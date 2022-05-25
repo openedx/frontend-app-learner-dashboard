@@ -1,10 +1,10 @@
 import { StrictDict } from 'utils';
 
-import { RequestKeys } from 'data/constants/requests';
+// import { RequestKeys } from 'data/constants/requests';
 import { actions } from 'data/redux';
-import api from 'data/services/lms/api';
+// import api from 'data/services/lms/api';
 
-import * as module from './requests';
+// import * as module from './requests';
 
 /**
  * Wrapper around a network request promise, that sends actions to the redux store to

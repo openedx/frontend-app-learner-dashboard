@@ -50,8 +50,8 @@ const messages = defineMessages({
   switchToProgram: {
     id: 'leanerDashboard.switchToProgram',
     defaultMessage: 'Switch to Programs',
-    description: 'Header link for switching to program page.'
-  }
+    description: 'Header link for switching to program page.',
+  },
 });
 
 export default messages;

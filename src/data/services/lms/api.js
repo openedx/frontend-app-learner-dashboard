@@ -1,13 +1,15 @@
-// import { StrictDict } from 'utils';
+/*
+import { StrictDict } from 'utils';
 import { locationId } from 'data/constants/app';
-// import { paramKeys } from './constants';
+import { paramKeys } from './constants';
 import urls from './urls';
 import {
-  // client,
+  client,
   get,
-  // post,
+  post,
   stringifyUrl,
 } from './utils';
+*/
 
 /*********************************************************************************
  * GET Actions

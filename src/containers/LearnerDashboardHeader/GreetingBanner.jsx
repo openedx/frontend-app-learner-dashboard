@@ -6,28 +6,28 @@ import messages from './messages';
 
 export const GreetingBanner = () => {
   let greetMessage;
-  let hour = new Date().getHours();
+  const hour = new Date().getHours();
 
-  if ( hour > 16 ) {
+  if (hour > 16) {
     greetMessage = messages.goodEvening;
-  }
-  else if ( hour > 11 ) {
+  } else if (hour > 11) {
     greetMessage = messages.goodAfternoon;
-  }
-  else {
+  } else {
     greetMessage = messages.goodMorning;
   }
-  
+
   return (
-    <div className='d-flex p-5 align-items-center justify-content-center'>
+    <div className="d-flex p-5 align-items-center justify-content-center">
       <img
-        className='d-block'
+        className="d-block"
         src={getConfig().LOGO_URL}
         alt={getConfig().SITE_NAME}
       />
-      <h1 className='text-center text-white'>
+      <h1 className="text-center text-white">
         <FormattedMessage {...greetMessage} />
       </h1>
     </div>
   );
 };
+
+export default GreetingBanner;
