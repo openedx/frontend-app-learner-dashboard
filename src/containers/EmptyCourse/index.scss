@@ -1,0 +1,10 @@
+@import "@edx/paragon/scss/core/core";
+
+.empty-course {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: map-get($spacers, 3);
+}

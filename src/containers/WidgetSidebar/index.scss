@@ -1,0 +1,7 @@
+@import "@edx/paragon/scss/core/core";
+
+.widget-sidebar {
+  width: 400px;
+  padding-left: map-get($spacers, 2);
+  padding-right: map-get($spacers, 2);
+}

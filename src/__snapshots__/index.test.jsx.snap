@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`app registry subscribe: APP_INIT_ERROR.  snapshot: displays an ErrorPage to root element 1`] = `
+<ErrorPage
+  message="test-error-message"
+/>
+`;
+
+exports[`app registry subscribe: APP_READY.  links App to root element 1`] = `
+<IntlProvider
+  locale="en"
+>
+  <AppProvider
+    store={
+      Object {
+        "dispatch": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+        Symbol(Symbol.observable): [Function],
+      }
+    }
+  >
+    <App />
+  </AppProvider>
+</IntlProvider>
+`;
