@@ -2,6 +2,7 @@ import { StrictDict } from 'utils';
 
 // import { RequestKeys } from 'data/constants/requests';
 import { actions } from 'data/redux';
+import fakeData from 'data/services/lms/fakeData/courses';
 // import api from 'data/services/lms/api';
 
 // import * as module from './requests';
@@ -33,5 +34,13 @@ export const networkRequest = ({
   });
 };
 
+export const initialize = () => (
+  Promise.resolve({
+    enrollments: fakeData.courseRunData,
+    entitlements: fakeData.entitlementCourses,
+  })
+);
+
 export default StrictDict({
+  initialize,
 });

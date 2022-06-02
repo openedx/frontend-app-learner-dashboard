@@ -1,24 +1,28 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Locked } from '@edx/paragon/icons';
-import { Button, Card } from '@edx/paragon';
+// import PropTypes from 'prop-types';
+import { Card } from '@edx/paragon';
 
-import { courseData } from 'data/services/lms/fakeData/courses';
+import shapes from 'data/services/lms/shapes';
 
-import RelatedProgram from './RelatedProgram';
-import CourseCardMenu from './CourseCardMenu';
-import CourseCardFooter from './CourseCardFooter';
+import RelatedProgram from './components/RelatedProgram';
+import CourseCardMenu from './components/CourseCardMenu';
+import CourseCardBanners from './components/CourseCardBanners';
+import CourseCardActions from './components/CourseCardActions';
 
-export const CourseCard = ({ courseID }) => {
+export const CourseCard = ({ cardData }) => {
   const {
-    title,
-    imageUrl,
-    displayNumber,
-    displayOrg,
-    accessExpiryDate,
-  } = courseData[courseID] || {};
+    course: {
+      title,
+      bannerUrl: imageUrl,
+    },
+    courseRun: {
+      courseNumber,
+      accessExpirationDate,
+    },
+  } = cardData;
+  const providerName = cardData.provider?.name;
   return (
-    <div>
+    <div className="mb-3">
       <Card orientation="horizontal">
         <Card.ImageCap
           src={imageUrl}
@@ -32,23 +36,20 @@ export const CourseCard = ({ courseID }) => {
             actions={<CourseCardMenu />}
           />
           <Card.Section>
-            {displayOrg} • {displayNumber} • Access expires {accessExpiryDate}
+            {providerName || 'Unkown'} • {courseNumber} • Access expires {accessExpirationDate}
           </Card.Section>
           <Card.Footer orientation="vertical" textElement={<RelatedProgram />}>
-            <Button iconBefore={Locked} variant="outline-primary">
-              Upgrade
-            </Button>
-            <Button>Resume</Button>
+            <CourseCardActions cardData={cardData} />
           </Card.Footer>
         </Card.Body>
       </Card>
-      <CourseCardFooter />
+      <CourseCardBanners cardData={cardData} />
     </div>
   );
 };
 
 CourseCard.propTypes = {
-  courseID: PropTypes.string.isRequired,
+  cardData: shapes.courseRunCardData.isRequired,
 };
 
 CourseCard.defaultProps = {};

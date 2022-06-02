@@ -6,7 +6,7 @@ export const providers = StrictDict({
     website: 'www.edx.com',
     email: 'support@edx.com',
   },
-  MIT: {
+  mit: {
     name: 'MIT',
     website: 'www.mit.edu',
     email: 'support@mit.edu',
@@ -38,7 +38,7 @@ export const genCourseRunData = (data = {}) => ({
 export const genEnrollmentData = (data = {}) => ({
   isAudit: true,
   isVerified: false,
-  canUpgrade: data.verified ? null : false,
+  canUpgrade: data.verified ? null : true,
   isAuditAccessExpired: data.verified ? null : false,
   ...data,
 });
@@ -48,10 +48,8 @@ export const genCertificateData = (data = {}) => ({
   isRestricted: false,
   isAvailable: false,
   isEarned: false,
-  isRequesting: false,
-  isGenerating: false,
   isDownloadable: false,
-  downloadUrls: null, // { preview, download, honorCertDownload }
+  downloadUrls: null, // { preview, download }
   ...data,
 });
 
@@ -68,15 +66,15 @@ export const courseRuns = [
     grades: { isPassing: true },
     courseRun: { isPending: true },
     certificates: genCertificateData(),
-    entitlement: { isEntitlement: false },
+    entitlements: { isEntitlement: false },
   },
   // audit, started, cannot upgrade, restricted
   {
-    enrollment: genEnrollmentData({ isAudit: true }),
+    enrollment: genEnrollmentData({ isAudit: true, canUpgrade: false }),
     grades: { isPassing: true },
     courseRun: { isStarted: true },
     certificates: genCertificateData({ isRestricted: true }),
-    entitlement: { isEntitlement: false },
+    entitlements: { isEntitlement: false },
   },
   // audit, started, can upgrade
   {
@@ -84,23 +82,35 @@ export const courseRuns = [
     grades: { isPassing: true },
     courseRun: { isStarted: true },
     certificates: genCertificateData(),
-    entitlement: { isEntitlement: false },
+    entitlements: { isEntitlement: false },
   },
   // audit, started, not passing
   {
     enrollment: genEnrollmentData({ isAudit: true, canUpgrade: true }),
     grades: { isPassing: false },
-    courseRun: { isStarted: true, accessExpirationDate: pastDate },
+    courseRun: { isStarted: true },
     certificates: genCertificateData(),
-    entitlement: { isEntitlement: false },
+    entitlements: { isEntitlement: false },
   },
-  // audit, started, audit access expired
+  // audit, started, audit access expired, can upgrade
   {
     enrollment: genEnrollmentData({ isAudit: true, isAuditAccessExpired: true }),
     grades: { isPassing: true },
     courseRun: { isStarted: true, accessExpirationDate: pastDate },
     certificates: genCertificateData(),
-    entitlement: { isEntitlement: false },
+    entitlements: { isEntitlement: false },
+  },
+  // audit, started, audit access expired, cannot upgrade
+  {
+    enrollment: genEnrollmentData({
+      isAudit: true,
+      isAuditAccessExpired: true,
+      canUpgrade: false,
+    }),
+    grades: { isPassing: true },
+    courseRun: { isStarted: true, accessExpirationDate: pastDate },
+    certificates: genCertificateData(),
+    entitlements: { isEntitlement: false },
   },
   // verified, pending, restricted
   {
@@ -108,7 +118,7 @@ export const courseRuns = [
     grades: { isPassing: true },
     courseRun: { isPending: true },
     certificates: genCertificateData({ isRestricted: true }),
-    entitlement: { isEntitlement: false },
+    entitlements: { isEntitlement: false },
   },
   // verified, started
   {
@@ -116,7 +126,7 @@ export const courseRuns = [
     grades: { isPassing: true },
     courseRun: { isStarted: true },
     certificates: genCertificateData(),
-    entitlement: { isEntitlement: false },
+    entitlements: { isEntitlement: false },
   },
   // verified, not passing
   {
@@ -124,7 +134,7 @@ export const courseRuns = [
     grades: { isPassing: false },
     courseRun: { isStarted: true },
     certificates: genCertificateData(),
-    entitlement: { isEntitlement: false },
+    entitlements: { isEntitlement: false },
   },
   // verified, finished, not passing
   {
@@ -132,7 +142,7 @@ export const courseRuns = [
     grades: { isPassing: false },
     courseRun: { isFinished: true },
     certificates: genCertificateData(),
-    entitlement: { isEntitlement: false },
+    entitlements: { isEntitlement: false },
   },
   // verified, restricted
   {
@@ -140,7 +150,7 @@ export const courseRuns = [
     grades: { isPassing: true },
     courseRun: { isStarted: true },
     certificates: genCertificateData({ isRestricted: true }),
-    entitlement: { isEntitlement: false },
+    entitlements: { isEntitlement: false },
   },
   // verified, earned but not available
   {
@@ -151,33 +161,7 @@ export const courseRuns = [
       isEarned: true,
       availableDate: futureDate,
     }),
-    entitlement: { isEntitlement: false },
-  },
-  // verified, earned, requesting
-  {
-    enrollment: genEnrollmentData({ isVerified: true }),
-    grades: { isPassing: true },
-    courseRun: { isStarted: true },
-    certificates: genCertificateData({
-      isEarned: true,
-      isAvailable: true,
-      isRequesting: true,
-      availableDate: pastDate,
-    }),
-    entitlement: { isEntitlement: false },
-  },
-  // verified, earned, generating
-  {
-    enrollment: genEnrollmentData({ isVerified: true }),
-    grades: { isPassing: true },
-    courseRun: { isStarted: true },
-    certificates: genCertificateData({
-      isEarned: true,
-      isAvailable: true,
-      isGenerating: true,
-      availableDate: pastDate,
-    }),
-    entitlement: { isEntitlement: false },
+    entitlements: { isEntitlement: false },
   },
   // verified, earned, downloadable (web + link)
   {
@@ -194,7 +178,7 @@ export const courseRuns = [
         download: logos.social,
       },
     }),
-    entitlement: { isEntitlement: false },
+    entitlements: { isEntitlement: false },
   },
   // verified, earned, downloadable (link)
   {
@@ -210,23 +194,7 @@ export const courseRuns = [
         download: logos.social,
       },
     }),
-    entitlement: { isEntitlement: false },
-  },
-  // verified, earned, downloadable (honor cert)
-  {
-    enrollment: genEnrollmentData({ isVerified: true }),
-    grades: { isPassing: true },
-    courseRun: { isStarted: true },
-    certificates: genCertificateData({
-      isEarned: true,
-      isAvailable: true,
-      isDownloadable: true,
-      availableDate: pastDate,
-      downloadUrls: {
-        honorCertDownload: logos.bio,
-      },
-    }),
-    entitlement: { isEntitlement: false },
+    entitlements: { isEntitlement: false },
   },
   // Entitlement Course Run - Cannot view yet
   {
@@ -234,11 +202,12 @@ export const courseRuns = [
     grades: { isPassing: true },
     courseRun: { isPending: true },
     certificates: genCertificateData(),
-    entitlement: {
+    entitlements: {
       isEntitlement: true,
       isFulfilled: true,
       isRefundable: true,
       canViewCourse: false,
+      canChange: true,
       changeDeadline: futureDate,
       isExpired: false,
     },
@@ -249,11 +218,12 @@ export const courseRuns = [
     grades: { isPassing: true },
     courseRun: { isStarted: true },
     certificates: genCertificateData(),
-    entitlement: {
+    entitlements: {
       isEntitlement: true,
       isFulfilled: true,
       isRefundable: true,
       canViewCourse: true,
+      canChange: true,
       changeDeadline: futureDate,
       isExpired: false,
     },
@@ -264,11 +234,12 @@ export const courseRuns = [
     grades: { isPassing: true },
     courseRun: { isStarted: true },
     certificates: genCertificateData(),
-    entitlement: {
+    entitlements: {
       isEntitlement: true,
       isFulfilled: true,
       isRefundable: true,
       canViewCourse: true,
+      canChange: false,
       changeDeadline: pastDate,
       isExpired: false,
     },
@@ -277,13 +248,14 @@ export const courseRuns = [
   {
     enrollment: genEnrollmentData({ isVerified: true }),
     grades: { isPassing: true },
-    courseRun: { isStarted: true },
+    courseRun: { isStarted: true, isFinished: true, isArchived: true },
     certificates: genCertificateData(),
-    entitlement: {
+    entitlements: {
       isEntitlement: true,
       isFulfilled: true,
-      isRefundable: true,
+      isRefundable: false,
       canViewCourse: true,
+      canChange: false,
       changeDeadline: pastDate,
       isExpired: true,
     },
@@ -294,31 +266,37 @@ export const entitlementCourses = [
   {
     course: { title: genCourseTitle(100) },
     entitlements: {
+      isEntitlement: true,
       availableSessions,
       isRefundable: true,
       isFulfilled: false,
       canViewCourse: false,
       changeDeadline: futureDate,
+      canChange: true,
       isExpired: false,
     },
   }, {
     course: { title: genCourseTitle(101) },
     entitlements: {
+      isEntitlement: true,
       availableSessions,
       isRefundable: true,
       isFulfilled: false,
       canViewCourse: false,
       changeDeadline: pastDate,
+      canChange: false,
       isExpired: false,
     },
   }, {
     course: { title: genCourseTitle(102) },
     entitlements: {
+      isEntitlement: true,
       availableSessions,
       isRefundable: true,
       isFulfilled: false,
       canViewCourse: false,
       changeDeadline: pastDate,
+      canChange: false,
       isExpired: true,
     },
   },
@@ -328,30 +306,26 @@ export const entitlementCourses = [
 // Entitlement Course - cannot view yet
 // Entitlement Course - can view and change
 // Entitlement Course - expired
-export const courseRunData = courseRuns.reduce(
-  (obj, curr, index) => {
-    const out = { ...curr };
+export const courseRunData = courseRuns.map(
+  (data, index) => {
+    const title = genCourseTitle(index);
+    const courseNumber = genCourseID(index);
     const providerIndex = index % 3;
     const iteratedData = [
-      {
-        provider: providers.edx,
-        course: { title: genCourseTitle(index), bannerUrl: logos.edx },
-      },
-      {
-        provider: providers.mit,
-        course: { title: genCourseTitle(index), bannerUrl: logos.bio },
-      },
-      {
-        provider: null,
-        course: { title: genCourseTitle(index), bannerUrl: logos.social },
-      },
+      { provider: providers.edx, course: { title, bannerUrl: logos.edx } },
+      { provider: providers.mit, course: { title, bannerUrl: logos.science } },
+      { provider: null, course: { title, bannerUrl: logos.social } },
     ];
-    out.courseRun.courseNumber = genCourseID(index);
     return {
-      ...out,
+      ...data,
+      courseRun: genCourseRunData({ ...data.courseRun, courseNumber }),
       ...iteratedData[providerIndex],
       credit: { isPurchased: false, requestStatus: null },
     };
   },
-  {},
 );
+
+export default {
+  courseRunData,
+  entitlementCourses,
+};

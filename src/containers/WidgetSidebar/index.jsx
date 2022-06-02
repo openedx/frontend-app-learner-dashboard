@@ -8,6 +8,7 @@ import './index.scss';
 export const WidgetSidebar = () => (
   <div className="widget-sidebar">
     <div className="d-flex">
+
       {/* <img src='more-courses-sidewidget.svg' />
       <div>
         <h3>
@@ -17,6 +18,7 @@ export const WidgetSidebar = () => (
           <FormattedMessage {...messages.findCoursesButton} />
         </Hyperlink>
       </div> */}
+
       <Card orientation="horizontal" className="mb-4">
         <Card.ImageCap
           src="more-courses-sidewidget.svg"
