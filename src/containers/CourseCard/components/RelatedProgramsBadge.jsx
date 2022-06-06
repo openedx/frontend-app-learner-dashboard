@@ -3,6 +3,7 @@ import React from 'react';
 import { Button, useToggle } from '@edx/paragon';
 import { Program } from '@edx/paragon/icons';
 
+import shapes from 'data/services/lms/shapes';
 import RelatedProgramsBadgeModal from 'containers/RelatedProgramsModal';
 
 export const RelatedProgramsBadge = ({ cardData }) => {
@@ -20,6 +21,9 @@ export const RelatedProgramsBadge = ({ cardData }) => {
       <RelatedProgramsBadgeModal {...{ isOpen, closeModal, cardData }} />
     </>
   );
+};
+RelatedProgramsBadge.propTypes = {
+  cardData: shapes.courseRunCardData.isRequired,
 };
 
 export default RelatedProgramsBadge;

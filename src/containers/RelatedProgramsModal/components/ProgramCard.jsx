@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 import {
   Badge,
   Card,
-  Hyperlink,
+  // Hyperlink,
   Icon,
 } from '@edx/paragon';
 import { Program } from '@edx/paragon/icons';

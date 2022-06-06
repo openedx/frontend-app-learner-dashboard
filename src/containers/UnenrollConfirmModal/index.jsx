@@ -30,6 +30,7 @@ export const UnenrollConfirmModal = ({
     confirm,
     reason,
     closeAndRefresh,
+    close,
   } = hooks({ dispatch, closeModal });
   const { formatMessage } = useIntl();
 
@@ -51,7 +52,7 @@ export const UnenrollConfirmModal = ({
             <h4>{formatMessage(messages.confirmHeader)}</h4>
             <p>{formatMessage(messages.confirmText)}</p>
             <ActionRow>
-              <Button variant="tertiary" onClick={closeModal}>
+              <Button variant="tertiary" onClick={close}>
                 {formatMessage(messages.confirmCancel)}
               </Button>
               <Button onClick={confirm}>
@@ -107,6 +108,5 @@ UnenrollConfirmModal.propTypes = {
     PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
   ]).isRequired,
 };
-
 
 export default UnenrollConfirmModal;

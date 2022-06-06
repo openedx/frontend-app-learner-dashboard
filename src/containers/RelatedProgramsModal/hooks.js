@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { StrictDict } from 'utils';
-import { thunkActions } from 'data/redux';
+// import { thunkActions } from 'data/redux';
 
 import * as module from './hooks';
 
@@ -20,7 +20,7 @@ export const modalHooks = ({
   const onToggle = React.useCallback(() => setToggleValue(!toggleValue), [toggleValue]);
   const save = React.useCallback(
     () => {
-      console.log("save email settings");
+      console.log('save email settings');
       closeModal();
     },
     [],

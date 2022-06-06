@@ -20,6 +20,14 @@ export const modalHooks = ({ closeModal, dispatch }) => {
 
   const confirm = React.useCallback(() => setIsConfirmed(true), []);
 
+  const close = () => {
+    closeModal();
+    setIsConfirmed(false);
+    setSelectedReason(null);
+    setSubmittedReason(null);
+    setCustomOption('');
+  };
+
   const reason = {
     value: submittedReason,
     skip: React.useCallback(() => setSubmittedReason('')),
@@ -42,7 +50,7 @@ export const modalHooks = ({ closeModal, dispatch }) => {
 
   const closeAndRefresh = React.useCallback(() => {
     dispatch(thunkActions.app.refreshList());
-    closeModal();
+    close();
   }, []);
 
   return {
@@ -50,6 +58,7 @@ export const modalHooks = ({ closeModal, dispatch }) => {
     confirm,
     reason,
     closeAndRefresh,
+    close,
   };
 };
 
