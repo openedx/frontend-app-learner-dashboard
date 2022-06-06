@@ -42,10 +42,15 @@ export const messages = StrictDict({
     description: 'Heading for unenroll finish modal',
     defaultMessage: 'You are unenrolled',
   },
+  finishThanksText: {
+    id: 'learner-dash.unenrollConfirm.confirm.finish.thanks-text',
+    description: 'Thank you message on unenroll modal for providing a reason',
+    defaultMessage: 'Thank you for sharing your reason for unenrolling.  ',
+  },
   finishText: {
-    id: 'learner-dash.unenrollConfirm.confirm.finish.heading',
+    id: 'learner-dash.unenrollConfirm.confirm.finish.text',
     description: 'Text for unenroll finish modal',
-    defaultMessage: 'Thank you for sharing your reason for unenrolling',
+    defaultMessage: 'This course will be removed from your dashboard.',
   },
   finishReturn: {
     id: 'learner-dash.unenrollConfirm.confirm.finish.return',

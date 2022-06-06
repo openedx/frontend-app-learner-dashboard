@@ -10,13 +10,12 @@ import hooks from './hooks';
 
 export const CourseCardMenu = ({ cardData }) => {
   const {
-    ref,
     emailSettingsModal,
     unenrollModal,
   } = hooks();
   return (
     <>
-      <Dropdown ref={ref}>
+      <Dropdown>
         <Dropdown.Toggle
           id="dropdown-toggle-with-iconbutton"
           as={IconButton}
@@ -34,12 +33,10 @@ export const CourseCardMenu = ({ cardData }) => {
       </Dropdown>
       <UnenrollConfirmModal
         show={unenrollModal.isVisible}
-        menuRef={ref}
         closeModal={unenrollModal.hide}
       />
       <EmailSettingsModal
         show={emailSettingsModal.isVisible}
-        menuRef={ref}
         closeModal={emailSettingsModal.hide}
         cardData={cardData}
       />

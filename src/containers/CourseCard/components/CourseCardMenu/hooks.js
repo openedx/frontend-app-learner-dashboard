@@ -28,11 +28,9 @@ export const emailSettingsModalHooks = () => {
 export const menuHooks = () => {
   const unenrollModal = module.unenrollModalHooks();
   const emailSettingsModal = module.emailSettingsModalHooks();
-  const ref = React.useRef(null);
   return {
     emailSettingsModal,
     unenrollModal,
-    ref,
   };
 };
 

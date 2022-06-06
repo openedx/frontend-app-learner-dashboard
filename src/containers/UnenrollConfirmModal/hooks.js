@@ -8,6 +8,7 @@ import * as module from './hooks';
 export const state = StrictDict({
   confirmed: (val) => React.useState(val),
   customReason: (val) => React.useState(val),
+  isSkipped: (val) => React.useState(val),
   selectedReason: (val) => React.useState(val),
   submittedReason: (val) => React.useState(val),
 });
@@ -17,6 +18,7 @@ export const modalHooks = ({ closeModal, dispatch }) => {
   const [selectedReason, setSelectedReason] = module.state.selectedReason(null);
   const [submittedReason, setSubmittedReason] = module.state.submittedReason(null);
   const [customOption, setCustomOption] = module.state.customReason('');
+  const [isSkipped, setIsSkipped] = module.state.isSkipped(false);
 
   const confirm = React.useCallback(() => setIsConfirmed(true), []);
 
@@ -26,11 +28,13 @@ export const modalHooks = ({ closeModal, dispatch }) => {
     setSelectedReason(null);
     setSubmittedReason(null);
     setCustomOption('');
+    setIsSkipped(false);
   };
 
   const reason = {
     value: submittedReason,
-    skip: React.useCallback(() => setSubmittedReason('')),
+    skip: React.useCallback(() => setIsSkipped(true), [isSkipped]),
+    isSkipped,
     selectOption: React.useCallback((e) => setSelectedReason(e.target.value), []),
     customOption: {
       value: customOption,
@@ -38,14 +42,13 @@ export const modalHooks = ({ closeModal, dispatch }) => {
     },
     selected: selectedReason,
     submit: React.useCallback(() => {
-      console.log({ customOption, selectedReason });
       if (selectedReason === 'custom') {
         setSubmittedReason(customOption);
       } else {
         setSubmittedReason(selectedReason);
       }
     }, [customOption, selectedReason]),
-    isSubmitted: submittedReason !== null,
+    isSubmitted: submittedReason !== null || isSkipped,
   };
 
   const closeAndRefresh = React.useCallback(() => {

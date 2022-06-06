@@ -1,0 +1,37 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import { useIntl } from 'react-intl';
+
+import {
+  ActionRow,
+  Button,
+} from '@edx/paragon';
+
+import messages from './messages';
+
+export const ConfirmPane = ({
+  handleClose,
+  handleConfirm,
+}) => {
+  const { formatMessage } = useIntl();
+  return (
+    <>
+      <h4>{formatMessage(messages.confirmHeader)}</h4>
+      <p>{formatMessage(messages.confirmText)}</p>
+      <ActionRow>
+        <Button variant="tertiary" onClick={handleClose}>
+          {formatMessage(messages.confirmCancel)}
+        </Button>
+        <Button onClick={handleConfirm}>
+          {formatMessage(messages.confirmUnenroll)}
+        </Button>
+      </ActionRow>
+    </>
+  );
+};
+ConfirmPane.propTypes = {
+  handleClose: PropTypes.func.isRequired,
+  handleConfirm: PropTypes.func.isRequired,
+};
+
+export default ConfirmPane;

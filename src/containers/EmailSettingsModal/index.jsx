@@ -7,7 +7,7 @@ import {
   ActionRow,
   Button,
   Form,
-  ModalPopup,
+  ModalDialog,
 } from '@edx/paragon';
 
 import { nullMethod } from 'hooks';
@@ -19,12 +19,8 @@ import messages from './messages';
 export const EmailSettingsModal = ({
   closeModal,
   show,
-  menuRef,
   cardData,
 }) => {
-  if (!menuRef.current) {
-    return null;
-  }
   const dispatch = useDispatch();
   const {
     toggleValue,
@@ -34,14 +30,13 @@ export const EmailSettingsModal = ({
   const { formatMessage } = useIntl();
 
   return (
-    <ModalPopup
-      positionRef={menuRef.current}
-      placement="bottom-end"
+    <ModalDialog
       isOpen={show}
       onClose={nullMethod}
+      hasCloseButton={false}
     >
       <div className="bg-white p-3 rounded shadow" style={{ textAlign: 'start' }}>
-        <h2>{formatMessage(messages.header)}</h2>
+        <h4>{formatMessage(messages.header)}</h4>
         <Form.Switch checked={!toggleValue} onChange={onToggle}>
           {formatMessage(toggleValue ? messages.emailsOff : messages.emailsOn)}
         </Form.Switch>
@@ -53,17 +48,13 @@ export const EmailSettingsModal = ({
           <Button onClick={save}>{formatMessage(messages.save)}</Button>
         </ActionRow>
       </div>
-    </ModalPopup>
+    </ModalDialog>
   );
 };
 EmailSettingsModal.propTypes = {
   cardData: shapes.courseRunCardData.isRequired,
   closeModal: PropTypes.func.isRequired,
   show: PropTypes.bool.isRequired,
-  menuRef: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
-  ]).isRequired,
 };
 
 export default EmailSettingsModal;
