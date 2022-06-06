@@ -2,12 +2,8 @@ import { StrictDict } from 'utils';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  courseMetadata: {
-    name: '',
-    number: '',
-    org: '',
-    courseId: '',
-  },
+  enrollments: [],
+  entitlements: [],
 };
 
 // eslint-disable-next-line no-unused-vars
@@ -15,7 +11,8 @@ const app = createSlice({
   name: 'app',
   initialState,
   reducers: {
-    loadCourseMetadata: (state, { payload }) => ({ ...state, courseMetadata: payload }),
+    loadEnrollments: (state, { payload }) => ({ ...state, enrollments: payload }),
+    loadEntitlements: (state, { payload }) => ({ ...state, entitlements: payload }),
   },
 });
 

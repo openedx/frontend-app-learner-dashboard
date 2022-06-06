@@ -10,7 +10,8 @@ const mkSimpleSelector = (cb) => createSelector([module.appSelector], cb);
 
 // top-level app data selectors
 export const simpleSelectors = {
-  courseMetadata: mkSimpleSelector(app => app.courseMetadata),
+  enrollments: mkSimpleSelector(app => app.enrollments),
+  entitlements: mkSimpleSelector(app => app.entitlements),
 };
 
 export default StrictDict({

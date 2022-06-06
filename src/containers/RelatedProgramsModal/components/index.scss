@@ -1,0 +1,23 @@
+.program-card {
+  color: white !important;
+  .program-card-banner {
+    .pgn__card-image-cap {
+      height: 6rem;
+    }
+  }
+  .program-type-badge {
+    text-align: left;
+    height: 24px;
+    width: 195px;
+    font-size: .75rem;
+    vertical-align: center;
+    .pgn__icon {
+      width: .75rem !important;
+      height: .75rem !important;
+    }
+  }
+  .program-summary {
+    font-size: .75rem;
+    line-height: 1.25rem;
+  }
+}
