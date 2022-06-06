@@ -13,6 +13,31 @@ export const providers = StrictDict({
   },
 });
 
+export const relatedPrograms = [
+  {
+    provider: 'HarvardX',
+    bannerUrl: 'https://prod-discovery.edx-cdn.org/media/course/image/327c8e4f-315a-417b-9857-046dfc90c243-677b97464958.small.jpg',
+    logoUrl: 'https://prod-discovery.edx-cdn.org/organization/certificate_logos/44022f13-20df-4666-9111-cede3e5dc5b6-770e00385e7e.png',
+    title: 'Relativity in Modern Mechanics',
+    programUrl: 'www.edx/my-program',
+    programType: 'MicroBachelors Program',
+    programTypeUrl: 'www.edx/my-program-type',
+    numberOfCourses: 3,
+    estimatedDuration: '4 weeks',
+  },
+  {
+    provider: 'University  of Maryland',
+    bannerUrl: 'https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg',
+    logoUrl: 'https://prod-discovery.edx-cdn.org/organization/certificate_logos/b9dc96da-b3fc-45a6-b6b7-b8e12eb79335-ac60112330e3.png',
+    title: 'Pandering for Modern Professionals',
+    programUrl: 'www.edx/my-program',
+    programType: 'MicroBachelors Program',
+    programTypeUrl: 'www.edx/my-program-type',
+    numberOfCourses: 3,
+    estimatedDuration: '4 weeks',
+  },
+];
+
 export const genCourseID = (index) => `course-id${index}`;
 export const genCourseTitle = (index) => `Course Name ${index}`;
 
@@ -40,6 +65,7 @@ export const genEnrollmentData = (data = {}) => ({
   isVerified: false,
   canUpgrade: data.verified ? null : true,
   isAuditAccessExpired: data.verified ? null : false,
+  isEmailEnabled: false,
   ...data,
 });
 
@@ -318,6 +344,7 @@ export const courseRunData = courseRuns.map(
     ];
     return {
       ...data,
+      relatedPrograms,
       courseRun: genCourseRunData({ ...data.courseRun, courseNumber }),
       ...iteratedData[providerIndex],
       credit: { isPurchased: false, requestStatus: null },

@@ -4,7 +4,7 @@ import { Card } from '@edx/paragon';
 
 import shapes from 'data/services/lms/shapes';
 
-import RelatedProgram from './components/RelatedProgram';
+import RelatedProgramsBadge from './components/RelatedProgramsBadge';
 import CourseCardMenu from './components/CourseCardMenu';
 import CourseCardBanners from './components/CourseCardBanners';
 import CourseCardActions from './components/CourseCardActions';
@@ -33,12 +33,15 @@ export const CourseCard = ({ cardData }) => {
         <Card.Body>
           <Card.Header
             title={title}
-            actions={<CourseCardMenu />}
+            actions={<CourseCardMenu cardData={cardData} />}
           />
           <Card.Section>
             {providerName || 'Unkown'} • {courseNumber} • Access expires {accessExpirationDate}
           </Card.Section>
-          <Card.Footer orientation="vertical" textElement={<RelatedProgram />}>
+          <Card.Footer
+            orientation="vertical"
+            textElement={<RelatedProgramsBadge cardData={cardData} />}
+          >
             <CourseCardActions cardData={cardData} />
           </Card.Footer>
         </Card.Body>

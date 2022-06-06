@@ -54,6 +54,17 @@ export const shapes = StrictDict({
   grades: PropTypes.shape({
     isPassing: PropTypes.bool,
   }),
+  programCard: PropTypes.shape({
+    provider: PropTypes.string,
+    bannerUrl: PropTypes.string,
+    logoUrl: PropTypes.string,
+    title: PropTypes.string,
+    programUrl: PropTypes.string,
+    programType: PropTypes.string,
+    programTypeUrl: PropTypes.string,
+    numberOfCourses: PropTypes.number,
+    estimatedDuration: PropTypes.string,
+  }),
 });
 
 shapes.courseRunCardData = PropTypes.shape({
@@ -65,6 +76,7 @@ shapes.courseRunCardData = PropTypes.shape({
   enrollment: shapes.enrollment,
   entitlement: shapes.entitlement,
   grades: shapes.grades,
+  relatedPrograms: PropTypes.arrayOf(shapes.programCard),
 });
 
 export default shapes;

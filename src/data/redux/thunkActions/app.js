@@ -13,7 +13,16 @@ import requests from './requests';
  * submission list data.
  */
 export const initialize = () => (dispatch) => (
-  requests.initialize().then(
+  requests.initializeList().then(
+    ({ enrollments, entitlements }) => {
+      dispatch(actions.app.loadEnrollments(enrollments));
+      dispatch(actions.app.loadEntitlements(entitlements));
+    },
+  )
+);
+
+export const refreshList = () => (dispatch) => (
+  requests.initializeList().then(
     ({ enrollments, entitlements }) => {
       dispatch(actions.app.loadEnrollments(enrollments));
       dispatch(actions.app.loadEntitlements(entitlements));
@@ -23,4 +32,5 @@ export const initialize = () => (dispatch) => (
 
 export default StrictDict({
   initialize,
+  refreshList,
 });

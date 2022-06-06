@@ -34,7 +34,7 @@ export const networkRequest = ({
   });
 };
 
-export const initialize = () => (
+export const initializeList = () => (
   Promise.resolve({
     enrollments: fakeData.courseRunData,
     entitlements: fakeData.entitlementCourses,
@@ -42,5 +42,5 @@ export const initialize = () => (
 );
 
 export default StrictDict({
-  initialize,
+  initializeList,
 });
