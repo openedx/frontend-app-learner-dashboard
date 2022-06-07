@@ -1,8 +1,8 @@
 /* eslint-disable quotes */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useIntl } from 'react-intl';
 
+import { useIntl } from '@edx/frontend-platform/i18n';
 import { CardGrid, ModalDialog } from '@edx/paragon';
 
 import shapes from 'data/services/lms/shapes';

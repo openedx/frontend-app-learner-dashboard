@@ -1,6 +1,6 @@
 import React from 'react';
-import { useIntl } from 'react-intl';
 
+import { useIntl } from '@edx/frontend-platform/i18n';
 import {
   Badge,
   Card,

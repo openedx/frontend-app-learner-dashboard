@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { useIntl } from 'react-intl';
 
+import { useIntl } from '@edx/frontend-platform/i18n';
 import {
   ActionRow,
   Button,

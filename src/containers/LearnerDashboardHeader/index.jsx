@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import { useIntl } from 'react-intl';
+
+import { useIntl } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
 import { Program } from '@edx/paragon/icons';
 import { Button } from '@edx/paragon';
@@ -10,6 +11,8 @@ import messages from './messages';
 
 export const LearnerDashboardHeader = () => {
   const { authenticatedUser } = useContext(AppContext);
+  const context = useContext(AppContext);
+  console.log({ context });
   const { formatMessage } = useIntl();
   return (
     <div className="d-flex flex-column bg-primary">
