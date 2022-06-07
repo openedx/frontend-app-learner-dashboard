@@ -6,7 +6,11 @@ import shapes from 'data/services/lms/shapes';
 
 import RelatedProgramsBadge from './components/RelatedProgramsBadge';
 import CourseCardMenu from './components/CourseCardMenu';
-import CourseCardBanners from './components/CourseCardBanners';
+import {
+  CourseBanner,
+  CertificateBanner,
+  EntitlementBanner,
+} from './components/Banners';
 import CourseCardActions from './components/CourseCardActions';
 
 export const CourseCard = ({ cardData }) => {
@@ -27,8 +31,6 @@ export const CourseCard = ({ cardData }) => {
         <Card.ImageCap
           src={imageUrl}
           srcAlt="course thumbnail"
-          // logoSrc='https://via.placeholder.com/150'
-          // logoAlt='Card logo'
         />
         <Card.Body>
           <Card.Header
@@ -46,7 +48,11 @@ export const CourseCard = ({ cardData }) => {
           </Card.Footer>
         </Card.Body>
       </Card>
-      <CourseCardBanners cardData={cardData} />
+      <div className="course-card-banners">
+        <CourseBanner cardData={cardData} />
+        <CertificateBanner cardData={cardData} />
+        <EntitlementBanner cardData={cardData} />
+      </div>
     </div>
   );
 };

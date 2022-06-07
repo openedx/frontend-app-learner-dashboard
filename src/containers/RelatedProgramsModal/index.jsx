@@ -23,9 +23,9 @@ export const RelatedProgramsModal = ({ isOpen, closeModal, cardData }) => {
       size="lg"
       className="related-programs-modal p-4"
     >
-      <ModalDialog.Title className="programs-title m-0 p-0">
+      <ModalDialog.Header className="programs-title m-0 p-0" as="h3">
         {formatMessage(messages.header)}
-      </ModalDialog.Title>
+      </ModalDialog.Header>
       <ModalDialog.Header as="h4" className="programs-header p-0">
         {cardData.course.title}
       </ModalDialog.Header>
