@@ -64,4 +64,5 @@ export default StrictDict({
   cardSelector,
   ...cardSelectors,
   programs,
+  fieldKeys,
 });

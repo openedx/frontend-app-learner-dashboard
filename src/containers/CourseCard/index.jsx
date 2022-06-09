@@ -6,7 +6,7 @@ import { Card } from '@edx/paragon';
 
 import { selectors } from 'data/redux';
 
-import { getCardValue } from 'hooks';
+import { getCardValues } from 'hooks';
 
 import RelatedProgramsBadge from './components/RelatedProgramsBadge';
 import CourseCardMenu from './components/CourseCardMenu';
@@ -20,11 +20,17 @@ import CourseCardActions from './components/CourseCardActions';
 const { cardData } = selectors;
 
 export const CourseCard = ({ courseNumber }) => {
-  const cardValue = getCardValue(courseNumber);
-  const title = cardValue(cardData.courseTitle);
-  const bannerUrl = cardValue(cardData.courseBannerUrl);
-  const accessExpirationDate = cardValue(cardData.courseRunAccessExpirationDate);
-  const providerName = cardValue(cardData.providerName);
+  const {
+    title,
+    bannerUrl,
+    accessExpirationDate,
+    providerName,
+  } = getCardValues(courseNumber, {
+    title: cardData.courseTitle,
+    bannerUrl: cardData.courseBannerUrl,
+    accessExpirationDate: cardData.courseRunAccessExpirationDate,
+    providerName: cardData.providerName,
+  });
   return (
     <div className="mb-3">
       <Card orientation="horizontal">

@@ -1,24 +1,26 @@
 /* eslint-disable max-len */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 
 import { Hyperlink } from '@edx/paragon';
 import { CheckCircle } from '@edx/paragon/icons';
 
 import { selectors } from 'data/redux';
 import Banner from 'components/Banner';
+import { getCardValue, getCardValues } from 'hooks';
 
 const { cardData } = selectors;
 
 const restrictedMessage = 'Your Certificate of Achievement is being held pending confirmation that the issuance of your Certificate is in compliance with strict U.S. embargoes on Iran, Cuba, Syria, and Sudan.  If you think our system has mistakenly identified you as being connected with one of those countries, please let us know by contacting ';
 
 export const CertificateBanner = ({ courseNumber }) => {
-  const cardValue = (sel) => useSelector(cardData.cardSelector(sel, courseNumber));
+  const cardValue = getCardValue(courseNumber);
 
-  const isRestricted = cardValue(cardData.isRestricted);
-  const isAudit = cardValue(cardData.isAudit);
-  const isVerified = cardValue(cardData.isVerified);
+  const { isRestricted, isAudit, isVerified } = getCardValues(courseNumber, {
+    isRestricted: cardData.isRestricted,
+    isAudit: cardData.isAudit,
+    isVerified: cardData.isVerified,
+  });
   if (isRestricted) {
     return (
       <Banner variant="danger">
@@ -31,12 +33,21 @@ export const CertificateBanner = ({ courseNumber }) => {
       </Banner>
     );
   }
-  const isPassing = cardValue(cardData.isPassing);
-  const minPassingGrade = cardValue(cardData.minPassingGrade);
-  const isCourseRunFinished = cardValue(cardData.isCourseRunFinished);
-  const isCertDownloadable = cardValue(cardData.isCertDownloadable);
-  const isCertEarnedButUnavailable = cardValue(cardData.isCertEarnedButUnavailable);
-  const certAvailableDate = cardValue(cardData.certAvailableDate);
+  const {
+    isPassing,
+    minPassingGrade,
+    isCourseRunFinished,
+    isCertDownloadable,
+    isCertEarnedButUnavailable,
+    certAvailableDate,
+  } = getCardValues(courseNumber, {
+    isPassing: cardData.isPassing,
+    minPassingGrade: cardData.minPassingGrade,
+    isCourseRunFinished: cardData.isCourseRunFinished,
+    isCertDownloadable: cardData.isCertDownloadable,
+    isCertEarnedButUnavailable: cardData.isCertEarnedButUnavailable,
+    certAvailableDate: cardData.certAvailableDate,
+  });
   if (!isPassing) {
     if (isAudit) {
       return (<Banner> Grade required to pass the course: {minPassingGrade}% </Banner>);

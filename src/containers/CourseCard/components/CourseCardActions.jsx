@@ -1,22 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 
 import { Button } from '@edx/paragon';
 import { Locked } from '@edx/paragon/icons';
 
 import { selectors } from 'data/redux';
+import { getCardValues } from 'hooks';
 
 const { cardData } = selectors;
 
 export const CourseCardActions = ({ courseNumber }) => {
-  const cardValue = (sel) => useSelector(cardData.cardSelector(sel, courseNumber));
-  const canUpgrade = cardValue(cardData.canUpgrade);
-  const isAudit = cardValue(cardData.isAudit);
-  const isAuditAccessExpired = cardValue(cardData.isAuditAccessExpired);
-  const isVerified = cardValue(cardData.isVerified);
-  const isPending = cardValue(cardData.isCourseRunPending);
-  const isFinished = cardValue(cardData.isCourseRunFinished);
+  const {
+    canUpgrade,
+    isAudit,
+    isAuditAccessExpired,
+    isVerified,
+    isPending,
+    isFinished,
+  } = getCardValues(courseNumber, {
+    canUpgrade: cardData.canUpgrade,
+    isAudit: cardData.isAudit,
+    isAuditAccessExpired: cardData.isAuditAccessExpired,
+    isVerified: cardData.isVerified,
+    isPending: cardData.isCourseRunPending,
+    isFinished: cardData.isCourseRunFinished,
+  });
 
   let primary;
   let secondary = null;
