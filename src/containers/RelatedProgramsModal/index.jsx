@@ -5,14 +5,18 @@ import PropTypes from 'prop-types';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { CardGrid, ModalDialog } from '@edx/paragon';
 
-import shapes from 'data/services/lms/shapes';
-
 import ProgramCard from './components/ProgramCard';
 import messages from './messages';
+import programsData from './hooks';
 import './index.scss';
 
-export const RelatedProgramsModal = ({ isOpen, closeModal, cardData }) => {
+export const RelatedProgramsModal = ({
+  isOpen,
+  closeModal,
+  courseNumber,
+}) => {
   const { formatMessage } = useIntl();
+  const { courseTitle, relatedPrograms } = programsData({ courseNumber });
   return (
     <ModalDialog
       title={formatMessage(messages.header)}
@@ -27,14 +31,16 @@ export const RelatedProgramsModal = ({ isOpen, closeModal, cardData }) => {
         {formatMessage(messages.header)}
       </ModalDialog.Header>
       <ModalDialog.Header as="h4" className="programs-header p-0">
-        {cardData.course.title}
+        {courseTitle}
       </ModalDialog.Header>
       <ModalDialog.Body className="pl-0">
         <p>{formatMessage(messages.description)}</p>
         <CardGrid
           columnSizes={{ lg: 6, xlg: 4, xs: 12 }}
         >
-          {cardData.relatedPrograms.map(programData => <ProgramCard data={programData} />)}
+          {relatedPrograms.map((programData) => (
+            <ProgramCard key={`${programData.programUrl}`} data={programData} />
+          ))}
         </CardGrid>
       </ModalDialog.Body>
     </ModalDialog>
@@ -43,7 +49,7 @@ export const RelatedProgramsModal = ({ isOpen, closeModal, cardData }) => {
 RelatedProgramsModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
-  cardData: shapes.courseRunCardData.isRequired,
+  courseNumber: PropTypes.string.isRequired,
 };
 
 export default RelatedProgramsModal;

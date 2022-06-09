@@ -11,8 +11,6 @@ import messages from './messages';
 
 export const LearnerDashboardHeader = () => {
   const { authenticatedUser } = useContext(AppContext);
-  const context = useContext(AppContext);
-  console.log({ context });
   const { formatMessage } = useIntl();
   return (
     <div className="d-flex flex-column bg-primary">

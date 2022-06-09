@@ -15,7 +15,7 @@ Banner.defaultProps = {
 };
 Banner.propTypes = {
   variant: PropTypes.string,
-  icon: PropTypes.string,
+  icon: PropTypes.func,
   children: PropTypes.node.isRequired,
 };
 

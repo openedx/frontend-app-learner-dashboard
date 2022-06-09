@@ -11,7 +11,7 @@ import messages from './messages';
 export const AuthenticatedUserDropdown = ({ intl, username }) => (
   <>
     <Dropdown className="user-dropdown">
-      <Dropdown.Toggle invertColors variant="primary">
+      <Dropdown.Toggle id="user" variant="primary">
         <Icon src={Person} />
         <span data-hj-suppress className="d-none d-md-inline">
           {username}

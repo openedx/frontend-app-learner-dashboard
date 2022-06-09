@@ -1,8 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 // import PropTypes from 'prop-types';
 import { Card } from '@edx/paragon';
 
-import shapes from 'data/services/lms/shapes';
+import { selectors } from 'data/redux';
+
+import { getCardValue } from 'hooks';
 
 import RelatedProgramsBadge from './components/RelatedProgramsBadge';
 import CourseCardMenu from './components/CourseCardMenu';
@@ -13,52 +17,48 @@ import {
 } from './components/Banners';
 import CourseCardActions from './components/CourseCardActions';
 
-export const CourseCard = ({ cardData }) => {
-  const {
-    course: {
-      title,
-      bannerUrl: imageUrl,
-    },
-    courseRun: {
-      courseNumber,
-      accessExpirationDate,
-    },
-  } = cardData;
-  const providerName = cardData.provider?.name;
+const { cardData } = selectors;
+
+export const CourseCard = ({ courseNumber }) => {
+  const cardValue = getCardValue(courseNumber);
+  const title = cardValue(cardData.courseTitle);
+  const bannerUrl = cardValue(cardData.courseBannerUrl);
+  const accessExpirationDate = cardValue(cardData.courseRunAccessExpirationDate);
+  const providerName = cardValue(cardData.providerName);
   return (
     <div className="mb-3">
       <Card orientation="horizontal">
         <Card.ImageCap
-          src={imageUrl}
+          src={bannerUrl}
           srcAlt="course thumbnail"
         />
         <Card.Body>
           <Card.Header
             title={title}
-            actions={<CourseCardMenu cardData={cardData} />}
+            actions={<CourseCardMenu courseNumber={courseNumber} />}
           />
           <Card.Section>
             {providerName || 'Unkown'} • {courseNumber} • Access expires {accessExpirationDate}
           </Card.Section>
           <Card.Footer
             orientation="vertical"
-            textElement={<RelatedProgramsBadge cardData={cardData} />}
+            textElement={<RelatedProgramsBadge courseNumber={courseNumber} />}
           >
-            <CourseCardActions cardData={cardData} />
+            <CourseCardActions courseNumber={courseNumber} />
           </Card.Footer>
         </Card.Body>
       </Card>
       <div className="course-card-banners">
-        <CourseBanner cardData={cardData} />
-        <CertificateBanner cardData={cardData} />
-        <EntitlementBanner cardData={cardData} />
+        <CourseBanner courseNumber={courseNumber} />
+        <CertificateBanner courseNumber={courseNumber} />
+        <EntitlementBanner courseNumber={courseNumber} />
       </div>
     </div>
   );
 };
 
 CourseCard.propTypes = {
-  cardData: shapes.courseRunCardData.isRequired,
+  courseNumber: PropTypes.string.isRequired,
 };
 
 CourseCard.defaultProps = {};

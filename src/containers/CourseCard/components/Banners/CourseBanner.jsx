@@ -1,22 +1,23 @@
 /* eslint-disable max-len */
 import React from 'react';
+import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import { Hyperlink } from '@edx/paragon';
 
-import shapes from 'data/services/lms/shapes';
+import { selectors } from 'data/redux';
 
 import Banner from 'components/Banner';
 
-export const CourseBanner = ({ cardData }) => {
-  const {
-    // course,
-    enrollment,
-    courseRun,
-  } = cardData;
-  if (enrollment.isVerified) {
-    return null;
-  }
-  const isActive = courseRun.isStarted && !courseRun.isFinished;
-  const { canUpgrade, isAuditAccessExpired } = enrollment;
+const { cardData } = selectors;
+
+export const CourseBanner = ({ courseNumber }) => {
+  const cardValue = (sel) => useSelector(cardData.cardSelector(sel, courseNumber));
+  const isVerified = cardValue(cardData.isVerified);
+  if (isVerified) { return null; }
+
+  const isCourseRunActive = cardValue(cardData.isCourseRunActive);
+  const canUpgrade = cardValue(cardData.canUpgrade);
+  const isAuditAccessExpired = cardValue(cardData.isAuditAccessExpired);
   if (isAuditAccessExpired) {
     if (canUpgrade) {
       return (
@@ -31,19 +32,20 @@ export const CourseBanner = ({ cardData }) => {
       </Banner>
     );
   }
-  if (isActive && !canUpgrade) {
+  if (isCourseRunActive && !canUpgrade) {
+    const courseWebsite = cardValue(cardData.courseWebsite);
     return (
       <Banner>
         Your upgrade deadline for this course has passed.  To upgrade, enroll in a session that is farther in the future.
         {'  '}
-        <Hyperlink href={cardData.course.website}>Explore course details.</Hyperlink>
+        <Hyperlink href={courseWebsite}>Explore course details.</Hyperlink>
       </Banner>
     );
   }
   return null;
 };
 CourseBanner.propTypes = {
-  cardData: shapes.courseRunCardData.isRequired,
+  courseNumber: PropTypes.string.isRequired,
 };
 
 export default CourseBanner;

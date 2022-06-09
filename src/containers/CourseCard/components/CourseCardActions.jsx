@@ -1,43 +1,50 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 import { Button } from '@edx/paragon';
 import { Locked } from '@edx/paragon/icons';
 
-import shapes from 'data/services/lms/shapes';
+import { selectors } from 'data/redux';
 
-export const CourseCardActions = ({ cardData: { enrollment, courseRun } }) => {
+const { cardData } = selectors;
+
+export const CourseCardActions = ({ courseNumber }) => {
+  const cardValue = (sel) => useSelector(cardData.cardSelector(sel, courseNumber));
+  const canUpgrade = cardValue(cardData.canUpgrade);
+  const isAudit = cardValue(cardData.isAudit);
+  const isAuditAccessExpired = cardValue(cardData.isAuditAccessExpired);
+  const isVerified = cardValue(cardData.isVerified);
+  const isPending = cardValue(cardData.isCourseRunPending);
+  const isFinished = cardValue(cardData.isCourseRunFinished);
+
   let primary;
   let secondary = null;
-  if (!enrollment.isVerified) {
+  if (!isVerified) {
     secondary = (
       <Button
         iconBefore={Locked}
         variant="outline-primary"
-        disabled={!enrollment.canUpgrade}
+        disabled={!canUpgrade}
       >
         Upgrade
       </Button>
     );
   }
-  if (courseRun.isPending) {
-    primary = (
-      <Button>
-        Begin Course
-      </Button>
-    );
-  } else if (!courseRun.isEnded) {
-    if (enrollment.isAudit && enrollment.isAuditAccessExpired) {
-      primary = (<Button disabled>Resume</Button>);
-    } else {
-      primary = (<Button>Resume</Button>);
-    }
+
+  if (isPending) {
+    primary = (<Button>Begin Course</Button>);
+  } else if (!isFinished) {
+    primary = (isAudit && isAuditAccessExpired)
+      ? (<Button disabled>Resume</Button>)
+      : (<Button>Resume</Button>);
   } else {
     primary = (<Button>View Course</Button>);
   }
   return (<>{secondary}{primary}</>);
 };
 CourseCardActions.propTypes = {
-  cardData: shapes.courseRunCardData.isRequired,
+  courseNumber: PropTypes.string.isRequired,
 };
 
 export default CourseCardActions;

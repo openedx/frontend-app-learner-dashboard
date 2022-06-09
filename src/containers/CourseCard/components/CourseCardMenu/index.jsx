@@ -1,14 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { Dropdown, Icon, IconButton } from '@edx/paragon';
 import { MoreVert } from '@edx/paragon/icons';
 
-import shapes from 'data/services/lms/shapes';
 import EmailSettingsModal from 'containers/EmailSettingsModal';
 import UnenrollConfirmModal from 'containers/UnenrollConfirmModal';
 import hooks from './hooks';
 
-export const CourseCardMenu = ({ cardData }) => {
+export const CourseCardMenu = ({ courseNumber }) => {
   const {
     emailSettingsModal,
     unenrollModal,
@@ -34,17 +34,18 @@ export const CourseCardMenu = ({ cardData }) => {
       <UnenrollConfirmModal
         show={unenrollModal.isVisible}
         closeModal={unenrollModal.hide}
+        courseNumber={courseNumber}
       />
       <EmailSettingsModal
         show={emailSettingsModal.isVisible}
         closeModal={emailSettingsModal.hide}
-        cardData={cardData}
+        courseNumber={courseNumber}
       />
     </>
   );
 };
 CourseCardMenu.propTypes = {
-  cardData: shapes.courseRunCardData.isRequired,
+  courseNumber: PropTypes.string.isRequired,
 };
 
 export default CourseCardMenu;

@@ -1,36 +1,24 @@
-import React from 'react';
+import { selectors } from 'data/redux';
+import { getCardValue } from 'hooks';
 
-import { StrictDict } from 'utils';
-// import { thunkActions } from 'data/redux';
+const { cardData } = selectors;
+const { programs } = cardData;
 
-import * as module from './hooks';
-
-export const state = StrictDict({
-  toggle: (val) => React.useState(val),
-});
-
-export const modalHooks = ({
-  cardData,
-  closeModal,
-  // dispatch,
+export const programsModalData = ({
+  courseNumber,
 }) => {
-  const { isEmailEnabled } = cardData.enrollment;
-  const [toggleValue, setToggleValue] = module.state.toggle(isEmailEnabled);
-
-  const onToggle = React.useCallback(() => setToggleValue(!toggleValue), [toggleValue]);
-  const save = React.useCallback(
-    () => {
-      console.log('save email settings');
-      closeModal();
-    },
-    [],
-  );
-
+  const cardValue = getCardValue(courseNumber);
   return {
-    onToggle,
-    save,
-    toggleValue,
+    courseTitle: cardValue(cardData.courseTitle),
+    relatedPrograms: cardValue(cardData.relatedPrograms).map(program => ({
+      estimatedNumberOfWeeks: programs.estimatedNumberOfWeeks(program),
+      numberOfCourses: programs.numberOfCourses(program),
+      programType: programs.programType(program),
+      programTypeUrl: programs.programTypeUrl(program),
+      provider: programs.provider(program),
+      title: programs.title(program),
+    })),
   };
 };
 
-export default modalHooks;
+export default programsModalData;
