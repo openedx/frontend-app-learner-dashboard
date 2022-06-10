@@ -12,7 +12,7 @@ import ConfirmPane from './components/ConfirmPane';
 import ReasonPane from './components/ReasonPane';
 import FinishedPane from './components/FinishedPane';
 
-import hooks, { modalStates } from './hooks';
+import { modalHooks, modalStates } from './hooks';
 
 export const UnenrollConfirmModal = ({
   closeModal,
@@ -25,7 +25,7 @@ export const UnenrollConfirmModal = ({
     closeAndRefresh,
     close,
     modalState,
-  } = hooks({ dispatch, closeModal });
+  } = modalHooks({ dispatch, closeModal });
   return (
     <ModalDialog
       isOpen={show}

@@ -1,0 +1,97 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UnenrollConfirmModal component snapshot: modalStates.confirm 1`] = `
+<ModalDialog
+  hasCloseButton={false}
+  isOpen={true}
+  onClose={[MockFunction hooks.nullMethod]}
+  title=""
+>
+  <div
+    className="bg-white p-3 rounded shadow"
+    style={
+      Object {
+        "textAlign": "start",
+      }
+    }
+  >
+    <ConfirmPane
+      handleClose={[MockFunction hooks.close]}
+      handleConfirm={[MockFunction hooks.confirm]}
+    />
+  </div>
+</ModalDialog>
+`;
+
+exports[`UnenrollConfirmModal component snapshot: modalStates.finished, reason given 1`] = `
+<ModalDialog
+  hasCloseButton={false}
+  isOpen={true}
+  onClose={[MockFunction hooks.nullMethod]}
+  title=""
+>
+  <div
+    className="bg-white p-3 rounded shadow"
+    style={
+      Object {
+        "textAlign": "start",
+      }
+    }
+  >
+    <FinishedPane
+      gaveReason={true}
+      handleClose={[MockFunction hooks.closeAndRefresh]}
+    />
+  </div>
+</ModalDialog>
+`;
+
+exports[`UnenrollConfirmModal component snapshot: modalStates.finished, reason skipped 1`] = `
+<ModalDialog
+  hasCloseButton={false}
+  isOpen={true}
+  onClose={[MockFunction hooks.nullMethod]}
+  title=""
+>
+  <div
+    className="bg-white p-3 rounded shadow"
+    style={
+      Object {
+        "textAlign": "start",
+      }
+    }
+  >
+    <FinishedPane
+      gaveReason={true}
+      handleClose={[MockFunction hooks.closeAndRefresh]}
+    />
+  </div>
+</ModalDialog>
+`;
+
+exports[`UnenrollConfirmModal component snapshot: modalStates.reason 1`] = `
+<ModalDialog
+  hasCloseButton={false}
+  isOpen={true}
+  onClose={[MockFunction hooks.nullMethod]}
+  title=""
+>
+  <div
+    className="bg-white p-3 rounded shadow"
+    style={
+      Object {
+        "textAlign": "start",
+      }
+    }
+  >
+    <ReasonPane
+      reason={
+        Object {
+          "isSkipped": false,
+          "reasonProps": "other",
+        }
+      }
+    />
+  </div>
+</ModalDialog>
+`;
