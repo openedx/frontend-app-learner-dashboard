@@ -56,6 +56,7 @@ export const genCourseRunData = (data = {}) => ({
   isFinished: false,
   isArchived: false,
   accessExpirationDate: futureDate,
+  endDate: futureDate,
   minPassingGrade: 70,
   ...data,
 });
@@ -140,7 +141,7 @@ export const courseRuns = [
   },
   // verified, pending, restricted
   {
-    enrollment: genEnrollmentData({ isVerified: true }),
+    enrollment: genEnrollmentData({ isAudit: false, isVerified: true }),
     grades: { isPassing: true },
     courseRun: { isPending: true },
     certificates: genCertificateData({ isRestricted: true }),
@@ -148,7 +149,7 @@ export const courseRuns = [
   },
   // verified, started
   {
-    enrollment: genEnrollmentData({ isVerified: true }),
+    enrollment: genEnrollmentData({ isAudit: false, isVerified: true }),
     grades: { isPassing: true },
     courseRun: { isStarted: true },
     certificates: genCertificateData(),
@@ -156,7 +157,7 @@ export const courseRuns = [
   },
   // verified, not passing
   {
-    enrollment: genEnrollmentData({ isVerified: true }),
+    enrollment: genEnrollmentData({ isAudit: false, isVerified: true }),
     grades: { isPassing: false },
     courseRun: { isStarted: true },
     certificates: genCertificateData(),
@@ -164,9 +165,9 @@ export const courseRuns = [
   },
   // verified, finished, not passing
   {
-    enrollment: genEnrollmentData({ isVerified: true }),
+    enrollment: genEnrollmentData({ isAudit: false, isVerified: true }),
     grades: { isPassing: false },
-    courseRun: { isFinished: true },
+    courseRun: { isFinished: true, endDate: pastDate },
     certificates: genCertificateData(),
     entitlements: { isEntitlement: false },
   },
@@ -191,7 +192,7 @@ export const courseRuns = [
   },
   // verified, earned, downloadable (web + link)
   {
-    enrollment: genEnrollmentData({ isVerified: true }),
+    enrollment: genEnrollmentData({ isAudit: false, isVerified: true }),
     grades: { isPassing: true },
     courseRun: { isStarted: true },
     certificates: genCertificateData({
@@ -208,7 +209,7 @@ export const courseRuns = [
   },
   // verified, earned, downloadable (link)
   {
-    enrollment: genEnrollmentData({ isVerified: true }),
+    enrollment: genEnrollmentData({ isAudit: false, isVerified: true }),
     grades: { isPassing: true },
     courseRun: { isStarted: true },
     certificates: genCertificateData({
@@ -224,7 +225,7 @@ export const courseRuns = [
   },
   // Entitlement Course Run - Cannot view yet
   {
-    enrollment: genEnrollmentData({ isVerified: true }),
+    enrollment: genEnrollmentData({ isAudit: false, isVerified: true }),
     grades: { isPassing: true },
     courseRun: { isPending: true },
     certificates: genCertificateData(),
@@ -240,7 +241,7 @@ export const courseRuns = [
   },
   // Entitlement Course Run - Can View and Change
   {
-    enrollment: genEnrollmentData({ isVerified: true }),
+    enrollment: genEnrollmentData({ isAudit: false, isVerified: true }),
     grades: { isPassing: true },
     courseRun: { isStarted: true },
     certificates: genCertificateData(),
@@ -256,7 +257,7 @@ export const courseRuns = [
   },
   // Entitlement Course Run - Can View but not Change
   {
-    enrollment: genEnrollmentData({ isVerified: true }),
+    enrollment: genEnrollmentData({ isAudit: false, isVerified: true }),
     grades: { isPassing: true },
     courseRun: { isStarted: true },
     certificates: genCertificateData(),
@@ -272,9 +273,14 @@ export const courseRuns = [
   },
   // Entitlement Course Run - Expired
   {
-    enrollment: genEnrollmentData({ isVerified: true }),
+    enrollment: genEnrollmentData({ isAudit: false, isVerified: true }),
     grades: { isPassing: true },
-    courseRun: { isStarted: true, isFinished: true, isArchived: true },
+    courseRun: {
+      isStarted: true,
+      isFinished: true,
+      isArchived: true,
+      endDate: pastDate,
+    },
     certificates: genCertificateData(),
     entitlements: {
       isEntitlement: true,

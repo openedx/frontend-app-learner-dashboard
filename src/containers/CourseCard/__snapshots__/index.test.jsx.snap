@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CourseCard component snapshot 1`] = `
+<div
+  className="mb-3"
+>
+  <Card
+    orientation="horizontal"
+  >
+    <Card.ImageCap
+      src="hooks.bannerUrl"
+      srcAlt={
+        Object {
+          "formatted": Object {
+            "defaultMessage": "Course thumbnail",
+            "description": "Course card banner alt-text",
+            "id": "learner-dash.courseCard.bannerAlt",
+          },
+        }
+      }
+    />
+    <Card.Body>
+      <Card.Header
+        actions={
+          <CourseCardMenu
+            courseNumber="test-course-number"
+          />
+        }
+        title="hooks.title"
+      />
+      <Card.Section>
+        hooks.providerName
+         • 
+        test-course-number
+         • 
+      </Card.Section>
+      <Card.Footer
+        orientation="vertical"
+        textElement={
+          <RelatedProgramsBadge
+            courseNumber="test-course-number"
+          />
+        }
+      >
+        <CourseCardActions
+          courseNumber="test-course-number"
+        />
+      </Card.Footer>
+    </Card.Body>
+  </Card>
+  <div
+    className="course-card-banners"
+  >
+    <CourseBanner
+      courseNumber="test-course-number"
+    />
+    <CertificateBanner
+      courseNumber="test-course-number"
+    />
+    <EntitlementBanner
+      courseNumber="test-course-number"
+    />
+  </div>
+</div>
+`;

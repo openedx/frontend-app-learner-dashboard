@@ -39,6 +39,9 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
   Card: {
     Body: 'Card.Body',
     Footer: 'Card.Footer',
+    Header: 'Card.Header',
+    ImageCap: 'Card.ImageCap',
+    Section: 'Card.Section',
   },
   Col: 'Col',
   Collapsible: {
@@ -127,5 +130,26 @@ jest.mock('react-redux', () => {
     }),
     useDispatch: jest.fn(() => dispatch),
     useSelector: jest.fn((selector) => ({ useSelector: selector })),
+  };
+});
+
+jest.mock('hooks', () => {
+  const formatMessage = jest.fn((msg, values) => ({ formatted: { msg, values } }));
+  return {
+    ...jest.requireActual('hooks'),
+    useIntl: () => ({
+      formatMessage,
+      formatDate: jest.fn((date) => ({ formatted: date })),
+    }),
+    getCardValues: jest.fn((courseNumber, mapping) => (
+      Object.keys(mapping).reduce(
+        (obj, key) => ({
+          ...obj,
+          [key]: { selector: mapping[key], courseNumber },
+        }),
+        {},
+      )
+    )),
+    nullMethod: jest.fn().mockName('hooks.nullMethod'),
   };
 });

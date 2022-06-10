@@ -1,3 +1,4 @@
+import { useIntl } from '@edx/frontend-platform/i18n';
 import { useSelector } from 'react-redux';
 
 import { selectors } from 'data/redux';
@@ -18,6 +19,10 @@ export const getCardValues = (courseNumber, mapping) => {
 
 export const nullMethod = () => ({});
 
+export { useIntl };
+
 export default {
+  getCardValues,
   nullMethod,
+  useIntl,
 };

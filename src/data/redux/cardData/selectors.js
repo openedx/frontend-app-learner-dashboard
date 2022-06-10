@@ -11,6 +11,7 @@ export const fieldSelectors = {
   courseTitle: data => data.course.title,
   courseBannerUrl: data => data.course.bannerUrl,
   courseRunAccessExpirationDate: data => data.courseRun.accessExpirationDate,
+  courseRunEndDate: data => data.courseRun.endDate,
   courseWebsite: data => data.course.website,
   providerName: data => data.provider?.name,
   isVerified: data => data.enrollment.isVerified,
