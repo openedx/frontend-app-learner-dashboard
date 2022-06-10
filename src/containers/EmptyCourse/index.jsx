@@ -1,8 +1,9 @@
 import React from 'react';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 import { Button } from '@edx/paragon';
-import messages from './messages';
 
+import ExampleCoursesWidget from './components/ExampleCoursesWidget';
+import messages from './messages';
 import './index.scss';
 
 export const EmptyCourse = () => (
@@ -17,6 +18,7 @@ export const EmptyCourse = () => (
     <Button variant="brand">
       <FormattedMessage {...messages.exploreCoursesButton} />
     </Button>
+    <ExampleCoursesWidget />
   </div>
 );
 

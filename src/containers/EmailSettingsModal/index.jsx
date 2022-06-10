@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { useIntl } from 'react-intl';
 
+import { useIntl } from '@edx/frontend-platform/i18n';
 import {
   ActionRow,
   Button,
@@ -11,7 +11,6 @@ import {
 } from '@edx/paragon';
 
 import { nullMethod } from 'hooks';
-import shapes from 'data/services/lms/shapes';
 
 import hooks from './hooks';
 import messages from './messages';
@@ -19,14 +18,14 @@ import messages from './messages';
 export const EmailSettingsModal = ({
   closeModal,
   show,
-  cardData,
+  courseNumber,
 }) => {
   const dispatch = useDispatch();
   const {
     toggleValue,
     onToggle,
     save,
-  } = hooks({ dispatch, closeModal, cardData });
+  } = hooks({ dispatch, closeModal, courseNumber });
   const { formatMessage } = useIntl();
 
   return (
@@ -34,6 +33,7 @@ export const EmailSettingsModal = ({
       isOpen={show}
       onClose={nullMethod}
       hasCloseButton={false}
+      title=""
     >
       <div className="bg-white p-3 rounded shadow" style={{ textAlign: 'start' }}>
         <h4>{formatMessage(messages.header)}</h4>
@@ -52,7 +52,7 @@ export const EmailSettingsModal = ({
   );
 };
 EmailSettingsModal.propTypes = {
-  cardData: shapes.courseRunCardData.isRequired,
+  courseNumber: PropTypes.string.isRequired,
   closeModal: PropTypes.func.isRequired,
   show: PropTypes.bool.isRequired,
 };

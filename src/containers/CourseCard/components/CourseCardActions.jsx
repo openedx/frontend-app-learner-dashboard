@@ -1,43 +1,58 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { Button } from '@edx/paragon';
 import { Locked } from '@edx/paragon/icons';
 
-import shapes from 'data/services/lms/shapes';
+import { selectors } from 'data/redux';
+import { getCardValues } from 'hooks';
 
-export const CourseCardActions = ({ cardData: { enrollment, courseRun } }) => {
+const { cardData } = selectors;
+
+export const CourseCardActions = ({ courseNumber }) => {
+  const {
+    canUpgrade,
+    isAudit,
+    isAuditAccessExpired,
+    isVerified,
+    isPending,
+    isFinished,
+  } = getCardValues(courseNumber, {
+    canUpgrade: cardData.canUpgrade,
+    isAudit: cardData.isAudit,
+    isAuditAccessExpired: cardData.isAuditAccessExpired,
+    isVerified: cardData.isVerified,
+    isPending: cardData.isCourseRunPending,
+    isFinished: cardData.isCourseRunFinished,
+  });
+
   let primary;
   let secondary = null;
-  if (!enrollment.isVerified) {
+  if (!isVerified) {
     secondary = (
       <Button
         iconBefore={Locked}
         variant="outline-primary"
-        disabled={!enrollment.canUpgrade}
+        disabled={!canUpgrade}
       >
         Upgrade
       </Button>
     );
   }
-  if (courseRun.isPending) {
-    primary = (
-      <Button>
-        Begin Course
-      </Button>
-    );
-  } else if (!courseRun.isEnded) {
-    if (enrollment.isAudit && enrollment.isAuditAccessExpired) {
-      primary = (<Button disabled>Resume</Button>);
-    } else {
-      primary = (<Button>Resume</Button>);
-    }
+
+  if (isPending) {
+    primary = (<Button>Begin Course</Button>);
+  } else if (!isFinished) {
+    primary = (isAudit && isAuditAccessExpired)
+      ? (<Button disabled>Resume</Button>)
+      : (<Button>Resume</Button>);
   } else {
     primary = (<Button>View Course</Button>);
   }
   return (<>{secondary}{primary}</>);
 };
 CourseCardActions.propTypes = {
-  cardData: shapes.courseRunCardData.isRequired,
+  courseNumber: PropTypes.string.isRequired,
 };
 
 export default CourseCardActions;

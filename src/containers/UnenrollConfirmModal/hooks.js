@@ -13,34 +13,34 @@ export const state = StrictDict({
   submittedReason: (val) => React.useState(val),
 });
 
-export const modalHooks = ({ closeModal, dispatch }) => {
-  const [isConfirmed, setIsConfirmed] = module.state.confirmed(false);
+export const modalStates = StrictDict({
+  confirm: 'confirm',
+  reason: 'reason',
+  finished: 'finished',
+});
+
+export const unenrollReasons = () => {
   const [selectedReason, setSelectedReason] = module.state.selectedReason(null);
   const [submittedReason, setSubmittedReason] = module.state.submittedReason(null);
-  const [customOption, setCustomOption] = module.state.customReason('');
   const [isSkipped, setIsSkipped] = module.state.isSkipped(false);
+  const [customOption, setCustomOption] = module.state.customReason('');
 
-  const confirm = React.useCallback(() => setIsConfirmed(true), []);
-
-  const close = () => {
-    closeModal();
-    setIsConfirmed(false);
-    setSelectedReason(null);
-    setSubmittedReason(null);
-    setCustomOption('');
-    setIsSkipped(false);
-  };
-
-  const reason = {
-    value: submittedReason,
-    skip: React.useCallback(() => setIsSkipped(true), [isSkipped]),
-    isSkipped,
-    selectOption: React.useCallback((e) => setSelectedReason(e.target.value), []),
+  return {
+    clear: React.useCallback(() => {
+      setSelectedReason(null);
+      setSubmittedReason(null);
+      setCustomOption('');
+      setIsSkipped(false);
+    }, []),
     customOption: {
       value: customOption,
       onChange: React.useCallback((e) => setCustomOption(e.target.value), []),
     },
+    isSkipped,
+    isSubmitted: submittedReason !== null || isSkipped,
     selected: selectedReason,
+    selectOption: React.useCallback((e) => setSelectedReason(e.target.value), []),
+    skip: React.useCallback(() => setIsSkipped(true), [isSkipped]),
     submit: React.useCallback(() => {
       if (selectedReason === 'custom') {
         setSubmittedReason(customOption);
@@ -48,8 +48,28 @@ export const modalHooks = ({ closeModal, dispatch }) => {
         setSubmittedReason(selectedReason);
       }
     }, [customOption, selectedReason]),
-    isSubmitted: submittedReason !== null || isSkipped,
+    value: submittedReason,
   };
+};
+
+export const modalHooks = ({ closeModal, dispatch }) => {
+  const [isConfirmed, setIsConfirmed] = module.state.confirmed(false);
+
+  const confirm = React.useCallback(() => setIsConfirmed(true), []);
+
+  const reason = unenrollReasons();
+  const close = () => {
+    closeModal();
+    setIsConfirmed(false);
+    reason.clear();
+  };
+
+  let modalState;
+  if (isConfirmed) {
+    modalState = reason.isSubmitted ? modalStates.finished : modalState.reason;
+  } else {
+    modalState = modalStates.confirm;
+  }
 
   const closeAndRefresh = React.useCallback(() => {
     dispatch(thunkActions.app.refreshList());
@@ -62,6 +82,7 @@ export const modalHooks = ({ closeModal, dispatch }) => {
     reason,
     closeAndRefresh,
     close,
+    modalState,
   };
 };
 

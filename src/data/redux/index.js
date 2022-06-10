@@ -4,16 +4,21 @@ import { StrictDict } from 'utils';
 
 import * as app from './app';
 import * as requests from './requests';
+import * as cardData from './cardData';
 
 export { default as thunkActions } from './thunkActions';
 
 const modules = {
   app,
   requests,
+  cardData,
 };
 
 const moduleProps = (propName) => Object.keys(modules).reduce(
-  (obj, moduleKey) => ({ ...obj, [moduleKey]: modules[moduleKey][propName] }),
+  (obj, moduleKey) => {
+    const value = modules[moduleKey][propName];
+    return value ? { ...obj, [moduleKey]: value } : obj;
+  },
   {},
 );
 

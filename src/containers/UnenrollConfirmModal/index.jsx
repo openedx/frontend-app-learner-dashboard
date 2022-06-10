@@ -12,7 +12,7 @@ import ConfirmPane from './components/ConfirmPane';
 import ReasonPane from './components/ReasonPane';
 import FinishedPane from './components/FinishedPane';
 
-import hooks from './hooks';
+import hooks, { modalStates } from './hooks';
 
 export const UnenrollConfirmModal = ({
   closeModal,
@@ -20,26 +20,28 @@ export const UnenrollConfirmModal = ({
 }) => {
   const dispatch = useDispatch();
   const {
-    isConfirmed,
     confirm,
     reason,
     closeAndRefresh,
     close,
+    modalState,
   } = hooks({ dispatch, closeModal });
   return (
     <ModalDialog
       isOpen={show}
       onClose={nullMethod}
       hasCloseButton={false}
+      title=""
     >
       <div className="bg-white p-3 rounded shadow" style={{ textAlign: 'start' }}>
-        {!isConfirmed && <ConfirmPane handleClose={close} handleConfirm={confirm} />}
-        {isConfirmed && !reason.isSubmitted && <ReasonPane reason={reason} />}
-        {isConfirmed && reason.isSubmitted && (
-          <FinishedPane
-            handleClose={closeAndRefresh}
-            gaveReason={!reason.isSkipped}
-          />
+        {(modalState === modalStates.confirm) && (
+          <ConfirmPane handleClose={close} handleConfirm={confirm} />
+        )}
+        {(modalState === modalStates.finished) && (
+          <FinishedPane handleClose={closeAndRefresh} gaveReason={!reason.isSkipped} />
+        )}
+        {(modalState === modalStates.reason) && (
+          <ReasonPane reason={reason} />
         )}
       </div>
     </ModalDialog>

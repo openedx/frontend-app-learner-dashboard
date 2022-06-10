@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { StrictDict } from 'utils';
+import { StrictDict, keyStore } from 'utils';
 
 export const shapes = StrictDict({
   course: PropTypes.shape({
@@ -21,10 +21,6 @@ export const shapes = StrictDict({
     isStarted: PropTypes.bool,
     minPassingGrade: PropTypes.number,
   }),
-  credit: PropTypes.shape({
-    isPurchased: PropTypes.bool,
-    requestStatus: PropTypes.string,
-  }),
   certificates: PropTypes.shape({
     availableDate: PropTypes.string,
     downloadUrls: PropTypes.shape({
@@ -43,7 +39,12 @@ export const shapes = StrictDict({
     isVerified: PropTypes.bool,
   }),
   entitlement: PropTypes.shape({
-    isEntitlement: PropTypes.bool,
+    isEntitlement: PropTypes.bool.isRequired,
+    availableSessions: PropTypes.shape({
+      startDate: PropTypes.string,
+      endDate: PropTypes.string,
+      courseNumber: PropTypes.string,
+    }),
     canChange: PropTypes.bool,
     isFulfilled: PropTypes.bool,
     isRefundable: PropTypes.bool,
@@ -63,7 +64,7 @@ export const shapes = StrictDict({
     programType: PropTypes.string,
     programTypeUrl: PropTypes.string,
     numberOfCourses: PropTypes.number,
-    estimatedDuration: PropTypes.string,
+    estimatedNumberOfWeeks: PropTypes.number,
   }),
 });
 
@@ -71,12 +72,23 @@ shapes.courseRunCardData = PropTypes.shape({
   course: shapes.course,
   provider: shapes.provider,
   courseRun: shapes.courseRun,
-  credit: shapes.credit,
   certificates: shapes.certificates,
   enrollment: shapes.enrollment,
   entitlement: shapes.entitlement,
   grades: shapes.grades,
   relatedPrograms: PropTypes.arrayOf(shapes.programCard),
+});
+
+export const keys = StrictDict({
+  cardData: keyStore(shapes.courseRunCardData),
+  course: keyStore(shapes.course),
+  provider: keyStore(shapes.provider),
+  courseRun: keyStore(shapes.courseRun),
+  certificates: keyStore(shapes.certificates),
+  enrollment: keyStore(shapes.enrollment),
+  entitlement: keyStore(shapes.entitlement),
+  grades: keyStore(shapes.grades),
+  program: keyStore(shapes.programCard),
 });
 
 export default shapes;

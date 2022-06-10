@@ -1,6 +1,7 @@
 import React from 'react';
-import { useIntl } from 'react-intl';
+import PropTypes from 'prop-types';
 
+import { useIntl } from '@edx/frontend-platform/i18n';
 import {
   Badge,
   Card,
@@ -9,7 +10,6 @@ import {
 } from '@edx/paragon';
 import { Program } from '@edx/paragon/icons';
 
-import shapes from 'data/services/lms/shapes';
 import './index.scss';
 
 export const whiteFontWrapper = (node) => (<span className="text-white">{node}</span>);
@@ -20,11 +20,23 @@ export const messages = {
     defaultMessage: '{numCourses} Courses',
     description: 'Number of courses in a program, displayed at the bottom of program card',
   },
+  duration: {
+    id: 'learnerDashboard.programCard.duration',
+    defaultMessage: '{numWeeks} Weeks',
+    description: 'Number of weeks in a program, displayed at the bottom of program card',
+  },
 };
 
 export const ProgramCard = ({ data }) => {
   const { formatMessage } = useIntl();
-  const numCoursesMessage = formatMessage(messages.courses, { numCourses: data.numberOfCourses });
+  const numCoursesMessage = formatMessage(
+    messages.courses,
+    { numCourses: data.numberOfCourses },
+  );
+  const durationMessage = formatMessage(
+    messages.duration,
+    { numWeeks: data.estimatedNumberOfWeeks },
+  );
   return (
     <Card
       className="program-card d-inline-block bg-primary-500 text-white pb-3.5"
@@ -46,14 +58,24 @@ export const ProgramCard = ({ data }) => {
           <Icon src={Program} className="d-inline-block" /> {data.programType}
         </Badge>
         <div className="program-summary mt-2">
-          {numCoursesMessage} • {data.estimatedDuration}
+          {numCoursesMessage} • {durationMessage}
         </div>
       </div>
     </Card>
   );
 };
 ProgramCard.propTypes = {
-  data: shapes.programCard.isRequired,
+  data: PropTypes.shape({
+    estimatedNumberOfWeeks: PropTypes.number,
+    numberOfCourses: PropTypes.number,
+    bannerUrl: PropTypes.string,
+    logoUrl: PropTypes.string,
+    title: PropTypes.string,
+    provider: PropTypes.string,
+    programType: PropTypes.string,
+    programUrl: PropTypes.string,
+    programTypeUrl: PropTypes.string,
+  }).isRequired,
 };
 
 export default ProgramCard;

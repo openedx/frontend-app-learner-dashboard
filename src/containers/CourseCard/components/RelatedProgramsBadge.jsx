@@ -1,12 +1,12 @@
 /* eslint-disable quotes */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button, useToggle } from '@edx/paragon';
 import { Program } from '@edx/paragon/icons';
 
-import shapes from 'data/services/lms/shapes';
 import RelatedProgramsBadgeModal from 'containers/RelatedProgramsModal';
 
-export const RelatedProgramsBadge = ({ cardData }) => {
+export const RelatedProgramsBadge = ({ courseNumber }) => {
   const [isOpen, open, closeModal] = useToggle(false);
   return (
     <>
@@ -18,12 +18,12 @@ export const RelatedProgramsBadge = ({ cardData }) => {
       >
         2 Related Program
       </Button>
-      <RelatedProgramsBadgeModal {...{ isOpen, closeModal, cardData }} />
+      <RelatedProgramsBadgeModal {...{ isOpen, closeModal, courseNumber }} />
     </>
   );
 };
 RelatedProgramsBadge.propTypes = {
-  cardData: shapes.courseRunCardData.isRequired,
+  courseNumber: PropTypes.string.isRequired,
 };
 
 export default RelatedProgramsBadge;
