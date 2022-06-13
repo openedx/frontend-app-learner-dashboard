@@ -81,6 +81,7 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
     Label: 'Form.Label',
     Radio: 'Form.Radio',
     RadioSet: 'Form.RadioSet',
+    Switch: 'Form.Switch',
   },
   FormControlFeedback: 'FormControlFeedback',
   FullscreenModal: 'FullscreenModal',

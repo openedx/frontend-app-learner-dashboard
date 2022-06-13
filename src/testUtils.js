@@ -166,6 +166,10 @@ export class MockUseState {
     );
   }
 
+  expectInitializedWith(key, value) {
+    expect(this.hooks.state[key]).toHaveBeenCalledWith(value);
+  }
+
   /**
    * Restore the hook module's state object to the actual code.
    */

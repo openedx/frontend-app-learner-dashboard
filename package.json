@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@edx/brand": "npm:@edx/brand-edx.org@^2.0.3",
-    "@edx/frontend-component-footer": "10.1.6",
+    "@edx/frontend-component-footer": "11.0.0",
     "@edx/frontend-component-header": "^2.4.6",
     "@edx/frontend-platform": "^2.3.0",
     "@edx/paragon": "19.25.0",
