@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App router component snapshot: enabled 1`] = `
+<BrowserRouter>
+  <div>
+    <LearnerDashboardHeader />
+    <main>
+      <Dashboard />
+    </main>
+    <Footer
+      logo="https://edx-cdn.org/v3/stage/open-edx-tag.svg"
+    />
+  </div>
+</BrowserRouter>
+`;

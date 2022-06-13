@@ -1,8 +1,6 @@
-import React from 'react';
-
-import { MockUseState, testCardValues } from 'testUtils';
-import * as hooks from './hooks';
+import { MockUseState } from 'testUtils';
 import { thunkActions } from 'data/redux';
+import * as hooks from './hooks';
 
 jest.mock('data/redux/thunkActions/app', () => ({
   refreshList: jest.fn((args) => ({ refreshList: args })),

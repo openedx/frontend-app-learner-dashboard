@@ -32,6 +32,7 @@ jest.mock('@edx/frontend-platform/i18n', () => {
       ),
       formatDate: jest.fn().mockName('useIntl.formatDate'),
     }),
+    IntlProvider: () => 'IntlProvider',
     defineMessages: m => m,
     FormattedMessage: () => 'FormattedMessage',
   };

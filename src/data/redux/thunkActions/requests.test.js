@@ -1,16 +1,9 @@
 import { actions } from 'data/redux';
-import { RequestKeys } from 'data/constants/requests';
-import api from 'data/services/lms/api';
+// import api from 'data/services/lms/api';
 import * as requests from './requests';
 
 jest.mock('data/services/lms/api', () => ({
-  batchUnlockSubmissions: (submissionUUIDs) => ({ batchUnlockSubmissions: submissionUUIDs }),
-  initializeApp: (locationId) => ({ initializeApp: locationId }),
-  fetchSubmissionStatus: (submissionUUID) => ({ fetchSubmissionStatus: submissionUUID }),
-  fetchSubmission: (submissionUUID) => ({ fetchSubmission: submissionUUID }),
-  lockSubmission: ({ submissionUUID }) => ({ lockSubmission: { submissionUUID } }),
-  unlockSubmission: ({ submissionUUID }) => ({ unlockSubmission: { submissionUUID } }),
-  updateGrade: (submissionUUID, gradeData) => ({ updateGrade: { submissionUUID, gradeData } }),
+  // initializeList: (locationId) => ({ initializeList: locationId }),
 }));
 
 const dispatch = jest.fn();
@@ -91,6 +84,7 @@ describe('requests thunkActions module', () => {
     });
   });
 
+  /*
   const testNetworkRequestAction = ({
     action,
     args,
@@ -117,92 +111,13 @@ describe('requests thunkActions module', () => {
       });
     });
   };
+  */
 
   describe('network request actions', () => {
-    const submissionUUID = 'test-submission-id';
-    const locationId = 'test-location-id';
     beforeEach(() => {
       requests.networkRequest = jest.fn(args => ({ networkRequest: args }));
     });
-    describe('initializeApp', () => {
-      testNetworkRequestAction({
-        action: requests.initializeApp,
-        args: { locationId },
-        expectedString: 'with initialize key, initializeApp promise',
-        expectedData: {
-          requestKey: RequestKeys.initialize,
-          promise: api.initializeApp(locationId),
-        },
-      });
-    });
-    describe('fetchSubmissionStatus', () => {
-      testNetworkRequestAction({
-        action: requests.fetchSubmissionStatus,
-        args: { submissionUUID },
-        expectedString: 'with fetchSubmissionStatus promise',
-        expectedData: {
-          requestKey: RequestKeys.fetchSubmissionStatus,
-          promise: api.fetchSubmissionStatus(submissionUUID),
-        },
-      });
-    });
-    describe('fetchSubmission', () => {
-      testNetworkRequestAction({
-        action: requests.fetchSubmission,
-        args: { submissionUUID },
-        expectedString: 'with fetchSubmission promise',
-        expectedData: {
-          requestKey: RequestKeys.fetchSubmission,
-          promise: api.fetchSubmission(submissionUUID),
-        },
-      });
-    });
-    describe('setLock: true', () => {
-      testNetworkRequestAction({
-        action: requests.setLock,
-        args: { submissionUUID, value: true },
-        expectedString: 'with setLock promise',
-        expectedData: {
-          requestKey: RequestKeys.setLock,
-          promise: api.lockSubmission(submissionUUID),
-        },
-      });
-    });
-    describe('setLock: false', () => {
-      testNetworkRequestAction({
-        action: requests.setLock,
-        args: { submissionUUID, value: false },
-        expectedString: 'with setLock promise',
-        expectedData: {
-          requestKey: RequestKeys.setLock,
-          promise: api.unlockSubmission(submissionUUID),
-        },
-      });
-    });
-    describe('batchUnlock', () => {
-      const submissionUUIDs = [1, 2, 3, 4, 5];
-      testNetworkRequestAction({
-        action: requests.batchUnlock,
-        args: { submissionUUIDs, value: false },
-        expectedString: 'with batchUnlock promise',
-        expectedData: {
-          requestKey: RequestKeys.batchUnlock,
-          promise: api.batchUnlockSubmissions(submissionUUIDs),
-          value: false,
-        },
-      });
-    });
-    describe('submitGrade', () => {
-      const gradeData = 'test-grade-data';
-      testNetworkRequestAction({
-        action: requests.submitGrade,
-        args: { submissionUUID, gradeData },
-        expectedString: 'with submitGrade promise',
-        expectedData: {
-          requestKey: RequestKeys.submitGrade,
-          promise: api.updateGrade(submissionUUID, gradeData),
-        },
-      });
+    describe('initializeList', () => {
     });
   });
 });

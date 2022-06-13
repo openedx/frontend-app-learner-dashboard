@@ -35,6 +35,7 @@ jest.mock('@edx/frontend-platform', () => ({
 jest.mock('@edx/frontend-component-footer', () => ({
   messages: ['some', 'messages'],
 }));
+jest.mock('data/store', () => ({ redux: 'store' }));
 jest.mock('./App', () => 'App');
 
 const testValue = 'my-test-value';
