@@ -23,6 +23,15 @@ jest.mock('@edx/frontend-platform/i18n', () => {
     intlShape: PropTypes.shape({
       formatMessage: PropTypes.func,
     }),
+    useIntl: () => ({
+      formatMessage: (msg) => (
+        <formatMessage
+          msg={msg.defaultMessage}
+          {...(msg.values && { values: msg.values })}
+        />
+      ),
+      formatDate: jest.fn().mockName('useIntl.formatDate'),
+    }),
     defineMessages: m => m,
     FormattedMessage: () => 'FormattedMessage',
   };
