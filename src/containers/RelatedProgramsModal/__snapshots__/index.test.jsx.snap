@@ -1,0 +1,167 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RelatedProgramsModal snapshot: closed 1`] = `
+<ModalDialog
+  className="related-programs-modal p-4"
+  hasCloseButton={true}
+  isFullscreenOnMobile={true}
+  isOpen={false}
+  onClose={[MockFunction props.closeModal]}
+  size="lg"
+  title={
+    <formatMessage
+      msg="Related Programs"
+    />
+  }
+>
+  <ModalDialog.Header
+    as="h3"
+    className="programs-title m-0 p-0"
+  >
+    <formatMessage
+      msg="Related Programs"
+    />
+  </ModalDialog.Header>
+  <ModalDialog.Header
+    as="h4"
+    className="programs-header p-0"
+  >
+    hookProps.courseTitle
+  </ModalDialog.Header>
+  <ModalDialog.Body
+    className="pl-0"
+  >
+    <p>
+      <formatMessage
+        msg="Are you looking to expand your knowledge?  Enrolling in a Program lets you take a series of courses in the subject that you're interested in"
+      />
+    </p>
+    <CardGrid
+      columnSizes={
+        Object {
+          "lg": 6,
+          "xlg": 4,
+          "xs": 12,
+        }
+      }
+    >
+      <ProgramCard
+        data={
+          Object {
+            "programData": Object {
+              "dataFor": "program1",
+            },
+            "programUrl": "program-1-url",
+          }
+        }
+        key="program-1-url"
+      />
+      <ProgramCard
+        data={
+          Object {
+            "programData": Object {
+              "dataFor": "program2",
+            },
+            "programUrl": "program-2-url",
+          }
+        }
+        key="program-2-url"
+      />
+      <ProgramCard
+        data={
+          Object {
+            "programData": Object {
+              "dataFor": "program3",
+            },
+            "programUrl": "program-3-url",
+          }
+        }
+        key="program-3-url"
+      />
+    </CardGrid>
+  </ModalDialog.Body>
+</ModalDialog>
+`;
+
+exports[`RelatedProgramsModal snapshot: open 1`] = `
+<ModalDialog
+  className="related-programs-modal p-4"
+  hasCloseButton={true}
+  isFullscreenOnMobile={true}
+  isOpen={true}
+  onClose={[MockFunction props.closeModal]}
+  size="lg"
+  title={
+    <formatMessage
+      msg="Related Programs"
+    />
+  }
+>
+  <ModalDialog.Header
+    as="h3"
+    className="programs-title m-0 p-0"
+  >
+    <formatMessage
+      msg="Related Programs"
+    />
+  </ModalDialog.Header>
+  <ModalDialog.Header
+    as="h4"
+    className="programs-header p-0"
+  >
+    hookProps.courseTitle
+  </ModalDialog.Header>
+  <ModalDialog.Body
+    className="pl-0"
+  >
+    <p>
+      <formatMessage
+        msg="Are you looking to expand your knowledge?  Enrolling in a Program lets you take a series of courses in the subject that you're interested in"
+      />
+    </p>
+    <CardGrid
+      columnSizes={
+        Object {
+          "lg": 6,
+          "xlg": 4,
+          "xs": 12,
+        }
+      }
+    >
+      <ProgramCard
+        data={
+          Object {
+            "programData": Object {
+              "dataFor": "program1",
+            },
+            "programUrl": "program-1-url",
+          }
+        }
+        key="program-1-url"
+      />
+      <ProgramCard
+        data={
+          Object {
+            "programData": Object {
+              "dataFor": "program2",
+            },
+            "programUrl": "program-2-url",
+          }
+        }
+        key="program-2-url"
+      />
+      <ProgramCard
+        data={
+          Object {
+            "programData": Object {
+              "dataFor": "program3",
+            },
+            "programUrl": "program-3-url",
+          }
+        }
+        key="program-3-url"
+      />
+    </CardGrid>
+  </ModalDialog.Body>
+</ModalDialog>
+`;

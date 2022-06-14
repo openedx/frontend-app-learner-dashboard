@@ -129,11 +129,11 @@ exports[`EmailSettingsModal render snapshot: emails enabled, show: true 1`] = `
       />
     </h4>
     <Form.Switch
-      checked={true}
+      checked={false}
       onChange={[MockFunction hooks.onToggle]}
     >
       <formatMessage
-        msg="Course emails are on"
+        msg="Course emails are off"
       />
     </Form.Switch>
     <p>

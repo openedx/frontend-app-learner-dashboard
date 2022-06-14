@@ -27,10 +27,10 @@ const dispatch = useDispatch();
 describe('EmailSettingsModal', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    hooks.mockReturnValueOnce(hookProps);
   });
   describe('behavior', () => {
     beforeEach(() => {
+      hooks.mockReturnValueOnce(hookProps);
       shallow(<EmailSettingsModal {...props} />);
     });
     it('calls hook w/ dispatch from redux hook, and closeModal, courseNumber from props', () => {
@@ -43,9 +43,11 @@ describe('EmailSettingsModal', () => {
   });
   describe('render', () => {
     test('snapshot: emails disabled, show: false', () => {
+      hooks.mockReturnValueOnce(hookProps);
       expect(shallow(<EmailSettingsModal {...props} show={false} />)).toMatchSnapshot();
     });
     test('snapshot: emails disabled, show: true', () => {
+      hooks.mockReturnValueOnce(hookProps);
       expect(shallow(<EmailSettingsModal {...props} />)).toMatchSnapshot();
     });
     test('snapshot: emails enabled, show: true', () => {

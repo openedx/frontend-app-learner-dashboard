@@ -53,6 +53,7 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
     ImageCap: 'Card.ImageCap',
     Section: 'Card.Section',
   },
+  CardGrid: 'CardGrid',
   Col: 'Col',
   Collapsible: {
     Advanced: 'Collapsible.Advanced',
@@ -88,7 +89,10 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
   Hyperlink: 'Hyperlink',
   Icon: 'Icon',
   IconButton: 'IconButton',
-  ModalDialog: 'ModalDialog',
+  ModalDialog: {
+    Header: 'ModalDialog.Header',
+    Body: 'ModalDialog.Body',
+  },
   MultiSelectDropdownFilter: 'MultiSelectDropdownFilter',
   OverlayTrigger: 'OverlayTrigger',
   Popover: {

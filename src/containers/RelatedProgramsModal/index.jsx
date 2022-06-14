@@ -7,7 +7,7 @@ import { CardGrid, ModalDialog } from '@edx/paragon';
 
 import ProgramCard from './components/ProgramCard';
 import messages from './messages';
-import programsData from './hooks';
+import { modalData } from './hooks';
 import './index.scss';
 
 export const RelatedProgramsModal = ({
@@ -16,7 +16,7 @@ export const RelatedProgramsModal = ({
   courseNumber,
 }) => {
   const { formatMessage } = useIntl();
-  const { courseTitle, relatedPrograms } = programsData({ courseNumber });
+  const { courseTitle, relatedPrograms } = modalData({ courseNumber });
   return (
     <ModalDialog
       title={formatMessage(messages.header)}
