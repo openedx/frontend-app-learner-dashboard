@@ -16,7 +16,6 @@ import {
 } from '@edx/frontend-platform';
 
 import { messages as footerMessages } from '@edx/frontend-component-footer';
-import { messages as headerMesssages } from '@edx/frontend-component-header';
 
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 
@@ -54,7 +53,6 @@ initialize({
   },
   messages: [
     messages,
-    headerMesssages,
     footerMessages,
   ],
   requireAuthenticatedUser: true,
