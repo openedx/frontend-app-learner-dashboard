@@ -1,13 +1,13 @@
 import { selectors } from 'data/redux';
-import { getCardValues } from 'hooks';
+import { useCardValues } from 'hooks';
 
 const { cardData } = selectors;
 const { programs } = cardData;
 
-export const modalData = ({
+export const useProgramData = ({
   courseNumber,
 }) => {
-  const data = getCardValues(courseNumber, {
+  const data = useCardValues(courseNumber, {
     courseTitle: cardData.courseTitle,
     relatedPrograms: cardData.relatedPrograms,
   });
@@ -24,4 +24,4 @@ export const modalData = ({
   };
 };
 
-export default modalData;
+export default useProgramData;

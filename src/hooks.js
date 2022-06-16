@@ -5,24 +5,29 @@ import { selectors } from 'data/redux';
 
 const { cardData } = selectors;
 
-export const getCardValue = (courseNumber) => (sel) => (
+export const useCardValue = (courseNumber, sel) => (
   useSelector(cardData.cardSelector(sel, courseNumber))
 );
 
-export const getCardValues = (courseNumber, mapping) => {
-  const cardValue = getCardValue(courseNumber);
-  return Object.keys(mapping).reduce(
-    (obj, key) => ({ ...obj, [key]: cardValue(mapping[key]) }),
+export const useCardValues = (courseNumber, mapping) => (
+  Object.keys(mapping).reduce(
+    // eslint-disable-next-line
+    (obj, key) => ({ ...obj, [key]: useCardValue(courseNumber, mapping[key]) }),
     {},
-  );
-};
+  )
+);
+
+export const useValueCallback = (cb, prereqs = []) => (
+  React.useCallback(e => cb(e.target.value), prereqs) // eslint-disable-line
+);
 
 export const nullMethod = () => ({});
 
 export { useIntl };
 
 export default {
-  getCardValues,
+  useCardValues,
+  useValueCallback,
   nullMethod,
   useIntl,
 };

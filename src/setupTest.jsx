@@ -157,7 +157,7 @@ jest.mock('hooks', () => {
       formatMessage,
       formatDate: jest.fn((date) => ({ formatted: date })),
     }),
-    getCardValues: jest.fn((courseNumber, mapping) => (
+    useCardValues: jest.fn((courseNumber, mapping) => (
       Object.keys(mapping).reduce(
         (obj, key) => ({
           ...obj,

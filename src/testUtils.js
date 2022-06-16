@@ -197,7 +197,7 @@ export class MockUseState {
 }
 
 /**
- * Test that getCardValues was called with the given courseNumber and selector mapping.
+ * Test that useCardValues was called with the given courseNumber and selector mapping.
  * @param {string} courseNumber - course run identifier
  * @param {obj} mapping - value mapping { <requestedKey>: <selectorFieldKey> }
  */
@@ -205,11 +205,11 @@ export const testCardValues = (courseNumber, mapping) => {
   describe('cardData values', () => {
     let mapped;
     test('passess correct courseNumber', () => {
-      expect(appHooks.getCardValues.mock.calls[0][0]).toEqual(courseNumber);
+      expect(appHooks.useCardValues.mock.calls[0][0]).toEqual(courseNumber);
     });
     Object.keys(mapping).forEach(key => {
       test(`loads ${key} from card data ${mapping[key]} selector`, () => {
-        [[, mapped]] = appHooks.getCardValues.mock.calls;
+        [[, mapped]] = appHooks.useCardValues.mock.calls;
         expect(mapped[key]).toEqual(cardData[mapping[key]]);
       });
     });

@@ -1,16 +1,17 @@
 import React from 'react';
 
-import { StrictDict } from 'utils';
 import { thunkActions } from 'data/redux';
+import { useValueCallback } from 'hooks';
+import { StrictDict } from 'utils';
 
 import * as module from './hooks';
 
 export const state = StrictDict({
-  confirmed: (val) => React.useState(val),
-  customOption: (val) => React.useState(val),
-  isSkipped: (val) => React.useState(val),
-  selectedReason: (val) => React.useState(val),
-  submittedReason: (val) => React.useState(val),
+  confirmed: (val) => React.useState(val), // eslint-disable-line
+  customOption: (val) => React.useState(val), // eslint-disable-line
+  isSkipped: (val) => React.useState(val), // eslint-disable-line
+  selectedReason: (val) => React.useState(val), // eslint-disable-line
+  submittedReason: (val) => React.useState(val), // eslint-disable-line
 });
 
 export const modalStates = StrictDict({
@@ -19,11 +20,7 @@ export const modalStates = StrictDict({
   finished: 'finished',
 });
 
-export const valueCallback = (cb, prereqs = []) => (
-  React.useCallback(e => cb(e.target.value), prereqs)
-);
-
-export const unenrollReasons = () => {
+export const useUnenrollReasons = () => {
   const [selectedReason, setSelectedReason] = module.state.selectedReason(null);
   const [submittedReason, setSubmittedReason] = module.state.submittedReason(null);
   const [isSkipped, setIsSkipped] = module.state.isSkipped(false);
@@ -35,20 +32,25 @@ export const unenrollReasons = () => {
       setSubmittedReason(null);
       setCustomOption('');
       setIsSkipped(false);
-    }, []),
+    }, [
+      setSelectedReason,
+      setSubmittedReason,
+      setCustomOption,
+      setIsSkipped,
+    ]),
 
     value: submittedReason,
 
     customOption: {
       value: customOption,
-      onChange: module.valueCallback(setCustomOption),
+      onChange: useValueCallback(setCustomOption),
     },
 
     selected: selectedReason,
-    selectOption: module.valueCallback(setSelectedReason),
+    selectOption: useValueCallback(setSelectedReason),
 
     isSkipped,
-    skip: React.useCallback(() => setIsSkipped(true), [isSkipped]),
+    skip: React.useCallback(() => setIsSkipped(true), [setIsSkipped]),
 
     isSubmitted: submittedReason !== null || isSkipped,
     submit: React.useCallback(() => {
@@ -57,21 +59,26 @@ export const unenrollReasons = () => {
       } else {
         setSubmittedReason(selectedReason);
       }
-    }, [customOption, selectedReason]),
+    }, [setSubmittedReason, customOption, selectedReason]),
   };
 };
 
-export const modalHooks = ({ closeModal, dispatch }) => {
+export const useUnenrollData = ({ closeModal, dispatch }) => {
   const [isConfirmed, setIsConfirmed] = module.state.confirmed(false);
 
-  const confirm = React.useCallback(() => setIsConfirmed(true), []);
+  const confirm = React.useCallback(() => setIsConfirmed(true), [setIsConfirmed]);
 
-  const reason = module.unenrollReasons();
-  const close = () => {
+  const reason = module.useUnenrollReasons();
+
+  const close = React.useCallback(() => {
     closeModal();
     setIsConfirmed(false);
     reason.clear();
-  };
+  }, [
+    closeModal,
+    reason,
+    setIsConfirmed,
+  ]);
 
   let modalState;
   if (isConfirmed) {
@@ -82,17 +89,24 @@ export const modalHooks = ({ closeModal, dispatch }) => {
 
   const closeAndRefresh = React.useCallback(() => {
     dispatch(thunkActions.app.refreshList());
-    close();
-  }, [reason, isConfirmed]);
+    closeModal();
+    setIsConfirmed(false);
+    reason.clear();
+  }, [
+    closeModal,
+    dispatch,
+    reason,
+    setIsConfirmed,
+  ]);
 
   return {
     isConfirmed,
     confirm,
     reason,
-    close: React.useCallback(close, [reason, isConfirmed]),
+    close,
     closeAndRefresh,
     modalState,
   };
 };
 
-export default modalHooks;
+export default useUnenrollData;

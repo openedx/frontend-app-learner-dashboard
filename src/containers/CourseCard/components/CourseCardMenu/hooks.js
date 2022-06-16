@@ -3,11 +3,11 @@ import { StrictDict } from 'utils';
 import * as module from './hooks';
 
 export const state = StrictDict({
-  isUnenrollConfirmVisible: (val) => React.useState(val),
-  isEmailSettingsVisible: (val) => React.useState(val),
+  isUnenrollConfirmVisible: (val) => React.useState(val), // eslint-disable-line
+  isEmailSettingsVisible: (val) => React.useState(val), // eslint-disable-line
 });
 
-export const unenrollModalHooks = () => {
+export const useUnenrollData = () => {
   const [isVisible, setIsVisible] = module.state.isUnenrollConfirmVisible(false);
   return {
     show: () => setIsVisible(true),
@@ -16,7 +16,7 @@ export const unenrollModalHooks = () => {
   };
 };
 
-export const emailSettingsModalHooks = () => {
+export const useEmailSettings = () => {
   const [isVisible, setIsVisible] = module.state.isEmailSettingsVisible(false);
   return {
     show: () => setIsVisible(true),
@@ -25,13 +25,13 @@ export const emailSettingsModalHooks = () => {
   };
 };
 
-export const menuHooks = () => {
-  const unenrollModal = module.unenrollModalHooks();
-  const emailSettingsModal = module.emailSettingsModalHooks();
+export const useCardMenuData = () => {
+  const unenrollModal = module.useUnenrollData();
+  const emailSettingsModal = module.useEmailSettings();
   return {
     emailSettingsModal,
     unenrollModal,
   };
 };
 
-export default menuHooks;
+export default useCardMenuData;

@@ -11,8 +11,8 @@ export const fieldSelectors = {
   courseTitle: data => data.course.title,
   courseBannerUrl: data => data.course.bannerUrl,
   courseRunAccessExpirationDate: data => data.courseRun.accessExpirationDate,
-  courseRunEndDate: data => data.courseRun.endDate,
-  courseWebsite: data => data.course.website,
+  courseRunEndDate: data => data.courseRun?.endDate,
+  courseWebsite: data => data.course?.website,
   providerName: data => data.provider?.name,
   isVerified: data => data.enrollment.isVerified,
   isAudit: data => data.enrollment.isAudit,
@@ -26,8 +26,8 @@ export const fieldSelectors = {
   isPassing: data => data.grades.isPassing,
   minPassingGrade: data => data.courseRun.minPassingGrade,
   isCertDownloadable: data => data.certificates.isDownloadable,
-  certDownloadUrl: data => data.certificates.downloadUrls.download,
-  certPreviewUrl: data => data.certificates.downloadUrls.preview,
+  certDownloadUrl: data => data.certificates.downloadUrls?.download,
+  certPreviewUrl: data => data.certificates.downloadUrls?.preview,
   isCertEarnedButUnavailable: ({ certificates: { isEarned, isAvailable } }) => (
     isEarned && !isAvailable
   ),

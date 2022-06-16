@@ -12,7 +12,7 @@ import {
 
 import { nullMethod } from 'hooks';
 
-import hooks from './hooks';
+import useEmailData from './hooks';
 import messages from './messages';
 
 export const EmailSettingsModal = ({
@@ -25,7 +25,7 @@ export const EmailSettingsModal = ({
     toggleValue,
     onToggle,
     save,
-  } = hooks({ dispatch, closeModal, courseNumber });
+  } = useEmailData({ dispatch, closeModal, courseNumber });
   const { formatMessage } = useIntl();
 
   return (

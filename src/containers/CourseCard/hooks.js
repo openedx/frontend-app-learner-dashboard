@@ -1,16 +1,16 @@
 import { selectors } from 'data/redux';
 
-import { useIntl, getCardValues } from 'hooks';
+import { useIntl, useCardValues } from 'hooks';
 
 import * as module from './hooks';
 import messages from './messages';
 
 const { cardData } = selectors;
 
-export const accessMessage = ({ courseNumber }) => {
+export const useAccessMessage = ({ courseNumber }) => {
   const { formatMessage, formatDate } = useIntl();
 
-  const data = getCardValues(courseNumber, {
+  const data = useCardValues(courseNumber, {
     accessExpirationDate: cardData.courseRunAccessExpirationDate,
     isAudit: cardData.isAudit,
     isFinished: cardData.isCourseRunFinished,
@@ -29,9 +29,9 @@ export const accessMessage = ({ courseNumber }) => {
   );
 };
 
-export const cardHooks = ({ courseNumber }) => {
+export const useCardData = ({ courseNumber }) => {
   const { formatMessage } = useIntl();
-  const data = getCardValues(courseNumber, {
+  const data = useCardValues(courseNumber, {
     title: cardData.courseTitle,
     bannerUrl: cardData.courseBannerUrl,
     providerName: cardData.providerName,
@@ -41,9 +41,9 @@ export const cardHooks = ({ courseNumber }) => {
     title: data.title,
     bannerUrl: data.bannerUrl,
     providerName: data.providerName || formatMessage(messages.unknownProviderName),
-    accessMessage: module.accessMessage({ courseNumber }),
+    accessMessage: module.useAccessMessage({ courseNumber }),
     formatMessage,
   };
 };
 
-export default cardHooks;
+export default useCardData;

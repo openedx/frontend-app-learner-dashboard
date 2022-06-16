@@ -12,23 +12,23 @@ import EmptyCourse from 'containers/EmptyCourse';
 import messages from './messages';
 import * as module from '.';
 
-export const hooks = ({ dispatch }) => ({
-  initialize: () => React.useEffect(
+export const useDashboardData = ({ dispatch }) => {
+  React.useEffect(
     () => { dispatch(thunkActions.app.initialize()); },
-    [],
-  ),
-  enrollments: useSelector(selectors.app.enrollments),
-  entitlements: useSelector(selectors.app.entitlements),
-});
+    [dispatch],
+  );
+  return {
+    enrollments: useSelector(selectors.app.enrollments),
+    entitlements: useSelector(selectors.app.entitlements),
+  };
+};
 
 export const Dashboard = () => {
   const dispatch = useDispatch();
   const {
-    initialize,
     enrollments,
     // entitlements,
-  } = module.hooks({ dispatch });
-  initialize();
+  } = module.useDashboardData({ dispatch });
   return (
     <div className="d-flex flex-column p-2">
       {enrollments.length ? (

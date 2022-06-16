@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 import { Button } from '@edx/paragon';
 
-import hooks from './hooks';
+import useCardActionData from './hooks';
 
 export const CourseCardActions = ({ courseNumber }) => {
-  const { primary, secondary } = hooks({ courseNumber });
+  const { primary, secondary } = useCardActionData({ courseNumber });
   return (
     <>
       {(secondary !== null) && (

@@ -1,14 +1,14 @@
 import { Locked } from '@edx/paragon/icons';
 
 import { selectors } from 'data/redux';
-import { useIntl, getCardValues } from 'hooks';
+import { useIntl, useCardValues } from 'hooks';
 import messages from './messages';
 
 const { cardData } = selectors;
 
-export const actionHooks = ({ courseNumber }) => {
+export const useCardActionData = ({ courseNumber }) => {
   const { formatMessage } = useIntl();
-  const data = getCardValues(courseNumber, {
+  const data = useCardValues(courseNumber, {
     canUpgrade: cardData.canUpgrade,
     isAudit: cardData.isAudit,
     isAuditAccessExpired: cardData.isAuditAccessExpired,
@@ -39,4 +39,4 @@ export const actionHooks = ({ courseNumber }) => {
   return { primary, secondary };
 };
 
-export default actionHooks;
+export default useCardActionData;

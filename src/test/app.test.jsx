@@ -94,9 +94,10 @@ const renderEl = async () => {
 
 describe('Learner Dashbpard app integration tests', () => {
   beforeEach(async () => {
-    mockApi();
-    await renderEl();
-    // inspector = new Inspector(el);
+    /*
+      mockApi();
+      await renderEl();
+    */
   });
 
   test('initialization', async (done) => {

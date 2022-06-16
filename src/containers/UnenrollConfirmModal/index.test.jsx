@@ -13,7 +13,7 @@ jest.mock('./components/FinishedPane', () => 'FinishedPane');
 jest.mock('./hooks', () => ({
   __esModule: true,
   modalStates: jest.requireActual('./hooks').modalStates,
-  modalHooks: jest.fn(),
+  useUnenrollData: jest.fn(),
 }));
 
 describe('UnenrollConfirmModal component', () => {
@@ -31,20 +31,20 @@ describe('UnenrollConfirmModal component', () => {
   const closeModal = jest.fn().mockName('props.closeModal');
   const show = true;
   test('hooks called with dispatch and closeModal props', () => {
-    hooks.modalHooks.mockReturnValueOnce(hookProps);
+    hooks.useUnenrollData.mockReturnValueOnce(hookProps);
     shallow(<UnenrollConfirmModal {...{ closeModal, show }} />);
-    expect(hooks.modalHooks).toHaveBeenCalledWith({ dispatch, closeModal });
+    expect(hooks.useUnenrollData).toHaveBeenCalledWith({ dispatch, closeModal });
   });
   test('snapshot: modalStates.confirm', () => {
-    hooks.modalHooks.mockReturnValueOnce(hookProps);
+    hooks.useUnenrollData.mockReturnValueOnce(hookProps);
     expect(shallow(<UnenrollConfirmModal {...{ closeModal, show }} />)).toMatchSnapshot();
   });
   test('snapshot: modalStates.finished, reason given', () => {
-    hooks.modalHooks.mockReturnValueOnce({ ...hookProps, modalState: hooks.modalStates.finished });
+    hooks.useUnenrollData.mockReturnValueOnce({ ...hookProps, modalState: hooks.modalStates.finished });
     expect(shallow(<UnenrollConfirmModal {...{ closeModal, show }} />)).toMatchSnapshot();
   });
   test('snapshot: modalStates.finished, reason skipped', () => {
-    hooks.modalHooks.mockReturnValueOnce({
+    hooks.useUnenrollData.mockReturnValueOnce({
       ...hookProps,
       modalState: hooks.modalStates.finished,
       isSkipped: true,
@@ -52,7 +52,7 @@ describe('UnenrollConfirmModal component', () => {
     expect(shallow(<UnenrollConfirmModal {...{ closeModal, show }} />)).toMatchSnapshot();
   });
   test('snapshot: modalStates.reason', () => {
-    hooks.modalHooks.mockReturnValueOnce({ ...hookProps, modalState: hooks.modalStates.reason });
+    hooks.useUnenrollData.mockReturnValueOnce({ ...hookProps, modalState: hooks.modalStates.reason });
     expect(shallow(<UnenrollConfirmModal {...{ closeModal, show }} />)).toMatchSnapshot();
   });
 });

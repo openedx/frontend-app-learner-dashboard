@@ -51,8 +51,8 @@ const relatedPrograms = [
 describe('RelatedProgramsModal hooks', () => {
   let out;
   beforeEach(() => {
-    appHooks.getCardValues.mockReturnValueOnce({ courseTitle, relatedPrograms });
-    out = hooks.modalData({ courseNumber });
+    appHooks.useCardValues.mockReturnValueOnce({ courseTitle, relatedPrograms });
+    out = hooks.useProgramData({ courseNumber });
   });
   testCardValues(courseNumber, {
     courseTitle: fieldKeys.courseTitle,

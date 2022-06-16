@@ -25,7 +25,7 @@ describe('CourseCardActions hooks', () => {
   const { formatMessage } = appHooks.useIntl();
   describe('data connection', () => {
     beforeEach(() => {
-      out = hooks.actionHooks({ courseNumber });
+      out = hooks.useCardActionData({ courseNumber });
     });
     testCardValues(courseNumber, {
       canUpgrade: fieldKeys.canUpgrade,
@@ -38,17 +38,17 @@ describe('CourseCardActions hooks', () => {
   });
   describe('secondary action', () => {
     it('returns null if verified', () => {
-      appHooks.getCardValues.mockReturnValueOnce({
+      appHooks.useCardValues.mockReturnValueOnce({
         ...props,
         isAudit: false,
         isVerified: true,
       });
-      out = hooks.actionHooks({ courseNumber });
+      out = hooks.useCardActionData({ courseNumber });
       expect(out.secondary).toEqual(null);
     });
     it('returns disabled upgrade button if audit, but cannot upgrade', () => {
-      appHooks.getCardValues.mockReturnValueOnce(props);
-      out = hooks.actionHooks({ courseNumber });
+      appHooks.useCardValues.mockReturnValueOnce(props);
+      out = hooks.useCardActionData({ courseNumber });
       expect(out.secondary).toEqual({
         iconBefore: Locked,
         variant: 'outline-primary',
@@ -57,8 +57,8 @@ describe('CourseCardActions hooks', () => {
       });
     });
     it('returns enabled upgrade button if audit and can upgrade', () => {
-      appHooks.getCardValues.mockReturnValueOnce({ ...props, canUpgrade: true });
-      out = hooks.actionHooks({ courseNumber });
+      appHooks.useCardValues.mockReturnValueOnce({ ...props, canUpgrade: true });
+      out = hooks.useCardActionData({ courseNumber });
       expect(out.secondary).toEqual({
         iconBefore: Locked,
         variant: 'outline-primary',
@@ -69,37 +69,37 @@ describe('CourseCardActions hooks', () => {
   });
   describe('primary action', () => {
     it('returns Begin Course button if pending', () => {
-      appHooks.getCardValues.mockReturnValueOnce({ ...props, isPending: true });
-      out = hooks.actionHooks({ courseNumber });
+      appHooks.useCardValues.mockReturnValueOnce({ ...props, isPending: true });
+      out = hooks.useCardActionData({ courseNumber });
       expect(out.primary).toEqual({
         children: formatMessage(messages.beginCourse),
       });
     });
     it('returns enabled Resume button if active, and not audit with expired access', () => {
-      appHooks.getCardValues.mockReturnValueOnce({ ...props, isAuditAccessExpired: true });
-      out = hooks.actionHooks({ courseNumber });
+      appHooks.useCardValues.mockReturnValueOnce({ ...props, isAuditAccessExpired: true });
+      out = hooks.useCardActionData({ courseNumber });
       expect(out.primary).toEqual({
         children: formatMessage(messages.resume),
         disabled: true,
       });
     });
     it('returns disabled Resume button if active and audit without expired access', () => {
-      appHooks.getCardValues.mockReturnValueOnce({ ...props });
-      out = hooks.actionHooks({ courseNumber });
+      appHooks.useCardValues.mockReturnValueOnce({ ...props });
+      out = hooks.useCardActionData({ courseNumber });
       expect(out.primary).toEqual({
         children: formatMessage(messages.resume),
         disabled: false,
       });
-      appHooks.getCardValues.mockReturnValueOnce({ ...props, isAudit: false, isVerified: true });
-      out = hooks.actionHooks({ courseNumber });
+      appHooks.useCardValues.mockReturnValueOnce({ ...props, isAudit: false, isVerified: true });
+      out = hooks.useCardActionData({ courseNumber });
       expect(out.primary).toEqual({
         children: formatMessage(messages.resume),
         disabled: false,
       });
     });
     it('returns viewCourse button if finished', () => {
-      appHooks.getCardValues.mockReturnValueOnce({ ...props, isFinished: true });
-      out = hooks.actionHooks({ courseNumber });
+      appHooks.useCardValues.mockReturnValueOnce({ ...props, isFinished: true });
+      out = hooks.useCardActionData({ courseNumber });
       expect(out.primary).toEqual({
         children: formatMessage(messages.viewCourse),
       });

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 // import PropTypes from 'prop-types';
 import { Card } from '@edx/paragon';
 
-import hooks from './hooks';
+import useCardData from './hooks';
 
 import RelatedProgramsBadge from './components/RelatedProgramsBadge';
 import CourseCardMenu from './components/CourseCardMenu';
@@ -23,7 +23,7 @@ export const CourseCard = ({ courseNumber }) => {
     providerName,
     accessMessage,
     formatMessage,
-  } = hooks({ courseNumber });
+  } = useCardData({ courseNumber });
   return (
     <div className="mb-3">
       <Card orientation="horizontal">

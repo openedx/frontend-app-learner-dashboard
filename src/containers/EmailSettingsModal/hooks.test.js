@@ -19,11 +19,11 @@ describe('EmailSettingsModal hooks', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-  describe('modalHooks', () => {
+  describe('useEmailData', () => {
     beforeEach(() => {
       state.mock();
-      appHooks.getCardValues.mockReturnValueOnce({ isEnabled: true });
-      out = hooks.modalHooks({ closeModal, courseNumber });
+      appHooks.useCardValues.mockReturnValueOnce({ isEnabled: true });
+      out = hooks.useEmailData({ closeModal, courseNumber });
     });
     afterEach(state.restore);
 
@@ -33,14 +33,14 @@ describe('EmailSettingsModal hooks', () => {
       state.expectInitializedWith(state.keys.toggle, true);
       expect(out.toggleValue).toEqual(true);
 
-      appHooks.getCardValues.mockReturnValueOnce({ isEnabled: false });
-      out = hooks.modalHooks({ closeModal, courseNumber });
+      appHooks.useCardValues.mockReturnValueOnce({ isEnabled: false });
+      out = hooks.useEmailData({ closeModal, courseNumber });
       state.expectInitializedWith(state.keys.toggle, false);
       expect(out.toggleValue).toEqual(false);
     });
     describe('onToggle - returned callback', () => {
       it('is based on toggle state value', () => {
-        expect(out.onToggle.useCallback.prereqs).toEqual([out.toggleValue]);
+        expect(out.onToggle.useCallback.prereqs).toEqual([state.setState.toggle, out.toggleValue]);
       });
       it('sets toggle state value to opposite current value', () => {
         out.onToggle.useCallback.cb();
@@ -48,8 +48,8 @@ describe('EmailSettingsModal hooks', () => {
       });
     });
     describe('save', () => {
-      it('returns a callback with no prereqs', () => {
-        expect(out.save.useCallback.prereqs).toEqual([]);
+      it('returns a callback', () => {
+        expect(out.save.useCallback.prereqs).toEqual([closeModal]);
       });
     });
   });

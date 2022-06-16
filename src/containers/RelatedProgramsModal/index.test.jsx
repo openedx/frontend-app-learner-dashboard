@@ -1,12 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { modalData } from './hooks';
+import { useProgramData } from './hooks';
 import RelatedProgramsModal from '.';
 
 jest.mock('./components/ProgramCard', () => 'ProgramCard');
 jest.mock('./hooks', () => ({
-  modalData: jest.fn(),
+  useProgramData: jest.fn(),
 }));
 
 const courseNumber = 'test-course-number';
@@ -36,7 +36,7 @@ const props = {
 
 describe('RelatedProgramsModal', () => {
   beforeEach(() => {
-    modalData.mockReturnValueOnce(hookProps);
+    useProgramData.mockReturnValueOnce(hookProps);
   });
   test('snapshot: open', () => {
     expect(shallow(<RelatedProgramsModal {...props} />)).toMatchSnapshot();
