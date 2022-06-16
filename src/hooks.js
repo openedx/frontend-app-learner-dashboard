@@ -1,5 +1,6 @@
-import { useIntl } from '@edx/frontend-platform/i18n';
+import React from 'react';
 import { useSelector } from 'react-redux';
+import { useIntl } from '@edx/frontend-platform/i18n';
 
 export const useCardValue = (courseNumber, sel) => (
   useSelector(state => sel(state, courseNumber))
