@@ -1,12 +1,8 @@
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { useSelector } from 'react-redux';
 
-import { selectors } from 'data/redux';
-
-const { cardData } = selectors;
-
 export const useCardValue = (courseNumber, sel) => (
-  useSelector(cardData.cardSelector(sel, courseNumber))
+  useSelector(state => sel(state, courseNumber))
 );
 
 export const useCardValues = (courseNumber, mapping) => (

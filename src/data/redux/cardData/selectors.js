@@ -8,35 +8,35 @@ const mkCardSelector = (sel) => (state, courseNumber) => (
 );
 
 export const fieldSelectors = {
-  courseTitle: data => data.course.title,
+  canChangeEntitlementSession: data => data.entitlements.canChange,
+  canUpgrade: data => data.enrollment.canUpgrade,
+  certAvailableDate: data => data.certificates.availableDate,
+  certDownloadUrl: data => data.certificates.downloadUrls?.download,
+  certPreviewUrl: data => data.certificates.downloadUrls?.preview,
   courseBannerUrl: data => data.course.bannerUrl,
   courseRunAccessExpirationDate: data => data.courseRun.accessExpirationDate,
   courseRunEndDate: data => data.courseRun?.endDate,
-  courseWebsite: data => data.course?.website,
-  providerName: data => data.provider?.name,
-  isVerified: data => data.enrollment.isVerified,
+  courseTitle: data => data.course.title,
+  courseWebsite: data => data.course.website,
+  entitlementSessions: data => data.entitlements.availableSessions,
   isAudit: data => data.enrollment.isAudit,
   isAuditAccessExpired: data => data.enrollment.isAuditAccessExpired,
+  isCertDownloadable: data => data.certificates.isDownloadable,
+  isCertEarnedButUnavailable: ({ certificates: { isEarned, isAvailable } }) => (
+    isEarned && !isAvailable
+  ),
   isCourseRunPending: data => data.courseRun.isPending,
   isCourseRunStarted: data => data.courseRun.isStarted,
   isCourseRunFinished: data => data.courseRun.isFinished,
   isEmailEnabled: data => data.enrollment.isEmailEnabled,
-  canUpgrade: data => data.enrollment.canUpgrade,
+  isEntitlement: data => data.entitlements.isEntitlement,
+  isEntitlementExpired: data => data.entitlements.isExpired,
+  isEntitlementFulfilled: data => data.entitlements.isFulfilled,
+  isVerified: data => data.enrollment.isVerified,
   isRestricted: data => data.certificates.isRestricted,
   isPassing: data => data.grades.isPassing,
   minPassingGrade: data => data.courseRun.minPassingGrade,
-  isCertDownloadable: data => data.certificates.isDownloadable,
-  certDownloadUrl: data => data.certificates.downloadUrls?.download,
-  certPreviewUrl: data => data.certificates.downloadUrls?.preview,
-  isCertEarnedButUnavailable: ({ certificates: { isEarned, isAvailable } }) => (
-    isEarned && !isAvailable
-  ),
-  certAvailableDate: data => data.certificates.availableDate,
-  isEntitlement: data => data.entitlements.isEntitlement,
-  isEntitlementFulfilled: data => data.entitlements.isFulfilled,
-  isEntitlementExpired: data => data.entitlements.isExpired,
-  canChangeEntitlementSession: data => data.entitlements.canChange,
-  entitlementSessions: data => data.entitlements.availableSessions,
+  providerName: data => data.provider?.name,
   relatedPrograms: data => data.relatedPrograms,
 };
 fieldSelectors.isCourseRunActive = data => (
@@ -59,10 +59,7 @@ export const cardSelectors = Object.keys(fieldSelectors).reduce(
   {},
 );
 
-export const cardSelector = (sel, courseNumber) => (state) => sel(state, courseNumber);
-
 export default StrictDict({
-  cardSelector,
   ...cardSelectors,
   programs,
   fieldKeys,

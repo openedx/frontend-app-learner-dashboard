@@ -11,7 +11,7 @@ jest.mock('./hooks', () => ({
 
 jest.mock('./components/RelatedProgramsBadge', () => 'RelatedProgramsBadge');
 jest.mock('./components/CourseCardMenu', () => 'CourseCardMenu');
-jest.mock('./components/banners', () => ({
+jest.mock('./components/Banners', () => ({
   CourseBanner: () => 'CourseBanner',
   CertificateBanner: () => 'CertificateBanner',
   EntitlementBanner: () => 'EntitlementBanner',
