@@ -3,32 +3,34 @@ import React from 'react';
 import { StrictDict } from 'utils';
 // import { thunkActions } from 'data/redux';
 import { selectors } from 'data/redux';
-import { getCardValue } from 'hooks';
+import { useCardValues } from 'hooks';
 
 import * as module from './hooks';
 
 const { cardData } = selectors;
 
 export const state = StrictDict({
-  toggle: (val) => React.useState(val),
+  toggle: (val) => React.useState(val), // eslint-disable-line
 });
 
-export const modalHooks = ({
+export const useEmailData = ({
   closeModal,
   courseNumber,
   // dispatch,
 }) => {
-  const cardValue = getCardValue(courseNumber);
-  const isEmailEnabled = cardValue(cardData.isEmailEnabled);
-  const [toggleValue, setToggleValue] = module.state.toggle(isEmailEnabled);
-
-  const onToggle = React.useCallback(() => setToggleValue(!toggleValue), [toggleValue]);
+  const data = useCardValues(courseNumber, {
+    isEnabled: cardData.isEmailEnabled,
+  });
+  const [toggleValue, setToggleValue] = module.state.toggle(data.isEnabled);
+  const onToggle = React.useCallback(
+    () => setToggleValue(!toggleValue),
+    [setToggleValue, toggleValue],
+  );
   const save = React.useCallback(
     () => {
-      console.log('save email settings');
       closeModal();
     },
-    [],
+    [closeModal],
   );
 
   return {
@@ -38,4 +40,4 @@ export const modalHooks = ({
   };
 };
 
-export default modalHooks;
+export default useEmailData;

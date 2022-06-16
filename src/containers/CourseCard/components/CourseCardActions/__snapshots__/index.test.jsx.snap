@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CourseCard Actions component does not render secondary button if null is returned for secondary props 1`] = `
+<Fragment>
+  <Button
+    courseNumber="test-course-number"
+    prop1="primary-prop1"
+    prop2="primary-prop2"
+  >
+    primary-children
+  </Button>
+</Fragment>
+`;
+
+exports[`CourseCard Actions component loads primary and secondary button props from hook 1`] = `
+<Fragment>
+  <Button
+    courseNumber="test-course-number"
+    prop1="primary-prop1"
+    prop2="primary-prop2"
+  >
+    primary-children
+  </Button>
+  <Button
+    courseNumber="test-course-number"
+    prop1="primary-prop1"
+    prop2="primary-prop2"
+  >
+    primary-children
+  </Button>
+</Fragment>
+`;

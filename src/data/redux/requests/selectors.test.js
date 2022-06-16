@@ -30,12 +30,6 @@ describe('requests selectors unit tests', () => {
   test('requestStatus returns data associated with given key', () => {
     expect(selectors.requestStatus(testState, { requestKey })).toEqual(requestData);
   });
-  describe('allowNavigation', () => {
-    it('returns false if any requests are pending', () => {
-      expect(selectors.allowNavigation(testState)).toEqual(true);
-      expect(selectors.allowNavigation({ requests: { key1: pendingRequest } })).toEqual(false);
-    });
-  });
   const testStatusSelector = (selector, matchingRequest) => {
     expect(selector(testState, { requestKey })).toEqual(false);
     expect(selector(

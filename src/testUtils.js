@@ -1,6 +1,12 @@
 import react from 'react';
 
+import { selectors } from 'data/redux';
+
+import * as appHooks from 'hooks';
+
 import { StrictDict } from 'utils';
+
+const { cardData } = selectors;
 
 /**
  * Mocked formatMessage provided by react-intl
@@ -160,6 +166,10 @@ export class MockUseState {
     );
   }
 
+  expectInitializedWith(key, value) {
+    expect(this.hooks.state[key]).toHaveBeenCalledWith(value);
+  }
+
   /**
    * Restore the hook module's state object to the actual code.
    */
@@ -185,3 +195,23 @@ export class MockUseState {
     });
   }
 }
+
+/**
+ * Test that useCardValues was called with the given courseNumber and selector mapping.
+ * @param {string} courseNumber - course run identifier
+ * @param {obj} mapping - value mapping { <requestedKey>: <selectorFieldKey> }
+ */
+export const testCardValues = (courseNumber, mapping) => {
+  describe('cardData values', () => {
+    let mapped;
+    test('passess correct courseNumber', () => {
+      expect(appHooks.useCardValues.mock.calls[0][0]).toEqual(courseNumber);
+    });
+    Object.keys(mapping).forEach(key => {
+      test(`loads ${key} from card data ${mapping[key]} selector`, () => {
+        [[, mapped]] = appHooks.useCardValues.mock.calls;
+        expect(mapped[key]).toEqual(cardData[mapping[key]]);
+      });
+    });
+  });
+};

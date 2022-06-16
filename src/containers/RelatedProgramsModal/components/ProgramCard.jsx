@@ -10,22 +10,10 @@ import {
 } from '@edx/paragon';
 import { Program } from '@edx/paragon/icons';
 
+import messages from './messages';
 import './index.scss';
 
 export const whiteFontWrapper = (node) => (<span className="text-white">{node}</span>);
-
-export const messages = {
-  courses: {
-    id: 'learnerDashboard.programCard.courses',
-    defaultMessage: '{numCourses} Courses',
-    description: 'Number of courses in a program, displayed at the bottom of program card',
-  },
-  duration: {
-    id: 'learnerDashboard.programCard.duration',
-    defaultMessage: '{numWeeks} Weeks',
-    description: 'Number of weeks in a program, displayed at the bottom of program card',
-  },
-};
 
 export const ProgramCard = ({ data }) => {
   const { formatMessage } = useIntl();
@@ -45,9 +33,9 @@ export const ProgramCard = ({ data }) => {
       <Card.ImageCap
         className="program-card-banner"
         src={data.bannerUrl}
-        srcAlt="Program banner"
+        srcAlt={formatMessage(messages.bannerAlt)}
         logoSrc={data.logoUrl}
-        logoAlt="Provider logo"
+        logoAlt={formatMessage(messages.logoAlt)}
       />
       <Card.Header
         title={whiteFontWrapper(data.title)}

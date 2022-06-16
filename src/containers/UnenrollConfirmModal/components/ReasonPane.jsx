@@ -58,7 +58,6 @@ ReasonPane.propTypes = {
     }),
     selected: PropTypes.string,
     submit: PropTypes.func,
-    isSubmited: PropTypes.bool,
   }).isRequired,
 };
 

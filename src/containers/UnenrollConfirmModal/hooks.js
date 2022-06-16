@@ -1,16 +1,17 @@
 import React from 'react';
 
-import { StrictDict } from 'utils';
 import { thunkActions } from 'data/redux';
+import { useValueCallback } from 'hooks';
+import { StrictDict } from 'utils';
 
 import * as module from './hooks';
 
 export const state = StrictDict({
-  confirmed: (val) => React.useState(val),
-  customReason: (val) => React.useState(val),
-  isSkipped: (val) => React.useState(val),
-  selectedReason: (val) => React.useState(val),
-  submittedReason: (val) => React.useState(val),
+  confirmed: (val) => React.useState(val), // eslint-disable-line
+  customOption: (val) => React.useState(val), // eslint-disable-line
+  isSkipped: (val) => React.useState(val), // eslint-disable-line
+  selectedReason: (val) => React.useState(val), // eslint-disable-line
+  submittedReason: (val) => React.useState(val), // eslint-disable-line
 });
 
 export const modalStates = StrictDict({
@@ -19,11 +20,11 @@ export const modalStates = StrictDict({
   finished: 'finished',
 });
 
-export const unenrollReasons = () => {
+export const useUnenrollReasons = () => {
   const [selectedReason, setSelectedReason] = module.state.selectedReason(null);
   const [submittedReason, setSubmittedReason] = module.state.submittedReason(null);
   const [isSkipped, setIsSkipped] = module.state.isSkipped(false);
-  const [customOption, setCustomOption] = module.state.customReason('');
+  const [customOption, setCustomOption] = module.state.customOption('');
 
   return {
     clear: React.useCallback(() => {
@@ -31,59 +32,81 @@ export const unenrollReasons = () => {
       setSubmittedReason(null);
       setCustomOption('');
       setIsSkipped(false);
-    }, []),
+    }, [
+      setSelectedReason,
+      setSubmittedReason,
+      setCustomOption,
+      setIsSkipped,
+    ]),
+
+    value: submittedReason,
+
     customOption: {
       value: customOption,
-      onChange: React.useCallback((e) => setCustomOption(e.target.value), []),
+      onChange: useValueCallback(setCustomOption),
     },
-    isSkipped,
-    isSubmitted: submittedReason !== null || isSkipped,
+
     selected: selectedReason,
-    selectOption: React.useCallback((e) => setSelectedReason(e.target.value), []),
-    skip: React.useCallback(() => setIsSkipped(true), [isSkipped]),
+    selectOption: useValueCallback(setSelectedReason),
+
+    isSkipped,
+    skip: React.useCallback(() => setIsSkipped(true), [setIsSkipped]),
+
+    isSubmitted: submittedReason !== null || isSkipped,
     submit: React.useCallback(() => {
       if (selectedReason === 'custom') {
         setSubmittedReason(customOption);
       } else {
         setSubmittedReason(selectedReason);
       }
-    }, [customOption, selectedReason]),
-    value: submittedReason,
+    }, [setSubmittedReason, customOption, selectedReason]),
   };
 };
 
-export const modalHooks = ({ closeModal, dispatch }) => {
+export const useUnenrollData = ({ closeModal, dispatch }) => {
   const [isConfirmed, setIsConfirmed] = module.state.confirmed(false);
 
-  const confirm = React.useCallback(() => setIsConfirmed(true), []);
+  const confirm = React.useCallback(() => setIsConfirmed(true), [setIsConfirmed]);
 
-  const reason = unenrollReasons();
-  const close = () => {
+  const reason = module.useUnenrollReasons();
+
+  const close = React.useCallback(() => {
     closeModal();
     setIsConfirmed(false);
     reason.clear();
-  };
+  }, [
+    closeModal,
+    reason,
+    setIsConfirmed,
+  ]);
 
   let modalState;
   if (isConfirmed) {
-    modalState = reason.isSubmitted ? modalStates.finished : modalState.reason;
+    modalState = reason.isSubmitted ? modalStates.finished : modalStates.reason;
   } else {
     modalState = modalStates.confirm;
   }
 
   const closeAndRefresh = React.useCallback(() => {
     dispatch(thunkActions.app.refreshList());
-    close();
-  }, []);
+    closeModal();
+    setIsConfirmed(false);
+    reason.clear();
+  }, [
+    closeModal,
+    dispatch,
+    reason,
+    setIsConfirmed,
+  ]);
 
   return {
     isConfirmed,
     confirm,
     reason,
-    closeAndRefresh,
     close,
+    closeAndRefresh,
     modalState,
   };
 };
 
-export default modalHooks;
+export default useUnenrollData;

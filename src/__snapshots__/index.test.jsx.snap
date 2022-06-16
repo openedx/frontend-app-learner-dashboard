@@ -13,11 +13,7 @@ exports[`app registry subscribe: APP_READY.  links App to root element 1`] = `
   <AppProvider
     store={
       Object {
-        "dispatch": [Function],
-        "getState": [Function],
-        "replaceReducer": [Function],
-        "subscribe": [Function],
-        Symbol(Symbol.observable): [Function],
+        "redux": "store",
       }
     }
   >

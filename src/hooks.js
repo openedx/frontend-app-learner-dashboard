@@ -1,23 +1,30 @@
+import React from 'react';
 import { useSelector } from 'react-redux';
+import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { selectors } from 'data/redux';
-
-const { cardData } = selectors;
-
-export const getCardValue = (courseNumber) => (sel) => (
-  useSelector(cardData.cardSelector(sel, courseNumber))
+export const useCardValue = (courseNumber, sel) => (
+  useSelector(state => sel(state, courseNumber))
 );
 
-export const getCardValues = (courseNumber, mapping) => {
-  const cardValue = getCardValue(courseNumber);
-  return Object.keys(mapping).reduce(
-    (obj, key) => ({ ...obj, [key]: cardValue(mapping[key]) }),
+export const useCardValues = (courseNumber, mapping) => (
+  Object.keys(mapping).reduce(
+    // eslint-disable-next-line
+    (obj, key) => ({ ...obj, [key]: useCardValue(courseNumber, mapping[key]) }),
     {},
-  );
-};
+  )
+);
+
+export const useValueCallback = (cb, prereqs = []) => (
+  React.useCallback(e => cb(e.target.value), prereqs) // eslint-disable-line
+);
 
 export const nullMethod = () => ({});
 
+export { useIntl };
+
 export default {
+  useCardValues,
+  useValueCallback,
   nullMethod,
+  useIntl,
 };

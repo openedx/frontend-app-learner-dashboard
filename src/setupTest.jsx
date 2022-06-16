@@ -23,6 +23,16 @@ jest.mock('@edx/frontend-platform/i18n', () => {
     intlShape: PropTypes.shape({
       formatMessage: PropTypes.func,
     }),
+    useIntl: () => ({
+      formatMessage: (msg) => (
+        <formatMessage
+          msg={msg.defaultMessage}
+          {...(msg.values && { values: msg.values })}
+        />
+      ),
+      formatDate: jest.fn().mockName('useIntl.formatDate'),
+    }),
+    IntlProvider: () => 'IntlProvider',
     defineMessages: m => m,
     FormattedMessage: () => 'FormattedMessage',
   };
@@ -39,7 +49,11 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
   Card: {
     Body: 'Card.Body',
     Footer: 'Card.Footer',
+    Header: 'Card.Header',
+    ImageCap: 'Card.ImageCap',
+    Section: 'Card.Section',
   },
+  CardGrid: 'CardGrid',
   Col: 'Col',
   Collapsible: {
     Advanced: 'Collapsible.Advanced',
@@ -68,12 +82,17 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
     Label: 'Form.Label',
     Radio: 'Form.Radio',
     RadioSet: 'Form.RadioSet',
+    Switch: 'Form.Switch',
   },
   FormControlFeedback: 'FormControlFeedback',
   FullscreenModal: 'FullscreenModal',
   Hyperlink: 'Hyperlink',
   Icon: 'Icon',
   IconButton: 'IconButton',
+  ModalDialog: {
+    Header: 'ModalDialog.Header',
+    Body: 'ModalDialog.Body',
+  },
   MultiSelectDropdownFilter: 'MultiSelectDropdownFilter',
   OverlayTrigger: 'OverlayTrigger',
   Popover: {
@@ -127,5 +146,26 @@ jest.mock('react-redux', () => {
     }),
     useDispatch: jest.fn(() => dispatch),
     useSelector: jest.fn((selector) => ({ useSelector: selector })),
+  };
+});
+
+jest.mock('hooks', () => {
+  const formatMessage = jest.fn((msg, values) => ({ formatted: { msg, values } }));
+  return {
+    ...jest.requireActual('hooks'),
+    useIntl: () => ({
+      formatMessage,
+      formatDate: jest.fn((date) => ({ formatted: date })),
+    }),
+    useCardValues: jest.fn((courseNumber, mapping) => (
+      Object.keys(mapping).reduce(
+        (obj, key) => ({
+          ...obj,
+          [key]: { selector: mapping[key], courseNumber },
+        }),
+        {},
+      )
+    )),
+    nullMethod: jest.fn().mockName('hooks.nullMethod'),
   };
 });

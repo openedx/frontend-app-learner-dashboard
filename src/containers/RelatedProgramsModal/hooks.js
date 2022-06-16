@@ -1,16 +1,19 @@
 import { selectors } from 'data/redux';
-import { getCardValue } from 'hooks';
+import { useCardValues } from 'hooks';
 
 const { cardData } = selectors;
 const { programs } = cardData;
 
-export const programsModalData = ({
+export const useProgramData = ({
   courseNumber,
 }) => {
-  const cardValue = getCardValue(courseNumber);
+  const data = useCardValues(courseNumber, {
+    courseTitle: cardData.courseTitle,
+    relatedPrograms: cardData.relatedPrograms,
+  });
   return {
-    courseTitle: cardValue(cardData.courseTitle),
-    relatedPrograms: cardValue(cardData.relatedPrograms).map(program => ({
+    courseTitle: data.courseTitle,
+    relatedPrograms: data.relatedPrograms.map(program => ({
       estimatedNumberOfWeeks: programs.estimatedNumberOfWeeks(program),
       numberOfCourses: programs.numberOfCourses(program),
       programType: programs.programType(program),
@@ -21,4 +24,4 @@ export const programsModalData = ({
   };
 };
 
-export default programsModalData;
+export default useProgramData;

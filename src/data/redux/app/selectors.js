@@ -19,10 +19,7 @@ export const courseCardData = (state, courseNumber) => (
   module.simpleSelectors.courseData(state)[courseNumber]
 );
 
-export const cardSelector = (sel, courseNumber) => state => sel(state, courseNumber);
-
 export default StrictDict({
   ...simpleSelectors,
   courseCardData,
-  cardSelector,
 });

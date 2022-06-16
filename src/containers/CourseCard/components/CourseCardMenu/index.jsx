@@ -6,13 +6,13 @@ import { MoreVert } from '@edx/paragon/icons';
 
 import EmailSettingsModal from 'containers/EmailSettingsModal';
 import UnenrollConfirmModal from 'containers/UnenrollConfirmModal';
-import hooks from './hooks';
+import useCourseCardMenuData from './hooks';
 
 export const CourseCardMenu = ({ courseNumber }) => {
   const {
     emailSettingsModal,
     unenrollModal,
-  } = hooks();
+  } = useCourseCardMenuData();
   return (
     <>
       <Dropdown>

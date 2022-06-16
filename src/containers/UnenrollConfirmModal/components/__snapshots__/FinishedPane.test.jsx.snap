@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UnenrollConfirmModal FinishedPane snapshot: did not give reason 1`] = `
+<Fragment>
+  <h4>
+    <formatMessage
+      msg="You are unenrolled"
+    />
+  </h4>
+  <p>
+    <formatMessage
+      msg="This course will be removed from your dashboard."
+    />
+  </p>
+  <ActionRow>
+    <Button
+      onClick={[MockFunction props.handleClose]}
+    >
+      <formatMessage
+        msg="Return to dashboard"
+      />
+    </Button>
+  </ActionRow>
+</Fragment>
+`;
+
+exports[`UnenrollConfirmModal FinishedPane snapshot: gave reason 1`] = `
+<Fragment>
+  <h4>
+    <formatMessage
+      msg="You are unenrolled"
+    />
+  </h4>
+  <p>
+    <formatMessage
+      msg="Thank you for sharing your reason for unenrolling.  "
+    />
+    <formatMessage
+      msg="This course will be removed from your dashboard."
+    />
+  </p>
+  <ActionRow>
+    <Button
+      onClick={[MockFunction props.handleClose]}
+    >
+      <formatMessage
+        msg="Return to dashboard"
+      />
+    </Button>
+  </ActionRow>
+</Fragment>
+`;
