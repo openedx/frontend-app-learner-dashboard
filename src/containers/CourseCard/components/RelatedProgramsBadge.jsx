@@ -11,6 +11,7 @@ export const RelatedProgramsBadge = ({ courseNumber }) => {
   return (
     <>
       <Button
+        data-testid="RelatedProgramsBadge"
         variant="tertiary"
         size="sm"
         iconBefore={Program}

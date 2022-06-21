@@ -30,10 +30,10 @@ export const CertificateBanner = ({ courseNumber }) => {
   if (data.isRestricted) {
     return (
       <Banner variant="danger">
-        {restrictedMessage}<Hyperlink>info@example.com</Hyperlink>
+        {restrictedMessage}<Hyperlink destination="info@example.com">info@example.com</Hyperlink>
         {data.isVerified && (
           <>
-            If you would like a refund on your Certificate of Achievement, please contact our billing address <Hyperlink>billing@example.com</Hyperlink>
+            If you would like a refund on your Certificate of Achievement, please contact our billing address <Hyperlink destination="billing@example.com">billing@example.com</Hyperlink>
           </>
         )}
       </Banner>
@@ -46,7 +46,7 @@ export const CertificateBanner = ({ courseNumber }) => {
     if (data.isCourseRunFinished) {
       return (
         <Banner variant="warning">
-          You are not eligible for a certificate.  <Hyperlink>View grades.</Hyperlink>
+          You are not eligible for a certificate.  <Hyperlink destination="">View grades.</Hyperlink>
         </Banner>
       );
     }
@@ -62,7 +62,7 @@ export const CertificateBanner = ({ courseNumber }) => {
         <Banner variant="success" icon={CheckCircle}>
           Congratulations.  Your certificate is ready.
           {'  '}
-          <Hyperlink href={data.certPreviewUrl}>View Certificate.</Hyperlink>
+          <Hyperlink destination={data.certPreviewUrl}>View Certificate.</Hyperlink>
         </Banner>
       );
     }
@@ -70,7 +70,7 @@ export const CertificateBanner = ({ courseNumber }) => {
       <Banner variant="success" icon={CheckCircle}>
         Congratulations.  Your certificate is ready.
         {'  '}
-        <Hyperlink href={data.certDownloadUrl}>Download Certificate.</Hyperlink>
+        <Hyperlink destination={data.certDownloadUrl}>Download Certificate.</Hyperlink>
       </Banner>
     );
   }

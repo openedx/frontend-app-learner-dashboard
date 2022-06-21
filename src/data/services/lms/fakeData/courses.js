@@ -87,7 +87,7 @@ export const availableSessions = [
 ];
 
 export const courseRuns = [
-  // audit, pending, cannot upgrade
+  // audit, pending, can upgrade
   {
     enrollment: genEnrollmentData({ isAudit: true }),
     grades: { isPassing: true },

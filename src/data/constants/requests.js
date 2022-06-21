@@ -8,15 +8,8 @@ export const RequestStates = StrictDict({
 });
 
 export const RequestKeys = StrictDict({
-  batchUnlock: 'batchUnlock',
-  downloadFiles: 'downloadFiles',
-  fetchSubmission: 'fetchSubmission',
-  fetchSubmissionStatus: 'fetchSubmissionStatus',
   initialize: 'initialize',
-  prefetchNext: 'prefetchNext',
-  prefetchPrev: 'prefetchPrev',
-  setLock: 'setLock',
-  submitGrade: 'submitGrade',
+  refreshList: 'refreshList',
 });
 
 export const ErrorCodes = StrictDict({

@@ -1,3 +1,4 @@
+import fakeData from 'data/services/lms/fakeData/courses';
 /*
 import { StrictDict } from 'utils';
 import { locationId } from 'data/constants/app';
@@ -14,14 +15,9 @@ import {
 /*********************************************************************************
  * GET Actions
  *********************************************************************************/
+const initializeList = () => Promise.resolve({
+  enrollments: fakeData.courseRunData,
+  entitlements: fakeData.entitlementCourses,
+});
 
-/**
- * get('/api/initialize', { ora_location, course_id? })
- * @return {
- *   oraMetadata: { name, prompt, type ('individual' vs 'team'), rubricConfig, fileUploadResponseConfig },
- *   courseMetadata: { courseOrg, courseName, courseNumber, courseId },
- * }
- */
-// const initializeApp = () => get().then(response => response.data);
-
-// export default { initializeApp };
+export default { initializeList };

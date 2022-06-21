@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`CourseCard Actions component does not render secondary button if null is returned for secondary props 1`] = `
-<Fragment>
+<div
+  data-test-id="CourseCardActions"
+>
   <Button
     courseNumber="test-course-number"
     prop1="primary-prop1"
@@ -9,11 +11,13 @@ exports[`CourseCard Actions component does not render secondary button if null i
   >
     primary-children
   </Button>
-</Fragment>
+</div>
 `;
 
 exports[`CourseCard Actions component loads primary and secondary button props from hook 1`] = `
-<Fragment>
+<div
+  data-test-id="CourseCardActions"
+>
   <Button
     courseNumber="test-course-number"
     prop1="primary-prop1"
@@ -28,5 +32,5 @@ exports[`CourseCard Actions component loads primary and secondary button props f
   >
     primary-children
   </Button>
-</Fragment>
+</div>
 `;

@@ -2,7 +2,8 @@
 
 exports[`CourseCard component snapshot 1`] = `
 <div
-  className="mb-3"
+  className="mb-3 course-card"
+  data-testid="CourseCard"
 >
   <Card
     orientation="horizontal"
@@ -26,13 +27,23 @@ exports[`CourseCard component snapshot 1`] = `
             courseNumber="test-course-number"
           />
         }
-        title="hooks.title"
+        title={
+          <span
+            data-testid="CourseCardTitle"
+          >
+            hooks.title
+          </span>
+        }
       />
       <Card.Section>
-        hooks.providerName
-         • 
-        test-course-number
-         • 
+        <span
+          data-testid="CourseCardDetails"
+        >
+          hooks.providerName
+           • 
+          test-course-number
+           • 
+        </span>
       </Card.Section>
       <Card.Footer
         orientation="vertical"
@@ -50,6 +61,7 @@ exports[`CourseCard component snapshot 1`] = `
   </Card>
   <div
     className="course-card-banners"
+    data-testid="CourseCardBanners"
   >
     <CourseBanner
       courseNumber="test-course-number"
