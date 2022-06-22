@@ -344,13 +344,24 @@ export const courseRunData = courseRuns.map(
     const courseNumber = genCourseID(index);
     const providerIndex = index % 3;
     const iteratedData = [
-      { provider: providers.edx, course: { title, bannerUrl: logos.edx } },
-      { provider: providers.mit, course: { title, bannerUrl: logos.science } },
-      { provider: null, course: { title, bannerUrl: logos.social } },
+      {
+        provider: providers.edx,
+        course: { title, bannerUrl: logos.edx },
+        relatedPrograms,
+      },
+      {
+        provider: providers.mit,
+        course: { title, bannerUrl: logos.science },
+        relatedPrograms: [relatedPrograms[0]],
+      },
+      {
+        provider: null,
+        course: { title, bannerUrl: logos.social },
+        relatedPrograms: [],
+      },
     ];
     return {
       ...data,
-      relatedPrograms,
       courseRun: genCourseRunData({ ...data.courseRun, courseNumber }),
       ...iteratedData[providerIndex],
       credit: { isPurchased: false, requestStatus: null },
