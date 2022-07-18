@@ -3,6 +3,7 @@
 exports[`RelatedProgramsModal snapshot: closed 1`] = `
 <ModalDialog
   className="related-programs-modal p-4"
+  data-testid="RelatedProgramsModal"
   hasCloseButton={true}
   isFullscreenOnMobile={true}
   isOpen={false}
@@ -86,6 +87,7 @@ exports[`RelatedProgramsModal snapshot: closed 1`] = `
 exports[`RelatedProgramsModal snapshot: open 1`] = `
 <ModalDialog
   className="related-programs-modal p-4"
+  data-testid="RelatedProgramsModal"
   hasCloseButton={true}
   isFullscreenOnMobile={true}
   isOpen={true}

@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RelatedProgramsBadge component snapshot: 3 programs 1`] = `
+<Fragment>
+  <Button
+    data-testid="RelatedProgramsBadge"
+    onClick={[MockFunction useRelatedProgramsBadge.openModal]}
+    size="sm"
+    variant="tertiary"
+  >
+    useRelatedProgramsBadge.programsMessage
+  </Button>
+  <RelatedProgramsModal
+    closeModal={[MockFunction useRelatedProgramsBadge.closeModal]}
+    courseNumber="test-course-number"
+    isOpen={true}
+  />
+</Fragment>
+`;

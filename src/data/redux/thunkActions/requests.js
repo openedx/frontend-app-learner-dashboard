@@ -1,9 +1,8 @@
 import { StrictDict } from 'utils';
 
-// import { RequestKeys } from 'data/constants/requests';
+import { RequestKeys } from 'data/constants/requests';
 import { actions } from 'data/redux';
-import fakeData from 'data/services/lms/fakeData/courses';
-// import api from 'data/services/lms/api';
+import api from 'data/services/lms/api';
 
 // import * as module from './requests';
 
@@ -34,12 +33,14 @@ export const networkRequest = ({
   });
 };
 
-export const initializeList = () => (
-  Promise.resolve({
-    enrollments: fakeData.courseRunData,
-    entitlements: fakeData.entitlementCourses,
-  })
-);
+export const initializeList = ({ onSuccess, onFailure }) => (dispatch) => {
+  dispatch(networkRequest({
+    requestKey: RequestKeys.initialize,
+    onFailure,
+    onSuccess,
+    promise: api.initializeList(),
+  }));
+};
 
 export default StrictDict({
   initializeList,

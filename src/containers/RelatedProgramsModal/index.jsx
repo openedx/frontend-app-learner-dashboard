@@ -26,6 +26,7 @@ export const RelatedProgramsModal = ({
       isFullscreenOnMobile
       size="lg"
       className="related-programs-modal p-4"
+      data-testid="RelatedProgramsModal"
     >
       <ModalDialog.Header className="programs-title m-0 p-0" as="h3">
         {formatMessage(messages.header)}

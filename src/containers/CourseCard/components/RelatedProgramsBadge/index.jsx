@@ -1,22 +1,31 @@
 /* eslint-disable quotes */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, useToggle } from '@edx/paragon';
+
+import { Button } from '@edx/paragon';
 import { Program } from '@edx/paragon/icons';
 
 import RelatedProgramsBadgeModal from 'containers/RelatedProgramsModal';
+import useRelatedProgramsBadgeData from './hooks';
 
 export const RelatedProgramsBadge = ({ courseNumber }) => {
-  const [isOpen, open, closeModal] = useToggle(false);
-  return (
+  const {
+    isOpen,
+    openModal,
+    closeModal,
+    numPrograms,
+    programsMessage,
+  } = useRelatedProgramsBadgeData({ courseNumber });
+  return (numPrograms > 0) && (
     <>
       <Button
+        data-testid="RelatedProgramsBadge"
         variant="tertiary"
         size="sm"
         iconBefore={Program}
-        onClick={open}
+        onClick={openModal}
       >
-        2 Related Program
+        {programsMessage}
       </Button>
       <RelatedProgramsBadgeModal {...{ isOpen, closeModal, courseNumber }} />
     </>

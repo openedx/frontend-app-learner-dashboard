@@ -38,6 +38,7 @@ export const fieldSelectors = {
   minPassingGrade: data => data.courseRun.minPassingGrade,
   providerName: data => data.provider?.name,
   relatedPrograms: data => data.relatedPrograms,
+  numRelatedPrograms: data => data.relatedPrograms.length,
 };
 fieldSelectors.isCourseRunActive = data => (
   fieldSelectors.isCourseRunStarted(data) && !fieldSelectors.isCourseRunFinished(data)

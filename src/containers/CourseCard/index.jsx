@@ -25,7 +25,7 @@ export const CourseCard = ({ courseNumber }) => {
     formatMessage,
   } = useCardData({ courseNumber });
   return (
-    <div className="mb-3">
+    <div className="mb-3 course-card" data-testid="CourseCard">
       <Card orientation="horizontal">
         <Card.ImageCap
           src={bannerUrl}
@@ -33,11 +33,13 @@ export const CourseCard = ({ courseNumber }) => {
         />
         <Card.Body>
           <Card.Header
-            title={title}
+            title={<span data-testid="CourseCardTitle">{title}</span>}
             actions={<CourseCardMenu courseNumber={courseNumber} />}
           />
           <Card.Section>
-            {providerName} • {courseNumber} • {accessMessage}
+            <span data-testid="CourseCardDetails">
+              {providerName} • {courseNumber} • {accessMessage}
+            </span>
           </Card.Section>
           <Card.Footer
             orientation="vertical"
@@ -47,7 +49,7 @@ export const CourseCard = ({ courseNumber }) => {
           </Card.Footer>
         </Card.Body>
       </Card>
-      <div className="course-card-banners">
+      <div className="course-card-banners" data-testid="CourseCardBanners">
         <CourseBanner courseNumber={courseNumber} />
         <CertificateBanner courseNumber={courseNumber} />
         <EntitlementBanner courseNumber={courseNumber} />

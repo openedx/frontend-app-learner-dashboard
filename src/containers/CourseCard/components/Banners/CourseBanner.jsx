@@ -31,7 +31,7 @@ export const CourseBanner = ({ courseNumber }) => {
     }
     return (
       <Banner>
-        Your audit access to this course has expired. <Hyperlink>Find another course</Hyperlink>
+        Your audit access to this course has expired. <Hyperlink destination="">Find another course</Hyperlink>
       </Banner>
     );
   }
@@ -40,7 +40,7 @@ export const CourseBanner = ({ courseNumber }) => {
       <Banner>
         Your upgrade deadline for this course has passed.  To upgrade, enroll in a session that is farther in the future.
         {'  '}
-        <Hyperlink href={courseData.courseWebsite}>Explore course details.</Hyperlink>
+        <Hyperlink destination={courseData.courseWebsite || ''}>Explore course details.</Hyperlink>
       </Banner>
     );
   }
