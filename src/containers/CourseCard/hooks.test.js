@@ -1,3 +1,5 @@
+import { useIntl } from '@edx/frontend-platform/i18n';
+
 import { keyStore } from 'utils';
 import { selectors } from 'data/redux';
 import * as appHooks from 'hooks';
@@ -15,7 +17,7 @@ const hookKeys = keyStore(hooks);
 
 describe('CourseCard hooks', () => {
   let out;
-  const { formatMessage, formatDate } = appHooks.useIntl();
+  const { formatMessage, formatDate } = useIntl();
   describe('useCardData', () => {
     beforeEach(() => {
       jest.spyOn(hooks, hookKeys.useAccessMessage).mockImplementationOnce(mockAccessMessage);

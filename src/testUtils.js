@@ -200,9 +200,13 @@ export class MockUseState {
  * Test that useCardValues was called with the given courseNumber and selector mapping.
  * @param {string} courseNumber - course run identifier
  * @param {obj} mapping - value mapping { <requestedKey>: <selectorFieldKey> }
+ * @param {[func]} beforeEachFn - optional beforeEach method
  */
-export const testCardValues = (courseNumber, mapping) => {
+export const testCardValues = (courseNumber, mapping, beforeEachFn) => {
   describe('cardData values', () => {
+    if (beforeEachFn) {
+      beforeEach(beforeEachFn);
+    }
     let mapped;
     test('passess correct courseNumber', () => {
       expect(appHooks.useCardValues.mock.calls[0][0]).toEqual(courseNumber);

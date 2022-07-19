@@ -1,6 +1,7 @@
+import { useIntl } from '@edx/frontend-platform/i18n';
 import { selectors } from 'data/redux';
 
-import { useIntl, useCardValues } from 'hooks';
+import { useCardValues } from 'hooks';
 
 import * as module from './hooks';
 import messages from './messages';

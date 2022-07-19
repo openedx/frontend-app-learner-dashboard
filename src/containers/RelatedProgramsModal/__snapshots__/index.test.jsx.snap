@@ -9,19 +9,13 @@ exports[`RelatedProgramsModal snapshot: closed 1`] = `
   isOpen={false}
   onClose={[MockFunction props.closeModal]}
   size="lg"
-  title={
-    <formatMessage
-      msg="Related Programs"
-    />
-  }
+  title="Related Programs"
 >
   <ModalDialog.Header
     as="h3"
     className="programs-title m-0 p-0"
   >
-    <formatMessage
-      msg="Related Programs"
-    />
+    Related Programs
   </ModalDialog.Header>
   <ModalDialog.Header
     as="h4"
@@ -33,9 +27,7 @@ exports[`RelatedProgramsModal snapshot: closed 1`] = `
     className="pl-0"
   >
     <p>
-      <formatMessage
-        msg="Are you looking to expand your knowledge?  Enrolling in a Program lets you take a series of courses in the subject that you're interested in"
-      />
+      Are you looking to expand your knowledge?  Enrolling in a Program lets you take a series of courses in the subject that you're interested in
     </p>
     <CardGrid
       columnSizes={
@@ -93,19 +85,13 @@ exports[`RelatedProgramsModal snapshot: open 1`] = `
   isOpen={true}
   onClose={[MockFunction props.closeModal]}
   size="lg"
-  title={
-    <formatMessage
-      msg="Related Programs"
-    />
-  }
+  title="Related Programs"
 >
   <ModalDialog.Header
     as="h3"
     className="programs-title m-0 p-0"
   >
-    <formatMessage
-      msg="Related Programs"
-    />
+    Related Programs
   </ModalDialog.Header>
   <ModalDialog.Header
     as="h4"
@@ -117,9 +103,7 @@ exports[`RelatedProgramsModal snapshot: open 1`] = `
     className="pl-0"
   >
     <p>
-      <formatMessage
-        msg="Are you looking to expand your knowledge?  Enrolling in a Program lets you take a series of courses in the subject that you're interested in"
-      />
+      Are you looking to expand your knowledge?  Enrolling in a Program lets you take a series of courses in the subject that you're interested in
     </p>
     <CardGrid
       columnSizes={

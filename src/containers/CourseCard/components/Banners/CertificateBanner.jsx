@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import { Hyperlink } from '@edx/paragon';
 import { CheckCircle } from '@edx/paragon/icons';
+// import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { selectors } from 'data/redux';
 import Banner from 'components/Banner';
@@ -27,6 +28,9 @@ export const CertificateBanner = ({ courseNumber }) => {
     isVerified: cardData.isVerified,
     minPassingGrade: cardData.minPassingGrade,
   });
+
+  // const { formatMessage } = useIntl();
+
   if (data.isRestricted) {
     return (
       <Banner variant="danger">

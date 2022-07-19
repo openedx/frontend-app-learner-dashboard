@@ -2,13 +2,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Hyperlink } from '@edx/paragon';
+import { useIntl } from '@edx/frontend-platform/i18n';
 
+import { useCardValues } from 'hooks';
+import { selectors } from 'data/redux';
 import Banner from 'components/Banner';
-import { useCourseBannerData } from './hooks';
 import messages from './messages';
 
+const { cardData } = selectors;
+
 export const CourseBanner = ({ courseNumber }) => {
-  const { courseData, formatMessage } = useCourseBannerData({ courseNumber });
+  const courseData = useCardValues(courseNumber, {
+    isVerified: cardData.isVerified,
+    isCourseRunActive: cardData.isCourseRunActive,
+    canUpgrade: cardData.canUpgrade,
+    isAuditAccessExpired: cardData.isAuditAccessExpired,
+    courseWebsite: cardData.courseWebsite,
+  });
+  const { formatMessage } = useIntl();
 
   if (courseData.isVerified) { return null; }
 

@@ -2,19 +2,19 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Hyperlink } from '@edx/paragon';
 
-import { formatMessage } from 'testUtils';
+import * as appHooks from 'hooks';
+import { testCardValues } from 'testUtils';
+import { selectors } from 'data/redux';
 import { CourseBanner } from './CourseBanner';
 
-import * as hooks from './hooks';
 import messages from './messages';
 
 jest.mock('components/Banner', () => 'Banner');
 
-jest.mock('./hooks', () => ({
-  useCourseBannerData: jest.fn(),
-}));
-
+const { fieldKeys } = selectors.cardData;
 const courseNumber = 'my-test-course-number';
+
+let el;
 
 const courseData = {
   isVerified: false,
@@ -24,20 +24,22 @@ const courseData = {
   courseWebsite: 'test-course-website',
 };
 
-let el;
-
-const render = (overrides) => {
-  hooks.useCourseBannerData.mockReturnValueOnce({
-    courseData: {
-      ...courseData,
-      ...overrides,
-    },
-    formatMessage,
+const render = (overrides = {}) => {
+  appHooks.useCardValues.mockReturnValueOnce({
+    ...courseData,
+    ...overrides,
   });
   el = shallow(<CourseBanner courseNumber={courseNumber} />);
 };
 
 describe('CourseBanner', () => {
+  testCardValues(courseNumber, {
+    isVerified: fieldKeys.isVerified,
+    isCourseRunActive: fieldKeys.isCourseRunActive,
+    canUpgrade: fieldKeys.canUpgrade,
+    isAuditAccessExpired: fieldKeys.isAuditAccessExpired,
+    courseWebsite: fieldKeys.courseWebsite,
+  }, render);
   test('no display if learner is verified', () => {
     render({ isVerified: true });
     expect(el.isEmptyRender()).toEqual(true);

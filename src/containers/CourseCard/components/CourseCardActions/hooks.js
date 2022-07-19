@@ -1,7 +1,8 @@
 import { Locked } from '@edx/paragon/icons';
+import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { selectors } from 'data/redux';
-import { useIntl, useCardValues } from 'hooks';
+import { useCardValues } from 'hooks';
 import messages from './messages';
 
 const { cardData } = selectors;

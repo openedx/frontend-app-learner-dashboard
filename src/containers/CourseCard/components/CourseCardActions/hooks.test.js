@@ -1,4 +1,5 @@
 import { Locked } from '@edx/paragon/icons';
+import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { selectors } from 'data/redux';
 
@@ -22,7 +23,7 @@ const props = {
 
 describe('CourseCardActions hooks', () => {
   let out;
-  const { formatMessage } = appHooks.useIntl();
+  const { formatMessage } = useIntl();
   describe('data connection', () => {
     beforeEach(() => {
       out = hooks.useCardActionData({ courseNumber });

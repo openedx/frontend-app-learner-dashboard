@@ -16,38 +16,28 @@ exports[`EmailSettingsModal render snapshot: emails disabled, show: false 1`] = 
     }
   >
     <h4>
-      <formatMessage
-        msg="Receive course emails?"
-      />
+      Receive course emails?
     </h4>
     <Form.Switch
       checked={true}
       onChange={[MockFunction hooks.onToggle]}
     >
-      <formatMessage
-        msg="Course emails are on"
-      />
+      Course emails are on
     </Form.Switch>
     <p>
-      <formatMessage
-        msg="Course emailsi include important information about your course."
-      />
+      Course emailsi include important information about your course.
     </p>
     <ActionRow>
       <Button
         onClick={[MockFunction closeModal]}
         variant="tertiary"
       >
-        <formatMessage
-          msg="Nevermind"
-        />
+        Nevermind
       </Button>
       <Button
         onClick={[MockFunction hooks.save]}
       >
-        <formatMessage
-          msg="Save settings"
-        />
+        Save settings
       </Button>
     </ActionRow>
   </div>
@@ -70,38 +60,28 @@ exports[`EmailSettingsModal render snapshot: emails disabled, show: true 1`] = `
     }
   >
     <h4>
-      <formatMessage
-        msg="Receive course emails?"
-      />
+      Receive course emails?
     </h4>
     <Form.Switch
       checked={true}
       onChange={[MockFunction hooks.onToggle]}
     >
-      <formatMessage
-        msg="Course emails are on"
-      />
+      Course emails are on
     </Form.Switch>
     <p>
-      <formatMessage
-        msg="Course emailsi include important information about your course."
-      />
+      Course emailsi include important information about your course.
     </p>
     <ActionRow>
       <Button
         onClick={[MockFunction closeModal]}
         variant="tertiary"
       >
-        <formatMessage
-          msg="Nevermind"
-        />
+        Nevermind
       </Button>
       <Button
         onClick={[MockFunction hooks.save]}
       >
-        <formatMessage
-          msg="Save settings"
-        />
+        Save settings
       </Button>
     </ActionRow>
   </div>
@@ -124,38 +104,28 @@ exports[`EmailSettingsModal render snapshot: emails enabled, show: true 1`] = `
     }
   >
     <h4>
-      <formatMessage
-        msg="Receive course emails?"
-      />
+      Receive course emails?
     </h4>
     <Form.Switch
       checked={false}
       onChange={[MockFunction hooks.onToggle]}
     >
-      <formatMessage
-        msg="Course emails are off"
-      />
+      Course emails are off
     </Form.Switch>
     <p>
-      <formatMessage
-        msg="Course emailsi include important information about your course."
-      />
+      Course emailsi include important information about your course.
     </p>
     <ActionRow>
       <Button
         onClick={[MockFunction closeModal]}
         variant="tertiary"
       >
-        <formatMessage
-          msg="Nevermind"
-        />
+        Nevermind
       </Button>
       <Button
         onClick={[MockFunction hooks.save]}
       >
-        <formatMessage
-          msg="Save settings"
-        />
+        Save settings
       </Button>
     </ActionRow>
   </div>
