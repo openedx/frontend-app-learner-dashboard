@@ -1,13 +1,16 @@
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { MockUseState } from 'testUtils';
-import * as appHooks from 'hooks';
-import { selectors } from 'data/redux';
+import { hooks as appHooks } from 'data/redux';
 
 import * as hooks from './hooks';
 import messages from './messages';
 
-const { cardData } = selectors;
+jest.mock('data/redux', () => ({
+  hooks: {
+    useCardRelatedProgramsData: jest.fn(),
+  },
+}));
 
 const courseNumber = 'my-test-course-number';
 
@@ -16,7 +19,7 @@ const numPrograms = 27;
 
 const { formatMessage } = useIntl();
 
-describe('EmailSettingsModal hooks', () => {
+describe('RelatedProgramsBadge hooks', () => {
   let out;
   describe('state values', () => {
     state.testGetter(state.keys.isOpen);
@@ -27,8 +30,8 @@ describe('EmailSettingsModal hooks', () => {
   describe('useRelatedProgramsBadgeData', () => {
     beforeEach(() => {
       state.mock();
-      appHooks.useCardValues.mockReturnValueOnce({
-        numPrograms,
+      appHooks.useCardRelatedProgramsData.mockReturnValueOnce({
+        length: numPrograms,
       });
       out = hooks.useRelatedProgramsBadgeData({ courseNumber });
     });
@@ -52,21 +55,16 @@ describe('EmailSettingsModal hooks', () => {
       expect(out.isOpen).toEqual(state.stateVals.isOpen);
     });
 
-    test('returns numPrograms from useCardValues call on numRelatedPrograms', () => {
-      expect(appHooks.useCardValues).toHaveBeenCalledWith(
-        courseNumber,
-        { numPrograms: cardData.numRelatedPrograms },
-      );
+    test('forwards numPrograms from relatedPrograms.length for the courseNumber', () => {
       expect(out.numPrograms).toEqual(numPrograms);
     });
-
     test('returns empty programsMessage if no programs', () => {
-      appHooks.useCardValues.mockReturnValueOnce({ numPrograms: 0 });
+      appHooks.useCardRelatedProgramsData.mockReturnValueOnce({ length: 0 });
       out = hooks.useRelatedProgramsBadgeData({ courseNumber });
       expect(out.programsMessage).toEqual('');
     });
     test('returns badgeLabelSingular programsMessage if 1 programs', () => {
-      appHooks.useCardValues.mockReturnValueOnce({ numPrograms: 1 });
+      appHooks.useCardRelatedProgramsData.mockReturnValueOnce({ length: 1 });
       out = hooks.useRelatedProgramsBadgeData({ courseNumber });
       expect(out.programsMessage).toEqual(formatMessage(
         messages.badgeLabelSingular,

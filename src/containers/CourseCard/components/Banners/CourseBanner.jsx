@@ -4,27 +4,24 @@ import PropTypes from 'prop-types';
 import { Hyperlink } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { useCardValues } from 'hooks';
-import { selectors } from 'data/redux';
+import { hooks as appHooks } from 'data/redux';
 import Banner from 'components/Banner';
 import messages from './messages';
 
-const { cardData } = selectors;
-
 export const CourseBanner = ({ courseNumber }) => {
-  const courseData = useCardValues(courseNumber, {
-    isVerified: cardData.isVerified,
-    isCourseRunActive: cardData.isCourseRunActive,
-    canUpgrade: cardData.canUpgrade,
-    isAuditAccessExpired: cardData.isAuditAccessExpired,
-    courseWebsite: cardData.courseWebsite,
-  });
+  const {
+    isVerified,
+    isAuditAccessExpired,
+    canUpgrade,
+  } = appHooks.useCardEnrollmentData(courseNumber);
+  const courseRun = appHooks.useCardCourseRunData(courseNumber);
+  const course = appHooks.useCardCourseData(courseNumber);
   const { formatMessage } = useIntl();
 
-  if (courseData.isVerified) { return null; }
+  if (isVerified) { return null; }
 
-  if (courseData.isAuditAccessExpired) {
-    if (courseData.canUpgrade) {
+  if (isAuditAccessExpired) {
+    if (canUpgrade) {
       return (
         <Banner>
           {formatMessage(messages.auditAccessExpired)}
@@ -41,12 +38,12 @@ export const CourseBanner = ({ courseNumber }) => {
       </Banner>
     );
   }
-  if (courseData.isCourseRunActive && !courseData.canUpgrade) {
+  if (courseRun.isActive && !canUpgrade) {
     return (
       <Banner>
         {formatMessage(messages.upgradeDeadlinePassed)}
         {'  '}
-        <Hyperlink destination={courseData.courseWebsite || ''}>
+        <Hyperlink destination={course.website || ''}>
           {formatMessage(messages.exploreCourseDetails)}
         </Hyperlink>
       </Banner>

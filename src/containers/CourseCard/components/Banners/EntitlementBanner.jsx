@@ -1,28 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { useCardValues } from 'hooks';
-import { selectors } from 'data/redux';
+import { hooks as appHooks } from 'data/redux';
 
 import Banner from 'components/Banner';
 
-const { cardData } = selectors;
-
 export const EntitlementBanner = ({ courseNumber }) => {
-  const data = useCardValues(courseNumber, {
-    canChange: cardData.canChangeEntitlementSession,
-    isEntitlement: cardData.isEntitlement,
-    isExpired: cardData.isEntitlementExpired,
-    isFulfilled: cardData.isEntitlementFulfilled,
-  });
+  const {
+    canChange,
+    isEntitlement,
+    isExpired,
+    isFulfilled,
+  } = appHooks.useCardEntitlementsData(courseNumber);
 
-  if (!data.isEntitlement) {
+  if (!isEntitlement) {
     return null;
   }
-  if (data.isExpired || data.isFulfilled) {
+  if (isExpired || isFulfilled) {
     return null;
   }
-  return data.canChange
+  return canChange
     ? (<Banner>You must select a session to access the course.</Banner>)
     : (<Banner>The deadline to select a session has passed</Banner>);
 };

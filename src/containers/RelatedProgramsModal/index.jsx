@@ -40,7 +40,7 @@ export const RelatedProgramsModal = ({
           columnSizes={{ lg: 6, xlg: 4, xs: 12 }}
         >
           {relatedPrograms.map((programData) => (
-            <ProgramCard key={`${programData.programUrl}`} data={programData} />
+            <ProgramCard key={programData.programUrl} data={programData} />
           ))}
         </CardGrid>
       </ModalDialog.Body>

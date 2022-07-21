@@ -1,47 +1,40 @@
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { selectors } from 'data/redux';
-
-import { useCardValues } from 'hooks';
+import { hooks as appHooks } from 'data/redux';
 
 import * as module from './hooks';
 import messages from './messages';
 
-const { cardData } = selectors;
-
 export const useAccessMessage = ({ courseNumber }) => {
   const { formatMessage, formatDate } = useIntl();
+  const {
+    accessExpirationDate,
+    isAudit,
+    isAuditAccessExpired,
+  } = appHooks.useCardEnrollmentData(courseNumber);
+  const { isArchived, endDate } = appHooks.useCardCourseRunData(courseNumber);
 
-  const data = useCardValues(courseNumber, {
-    accessExpirationDate: cardData.courseRunAccessExpirationDate,
-    isAudit: cardData.isAudit,
-    isFinished: cardData.isCourseRunFinished,
-    isAuditAccessExpired: cardData.isAuditAccessExpired,
-    endDate: cardData.courseRunEndDate,
-  });
-  if (data.isAudit) {
+  if (isAudit) {
     return formatMessage(
-      data.isAuditAccessExpired ? messages.accessExpired : messages.accessExpires,
-      { accessExpirationDate: formatDate(data.accessExpirationDate) },
+      isAuditAccessExpired ? messages.accessExpired : messages.accessExpires,
+      { accessExpirationDate: formatDate(accessExpirationDate) },
     );
   }
+
   return formatMessage(
-    data.isFinished ? messages.courseEnded : messages.courseEnds,
-    { endDate: formatDate(data.endDate) },
+    isArchived ? messages.courseEnded : messages.courseEnds,
+    { endDate: formatDate(endDate) },
   );
 };
 
 export const useCardData = ({ courseNumber }) => {
   const { formatMessage } = useIntl();
-  const data = useCardValues(courseNumber, {
-    title: cardData.courseTitle,
-    bannerUrl: cardData.courseBannerUrl,
-    providerName: cardData.providerName,
-  });
+  const { title, bannerUrl } = appHooks.useCardCourseData(courseNumber);
+  const providerName = appHooks.useCardProviderData(courseNumber).name;
 
   return {
-    title: data.title,
-    bannerUrl: data.bannerUrl,
-    providerName: data.providerName || formatMessage(messages.unknownProviderName),
+    title,
+    bannerUrl,
+    providerName: providerName || formatMessage(messages.unknownProviderName),
     accessMessage: module.useAccessMessage({ courseNumber }),
     formatMessage,
   };

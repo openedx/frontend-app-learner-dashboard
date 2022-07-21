@@ -147,11 +147,13 @@ describe('ESG app integration tests', () => {
       courseData.course.title,
     );
     cardDetails = inspector.get.card.details(card);
+
+    console.log({ enrollment: courseData.enrollment });
     [
       courseData.provider.name,
       courseNumber,
       appMessages.withValues.CourseCard.accessExpires({
-        accessExpirationDate: courseData.courseRun.accessExpirationDate,
+        accessExpirationDate: courseData.enrollment.accessExpirationDate,
       }),
     ].forEach(value => inspector.verifyTextIncludes(cardDetails, value));
 

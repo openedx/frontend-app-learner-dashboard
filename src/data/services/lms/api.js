@@ -18,6 +18,7 @@ import {
 const initializeList = () => Promise.resolve({
   enrollments: fakeData.courseRunData,
   entitlements: fakeData.entitlementCourses,
+  ...fakeData.globalData,
 });
 
 export default { initializeList };

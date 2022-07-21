@@ -5,6 +5,10 @@ const initialState = {
   enrollments: [],
   courseData: {},
   entitlements: [],
+  emailConfirmation: {},
+  enterpriseDashboards: {},
+  platformSettings: {},
+  suggestedCourses: {},
 };
 
 // eslint-disable-next-line no-unused-vars
@@ -24,6 +28,13 @@ const app = createSlice({
       ),
     }),
     loadEntitlements: (state, { payload }) => ({ ...state, entitlements: payload }),
+    loadGlobalData: (state, { payload }) => ({
+      ...state,
+      emailConfirmation: payload.emailConfirmation,
+      enterpriseDashboards: payload.enterpriseDashboards,
+      platformSettings: payload.platformSettings,
+      suggestedCourses: payload.suggestedCourses,
+    }),
   },
 });
 

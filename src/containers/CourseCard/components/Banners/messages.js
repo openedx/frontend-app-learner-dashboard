@@ -26,6 +26,11 @@ export const messages = StrictDict({
     description: 'Action prompt taking learners to course details page',
     defaultMessage: 'Explore course details.',
   },
+  certRestricted: {
+    id: 'learner-dash.courseCard.banners.certificateRestricted',
+    description: 'Restricted certificate warning message',
+    defaultMessage: 'Your Certificate of Achievement is being held pending confirmation that the issuance of your Certificate is in compliance with strict U.S. embargoes on Iran, Cuba, Syria, and Sudan.  If you think our system has mistakenly identified you as being connected with one of those countries, please let us know by contacting ',
+  },
 });
 
 export default messages;
