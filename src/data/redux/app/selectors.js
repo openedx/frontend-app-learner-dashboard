@@ -26,11 +26,15 @@ const mkCardSelector = (sel) => (state, courseNumber) => (
   sel(courseCardData(state, courseNumber))
 );
 
+const dateSixMonthsFromNow = new Date();
+dateSixMonthsFromNow.setDate(dateSixMonthsFromNow.getDate() + 180);
+
 export const courseCard = StrictDict({
   certificates: mkCardSelector(({ certificates }) => ({
     availableDate: certificates.availableDate,
-    downloadUrl: certificates.downloadUrls?.download,
-    previewUrl: certificates.downloadUrls?.preview,
+    certDownloadUrl: certificates.certDownloadUrl,
+    honorCertDownloadUrl: certificates.honorCertDownloadUrl,
+    certPreviewUrl: certificates.certPreviewUrl,
     isDownloadable: certificates.isDownloadable,
     isEarnedButUnavailable: certificates.isEarned && !certificates.isAvailable,
     isRestricted: certificates.isRestricted,
@@ -58,13 +62,20 @@ export const courseCard = StrictDict({
     lastEnrolled: enrollment.lastEnrollment,
     isEnrolled: enrollment.isEnrolled,
   })),
-  entitlements: mkCardSelector(({ entitlements }) => ({
-    canChange: entitlements.canChange,
-    entitlementSessions: entitlements.availableSessions,
-    isEntitlement: entitlements.isEntitlement,
-    isExpired: entitlements.isExpired,
-    isFulfilled: entitlements.isFulfilled,
-  })),
+  entitlements: mkCardSelector(({ entitlements }) => {
+    const deadline = new Date(entitlements.changeDeadline);
+    const showExpirationWarning = deadline > new Date() && deadline <= dateSixMonthsFromNow;
+    return {
+      canChange: entitlements.canChange,
+      entitlementSessions: entitlements.availableSessions,
+      isEntitlement: entitlements.isEntitlement,
+      isExpired: entitlements.isExpired,
+      isFulfilled: entitlements.isFulfilled,
+      hasSessions: entitlements.availableSessions?.length > 0,
+      changeDeadline: entitlements.changeDeadline,
+      showExpirationWarning,
+    };
+  }),
   grades: mkCardSelector(({ grades }) => ({ isPassing: grades.isPassing })),
   provider: mkCardSelector(({ provider }) => ({ name: provider?.name })),
   relatedPrograms: mkCardSelector(({ relatedPrograms }) => ({

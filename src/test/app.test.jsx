@@ -80,7 +80,8 @@ const mockApi = () => {
       resolveFns.init = {
         success: () => resolve({
           enrollments: fakeData.courseRunData,
-          entitlements: fakeData.entitlementCourses,
+          entitlements: fakeData.entitlementData,
+          ...fakeData.globalData,
         }),
       };
     }));
@@ -148,7 +149,6 @@ describe('ESG app integration tests', () => {
     );
     cardDetails = inspector.get.card.details(card);
 
-    console.log({ enrollment: courseData.enrollment });
     [
       courseData.provider.name,
       courseNumber,

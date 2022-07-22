@@ -127,7 +127,7 @@ describe('CourseCard hooks', () => {
 
     describe('if verified and ended', () => {
       it('returns course ended message with course end date', () => {
-        runHook({ courseRun: { isFinished: true } });
+        runHook({ courseRun: { isArchived: true } });
         expect(out).toEqual(formatMessage(
           messages.courseEnded,
           { endDate: formatDate(courseRunData.endDate) },

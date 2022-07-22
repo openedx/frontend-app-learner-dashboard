@@ -48,6 +48,9 @@ const logos = {
 
 const pastDate = '11/11/2000';
 const futureDate = '11/11/3030';
+const soonDate = new Date();
+soonDate.setDate(soonDate.getDate() + 60);
+const soonDateStr = soonDate.toDateString();
 
 const globalData = {
   emailConfirmation: {
@@ -100,7 +103,9 @@ export const genCertificateData = (data = {}) => ({
   isAvailable: false,
   isEarned: false,
   isDownloadable: false,
-  downloadUrls: null, // { preview, download }
+  certPreviewUrl: 'edx.com/courses/my-course-url/cert-preview',
+  certDownloadUrl: 'edx.com/courses/my-course-url/cert-download',
+  honorCertDownloadUrl: 'edx.com/courses/my-course-url/honor-cert-download',
   ...data,
 });
 
@@ -224,10 +229,8 @@ export const courseRuns = [
       isAvailable: true,
       isDownloadable: true,
       availableDate: pastDate,
-      downloadUrls: {
-        preview: logos.edx,
-        download: logos.social,
-      },
+      certDownloadUrl: logos.social,
+      certPreviewUrl: logos.edx,
     }),
     entitlements: { isEntitlement: false },
   },
@@ -241,9 +244,7 @@ export const courseRuns = [
       isAvailable: true,
       isDownloadable: true,
       availableDate: pastDate,
-      downloadUrls: {
-        download: logos.social,
-      },
+      certDownloadUrl: logos.social,
     }),
     entitlements: { isEntitlement: false },
   },
@@ -319,7 +320,6 @@ export const courseRuns = [
 
 export const entitlementCourses = [
   {
-    course: { title: genCourseTitle(100) },
     entitlements: {
       isEntitlement: true,
       availableSessions,
@@ -331,7 +331,17 @@ export const entitlementCourses = [
       isExpired: false,
     },
   }, {
-    course: { title: genCourseTitle(101) },
+    entitlements: {
+      isEntitlement: true,
+      availableSessions,
+      isRefundable: true,
+      isFulfilled: false,
+      canViewCourse: false,
+      changeDeadline: soonDateStr,
+      canChange: true,
+      isExpired: false,
+    },
+  }, {
     entitlements: {
       isEntitlement: true,
       availableSessions,
@@ -343,10 +353,9 @@ export const entitlementCourses = [
       isExpired: false,
     },
   }, {
-    course: { title: genCourseTitle(102) },
     entitlements: {
       isEntitlement: true,
-      availableSessions,
+      availableSessions: [],
       isRefundable: true,
       isFulfilled: false,
       canViewCourse: false,
@@ -387,13 +396,45 @@ export const courseRunData = courseRuns.map(
       ...data,
       courseRun: genCourseRunData({ ...data.courseRun, courseNumber }),
       ...iteratedData[providerIndex],
-      credit: { isPurchased: false, requestStatus: null },
+    };
+  },
+);
+
+export const entitlementData = entitlementCourses.map(
+  (data, index) => {
+    const title = genCourseTitle(100 + index);
+    const courseNumber = genCourseID(100 + index);
+    const providerIndex = index % 3;
+    const iteratedData = [
+      {
+        provider: providers.edx,
+        course: { title, bannerUrl: logos.edx },
+        relatedPrograms,
+      },
+      {
+        provider: providers.mit,
+        course: { title, bannerUrl: logos.science },
+        relatedPrograms: [relatedPrograms[0]],
+      },
+      {
+        provider: null,
+        course: { title, bannerUrl: logos.social },
+        relatedPrograms: [],
+      },
+    ];
+    return {
+      ...data,
+      enrollment: genEnrollmentData(),
+      grades: { isPassing: true },
+      certificates: genCertificateData(),
+      courseRun: genCourseRunData({ ...data.courseRun, courseNumber }),
+      ...iteratedData[providerIndex],
     };
   },
 );
 
 export default {
   courseRunData,
-  entitlementCourses,
+  entitlementData,
   globalData,
 };

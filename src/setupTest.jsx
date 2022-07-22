@@ -19,7 +19,7 @@ jest.mock('@edx/frontend-platform/i18n', () => {
   const i18n = jest.requireActual('@edx/frontend-platform/i18n');
   const PropTypes = jest.requireActual('prop-types');
   const { formatMessage } = jest.requireActual('./testUtils');
-  const formatDate = jest.fn().mockName('useIntl.formatDate');
+  const formatDate = jest.fn(date => date).mockName('useIntl.formatDate');
   return {
     ...i18n,
     intlShape: PropTypes.shape({
@@ -86,6 +86,7 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
   Hyperlink: 'Hyperlink',
   Icon: 'Icon',
   IconButton: 'IconButton',
+  MailtoLink: 'MailtoLink',
   ModalDialog: {
     Header: 'ModalDialog.Header',
     Body: 'ModalDialog.Body',

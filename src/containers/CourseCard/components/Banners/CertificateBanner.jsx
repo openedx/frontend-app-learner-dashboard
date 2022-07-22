@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Hyperlink } from '@edx/paragon';
+import { MailtoLink, Hyperlink } from '@edx/paragon';
 import { CheckCircle } from '@edx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
@@ -19,61 +19,76 @@ export const CertificateBanner = ({ courseNumber }) => {
     hasFinished,
   } = appHooks.useCardEnrollmentData(courseNumber);
   const { isPassing } = appHooks.useCardGradeData(courseNumber);
-  const { minPassingGrade } = appHooks.useCardCourseRunData(courseNumber);
+  const { minPassingGrade, progressUrl } = appHooks.useCardCourseRunData(courseNumber);
+  const { supportEmail, billingEmail } = appHooks.usePlatformSettingsData();
   const { formatMessage } = useIntl();
+
+  const emailLink = address => address && <MailtoLink to={address}>{address}</MailtoLink>;
 
   if (certificate.isRestricted) {
     return (
       <Banner variant="danger">
-        {formatMessage(messages.certRestricted)}
-        <Hyperlink destination="info@example.com">info@example.com</Hyperlink>
-        {isVerified && (
-          <>
-            If you would like a refund on your Certificate of Achievement, please contact our billing address <Hyperlink destination="billing@example.com">billing@example.com</Hyperlink>
-          </>
+        {formatMessage(messages.certRestricted, { supportEmail: emailLink(supportEmail) })}
+        {isVerified && '  '}
+        {isVerified && formatMessage(
+          messages.certRefundContactBilling,
+          { billingEmail: emailLink(billingEmail) },
         )}
       </Banner>
     );
   }
   if (!isPassing) {
     if (isAudit) {
-      return (<Banner> Grade required to pass the course: {minPassingGrade}% </Banner>);
+      return (
+        <Banner>
+          {formatMessage(messages.passingGrade, { minPassingGrade })}
+        </Banner>
+      );
     }
     if (hasFinished) {
       return (
         <Banner variant="warning">
-          You are not eligible for a certificate.  <Hyperlink destination="">View grades.</Hyperlink>
+          {formatMessage(messages.notEligibleForCert)}.
+          {'  '}
+          <Hyperlink destination={progressUrl}>{formatMessage(messages.viewGrades)}</Hyperlink>
         </Banner>
       );
     }
     return (
       <Banner variant="warning">
-        Grade required for a certificate: {minPassingGrade}%
+        {formatMessage(messages.certMinGrade, { minPassingGrade })}
       </Banner>
     );
   }
   if (certificate.isDownloadable) {
-    if (certificate.previewUrl) {
+    if (certificate.certPreviewUrl) {
       return (
         <Banner variant="success" icon={CheckCircle}>
-          Congratulations.  Your certificate is ready.
+          {formatMessage(messages.certReady)}
           {'  '}
-          <Hyperlink destination={certificate.previewUrl}>View Certificate.</Hyperlink>
+          <Hyperlink destination={certificate.certPreviewUrl}>
+            {formatMessage(messages.viewCertificate)}
+          </Hyperlink>
         </Banner>
       );
     }
     return (
       <Banner variant="success" icon={CheckCircle}>
-        Congratulations.  Your certificate is ready.
+        {formatMessage(messages.certReady)}
         {'  '}
-        <Hyperlink destination={certificate.downloadUrl}>Download Certificate.</Hyperlink>
+        <Hyperlink destination={certificate.certDownloadUrl}>
+          {formatMessage(messages.downloadCertificate)}
+        </Hyperlink>
       </Banner>
     );
   }
   if (certificate.isEarnedButUnavailable) {
     return (
       <Banner>
-        Your grade and certificate will be ready after {certificate.availableDate}.
+        {formatMessage(
+          messages.gradeAndCertReadyAfter,
+          { availableDate: certificate.availableDate },
+        )}
       </Banner>
     );
   }
