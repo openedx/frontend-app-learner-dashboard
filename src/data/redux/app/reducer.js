@@ -5,6 +5,11 @@ const initialState = {
   enrollments: [],
   courseData: {},
   entitlements: [],
+  emailConfirmation: {},
+  enterpriseDashboards: {},
+  platformSettings: {},
+  suggestedCourses: {},
+  filterState: {},
 };
 
 // eslint-disable-next-line no-unused-vars
@@ -12,18 +17,30 @@ const app = createSlice({
   name: 'app',
   initialState,
   reducers: {
-    loadEnrollments: (state, { payload }) => ({
+    loadCourses: (state, { payload: { enrollments, entitlements } }) => ({
       ...state,
-      enrollments: payload.map(curr => curr.courseRun.courseNumber),
-      courseData: payload.reduce(
-        (obj, curr) => ({
-          ...obj,
-          [curr.courseRun.courseNumber]: curr,
-        }),
-        {},
-      ),
+      enrollments: [
+        ...enrollments.map(curr => curr.courseRun.courseNumber),
+        ...entitlements.map(curr => curr.courseRun.courseNumber),
+      ],
+      courseData: {
+        ...entitlements.reduce(
+          (obj, curr) => ({ ...obj, [curr.courseRun.courseNumber]: curr }),
+          {},
+        ),
+        ...enrollments.reduce(
+          (obj, curr) => ({ ...obj, [curr.courseRun.courseNumber]: curr }),
+          {},
+        ),
+      },
     }),
-    loadEntitlements: (state, { payload }) => ({ ...state, entitlements: payload }),
+    loadGlobalData: (state, { payload }) => ({
+      ...state,
+      emailConfirmation: payload.emailConfirmation,
+      enterpriseDashboards: payload.enterpriseDashboards,
+      platformSettings: payload.platformSettings,
+      suggestedCourses: payload.suggestedCourses,
+    }),
   },
 });
 

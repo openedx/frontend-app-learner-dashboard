@@ -2,45 +2,50 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Hyperlink } from '@edx/paragon';
+import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { useCardValues } from 'hooks';
-import { selectors } from 'data/redux';
-
+import { hooks as appHooks } from 'data/redux';
 import Banner from 'components/Banner';
-
-const { cardData } = selectors;
+import messages from './messages';
 
 export const CourseBanner = ({ courseNumber }) => {
-  const courseData = useCardValues(courseNumber, {
-    isVerified: cardData.isVerified,
-    isCourseRunActive: cardData.isCourseRunActive,
-    canUpgrade: cardData.canUpgrade,
-    isAuditAccessExpired: cardData.isAuditAccessExpired,
-    courseWebsite: cardData.courseWebsite,
-  });
+  const {
+    isVerified,
+    isAuditAccessExpired,
+    canUpgrade,
+  } = appHooks.useCardEnrollmentData(courseNumber);
+  const courseRun = appHooks.useCardCourseRunData(courseNumber);
+  const course = appHooks.useCardCourseData(courseNumber);
+  const { formatMessage } = useIntl();
 
-  if (courseData.isVerified) { return null; }
+  if (isVerified) { return null; }
 
-  if (courseData.isAuditAccessExpired) {
-    if (courseData.canUpgrade) {
+  if (isAuditAccessExpired) {
+    if (canUpgrade) {
       return (
         <Banner>
-          Your audit access to this course has expired.  Upgrade now to access your course again.
+          {formatMessage(messages.auditAccessExpired)}
+          {'  '}
+          {formatMessage(messages.upgradeToAccess)}
         </Banner>
       );
     }
     return (
       <Banner>
-        Your audit access to this course has expired. <Hyperlink destination="">Find another course</Hyperlink>
+        {formatMessage(messages.auditAccessExpired)}
+        {'  '}
+        <Hyperlink destination="">{formatMessage(messages.findAnotherCourse)}</Hyperlink>
       </Banner>
     );
   }
-  if (courseData.isCourseRunActive && !courseData.canUpgrade) {
+  if (courseRun.isActive && !canUpgrade) {
     return (
       <Banner>
-        Your upgrade deadline for this course has passed.  To upgrade, enroll in a session that is farther in the future.
+        {formatMessage(messages.upgradeDeadlinePassed)}
         {'  '}
-        <Hyperlink destination={courseData.courseWebsite || ''}>Explore course details.</Hyperlink>
+        <Hyperlink destination={course.website || ''}>
+          {formatMessage(messages.exploreCourseDetails)}
+        </Hyperlink>
       </Banner>
     );
   }

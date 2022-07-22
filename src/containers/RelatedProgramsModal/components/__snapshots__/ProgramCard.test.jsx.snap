@@ -12,18 +12,10 @@ exports[`RelatedProgramsModal ProgramCard snapshot 1`] = `
 >
   <Card.ImageCap
     className="program-card-banner"
-    logoAlt={
-      <formatMessage
-        msg="Provider logo"
-      />
-    }
+    logoAlt="Provider logo"
     logoSrc="props.data.logoUrl"
     src="props.data.bannerUrl"
-    srcAlt={
-      <formatMessage
-        msg="Programm banner"
-      />
-    }
+    srcAlt="Programm banner"
   />
   <Card.Header
     subtitle={
@@ -57,13 +49,9 @@ exports[`RelatedProgramsModal ProgramCard snapshot 1`] = `
     <div
       className="program-summary mt-2"
     >
-      <formatMessage
-        msg="{numCourses} Courses"
-      />
+      2 Courses
        • 
-      <formatMessage
-        msg="{numWeeks} Weeks"
-      />
+      1 Weeks
     </div>
   </div>
 </Card>

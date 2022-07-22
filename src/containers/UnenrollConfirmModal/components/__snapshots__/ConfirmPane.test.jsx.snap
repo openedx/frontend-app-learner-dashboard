@@ -3,30 +3,22 @@
 exports[`UnenrollConfirmModal ConfirmPane snapshot 1`] = `
 <Fragment>
   <h4>
-    <formatMessage
-      msg="Unenroll from course?"
-    />
+    Unenroll from course?
   </h4>
   <p>
-    <formatMessage
-      msg="Progress that you've made so far will not be saved"
-    />
+    Progress that you've made so far will not be saved
   </p>
   <ActionRow>
     <Button
       onClick={[MockFunction props.handleClose]}
       variant="tertiary"
     >
-      <formatMessage
-        msg="Nevermind"
-      />
+      Nevermind
     </Button>
     <Button
       onClick={[MockFunction props.handleConfirm]}
     >
-      <formatMessage
-        msg="Unenroll"
-      />
+      Unenroll
     </Button>
   </ActionRow>
 </Fragment>

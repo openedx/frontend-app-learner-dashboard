@@ -80,7 +80,8 @@ const mockApi = () => {
       resolveFns.init = {
         success: () => resolve({
           enrollments: fakeData.courseRunData,
-          entitlements: fakeData.entitlementCourses,
+          entitlements: fakeData.entitlementData,
+          ...fakeData.globalData,
         }),
       };
     }));
@@ -147,11 +148,12 @@ describe('ESG app integration tests', () => {
       courseData.course.title,
     );
     cardDetails = inspector.get.card.details(card);
+
     [
       courseData.provider.name,
       courseNumber,
       appMessages.withValues.CourseCard.accessExpires({
-        accessExpirationDate: courseData.courseRun.accessExpirationDate,
+        accessExpirationDate: courseData.enrollment.accessExpirationDate,
       }),
     ].forEach(value => inspector.verifyTextIncludes(cardDetails, value));
 

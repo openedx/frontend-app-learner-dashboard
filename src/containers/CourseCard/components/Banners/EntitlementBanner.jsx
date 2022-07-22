@@ -1,30 +1,52 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useIntl } from '@edx/frontend-platform/i18n';
+import { Button, MailtoLink } from '@edx/paragon';
 
-import { useCardValues } from 'hooks';
-import { selectors } from 'data/redux';
+import { hooks as appHooks } from 'data/redux';
 
 import Banner from 'components/Banner';
-
-const { cardData } = selectors;
+import messages from './messages';
 
 export const EntitlementBanner = ({ courseNumber }) => {
-  const data = useCardValues(courseNumber, {
-    canChange: cardData.canChangeEntitlementSession,
-    isEntitlement: cardData.isEntitlement,
-    isExpired: cardData.isEntitlementExpired,
-    isFulfilled: cardData.isEntitlementFulfilled,
-  });
+  const {
+    isEntitlement,
+    hasSessions,
+    isFulfilled,
+    changeDeadline,
+    showExpirationWarning,
+  } = appHooks.useCardEntitlementsData(courseNumber);
+  const { supportEmail } = appHooks.usePlatformSettingsData();
+  const { formatDate, formatMessage } = useIntl();
 
-  if (!data.isEntitlement) {
+  if (!isEntitlement) {
     return null;
   }
-  if (data.isExpired || data.isFulfilled) {
-    return null;
+
+  if (!hasSessions && !isFulfilled) {
+    return (
+      <Banner variant="warning">
+        {formatMessage(messages.entitlementsUnavailable, {
+          emailLink: supportEmail && <MailtoLink to={supportEmail}>{supportEmail}</MailtoLink>,
+        })}
+      </Banner>
+    );
   }
-  return data.canChange
-    ? (<Banner>You must select a session to access the course.</Banner>)
-    : (<Banner>The deadline to select a session has passed</Banner>);
+  if (showExpirationWarning) {
+    return (
+      <Banner>
+        {formatMessage(messages.entitlementsExpiringSoon, {
+          changeDeadline: formatDate(changeDeadline),
+          selectSessionButton: (
+            <Button variant="link" size="inline" className="m-0 p-0">
+              {formatMessage(messages.selectSession)}
+            </Button>
+          ),
+        })}
+      </Banner>
+    );
+  }
+  return null;
 };
 EntitlementBanner.propTypes = {
   courseNumber: PropTypes.string.isRequired,

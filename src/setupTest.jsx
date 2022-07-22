@@ -18,19 +18,16 @@ jest.mock('react', () => ({
 jest.mock('@edx/frontend-platform/i18n', () => {
   const i18n = jest.requireActual('@edx/frontend-platform/i18n');
   const PropTypes = jest.requireActual('prop-types');
+  const { formatMessage } = jest.requireActual('./testUtils');
+  const formatDate = jest.fn(date => date).mockName('useIntl.formatDate');
   return {
     ...i18n,
     intlShape: PropTypes.shape({
       formatMessage: PropTypes.func,
     }),
     useIntl: () => ({
-      formatMessage: (msg) => (
-        <formatMessage
-          msg={msg.defaultMessage}
-          {...(msg.values && { values: msg.values })}
-        />
-      ),
-      formatDate: jest.fn().mockName('useIntl.formatDate'),
+      formatMessage,
+      formatDate,
     }),
     IntlProvider: () => 'IntlProvider',
     defineMessages: m => m,
@@ -89,6 +86,7 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
   Hyperlink: 'Hyperlink',
   Icon: 'Icon',
   IconButton: 'IconButton',
+  MailtoLink: 'MailtoLink',
   ModalDialog: {
     Header: 'ModalDialog.Header',
     Body: 'ModalDialog.Body',
@@ -149,23 +147,7 @@ jest.mock('react-redux', () => {
   };
 });
 
-jest.mock('hooks', () => {
-  const formatMessage = jest.fn((msg, values) => ({ formatted: { msg, values } }));
-  return {
-    ...jest.requireActual('hooks'),
-    useIntl: () => ({
-      formatMessage,
-      formatDate: jest.fn((date) => ({ formatted: date })),
-    }),
-    useCardValues: jest.fn((courseNumber, mapping) => (
-      Object.keys(mapping).reduce(
-        (obj, key) => ({
-          ...obj,
-          [key]: { selector: mapping[key], courseNumber },
-        }),
-        {},
-      )
-    )),
-    nullMethod: jest.fn().mockName('hooks.nullMethod'),
-  };
-});
+jest.mock('hooks', () => ({
+  ...jest.requireActual('hooks'),
+  nullMethod: jest.fn().mockName('hooks.nullMethod'),
+}));

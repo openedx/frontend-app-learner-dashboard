@@ -21,20 +21,19 @@ export const relatedPrograms = [
     title: 'Relativity in Modern Mechanics',
     programUrl: 'www.edx/my-program',
     programType: 'MicroBachelors Program',
-    programTypeUrl: 'www.edx/my-program-type',
     numberOfCourses: 3,
-    estimatedDuration: '4 weeks',
+    estimatedNumberOfWeeks: 4,
   },
   {
     provider: 'University  of Maryland',
     bannerUrl: 'https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg',
     logoUrl: 'https://prod-discovery.edx-cdn.org/organization/certificate_logos/b9dc96da-b3fc-45a6-b6b7-b8e12eb79335-ac60112330e3.png',
     title: 'Pandering for Modern Professionals',
-    programUrl: 'www.edx/my-program',
+    programUrl: 'www.edx/my-program-2',
     programType: 'MicroBachelors Program',
     programTypeUrl: 'www.edx/my-program-type',
     numberOfCourses: 3,
-    estimatedDuration: '4 weeks',
+    estimatedNumberOfWeeks: 4,
   },
 ];
 
@@ -49,24 +48,52 @@ const logos = {
 
 const pastDate = '11/11/2000';
 const futureDate = '11/11/3030';
+const soonDate = new Date();
+soonDate.setDate(soonDate.getDate() + 60);
+const soonDateStr = soonDate.toDateString();
+
+const globalData = {
+  emailConfirmation: {
+    isNeeded: true,
+    sendEmailUrl: 'sendConfirmation@edx.org',
+  },
+  enterpriseDashboards: {
+    availableDashboards: [
+      { label: 'edX', url: 'edx.org/edx-dashboard' },
+      { label: 'harvard', url: 'edx.org/harvard-dashboard' },
+    ],
+    mostRecentDashboard: { label: 'edX', url: 'edx.org/edx-dashboard' },
+  },
+  platformSettings: {
+    supportEmail: 'support@example.com',
+    billingEmail: 'billing@email.com',
+    courseSearchUrl: 'edx.com/course-search',
+  },
+};
 
 export const genCourseRunData = (data = {}) => ({
-  isPending: false,
   isStarted: false,
-  isFinished: false,
   isArchived: false,
-  accessExpirationDate: futureDate,
   endDate: futureDate,
   minPassingGrade: 70,
+  homeUrl: 'edx.com/courses/my-course-url/home',
+  marketingUrl: 'edx.com/courses/my-course-url/marketing',
+  progressUrl: 'edx.com/courses/my-course-url/progress',
+  unenrollUrl: 'edx.com/courses/my-course-url/unenroll',
+  resumeUrl: 'edx.com/courses/my-course-url/resume',
   ...data,
 });
 
 export const genEnrollmentData = (data = {}) => ({
-  isAudit: true,
-  isVerified: false,
+  accessExpirationDate: futureDate,
   canUpgrade: data.verified ? null : true,
+  hasStarted: false,
+  isAudit: true,
   isAuditAccessExpired: data.verified ? null : false,
   isEmailEnabled: false,
+  isEnrolled: true,
+  isVerified: false,
+  lastEnrolled: pastDate,
   ...data,
 });
 
@@ -76,7 +103,9 @@ export const genCertificateData = (data = {}) => ({
   isAvailable: false,
   isEarned: false,
   isDownloadable: false,
-  downloadUrls: null, // { preview, download }
+  certPreviewUrl: 'edx.com/courses/my-course-url/cert-preview',
+  certDownloadUrl: 'edx.com/courses/my-course-url/cert-download',
+  honorCertDownloadUrl: 'edx.com/courses/my-course-url/honor-cert-download',
   ...data,
 });
 
@@ -167,7 +196,7 @@ export const courseRuns = [
   {
     enrollment: genEnrollmentData({ isAudit: false, isVerified: true }),
     grades: { isPassing: false },
-    courseRun: { isFinished: true, endDate: pastDate },
+    courseRun: { isArchived: true, endDate: pastDate },
     certificates: genCertificateData(),
     entitlements: { isEntitlement: false },
   },
@@ -200,10 +229,8 @@ export const courseRuns = [
       isAvailable: true,
       isDownloadable: true,
       availableDate: pastDate,
-      downloadUrls: {
-        preview: logos.edx,
-        download: logos.social,
-      },
+      certDownloadUrl: logos.social,
+      certPreviewUrl: logos.edx,
     }),
     entitlements: { isEntitlement: false },
   },
@@ -217,9 +244,7 @@ export const courseRuns = [
       isAvailable: true,
       isDownloadable: true,
       availableDate: pastDate,
-      downloadUrls: {
-        download: logos.social,
-      },
+      certDownloadUrl: logos.social,
     }),
     entitlements: { isEntitlement: false },
   },
@@ -277,7 +302,6 @@ export const courseRuns = [
     grades: { isPassing: true },
     courseRun: {
       isStarted: true,
-      isFinished: true,
       isArchived: true,
       endDate: pastDate,
     },
@@ -296,7 +320,6 @@ export const courseRuns = [
 
 export const entitlementCourses = [
   {
-    course: { title: genCourseTitle(100) },
     entitlements: {
       isEntitlement: true,
       availableSessions,
@@ -308,7 +331,17 @@ export const entitlementCourses = [
       isExpired: false,
     },
   }, {
-    course: { title: genCourseTitle(101) },
+    entitlements: {
+      isEntitlement: true,
+      availableSessions,
+      isRefundable: true,
+      isFulfilled: false,
+      canViewCourse: false,
+      changeDeadline: soonDateStr,
+      canChange: true,
+      isExpired: false,
+    },
+  }, {
     entitlements: {
       isEntitlement: true,
       availableSessions,
@@ -320,10 +353,9 @@ export const entitlementCourses = [
       isExpired: false,
     },
   }, {
-    course: { title: genCourseTitle(102) },
     entitlements: {
       isEntitlement: true,
-      availableSessions,
+      availableSessions: [],
       isRefundable: true,
       isFulfilled: false,
       canViewCourse: false,
@@ -364,12 +396,45 @@ export const courseRunData = courseRuns.map(
       ...data,
       courseRun: genCourseRunData({ ...data.courseRun, courseNumber }),
       ...iteratedData[providerIndex],
-      credit: { isPurchased: false, requestStatus: null },
+    };
+  },
+);
+
+export const entitlementData = entitlementCourses.map(
+  (data, index) => {
+    const title = genCourseTitle(100 + index);
+    const courseNumber = genCourseID(100 + index);
+    const providerIndex = index % 3;
+    const iteratedData = [
+      {
+        provider: providers.edx,
+        course: { title, bannerUrl: logos.edx },
+        relatedPrograms,
+      },
+      {
+        provider: providers.mit,
+        course: { title, bannerUrl: logos.science },
+        relatedPrograms: [relatedPrograms[0]],
+      },
+      {
+        provider: null,
+        course: { title, bannerUrl: logos.social },
+        relatedPrograms: [],
+      },
+    ];
+    return {
+      ...data,
+      enrollment: genEnrollmentData(),
+      grades: { isPassing: true },
+      certificates: genCertificateData(),
+      courseRun: genCourseRunData({ ...data.courseRun, courseNumber }),
+      ...iteratedData[providerIndex],
     };
   },
 );
 
 export default {
   courseRunData,
-  entitlementCourses,
+  entitlementData,
+  globalData,
 };

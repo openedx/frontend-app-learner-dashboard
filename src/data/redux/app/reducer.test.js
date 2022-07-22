@@ -20,45 +20,66 @@ describe('app reducer', () => {
       });
     };
     describe('action handlers', () => {
-      test('loadEntitlements loads entitlements from payload', () => {
-        testAction(
-          actions.loadEntitlements(testValue),
-          { entitlements: testValue },
-        );
-      });
-      describe('loadEnrollments', () => {
-        const enrollments = [
+      describe('loadCourses', () => {
+        const courseIds = [
           'course-1',
           'course-2',
           'course-3',
         ];
-        const courseData = {
-          [enrollments[0]]: {
-            courseRun: { courseNumber: enrollments[0] },
+        const entitlementIds = [
+          'entitlement-course-1',
+          'entitlement-course-2',
+        ];
+        const enrollmentData = [
+          {
+            courseRun: { courseNumber: courseIds[0] },
             course: 1,
             some: 'data',
           },
-          [enrollments[1]]: {
-            courseRun: { courseNumber: enrollments[1] },
+          {
+            courseRun: { courseNumber: courseIds[1] },
             course: 2,
             some: 'other data',
           },
-          [enrollments[2]]: {
-            courseRun: { courseNumber: enrollments[2] },
+          {
+            courseRun: { courseNumber: courseIds[2] },
             course: 3,
             some: 'still different data',
           },
-        };
-        const enrollmentData = enrollments.map(v => courseData[v]);
+        ];
+        const entitlementData = [
+          {
+            courseRun: { courseNumber: entitlementIds[0] },
+            course: 4,
+            some: 'STILL different data',
+          },
+          {
+            courseRun: { courseNumber: entitlementIds[1] },
+            course: 5,
+            some: 'still DIFFERENT data',
+          },
+        ];
         let out;
         beforeEach(() => {
-          out = reducer(testState, actions.loadEnrollments(enrollmentData));
+          out = reducer(testState, actions.loadCourses({
+            enrollments: enrollmentData,
+            entitlements: entitlementData,
+          }));
         });
         it('loads list of courseRun ids into enrollments field', () => {
-          expect(out.enrollments).toEqual(enrollments);
+          expect(out.enrollments).toEqual([
+            ...courseIds,
+            ...entitlementIds,
+          ]);
         });
         it('loads object keyed by courseRun ids into courseData field', () => {
-          expect(out.courseData).toEqual(courseData);
+          expect(out.courseData).toEqual({
+            [courseIds[0]]: enrollmentData[0],
+            [courseIds[1]]: enrollmentData[1],
+            [courseIds[2]]: enrollmentData[2],
+            [entitlementIds[0]]: entitlementData[0],
+            [entitlementIds[1]]: entitlementData[1],
+          });
         });
       });
     });

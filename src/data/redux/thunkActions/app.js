@@ -14,18 +14,18 @@ import requests from './requests';
  */
 export const initialize = () => (dispatch) => (
   dispatch(requests.initializeList({
-    onSuccess: (({ enrollments, entitlements }) => {
-      dispatch(actions.app.loadEnrollments(enrollments));
-      dispatch(actions.app.loadEntitlements(entitlements));
+    onSuccess: (({ enrollments, entitlements, ...globalData }) => {
+      dispatch(actions.app.loadCourses({ enrollments, entitlements }));
+      dispatch(actions.app.loadGlobalData(globalData));
     }),
   }))
 );
 
 export const refreshList = () => (dispatch) => (
   dispatch(requests.initializeList({
-    onSuccess: (({ enrollments, entitlements }) => {
-      dispatch(actions.app.loadEnrollments(enrollments));
-      dispatch(actions.app.loadEntitlements(entitlements));
+    onSuccess: (({ enrollments, entitlements, ...globalData }) => {
+      dispatch(actions.app.loadCourses({ enrollments, entitlements }));
+      dispatch(actions.app.loadGlobalData(globalData));
     }),
   }))
 );

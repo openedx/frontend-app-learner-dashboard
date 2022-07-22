@@ -54,15 +54,14 @@ export const ProgramCard = ({ data }) => {
 };
 ProgramCard.propTypes = {
   data: PropTypes.shape({
-    estimatedNumberOfWeeks: PropTypes.number,
-    numberOfCourses: PropTypes.number,
     bannerUrl: PropTypes.string,
+    estimatedNumberOfWeeks: PropTypes.number,
     logoUrl: PropTypes.string,
-    title: PropTypes.string,
-    provider: PropTypes.string,
+    numberOfCourses: PropTypes.number,
     programType: PropTypes.string,
     programUrl: PropTypes.string,
-    programTypeUrl: PropTypes.string,
+    provider: PropTypes.string,
+    title: PropTypes.string,
   }).isRequired,
 };
 

@@ -1,37 +1,35 @@
 import { Locked } from '@edx/paragon/icons';
+import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { selectors } from 'data/redux';
-import { useIntl, useCardValues } from 'hooks';
+import { hooks as appHooks } from 'data/redux';
 import messages from './messages';
-
-const { cardData } = selectors;
 
 export const useCardActionData = ({ courseNumber }) => {
   const { formatMessage } = useIntl();
-  const data = useCardValues(courseNumber, {
-    canUpgrade: cardData.canUpgrade,
-    isAudit: cardData.isAudit,
-    isAuditAccessExpired: cardData.isAuditAccessExpired,
-    isVerified: cardData.isVerified,
-    isPending: cardData.isCourseRunPending,
-    isFinished: cardData.isCourseRunFinished,
-  });
+  const {
+    canUpgrade,
+    isAudit,
+    isAuditAccessExpired,
+    isVerified,
+  } = appHooks.useCardEnrollmentData(courseNumber);
+  const { isPending, isArchived } = appHooks.useCardCourseRunData(courseNumber);
+
   let primary;
   let secondary = null;
-  if (!data.isVerified) {
+  if (!isVerified) {
     secondary = {
       iconBefore: Locked,
       variant: 'outline-primary',
-      disabled: !data.canUpgrade,
+      disabled: !canUpgrade,
       children: formatMessage(messages.upgrade),
     };
   }
-  if (data.isPending) {
+  if (isPending) {
     primary = { children: formatMessage(messages.beginCourse) };
-  } else if (!data.isFinished) {
+  } else if (!isArchived) {
     primary = {
       children: formatMessage(messages.resume),
-      disabled: data.isAudit && data.isAuditAccessExpired,
+      disabled: isAudit && isAuditAccessExpired,
     };
   } else {
     primary = { children: formatMessage(messages.viewCourse) };

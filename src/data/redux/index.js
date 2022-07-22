@@ -4,14 +4,14 @@ import { StrictDict } from 'utils';
 
 import * as app from './app';
 import * as requests from './requests';
-import * as cardData from './cardData';
+
+import * as hooks from './hooks';
 
 export { default as thunkActions } from './thunkActions';
 
 const modules = {
   app,
   requests,
-  cardData,
 };
 
 const moduleProps = (propName) => Object.keys(modules).reduce(
@@ -28,6 +28,6 @@ const actions = StrictDict(moduleProps('actions'));
 
 const selectors = StrictDict(moduleProps('selectors'));
 
-export { actions, selectors };
+export { actions, selectors, hooks };
 
 export default rootReducer;

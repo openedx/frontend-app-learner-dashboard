@@ -3,9 +3,7 @@
 exports[`UnenrollConfirmModal ReasonPane snapshot 1`] = `
 <Fragment>
   <h4>
-    <formatMessage
-      msg="What's your main reason for unenrolling?"
-    />
+    What's your main reason for unenrolling?
   </h4>
   <Form.RadioSet
     name="unenrollReason"
@@ -16,84 +14,62 @@ exports[`UnenrollConfirmModal ReasonPane snapshot 1`] = `
       key="prereqs"
       value="prereqs"
     >
-      <formatMessage
-        msg="I don't have the academic or language prerequisites"
-      />
+      I don't have the academic or language prerequisites
     </Form.Radio>
     <Form.Radio
       key="difficulty"
       value="difficulty"
     >
-      <formatMessage
-        msg="The course material was too hard"
-      />
+      The course material was too hard
     </Form.Radio>
     <Form.Radio
       key="goals"
       value="goals"
     >
-      <formatMessage
-        msg="This won't help me reach my goals"
-      />
+      This won't help me reach my goals
     </Form.Radio>
     <Form.Radio
       key="broken"
       value="broken"
     >
-      <formatMessage
-        msg="Something was broken"
-      />
+      Something was broken
     </Form.Radio>
     <Form.Radio
       key="time"
       value="time"
     >
-      <formatMessage
-        msg="I don't have the time"
-      />
+      I don't have the time
     </Form.Radio>
     <Form.Radio
       key="browse"
       value="browse"
     >
-      <formatMessage
-        msg="I just wanted to browse the material"
-      />
+      I just wanted to browse the material
     </Form.Radio>
     <Form.Radio
       key="support"
       value="support"
     >
-      <formatMessage
-        msg="I don't have enough support"
-      />
+      I don't have enough support
     </Form.Radio>
     <Form.Radio
       key="quality"
       value="quality"
     >
-      <formatMessage
-        msg="I am not happy with the quality of the content"
-      />
+      I am not happy with the quality of the content
     </Form.Radio>
     <Form.Radio
       key="easy"
       value="easy"
     >
-      <formatMessage
-        msg="The course material was too easy"
-      />
+      The course material was too easy
     </Form.Radio>
     <Form.Radio
       value="custom"
     >
       <Form.Control
         onChange={[MockFunction props.reason.customOption.onChange]}
-        placeholder={
-          <formatMessage
-            msg="Other"
-          />
-        }
+        placeholder="Other"
         value="props.reason.customOption.value"
       />
     </Form.Radio>
@@ -103,16 +79,12 @@ exports[`UnenrollConfirmModal ReasonPane snapshot 1`] = `
       onClick={[MockFunction props.reason.skip]}
       variant="tertiary"
     >
-      <formatMessage
-        msg="Skip"
-      />
+      Skip
     </Button>
     <Button
       onClick={[MockFunction props.reason.submit]}
     >
-      <formatMessage
-        msg="Submit"
-      />
+      Submit
     </Button>
   </ActionRow>
 </Fragment>
