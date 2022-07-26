@@ -1,0 +1,188 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SelectSessionModal snapshot empty modal with leave option  1`] = `
+<ModalDialog
+  hasCloseButton={false}
+  isOpen={true}
+  onClose={[MockFunction hooks.nullMethod]}
+  title=""
+>
+  <div
+    className="bg-white p-3 rounded shadow"
+    size="md"
+    style={
+      Object {
+        "textAlign": "start",
+      }
+    }
+  >
+    <h4>
+      Change or leave session?
+    </h4>
+    <Form.Group>
+      <Form.Label>
+        When you change to a different session any course progress or grades from your current session will be lost.
+      </Form.Label>
+      <Form.RadioSet
+        name="sessions"
+      >
+        <Form.Radio
+          value="leave"
+        >
+          Leave session
+        </Form.Radio>
+      </Form.RadioSet>
+    </Form.Group>
+    <ActionRow>
+      <Button
+        onClick={[MockFunction useSelectSession.closeSessionModal]}
+        variant="tertiary"
+      >
+        Nevermind
+      </Button>
+      <Button>
+        Confirm Session
+      </Button>
+    </ActionRow>
+  </div>
+</ModalDialog>
+`;
+
+exports[`SelectSessionModal snapshot modal with leave option  1`] = `
+<ModalDialog
+  hasCloseButton={false}
+  isOpen={true}
+  onClose={[MockFunction hooks.nullMethod]}
+  title=""
+>
+  <div
+    className="bg-white p-3 rounded shadow"
+    size="md"
+    style={
+      Object {
+        "textAlign": "start",
+      }
+    }
+  >
+    <h4>
+      Change or leave session?
+    </h4>
+    <Form.Group>
+      <Form.Label>
+        When you change to a different session any course progress or grades from your current session will be lost.
+      </Form.Label>
+      <Form.RadioSet
+        name="sessions"
+      >
+        <Form.Radio
+          key="1/2/2000"
+          value="1/2/2000"
+        >
+          1/2/2000
+           - 
+          1/2/2020
+        </Form.Radio>
+        <Form.Radio
+          key="2/3/2000"
+          value="2/3/2000"
+        >
+          2/3/2000
+           - 
+          2/3/2020
+        </Form.Radio>
+        <Form.Radio
+          key="3/4/2000"
+          value="3/4/2000"
+        >
+          3/4/2000
+           - 
+          3/4/2020
+        </Form.Radio>
+        <Form.Radio
+          value="leave"
+        >
+          Leave session
+        </Form.Radio>
+      </Form.RadioSet>
+    </Form.Group>
+    <ActionRow>
+      <Button
+        onClick={[MockFunction useSelectSession.closeSessionModal]}
+        variant="tertiary"
+      >
+        Nevermind
+      </Button>
+      <Button>
+        Confirm Session
+      </Button>
+    </ActionRow>
+  </div>
+</ModalDialog>
+`;
+
+exports[`SelectSessionModal snapshot modal without leave option  1`] = `
+<ModalDialog
+  hasCloseButton={false}
+  isOpen={true}
+  onClose={[MockFunction hooks.nullMethod]}
+  title=""
+>
+  <div
+    className="bg-white p-3 rounded shadow"
+    size="md"
+    style={
+      Object {
+        "textAlign": "start",
+      }
+    }
+  >
+    <h4>
+      Select a session to access course-title: unit test save life
+    </h4>
+    <Form.Group>
+      <Form.Label>
+        Remember, if you change your mind you have 2 weeks to unenroll and reclaim your entitlement.
+      </Form.Label>
+      <Form.RadioSet
+        name="sessions"
+      >
+        <Form.Radio
+          key="1/2/2000"
+          value="1/2/2000"
+        >
+          1/2/2000
+           - 
+          1/2/2020
+        </Form.Radio>
+        <Form.Radio
+          key="2/3/2000"
+          value="2/3/2000"
+        >
+          2/3/2000
+           - 
+          2/3/2020
+        </Form.Radio>
+        <Form.Radio
+          key="3/4/2000"
+          value="3/4/2000"
+        >
+          3/4/2000
+           - 
+          3/4/2020
+        </Form.Radio>
+      </Form.RadioSet>
+    </Form.Group>
+    <ActionRow>
+      <Button
+        onClick={[MockFunction useSelectSession.closeSessionModal]}
+        variant="tertiary"
+      >
+        Nevermind
+      </Button>
+      <Button>
+        Confirm Session
+      </Button>
+    </ActionRow>
+  </div>
+</ModalDialog>
+`;

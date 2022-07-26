@@ -289,6 +289,7 @@ export const courseRuns = [
       canChange: true,
       changeDeadline: futureDate,
       isExpired: false,
+      availableSessions,
     },
   },
   // Entitlement Course Run - Can View and Change
@@ -305,6 +306,7 @@ export const courseRuns = [
       canChange: true,
       changeDeadline: futureDate,
       isExpired: false,
+      availableSessions,
     },
   },
   // Entitlement Course Run - Can View but not Change
@@ -345,6 +347,10 @@ export const courseRuns = [
   },
 ];
 
+// unfulfilled entitlement select session
+// unfulfilled entitlement select session with deadline
+// unfulfilled entitlement select session pass deadline with available session {banner different from 4th}
+// unfulfilled entitlement select session pass deadline without available session
 export const entitlementCourses = [
   {
     entitlements: {

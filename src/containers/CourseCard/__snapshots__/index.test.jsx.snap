@@ -36,14 +36,9 @@ exports[`CourseCard component snapshot 1`] = `
         }
       />
       <Card.Section>
-        <span
-          data-testid="CourseCardDetails"
-        >
-          hooks.providerName
-           • 
-          test-course-number
-           • 
-        </span>
+        <CourseCardDetails
+          courseNumber="test-course-number"
+        />
       </Card.Section>
       <Card.Footer
         orientation="vertical"

@@ -1,4 +1,4 @@
-import CourseCard from 'containers/CourseCard/messages';
+import CourseCardDetails from 'containers/CourseCard/components/CourseCardDetails/messages';
 
 const mapMessages = (messages) => Object.keys(messages).reduce(
   (acc, key) => ({ ...acc, [key]: messages[key].defaultMessage }),
@@ -22,8 +22,8 @@ const mapMessagesWithValues = (messages) => Object.keys(messages).reduce(
 );
 
 export default {
-  CourseCard: mapMessages(CourseCard),
+  CourseCardDetails: mapMessages(CourseCardDetails),
   withValues: {
-    CourseCard: mapMessagesWithValues(CourseCard),
+    CourseCardDetails: mapMessagesWithValues(CourseCardDetails),
   },
 };

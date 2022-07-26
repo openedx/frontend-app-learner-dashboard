@@ -17,12 +17,11 @@ jest.mock('./components/Banners', () => ({
   EntitlementBanner: () => 'EntitlementBanner',
 }));
 jest.mock('./components/CourseCardActions', () => 'CourseCardActions');
+jest.mock('./components/CourseCardDetails', () => 'CourseCardDetails');
 
 const dataProps = {
   title: 'hooks.title',
   bannerUrl: 'hooks.bannerUrl',
-  providerName: 'hooks.providerName',
-  accessMessagE: 'hooks.accessMessage',
   formatMessage: jest.fn(msg => ({ formatted: msg })),
 };
 

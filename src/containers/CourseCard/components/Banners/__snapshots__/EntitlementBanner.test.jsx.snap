@@ -12,9 +12,10 @@ exports[`EntitlementBanner snapshot: expiration warning 1`] = `
     }
     values={
       Object {
-        "changeDeadline": "test-deadline",
+        "changeDeadline": "11/11/2022",
         "selectSessionButton": <Button
           className="m-0 p-0"
+          onClick={[MockFunction useSelectSession.openSessionModal]}
           size="inline"
           variant="link"
         >

@@ -11,6 +11,9 @@ jest.mock('data/redux', () => ({
     useCardEntitlementsData: jest.fn(),
   },
 }));
+jest.mock('containers/SelectSession/hooks', () => () => ({
+  openSessionModal: jest.fn().mockName('useSelectSession.openSessionModal'),
+}));
 
 const courseNumber = 'my-test-course-number';
 
@@ -20,7 +23,7 @@ const entitlementsData = {
   isEntitlement: true,
   hasSessions: true,
   isFulfilled: false,
-  changeDeadline: 'test-deadline',
+  changeDeadline: '11/11/2022',
   showExpirationWarning: false,
 };
 const platformData = { supportEmail: 'test-support-email' };

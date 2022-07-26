@@ -86,6 +86,11 @@ export const messages = StrictDict({
     description: 'Entitlements course message when the entitlement is expiring soon.',
     defaultMessage: 'You must {selectSessionButton} by {changeDeadline} to access the course.',
   },
+  entitlementsExpired: {
+    id: 'learner-dash.courseCard.banners.entitlementsExpired',
+    description: 'Entitlements course message when the entitlement is expired.',
+    defaultMessage: 'You can no longer change sessions.',
+  },
   selectSession: {
     id: 'learner-dash.courseCard.banners.selectSession',
     description: 'Entitlements session selection link text',

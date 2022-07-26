@@ -118,14 +118,13 @@ describe('ESG app integration tests', () => {
     inspector = new Inspector(el);
   });
 
-  test('initialization', async (done) => {
+  test('initialization', async () => {
     await waitForRequestStatus(RequestKeys.initialize, RequestStates.pending);
     resolveFns.init.success();
     await waitForRequestStatus(RequestKeys.initialize, RequestStates.completed);
-    done();
   });
 
-  test('course cards', async (done) => {
+  test('course cards', async () => {
     resolveFns.init.success();
     await waitForRequestStatus(RequestKeys.initialize, RequestStates.completed);
     await inspector.findByText(fakeData.courseRunData[0].course.title);
@@ -152,11 +151,9 @@ describe('ESG app integration tests', () => {
     [
       courseData.provider.name,
       courseNumber,
-      appMessages.withValues.CourseCard.accessExpires({
+      appMessages.withValues.CourseCardDetails.accessExpires({
         accessExpirationDate: courseData.enrollment.accessExpirationDate,
       }),
     ].forEach(value => inspector.verifyTextIncludes(cardDetails, value));
-
-    done();
   });
 });
