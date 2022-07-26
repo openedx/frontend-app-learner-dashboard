@@ -15,13 +15,12 @@ import {
 } from './components/Banners';
 import CourseCardActions from './components/CourseCardActions';
 import messages from './messages';
+import CourseCardDetails from './components/CourseCardDetails';
 
 export const CourseCard = ({ courseNumber }) => {
   const {
     title,
     bannerUrl,
-    providerName,
-    accessMessage,
     formatMessage,
   } = useCardData({ courseNumber });
   return (
@@ -37,9 +36,7 @@ export const CourseCard = ({ courseNumber }) => {
             actions={<CourseCardMenu courseNumber={courseNumber} />}
           />
           <Card.Section>
-            <span data-testid="CourseCardDetails">
-              {providerName} • {courseNumber} • {accessMessage}
-            </span>
+            <CourseCardDetails courseNumber={courseNumber} />
           </Card.Section>
           <Card.Footer
             orientation="vertical"

@@ -21,6 +21,11 @@ export const messages = StrictDict({
     description: 'Course card view-course button text',
     defaultMessage: 'View Course',
   },
+  selectSession: {
+    id: 'learner-dash.courseCard.actions.selectSession',
+    description: 'Course card select-session button text',
+    defaultMessage: 'Select Session',
+  },
 });
 
 export default messages;

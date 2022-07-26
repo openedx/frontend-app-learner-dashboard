@@ -10,6 +10,7 @@ const initialState = {
   platformSettings: {},
   suggestedCourses: [],
   filterState: {},
+  selectSessionsModal: {},
 };
 
 // eslint-disable-next-line no-unused-vars
@@ -40,6 +41,12 @@ const app = createSlice({
       enterpriseDashboards: payload.enterpriseDashboards,
       platformSettings: payload.platformSettings,
       suggestedCourses: payload.suggestedCourses,
+    }),
+    updateSelectSessionModal: (state, { payload }) => ({
+      ...state,
+      selectSessionsModal: {
+        ...payload,
+      },
     }),
   },
 });

@@ -19,7 +19,7 @@ jest.mock('@edx/frontend-platform/i18n', () => {
   const i18n = jest.requireActual('@edx/frontend-platform/i18n');
   const PropTypes = jest.requireActual('prop-types');
   const { formatMessage } = jest.requireActual('./testUtils');
-  const formatDate = jest.fn(date => date).mockName('useIntl.formatDate');
+  const formatDate = jest.fn(date => new Date(date).toLocaleDateString()).mockName('useIntl.formatDate');
   return {
     ...i18n,
     intlShape: PropTypes.shape({
@@ -133,8 +133,6 @@ jest.mock('hooks', () => ({
   nullMethod: jest.fn().mockName('hooks.nullMethod'),
 }));
 
-jest.mock('@zip.js/zip.js', () => ({}));
-
 // Mock react-redux hooks
 // unmock for integration tests
 jest.mock('react-redux', () => {
@@ -153,4 +151,11 @@ jest.mock('react-redux', () => {
 jest.mock('hooks', () => ({
   ...jest.requireActual('hooks'),
   nullMethod: jest.fn().mockName('hooks.nullMethod'),
+}));
+
+jest.mock('moment', () => ({
+  __esModule: true,
+  default: (date) => ({
+    toDate: jest.fn().mockReturnValue(date),
+  }),
 }));

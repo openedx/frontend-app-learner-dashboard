@@ -12,13 +12,13 @@ describe('app reducer', () => {
       },
       entitlements: [],
     };
-    const testValue = 'my-test-value';
-    const testAction = (action, expected) => {
-      expect(reducer(testState, action)).toEqual({
-        ...testState,
-        ...expected,
-      });
-    };
+    // const testValue = 'my-test-value';
+    // const testAction = (action, expected) => {
+    //   expect(reducer(testState, action)).toEqual({
+    //     ...testState,
+    //     ...expected,
+    //   });
+    // };
     describe('action handlers', () => {
       describe('loadCourses', () => {
         const courseIds = [

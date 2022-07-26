@@ -17,6 +17,7 @@ export const simpleSelectors = {
   suggestedCourses: mkSimpleSelector(app => app.suggestedCourses),
   emailConfirmation: mkSimpleSelector(app => app.emailConfirmation),
   enterpriseDashboards: mkSimpleSelector(app => app.enterpriseDashboards),
+  selectSessionsModal: mkSimpleSelector(app => app.selectSessionsModal),
 };
 
 export const courseCardData = (state, courseNumber) => (
@@ -68,6 +69,7 @@ export const courseCard = StrictDict({
     const showExpirationWarning = deadline > new Date() && deadline <= dateSixMonthsFromNow;
     return {
       canChange: entitlements.canChange,
+      canViewCourse: entitlements.canViewCourse,
       entitlementSessions: entitlements.availableSessions,
       isEntitlement: entitlements.isEntitlement,
       isExpired: entitlements.isExpired,
