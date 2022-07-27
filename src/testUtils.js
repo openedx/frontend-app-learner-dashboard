@@ -126,6 +126,7 @@ export class MockUseState {
     this.restore = this.restore.bind(this);
     this.mockVal = this.mockVal.bind(this);
     this.testGetter = this.testGetter.bind(this);
+    this.getState = this.getState.bind(this);
   }
 
   /**
@@ -187,5 +188,9 @@ export class MockUseState {
       jest.spyOn(react, 'useState').mockImplementationOnce(useState);
       expect(this.hooks.state[key](testValue)).toEqual(useState(testValue));
     });
+  }
+
+  getState(key) {
+    return this.hooks.state[key];
   }
 }

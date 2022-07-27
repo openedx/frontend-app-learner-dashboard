@@ -5,32 +5,34 @@ import {
 } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { hooks as appHooks } from 'data/redux';
 import messages from './messages';
 import './ConfirmEmailBanner.scss';
+import useConfirmEmailBannerData from './hooks';
 
 export const ConfirmEmailBanner = () => {
-  const { isNeeded } = appHooks.useEmailConfirmationData();
-  const [show, setShow] = React.useState(isNeeded);
-  const [isOpen, setOpen] = React.useState(false);
-  const close = () => setOpen(false);
+  const {
+    isNeeded,
+    showConfirmModal,
+    showPageBanner,
+    closePageBanner,
+    closeConfirmModal,
+    openConfirmModalButtonClick,
+    userConfirmEmailButtonClick,
+  } = useConfirmEmailBannerData();
   const { formatMessage } = useIntl();
 
   if (!isNeeded) { return null; }
 
   return (
     <>
-      <PageBanner show={show} dismissible onDismiss={() => setShow(false)}>
+      <PageBanner show={showPageBanner} dismissible onDismiss={closePageBanner}>
         {formatMessage(messages.confirmEmailTextReminderBanner, {
           confirmNowButton: (
             <Button
               className="confirm-email-now-button"
               variant="link"
               size="inline"
-              onClick={() => {
-                setOpen(true);
-                setShow(false);
-              }}
+              onClick={openConfirmModalButtonClick}
             >
               {formatMessage(messages.confirmNowButton)}
             </Button>
@@ -38,17 +40,17 @@ export const ConfirmEmailBanner = () => {
         })}
       </PageBanner>
       <MarketingModal
-        title="My dialog"
-        isOpen={isOpen}
-        onClose={close}
+        title=""
+        isOpen={showConfirmModal}
+        onClose={closeConfirmModal}
         hasCloseButton={false}
         heroNode={(
           <ModalDialog.Hero className="bg-gray-300">
-            <img className="m-auto" src="confirm-email.svg" alt="" />
+            <img className="m-auto" src="confirm-email.svg" alt={formatMessage(messages.confirmEmailImageAlt)} />
           </ModalDialog.Hero>
         )}
         footerNode={(
-          <Button className="mx-auto my-3" variant="danger" onClick={close}>
+          <Button className="mx-auto my-3" variant="danger" onClick={userConfirmEmailButtonClick}>
             {formatMessage(messages.verifiedConfirmEmailButton)}
           </Button>
         )}
