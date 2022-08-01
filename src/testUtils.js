@@ -17,7 +17,7 @@ export const formatMessage = (msg, values) => {
   }
   Object.keys(values).forEach((key) => {
     // eslint-disable-next-line
-    message = message.replace(`{${key}}`, values[key]);
+    message = message.replaceAll(`{${key}}`, values[key]);
   });
   return message;
 };
