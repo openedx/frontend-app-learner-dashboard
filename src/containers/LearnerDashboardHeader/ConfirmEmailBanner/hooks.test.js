@@ -56,21 +56,21 @@ describe('ConfirmEmailBanner hooks', () => {
     afterEach(state.restore);
     test('closePageBanner', () => {
       out.closePageBanner();
-      expect(state.getState('showPageBanner')).toEqual(false);
+      expect(state.values.showPageBanner).toEqual(false);
     });
     test('closeConfirmModal', () => {
       out.closeConfirmModal();
-      expect(state.getState('showConfirmModal')).toEqual(false);
+      expect(state.values.showConfirmModal).toEqual(false);
     });
     test('openConfirmModalButtonClick', () => {
       out.openConfirmModalButtonClick();
-      expect(state.getState('showConfirmModal')).toEqual(true);
+      expect(state.values.showConfirmModal).toEqual(true);
       expect(thunkActions.app.sendConfirmEmail).toBeCalled();
     });
     test('userConfirmEmailButtonClick', () => {
       out.userConfirmEmailButtonClick();
-      expect(state.getState('showConfirmModal')).toEqual(false);
-      expect(state.getState('showPageBanner')).toEqual(false);
+      expect(state.values.showConfirmModal).toEqual(false);
+      expect(state.values.showPageBanner).toEqual(false);
     });
   });
 });

@@ -126,7 +126,6 @@ export class MockUseState {
     this.restore = this.restore.bind(this);
     this.mockVal = this.mockVal.bind(this);
     this.testGetter = this.testGetter.bind(this);
-    this.getState = this.getState.bind(this);
   }
 
   /**
@@ -190,7 +189,7 @@ export class MockUseState {
     });
   }
 
-  getState(key) {
-    return this.hooks.state[key];
+  get values() {
+    return StrictDict({ ...this.hooks.state });
   }
 }
