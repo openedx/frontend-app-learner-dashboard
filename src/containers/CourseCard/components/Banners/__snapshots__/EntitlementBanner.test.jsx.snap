@@ -2,7 +2,7 @@
 
 exports[`EntitlementBanner snapshot: expiration warning 1`] = `
 <Banner>
-  <div
+  <formatMessageFunction
     message={
       Object {
         "defaultMessage": "You must {selectSessionButton} by {changeDeadline} to access the course.",
@@ -18,15 +18,7 @@ exports[`EntitlementBanner snapshot: expiration warning 1`] = `
           size="inline"
           variant="link"
         >
-          <div
-            message={
-              Object {
-                "defaultMessage": "select a session",
-                "description": "Entitlements session selection link text",
-                "id": "learner-dash.courseCard.banners.selectSession",
-              }
-            }
-          />
+          select a session
         </Button>,
       }
     }
@@ -38,7 +30,7 @@ exports[`EntitlementBanner snapshot: no sessions available 1`] = `
 <Banner
   variant="warning"
 >
-  <div
+  <formatMessageFunction
     message={
       Object {
         "defaultMessage": "There are no sessions available at the moment.  The course team will create new sessions soon.  If no sessions appear, please contact {emailLink} for information.",

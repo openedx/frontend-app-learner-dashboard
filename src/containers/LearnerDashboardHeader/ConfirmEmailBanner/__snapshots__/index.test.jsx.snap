@@ -7,7 +7,27 @@ exports[`ConfirmEmailBanner snapshot Show on unverified 1`] = `
     onDismiss={[MockFunction closePageBanner]}
     show={[MockFunction showPageBanner]}
   >
-    Remember to confirm your email so that you can keep learning on edX! [object Object].
+    <formatMessageFunction
+      message={
+        Object {
+          "defaultMessage": "Remember to confirm your email so that you can keep learning on edX! {confirmNowButton}.",
+          "description": "Text for reminding user to confirm email",
+          "id": "leanerDashboard.confirmEmailTextReminderBanner",
+        }
+      }
+      values={
+        Object {
+          "confirmNowButton": <Button
+            className="confirm-email-now-button"
+            onClick={[MockFunction openConfirmModalButtonClick]}
+            size="inline"
+            variant="link"
+          >
+            Confirm Now
+          </Button>,
+        }
+      }
+    />
   </PageBanner>
   <MarketingModal
     footerNode={

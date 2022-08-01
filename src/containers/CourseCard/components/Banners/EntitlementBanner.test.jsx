@@ -1,13 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { hooks as appHooks } from 'data/redux';
 import EntitlementBanner from './EntitlementBanner';
 
-jest.mock('@edx/frontend-platform/i18n', () => ({
-  useIntl: jest.fn(),
-}));
 jest.mock('components/Banner', () => 'Banner');
 jest.mock('data/redux', () => ({
   hooks: {
@@ -37,15 +33,6 @@ const render = (overrides = {}) => {
 };
 
 describe('EntitlementBanner', () => {
-  beforeEach(() => {
-    useIntl.mockReturnValue({
-      formatDate: (date) => date,
-      formatMessage: (message, values) => <div {...{ message, values }} />,
-    });
-  });
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
   it('initializes data with course number from entitlements', () => {
     render();
     expect(appHooks.useCardEntitlementsData).toHaveBeenCalledWith(courseNumber);
