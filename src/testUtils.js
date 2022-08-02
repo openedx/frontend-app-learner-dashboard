@@ -10,6 +10,11 @@ export const formatMessage = (msg, values) => {
   if (values === undefined) {
     return message;
   }
+  // check if value is not a primitive type.
+  if (Object.values(values).filter(value => Object(value) === value).length) {
+    // eslint-disable-next-line react/jsx-filename-extension
+    return <formatMessageFunction {...{ message: msg, values }} />;
+  }
   Object.keys(values).forEach((key) => {
     // eslint-disable-next-line
     message = message.replace(`{${key}}`, values[key]);
@@ -187,5 +192,9 @@ export class MockUseState {
       jest.spyOn(react, 'useState').mockImplementationOnce(useState);
       expect(this.hooks.state[key](testValue)).toEqual(useState(testValue));
     });
+  }
+
+  get values() {
+    return StrictDict({ ...this.hooks.state });
   }
 }

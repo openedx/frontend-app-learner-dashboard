@@ -40,6 +40,7 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
     Heading: 'Alert.Heading',
   },
   AlertModal: 'AlertModal',
+  MarketingModal: 'MarketingModal',
   ActionRow: 'ActionRow',
   Badge: 'Badge',
   Button: 'Button',
@@ -90,6 +91,7 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
   ModalDialog: {
     Header: 'ModalDialog.Header',
     Body: 'ModalDialog.Body',
+    Hero: 'ModalDialog.Hero',
   },
   MultiSelectDropdownFilter: 'MultiSelectDropdownFilter',
   OverlayTrigger: 'OverlayTrigger',
@@ -100,6 +102,7 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
   StatefulButton: 'StatefulButton',
   TextFilter: 'TextFilter',
   Spinner: 'Spinner',
+  PageBanner: 'PageBanner',
 }));
 
 jest.mock('@fortawesome/react-fontawesome', () => ({

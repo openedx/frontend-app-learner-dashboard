@@ -30,7 +30,11 @@ export const refreshList = () => (dispatch) => (
   }))
 );
 
+// TODO: connect hook to actual api later
+export const sendConfirmEmail = () => () => console.log('send confirm email');
+
 export default StrictDict({
   initialize,
   refreshList,
+  sendConfirmEmail,
 });
