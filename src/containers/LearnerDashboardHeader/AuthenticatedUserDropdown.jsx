@@ -13,14 +13,14 @@ export const AuthenticatedUserDropdown = ({ username }) => {
   const { formatMessage } = useIntl();
   return (
     <>
-      <Dropdown className='user-dropdown'>
-        <Dropdown.Toggle id='user' variant='primary'>
+      <Dropdown className="user-dropdown">
+        <Dropdown.Toggle id="user" variant="primary">
           <Icon src={Person} />
-          <span data-hj-suppress className='d-none d-md-inline'>
+          <span data-hj-suppress className="d-none d-md-inline">
             {username}
           </span>
         </Dropdown.Toggle>
-        <Dropdown.Menu className='dropdown-menu-right'>
+        <Dropdown.Menu className="dropdown-menu-right">
           <EnterpriseDashboard />
           <Dropdown.Item href={`${getConfig().LMS_BASE_URL}/u/${username}`}>
             {formatMessage(messages.profile)}

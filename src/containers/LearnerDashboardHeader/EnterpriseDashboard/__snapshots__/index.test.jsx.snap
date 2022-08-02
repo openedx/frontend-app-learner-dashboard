@@ -1,0 +1,130 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EnterpriseDashboard snapshot initilized 1`] = `
+<Fragment>
+  <Dropdown.Item
+    active={false}
+    key="Personal"
+  >
+    Personal
+     
+    Dashboard
+  </Dropdown.Item>
+  <Dropdown.Item
+    active={true}
+    key="edX, Inc."
+  >
+    edX, Inc.
+     
+    Dashboard
+  </Dropdown.Item>
+  <Dropdown.Item
+    active={false}
+    key="Harvard"
+  >
+    Harvard
+     
+    Dashboard
+  </Dropdown.Item>
+  <ModalDialog
+    hasCloseButton={false}
+    isOpen={false}
+    onClose={[MockFunction hooks.nullMethod]}
+    title=""
+  >
+    <div
+      className="bg-white p-3 rounded shadow"
+      style={
+        Object {
+          "textAlign": "start",
+        }
+      }
+    >
+      <h4>
+        You have access to the undefined dashboard
+      </h4>
+      <p>
+        To access the coureses available to you through undefined, visit the undefined dashboard now.
+      </p>
+      <ActionRow>
+        <Button
+          onClick={[MockFunction cancelSelectDashboardItem]}
+          variant="tertiary"
+        >
+          Dismiss
+        </Button>
+        <Button
+          type="a"
+        >
+          Go To Dashboard
+        </Button>
+      </ActionRow>
+    </div>
+  </ModalDialog>
+</Fragment>
+`;
+
+exports[`EnterpriseDashboard snapshot select item and open modal 1`] = `
+<Fragment>
+  <Dropdown.Item
+    active={false}
+    key="Personal"
+  >
+    Personal
+     
+    Dashboard
+  </Dropdown.Item>
+  <Dropdown.Item
+    active={true}
+    key="edX, Inc."
+  >
+    edX, Inc.
+     
+    Dashboard
+  </Dropdown.Item>
+  <Dropdown.Item
+    active={false}
+    key="Harvard"
+  >
+    Harvard
+     
+    Dashboard
+  </Dropdown.Item>
+  <ModalDialog
+    hasCloseButton={false}
+    isOpen={true}
+    onClose={[MockFunction hooks.nullMethod]}
+    title=""
+  >
+    <div
+      className="bg-white p-3 rounded shadow"
+      style={
+        Object {
+          "textAlign": "start",
+        }
+      }
+    >
+      <h4>
+        You have access to the Personal dashboard
+      </h4>
+      <p>
+        To access the coureses available to you through Personal, visit the Personal dashboard now.
+      </p>
+      <ActionRow>
+        <Button
+          onClick={[MockFunction cancelSelectDashboardItem]}
+          variant="tertiary"
+        >
+          Dismiss
+        </Button>
+        <Button
+          href="/dashboard"
+          type="a"
+        >
+          Go To Dashboard
+        </Button>
+      </ActionRow>
+    </div>
+  </ModalDialog>
+</Fragment>
+`;

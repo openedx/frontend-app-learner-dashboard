@@ -1,13 +1,7 @@
 import { MockUseState } from 'testUtils';
 import { hooks as appHooks } from 'data/redux';
 
-import * as Component from './EnterpriseDashboard';
-import { shallow } from 'enzyme';
-
-const {
-  EnterpriseDashboard,
-  useEnterpriseDashboardHook,
-} = Component;
+import * as hooks from './hooks';
 
 jest.mock('data/redux', () => ({
   hooks: {
@@ -15,36 +9,37 @@ jest.mock('data/redux', () => ({
   },
 }));
 
-const state = new MockUseState(Component);
+const state = new MockUseState(hooks);
 
-const useEnterpriseDashboardData = {
+const enterpriseDashboardData = {
   availableDashboards: [
     { label: 'Personal', url: '/dashboard' },
     { label: 'edX, Inc.', url: '/edx-dashboard' },
     { label: 'Harvard', url: '/harvard-dashboard' },
   ],
   mostRecentDashboard: { label: 'edX, Inc.', url: '/edx-dashboard' },
-}
+};
 
-describe('EnterpriseDashboard', () => {
+describe('EnterpriseDashboard hooks', () => {
+  appHooks.useEnterpriseDashboardData.mockReturnValue({ ...enterpriseDashboardData });
+
   describe('state values', () => {
     state.testGetter(state.keys.showDialog);
     state.testGetter(state.keys.selectedItem);
   });
 
-  describe('hooks', () => {
+  describe('behavior', () => {
     let out;
-    
+
     beforeEach(() => {
       state.mock();
-      appHooks.useEnterpriseDashboardData.mockReturnValueOnce({...useEnterpriseDashboardData});
-      out = useEnterpriseDashboardHook();
+      out = hooks.useEnterpriseDashboardHook();
     });
     afterEach(state.restore);
 
     test('useEnterpriseDashboardHook to return dashboard data from redux hooks', () => {
-      expect(out.availableDashboards).toMatchObject(useEnterpriseDashboardData.availableDashboards);
-      expect(out.mostRecentDashboard).toMatchObject(useEnterpriseDashboardData.mostRecentDashboard);
+      expect(out.availableDashboards).toMatchObject(enterpriseDashboardData.availableDashboards);
+      expect(out.mostRecentDashboard).toMatchObject(enterpriseDashboardData.mostRecentDashboard);
     });
 
     test('modal is open on begin select dashboard item', () => {
@@ -62,13 +57,4 @@ describe('EnterpriseDashboard', () => {
       expect(state.values.showDialog).toEqual(false);
     });
   });
-  
-  
-  describe('component', () => {
-    describe('snapshot', () => {
-      appHooks.useEnterpriseDashboardData.mockReturnValueOnce({...useEnterpriseDashboardData});
-      let el = shallow(EnterpriseDashboard);
-      expect(el).toMatchSnapshot();
-    });
-  })
 });
