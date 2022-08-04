@@ -2,6 +2,7 @@
 
 .widget-sidebar {
   width: 400px;
+  flex-shrink: 0;
   padding-left: map-get($spacers, 2);
   padding-right: map-get($spacers, 2);
 }
