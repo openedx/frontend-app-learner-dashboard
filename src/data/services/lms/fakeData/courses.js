@@ -59,10 +59,11 @@ const globalData = {
   },
   enterpriseDashboards: {
     availableDashboards: [
-      { label: 'edX', url: 'edx.org/edx-dashboard' },
-      { label: 'harvard', url: 'edx.org/harvard-dashboard' },
+      { label: 'Personal', url: '/dashboard' },
+      { label: 'edX, Inc.', url: '/edx-dashboard' },
+      { label: 'Harvard', url: '/harvard-dashboard' },
     ],
-    mostRecentDashboard: { label: 'edX', url: 'edx.org/edx-dashboard' },
+    mostRecentDashboard: { label: 'edX, Inc.', url: '/edx-dashboard' },
   },
   platformSettings: {
     supportEmail: 'support@example.com',
