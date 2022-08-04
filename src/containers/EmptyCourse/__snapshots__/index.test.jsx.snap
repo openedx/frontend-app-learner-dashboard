@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EmptyCourse snapshot 1`] = `
+<div
+  className="p-3"
+>
+  <div
+    className="empty-course-hero"
+  >
+    <img
+      alt="empty course banner"
+      src="empty-course.svg"
+    />
+    <h1>
+      <FormattedMessage
+        defaultMessage="Looking for a new challenge?"
+        description="Prompt user for new challenge"
+        id="EmptyCourse.lookingForChallengePrompt"
+      />
+    </h1>
+    <p>
+      <FormattedMessage
+        defaultMessage="Explore our courses to add them to your dashboard."
+        description="Prompt user to explore more courses"
+        id="EmptyCourse.exploreCoursesPrompt"
+      />
+    </p>
+    <Button
+      variant="brand"
+    >
+      <FormattedMessage
+        defaultMessage="Explore courses"
+        description="Button to explore more courses"
+        id="EmptyCourse.exploreCoursesButton"
+      />
+    </Button>
+  </div>
+  <SuggestedCourses />
+</div>
+`;
