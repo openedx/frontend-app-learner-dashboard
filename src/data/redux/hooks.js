@@ -7,6 +7,8 @@ const { courseCard } = appSelectors;
 export const useEmailConfirmationData = () => useSelector(appSelectors.emailConfirmation);
 export const useEnterpriseDashboardData = () => useSelector(appSelectors.enterpriseDashboards);
 export const usePlatformSettingsData = () => useSelector(appSelectors.platformSettings);
+// suggested courses is max at 3 at the moment.
+export const useSuggestedCoursesData = () => useSelector(appSelectors.suggestedCourses).slice(0, 3);
 
 // eslint-disable-next-line
 export const useCourseCardData = (selector) => (courseNumber) => useSelector(

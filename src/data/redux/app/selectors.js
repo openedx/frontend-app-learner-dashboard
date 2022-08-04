@@ -14,6 +14,7 @@ export const simpleSelectors = {
   entitlements: mkSimpleSelector(app => app.entitlements),
   courseData: mkSimpleSelector(app => app.courseData),
   platformSettings: mkSimpleSelector(app => app.platformSettings),
+  suggestedCourses: mkSimpleSelector(app => app.suggestedCourses),
   emailConfirmation: mkSimpleSelector(app => app.emailConfirmation),
   enterpriseDashboards: mkSimpleSelector(app => app.enterpriseDashboards),
 };

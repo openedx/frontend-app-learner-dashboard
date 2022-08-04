@@ -8,7 +8,7 @@ const initialState = {
   emailConfirmation: {},
   enterpriseDashboards: {},
   platformSettings: {},
-  suggestedCourses: {},
+  suggestedCourses: [],
   filterState: {},
 };
 
