@@ -1,6 +1,9 @@
 import React from 'react';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 import { Hyperlink, Card } from '@edx/paragon';
+
+import moreCoursesSVG from 'assets/more-courses-sidewidget.svg';
+
 import messages from './messages';
 
 import './index.scss';
@@ -21,7 +24,7 @@ export const WidgetSidebar = () => (
 
       <Card orientation="horizontal" className="mb-4">
         <Card.ImageCap
-          src="more-courses-sidewidget.svg"
+          src={moreCoursesSVG}
           srcAlt="course side widget"
         />
         <Card.Body>

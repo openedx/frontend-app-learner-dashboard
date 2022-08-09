@@ -44,10 +44,10 @@ exports[`ConfirmEmailBanner snapshot Show on unverified 1`] = `
       <ModalDialog.Hero
         className="bg-gray-300"
       >
-        <img
+        <Image
           alt="confirm email background"
           className="m-auto"
-          src="confirm-email.svg"
+          src="icon/mock/path"
         />
       </ModalDialog.Hero>
     }

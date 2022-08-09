@@ -7,9 +7,9 @@ exports[`EmptyCourse snapshot 1`] = `
   <div
     className="empty-course-hero"
   >
-    <img
+    <Image
       alt="empty course banner"
-      src="empty-course.svg"
+      src="icon/mock/path"
     />
     <h1>
       <FormattedMessage

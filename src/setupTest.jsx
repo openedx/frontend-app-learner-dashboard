@@ -87,6 +87,7 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
   Hyperlink: 'Hyperlink',
   Icon: 'Icon',
   IconButton: 'IconButton',
+  Image: 'Image',
   MailtoLink: 'MailtoLink',
   ModalDialog: {
     Header: 'ModalDialog.Header',

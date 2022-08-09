@@ -17,7 +17,6 @@ export const GreetingBanner = () => {
   } else {
     greetMessage = messages.goodMorning;
   }
-  console.log({ config: getConfig() });
 
   return (
     <div className="d-flex p-5 align-items-center justify-content-center">

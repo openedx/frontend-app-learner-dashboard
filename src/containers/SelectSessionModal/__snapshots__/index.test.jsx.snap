@@ -7,6 +7,7 @@ exports[`SelectSessionModal snapshot empty modal with leave option  1`] = `
   isOpen={true}
   onClose={[MockFunction hooks.nullMethod]}
   size="md"
+  title="test-header"
 >
   <h3>
     test-header
@@ -49,6 +50,7 @@ exports[`SelectSessionModal snapshot modal with leave option  1`] = `
   isOpen={true}
   onClose={[MockFunction hooks.nullMethod]}
   size="md"
+  title="test-header"
 >
   <h3>
     test-header
@@ -115,6 +117,7 @@ exports[`SelectSessionModal snapshot modal without leave option  1`] = `
   isOpen={true}
   onClose={[MockFunction hooks.nullMethod]}
   size="md"
+  title="test-header"
 >
   <h3>
     test-header

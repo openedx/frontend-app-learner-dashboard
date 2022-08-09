@@ -1,6 +1,11 @@
 import React from 'react';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
-import { Button } from '@edx/paragon';
+import {
+  Button,
+  Image,
+} from '@edx/paragon';
+
+import emptyCourseSVG from 'assets/empty-course.svg';
 
 import SuggestedCourses from './SuggestedCourses';
 import messages from './messages';
@@ -9,7 +14,7 @@ import './index.scss';
 export const EmptyCourse = () => (
   <div className="p-3">
     <div className="empty-course-hero">
-      <img src="empty-course.svg" alt="empty course banner" />
+      <Image src={emptyCourseSVG} alt="empty course banner" />
       <h1>
         <FormattedMessage {...messages.lookingForChallengePrompt} />
       </h1>
