@@ -6,11 +6,12 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { Dropdown, Icon } from '@edx/paragon';
 import { Person } from '@edx/paragon/icons';
 
+import { hooks as appHooks } from 'data/redux';
 import messages from './messages';
-import EnterpriseDashboard from './EnterpriseDashboard';
 
 export const AuthenticatedUserDropdown = ({ username }) => {
   const { formatMessage } = useIntl();
+  const { availableDashboards } = appHooks.useEnterpriseDashboardData();
   return (
     <>
       <Dropdown className="user-dropdown">
@@ -21,7 +22,18 @@ export const AuthenticatedUserDropdown = ({ username }) => {
           </span>
         </Dropdown.Toggle>
         <Dropdown.Menu className="dropdown-menu-right">
-          <EnterpriseDashboard />
+          <Dropdown.Header>SWITCH DASHBOARD</Dropdown.Header>
+          <Dropdown.Item as="a" href="/dashboard">Personal</Dropdown.Item>
+          {availableDashboards && availableDashboards.map((dashboard) => (
+            <Dropdown.Item
+              as="a"
+              href={dashboard.url}
+              key={dashboard.label}
+            >
+              {dashboard.label} {formatMessage(messages.dashboard)}
+            </Dropdown.Item>
+          ))}
+          <Dropdown.Divider />
           <Dropdown.Item href={`${getConfig().LMS_BASE_URL}/u/${username}`}>
             {formatMessage(messages.profile)}
           </Dropdown.Item>
@@ -36,6 +48,7 @@ export const AuthenticatedUserDropdown = ({ username }) => {
           <Dropdown.Item href={getConfig().SUPPORT_URL}>
             {formatMessage(messages.help)}
           </Dropdown.Item>
+          <Dropdown.Divider />
           <Dropdown.Item href={getConfig().LOGOUT_URL}>
             {formatMessage(messages.signOut)}
           </Dropdown.Item>

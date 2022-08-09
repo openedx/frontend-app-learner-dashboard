@@ -14,8 +14,8 @@ import requests from './requests';
  */
 export const initialize = () => (dispatch) => (
   dispatch(requests.initializeList({
-    onSuccess: (({ enrollments, entitlements, ...globalData }) => {
-      dispatch(actions.app.loadCourses({ enrollments, entitlements }));
+    onSuccess: (({ courses, ...globalData }) => {
+      dispatch(actions.app.loadCourses({ courses }));
       dispatch(actions.app.loadGlobalData(globalData));
     }),
   }))
@@ -23,8 +23,8 @@ export const initialize = () => (dispatch) => (
 
 export const refreshList = () => (dispatch) => (
   dispatch(requests.initializeList({
-    onSuccess: (({ enrollments, entitlements, ...globalData }) => {
-      dispatch(actions.app.loadCourses({ enrollments, entitlements }));
+    onSuccess: (({ courses, ...globalData }) => {
+      dispatch(actions.app.loadCourses({ courses }));
       dispatch(actions.app.loadGlobalData(globalData));
     }),
   }))

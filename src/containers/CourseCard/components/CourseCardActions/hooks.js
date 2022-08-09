@@ -2,18 +2,18 @@ import { Locked } from '@edx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { hooks as appHooks } from 'data/redux';
-import useSelectSession from 'containers/SelectSession/hooks';
+import useSelectSessionModalData from 'containers/SelectSessionModal/hooks';
 import messages from './messages';
 
-export const useCardActionData = ({ courseNumber }) => {
+export const useCardActionData = ({ cardId }) => {
   const { formatMessage } = useIntl();
   const {
     canUpgrade,
     isAudit,
     isAuditAccessExpired,
     isVerified,
-  } = appHooks.useCardEnrollmentData(courseNumber);
-  const { isPending, isArchived } = appHooks.useCardCourseRunData(courseNumber);
+  } = appHooks.useCardEnrollmentData(cardId);
+  const { isPending, isArchived } = appHooks.useCardCourseRunData(cardId);
   const {
     isEntitlement,
     canViewCourse,
@@ -21,8 +21,8 @@ export const useCardActionData = ({ courseNumber }) => {
     isExpired,
     canChange,
     hasSessions,
-  } = appHooks.useCardEntitlementsData(courseNumber);
-  const { openSessionModal } = useSelectSession({ courseNumber });
+  } = appHooks.useCardEntitlementsData(cardId);
+  const { openSessionModal } = useSelectSessionModalData();
 
   let primary;
   let secondary = null;
@@ -31,7 +31,7 @@ export const useCardActionData = ({ courseNumber }) => {
       primary = {
         children: formatMessage(messages.selectSession),
         disabled: !(canChange && hasSessions),
-        onClick: openSessionModal,
+        onClick: openSessionModal(cardId),
       };
     } else {
       primary = {

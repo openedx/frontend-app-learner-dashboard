@@ -2,7 +2,7 @@
 
 exports[`CourseCard component snapshot 1`] = `
 <div
-  className="mb-3 course-card"
+  className="mb-4.5 course-card"
   data-testid="CourseCard"
 >
   <Card
@@ -24,7 +24,7 @@ exports[`CourseCard component snapshot 1`] = `
       <Card.Header
         actions={
           <CourseCardMenu
-            courseNumber="test-course-number"
+            cardId="test-card-id"
           />
         }
         title={
@@ -37,19 +37,19 @@ exports[`CourseCard component snapshot 1`] = `
       />
       <Card.Section>
         <CourseCardDetails
-          courseNumber="test-course-number"
+          cardId="test-card-id"
         />
       </Card.Section>
       <Card.Footer
         orientation="vertical"
         textElement={
           <RelatedProgramsBadge
-            courseNumber="test-course-number"
+            cardId="test-card-id"
           />
         }
       >
         <CourseCardActions
-          courseNumber="test-course-number"
+          cardId="test-card-id"
         />
       </Card.Footer>
     </Card.Body>
@@ -59,13 +59,13 @@ exports[`CourseCard component snapshot 1`] = `
     data-testid="CourseCardBanners"
   >
     <CourseBanner
-      courseNumber="test-course-number"
-    />
-    <CertificateBanner
-      courseNumber="test-course-number"
+      cardId="test-card-id"
     />
     <EntitlementBanner
-      courseNumber="test-course-number"
+      cardId="test-card-id"
+    />
+    <CertificateBanner
+      cardId="test-card-id"
     />
   </div>
 </div>

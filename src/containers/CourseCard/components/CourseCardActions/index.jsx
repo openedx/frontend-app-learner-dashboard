@@ -5,8 +5,8 @@ import { Button } from '@edx/paragon';
 
 import useCardActionData from './hooks';
 
-export const CourseCardActions = ({ courseNumber }) => {
-  const { primary, secondary } = useCardActionData({ courseNumber });
+export const CourseCardActions = ({ cardId }) => {
+  const { primary, secondary } = useCardActionData({ cardId });
   return (
     <div data-test-id="CourseCardActions">
       {(secondary !== null) && (
@@ -17,7 +17,7 @@ export const CourseCardActions = ({ courseNumber }) => {
   );
 };
 CourseCardActions.propTypes = {
-  courseNumber: PropTypes.string.isRequired,
+  cardId: PropTypes.string.isRequired,
 };
 
 export default CourseCardActions;

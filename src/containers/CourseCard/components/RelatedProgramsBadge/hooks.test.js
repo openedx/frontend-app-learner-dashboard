@@ -12,7 +12,7 @@ jest.mock('data/redux', () => ({
   },
 }));
 
-const courseNumber = 'my-test-course-number';
+const cardId = 'test-card-id';
 
 const state = new MockUseState(hooks);
 const numPrograms = 27;
@@ -33,7 +33,7 @@ describe('RelatedProgramsBadge hooks', () => {
       appHooks.useCardRelatedProgramsData.mockReturnValueOnce({
         length: numPrograms,
       });
-      out = hooks.useRelatedProgramsBadgeData({ courseNumber });
+      out = hooks.useRelatedProgramsBadgeData({ cardId });
     });
     afterEach(state.restore);
 
@@ -55,17 +55,17 @@ describe('RelatedProgramsBadge hooks', () => {
       expect(out.isOpen).toEqual(state.stateVals.isOpen);
     });
 
-    test('forwards numPrograms from relatedPrograms.length for the courseNumber', () => {
+    test('forwards numPrograms from relatedPrograms.length for the cardId', () => {
       expect(out.numPrograms).toEqual(numPrograms);
     });
     test('returns empty programsMessage if no programs', () => {
       appHooks.useCardRelatedProgramsData.mockReturnValueOnce({ length: 0 });
-      out = hooks.useRelatedProgramsBadgeData({ courseNumber });
+      out = hooks.useRelatedProgramsBadgeData({ cardId });
       expect(out.programsMessage).toEqual('');
     });
     test('returns badgeLabelSingular programsMessage if 1 programs', () => {
       appHooks.useCardRelatedProgramsData.mockReturnValueOnce({ length: 1 });
-      out = hooks.useRelatedProgramsBadgeData({ courseNumber });
+      out = hooks.useRelatedProgramsBadgeData({ cardId });
       expect(out.programsMessage).toEqual(formatMessage(
         messages.badgeLabelSingular,
         { numPrograms: 1 },

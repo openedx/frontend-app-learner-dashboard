@@ -1,44 +1,41 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { FormattedMessage } from '@edx/frontend-platform/i18n';
-
-import { selectors, thunkActions } from 'data/redux';
+import {
+  thunkActions,
+  hooks as appHooks,
+} from 'data/redux';
 
 import CourseList from 'containers/CourseList';
 import WidgetSidebar from 'containers/WidgetSidebar';
 import EmptyCourse from 'containers/EmptyCourse';
+import SelectSessionModal from 'containers/SelectSessionModal';
+import EnterpriseDashboardModal from 'containers/EnterpriseDashboardModal';
 
-import messages from './messages';
-import * as module from '.';
+import './index.scss';
 
-export const useDashboardData = ({ dispatch }) => {
+export const Dashboard = () => {
+  const dispatch = useDispatch();
   React.useEffect(
     () => { dispatch(thunkActions.app.initialize()); },
     [dispatch],
   );
-  return {
-    enrollments: useSelector(selectors.app.enrollments),
-    entitlements: useSelector(selectors.app.entitlements),
-  };
-};
 
-export const Dashboard = () => {
-  const dispatch = useDispatch();
-  const {
-    enrollments,
-    // entitlements,
-  } = module.useDashboardData({ dispatch });
+  const hasCourses = appHooks.useHasCourses();
+  const hasAvailableDashboards = appHooks.useHasAvailableDashboards();
   return (
-    <div className="d-flex flex-column p-2">
-      {enrollments.length ? (
+    <div className="d-flex flex-column p-2" id="course-dashboard">
+      {hasAvailableDashboards && <EnterpriseDashboardModal />}
+      {hasCourses ? (
         <>
-          <h2 className="py-2">
-            <FormattedMessage {...messages.myCourse} />
-          </h2>
-          <div className="d-flex">
-            <CourseList courseListData={enrollments} />
-            <WidgetSidebar />
+          <div className="d-flex" style={{ margin: 'auto' }}>
+            <div className="w-100 mw-md mr-4">
+              <SelectSessionModal />
+              <CourseList />
+            </div>
+            <div id="dashboard-sidebar-container mw-xs">
+              <WidgetSidebar />
+            </div>
           </div>
         </>
       ) : (

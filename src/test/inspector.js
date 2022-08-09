@@ -27,9 +27,9 @@ class Inspector {
       card: {
         header: (card) => within(card).getByTestId('CourseCardTitle'),
         details: (card) => within(card).getByTestId('CourseCardDetails'),
-        banners: (card) => within(card).getByTestId('CourseCardBanners'),
-        programsBadge: (card) => within(card).getByTestId('RelatedProgramsBadge'),
-        actions: (card) => within(card).getByTestId('CourseCardActions'),
+        // banners: (card) => within(card).getByTestId('CourseCardBanners'),
+        // programsBadge: (card) => within(card).getByTestId('RelatedProgramsBadge'),
+        // actions: (card) => within(card).getByTestId('CourseCardActions'),
       },
     };
   }

@@ -18,14 +18,14 @@ import messages from './messages';
 export const EmailSettingsModal = ({
   closeModal,
   show,
-  courseNumber,
+  cardId,
 }) => {
   const dispatch = useDispatch();
   const {
     toggleValue,
     onToggle,
     save,
-  } = useEmailData({ dispatch, closeModal, courseNumber });
+  } = useEmailData({ dispatch, closeModal, cardId });
   const { formatMessage } = useIntl();
 
   return (
@@ -52,7 +52,7 @@ export const EmailSettingsModal = ({
   );
 };
 EmailSettingsModal.propTypes = {
-  courseNumber: PropTypes.string.isRequired,
+  cardId: PropTypes.string.isRequired,
   closeModal: PropTypes.func.isRequired,
   show: PropTypes.bool.isRequired,
 };

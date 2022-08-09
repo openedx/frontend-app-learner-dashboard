@@ -1,10 +1,15 @@
 /* eslint-disable max-len */
 import React from 'react';
 import {
-  PageBanner, ModalDialog, MarketingModal, Button,
+  Button,
+  Image,
+  MarketingModal,
+  ModalDialog,
+  PageBanner,
 } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
+import confirmEmailSVG from 'assets/confirm-email.svg';
 import messages from './messages';
 import './ConfirmEmailBanner.scss';
 import useConfirmEmailBannerData from './hooks';
@@ -46,7 +51,11 @@ export const ConfirmEmailBanner = () => {
         hasCloseButton={false}
         heroNode={(
           <ModalDialog.Hero className="bg-gray-300">
-            <img className="m-auto" src="confirm-email.svg" alt={formatMessage(messages.confirmEmailImageAlt)} />
+            <Image
+              className="m-auto"
+              src={confirmEmailSVG}
+              alt={formatMessage(messages.confirmEmailImageAlt)}
+            />
           </ModalDialog.Hero>
         )}
         footerNode={(

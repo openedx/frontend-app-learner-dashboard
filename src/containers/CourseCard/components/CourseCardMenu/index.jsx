@@ -8,7 +8,7 @@ import EmailSettingsModal from 'containers/EmailSettingsModal';
 import UnenrollConfirmModal from 'containers/UnenrollConfirmModal';
 import useCourseCardMenuData from './hooks';
 
-export const CourseCardMenu = ({ courseNumber }) => {
+export const CourseCardMenu = ({ cardId }) => {
   const {
     emailSettingsModal,
     unenrollModal,
@@ -34,18 +34,18 @@ export const CourseCardMenu = ({ courseNumber }) => {
       <UnenrollConfirmModal
         show={unenrollModal.isVisible}
         closeModal={unenrollModal.hide}
-        courseNumber={courseNumber}
+        cardId={cardId}
       />
       <EmailSettingsModal
         show={emailSettingsModal.isVisible}
         closeModal={emailSettingsModal.hide}
-        courseNumber={courseNumber}
+        cardId={cardId}
       />
     </>
   );
 };
 CourseCardMenu.propTypes = {
-  courseNumber: PropTypes.string.isRequired,
+  cardId: PropTypes.string.isRequired,
 };
 
 export default CourseCardMenu;

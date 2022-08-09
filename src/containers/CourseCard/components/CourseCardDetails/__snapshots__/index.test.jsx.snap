@@ -6,7 +6,6 @@ exports[`CourseCard Details component does not have change session button on reg
 >
   provider-name
    • 
-  test-course-number
    • 
   acess-message
 </span>
@@ -18,7 +17,6 @@ exports[`CourseCard Details component has change session button on entitlement c
 >
   provider-name
    • 
-  test-course-number
    • 
   access-message
    • 
@@ -28,15 +26,7 @@ exports[`CourseCard Details component has change session button on entitlement c
     size="inline"
     variant="link"
   >
-    <div
-      message={
-        Object {
-          "defaultMessage": "Change or leave session",
-          "description": "Button for trigger change or leave session for entitlement course",
-          "id": "learner-dash.courseCard.CourseCardDetails.changeOrLeaveSessionButton",
-        }
-      }
-    />
+    Change or leave session
   </Button>
 </span>
 `;

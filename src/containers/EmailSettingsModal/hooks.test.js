@@ -9,7 +9,7 @@ jest.mock('data/redux', () => ({
   },
 }));
 
-const courseNumber = 'my-test-course-number';
+const cardId = 'my-test-course-number';
 const closeModal = jest.fn();
 
 const state = new MockUseState(hooks);
@@ -26,12 +26,12 @@ describe('EmailSettingsModal hooks', () => {
     beforeEach(() => {
       state.mock();
       appHooks.useCardEnrollmentData.mockReturnValueOnce({ isEmailEnabled: true });
-      out = hooks.useEmailData({ closeModal, courseNumber });
+      out = hooks.useEmailData({ closeModal, cardId });
     });
     afterEach(state.restore);
 
     test('loads enrollment data based on course number', () => {
-      expect(appHooks.useCardEnrollmentData).toHaveBeenCalledWith(courseNumber);
+      expect(appHooks.useCardEnrollmentData).toHaveBeenCalledWith(cardId);
     });
 
     test('initializes toggle value to cardData.isEmailEnabled', () => {
@@ -39,7 +39,7 @@ describe('EmailSettingsModal hooks', () => {
       expect(out.toggleValue).toEqual(true);
 
       appHooks.useCardEnrollmentData.mockReturnValueOnce({ isEmailEnabled: false });
-      out = hooks.useEmailData({ closeModal, courseNumber });
+      out = hooks.useEmailData({ closeModal, cardId });
       state.expectInitializedWith(state.keys.toggle, false);
       expect(out.toggleValue).toEqual(false);
     });

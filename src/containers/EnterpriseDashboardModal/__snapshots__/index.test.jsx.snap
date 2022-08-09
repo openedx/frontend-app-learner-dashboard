@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EnterpriseDashboard snapshot 1`] = `
+<ModalDialog
+  hasCloseButton={false}
+  onClose={[MockFunction useEnterpriseDashboardHook.handleClick]}
+  title=""
+>
+  <div
+    className="bg-white p-3 rounded shadow"
+    style={
+      Object {
+        "textAlign": "start",
+      }
+    }
+  >
+    <h4>
+      You have access to the edX, Inc. dashboard
+    </h4>
+    <p>
+      To access the coureses available to you through edX, Inc., visit the edX, Inc. dashboard now.
+    </p>
+    <ActionRow>
+      <Button
+        onClick={[MockFunction useEnterpriseDashboardHook.handleClick]}
+        variant="tertiary"
+      >
+        Dismiss
+      </Button>
+      <Button
+        href="/edx-dashboard"
+        type="a"
+      >
+        Go To Dashboard
+      </Button>
+    </ActionRow>
+  </div>
+</ModalDialog>
+`;

@@ -13,10 +13,10 @@ import './index.scss';
 export const RelatedProgramsModal = ({
   isOpen,
   closeModal,
-  courseNumber,
+  cardId,
 }) => {
   const { formatMessage } = useIntl();
-  const { courseTitle, relatedPrograms } = useProgramData({ courseNumber });
+  const { courseTitle, relatedPrograms } = useProgramData({ cardId });
   return (
     <ModalDialog
       title={formatMessage(messages.header)}
@@ -50,7 +50,7 @@ export const RelatedProgramsModal = ({
 RelatedProgramsModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
-  courseNumber: PropTypes.string.isRequired,
+  cardId: PropTypes.string.isRequired,
 };
 
 export default RelatedProgramsModal;

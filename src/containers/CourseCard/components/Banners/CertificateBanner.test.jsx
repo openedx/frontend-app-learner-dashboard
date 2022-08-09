@@ -16,7 +16,7 @@ jest.mock('data/redux', () => ({
   },
 }));
 
-const courseNumber = 'my-test-course-number';
+const cardId = 'my-test-course-number';
 
 let el;
 
@@ -50,15 +50,15 @@ const render = (overrides = {}) => {
     ...enrollmentData,
     ...enrollment,
   });
-  el = shallow(<CourseBanner courseNumber={courseNumber} />);
+  el = shallow(<CourseBanner cardId={cardId} />);
 };
 
 describe('CourseBanner', () => {
   it('initializes data with course number from enrollment, course and course run data', () => {
     render();
-    expect(appHooks.useCardCourseData).toHaveBeenCalledWith(courseNumber);
-    expect(appHooks.useCardCourseRunData).toHaveBeenCalledWith(courseNumber);
-    expect(appHooks.useCardEnrollmentData).toHaveBeenCalledWith(courseNumber);
+    expect(appHooks.useCardCourseData).toHaveBeenCalledWith(cardId);
+    expect(appHooks.useCardCourseRunData).toHaveBeenCalledWith(cardId);
+    expect(appHooks.useCardEnrollmentData).toHaveBeenCalledWith(cardId);
   });
   test('no display if learner is verified', () => {
     render({ enrollment: { isVerified: true } });

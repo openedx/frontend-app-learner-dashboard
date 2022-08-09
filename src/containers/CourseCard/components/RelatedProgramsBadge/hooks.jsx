@@ -11,10 +11,10 @@ export const state = StrictDict({
   isOpen: (val) => React.useState(val), // eslint-disable-line
 });
 
-export const useRelatedProgramsBadgeData = ({ courseNumber }) => {
+export const useRelatedProgramsBadgeData = ({ cardId }) => {
   const [isOpen, setIsOpen] = module.state.isOpen(false);
   const { formatMessage } = useIntl();
-  const numPrograms = appHooks.useCardRelatedProgramsData(courseNumber).length;
+  const numPrograms = appHooks.useCardRelatedProgramsData(cardId).length;
   let programsMessage = '';
   if (numPrograms) {
     programsMessage = formatMessage(

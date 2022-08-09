@@ -7,10 +7,10 @@ import { hooks as appHooks } from 'data/redux';
 import { dateFormatter } from 'utils';
 
 import Banner from 'components/Banner';
-import useSelectSession from 'containers/SelectSession/hooks';
+import useSelectSessionModalData from 'containers/SelectSessionModal/hooks';
 import messages from './messages';
 
-export const EntitlementBanner = ({ courseNumber }) => {
+export const EntitlementBanner = ({ cardId }) => {
   const {
     isEntitlement,
     hasSessions,
@@ -18,9 +18,9 @@ export const EntitlementBanner = ({ courseNumber }) => {
     changeDeadline,
     showExpirationWarning,
     isExpired,
-  } = appHooks.useCardEntitlementsData(courseNumber);
+  } = appHooks.useCardEntitlementsData(cardId);
   const { supportEmail } = appHooks.usePlatformSettingsData();
-  const { openSessionModal } = useSelectSession({ courseNumber });
+  const { openSessionModal } = useSelectSessionModalData({ cardId });
   const { formatDate, formatMessage } = useIntl();
 
   if (!isEntitlement) {
@@ -42,7 +42,7 @@ export const EntitlementBanner = ({ courseNumber }) => {
         {formatMessage(messages.entitlementsExpiringSoon, {
           changeDeadline: dateFormatter(formatDate, changeDeadline),
           selectSessionButton: (
-            <Button variant="link" size="inline" className="m-0 p-0" onClick={openSessionModal}>
+            <Button variant="link" size="inline" className="m-0 p-0" onClick={openSessionModal(cardId)}>
               {formatMessage(messages.selectSession)}
             </Button>
           ),
@@ -60,7 +60,7 @@ export const EntitlementBanner = ({ courseNumber }) => {
   return null;
 };
 EntitlementBanner.propTypes = {
-  courseNumber: PropTypes.string.isRequired,
+  cardId: PropTypes.string.isRequired,
 };
 
 export default EntitlementBanner;
