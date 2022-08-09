@@ -133,7 +133,7 @@ export const currentList = (state, {
   if (filters.length) {
     list = list.filter(course => {
       if (filters.includes(FilterKeys.notEnrolled)) {
-        if (!course.enrollment.isEnrolled) {
+        if (course.enrollment.isEnrolled) {
           return false;
         }
       }
