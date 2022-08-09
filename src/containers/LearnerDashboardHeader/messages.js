@@ -34,17 +34,17 @@ const messages = defineMessages({
 
   goodMorning: {
     id: 'greeting.morning',
-    defaultMessage: 'Good Morning',
+    defaultMessage: 'Good Morning!',
     description: 'Good Morning',
   },
   goodAfternoon: {
     id: 'greeting.afternoon',
-    defaultMessage: 'Good Afternoon',
+    defaultMessage: 'Good Afternoon!',
     description: 'Good Afternoon',
   },
   goodEvening: {
     id: 'greeting.evening',
-    defaultMessage: 'Good Evening',
+    defaultMessage: 'Good Evening!',
     description: 'Good Evening',
   },
   switchToProgram: {

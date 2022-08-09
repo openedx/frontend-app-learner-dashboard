@@ -8,8 +8,9 @@ import { Button } from '@edx/paragon';
 import AuthenticatedUserDropdown from './AuthenticatedUserDropdown';
 
 import GreetingBanner from './GreetingBanner';
-import messages from './messages';
 import ConfirmEmailBanner from './ConfirmEmailBanner';
+import messages from './messages';
+import './index.scss';
 
 export const LearnerDashboardHeader = () => {
   const { authenticatedUser } = useContext(AppContext);
