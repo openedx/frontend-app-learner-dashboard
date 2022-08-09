@@ -24,6 +24,7 @@ export const useConfirmEmailBannerData = () => {
   const openConfirmModalButtonClick = () => {
     dispatch(thunkActions.app.sendConfirmEmail());
     openConfirmModal();
+    closePageBanner();
   };
 
   const userConfirmEmailButtonClick = () => {

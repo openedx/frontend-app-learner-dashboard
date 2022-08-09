@@ -7,10 +7,11 @@ import * as hooks from './hooks';
 jest.mock('data/redux', () => ({
   hooks: {
     useCardCourseData: jest.fn(),
+    useCardEnrollmentData: jest.fn(),
   },
 }));
 
-const courseNumber = 'my-test-course-number';
+const cardId = 'my-test-course-number';
 
 describe('CourseCard hooks', () => {
   let out;
@@ -29,7 +30,8 @@ describe('CourseCard hooks', () => {
         ...courseData,
         ...course,
       });
-      out = hooks.useCardData({ courseNumber });
+      appHooks.useCardEnrollmentData.mockReturnValue({ isEnrolled: 'test-is-enrolled' });
+      out = hooks.useCardData({ cardId });
     };
     beforeEach(() => {
       runHook({});
@@ -38,7 +40,7 @@ describe('CourseCard hooks', () => {
       expect(out.formatMessage).toEqual(formatMessage);
     });
     it('passes course title and banner URL form course data', () => {
-      expect(appHooks.useCardCourseData).toHaveBeenCalledWith(courseNumber);
+      expect(appHooks.useCardCourseData).toHaveBeenCalledWith(cardId);
       expect(out.title).toEqual(courseData.title);
       expect(out.bannerUrl).toEqual(courseData.bannerUrl);
     });

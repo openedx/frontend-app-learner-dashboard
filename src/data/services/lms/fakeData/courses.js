@@ -37,7 +37,9 @@ export const relatedPrograms = [
   },
 ];
 
-export const genCourseID = (index) => `course-id${index}`;
+export const genCardId = (index) => `card-id${index}`;
+export const genCourseId = (index) => `course-number${index}-course-id${index}`;
+export const genCourseNumber = (index) => `course-number${index}`;
 export const genCourseTitle = (index) => `Course Name ${index}`;
 
 const logos = {
@@ -59,7 +61,6 @@ const globalData = {
   },
   enterpriseDashboards: {
     availableDashboards: [
-      { label: 'Personal', url: '/dashboard' },
       { label: 'edX, Inc.', url: '/edx-dashboard' },
       { label: 'Harvard', url: '/harvard-dashboard' },
     ],
@@ -112,15 +113,15 @@ export const genCourseRunData = (data = {}) => ({
 });
 
 export const genEnrollmentData = (data = {}) => ({
-  accessExpirationDate: futureDate,
-  canUpgrade: data.verified ? null : true,
+  accessExpirationDate: ((data.isEnrolled === false) ? null : futureDate),
+  canUpgrade: (data.isVerified ? null : true),
+  hasFinished: false,
   hasStarted: false,
-  isAudit: true,
-  isAuditAccessExpired: data.verified ? null : false,
+  isAudit: !data.isVerified || data.isEnrolled,
+  isAuditAccessExpired: data.isVerified ? null : false,
   isEmailEnabled: false,
   isEnrolled: true,
   isVerified: false,
-  lastEnrolled: pastDate,
   ...data,
 });
 
@@ -137,150 +138,169 @@ export const genCertificateData = (data = {}) => ({
 });
 
 export const availableSessions = [
-  { startDate: '1/2/2000', endDate: '1/2/2020', courseNumber: genCourseID(100) },
-  { startDate: '2/3/2000', endDate: '2/3/2020', courseNumber: genCourseID(101) },
-  { startDate: '3/4/2000', endDate: '3/4/2020', courseNumber: genCourseID(102) },
+  { startDate: '1/2/2000', endDate: '1/2/2020', courseId: genCourseId(1000) },
+  { startDate: '2/3/2000', endDate: '2/3/2020', courseId: genCourseId(1001) },
+  { startDate: '3/4/2000', endDate: '3/4/2020', courseId: genCourseId(1002) },
+  { startDate: '1/2/2000', endDate: '1/2/2020', courseId: genCourseId(1000) },
+  { startDate: '2/3/2000', endDate: '2/3/2020', courseId: genCourseId(1001) },
+  { startDate: '3/4/2000', endDate: '3/4/2020', courseId: genCourseId(1002) },
+  { startDate: '1/2/2000', endDate: '1/2/2020', courseId: genCourseId(1000) },
+  { startDate: '2/3/2000', endDate: '2/3/2020', courseId: genCourseId(1001) },
+  { startDate: '3/4/2000', endDate: '3/4/2020', courseId: genCourseId(1002) },
+  { startDate: '1/2/2000', endDate: '1/2/2020', courseId: genCourseId(1000) },
+  { startDate: '2/3/2000', endDate: '2/3/2020', courseId: genCourseId(1001) },
+  { startDate: '3/4/2000', endDate: '3/4/2020', courseId: genCourseId(1002) },
 ];
 
 export const courseRuns = [
-  // audit, pending, can upgrade
+  // audit, can upgrade, course not started,
+  {},
+  // audit, can upgrade, course started
   {
-    enrollment: genEnrollmentData({ isAudit: true }),
-    grades: { isPassing: true },
-    courseRun: { isPending: true },
-    certificates: genCertificateData(),
-    entitlements: { isEntitlement: false },
-  },
-  // audit, started, cannot upgrade, restricted
-  {
-    enrollment: genEnrollmentData({ isAudit: true, canUpgrade: false }),
-    grades: { isPassing: true },
     courseRun: { isStarted: true },
-    certificates: genCertificateData({ isRestricted: true }),
-    entitlements: { isEntitlement: false },
   },
-  // audit, started, can upgrade
+  // audit, can upgrade, course started, learner started
   {
-    enrollment: genEnrollmentData({ isAudit: true, canUpgrade: true }),
-    grades: { isPassing: true },
     courseRun: { isStarted: true },
-    certificates: genCertificateData(),
-    entitlements: { isEntitlement: false },
+    enrollment: { hasStarted: true },
   },
-  // audit, started, not passing
+  // audit, can upgrade, course started, learner started, not passing
   {
-    enrollment: genEnrollmentData({ isAudit: true, canUpgrade: true }),
+    courseRun: { isStarted: true },
+    enrollment: { hasStarted: true },
     grades: { isPassing: false },
+  },
+  // audit, access expired, can upgrade, course started, learner started
+  {
     courseRun: { isStarted: true },
-    certificates: genCertificateData(),
-    entitlements: { isEntitlement: false },
-  },
-  // audit, started, audit access expired, can upgrade
-  {
-    enrollment: genEnrollmentData({ isAudit: true, isAuditAccessExpired: true }),
-    grades: { isPassing: true },
-    courseRun: { isStarted: true, accessExpirationDate: pastDate },
-    certificates: genCertificateData(),
-    entitlements: { isEntitlement: false },
-  },
-  // audit, started, audit access expired, cannot upgrade
-  {
-    enrollment: genEnrollmentData({
-      isAudit: true,
+    enrollment: {
+      hasStarted: true,
       isAuditAccessExpired: true,
+      accessExpirationDate: pastDate,
+    },
+  },
+  // audit, access expired, cannot upgrade, course started, learner started
+  {
+    courseRun: { isStarted: true },
+    enrollment: {
+      accessExpirationDate: pastDate,
+      isAuditAccessExpired: true,
+      hasStarted: true,
       canUpgrade: false,
-    }),
-    grades: { isPassing: true },
-    courseRun: { isStarted: true, accessExpirationDate: pastDate },
-    certificates: genCertificateData(),
-    entitlements: { isEntitlement: false },
+    },
   },
-  // verified, pending, restricted
+
+  // verified, course not started
+  { enrollment: { isVerified: true } },
+  // verified, course started, learner not started
   {
-    enrollment: genEnrollmentData({ isAudit: false, isVerified: true }),
-    grades: { isPassing: true },
-    courseRun: { isPending: true },
-    certificates: genCertificateData({ isRestricted: true }),
-    entitlements: { isEntitlement: false },
-  },
-  // verified, started
-  {
-    enrollment: genEnrollmentData({ isAudit: false, isVerified: true }),
-    grades: { isPassing: true },
     courseRun: { isStarted: true },
-    certificates: genCertificateData(),
-    entitlements: { isEntitlement: false },
+    enrollment: { isVerified: true },
   },
-  // verified, not passing
+  // verified, course started, learner started, passing
   {
-    enrollment: genEnrollmentData({ isAudit: false, isVerified: true }),
+    courseRun: { isStarted: true },
+    enrollment: { hasStarted: true, isVerified: true },
+  },
+  // verified, course started, learner started, not passing
+  {
+    courseRun: { isStarted: true },
     grades: { isPassing: false },
-    courseRun: { isStarted: true },
-    certificates: genCertificateData(),
-    entitlements: { isEntitlement: false },
+    enrollment: { hasStarted: true, isVerified: true },
   },
-  // verified, finished, not passing
+  // verified, learner started, not finished, not passing
   {
-    enrollment: genEnrollmentData({ isAudit: false, isVerified: true }),
+    enrollment: { hasStarted: true, isVerified: true },
     grades: { isPassing: false },
-    courseRun: { isArchived: true, endDate: pastDate },
-    certificates: genCertificateData(),
-    entitlements: { isEntitlement: false },
   },
-  // verified, restricted
+  // verified, learner finished, passing, restricted
   {
-    enrollment: genEnrollmentData({ isVerified: true }),
-    grades: { isPassing: true },
+    enrollment: {
+      hasFinished: true,
+      hasStarted: true,
+      isVerified: true,
+    },
     courseRun: { isStarted: true },
-    certificates: genCertificateData({ isRestricted: true }),
-    entitlements: { isEntitlement: false },
+    certificates: { isRestricted: true },
   },
-  // verified, earned but not available
+  // verified, learner finished, passing, cert earned but not available
   {
-    enrollment: genEnrollmentData({ isVerified: true }),
-    grades: { isPassing: true },
+    enrollment: {
+      hasFinished: true,
+      hasStarted: true,
+      isVerified: true,
+    },
     courseRun: { isStarted: true },
-    certificates: genCertificateData({
+    certificates: {
       isEarned: true,
       availableDate: futureDate,
-    }),
-    entitlements: { isEntitlement: false },
+      isAvailable: false,
+    },
   },
-  // verified, earned, downloadable (web + link)
+  // verified, learner finished, cert earned, downloadable (web + link)
   {
-    enrollment: genEnrollmentData({ isAudit: false, isVerified: true }),
-    grades: { isPassing: true },
+    enrollment: {
+      hasFinished: true,
+      hasStarted: true,
+      isVerified: true,
+    },
     courseRun: { isStarted: true },
-    certificates: genCertificateData({
+    certificates: {
       isEarned: true,
       isAvailable: true,
       isDownloadable: true,
       availableDate: pastDate,
       certDownloadUrl: logos.social,
       certPreviewUrl: logos.edx,
-    }),
-    entitlements: { isEntitlement: false },
+    },
   },
-  // verified, earned, downloadable (link)
+  // verified, learner finished, cert earned, downloadable (link only)
   {
-    enrollment: genEnrollmentData({ isAudit: false, isVerified: true }),
-    grades: { isPassing: true },
+    enrollment: {
+      hasFinished: true,
+      hasStarted: true,
+      isVerified: true,
+    },
     courseRun: { isStarted: true },
-    certificates: genCertificateData({
+    certificates: {
       isEarned: true,
       isAvailable: true,
       isDownloadable: true,
       availableDate: pastDate,
       certDownloadUrl: logos.social,
-    }),
-    entitlements: { isEntitlement: false },
+    },
+  },
+  // verified, course archived, learner finished, cert earned, downloadable (web + link)
+  {
+    enrollment: {
+      hasFinished: true,
+      hasStarted: true,
+      isVerified: true,
+    },
+    courseRun: {
+      isStarted: true,
+      isArchived: true,
+      endDate: pastDate,
+    },
+    certificates: {
+      isEarned: true,
+      isAvailable: true,
+      isDownloadable: true,
+      availableDate: pastDate,
+      certDownloadUrl: logos.social,
+      certPreviewUrl: logos.edx,
+    },
+  },
+  // verified, course archived, learner started, not finished, not passing
+  {
+    enrollment: { hasStarted: true, isVerified: true },
+    grades: { isPassing: false },
+    courseRun: { isArchived: true, endDate: pastDate },
   },
   // Entitlement Course Run - Cannot view yet
   {
-    enrollment: genEnrollmentData({ isAudit: false, isVerified: true }),
-    grades: { isPassing: true },
-    courseRun: { isPending: true },
-    certificates: genCertificateData(),
+    enrollment: { isVerified: true },
+    courseRun: { isStarted: false },
     entitlements: {
       isEntitlement: true,
       isFulfilled: true,
@@ -294,10 +314,8 @@ export const courseRuns = [
   },
   // Entitlement Course Run - Can View and Change
   {
-    enrollment: genEnrollmentData({ isAudit: false, isVerified: true }),
-    grades: { isPassing: true },
+    enrollment: { isVerified: true },
     courseRun: { isStarted: true },
-    certificates: genCertificateData(),
     entitlements: {
       isEntitlement: true,
       isFulfilled: true,
@@ -311,10 +329,8 @@ export const courseRuns = [
   },
   // Entitlement Course Run - Can View but not Change
   {
-    enrollment: genEnrollmentData({ isAudit: false, isVerified: true }),
-    grades: { isPassing: true },
+    enrollment: { isVerified: true },
     courseRun: { isStarted: true },
-    certificates: genCertificateData(),
     entitlements: {
       isEntitlement: true,
       isFulfilled: true,
@@ -327,14 +343,8 @@ export const courseRuns = [
   },
   // Entitlement Course Run - Expired
   {
-    enrollment: genEnrollmentData({ isAudit: false, isVerified: true }),
-    grades: { isPassing: true },
-    courseRun: {
-      isStarted: true,
-      isArchived: true,
-      endDate: pastDate,
-    },
-    certificates: genCertificateData(),
+    enrollment: { isVerified: true },
+    courseRun: { isStarted: true, isArchived: true, endDate: pastDate },
     entitlements: {
       isEntitlement: true,
       isFulfilled: true,
@@ -406,28 +416,41 @@ export const entitlementCourses = [
 export const courseRunData = courseRuns.map(
   (data, index) => {
     const title = genCourseTitle(index);
-    const courseNumber = genCourseID(index);
+    const cardId = genCardId(index);
+    const courseId = genCourseId(index);
+    const courseNumber = genCourseNumber(index);
     const providerIndex = index % 3;
+    const lastEnrolled = new Date();
+    lastEnrolled.setDate(lastEnrolled.getDate() - index);
     const iteratedData = [
       {
         provider: providers.edx,
-        course: { title, bannerUrl: logos.edx },
+        course: { title, bannerUrl: logos.edx, courseNumber },
         relatedPrograms,
       },
       {
         provider: providers.mit,
-        course: { title, bannerUrl: logos.science },
+        course: { title, bannerUrl: logos.science, courseNumber },
         relatedPrograms: [relatedPrograms[0]],
       },
       {
         provider: null,
-        course: { title, bannerUrl: logos.social },
+        course: { title, bannerUrl: logos.social, courseNumber },
         relatedPrograms: [],
       },
     ];
     return {
+      cardId,
+      grades: { isPassing: true },
+      entitlements: null,
       ...data,
-      courseRun: genCourseRunData({ ...data.courseRun, courseNumber }),
+      certificates: genCertificateData(data.certificates),
+      enrollment: genEnrollmentData(data.enrollment),
+      courseRun: genCourseRunData({
+        ...data.courseRun,
+        courseId,
+        lastEnrolled,
+      }),
       ...iteratedData[providerIndex],
     };
   },
@@ -436,31 +459,44 @@ export const courseRunData = courseRuns.map(
 export const entitlementData = entitlementCourses.map(
   (data, index) => {
     const title = genCourseTitle(100 + index);
-    const courseNumber = genCourseID(100 + index);
+    const cardId = genCardId(100 + index);
+    const courseNumber = genCourseNumber(100 + index);
     const providerIndex = index % 3;
     const iteratedData = [
       {
         provider: providers.edx,
-        course: { title, bannerUrl: logos.edx },
+        course: { courseNumber, title, bannerUrl: logos.edx },
         relatedPrograms,
       },
       {
         provider: providers.mit,
-        course: { title, bannerUrl: logos.science },
+        course: { courseNumber, title, bannerUrl: logos.science },
         relatedPrograms: [relatedPrograms[0]],
       },
       {
         provider: null,
-        course: { title, bannerUrl: logos.social },
+        course: { courseNumber, title, bannerUrl: logos.social },
         relatedPrograms: [],
       },
     ];
     return {
+      cardId,
+      enrollment: genEnrollmentData({
+        isEnrolled: false,
+        lastEnrolled: null,
+        accessExpirationDate: null,
+        canUpgrade: false,
+        hasFinished: false,
+        hasStarted: false,
+        isAudit: false,
+        isAuditAccessExpired: false,
+        isEmailEnabled: false,
+        isVerified: false,
+      }),
+      grades: null,
+      certificates: null,
+      courseRun: null,
       ...data,
-      enrollment: genEnrollmentData(),
-      grades: { isPassing: true },
-      certificates: genCertificateData(),
-      courseRun: genCourseRunData({ ...data.courseRun, courseNumber }),
       ...iteratedData[providerIndex],
     };
   },

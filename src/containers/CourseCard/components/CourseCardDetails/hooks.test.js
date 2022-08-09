@@ -8,22 +8,24 @@ import messages from './messages';
 
 jest.mock('data/redux', () => ({
   hooks: {
+    useCardCourseData: jest.fn(),
     useCardCourseRunData: jest.fn(),
     useCardEnrollmentData: jest.fn(),
     useCardEntitlementsData: jest.fn(),
     useCardProviderData: jest.fn(),
   },
 }));
-jest.mock('containers/SelectSession/hooks', () => () => ({
-  openSessionModalWithLeaveOption: jest.fn().mockName('useSelectSession.openSessionModalWithLeaveOptionFunction'),
+jest.mock('containers/SelectSessionModal/hooks', () => () => ({
+  openSessionModal: jest.fn().mockName('useSelectSession.openSessionModalFunction'),
 }));
 
-const courseNumber = 'my-test-course-number';
+const cardId = 'my-test-card-id';
+const courseNumber = 'test-course-number';
 const useAccessMessage = 'test-access-message';
-const mockAccessMessage = (args) => ({ courseNumber: args.coursenumber, useAccessMessage });
+const mockAccessMessage = (args) => ({ cardId: args.cardId, useAccessMessage });
 const hookKeys = keyStore(hooks);
 
-describe('CourseCard hooks', () => {
+describe('CourseCardDetails hooks', () => {
   let out;
   const { formatMessage, formatDate } = useIntl();
   beforeEach(() => {
@@ -53,7 +55,8 @@ describe('CourseCard hooks', () => {
         ...entitlementData,
         ...entitlement,
       });
-      out = hooks.useCardDetailsData({ courseNumber });
+      appHooks.useCardCourseData.mockReturnValueOnce({ courseNumber });
+      out = hooks.useCardDetailsData({ cardId });
     };
     beforeEach(() => {
       runHook({});
@@ -61,8 +64,8 @@ describe('CourseCard hooks', () => {
     it('forwards formatMessage from useIntl', () => {
       expect(out.formatMessage).toEqual(formatMessage);
     });
-    it('forwards useAccessMessage output, called with courseNumber', () => {
-      expect(out.accessMessage).toEqual(mockAccessMessage({ courseNumber }));
+    it('forwards useAccessMessage output, called with cardId', () => {
+      expect(out.accessMessage).toEqual(mockAccessMessage({ cardId }));
     });
     it('forwards provider name if it exists, else formatted unknown provider name', () => {
       expect(out.providerName).toEqual(providerData.name);
@@ -70,15 +73,17 @@ describe('CourseCard hooks', () => {
       expect(out.providerName).toEqual(formatMessage(messages.unknownProviderName));
     });
   });
+
   describe('useAccessMessage', () => {
     const enrollmentData = {
+      isEnrolled: true,
       accessExpirationDate: 'test-expiration-date',
       isAudit: false,
       isAuditAccessExpired: false,
     };
     const courseRunData = {
       isFinished: false,
-      endDate: 'test-end-date',
+      endDate: '10/20/1000',
     };
     const runHook = ({ enrollment = {}, courseRun = {} }) => {
       appHooks.useCardCourseRunData.mockReturnValueOnce({
@@ -89,13 +94,15 @@ describe('CourseCard hooks', () => {
         ...enrollmentData,
         ...enrollment,
       });
-      out = hooks.useAccessMessage({ courseNumber });
+      out = hooks.useAccessMessage({ cardId });
     };
+
     it('loads data from enrollment and course run data based on course number', () => {
       runHook({});
-      expect(appHooks.useCardCourseRunData).toHaveBeenCalledWith(courseNumber);
-      expect(appHooks.useCardEnrollmentData).toHaveBeenCalledWith(courseNumber);
+      expect(appHooks.useCardCourseRunData).toHaveBeenCalledWith(cardId);
+      expect(appHooks.useCardEnrollmentData).toHaveBeenCalledWith(cardId);
     });
+
     describe('if audit, and expired', () => {
       it('returns accessExpired message with accessExpirationDate from cardData', () => {
         runHook({ enrollment: { isAudit: true, isAuditAccessExpired: true } });

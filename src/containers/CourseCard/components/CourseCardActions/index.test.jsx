@@ -9,7 +9,7 @@ jest.mock('./hooks', () => ({
   default: jest.fn(),
 }));
 
-const courseNumber = 'test-course-number';
+const cardId = 'test-course-number';
 
 describe('CourseCard Actions component', () => {
   it('loads primary and secondary button props from hook', () => {
@@ -18,17 +18,17 @@ describe('CourseCard Actions component', () => {
         prop1: 'primary-prop1',
         prop2: 'primary-prop2',
         children: 'primary-children',
-        courseNumber: args.courseNumber,
+        cardId: args.cardId,
       },
       secondary: {
         prop1: 'primary-prop1',
         prop2: 'primary-prop2',
         children: 'primary-children',
-        courseNumber: args.courseNumber,
+        cardId: args.cardId,
       },
     });
     hooks.mockImplementationOnce(mockHook);
-    expect(shallow(<CourseCardActions courseNumber={courseNumber} />)).toMatchSnapshot();
+    expect(shallow(<CourseCardActions cardId={cardId} />)).toMatchSnapshot();
   });
   it('does not render secondary button if null is returned for secondary props', () => {
     const mockHook = (args) => ({
@@ -36,11 +36,11 @@ describe('CourseCard Actions component', () => {
         prop1: 'primary-prop1',
         prop2: 'primary-prop2',
         children: 'primary-children',
-        courseNumber: args.courseNumber,
+        cardId: args.cardId,
       },
       secondary: null,
     });
     hooks.mockImplementationOnce(mockHook);
-    expect(shallow(<CourseCardActions courseNumber={courseNumber} />)).toMatchSnapshot();
+    expect(shallow(<CourseCardActions cardId={cardId} />)).toMatchSnapshot();
   });
 });

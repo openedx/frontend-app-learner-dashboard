@@ -19,7 +19,7 @@ const hookProps = {
 const props = {
   closeModal: jest.fn().mockName('closeModal'),
   show: true,
-  courseNumber: 'test-course-number',
+  cardId: 'test-course-number',
 };
 
 const dispatch = useDispatch();
@@ -33,11 +33,11 @@ describe('EmailSettingsModal', () => {
       hooks.mockReturnValueOnce(hookProps);
       shallow(<EmailSettingsModal {...props} />);
     });
-    it('calls hook w/ dispatch from redux hook, and closeModal, courseNumber from props', () => {
+    it('calls hook w/ dispatch from redux hook, and closeModal, cardId from props', () => {
       expect(hooks).toHaveBeenCalledWith({
         closeModal: props.closeModal,
         dispatch,
-        courseNumber: props.courseNumber,
+        cardId: props.cardId,
       });
     });
   });

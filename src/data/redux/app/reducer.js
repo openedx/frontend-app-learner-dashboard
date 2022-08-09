@@ -10,30 +10,25 @@ const initialState = {
   platformSettings: {},
   suggestedCourses: [],
   filterState: {},
-  selectSessionsModal: {},
+  selectSessionModal: {},
 };
+
+export const cardId = (val) => `card-${val}`;
 
 // eslint-disable-next-line no-unused-vars
 const app = createSlice({
   name: 'app',
   initialState,
   reducers: {
-    loadCourses: (state, { payload: { enrollments, entitlements } }) => ({
+    loadCourses: (state, { payload: { courses } }) => ({
       ...state,
-      enrollments: [
-        ...enrollments.map(curr => curr.courseRun.courseNumber),
-        ...entitlements.map(curr => curr.courseRun.courseNumber),
-      ],
-      courseData: {
-        ...entitlements.reduce(
-          (obj, curr) => ({ ...obj, [curr.courseRun.courseNumber]: curr }),
-          {},
-        ),
-        ...enrollments.reduce(
-          (obj, curr) => ({ ...obj, [curr.courseRun.courseNumber]: curr }),
-          {},
-        ),
-      },
+      courseData: courses.reduce(
+        (obj, curr, index) => ({
+          ...obj,
+          [cardId(index)]: { ...curr, cardId: cardId(index) },
+        }),
+        {},
+      ),
     }),
     loadGlobalData: (state, { payload }) => ({
       ...state,
@@ -44,9 +39,7 @@ const app = createSlice({
     }),
     updateSelectSessionModal: (state, { payload }) => ({
       ...state,
-      selectSessionsModal: {
-        ...payload,
-      },
+      selectSessionModal: { cardId: payload },
     }),
   },
 });

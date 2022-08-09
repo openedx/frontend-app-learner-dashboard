@@ -16,8 +16,10 @@ import {
  * GET Actions
  *********************************************************************************/
 const initializeList = () => Promise.resolve({
-  enrollments: fakeData.courseRunData,
-  entitlements: fakeData.entitlementData,
+  courses: [
+    ...fakeData.courseRunData,
+    ...fakeData.entitlementData,
+  ],
   ...fakeData.globalData,
 });
 

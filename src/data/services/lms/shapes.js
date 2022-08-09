@@ -14,7 +14,7 @@ export const shapes = StrictDict({
   }),
   courseRun: PropTypes.shape({
     accessExpirationDate: PropTypes.string,
-    courseNumber: PropTypes.string,
+    cardId: PropTypes.string,
     isArchived: PropTypes.bool,
     isFinished: PropTypes.bool,
     isPending: PropTypes.bool,
@@ -43,7 +43,7 @@ export const shapes = StrictDict({
     availableSessions: PropTypes.shape({
       startDate: PropTypes.string,
       endDate: PropTypes.string,
-      courseNumber: PropTypes.string,
+      cardId: PropTypes.string,
     }),
     canChange: PropTypes.bool,
     isFulfilled: PropTypes.bool,

@@ -10,7 +10,7 @@ export const messages = StrictDict({
   selectSessionHeader: {
     id: 'learner-dash.selectSession.selectSessionHeader',
     description: 'Header for unfulfilled entitlement',
-    defaultMessage: 'Select a session to access {courseTitle}',
+    defaultMessage: 'Select a session',
   },
   changeOrLeaveHint: {
     id: 'learner-dash.selectSession.changeOrLeaveHint',

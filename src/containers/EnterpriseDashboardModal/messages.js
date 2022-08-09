@@ -1,11 +1,6 @@
 import { defineMessages } from '@edx/frontend-platform/i18n';
 
 const messages = defineMessages({
-  dashboard: {
-    id: 'leanerDashboard.menu.dashboard.label',
-    defaultMessage: 'Dashboard',
-    description: 'The text for the user menu Dashboard navigation link.',
-  },
   enterpriseDialogHeader: {
     id: 'leanerDashboard.enterpriseDialogHeader',
     defaultMessage: 'You have access to the {label} dashboard',

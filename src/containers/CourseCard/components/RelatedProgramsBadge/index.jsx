@@ -8,14 +8,14 @@ import { Program } from '@edx/paragon/icons';
 import RelatedProgramsBadgeModal from 'containers/RelatedProgramsModal';
 import useRelatedProgramsBadgeData from './hooks';
 
-export const RelatedProgramsBadge = ({ courseNumber }) => {
+export const RelatedProgramsBadge = ({ cardId }) => {
   const {
     isOpen,
     openModal,
     closeModal,
     numPrograms,
     programsMessage,
-  } = useRelatedProgramsBadgeData({ courseNumber });
+  } = useRelatedProgramsBadgeData({ cardId });
   return (numPrograms > 0) && (
     <>
       <Button
@@ -27,12 +27,12 @@ export const RelatedProgramsBadge = ({ courseNumber }) => {
       >
         {programsMessage}
       </Button>
-      <RelatedProgramsBadgeModal {...{ isOpen, closeModal, courseNumber }} />
+      <RelatedProgramsBadgeModal {...{ isOpen, closeModal, cardId }} />
     </>
   );
 };
 RelatedProgramsBadge.propTypes = {
-  courseNumber: PropTypes.string.isRequired,
+  cardId: PropTypes.string.isRequired,
 };
 
 export default RelatedProgramsBadge;

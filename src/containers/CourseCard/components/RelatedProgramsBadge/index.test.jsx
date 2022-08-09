@@ -15,16 +15,16 @@ const hookProps = {
   programsMessage: 'useRelatedProgramsBadge.programsMessage',
 };
 
-const courseNumber = 'test-course-number';
+const cardId = 'test-course-number';
 
 describe('RelatedProgramsBadge component', () => {
   test('empty render: no programs', () => {
     useRelatedProgramsBadge.mockReturnValueOnce({ ...hookProps, numPrograms: 0 });
-    const el = shallow(<RelatedProgramsBadge courseNumber={courseNumber} />);
+    const el = shallow(<RelatedProgramsBadge cardId={cardId} />);
     expect(el.isEmptyRender()).toEqual(true);
   });
   test('snapshot: 3 programs', () => {
     useRelatedProgramsBadge.mockReturnValueOnce(hookProps);
-    expect(shallow(<RelatedProgramsBadge courseNumber={courseNumber} />)).toMatchSnapshot();
+    expect(shallow(<RelatedProgramsBadge cardId={cardId} />)).toMatchSnapshot();
   });
 });

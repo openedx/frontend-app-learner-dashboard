@@ -23,14 +23,18 @@ const dataProps = {
   title: 'hooks.title',
   bannerUrl: 'hooks.bannerUrl',
   formatMessage: jest.fn(msg => ({ formatted: msg })),
+  isEnrolled: true,
 };
 
-const courseNumber = 'test-course-number';
+const cardId = 'test-card-id';
 
 describe('CourseCard component', () => {
   test('snapshot', () => {
     hooks.mockReturnValueOnce(dataProps);
-    expect(shallow(<CourseCard courseNumber={courseNumber} />)).toMatchSnapshot();
-    expect(hooks).toHaveBeenCalledWith({ courseNumber });
+    expect(shallow(<CourseCard cardId={cardId} />)).toMatchSnapshot();
+    expect(hooks).toHaveBeenCalledWith({ cardId });
+  });
+  test('snapshot: not enrolled (no certificate card)', () => {
+    hooks.mockReturnValueOnce({ ...dataProps, isEnrolled: true });
   });
 });

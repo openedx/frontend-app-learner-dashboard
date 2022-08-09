@@ -9,7 +9,7 @@ jest.mock('./hooks', () => ({
   useProgramData: jest.fn(),
 }));
 
-const courseNumber = 'test-course-number';
+const cardId = 'test-course-number';
 const hookProps = {
   courseTitle: 'hookProps.courseTitle',
   relatedPrograms: [
@@ -31,7 +31,7 @@ const hookProps = {
 const props = {
   isOpen: true,
   closeModal: jest.fn().mockName('props.closeModal'),
-  courseNumber,
+  cardId,
 };
 
 describe('RelatedProgramsModal', () => {

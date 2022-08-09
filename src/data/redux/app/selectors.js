@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 
 import { StrictDict } from 'utils';
+import { FilterKeys } from 'data/constants/app';
 
 import * as module from './selectors';
 
@@ -10,23 +11,35 @@ const mkSimpleSelector = (cb) => createSelector([module.appSelector], cb);
 
 // top-level app data selectors
 export const simpleSelectors = {
-  enrollments: mkSimpleSelector(app => app.enrollments),
-  entitlements: mkSimpleSelector(app => app.entitlements),
   courseData: mkSimpleSelector(app => app.courseData),
   platformSettings: mkSimpleSelector(app => app.platformSettings),
   suggestedCourses: mkSimpleSelector(app => app.suggestedCourses),
   emailConfirmation: mkSimpleSelector(app => app.emailConfirmation),
   enterpriseDashboards: mkSimpleSelector(app => app.enterpriseDashboards),
-  selectSessionsModal: mkSimpleSelector(app => app.selectSessionsModal),
+  selectSessionModal: mkSimpleSelector(app => app.selectSessionModal),
 };
 
-export const courseCardData = (state, courseNumber) => (
-  module.simpleSelectors.courseData(state)[courseNumber]
+export const numCourses = createSelector(
+  [module.simpleSelectors.courseData],
+  (courseData) => Object.keys(courseData).length,
+);
+export const hasCourses = createSelector([module.numCourses], (num) => num > 0);
+export const hasAvailableDashboards = createSelector(
+  [module.simpleSelectors.enterpriseDashboards],
+  (data) => !!data.availableDashboards,
 );
 
-const mkCardSelector = (sel) => (state, courseNumber) => (
-  sel(courseCardData(state, courseNumber))
+export const courseCardData = (state, cardId) => (
+  module.simpleSelectors.courseData(state)[cardId]
 );
+
+const mkCardSelector = (sel) => (state, cardId) => {
+  const cardData = module.courseCardData(state, cardId);
+  if (cardData) {
+    return sel(cardData);
+  }
+  return {};
+};
 
 const dateSixMonthsFromNow = new Date();
 dateSixMonthsFromNow.setDate(dateSixMonthsFromNow.getDate() + 180);
@@ -43,28 +56,41 @@ export const courseCard = StrictDict({
   })),
   course: mkCardSelector(({ course }) => ({
     bannerUrl: course.bannerUrl,
+    courseNumber: course.courseNumber,
     title: course.title,
     website: course.website,
   })),
-  courseRun: mkCardSelector(({ courseRun }) => ({
+  courseRun: mkCardSelector(({ courseRun }) => (courseRun === null ? {} : {
     endDate: courseRun?.endDate,
+    courseId: courseRun.courseId,
     isArchived: courseRun.isArchived,
     isStarted: courseRun.isStarted,
     isFinished: courseRun.isFinished,
     minPassingGrade: courseRun.minPassingGrade,
   })),
-  enrollment: mkCardSelector(({ enrollment }) => ({
-    accessExpirationDate: enrollment.accessExpirationDate,
-    canUpgrade: enrollment.canUpgrade,
-    hasStarted: enrollment.hasStarted,
-    isAudit: enrollment.isAudit,
-    isAuditAccessExpired: enrollment.isAuditAccessExpired,
-    isEmailEnabled: enrollment.isEmailEnabled,
-    isVerified: enrollment.isVerified,
-    lastEnrolled: enrollment.lastEnrollment,
-    isEnrolled: enrollment.isEnrolled,
-  })),
+  enrollment: mkCardSelector(({ enrollment }) => {
+    if (enrollment == null) {
+      return {
+        isEnrolled: false,
+      };
+    }
+    return {
+      accessExpirationDate: enrollment.accessExpirationDate,
+      canUpgrade: enrollment.canUpgrade,
+      hasStarted: enrollment.hasStarted,
+      hasFinished: enrollment.hasFinished,
+      isAudit: enrollment.isAudit,
+      isAuditAccessExpired: enrollment.isAuditAccessExpired,
+      isEmailEnabled: enrollment.isEmailEnabled,
+      isVerified: enrollment.isVerified,
+      lastEnrolled: enrollment.lastEnrollment,
+      isEnrolled: enrollment.isEnrolled,
+    };
+  }),
   entitlements: mkCardSelector(({ entitlements }) => {
+    if (!entitlements) {
+      return {};
+    }
     const deadline = new Date(entitlements.changeDeadline);
     const showExpirationWarning = deadline > new Date() && deadline <= dateSixMonthsFromNow;
     return {
@@ -96,7 +122,71 @@ export const courseCard = StrictDict({
   })),
 });
 
+export const currentList = (state, {
+  sortBy,
+  isAscending,
+  filters,
+  pageNumber,
+  pageSize,
+}) => {
+  let list = Object.values(module.simpleSelectors.courseData(state));
+  if (filters.length) {
+    list = list.filter(course => {
+      if (filters.includes(FilterKeys.notEnrolled)) {
+        if (!course.enrollment.isEnrolled) {
+          return false;
+        }
+      }
+      if (filters.includes(FilterKeys.done)) {
+        if (!course.enrollment.hasFinished) {
+          return false;
+        }
+      }
+      if (filters.includes(FilterKeys.upgraded)) {
+        if (!course.enrollment.isVerified) {
+          return false;
+        }
+      }
+      if (filters.includes(FilterKeys.inProgress)) {
+        if (!course.enrollment.hasStarted) {
+          return false;
+        }
+      }
+      if (filters.includes(FilterKeys.notStarted)) {
+        if (course.enrollment.hasStarted) {
+          return false;
+        }
+      }
+      return true;
+    });
+  }
+  if (sortBy === 'enrolled') {
+    list = list.sort((a, b) => {
+      const dateA = new Date(a.enrollment.lastEnrolled);
+      const dateB = new Date(b.enrollment.lastEnrolled);
+      if (dateA < dateB) { return isAscending ? -1 : 1; }
+      if (dateA > dateB) { return isAscending ? 1 : 1; }
+      return 0;
+    });
+  } else {
+    list = list.sort((a, b) => {
+      const titleA = a.course.title.toLowerCase();
+      const titleB = b.course.title.toLowerCase();
+      if (titleA < titleB) { return isAscending ? -1 : 1; }
+      if (titleA > titleB) { return isAscending ? 1 : 1; }
+      return 0;
+    });
+  }
+  return {
+    visible: list.slice((pageNumber - 1) * pageSize, pageNumber * pageSize),
+    numPages: Math.ceil(list.length / pageSize),
+  };
+};
+
 export default StrictDict({
   ...simpleSelectors,
   courseCard,
+  currentList,
+  hasCourses,
+  hasAvailableDashboards,
 });

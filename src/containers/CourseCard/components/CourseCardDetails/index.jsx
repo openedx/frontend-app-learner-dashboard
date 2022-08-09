@@ -7,7 +7,7 @@ import useCardDetailsData from './hooks';
 
 import messages from './messages';
 
-export const CourseCardDetails = ({ courseNumber }) => {
+export const CourseCardDetails = ({ cardId }) => {
   const {
     providerName,
     accessMessage,
@@ -16,11 +16,18 @@ export const CourseCardDetails = ({ courseNumber }) => {
     canChange,
     openSessionModal,
     formatMessage,
-  } = useCardDetailsData({ courseNumber });
+    courseNumber,
+  } = useCardDetailsData({ cardId });
 
   return (
     <span data-testid="CourseCardDetails">
-      {providerName} • {courseNumber} • {accessMessage}
+      {providerName} • {courseNumber}
+      {!(isEntitlement && !isFulfilled) && (
+        <>
+          {' • '}
+          {accessMessage}
+        </>
+      )}
       {isEntitlement && isFulfilled && canChange ? (
         <>
           {' • '}
@@ -34,7 +41,7 @@ export const CourseCardDetails = ({ courseNumber }) => {
 };
 
 CourseCardDetails.propTypes = {
-  courseNumber: PropTypes.string.isRequired,
+  cardId: PropTypes.string.isRequired,
 };
 
 CourseCardDetails.defaultProps = {};

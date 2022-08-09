@@ -20,6 +20,7 @@ import { RequestKeys, RequestStates } from 'data/constants/requests';
 import reducers from 'data/redux';
 import messages from 'i18n';
 import { selectors } from 'data/redux';
+import { cardId as genCardId } from 'data/redux/app/reducer';
 
 import App from 'App';
 import Inspector from './inspector';
@@ -79,8 +80,10 @@ const mockApi = () => {
     (resolve, reject) => {
       resolveFns.init = {
         success: () => resolve({
-          enrollments: fakeData.courseRunData,
-          entitlements: fakeData.entitlementData,
+          courses: [
+            ...fakeData.courseRunData,
+            ...fakeData.entitlementData,
+          ],
           ...fakeData.globalData,
         }),
       };
@@ -130,27 +133,28 @@ describe('ESG app integration tests', () => {
     await inspector.findByText(fakeData.courseRunData[0].course.title);
     const cards = inspector.get.courseCards;
 
-    let card = cards.at(0);
-    let courseNumber;
+    let cardId;
     let courseData;
     let cardDetails;
     await getState();
 
     // Card 1 is Audit, pending, and can upgrade
-    courseNumber = state.app.enrollments[0];
-    courseData = state.app.courseData[courseNumber];
+    cardId = genCardId(0);
+    courseData = state.app.courseData[cardId];
     expect(courseData.enrollment.isAudit).toEqual(true);
-    expect(courseData.courseRun.isPending).toEqual(true);
+    expect(courseData.courseRun.isStarted).toEqual(false);
     expect(courseData.enrollment.canUpgrade).toEqual(true);
+
+    let card = cards.at(0);
+
     inspector.verifyText(
       inspector.get.card.header(card),
       courseData.course.title,
     );
     cardDetails = inspector.get.card.details(card);
-
     [
       courseData.provider.name,
-      courseNumber,
+      courseData.course.courseNumber,
       appMessages.withValues.CourseCardDetails.accessExpires({
         accessExpirationDate: courseData.enrollment.accessExpirationDate,
       }),

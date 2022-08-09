@@ -15,11 +15,11 @@ jest.mock('data/redux', () => ({
   },
 }));
 
-jest.mock('containers/SelectSession/hooks', () => () => ({
-  openSessionModal: jest.fn().mockName('useSelectSession.openSessionModal'),
+jest.mock('containers/SelectSessionModal/hooks', () => () => ({
+  openSessionModal: (cardId) => jest.fn().mockName(`useSelectSession.openSessionModal(${cardId})`),
 }));
 
-const courseNumber = 'my-test-course-number';
+const cardId = 'my-test-course-number';
 
 const enrollmentData = {
   canUpgrade: false,
@@ -48,7 +48,7 @@ describe('CourseCardActions hooks', () => {
     appHooks.useCardCourseRunData.mockReturnValueOnce({ ...courseRunData, ...courseRun });
     appHooks.useCardEnrollmentData.mockReturnValueOnce({ ...enrollmentData, ...enrollment });
     appHooks.useCardEntitlementsData.mockReturnValueOnce({ ...entitlementData, ...entitlement });
-    out = hooks.useCardActionData({ courseNumber });
+    out = hooks.useCardActionData({ cardId });
   };
   describe('entitlement', () => {
     describe('secondary action', () => {

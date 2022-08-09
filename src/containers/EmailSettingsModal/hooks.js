@@ -12,10 +12,10 @@ export const state = StrictDict({
 
 export const useEmailData = ({
   closeModal,
-  courseNumber,
+  cardId,
   // dispatch,
 }) => {
-  const { isEmailEnabled } = appHooks.useCardEnrollmentData(courseNumber);
+  const { isEmailEnabled } = appHooks.useCardEnrollmentData(cardId);
   const [toggleValue, setToggleValue] = module.state.toggle(isEmailEnabled);
   const onToggle = React.useCallback(
     () => setToggleValue(!toggleValue),

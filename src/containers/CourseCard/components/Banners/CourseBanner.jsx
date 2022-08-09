@@ -8,14 +8,14 @@ import { hooks as appHooks } from 'data/redux';
 import Banner from 'components/Banner';
 import messages from './messages';
 
-export const CourseBanner = ({ courseNumber }) => {
+export const CourseBanner = ({ cardId }) => {
   const {
     isVerified,
     isAuditAccessExpired,
     canUpgrade,
-  } = appHooks.useCardEnrollmentData(courseNumber);
-  const courseRun = appHooks.useCardCourseRunData(courseNumber);
-  const course = appHooks.useCardCourseData(courseNumber);
+  } = appHooks.useCardEnrollmentData(cardId);
+  const courseRun = appHooks.useCardCourseRunData(cardId);
+  const course = appHooks.useCardCourseData(cardId);
   const { formatMessage } = useIntl();
 
   if (isVerified) { return null; }
@@ -52,7 +52,7 @@ export const CourseBanner = ({ courseNumber }) => {
   return null;
 };
 CourseBanner.propTypes = {
-  courseNumber: PropTypes.string.isRequired,
+  cardId: PropTypes.string.isRequired,
 };
 
 export default CourseBanner;

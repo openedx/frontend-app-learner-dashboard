@@ -11,8 +11,8 @@ exports[`RelatedProgramsBadge component snapshot: 3 programs 1`] = `
     useRelatedProgramsBadge.programsMessage
   </Button>
   <RelatedProgramsModal
+    cardId="test-course-number"
     closeModal={[MockFunction useRelatedProgramsBadge.closeModal]}
-    courseNumber="test-course-number"
     isOpen={true}
   />
 </Fragment>

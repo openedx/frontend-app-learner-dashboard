@@ -5,7 +5,7 @@ exports[`CourseCard Actions component does not render secondary button if null i
   data-test-id="CourseCardActions"
 >
   <Button
-    courseNumber="test-course-number"
+    cardId="test-course-number"
     prop1="primary-prop1"
     prop2="primary-prop2"
   >
@@ -19,14 +19,14 @@ exports[`CourseCard Actions component loads primary and secondary button props f
   data-test-id="CourseCardActions"
 >
   <Button
-    courseNumber="test-course-number"
+    cardId="test-course-number"
     prop1="primary-prop1"
     prop2="primary-prop2"
   >
     primary-children
   </Button>
   <Button
-    courseNumber="test-course-number"
+    cardId="test-course-number"
     prop1="primary-prop1"
     prop2="primary-prop2"
   >

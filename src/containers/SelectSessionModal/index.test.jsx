@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import hooks from './hooks';
-import SelectSessionModal from './SelectSessionModal';
+import SelectSessionModal from '.';
 
 jest.mock('./hooks', () => ({
   __esModule: true,
@@ -11,10 +11,11 @@ jest.mock('./hooks', () => ({
 
 const hookReturn = {
   entitlementSessions: [],
-  showSessionModal: true,
-  closeSessionModal: jest.fn().mockName('useSelectSession.closeSessionModal'),
-  showLeaveSessionInSessionModal: true,
-  courseTitle: 'course-title: unit test save life',
+  showModal: true,
+  closeSessionModal: jest.fn().mockName('useSelectSessionModalData.closeSessionModal'),
+  showLeaveOption: true,
+  header: 'test-header',
+  hint: 'test-hint',
 };
 
 const courseNumber = 'my-test-course-number';
@@ -31,7 +32,7 @@ describe('SelectSessionModal', () => {
       hooks.mockReturnValueOnce({
         ...hookReturn,
       });
-      expect(shallow(<SelectSessionModal courseNumber={courseNumber} />)).toMatchSnapshot();
+      expect(shallow(<SelectSessionModal />)).toMatchSnapshot();
     });
 
     test('modal with leave option ', () => {
@@ -39,16 +40,16 @@ describe('SelectSessionModal', () => {
         ...hookReturn,
         entitlementSessions: [...availableSessions],
       });
-      expect(shallow(<SelectSessionModal courseNumber={courseNumber} />)).toMatchSnapshot();
+      expect(shallow(<SelectSessionModal />)).toMatchSnapshot();
     });
 
     test('modal without leave option ', () => {
       hooks.mockReturnValueOnce({
         ...hookReturn,
         entitlementSessions: [...availableSessions],
-        showLeaveSessionInSessionModal: false,
+        showLeaveOption: false,
       });
-      expect(shallow(<SelectSessionModal courseNumber={courseNumber} />)).toMatchSnapshot();
+      expect(shallow(<SelectSessionModal />)).toMatchSnapshot();
     });
   });
 });

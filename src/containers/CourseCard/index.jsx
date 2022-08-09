@@ -17,14 +17,15 @@ import CourseCardActions from './components/CourseCardActions';
 import messages from './messages';
 import CourseCardDetails from './components/CourseCardDetails';
 
-export const CourseCard = ({ courseNumber }) => {
+export const CourseCard = ({ cardId }) => {
   const {
+    isEnrolled,
     title,
     bannerUrl,
     formatMessage,
-  } = useCardData({ courseNumber });
+  } = useCardData({ cardId });
   return (
-    <div className="mb-3 course-card" data-testid="CourseCard">
+    <div className="mb-4.5 course-card" data-testid="CourseCard">
       <Card orientation="horizontal">
         <Card.ImageCap
           src={bannerUrl}
@@ -33,30 +34,30 @@ export const CourseCard = ({ courseNumber }) => {
         <Card.Body>
           <Card.Header
             title={<span data-testid="CourseCardTitle">{title}</span>}
-            actions={<CourseCardMenu courseNumber={courseNumber} />}
+            actions={<CourseCardMenu cardId={cardId} />}
           />
           <Card.Section>
-            <CourseCardDetails courseNumber={courseNumber} />
+            <CourseCardDetails cardId={cardId} />
           </Card.Section>
           <Card.Footer
             orientation="vertical"
-            textElement={<RelatedProgramsBadge courseNumber={courseNumber} />}
+            textElement={<RelatedProgramsBadge cardId={cardId} />}
           >
-            <CourseCardActions courseNumber={courseNumber} />
+            <CourseCardActions cardId={cardId} />
           </Card.Footer>
         </Card.Body>
       </Card>
       <div className="course-card-banners" data-testid="CourseCardBanners">
-        <CourseBanner courseNumber={courseNumber} />
-        <CertificateBanner courseNumber={courseNumber} />
-        <EntitlementBanner courseNumber={courseNumber} />
+        <CourseBanner cardId={cardId} />
+        <EntitlementBanner cardId={cardId} />
+        {isEnrolled && <CertificateBanner cardId={cardId} />}
       </div>
     </div>
   );
 };
 
 CourseCard.propTypes = {
-  courseNumber: PropTypes.string.isRequired,
+  cardId: PropTypes.string.isRequired,
 };
 
 CourseCard.defaultProps = {};

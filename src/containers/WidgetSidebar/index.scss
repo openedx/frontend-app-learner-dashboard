@@ -1,6 +1,6 @@
 @import "@edx/paragon/scss/core/core";
-
 .widget-sidebar {
+  margin-top: map-get($spacers, 5);
   width: 400px;
   flex-shrink: 0;
   padding-left: map-get($spacers, 2);

@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`SelectSession snapshot has courseNumber 1`] = `
-<SelectSessionModal
-  courseNumber="some course"
-/>
-`;
-
-exports[`SelectSession snapshot no courseNumber 1`] = `""`;

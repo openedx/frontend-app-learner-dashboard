@@ -11,11 +11,11 @@ jest.mock('data/redux', () => ({
     useCardEntitlementsData: jest.fn(),
   },
 }));
-jest.mock('containers/SelectSession/hooks', () => () => ({
-  openSessionModal: jest.fn().mockName('useSelectSession.openSessionModal'),
+jest.mock('containers/SelectSessionModal/hooks', () => () => ({
+  openSessionModal: (cardId) => jest.fn().mockName(`useSelectSessionModalData.openSessionModal(${cardId})`),
 }));
 
-const courseNumber = 'my-test-course-number';
+const cardId = 'my-test-course-number';
 
 let el;
 
@@ -32,13 +32,13 @@ const render = (overrides = {}) => {
   const { entitlements = {} } = overrides;
   appHooks.useCardEntitlementsData.mockReturnValueOnce({ ...entitlementsData, ...entitlements });
   appHooks.usePlatformSettingsData.mockReturnValueOnce(platformData);
-  el = shallow(<EntitlementBanner courseNumber={courseNumber} />);
+  el = shallow(<EntitlementBanner cardId={cardId} />);
 };
 
 describe('EntitlementBanner', () => {
   it('initializes data with course number from entitlements', () => {
     render();
-    expect(appHooks.useCardEntitlementsData).toHaveBeenCalledWith(courseNumber);
+    expect(appHooks.useCardEntitlementsData).toHaveBeenCalledWith(cardId);
   });
   test('no display if not an entitlement', () => {
     render({ entitlements: { isEntitlement: false } });

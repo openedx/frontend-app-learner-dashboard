@@ -11,15 +11,15 @@ import Banner from 'components/Banner';
 
 import messages from './messages';
 
-export const CertificateBanner = ({ courseNumber }) => {
-  const certificate = appHooks.useCardCertificateData(courseNumber);
+export const CertificateBanner = ({ cardId }) => {
+  const certificate = appHooks.useCardCertificateData(cardId);
   const {
     isAudit,
     isVerified,
     hasFinished,
-  } = appHooks.useCardEnrollmentData(courseNumber);
-  const { isPassing } = appHooks.useCardGradeData(courseNumber);
-  const { minPassingGrade, progressUrl } = appHooks.useCardCourseRunData(courseNumber);
+  } = appHooks.useCardEnrollmentData(cardId);
+  const { isPassing } = appHooks.useCardGradeData(cardId);
+  const { minPassingGrade, progressUrl } = appHooks.useCardCourseRunData(cardId);
   const { supportEmail, billingEmail } = appHooks.usePlatformSettingsData();
   const { formatMessage } = useIntl();
 
@@ -96,7 +96,7 @@ export const CertificateBanner = ({ courseNumber }) => {
   return null;
 };
 CertificateBanner.propTypes = {
-  courseNumber: PropTypes.string.isRequired,
+  cardId: PropTypes.string.isRequired,
 };
 
 export default CertificateBanner;
