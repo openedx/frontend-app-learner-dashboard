@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 
 import { Button } from '@edx/paragon';
 
@@ -8,6 +9,7 @@ import useCardDetailsData from './hooks';
 import messages from './messages';
 
 export const CourseCardDetails = ({ cardId }) => {
+  const dispatch = useDispatch();
   const {
     providerName,
     accessMessage,
@@ -17,7 +19,7 @@ export const CourseCardDetails = ({ cardId }) => {
     openSessionModal,
     formatMessage,
     courseNumber,
-  } = useCardDetailsData({ cardId });
+  } = useCardDetailsData({ cardId, dispatch });
 
   return (
     <span data-testid="CourseCardDetails">

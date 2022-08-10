@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { Button, MailtoLink } from '@edx/paragon';
 
@@ -7,10 +9,10 @@ import { hooks as appHooks } from 'data/redux';
 import { dateFormatter } from 'utils';
 
 import Banner from 'components/Banner';
-import useSelectSessionModalData from 'containers/SelectSessionModal/hooks';
 import messages from './messages';
 
 export const EntitlementBanner = ({ cardId }) => {
+  const dispatch = useDispatch();
   const {
     isEntitlement,
     hasSessions,
@@ -20,7 +22,7 @@ export const EntitlementBanner = ({ cardId }) => {
     isExpired,
   } = appHooks.useCardEntitlementsData(cardId);
   const { supportEmail } = appHooks.usePlatformSettingsData();
-  const { openSessionModal } = useSelectSessionModalData({ cardId });
+  const openSessionModal = appHooks.useUpdateSelectSessionModalCallback(dispatch, cardId);
   const { formatDate, formatMessage } = useIntl();
 
   if (!isEntitlement) {
@@ -42,7 +44,7 @@ export const EntitlementBanner = ({ cardId }) => {
         {formatMessage(messages.entitlementsExpiringSoon, {
           changeDeadline: dateFormatter(formatDate, changeDeadline),
           selectSessionButton: (
-            <Button variant="link" size="inline" className="m-0 p-0" onClick={openSessionModal(cardId)}>
+            <Button variant="link" size="inline" className="m-0 p-0" onClick={openSessionModal}>
               {formatMessage(messages.selectSession)}
             </Button>
           ),

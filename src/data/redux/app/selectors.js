@@ -39,10 +39,7 @@ export const courseCardData = (state, cardId) => (
 
 const mkCardSelector = (sel) => (state, cardId) => {
   const cardData = module.courseCardData(state, cardId);
-  if (cardData) {
-    return sel(cardData);
-  }
-  return {};
+  return sel(cardData);
 };
 
 const dateSixMonthsFromNow = new Date();

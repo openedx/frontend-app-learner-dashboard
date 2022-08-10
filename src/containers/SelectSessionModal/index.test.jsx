@@ -18,12 +18,10 @@ const hookReturn = {
   hint: 'test-hint',
 };
 
-const courseNumber = 'my-test-course-number';
-
 const availableSessions = [
-  { startDate: '1/2/2000', endDate: '1/2/2020', courseNumber },
-  { startDate: '2/3/2000', endDate: '2/3/2020', courseNumber },
-  { startDate: '3/4/2000', endDate: '3/4/2020', courseNumber },
+  { startDate: '1/2/2000', endDate: '1/2/2020', courseId: 'test-course-id-1' },
+  { startDate: '2/3/2000', endDate: '2/3/2020', courseId: 'test-course-id-2' },
+  { startDate: '3/4/2000', endDate: '3/4/2020', courseId: 'test-course-id-3' },
 ];
 
 describe('SelectSessionModal', () => {

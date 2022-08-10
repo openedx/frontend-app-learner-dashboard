@@ -13,10 +13,8 @@ jest.mock('data/redux', () => ({
     useCardEnrollmentData: jest.fn(),
     useCardEntitlementsData: jest.fn(),
     useCardProviderData: jest.fn(),
+    useUpdateSelectSessionModalCallback: (...args) => ({ updateSelectSessionModalCallback: args }),
   },
-}));
-jest.mock('containers/SelectSessionModal/hooks', () => () => ({
-  openSessionModal: jest.fn().mockName('useSelectSession.openSessionModalFunction'),
 }));
 
 const cardId = 'my-test-card-id';

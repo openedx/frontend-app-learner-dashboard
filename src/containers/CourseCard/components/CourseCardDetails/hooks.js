@@ -1,6 +1,5 @@
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { hooks as appHooks } from 'data/redux';
-import useSelectSessionModalData from 'containers/SelectSessionModal/hooks';
 
 import * as module from './hooks';
 import messages from './messages';
@@ -29,7 +28,7 @@ export const useAccessMessage = ({ cardId }) => {
   return null;
 };
 
-export const useCardDetailsData = ({ cardId }) => {
+export const useCardDetailsData = ({ dispatch, cardId }) => {
   const { formatMessage } = useIntl();
   const providerName = appHooks.useCardProviderData(cardId).name;
   const { courseNumber } = appHooks.useCardCourseData(cardId);
@@ -39,7 +38,7 @@ export const useCardDetailsData = ({ cardId }) => {
     canChange,
   } = appHooks.useCardEntitlementsData(cardId);
 
-  const { openSessionModal } = useSelectSessionModalData();
+  const openSessionModal = appHooks.useUpdateSelectSessionModalCallback(dispatch, cardId);
 
   return {
     providerName: providerName || formatMessage(messages.unknownProviderName),
@@ -47,7 +46,7 @@ export const useCardDetailsData = ({ cardId }) => {
     isEntitlement,
     isFulfilled,
     canChange,
-    openSessionModal: openSessionModal(cardId),
+    openSessionModal,
     formatMessage,
     courseNumber,
   };
