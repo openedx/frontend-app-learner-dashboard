@@ -141,15 +141,8 @@ export const availableSessions = [
   { startDate: '1/2/2000', endDate: '1/2/2020', courseId: genCourseId(1000) },
   { startDate: '2/3/2000', endDate: '2/3/2020', courseId: genCourseId(1001) },
   { startDate: '3/4/2000', endDate: '3/4/2020', courseId: genCourseId(1002) },
-  { startDate: '1/2/2000', endDate: '1/2/2020', courseId: genCourseId(1000) },
-  { startDate: '2/3/2000', endDate: '2/3/2020', courseId: genCourseId(1001) },
-  { startDate: '3/4/2000', endDate: '3/4/2020', courseId: genCourseId(1002) },
-  { startDate: '1/2/2000', endDate: '1/2/2020', courseId: genCourseId(1000) },
-  { startDate: '2/3/2000', endDate: '2/3/2020', courseId: genCourseId(1001) },
-  { startDate: '3/4/2000', endDate: '3/4/2020', courseId: genCourseId(1002) },
-  { startDate: '1/2/2000', endDate: '1/2/2020', courseId: genCourseId(1000) },
-  { startDate: '2/3/2000', endDate: '2/3/2020', courseId: genCourseId(1001) },
-  { startDate: '3/4/2000', endDate: '3/4/2020', courseId: genCourseId(1002) },
+  { startDate: '4/5/2000', endDate: '4/6/2020', courseId: genCourseId(1003) },
+  { startDate: '5/6/2000', endDate: '5/7/2020', courseId: genCourseId(1004) },
 ];
 
 export const courseRuns = [

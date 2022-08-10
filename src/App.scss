@@ -12,6 +12,7 @@ $input-focus-box-shadow: $input-box-shadow; // hack to get upgrade to paragon 4.
 @import "~@edx/frontend-component-footer/dist/_footer";
 
 #root {
+  // Removing a odd 1.5 scaling on checkboxes.:
   input[type=checkbox] {
     transform: none;
   }

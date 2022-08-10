@@ -23,6 +23,7 @@ export const Dashboard = () => {
 
   const hasCourses = appHooks.useHasCourses();
   const hasAvailableDashboards = appHooks.useHasAvailableDashboards();
+  const showSelectSessionModal = appHooks.useShowSelectSessionModal();
   return (
     <div className="d-flex flex-column p-2" id="course-dashboard">
       {hasAvailableDashboards && <EnterpriseDashboardModal />}
@@ -30,7 +31,7 @@ export const Dashboard = () => {
         <>
           <div className="d-flex" style={{ margin: 'auto' }}>
             <div className="w-100 mw-md mr-4">
-              <SelectSessionModal />
+              {showSelectSessionModal && (<SelectSessionModal />)}
               <CourseList />
             </div>
             <div id="dashboard-sidebar-container mw-xs">
