@@ -7,6 +7,14 @@ import { Form } from '@edx/paragon';
 
 import Checkbox from './Checkbox';
 
+export const filterOrder = [
+  FilterKeys.inProgress,
+  FilterKeys.notStarted,
+  FilterKeys.done,
+  FilterKeys.notEnrolled,
+  FilterKeys.upgraded,
+];
+
 export const FilterForm = ({
   filters,
   handleFilterChange,
@@ -16,13 +24,11 @@ export const FilterForm = ({
     <Form.CheckboxSet
       name="course-status-filters"
       onChange={handleFilterChange}
-      values={filters}
+      value={filters}
     >
-      <Checkbox {...{ filterKey: FilterKeys.inProgress }} />
-      <Checkbox {...{ filterKey: FilterKeys.notStarted }} />
-      <Checkbox {...{ filterKey: FilterKeys.done }} />
-      <Checkbox {...{ filterKey: FilterKeys.notEnrolled }} />
-      <Checkbox {...{ filterKey: FilterKeys.upgraded }} />
+      {filterOrder.map(filterKey => (
+        <Checkbox filterKey={filterKey} key={filterKey} />
+      ))}
     </Form.CheckboxSet>
   </Form.Group>
 );
