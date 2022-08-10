@@ -17,4 +17,4 @@ export const FilterKeys = StrictDict({
   upgraded: 'upgraded',
 });
 
-export const ListPageSize = 50;
+export const ListPageSize = 5;
