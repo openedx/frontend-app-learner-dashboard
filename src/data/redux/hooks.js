@@ -17,6 +17,7 @@ export const useHasAvailableDashboards = () => useSelector(appSelectors.hasAvail
 export const useCurrentCourseList = (opts) => useSelector(
   state => appSelectors.currentList(state, opts),
 );
+export const useShowSelectSessionModal = () => useSelector(appSelectors.showSelectSessionModal);
 
 // eslint-disable-next-line
 export const useCourseCardData = (selector) => (cardId) => useSelector(

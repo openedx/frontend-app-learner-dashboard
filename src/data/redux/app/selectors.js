@@ -28,6 +28,10 @@ export const hasAvailableDashboards = createSelector(
   [module.simpleSelectors.enterpriseDashboards],
   (data) => !!data.availableDashboards,
 );
+export const showSelectSessionModal = createSelector(
+  [module.simpleSelectors.selectSessionModal],
+  (data) => data.cardId != null,
+);
 
 export const courseCardData = (state, cardId) => (
   module.simpleSelectors.courseData(state)[cardId]
@@ -35,10 +39,7 @@ export const courseCardData = (state, cardId) => (
 
 const mkCardSelector = (sel) => (state, cardId) => {
   const cardData = module.courseCardData(state, cardId);
-  if (cardData) {
-    return sel(cardData);
-  }
-  return {};
+  return sel(cardData);
 };
 
 const dateSixMonthsFromNow = new Date();
@@ -130,29 +131,30 @@ export const currentList = (state, {
   pageSize,
 }) => {
   let list = Object.values(module.simpleSelectors.courseData(state));
+  const hasFilter = filters.reduce((obj, filter) => ({ ...obj, [filter]: true }), {});
   if (filters.length) {
     list = list.filter(course => {
-      if (filters.includes(FilterKeys.notEnrolled)) {
-        if (!course.enrollment.isEnrolled) {
+      if (hasFilter[FilterKeys.notEnrolled]) {
+        if (course.enrollment.isEnrolled) {
           return false;
         }
       }
-      if (filters.includes(FilterKeys.done)) {
+      if (hasFilter[FilterKeys.done]) {
         if (!course.enrollment.hasFinished) {
           return false;
         }
       }
-      if (filters.includes(FilterKeys.upgraded)) {
+      if (hasFilter[FilterKeys.upgraded]) {
         if (!course.enrollment.isVerified) {
           return false;
         }
       }
-      if (filters.includes(FilterKeys.inProgress)) {
+      if (hasFilter[FilterKeys.inProgress]) {
         if (!course.enrollment.hasStarted) {
           return false;
         }
       }
-      if (filters.includes(FilterKeys.notStarted)) {
+      if (hasFilter[FilterKeys.notStarted]) {
         if (course.enrollment.hasStarted) {
           return false;
         }
@@ -189,4 +191,5 @@ export default StrictDict({
   currentList,
   hasCourses,
   hasAvailableDashboards,
+  showSelectSessionModal,
 });

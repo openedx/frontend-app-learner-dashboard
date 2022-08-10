@@ -1,12 +1,14 @@
+import { useDispatch } from 'react-redux';
+
 import { Locked } from '@edx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { hooks as appHooks } from 'data/redux';
-import useSelectSessionModalData from 'containers/SelectSessionModal/hooks';
 import messages from './messages';
 
 export const useCardActionData = ({ cardId }) => {
   const { formatMessage } = useIntl();
+  const dispatch = useDispatch();
   const {
     canUpgrade,
     isAudit,
@@ -22,7 +24,7 @@ export const useCardActionData = ({ cardId }) => {
     canChange,
     hasSessions,
   } = appHooks.useCardEntitlementsData(cardId);
-  const { openSessionModal } = useSelectSessionModalData();
+  const openSessionModal = appHooks.useUpdateSelectSessionModalCallback(dispatch, cardId);
 
   let primary;
   let secondary = null;
@@ -31,7 +33,7 @@ export const useCardActionData = ({ cardId }) => {
       primary = {
         children: formatMessage(messages.selectSession),
         disabled: !(canChange && hasSessions),
-        onClick: openSessionModal(cardId),
+        onClick: openSessionModal,
       };
     } else {
       primary = {

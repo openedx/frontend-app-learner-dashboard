@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { useDispatch } from 'react-redux';
 
 import { hooks as appHooks } from 'data/redux';
 import EntitlementBanner from './EntitlementBanner';
@@ -9,10 +10,10 @@ jest.mock('data/redux', () => ({
   hooks: {
     usePlatformSettingsData: jest.fn(),
     useCardEntitlementsData: jest.fn(),
+    useUpdateSelectSessionModalCallback: jest.fn(
+      (_, cardId) => jest.fn().mockName(`updateSelectSessionModalCallback(${cardId})`),
+    ),
   },
-}));
-jest.mock('containers/SelectSessionModal/hooks', () => () => ({
-  openSessionModal: (cardId) => jest.fn().mockName(`useSelectSessionModalData.openSessionModal(${cardId})`),
 }));
 
 const cardId = 'my-test-course-number';
@@ -35,10 +36,13 @@ const render = (overrides = {}) => {
   el = shallow(<EntitlementBanner cardId={cardId} />);
 };
 
+const dispatch = useDispatch();
+
 describe('EntitlementBanner', () => {
   it('initializes data with course number from entitlements', () => {
     render();
     expect(appHooks.useCardEntitlementsData).toHaveBeenCalledWith(cardId);
+    expect(appHooks.useUpdateSelectSessionModalCallback).toHaveBeenCalledWith(dispatch, cardId);
   });
   test('no display if not an entitlement', () => {
     render({ entitlements: { isEntitlement: false } });

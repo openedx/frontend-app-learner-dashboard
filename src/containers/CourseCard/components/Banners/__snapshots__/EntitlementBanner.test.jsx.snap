@@ -15,7 +15,7 @@ exports[`EntitlementBanner snapshot: expiration warning 1`] = `
         "changeDeadline": "11/11/2022",
         "selectSessionButton": <Button
           className="m-0 p-0"
-          onClick={[MockFunction useSelectSessionModalData.openSessionModal(my-test-course-number)]}
+          onClick={[MockFunction updateSelectSessionModalCallback(my-test-course-number)]}
           size="inline"
           variant="link"
         >

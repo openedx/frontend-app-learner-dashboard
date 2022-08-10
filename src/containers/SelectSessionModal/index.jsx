@@ -40,7 +40,7 @@ export const SelectSessionModal = () => {
         <Form.Label>{hint}</Form.Label>
         <Form.RadioSet name="sessions" className="pt-3 pb-4">
           {entitlementSessions?.map((session) => (
-            <Form.Radio key={session.startDate} value={session.startDate}>
+            <Form.Radio key={session.courseId} value={session.startDate}>
               {dateFormatter(formatDate, session.startDate)} - {dateFormatter(formatDate, session.endDate)}
             </Form.Radio>
           ))}

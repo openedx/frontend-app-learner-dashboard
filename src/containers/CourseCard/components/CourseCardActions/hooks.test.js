@@ -1,3 +1,4 @@
+import { useDispatch } from 'react-redux';
 import { Locked } from '@edx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
@@ -12,11 +13,10 @@ jest.mock('data/redux', () => ({
     useCardCourseRunData: jest.fn(),
     useCardEnrollmentData: jest.fn(),
     useCardEntitlementsData: jest.fn(),
+    useUpdateSelectSessionModalCallback: jest.fn(
+      (...args) => ({ updateSelectSessionModalCallback: args }),
+    ),
   },
-}));
-
-jest.mock('containers/SelectSessionModal/hooks', () => () => ({
-  openSessionModal: (cardId) => jest.fn().mockName(`useSelectSession.openSessionModal(${cardId})`),
 }));
 
 const cardId = 'my-test-course-number';
@@ -40,6 +40,8 @@ const entitlementData = {
   hasSessions: false,
 };
 
+const dispatch = useDispatch();
+
 describe('CourseCardActions hooks', () => {
   let out;
   const { formatMessage } = useIntl();
@@ -50,6 +52,23 @@ describe('CourseCardActions hooks', () => {
     appHooks.useCardEntitlementsData.mockReturnValueOnce({ ...entitlementData, ...entitlement });
     out = hooks.useCardActionData({ cardId });
   };
+  describe('behavior', () => {
+    beforeEach(() => {
+      runHook();
+    });
+    it('initializes courseRun data with cardId', () => {
+      expect(appHooks.useCardCourseRunData).toHaveBeenCalledWith(cardId);
+    });
+    it('initializes Enrollment data with cardId', () => {
+      expect(appHooks.useCardEnrollmentData).toHaveBeenCalledWith(cardId);
+    });
+    it('initializes Entitlements data with cardId', () => {
+      expect(appHooks.useCardEntitlementsData).toHaveBeenCalledWith(cardId);
+    });
+    it('initializes SelectSession data with dispatch and cardId', () => {
+      expect(appHooks.useUpdateSelectSessionModalCallback).toHaveBeenCalledWith(dispatch, cardId);
+    });
+  });
   describe('entitlement', () => {
     describe('secondary action', () => {
       it('return null on entitlement course', () => {
@@ -82,6 +101,10 @@ describe('CourseCardActions hooks', () => {
             },
           });
           expect(out.primary.disabled).toEqual(true);
+        });
+        it('calls updateSelectSessionModalCallback on click', () => {
+          runHook({ entitlement: { isEntitlement: true, isFulfilled: false } });
+          expect(out.primary.onClick).toEqual(appHooks.useUpdateSelectSessionModalCallback(dispatch, cardId));
         });
       });
 
