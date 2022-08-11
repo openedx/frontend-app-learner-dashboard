@@ -27,7 +27,7 @@ export const WidgetSidebar = () => (
           src={moreCoursesSVG}
           srcAlt="course side widget"
         />
-        <Card.Body>
+        <Card.Body className="m-auto pr-2">
           <h3>
             <FormattedMessage {...messages.lookingForChallengePrompt} />
           </h3>

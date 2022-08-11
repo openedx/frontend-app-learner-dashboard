@@ -34,7 +34,7 @@ export const RelatedProgramsModal = ({
       <ModalDialog.Header as="h4" className="programs-header p-0">
         {courseTitle}
       </ModalDialog.Header>
-      <ModalDialog.Body className="pl-0">
+      <ModalDialog.Body className="pl-0 overflow-hidden">
         <p>{formatMessage(messages.description)}</p>
         <CardGrid
           columnSizes={{ lg: 6, xlg: 4, xs: 12 }}
