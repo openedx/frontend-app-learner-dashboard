@@ -23,7 +23,7 @@ export const AuthenticatedUserDropdown = ({ username }) => {
         </Dropdown.Toggle>
         <Dropdown.Menu className="dropdown-menu-right">
           <Dropdown.Header>SWITCH DASHBOARD</Dropdown.Header>
-          <Dropdown.Item as="a" href="localhost:1993/edx-dashboard" className="active">Personal</Dropdown.Item>
+          <Dropdown.Item as="a" href="/edx-dashboard" className="active">Personal</Dropdown.Item>
           {availableDashboards && availableDashboards.map((dashboard) => (
             <Dropdown.Item
               as="a"

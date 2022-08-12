@@ -20,7 +20,7 @@ export const messages = StrictDict({
   selectSessionHint: {
     id: 'learner-dash.selectSession.selectSessionHint',
     description: 'Hint for session that does not allow leave option',
-    defaultMessage: 'Remember, if you change your mind you have 2 weeks to unenroll and reclaim your entitlement.',
+    defaultMessage: 'Remember, if you change your mind you have 2 weeks to unenroll and select a different session.',
   },
   leaveSessionOption: {
     id: 'learner-dash.selectSession.leaveSessionOption',

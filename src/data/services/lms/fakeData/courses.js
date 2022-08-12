@@ -129,12 +129,10 @@ export const genEnrollmentData = (data = {}) => ({
 export const genCertificateData = (data = {}) => ({
   availableDate: null,
   isRestricted: false,
-  isAvailable: false,
   isEarned: false,
   isDownloadable: false,
   certPreviewUrl: 'edx.com/courses/my-course-url/cert-preview',
   certDownloadUrl: 'edx.com/courses/my-course-url/cert-download',
-  honorCertDownloadUrl: 'edx.com/courses/my-course-url/honor-cert-download',
   ...data,
 });
 

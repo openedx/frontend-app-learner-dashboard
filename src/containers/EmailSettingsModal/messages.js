@@ -20,7 +20,7 @@ export const messages = StrictDict({
   description: {
     id: 'learner-dash.emailSettings.description',
     description: 'Description for email settings modal',
-    defaultMessage: 'Course emails include important information about your course.',
+    defaultMessage: 'Course emails include important information about your course from instructors.',
   },
   nevermind: {
     id: 'learner-dash.emailSettings.nevermind',
