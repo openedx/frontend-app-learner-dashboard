@@ -3,27 +3,28 @@ import PropTypes from 'prop-types';
 
 import { getConfig } from '@edx/frontend-platform';
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { Dropdown, Icon } from '@edx/paragon';
-import { Person } from '@edx/paragon/icons';
+import { AppContext } from '@edx/frontend-platform/react';
+import { AvatarButton, Dropdown } from '@edx/paragon';
 
 import { hooks as appHooks } from 'data/redux';
 import messages from './messages';
 
 export const AuthenticatedUserDropdown = ({ username }) => {
   const { formatMessage } = useIntl();
+  const { authenticatedUser } = React.useContext(AppContext);
+  const { profileImage } = authenticatedUser;
   const { availableDashboards } = appHooks.useEnterpriseDashboardData();
   return (
     <>
       <Dropdown className="user-dropdown">
-        <Dropdown.Toggle id="user" variant="primary">
-          <Icon src={Person} />
+        <Dropdown.Toggle as={AvatarButton} src={profileImage} id="user" variant="primary">
           <span data-hj-suppress className="d-none d-md-inline">
             {username}
           </span>
         </Dropdown.Toggle>
         <Dropdown.Menu className="dropdown-menu-right">
           <Dropdown.Header>SWITCH DASHBOARD</Dropdown.Header>
-          <Dropdown.Item as="a" href="/dashboard">Personal</Dropdown.Item>
+          <Dropdown.Item as="a" href="/edx-dashboard" className="active">Personal</Dropdown.Item>
           {availableDashboards && availableDashboards.map((dashboard) => (
             <Dropdown.Item
               as="a"

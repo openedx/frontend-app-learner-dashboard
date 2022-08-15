@@ -117,9 +117,10 @@ export const genEnrollmentData = (data = {}) => ({
   canUpgrade: (data.isVerified ? null : true),
   hasFinished: false,
   hasStarted: false,
-  isAudit: !data.isVerified || data.isEnrolled,
+  isAudit: !data.isVerified && (data.isEnrolled !== false),
   isAuditAccessExpired: data.isVerified ? null : false,
   isEmailEnabled: false,
+  hasOptedOutOfEmail: false,
   isEnrolled: true,
   isVerified: false,
   ...data,
@@ -128,12 +129,9 @@ export const genEnrollmentData = (data = {}) => ({
 export const genCertificateData = (data = {}) => ({
   availableDate: null,
   isRestricted: false,
-  isAvailable: false,
   isEarned: false,
   isDownloadable: false,
   certPreviewUrl: 'edx.com/courses/my-course-url/cert-preview',
-  certDownloadUrl: 'edx.com/courses/my-course-url/cert-download',
-  honorCertDownloadUrl: 'edx.com/courses/my-course-url/honor-cert-download',
   ...data,
 });
 
@@ -146,44 +144,114 @@ export const availableSessions = [
 ];
 
 export const courseRuns = [
-  // audit, can upgrade, course not started,
+  // audit, course run not started
   {},
-  // audit, can upgrade, course started
+  // audit, course run started
   {
     courseRun: { isStarted: true },
   },
-  // audit, can upgrade, course started, learner started
-  {
-    courseRun: { isStarted: true },
-    enrollment: { hasStarted: true },
-  },
-  // audit, can upgrade, course started, learner started, not passing
-  {
-    courseRun: { isStarted: true },
-    enrollment: { hasStarted: true },
-    grades: { isPassing: false },
-  },
-  // audit, access expired, can upgrade, course started, learner started
+  // audit, course run started, access expired, learner not started
   {
     courseRun: { isStarted: true },
     enrollment: {
-      hasStarted: true,
-      isAuditAccessExpired: true,
       accessExpirationDate: pastDate,
+      isAuditAccessExpired: true,
     },
   },
-  // audit, access expired, cannot upgrade, course started, learner started
+  // audit, course run started, access expired, cannot upgrade, learner not started
   {
     courseRun: { isStarted: true },
     enrollment: {
       accessExpirationDate: pastDate,
-      isAuditAccessExpired: true,
-      hasStarted: true,
       canUpgrade: false,
+      isAuditAccessExpired: true,
     },
   },
-
-  // verified, course not started
+  // audit, course run ended, access expired, cannot upgrade, learner not started
+  {
+    courseRun: {
+      endDate: pastDate,
+      isStarted: true,
+    },
+    enrollment: {
+      accessExpirationDate: pastDate,
+      isAuditAccessExpired: true,
+    },
+  },
+  // audit, course run archived, access expired, cannot upgrade, learner not started
+  {
+    courseRun: {
+      endDate: pastDate,
+      isArchived: true,
+      isStarted: true,
+    },
+    enrollment: {
+      accessExpirationDate: pastDate,
+      isAuditAccessExpired: true,
+    },
+  },
+  // audit, course run and learner started, passing
+  {
+    courseRun: { isStarted: true },
+    enrollment: { isStarted: true },
+  },
+  // audit, course run and learner started, access expired
+  {
+    courseRun: {
+      courseRun: { isStarted: true },
+    },
+    enrollment: {
+      accessExpirationDate: pastDate,
+      isAuditAccessExpired: true,
+      isStarted: true,
+    },
+  },
+  // audit, course run and learner started, access expired, cannot upgrade
+  {
+    courseRun: {
+      courseRun: { isStarted: true },
+    },
+    enrollment: {
+      accessExpirationDate: pastDate,
+      canUpgrade: false,
+      isAuditAccessExpired: true,
+      isStarted: true,
+    },
+  },
+  // audit, course run ended, learner started, expired, cannot upgraded, not passing
+  {
+    courseRun: {
+      courseRun: {
+        isStarted: true,
+        endDate: pastDate,
+      },
+    },
+    enrollment: {
+      accessExpirationDate: pastDate,
+      canUpgrade: false,
+      isAuditAccessExpired: true,
+      isStarted: true,
+    },
+    grade: { isPassing: false },
+  },
+  // audit, course run archived, learner started, expired, cannot upgrade, not passing
+  {
+    courseRun: {
+      courseRun: {
+        isStarted: true,
+        isArchived: true,
+        endDate: pastDate,
+      },
+    },
+    enrollment: {
+      accessExpirationDate: pastDate,
+      canUpgrade: false,
+      isAuditAccessExpired: true,
+      isStarted: true,
+    },
+    grade: { isPassing: false },
+  },
+  // verified, course not started, learner not started
   { enrollment: { isVerified: true } },
   // verified, course started, learner not started
   {
@@ -201,12 +269,7 @@ export const courseRuns = [
     grades: { isPassing: false },
     enrollment: { hasStarted: true, isVerified: true },
   },
-  // verified, learner started, not finished, not passing
-  {
-    enrollment: { hasStarted: true, isVerified: true },
-    grades: { isPassing: false },
-  },
-  // verified, learner finished, passing, restricted
+  // verified, learner finished, not passing, cert not earned
   {
     enrollment: {
       hasFinished: true,
@@ -214,7 +277,10 @@ export const courseRuns = [
       isVerified: true,
     },
     courseRun: { isStarted: true },
-    certificates: { isRestricted: true },
+    grades: { isPassing: false },
+    certificates: {
+      isEarned: false,
+    },
   },
   // verified, learner finished, passing, cert earned but not available
   {
@@ -229,6 +295,16 @@ export const courseRuns = [
       availableDate: futureDate,
       isAvailable: false,
     },
+  },
+  // verified, learner finished, passing, restricted
+  {
+    enrollment: {
+      hasFinished: true,
+      hasStarted: true,
+      isVerified: true,
+    },
+    courseRun: { isStarted: true },
+    certificates: { isRestricted: true },
   },
   // verified, learner finished, cert earned, downloadable (web + link)
   {
@@ -247,14 +323,17 @@ export const courseRuns = [
       certPreviewUrl: logos.edx,
     },
   },
-  // verified, learner finished, cert earned, downloadable (link only)
+  // verified, course ended, learner finished, cert earned, downloadable (link only),
   {
     enrollment: {
       hasFinished: true,
       hasStarted: true,
       isVerified: true,
     },
-    courseRun: { isStarted: true },
+    courseRun: {
+      isStarted: true,
+      endDate: pastDate,
+    },
     certificates: {
       isEarned: true,
       isAvailable: true,
@@ -284,68 +363,168 @@ export const courseRuns = [
       certPreviewUrl: logos.edx,
     },
   },
-  // verified, course archived, learner started, not finished, not passing
-  {
-    enrollment: { hasStarted: true, isVerified: true },
-    grades: { isPassing: false },
-    courseRun: { isArchived: true, endDate: pastDate },
-  },
-  // Entitlement Course Run - Cannot view yet
+  // Entitlement - not started
   {
     enrollment: { isVerified: true },
     courseRun: { isStarted: false },
     entitlements: {
-      isEntitlement: true,
-      isFulfilled: true,
-      isRefundable: true,
+      availableSessions,
       canViewCourse: false,
-      canChange: true,
       changeDeadline: futureDate,
+      enrollmentUrl: '/entitlement-enrollment',
+      isEntitlement: true,
       isExpired: false,
-      availableSessions,
+      isFulfilled: true,
+      isRefundable: true,
     },
   },
-  // Entitlement Course Run - Can View and Change
+  // Entitlement - Course run started, learner not started
   {
     enrollment: { isVerified: true },
     courseRun: { isStarted: true },
     entitlements: {
+      availableSessions,
+      canViewCourse: true,
+      changeDeadline: futureDate,
+      enrollmentUrl: '/entitlement-enrollment',
       isEntitlement: true,
+      isExpired: false,
       isFulfilled: true,
       isRefundable: true,
-      canViewCourse: true,
-      canChange: true,
-      changeDeadline: futureDate,
-      isExpired: false,
-      availableSessions,
     },
   },
-  // Entitlement Course Run - Can View but not Change
+  // Entitlement - Course run started, learner started, not passing
   {
-    enrollment: { isVerified: true },
+    enrollment: {
+      isVerified: true,
+      hasStarted: true,
+    },
     courseRun: { isStarted: true },
     entitlements: {
+      availableSessions,
+      canViewCourse: true,
+      changeDeadline: futureDate,
+      enrollmentUrl: '/entitlement-enrollment',
       isEntitlement: true,
+      isExpired: false,
       isFulfilled: true,
       isRefundable: true,
+    },
+    grades: { isPassing: false },
+  },
+  // Entitlement - Course run started, learner started, passing, cannot change
+  {
+    enrollment: {
+      isVerified: true,
+      hasStarted: true,
+    },
+    courseRun: { isStarted: true },
+    entitlements: {
+      availableSessions,
       canViewCourse: true,
-      canChange: false,
       changeDeadline: pastDate,
+      enrollmentUrl: '/entitlement-enrollment',
+      isEntitlement: true,
       isExpired: false,
+      isFulfilled: true,
+      isRefundable: true,
     },
   },
-  // Entitlement Course Run - Expired
+  // Entitlement - Learner finished, but did not pass
   {
-    enrollment: { isVerified: true },
-    courseRun: { isStarted: true, isArchived: true, endDate: pastDate },
+    enrollment: {
+      isVerified: true,
+      hasFinished: false,
+    },
+    courseRun: { isStarted: true },
     entitlements: {
+      availableSessions: null,
+      canViewCourse: true,
+      changeDeadline: pastDate,
+      enrollmentUrl: '/entitlement-enrollment',
+      isEntitlement: true,
+      isExpired: false,
+      isFulfilled: true,
+      isRefundable: false,
+    },
+    grades: { isPassing: false },
+  },
+  // Entitlement - Learner finished, and passed.  cannot refund.  previewable cert.
+  {
+    enrollment: {
+      isVerified: true,
+      hasFinished: false,
+    },
+    courseRun: { isStarted: true },
+    entitlements: {
+      availableSessions: null,
+      canViewCourse: true,
+      changeDeadline: pastDate,
+      enrollmentUrl: '/entitlement-enrollment',
+      isEntitlement: true,
+      isExpired: false,
+      isFulfilled: true,
+      isRefundable: false,
+    },
+    certificates: {
+      isEarned: true,
+      isAvailable: true,
+      isDownloadable: true,
+      availableDate: pastDate,
+      certDownloadUrl: logos.social,
+      certPreviewUrl: logos.edx,
+    },
+  },
+  // Entitlement - Learner finished and failed.  cannot refund.  course ended.
+  {
+    enrollment: {
+      isVerified: true,
+      hasFinished: false,
+    },
+    courseRun: {
+      isStarted: true,
+      endDate: pastDate,
+    },
+    entitlements: {
+      availableSessions: null,
+      enrollmentUrl: '/entitlement-enrollment',
       isEntitlement: true,
       isFulfilled: true,
       isRefundable: false,
       canViewCourse: true,
-      canChange: false,
       changeDeadline: pastDate,
-      isExpired: true,
+      isExpired: false,
+    },
+    grades: { isPassing: false },
+  },
+  // Entitlement - Learner finished and passed.  cannot refund.  course archived.   cert downloadable
+  {
+    enrollment: {
+      isVerified: true,
+      hasFinished: false,
+    },
+    courseRun: {
+      isArchived: true,
+      isStarted: true,
+      endDate: pastDate,
+    },
+    entitlements: {
+      availableSessions: null,
+      canViewCourse: false,
+      changeDeadline: pastDate,
+      enrollmentUrl: '/entitlement-enrollment',
+      isEntitlement: true,
+      isExpired: false,
+      isRefundable: false,
+      isFulfilled: true,
+    },
+    certificates: {
+      isEarned: true,
+      isAvailable: true,
+      isDownloadable: true,
+      availableDate: pastDate,
+      certDownloadUrl: logos.social,
+      certPreviewUrl: logos.edx,
     },
   },
 ];
@@ -357,47 +536,47 @@ export const courseRuns = [
 export const entitlementCourses = [
   {
     entitlements: {
-      isEntitlement: true,
       availableSessions,
-      isRefundable: true,
-      isFulfilled: false,
       canViewCourse: false,
       changeDeadline: futureDate,
-      canChange: true,
+      enrollmentUrl: '/entitlement-enrollment',
+      isEntitlement: true,
       isExpired: false,
+      isFulfilled: false,
+      isRefundable: true,
     },
   }, {
     entitlements: {
-      isEntitlement: true,
       availableSessions,
-      isRefundable: true,
-      isFulfilled: false,
       canViewCourse: false,
       changeDeadline: soonDateStr,
-      canChange: true,
+      enrollmentUrl: '/entitlement-enrollment',
+      isEntitlement: true,
       isExpired: false,
+      isFulfilled: false,
+      isRefundable: true,
     },
   }, {
     entitlements: {
-      isEntitlement: true,
       availableSessions,
-      isRefundable: true,
-      isFulfilled: false,
       canViewCourse: false,
       changeDeadline: pastDate,
-      canChange: false,
+      enrollmentUrl: '/entitlement-enrollment',
+      isEntitlement: true,
       isExpired: false,
+      isFulfilled: false,
+      isRefundable: true,
     },
   }, {
     entitlements: {
-      isEntitlement: true,
       availableSessions: [],
-      isRefundable: true,
-      isFulfilled: false,
       canViewCourse: false,
       changeDeadline: pastDate,
-      canChange: false,
+      enrollmentUrl: '/entitlement-enrollment',
+      isEntitlement: true,
       isExpired: true,
+      isFulfilled: false,
+      isRefundable: true,
     },
   },
 ];
@@ -417,18 +596,21 @@ export const courseRunData = courseRuns.map(
     lastEnrolled.setDate(lastEnrolled.getDate() - index);
     const iteratedData = [
       {
-        provider: providers.edx,
         course: { title, bannerUrl: logos.edx, courseNumber },
+        emailSettings: { isEmailEnabled: false, hasOptedOutOfEmail: false },
         relatedPrograms,
+        provider: providers.edx,
       },
       {
-        provider: providers.mit,
         course: { title, bannerUrl: logos.science, courseNumber },
+        emailSettings: { isEmailEnabled: true, hasOptedOutOfEmail: false },
+        provider: providers.mit,
         relatedPrograms: [relatedPrograms[0]],
       },
       {
-        provider: null,
         course: { title, bannerUrl: logos.social, courseNumber },
+        emailSettings: { isEmailEnabled: true, hasOptedOutOfEmail: true },
+        provider: null,
         relatedPrograms: [],
       },
     ];
@@ -441,10 +623,13 @@ export const courseRunData = courseRuns.map(
       enrollment: genEnrollmentData(data.enrollment),
       courseRun: genCourseRunData({
         ...data.courseRun,
+        ...iteratedData.emailSettings,
         courseId,
         lastEnrolled,
       }),
-      ...iteratedData[providerIndex],
+      provider: iteratedData[providerIndex].provider,
+      course: iteratedData[providerIndex].course,
+      relatedPrograms: iteratedData[providerIndex].relatedPrograms,
     };
   },
 );
