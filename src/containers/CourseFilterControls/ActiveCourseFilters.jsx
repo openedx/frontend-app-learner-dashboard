@@ -14,7 +14,6 @@ export const ActiveCourseFilters = ({
   handleRemoveFilter,
 }) => {
   const { formatMessage } = useIntl();
-  console.log({ filters });
   return (
     <div id="course-list-active-filters">
       {filters.map(filter => (
