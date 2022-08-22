@@ -61,23 +61,12 @@ export const CertificateBanner = ({ cardId }) => {
     );
   }
   if (certificate.isDownloadable) {
-    if (certificate.certPreviewUrl) {
-      return (
-        <Banner variant="success" icon={CheckCircle}>
-          {formatMessage(messages.certReady)}
-          {'  '}
-          <Hyperlink destination={certificate.certPreviewUrl}>
-            {formatMessage(messages.viewCertificate)}
-          </Hyperlink>
-        </Banner>
-      );
-    }
     return (
       <Banner variant="success" icon={CheckCircle}>
         {formatMessage(messages.certReady)}
         {'  '}
-        <Hyperlink destination={certificate.certDownloadUrl}>
-          {formatMessage(messages.downloadCertificate)}
+        <Hyperlink destination={certificate.certPreviewUrl}>
+          {formatMessage(messages.viewCertificate)}
         </Hyperlink>
       </Banner>
     );

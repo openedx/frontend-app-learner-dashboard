@@ -21,6 +21,11 @@ export const messages = StrictDict({
     description: 'Course ending message on course card.',
     defaultMessage: 'Course ends {endDate}',
   },
+  courseStarts: {
+    id: 'learner-dash.courseCard.CourseCardDetails.courseStarts',
+    description: 'Course start date message on course card.',
+    defaultMessage: 'Course starts {startDate}',
+  },
   unknownProviderName: {
     id: 'learner-dash.courseCard.CourseCardDetails.unknownProviderName',
     description: 'Provider name display when name is unknown',

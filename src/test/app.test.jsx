@@ -155,8 +155,8 @@ describe('ESG app integration tests', () => {
     [
       courseData.provider.name,
       courseData.course.courseNumber,
-      appMessages.withValues.CourseCardDetails.accessExpires({
-        accessExpirationDate: courseData.enrollment.accessExpirationDate,
+      appMessages.withValues.CourseCardDetails.courseStarts({
+        startDate: courseData.courseRun.startDate,
       }),
     ].forEach(value => inspector.verifyTextIncludes(cardDetails, value));
   });
