@@ -1,0 +1,16 @@
+.course-card {
+  .card {
+    overflow: hidden;
+
+    .pgn__card-image-cap {
+      border-bottom-left-radius: 0 !important;
+    }
+  }
+
+  .course-card-banners {
+    > .alert {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+  }
+}
