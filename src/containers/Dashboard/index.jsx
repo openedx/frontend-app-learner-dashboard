@@ -12,8 +12,6 @@ import EmptyCourse from 'containers/EmptyCourse';
 import SelectSessionModal from 'containers/SelectSessionModal';
 import EnterpriseDashboardModal from 'containers/EnterpriseDashboardModal';
 
-import './index.scss';
-
 export const Dashboard = () => {
   const dispatch = useDispatch();
   React.useEffect(

@@ -13,6 +13,8 @@ import CourseCard from 'containers/CourseCard';
 
 import messages from './messages';
 
+import './index.scss';
+
 export const useCourseListData = () => {
   const [pageNumber, setPageNumber] = React.useState(1);
   const [sortBy, setSortBy] = React.useState(SortKeys.title);
