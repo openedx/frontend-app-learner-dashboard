@@ -23,7 +23,7 @@ export const Dashboard = () => {
   const hasAvailableDashboards = appHooks.useHasAvailableDashboards();
   const showSelectSessionModal = appHooks.useShowSelectSessionModal();
   return (
-    <div className="d-flex flex-column p-2" id="course-dashboard">
+    <div className="d-flex flex-column p-2">
       {hasAvailableDashboards && <EnterpriseDashboardModal />}
       {hasCourses ? (
         <>

@@ -1,4 +1,10 @@
+@import "@edx/paragon/scss/core/core";
+
 #course-list-heading-container {
   display: flex;
   justify-content: space-between;
+}
+
+.course-list-container {
+  min-width: map-get($container-max-widths, "sm");
 }
