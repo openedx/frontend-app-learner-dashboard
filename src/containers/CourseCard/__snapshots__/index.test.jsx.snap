@@ -8,65 +8,73 @@ exports[`CourseCard component snapshot 1`] = `
   <Card
     orientation="horizontal"
   >
-    <Card.ImageCap
-      src="hooks.bannerUrl"
-      srcAlt={
-        Object {
-          "formatted": Object {
-            "defaultMessage": "Course thumbnail",
-            "description": "Course card banner alt-text",
-            "id": "learner-dash.courseCard.bannerAlt",
-          },
-        }
-      }
-    />
-    <Card.Body>
-      <Card.Header
-        actions={
-          <CourseCardMenu
-            cardId="test-card-id"
-          />
-        }
-        title={
-          <span
-            data-testid="CourseCardTitle"
-          >
-            hooks.title
-          </span>
-        }
-      />
-      <Card.Section>
-        <CourseCardDetails
-          cardId="test-card-id"
-        />
-      </Card.Section>
-      <Card.Footer
-        orientation="vertical"
-        textElement={
-          <RelatedProgramsBadge
-            cardId="test-card-id"
-          />
-        }
+    <div
+      className="d-flex flex-column w-100"
+    >
+      <div
+        className="d-flex"
       >
-        <CourseCardActions
+        <Card.ImageCap
+          src="hooks.bannerUrl"
+          srcAlt={
+            Object {
+              "formatted": Object {
+                "defaultMessage": "Course thumbnail",
+                "description": "Course card banner alt-text",
+                "id": "learner-dash.courseCard.bannerAlt",
+              },
+            }
+          }
+        />
+        <Card.Body>
+          <Card.Header
+            actions={
+              <CourseCardMenu
+                cardId="test-card-id"
+              />
+            }
+            title={
+              <span
+                data-testid="CourseCardTitle"
+              >
+                hooks.title
+              </span>
+            }
+          />
+          <Card.Section>
+            <CourseCardDetails
+              cardId="test-card-id"
+            />
+          </Card.Section>
+          <Card.Footer
+            orientation="vertical"
+            textElement={
+              <RelatedProgramsBadge
+                cardId="test-card-id"
+              />
+            }
+          >
+            <CourseCardActions
+              cardId="test-card-id"
+            />
+          </Card.Footer>
+        </Card.Body>
+      </div>
+      <div
+        className="course-card-banners"
+        data-testid="CourseCardBanners"
+      >
+        <CourseBanner
           cardId="test-card-id"
         />
-      </Card.Footer>
-    </Card.Body>
+        <EntitlementBanner
+          cardId="test-card-id"
+        />
+        <CertificateBanner
+          cardId="test-card-id"
+        />
+      </div>
+    </div>
   </Card>
-  <div
-    className="course-card-banners"
-    data-testid="CourseCardBanners"
-  >
-    <CourseBanner
-      cardId="test-card-id"
-    />
-    <EntitlementBanner
-      cardId="test-card-id"
-    />
-    <CertificateBanner
-      cardId="test-card-id"
-    />
-  </div>
 </div>
 `;
