@@ -22,7 +22,6 @@ export const relatedPrograms = [
     programUrl: 'www.edx/my-program',
     programType: 'MicroBachelors Program',
     numberOfCourses: 3,
-    estimatedNumberOfWeeks: 4,
   },
   {
     provider: 'University  of Maryland',
@@ -33,7 +32,6 @@ export const relatedPrograms = [
     programType: 'MicroBachelors Program',
     programTypeUrl: 'www.edx/my-program-type',
     numberOfCourses: 3,
-    estimatedNumberOfWeeks: 4,
   },
 ];
 

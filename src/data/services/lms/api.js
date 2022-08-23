@@ -1,3 +1,6 @@
+import { getConfig } from '@edx/frontend-platform';
+import { get } from './utils';
+
 import fakeData from 'data/services/lms/fakeData/courses';
 /*
 import { StrictDict } from 'utils';
@@ -15,12 +18,18 @@ import {
 /*********************************************************************************
  * GET Actions
  *********************************************************************************/
-const initializeList = () => Promise.resolve({
-  courses: [
-    ...fakeData.courseRunData,
-    ...fakeData.entitlementData,
-  ],
-  ...fakeData.globalData,
-});
+const initializeList = () => {
+  const url = `${getConfig().LMS_BASE_URL}/learner/mock/home`;
+  console.log({ url });
+  get(url).then(console.log);
+
+  return Promise.resolve({
+    courses: [
+      ...fakeData.courseRunData,
+      ...fakeData.entitlementData,
+    ],
+    ...fakeData.globalData,
+  });
+};
 
 export default { initializeList };

@@ -110,7 +110,6 @@ export const courseCard = StrictDict({
   relatedPrograms: mkCardSelector(({ relatedPrograms }) => ({
     list: relatedPrograms.map(program => ({
       bannerUrl: program.bannerUrl,
-      estimatedNumberOfWeeks: program.estimatedNumberOfWeeks,
       logoUrl: program.logoUrl,
       numberOfCourses: program.numberOfCourses,
       programType: program.programType,
