@@ -12,6 +12,8 @@ import EmptyCourse from 'containers/EmptyCourse';
 import SelectSessionModal from 'containers/SelectSessionModal';
 import EnterpriseDashboardModal from 'containers/EnterpriseDashboardModal';
 
+import './index.scss';
+
 export const Dashboard = () => {
   const dispatch = useDispatch();
   React.useEffect(
@@ -27,12 +29,12 @@ export const Dashboard = () => {
       {hasAvailableDashboards && <EnterpriseDashboardModal />}
       {hasCourses ? (
         <>
-          <div className="d-flex" style={{ margin: 'auto' }}>
-            <div className="w-100 mw-md mr-4">
+          <div className="dashboard-course-container">
+            <div className="w-100 mw-md">
               {showSelectSessionModal && (<SelectSessionModal />)}
               <CourseList />
             </div>
-            <div id="dashboard-sidebar-container mw-xs">
+            <div className="dashboard-sidebar-container mw-xs">
               <WidgetSidebar />
             </div>
           </div>

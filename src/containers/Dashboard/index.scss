@@ -1,0 +1,14 @@
+@import "@edx/paragon/scss/core/core";
+
+.dashboard-course-container {
+  display: flex;
+  margin: auto;
+  gap: map-get($spacers, 4);
+}
+
+@include media-breakpoint-down(md) {
+  .dashboard-course-container {
+    flex-direction: column-reverse;
+    gap: 0;
+  }
+}

@@ -6,3 +6,9 @@
   padding-left: map-get($spacers, 2);
   padding-right: map-get($spacers, 2);
 }
+
+@include media-breakpoint-down(md) {
+  .widget-sidebar {
+    display: none;
+  }
+}
