@@ -21,10 +21,6 @@ export const ProgramCard = ({ data }) => {
     messages.courses,
     { numCourses: data.numberOfCourses },
   );
-  const durationMessage = formatMessage(
-    messages.duration,
-    { numWeeks: data.estimatedNumberOfWeeks },
-  );
   return (
     <Card
       className="program-card d-inline-block bg-primary-500 text-white pb-3.5"
@@ -46,7 +42,7 @@ export const ProgramCard = ({ data }) => {
           <Icon src={Program} className="d-inline-block" /> {data.programType}
         </Badge>
         <div className="program-summary mt-2">
-          {numCoursesMessage} • {durationMessage}
+          {numCoursesMessage}
         </div>
       </div>
     </Card>
@@ -55,7 +51,6 @@ export const ProgramCard = ({ data }) => {
 ProgramCard.propTypes = {
   data: PropTypes.shape({
     bannerUrl: PropTypes.string,
-    estimatedNumberOfWeeks: PropTypes.number,
     logoUrl: PropTypes.string,
     numberOfCourses: PropTypes.number,
     programType: PropTypes.string,

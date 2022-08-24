@@ -22,7 +22,6 @@ export const relatedPrograms = [
     programUrl: 'www.edx/my-program',
     programType: 'MicroBachelors Program',
     numberOfCourses: 3,
-    estimatedNumberOfWeeks: 4,
   },
   {
     provider: 'University  of Maryland',
@@ -33,7 +32,6 @@ export const relatedPrograms = [
     programType: 'MicroBachelors Program',
     programTypeUrl: 'www.edx/my-program-type',
     numberOfCourses: 3,
-    estimatedNumberOfWeeks: 4,
   },
 ];
 
@@ -48,8 +46,10 @@ const logos = {
   science: 'https://courses.edx.org/asset-v1:HarvardX+PH525.5x+3T2020+type@thumbnail+block@course_image-375x200.jpg',
 };
 
+const farPastDate = '11/11/1900';
 const pastDate = '11/11/2000';
 const futureDate = '11/11/3030';
+const farFutureDate = '11/11/4040';
 const soonDate = new Date();
 soonDate.setDate(soonDate.getDate() + 60);
 const soonDateStr = soonDate.toDateString();
@@ -102,7 +102,8 @@ const globalData = {
 export const genCourseRunData = (data = {}) => ({
   isStarted: false,
   isArchived: false,
-  endDate: futureDate,
+  startDate: data.isStarted ? farPastDate : futureDate,
+  endDate: farFutureDate,
   minPassingGrade: 70,
   homeUrl: 'edx.com/courses/my-course-url/home',
   marketingUrl: 'edx.com/courses/my-course-url/marketing',
@@ -319,7 +320,6 @@ export const courseRuns = [
       isAvailable: true,
       isDownloadable: true,
       availableDate: pastDate,
-      certDownloadUrl: logos.social,
       certPreviewUrl: logos.edx,
     },
   },
@@ -339,7 +339,6 @@ export const courseRuns = [
       isAvailable: true,
       isDownloadable: true,
       availableDate: pastDate,
-      certDownloadUrl: logos.social,
     },
   },
   // verified, course archived, learner finished, cert earned, downloadable (web + link)
@@ -359,7 +358,6 @@ export const courseRuns = [
       isAvailable: true,
       isDownloadable: true,
       availableDate: pastDate,
-      certDownloadUrl: logos.social,
       certPreviewUrl: logos.edx,
     },
   },
@@ -471,7 +469,6 @@ export const courseRuns = [
       isAvailable: true,
       isDownloadable: true,
       availableDate: pastDate,
-      certDownloadUrl: logos.social,
       certPreviewUrl: logos.edx,
     },
   },
@@ -523,7 +520,6 @@ export const courseRuns = [
       isAvailable: true,
       isDownloadable: true,
       availableDate: pastDate,
-      certDownloadUrl: logos.social,
       certPreviewUrl: logos.edx,
     },
   },

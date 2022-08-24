@@ -80,8 +80,10 @@ describe('CourseCardDetails hooks', () => {
       isAuditAccessExpired: false,
     };
     const courseRunData = {
+      isStarted: true,
       isFinished: false,
-      endDate: '10/20/1000',
+      startDate: '10/10/1000',
+      endDate: '10/20/2000',
     };
     const runHook = ({ enrollment = {}, courseRun = {} }) => {
       appHooks.useCardCourseRunData.mockReturnValueOnce({
@@ -99,6 +101,19 @@ describe('CourseCardDetails hooks', () => {
       runHook({});
       expect(appHooks.useCardCourseRunData).toHaveBeenCalledWith(cardId);
       expect(appHooks.useCardEnrollmentData).toHaveBeenCalledWith(cardId);
+    });
+
+    describe('if not started yet', () => {
+      it('returns accessExpired message with accessExpirationDate from cardData', () => {
+        runHook({
+          enrollment: { isAudit: true, isAuditAccessExpired: true },
+          courseRun: { isStarted: false },
+        });
+        expect(out).toEqual(formatMessage(
+          messages.courseStarts,
+          { startDate: dateFormatter(formatDate, courseRunData.startDate) },
+        ));
+      });
     });
 
     describe('if audit, and expired', () => {

@@ -48,8 +48,6 @@ dateSixMonthsFromNow.setDate(dateSixMonthsFromNow.getDate() + 180);
 export const courseCard = StrictDict({
   certificates: mkCardSelector(({ certificates }) => ({
     availableDate: certificates.availableDate,
-    certDownloadUrl: certificates.certDownloadUrl,
-    honorCertDownloadUrl: certificates.honorCertDownloadUrl,
     certPreviewUrl: certificates.certPreviewUrl,
     isDownloadable: certificates.isDownloadable,
     isEarnedButUnavailable: certificates.isEarned && !certificates.isAvailable,
@@ -68,6 +66,7 @@ export const courseCard = StrictDict({
     isStarted: courseRun.isStarted,
     isFinished: courseRun.isFinished,
     minPassingGrade: courseRun.minPassingGrade,
+    startDate: courseRun.startDate,
   })),
   enrollment: mkCardSelector(({ enrollment }) => {
     if (enrollment == null) {
@@ -111,7 +110,6 @@ export const courseCard = StrictDict({
   relatedPrograms: mkCardSelector(({ relatedPrograms }) => ({
     list: relatedPrograms.map(program => ({
       bannerUrl: program.bannerUrl,
-      estimatedNumberOfWeeks: program.estimatedNumberOfWeeks,
       logoUrl: program.logoUrl,
       numberOfCourses: program.numberOfCourses,
       programType: program.programType,

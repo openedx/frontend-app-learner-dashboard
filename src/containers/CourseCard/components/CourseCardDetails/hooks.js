@@ -8,6 +8,9 @@ export const useAccessMessage = ({ cardId }) => {
   const { formatMessage, formatDate } = useIntl();
   const enrollment = appHooks.useCardEnrollmentData(cardId);
   const courseRun = appHooks.useCardCourseRunData(cardId);
+  if (!courseRun.isStarted) {
+    return formatMessage(messages.courseStarts, { startDate: courseRun.startDate });
+  }
   if (enrollment.isEnrolled) {
     if (enrollment.isAudit) {
       const {

@@ -1,26 +1,9 @@
-import fakeData from 'data/services/lms/fakeData/courses';
-/*
-import { StrictDict } from 'utils';
-import { locationId } from 'data/constants/app';
-import { paramKeys } from './constants';
+import { get } from './utils';
 import urls from './urls';
-import {
-  client,
-  get,
-  post,
-  stringifyUrl,
-} from './utils';
-*/
 
 /*********************************************************************************
  * GET Actions
  *********************************************************************************/
-const initializeList = () => Promise.resolve({
-  courses: [
-    ...fakeData.courseRunData,
-    ...fakeData.entitlementData,
-  ],
-  ...fakeData.globalData,
-});
+const initializeList = () => get(urls.init).then(({ data }) => data);
 
 export default { initializeList };

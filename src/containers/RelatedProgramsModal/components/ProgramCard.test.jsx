@@ -5,7 +5,6 @@ import ProgramCard from './ProgramCard';
 
 const props = {
   data: {
-    estimatedNumberOfWeeks: 1,
     numberOfCourses: 2,
     bannerUrl: 'props.data.bannerUrl',
     logoUrl: 'props.data.logoUrl',
