@@ -42,6 +42,12 @@ export const initializeList = ({ onSuccess, onFailure }) => (dispatch) => {
   }));
 };
 
+export const enrollEntitlementession = ({ onSuccess, onFailure, courseId }) => (dispatch, getState) => {
+};
+
+export const leaveEntitlementession = ({ onSuccess, onFailure, courseId }) => (dispatch, getState) => {
+};
+
 export default StrictDict({
   initializeList,
 });

@@ -1,23 +1,28 @@
+import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { hooks as appHooks } from 'data/redux';
+import { StrictDict } from 'utils';
 
+import { hooks as appHooks, thunkActions } from 'data/redux';
+import * as module from './hooks';
 import messages from './messages';
+
+export const state = StrictDict({
+  selectedSession: (val) => React.useState(val), // eslint-disable-line
+});
 
 export const useSelectSessionModalData = () => {
   const dispatch = useDispatch();
   const selectedCardId = appHooks.useSelectSessionModalData().cardId;
-
   const {
-    entitlementSessions,
+    entitlementessions,
     isFulfilled,
-  } = appHooks.useCardEntitlementsData(selectedCardId);
-
+  } = appHooks.useCardEntitlementData(selectedCardId);
   const { title: courseTitle } = appHooks.useCardCourseData(selectedCardId);
-
   const { formatMessage } = useIntl();
+  const [selectedSession, setSelectedSession] = module.state.selectedSession(null);
 
   let header;
   let hint;
@@ -32,14 +37,22 @@ export const useSelectSessionModalData = () => {
   }
   const updateCallback = appHooks.useUpdateSelectSessionModalCallback;
 
+  const handleSelection = ({ target: { value } }) => setSelectedSession(value);
+  const handleSubmit = () => dispatch(
+    thunkActions.app.updateEntitlementSession(selectedCardId, selectedSession),
+  );
+
   return {
     showModal: selectedCardId != null,
     closeSessionModal: updateCallback(dispatch, null),
     openSessionModal: (cardId) => updateCallback(dispatch, cardId),
     showLeaveOption: isFulfilled,
-    entitlementSessions,
+    entitlementessions,
     hint,
     header,
+    selectedSession,
+    handleSelection,
+    handleSubmit,
   };
 };
 

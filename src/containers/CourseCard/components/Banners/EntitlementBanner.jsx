@@ -20,7 +20,7 @@ export const EntitlementBanner = ({ cardId }) => {
     changeDeadline,
     showExpirationWarning,
     isExpired,
-  } = appHooks.useCardEntitlementsData(cardId);
+  } = appHooks.useCardEntitlementData(cardId);
   const { supportEmail } = appHooks.usePlatformSettingsData();
   const openSessionModal = appHooks.useUpdateSelectSessionModalCallback(dispatch, cardId);
   const { formatDate, formatMessage } = useIntl();
@@ -32,7 +32,7 @@ export const EntitlementBanner = ({ cardId }) => {
   if (!hasSessions && !isFulfilled) {
     return (
       <Banner variant="warning">
-        {formatMessage(messages.entitlementsUnavailable, {
+        {formatMessage(messages.entitlementUnavailable, {
           emailLink: supportEmail && <MailtoLink to={supportEmail}>{supportEmail}</MailtoLink>,
         })}
       </Banner>
@@ -41,7 +41,7 @@ export const EntitlementBanner = ({ cardId }) => {
   if (showExpirationWarning) {
     return (
       <Banner>
-        {formatMessage(messages.entitlementsExpiringSoon, {
+        {formatMessage(messages.entitlementExpiringSoon, {
           changeDeadline: dateFormatter(formatDate, changeDeadline),
           selectSessionButton: (
             <Button variant="link" size="inline" className="m-0 p-0" onClick={openSessionModal}>
@@ -55,7 +55,7 @@ export const EntitlementBanner = ({ cardId }) => {
   if (isExpired) {
     return (
       <Banner>
-        {formatMessage(messages.entitlementsExpired)}
+        {formatMessage(messages.entitlementExpired)}
       </Banner>
     );
   }

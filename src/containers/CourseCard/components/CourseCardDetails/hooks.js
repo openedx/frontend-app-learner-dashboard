@@ -39,7 +39,7 @@ export const useCardDetailsData = ({ dispatch, cardId }) => {
     isEntitlement,
     isFulfilled,
     canChange,
-  } = appHooks.useCardEntitlementsData(cardId);
+  } = appHooks.useCardEntitlementData(cardId);
 
   const openSessionModal = appHooks.useUpdateSelectSessionModalCallback(dispatch, cardId);
 

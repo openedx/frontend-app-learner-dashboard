@@ -16,12 +16,15 @@ import messages from './messages';
 
 export const SelectSessionModal = () => {
   const {
-    entitlementSessions,
+    entitlementessions,
     showModal,
     closeSessionModal,
     showLeaveOption,
+    handleSelection,
+    handleSubmit,
     header,
     hint,
+    selectedSession,
   } = useSelectSessionModalData();
 
   const { formatMessage, formatDate } = useIntl();
@@ -38,9 +41,14 @@ export const SelectSessionModal = () => {
       <h3>{header}</h3>
       <Form.Group className="pt-3">
         <Form.Label>{hint}</Form.Label>
-        <Form.RadioSet name="sessions" className="pt-3 pb-4">
-          {entitlementSessions?.map((session) => (
-            <Form.Radio key={session.courseId} value={session.startDate}>
+        <Form.RadioSet
+          name="sessions"
+          className="pt-3 pb-4"
+          onChange={handleSelection}
+          value={selectedSession}
+        >
+          {entitlementessions?.map((session) => (
+            <Form.Radio key={session.courseId} value={session.courseId}>
               {dateFormatter(formatDate, session.startDate)} - {dateFormatter(formatDate, session.endDate)}
             </Form.Radio>
           ))}
@@ -55,7 +63,7 @@ export const SelectSessionModal = () => {
         <Button variant="tertiary" onClick={closeSessionModal}>
           {formatMessage(messages.nevermind)}
         </Button>
-        <Button>{formatMessage(messages.confirmSession)}</Button>
+        <Button onClick={handleSubmit}>{formatMessage(messages.confirmSession)}</Button>
       </ActionRow>
     </ModalDialog>
   );

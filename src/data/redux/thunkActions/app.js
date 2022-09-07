@@ -1,5 +1,5 @@
 import { StrictDict } from 'utils';
-import { actions } from 'data/redux';
+import { actions, selectors } from 'data/redux';
 
 import requests from './requests';
 
@@ -15,6 +15,7 @@ import requests from './requests';
 export const initialize = () => (dispatch) => (
   dispatch(requests.initializeList({
     onSuccess: (({ courses, ...globalData }) => {
+      console.log({ courses });
       dispatch(actions.app.loadCourses({ courses }));
       dispatch(actions.app.loadGlobalData(globalData));
     }),
@@ -33,8 +34,15 @@ export const refreshList = () => (dispatch) => (
 // TODO: connect hook to actual api later
 export const sendConfirmEmail = () => () => console.log('send confirm email');
 
+export const updateEntitlementSession = (cardId, selection) => (dispatch, getState) => {
+  const entitlement = selectors.app.courseCard.entitlement(getState(), cardId);
+  const { uuid } = entitlement;
+  console.log({ cardId, selection, entitlement, uuid });
+};
+
 export default StrictDict({
   initialize,
   refreshList,
   sendConfirmEmail,
+  updateEntitlementSession,
 });

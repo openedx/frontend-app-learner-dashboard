@@ -4,7 +4,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   enrollments: [],
   courseData: {},
-  entitlements: [],
+  entitlement: [],
   emailConfirmation: {},
   enterpriseDashboards: {},
   platformSettings: {},

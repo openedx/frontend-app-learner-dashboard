@@ -12,7 +12,7 @@ jest.mock('data/redux', () => ({
   hooks: {
     useCardCourseRunData: jest.fn(),
     useCardEnrollmentData: jest.fn(),
-    useCardEntitlementsData: jest.fn(),
+    useCardEntitlementData: jest.fn(),
     useUpdateSelectSessionModalCallback: jest.fn(
       (...args) => ({ updateSelectSessionModalCallback: args }),
     ),
@@ -49,7 +49,7 @@ describe('CourseCardActions hooks', () => {
     const { enrollment = {}, courseRun = {}, entitlement = {} } = overrides;
     appHooks.useCardCourseRunData.mockReturnValueOnce({ ...courseRunData, ...courseRun });
     appHooks.useCardEnrollmentData.mockReturnValueOnce({ ...enrollmentData, ...enrollment });
-    appHooks.useCardEntitlementsData.mockReturnValueOnce({ ...entitlementData, ...entitlement });
+    appHooks.useCardEntitlementData.mockReturnValueOnce({ ...entitlementData, ...entitlement });
     out = hooks.useCardActionData({ cardId });
   };
   describe('behavior', () => {
@@ -62,8 +62,8 @@ describe('CourseCardActions hooks', () => {
     it('initializes Enrollment data with cardId', () => {
       expect(appHooks.useCardEnrollmentData).toHaveBeenCalledWith(cardId);
     });
-    it('initializes Entitlements data with cardId', () => {
-      expect(appHooks.useCardEntitlementsData).toHaveBeenCalledWith(cardId);
+    it('initializes Entitlement data with cardId', () => {
+      expect(appHooks.useCardEntitlementData).toHaveBeenCalledWith(cardId);
     });
     it('initializes SelectSession data with dispatch and cardId', () => {
       expect(appHooks.useUpdateSelectSessionModalCallback).toHaveBeenCalledWith(dispatch, cardId);

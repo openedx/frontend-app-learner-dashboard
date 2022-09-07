@@ -39,6 +39,7 @@ export const genCardId = (index) => `card-id${index}`;
 export const genCourseId = (index) => `course-number${index}-course-id${index}`;
 export const genCourseNumber = (index) => `course-number${index}`;
 export const genCourseTitle = (index) => `Course Name ${index}`;
+export const genEntitlementUUID = (index) => `entitlement-course-uuid-${index}`;
 
 const logos = {
   edx: 'https://edx-cdn.org/v3/prod/logo.svg',
@@ -365,7 +366,8 @@ export const courseRuns = [
   {
     enrollment: { isVerified: true },
     courseRun: { isStarted: false },
-    entitlements: {
+    entitlement: {
+      uuid: genEntitlementUUID(0),
       availableSessions,
       canViewCourse: false,
       changeDeadline: futureDate,
@@ -380,7 +382,8 @@ export const courseRuns = [
   {
     enrollment: { isVerified: true },
     courseRun: { isStarted: true },
-    entitlements: {
+    entitlement: {
+      uuid: genEntitlementUUID(1),
       availableSessions,
       canViewCourse: true,
       changeDeadline: futureDate,
@@ -398,7 +401,8 @@ export const courseRuns = [
       hasStarted: true,
     },
     courseRun: { isStarted: true },
-    entitlements: {
+    entitlement: {
+      uuid: genEntitlementUUID(2),
       availableSessions,
       canViewCourse: true,
       changeDeadline: futureDate,
@@ -417,7 +421,8 @@ export const courseRuns = [
       hasStarted: true,
     },
     courseRun: { isStarted: true },
-    entitlements: {
+    entitlement: {
+      uuid: genEntitlementUUID(3),
       availableSessions,
       canViewCourse: true,
       changeDeadline: pastDate,
@@ -435,7 +440,8 @@ export const courseRuns = [
       hasFinished: false,
     },
     courseRun: { isStarted: true },
-    entitlements: {
+    entitlement: {
+      uuid: genEntitlementUUID(4),
       availableSessions: null,
       canViewCourse: true,
       changeDeadline: pastDate,
@@ -454,7 +460,8 @@ export const courseRuns = [
       hasFinished: false,
     },
     courseRun: { isStarted: true },
-    entitlements: {
+    entitlement: {
+      uuid: genEntitlementUUID(5),
       availableSessions: null,
       canViewCourse: true,
       changeDeadline: pastDate,
@@ -482,7 +489,8 @@ export const courseRuns = [
       isStarted: true,
       endDate: pastDate,
     },
-    entitlements: {
+    entitlement: {
+      uuid: genEntitlementUUID(6),
       availableSessions: null,
       enrollmentUrl: '/entitlement-enrollment',
       isEntitlement: true,
@@ -505,7 +513,8 @@ export const courseRuns = [
       isStarted: true,
       endDate: pastDate,
     },
-    entitlements: {
+    entitlement: {
+      uuid: genEntitlementUUID(7),
       availableSessions: null,
       canViewCourse: false,
       changeDeadline: pastDate,
@@ -531,7 +540,8 @@ export const courseRuns = [
 // unfulfilled entitlement select session pass deadline without available session
 export const entitlementCourses = [
   {
-    entitlements: {
+    entitlement: {
+      uuid: genEntitlementUUID(10),
       availableSessions,
       canViewCourse: false,
       changeDeadline: futureDate,
@@ -542,7 +552,8 @@ export const entitlementCourses = [
       isRefundable: true,
     },
   }, {
-    entitlements: {
+    entitlement: {
+      uuid: genEntitlementUUID(11),
       availableSessions,
       canViewCourse: false,
       changeDeadline: soonDateStr,
@@ -553,7 +564,8 @@ export const entitlementCourses = [
       isRefundable: true,
     },
   }, {
-    entitlements: {
+    entitlement: {
+      uuid: genEntitlementUUID(12),
       availableSessions,
       canViewCourse: false,
       changeDeadline: pastDate,
@@ -564,7 +576,8 @@ export const entitlementCourses = [
       isRefundable: true,
     },
   }, {
-    entitlements: {
+    entitlement: {
+      uuid: genEntitlementUUID(13),
       availableSessions: [],
       canViewCourse: false,
       changeDeadline: pastDate,
@@ -613,7 +626,7 @@ export const courseRunData = courseRuns.map(
     return {
       cardId,
       grades: { isPassing: true },
-      entitlements: null,
+      entitlement: null,
       ...data,
       certificates: genCertificateData(data.certificates),
       enrollment: genEnrollmentData(data.enrollment),
@@ -675,6 +688,13 @@ export const entitlementData = entitlementCourses.map(
     };
   },
 );
+
+console.log({
+  networkData: {
+    courses: [...courseRunData, ...entitlementData],
+    ...globalData,
+  },
+});
 
 export default {
   courseRunData,

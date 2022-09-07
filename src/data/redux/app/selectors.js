@@ -87,21 +87,23 @@ export const courseCard = StrictDict({
       isEnrolled: enrollment.isEnrolled,
     };
   }),
-  entitlements: mkCardSelector(({ entitlements }) => {
-    if (!entitlements) {
+  entitlement: mkCardSelector(({ entitlement }) => {
+    if (!entitlement) {
       return {};
     }
-    const deadline = new Date(entitlements.changeDeadline);
-    const showExpirationWarning = deadline > new Date() && deadline <= dateSixMonthsFromNow;
+    const deadline = new Date(entitlement.changeDeadline);
+    const deadlinePassed = deadline < new Date();
+    const showExpirationWarning = !deadlinePassed && deadline <= dateSixMonthsFromNow;
     return {
-      canChange: entitlements.canChange,
-      canViewCourse: entitlements.canViewCourse,
-      entitlementSessions: entitlements.availableSessions,
-      isEntitlement: entitlements.isEntitlement,
-      isExpired: entitlements.isExpired,
-      isFulfilled: entitlements.isFulfilled,
-      hasSessions: entitlements.availableSessions?.length > 0,
-      changeDeadline: entitlements.changeDeadline,
+      canChange: !deadlinePassed,
+      canViewCourse: entitlement.canViewCourse,
+      entitlementessions: entitlement.availableSessions,
+      isEntitlement: entitlement.isEntitlement,
+      isExpired: entitlement.isExpired,
+      isFulfilled: entitlement.isFulfilled,
+      hasSessions: entitlement.availableSessions?.length > 0,
+      changeDeadline: entitlement.changeDeadline,
+      uuid: entitlement.uuid,
       showExpirationWarning,
     };
   }),

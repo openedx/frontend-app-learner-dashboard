@@ -12,7 +12,7 @@ describe('app reducer', () => {
       enrollments: [],
       courseData: {
       },
-      entitlements: [],
+      entitlement: [],
     };
     describe('action handlers', () => {
       describe('loadCourses', () => {

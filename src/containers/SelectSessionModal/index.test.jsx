@@ -10,7 +10,7 @@ jest.mock('./hooks', () => ({
 }));
 
 const hookReturn = {
-  entitlementSessions: [],
+  entitlementessions: [],
   showModal: true,
   closeSessionModal: jest.fn().mockName('useSelectSessionModalData.closeSessionModal'),
   showLeaveOption: true,
@@ -36,7 +36,7 @@ describe('SelectSessionModal', () => {
     test('modal with leave option ', () => {
       hooks.mockReturnValueOnce({
         ...hookReturn,
-        entitlementSessions: [...availableSessions],
+        entitlementessions: [...availableSessions],
       });
       expect(shallow(<SelectSessionModal />)).toMatchSnapshot();
     });
@@ -44,7 +44,7 @@ describe('SelectSessionModal', () => {
     test('modal without leave option ', () => {
       hooks.mockReturnValueOnce({
         ...hookReturn,
-        entitlementSessions: [...availableSessions],
+        entitlementessions: [...availableSessions],
         showLeaveOption: false,
       });
       expect(shallow(<SelectSessionModal />)).toMatchSnapshot();

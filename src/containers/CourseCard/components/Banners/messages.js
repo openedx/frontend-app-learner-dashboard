@@ -76,24 +76,24 @@ export const messages = StrictDict({
     description: 'Grade and certificate availability date message',
     defaultMessage: 'Your grade and certificate will be ready after {availableDate}.',
   },
-  entitlementsUnavailable: {
-    id: 'learner-dash.courseCard.banners.entitlementsUnavailable',
-    description: 'Entitlements course message when no sessions are available',
+  entitlementUnavailable: {
+    id: 'learner-dash.courseCard.banners.entitlementUnavailable',
+    description: 'Entitlement course message when no sessions are available',
     defaultMessage: 'There are no sessions available at the moment.  The course team will create new sessions soon.  If no sessions appear, please contact {emailLink} for information.',
   },
-  entitlementsExpiringSoon: {
-    id: 'learner-dash.courseCard.banners.entitlementsExpiringSoon',
-    description: 'Entitlements course message when the entitlement is expiring soon.',
+  entitlementExpiringSoon: {
+    id: 'learner-dash.courseCard.banners.entitlementExpiringSoon',
+    description: 'Entitlement course message when the entitlement is expiring soon.',
     defaultMessage: 'You must {selectSessionButton} by {changeDeadline} to access the course.',
   },
-  entitlementsExpired: {
-    id: 'learner-dash.courseCard.banners.entitlementsExpired',
-    description: 'Entitlements course message when the entitlement is expired.',
+  entitlementExpired: {
+    id: 'learner-dash.courseCard.banners.entitlementExpired',
+    description: 'Entitlement course message when the entitlement is expired.',
     defaultMessage: 'You can no longer change sessions.',
   },
   selectSession: {
     id: 'learner-dash.courseCard.banners.selectSession',
-    description: 'Entitlements session selection link text',
+    description: 'Entitlement session selection link text',
     defaultMessage: 'select a session',
   },
 });
