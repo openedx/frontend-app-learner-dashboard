@@ -12,6 +12,7 @@ import { nullMethod } from 'hooks';
 import { dateFormatter } from 'utils';
 
 import useSelectSessionModalData from './hooks';
+import { LEAVE_OPTION } from './constants';
 import messages from './messages';
 
 export const SelectSessionModal = () => {
@@ -53,7 +54,7 @@ export const SelectSessionModal = () => {
             </Form.Radio>
           ))}
           {showLeaveOption && (
-            <Form.Radio value="leave">
+            <Form.Radio value={LEAVE_OPTION}>
               {formatMessage(messages.leaveSessionOption)}
             </Form.Radio>
           )}

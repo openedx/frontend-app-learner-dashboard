@@ -13,7 +13,8 @@ export const AuthenticatedUserDropdown = ({ username }) => {
   const { formatMessage } = useIntl();
   const { authenticatedUser } = React.useContext(AppContext);
   const { profileImage } = authenticatedUser;
-  const { availableDashboards } = appHooks.useEnterpriseDashboardData();
+  const dashboard = appHooks.useEnterpriseDashboardData();
+  console.log({ dashboard });
   return (
     <>
       <Dropdown className="user-dropdown">
@@ -25,7 +26,7 @@ export const AuthenticatedUserDropdown = ({ username }) => {
         <Dropdown.Menu className="dropdown-menu-right">
           <Dropdown.Header>SWITCH DASHBOARD</Dropdown.Header>
           <Dropdown.Item as="a" href="/edx-dashboard" className="active">Personal</Dropdown.Item>
-          {availableDashboards && availableDashboards.map((dashboard) => (
+          {!!dashboard && (
             <Dropdown.Item
               as="a"
               href={dashboard.url}
@@ -33,7 +34,7 @@ export const AuthenticatedUserDropdown = ({ username }) => {
             >
               {dashboard.label} {formatMessage(messages.dashboard)}
             </Dropdown.Item>
-          ))}
+          )}
           <Dropdown.Divider />
           <Dropdown.Item href={`${getConfig().LMS_BASE_URL}/u/${username}`}>
             {formatMessage(messages.profile)}

@@ -14,8 +14,11 @@ export const EnterpriseDashboardModal = () => {
   const {
     showModal,
     handleClick,
-    mostRecentDashboard,
+    dashboard,
   } = useEnterpriseDashboardHook();
+  if (!dashboard) {
+    return null;
+  }
   return (
     <ModalDialog
       isOpen={showModal}
@@ -29,19 +32,19 @@ export const EnterpriseDashboardModal = () => {
       >
         <h4>
           {formatMessage(messages.enterpriseDialogHeader, {
-            label: mostRecentDashboard.label,
+            label: dashboard.label,
           })}
         </h4>
         <p>
           {formatMessage(messages.enterpriseDialogBody, {
-            label: mostRecentDashboard.label,
+            label: dashboard.label,
           })}
         </p>
         <ActionRow>
           <Button variant="tertiary" onClick={handleClick}>
             {formatMessage(messages.enterpriseDialogDismissButton)}
           </Button>
-          <Button type="a" href={mostRecentDashboard.url}>
+          <Button type="a" href={dashboard.url}>
             {formatMessage(messages.enterpriseDialogConfirmButton)}
           </Button>
         </ActionRow>

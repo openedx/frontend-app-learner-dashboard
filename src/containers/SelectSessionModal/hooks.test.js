@@ -5,6 +5,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { MockUseState } from 'testUtils';
 import { hooks as appHooks, thunkActions } from 'data/redux';
 
+import { LEAVE_OPTION } from './constants';
 import messages from './messages';
 import * as hooks from './hooks';
 
@@ -23,14 +24,16 @@ jest.mock('data/redux', () => ({
     },
   },
   thunkActions: {
-    app: {
-      updateEntitlementSession: jest.fn((...args) => ({ updateEntitlementSession: args })),
+    requests: {
+      updateEntitlementEnrollment: jest.fn((...args) => ({ updateEntitlementSession: args })),
+      leaveEntitlementSession: jest.fn((...args) => ({ leaveEntitlementSession: args })),
     },
   },
 }));
 
 const state = new MockUseState(hooks);
 const selectedCardId = 'test-selected-card-id';
+const uuid = 'test-uuid';
 
 const selectSessionData = {
   cardId: selectedCardId,
@@ -43,6 +46,7 @@ const entitlementData = {
     { startDate: '3/4/2000', endDate: '3/4/2020', cardId: 'session-id-3' },
   ],
   isFullfilled: false,
+  uuid,
 };
 
 const cardCourseData = {
@@ -107,10 +111,14 @@ describe('SelectSessionModal hooks', () => {
           state.mockVal(state.keys.selectedSession, testValue);
           runHook({});
           expect(out.handleSubmit()).toEqual(dispatch(
-            thunkActions.app.updateEntitlementSession(
-              selectedCardId,
-              testValue,
-            ),
+            thunkActions.requests.updateEntitlementEnrollment({ courseId: testValue, uuid }),
+          ));
+        });
+        it('dispatches leaveEntitlementSession if LEAVE_OPTION is selected', () => {
+          state.mockVal(state.keys.selectedSession, LEAVE_OPTION);
+          runHook({});
+          expect(out.handleSubmit()).toEqual(dispatch(
+            thunkActions.requests.leaveEntitlementSession({ uuid }),
           ));
         });
       });

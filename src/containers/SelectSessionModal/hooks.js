@@ -7,6 +7,7 @@ import { StrictDict } from 'utils';
 
 import { hooks as appHooks, thunkActions } from 'data/redux';
 import * as module from './hooks';
+import { LEAVE_OPTION } from './constants';
 import messages from './messages';
 
 export const state = StrictDict({
@@ -19,6 +20,7 @@ export const useSelectSessionModalData = () => {
   const {
     entitlementessions,
     isFulfilled,
+    uuid,
   } = appHooks.useCardEntitlementData(selectedCardId);
   const { title: courseTitle } = appHooks.useCardCourseData(selectedCardId);
   const { formatMessage } = useIntl();
@@ -38,9 +40,12 @@ export const useSelectSessionModalData = () => {
   const updateCallback = appHooks.useUpdateSelectSessionModalCallback;
 
   const handleSelection = ({ target: { value } }) => setSelectedSession(value);
-  const handleSubmit = () => dispatch(
-    thunkActions.app.updateEntitlementSession(selectedCardId, selectedSession),
-  );
+  const handleSubmit = () => {
+    if (selectedSession === LEAVE_OPTION) {
+      return dispatch(thunkActions.requests.leaveEntitlementSession({ uuid }));
+    }
+    return dispatch(thunkActions.requests.updateEntitlementEnrollment({ uuid, courseId: selectedSession }));
+  };
 
   return {
     showModal: selectedCardId != null,

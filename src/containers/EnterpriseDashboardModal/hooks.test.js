@@ -11,9 +11,7 @@ jest.mock('data/redux', () => ({
 
 const state = new MockUseState(hooks);
 
-const enterpriseDashboardData = {
-  mostRecentDashboard: { label: 'edX, Inc.', url: '/edx-dashboard' },
-};
+const enterpriseDashboardData = { label: 'edX, Inc.', url: '/edx-dashboard' };
 
 describe('EnterpriseDashboard hooks', () => {
   appHooks.useEnterpriseDashboardData.mockReturnValue({ ...enterpriseDashboardData });
@@ -32,7 +30,7 @@ describe('EnterpriseDashboard hooks', () => {
     afterEach(state.restore);
 
     test('useEnterpriseDashboardHook to return dashboard data from redux hooks', () => {
-      expect(out.mostRecentDashboard).toMatchObject(enterpriseDashboardData.mostRecentDashboard);
+      expect(out.dashboard).toMatchObject(enterpriseDashboardData);
     });
 
     test('modal initializes to shown when rendered and closes on click', () => {

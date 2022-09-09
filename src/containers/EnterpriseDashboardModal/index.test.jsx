@@ -11,7 +11,7 @@ jest.mock('./hooks', () => ({
 describe('EnterpriseDashboard', () => {
   test('snapshot', () => {
     const hookData = {
-      mostRecentDashboard: { label: 'edX, Inc.', url: '/edx-dashboard' },
+      dashboard: { label: 'edX, Inc.', url: '/edx-dashboard' },
       showDialog: false,
       handleClick: jest.fn().mockName('useEnterpriseDashboardHook.handleClick'),
     };
