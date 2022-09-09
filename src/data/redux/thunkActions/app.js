@@ -7,7 +7,7 @@ import requests from './requests';
 // import { locationId } from 'data/constants/app';
 
 // import { } from './requests';
-// import * as module from './app';
+import * as module from './app';
 
 /**
  * initialize the app, loading ora and course metadata from the api, and loading the initial
@@ -47,9 +47,14 @@ export const updateEntitlementSession = (cardId, selection) => (dispatch, getSta
   });
 };
 
+export const unenroll = (courseId) => (dispatch, getState) => post(
+  selectors.app.courseCard.courseRun(getState(), courseId),
+).then(() => dispatch(module.refreshList()));
+
 export default StrictDict({
   initialize,
   refreshList,
   sendConfirmEmail,
   updateEntitlementSession,
+  unenroll,
 });
