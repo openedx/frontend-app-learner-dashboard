@@ -97,7 +97,7 @@ export const courseCard = StrictDict({
     return {
       canChange: !deadlinePassed,
       canViewCourse: entitlement.canViewCourse,
-      entitlementessions: entitlement.availableSessions,
+      entitlementSessions: entitlement.availableSessions,
       isEntitlement: entitlement.isEntitlement,
       isExpired: entitlement.isExpired,
       isFulfilled: entitlement.isFulfilled,

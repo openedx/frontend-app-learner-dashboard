@@ -18,7 +18,7 @@ export const useSelectSessionModalData = () => {
   const dispatch = useDispatch();
   const selectedCardId = appHooks.useSelectSessionModalData().cardId;
   const {
-    entitlementessions,
+    entitlementSessions,
     isFulfilled,
     uuid,
   } = appHooks.useCardEntitlementData(selectedCardId);
@@ -52,7 +52,7 @@ export const useSelectSessionModalData = () => {
     closeSessionModal: updateCallback(dispatch, null),
     openSessionModal: (cardId) => updateCallback(dispatch, cardId),
     showLeaveOption: isFulfilled,
-    entitlementessions,
+    entitlementSessions,
     hint,
     header,
     selectedSession,
