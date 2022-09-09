@@ -10,6 +10,8 @@ export const RequestStates = StrictDict({
 export const RequestKeys = StrictDict({
   initialize: 'initialize',
   refreshList: 'refreshList',
+  enrollEntitlementSession: 'enrollEntitlementSession',
+  leaveEntitlementSession: 'leaveEntitlementSession',
 });
 
 export const ErrorCodes = StrictDict({

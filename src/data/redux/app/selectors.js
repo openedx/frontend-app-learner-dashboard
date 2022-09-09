@@ -15,7 +15,7 @@ export const simpleSelectors = {
   platformSettings: mkSimpleSelector(app => app.platformSettings),
   suggestedCourses: mkSimpleSelector(app => app.suggestedCourses),
   emailConfirmation: mkSimpleSelector(app => app.emailConfirmation),
-  enterpriseDashboards: mkSimpleSelector(app => app.enterpriseDashboards),
+  enterpriseDashboard: mkSimpleSelector(app => app.enterpriseDashboard),
   selectSessionModal: mkSimpleSelector(app => app.selectSessionModal),
 };
 
@@ -25,8 +25,8 @@ export const numCourses = createSelector(
 );
 export const hasCourses = createSelector([module.numCourses], (num) => num > 0);
 export const hasAvailableDashboards = createSelector(
-  [module.simpleSelectors.enterpriseDashboards],
-  (data) => !!data.availableDashboards,
+  [module.simpleSelectors.enterpriseDashboard],
+  (data) => data !== null,
 );
 export const showSelectSessionModal = createSelector(
   [module.simpleSelectors.selectSessionModal],

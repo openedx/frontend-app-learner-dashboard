@@ -1,5 +1,6 @@
 import { StrictDict } from 'utils';
 import { actions, selectors } from 'data/redux';
+import { post } from 'data/services/lms/utils';
 
 import requests from './requests';
 
@@ -15,9 +16,8 @@ import requests from './requests';
 export const initialize = () => (dispatch) => (
   dispatch(requests.initializeList({
     onSuccess: (({ courses, ...globalData }) => {
-      console.log({ courses });
-      dispatch(actions.app.loadCourses({ courses }));
       dispatch(actions.app.loadGlobalData(globalData));
+      dispatch(actions.app.loadCourses({ courses }));
     }),
   }))
 );
@@ -25,19 +25,26 @@ export const initialize = () => (dispatch) => (
 export const refreshList = () => (dispatch) => (
   dispatch(requests.initializeList({
     onSuccess: (({ courses, ...globalData }) => {
-      dispatch(actions.app.loadCourses({ courses }));
       dispatch(actions.app.loadGlobalData(globalData));
+      dispatch(actions.app.loadCourses({ courses }));
     }),
   }))
 );
 
 // TODO: connect hook to actual api later
-export const sendConfirmEmail = () => () => console.log('send confirm email');
+export const sendConfirmEmail = () => (dispatch, getState) => post(
+  selectors.app.emailConfirmation(getState()).sendEmailUrl,
+);
 
 export const updateEntitlementSession = (cardId, selection) => (dispatch, getState) => {
   const entitlement = selectors.app.courseCard.entitlement(getState(), cardId);
   const { uuid } = entitlement;
-  console.log({ cardId, selection, entitlement, uuid });
+  console.log({
+    cardId,
+    selection,
+    entitlement,
+    uuid,
+  });
 };
 
 export default StrictDict({

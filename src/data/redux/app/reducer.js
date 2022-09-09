@@ -33,7 +33,7 @@ const app = createSlice({
     loadGlobalData: (state, { payload }) => ({
       ...state,
       emailConfirmation: payload.emailConfirmation,
-      enterpriseDashboards: payload.enterpriseDashboards,
+      enterpriseDashboard: payload.enterpriseDashboard,
       platformSettings: payload.platformSettings,
       suggestedCourses: payload.suggestedCourses,
     }),
