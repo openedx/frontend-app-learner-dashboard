@@ -60,13 +60,7 @@ const globalData = {
     isNeeded: true,
     sendEmailUrl: 'sendConfirmation@edx.org',
   },
-  enterpriseDashboards: {
-    availableDashboards: [
-      { label: 'edX, Inc.', url: '/edx-dashboard' },
-      { label: 'Harvard', url: '/harvard-dashboard' },
-    ],
-    mostRecentDashboard: { label: 'edX, Inc.', url: '/edx-dashboard' },
-  },
+  enterpriseDashboard: { label: 'edX, Inc.', url: '/edx-dashboard' },
   platformSettings: {
     supportEmail: 'support@example.com',
     billingEmail: 'billing@email.com',
@@ -688,13 +682,6 @@ export const entitlementData = entitlementCourses.map(
     };
   },
 );
-
-console.log({
-  networkData: {
-    courses: [...courseRunData, ...entitlementData],
-    ...globalData,
-  },
-});
 
 export default {
   courseRunData,
