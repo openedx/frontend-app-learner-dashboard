@@ -20,6 +20,7 @@ export const RelatedProgramsBadge = ({ cardId }) => {
     <>
       <Button
         data-testid="RelatedProgramsBadge"
+        className="pr-0 mr-0"
         variant="tertiary"
         size="sm"
         iconBefore={Program}

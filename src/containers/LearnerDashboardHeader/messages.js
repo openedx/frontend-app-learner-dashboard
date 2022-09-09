@@ -16,6 +16,11 @@ const messages = defineMessages({
     defaultMessage: 'Profile',
     description: 'The text for the user menu Profile navigation link.',
   },
+  viewPrograms: {
+    id: 'leanerDashboard.menu.viewPrograms.label',
+    defaultMessage: 'View Programs',
+    description: 'The text for the user menu View Programs navigation link.',
+  },
   account: {
     id: 'leanerDashboard.menu.account.label',
     defaultMessage: 'Account',

@@ -29,49 +29,58 @@ exports[`RelatedProgramsModal snapshot: closed 1`] = `
     <p>
       Are you looking to expand your knowledge?  Enrolling in a Program lets you take a series of courses in the subject that you're interested in
     </p>
-    <CardGrid
-      columnSizes={
-        Object {
-          "lg": 6,
-          "xlg": 4,
-          "xs": 12,
-        }
-      }
-    >
-      <ProgramCard
-        data={
-          Object {
-            "programData": Object {
-              "dataFor": "program1",
-            },
-            "programUrl": "program-1-url",
-          }
-        }
-        key="program-1-url"
-      />
-      <ProgramCard
-        data={
-          Object {
-            "programData": Object {
-              "dataFor": "program2",
-            },
-            "programUrl": "program-2-url",
-          }
-        }
-        key="program-2-url"
-      />
-      <ProgramCard
-        data={
-          Object {
-            "programData": Object {
-              "dataFor": "program3",
-            },
-            "programUrl": "program-3-url",
-          }
-        }
-        key="program-3-url"
-      />
-    </CardGrid>
+    <Container>
+      <Row>
+        <Col
+          key="program-1-url"
+          lg={6}
+          sm={12}
+        >
+          <ProgramCard
+            data={
+              Object {
+                "programData": Object {
+                  "dataFor": "program1",
+                },
+                "programUrl": "program-1-url",
+              }
+            }
+          />
+        </Col>
+        <Col
+          key="program-2-url"
+          lg={6}
+          sm={12}
+        >
+          <ProgramCard
+            data={
+              Object {
+                "programData": Object {
+                  "dataFor": "program2",
+                },
+                "programUrl": "program-2-url",
+              }
+            }
+          />
+        </Col>
+        <Col
+          key="program-3-url"
+          lg={6}
+          sm={12}
+        >
+          <ProgramCard
+            data={
+              Object {
+                "programData": Object {
+                  "dataFor": "program3",
+                },
+                "programUrl": "program-3-url",
+              }
+            }
+          />
+        </Col>
+      </Row>
+    </Container>
   </ModalDialog.Body>
 </ModalDialog>
 `;
@@ -105,49 +114,58 @@ exports[`RelatedProgramsModal snapshot: open 1`] = `
     <p>
       Are you looking to expand your knowledge?  Enrolling in a Program lets you take a series of courses in the subject that you're interested in
     </p>
-    <CardGrid
-      columnSizes={
-        Object {
-          "lg": 6,
-          "xlg": 4,
-          "xs": 12,
-        }
-      }
-    >
-      <ProgramCard
-        data={
-          Object {
-            "programData": Object {
-              "dataFor": "program1",
-            },
-            "programUrl": "program-1-url",
-          }
-        }
-        key="program-1-url"
-      />
-      <ProgramCard
-        data={
-          Object {
-            "programData": Object {
-              "dataFor": "program2",
-            },
-            "programUrl": "program-2-url",
-          }
-        }
-        key="program-2-url"
-      />
-      <ProgramCard
-        data={
-          Object {
-            "programData": Object {
-              "dataFor": "program3",
-            },
-            "programUrl": "program-3-url",
-          }
-        }
-        key="program-3-url"
-      />
-    </CardGrid>
+    <Container>
+      <Row>
+        <Col
+          key="program-1-url"
+          lg={6}
+          sm={12}
+        >
+          <ProgramCard
+            data={
+              Object {
+                "programData": Object {
+                  "dataFor": "program1",
+                },
+                "programUrl": "program-1-url",
+              }
+            }
+          />
+        </Col>
+        <Col
+          key="program-2-url"
+          lg={6}
+          sm={12}
+        >
+          <ProgramCard
+            data={
+              Object {
+                "programData": Object {
+                  "dataFor": "program2",
+                },
+                "programUrl": "program-2-url",
+              }
+            }
+          />
+        </Col>
+        <Col
+          key="program-3-url"
+          lg={6}
+          sm={12}
+        >
+          <ProgramCard
+            data={
+              Object {
+                "programData": Object {
+                  "dataFor": "program3",
+                },
+                "programUrl": "program-3-url",
+              }
+            }
+          />
+        </Col>
+      </Row>
+    </Container>
   </ModalDialog.Body>
 </ModalDialog>
 `;

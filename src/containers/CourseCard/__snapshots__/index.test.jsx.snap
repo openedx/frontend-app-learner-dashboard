@@ -1,6 +1,34 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CourseCard component snapshot 1`] = `
+exports[`CourseCard component snapshot: collapsed 1`] = `
+<div
+  className="mb-4.5 course-card"
+  data-testid="CourseCard"
+>
+  <Card
+    orientation="vertical"
+  >
+    <div
+      className="d-flex flex-column w-100"
+    >
+      <CourseCardContent
+        cardId="test-card-id"
+        orientation="vertical"
+      />
+      <div
+        className="course-card-banners"
+        data-testid="CourseCardBanners"
+      >
+        <CourseCardBanners
+          cardId="test-card-id"
+        />
+      </div>
+    </div>
+  </Card>
+</div>
+`;
+
+exports[`CourseCard component snapshot: not collapsed 1`] = `
 <div
   className="mb-4.5 course-card"
   data-testid="CourseCard"
@@ -14,63 +42,16 @@ exports[`CourseCard component snapshot 1`] = `
       <div
         className="d-flex"
       >
-        <Card.ImageCap
-          src="hooks.bannerUrl"
-          srcAlt={
-            Object {
-              "formatted": Object {
-                "defaultMessage": "Course thumbnail",
-                "description": "Course card banner alt-text",
-                "id": "learner-dash.courseCard.bannerAlt",
-              },
-            }
-          }
+        <CourseCardContent
+          cardId="test-card-id"
+          orientation="horizontal"
         />
-        <Card.Body>
-          <Card.Header
-            actions={
-              <CourseCardMenu
-                cardId="test-card-id"
-              />
-            }
-            title={
-              <span
-                data-testid="CourseCardTitle"
-              >
-                hooks.title
-              </span>
-            }
-          />
-          <Card.Section>
-            <CourseCardDetails
-              cardId="test-card-id"
-            />
-          </Card.Section>
-          <Card.Footer
-            orientation="vertical"
-            textElement={
-              <RelatedProgramsBadge
-                cardId="test-card-id"
-              />
-            }
-          >
-            <CourseCardActions
-              cardId="test-card-id"
-            />
-          </Card.Footer>
-        </Card.Body>
       </div>
       <div
         className="course-card-banners"
         data-testid="CourseCardBanners"
       >
-        <CourseBanner
-          cardId="test-card-id"
-        />
-        <EntitlementBanner
-          cardId="test-card-id"
-        />
-        <CertificateBanner
+        <CourseCardBanners
           cardId="test-card-id"
         />
       </div>
