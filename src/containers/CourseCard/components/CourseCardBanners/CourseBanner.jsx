@@ -13,7 +13,7 @@ export const CourseBanner = ({ cardId }) => {
     isVerified,
     isAuditAccessExpired,
     canUpgrade,
-    hasAccess = {},
+    coursewareAccess = {},
   } = appHooks.useCardEnrollmentData(cardId);
   const courseRun = appHooks.useCardCourseRunData(cardId);
   const course = appHooks.useCardCourseData(cardId);
@@ -23,7 +23,7 @@ export const CourseBanner = ({ cardId }) => {
     hasUnmetPrerequisites,
     isStaff,
     isTooEarly,
-  } = hasAccess;
+  } = coursewareAccess;
 
   if (isVerified) { return null; }
 

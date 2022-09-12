@@ -78,7 +78,7 @@ export const courseCard = StrictDict({
       accessExpirationDate: enrollment.accessExpirationDate,
       canUpgrade: enrollment.canUpgrade,
       hasStarted: enrollment.hasStarted,
-      hasAccess: enrollment.hasAccess,
+      coursewareAccess: enrollment.coursewareAccess,
       hasFinished: enrollment.hasFinished,
       isAudit: enrollment.isAudit,
       isAuditAccessExpired: enrollment.isAuditAccessExpired,

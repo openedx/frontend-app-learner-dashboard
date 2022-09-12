@@ -25,7 +25,7 @@ const enrollmentData = {
   isVerified: false,
   canUpgrade: false,
   isAuditAccessExpired: false,
-  hasAccess: {
+  coursewareAccess: {
     hasUnmetPrerequisites: false,
     isStaff: false,
     isTooEarly: false,
@@ -117,7 +117,7 @@ describe('CourseBanner', () => {
   });
   describe('unmet prerequisites', () => {
     beforeEach(() => {
-      render({ enrollment: { hasAccess: { hasUnmetPrerequisites: true } } });
+      render({ enrollment: { coursewareAccess: { hasUnmetPrerequisites: true } } });
     });
     test('snapshot: unmetPrerequisites', () => {
       expect(el).toMatchSnapshot();
@@ -128,7 +128,7 @@ describe('CourseBanner', () => {
   });
   describe('too early', () => {
     beforeEach(() => {
-      render({ enrollment: { hasAccess: { isTooEarly: true } } });
+      render({ enrollment: { coursewareAccess: { isTooEarly: true } } });
     });
     test('snapshot: tooEarly', () => {
       expect(el).toMatchSnapshot();
@@ -139,7 +139,7 @@ describe('CourseBanner', () => {
   });
   describe('staff', () => {
     beforeEach(() => {
-      render({ enrollment: { hasAccess: { isStaff: true } } });
+      render({ enrollment: { coursewareAccess: { isStaff: true } } });
     });
     test('snapshot: isStaff', () => {
       expect(el).toMatchSnapshot();
