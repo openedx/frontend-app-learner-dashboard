@@ -28,7 +28,6 @@ export const LearnerDashboardHeader = () => {
       <div className="flex-column bg-primary">
         <header className="learner-dashboard-header">
           <div className="d-flex">
-            {isCollapsed && (<div className="my-auto ml-1"><UserMenu /></div>)}
             {(!isCollapsed) && (
               <Button variant="inverse-tertiary" iconBefore={Program}>
                 {formatMessage(messages.switchToProgram)}
@@ -37,7 +36,9 @@ export const LearnerDashboardHeader = () => {
             <div className="flex-grow-1">
               {isCollapsed && <GreetingBanner size="small" />}
             </div>
-            {!isCollapsed && (<UserMenu />)}
+            {isCollapsed
+              ? (<div className="my-auto ml-1"><UserMenu /></div>)
+              : (<UserMenu />)}
           </div>
         </header>
         {!isCollapsed && <GreetingBanner size="large" />}
