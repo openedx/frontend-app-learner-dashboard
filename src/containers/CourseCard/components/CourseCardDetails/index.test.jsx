@@ -24,6 +24,7 @@ describe('CourseCard Details component', () => {
       isEntitlement: true,
       isFulfilled: true,
       canChange: true,
+      courseNumber: 'test-course-number',
       ...args,
     });
     hooks.mockImplementationOnce(mockHook({ isEntitlement: true }));
