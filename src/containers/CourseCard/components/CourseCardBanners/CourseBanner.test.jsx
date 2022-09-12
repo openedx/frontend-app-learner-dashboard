@@ -3,6 +3,7 @@ import { shallow } from 'enzyme';
 import { Hyperlink } from '@edx/paragon';
 
 import { hooks as appHooks } from 'data/redux';
+import { formatMessage } from 'testUtils';
 import { CourseBanner } from './CourseBanner';
 
 import messages from './messages';
@@ -24,9 +25,15 @@ const enrollmentData = {
   isVerified: false,
   canUpgrade: false,
   isAuditAccessExpired: false,
+  hasAccess: {
+    hasUnmetPrerequisites: false,
+    isStaff: false,
+    isTooEarly: false,
+  },
 };
 const courseRunData = {
   isActive: false,
+  startDate: '11/11/3030',
 };
 const courseData = {
   website: 'test-course-website',
@@ -107,5 +114,38 @@ describe('CourseBanner', () => {
     expect(el.isEmptyRender()).toEqual(true);
     render({ enrollment: { canUpgrade: true }, courseRun: { isActive: true } });
     expect(el.isEmptyRender()).toEqual(true);
+  });
+  describe('unmet prerequisites', () => {
+    beforeEach(() => {
+      render({ enrollment: { hasAccess: { hasUnmetPrerequisites: true } } });
+    });
+    test('snapshot: unmetPrerequisites', () => {
+      expect(el).toMatchSnapshot();
+    });
+    test('messages: prerequisitesNotMet', () => {
+      expect(el.text()).toContain(messages.prerequisitesNotMet.defaultMessage);
+    });
+  });
+  describe('too early', () => {
+    beforeEach(() => {
+      render({ enrollment: { hasAccess: { isTooEarly: true } } });
+    });
+    test('snapshot: tooEarly', () => {
+      expect(el).toMatchSnapshot();
+    });
+    test('messages: courseHasNotStarted', () => {
+      expect(el.text()).toContain(formatMessage(messages.courseHasNotStarted, { startDate: courseRunData.startDate }));
+    });
+  });
+  describe('staff', () => {
+    beforeEach(() => {
+      render({ enrollment: { hasAccess: { isStaff: true } } });
+    });
+    test('snapshot: isStaff', () => {
+      expect(el).toMatchSnapshot();
+    });
+    test('messages: staffAccessOnly', () => {
+      expect(el.text()).toContain(messages.staffAccessOnly.defaultMessage);
+    });
   });
 });

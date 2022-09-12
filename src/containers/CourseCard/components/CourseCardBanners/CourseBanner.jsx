@@ -13,10 +13,17 @@ export const CourseBanner = ({ cardId }) => {
     isVerified,
     isAuditAccessExpired,
     canUpgrade,
+    hasAccess = {},
   } = appHooks.useCardEnrollmentData(cardId);
   const courseRun = appHooks.useCardCourseRunData(cardId);
   const course = appHooks.useCardCourseData(cardId);
   const { formatMessage } = useIntl();
+
+  const {
+    hasUnmetPrerequisites,
+    isStaff,
+    isTooEarly,
+  } = hasAccess;
 
   if (isVerified) { return null; }
 
@@ -46,6 +53,27 @@ export const CourseBanner = ({ cardId }) => {
         <Hyperlink destination={course.website || ''}>
           {formatMessage(messages.exploreCourseDetails)}
         </Hyperlink>
+      </Banner>
+    );
+  }
+  if (isTooEarly) {
+    return (
+      <Banner>
+        {formatMessage(messages.courseHasNotStarted, { startDate: courseRun.startDate })}
+      </Banner>
+    );
+  }
+  if (hasUnmetPrerequisites) {
+    return (
+      <Banner>
+        {formatMessage(messages.prerequisitesNotMet)}
+      </Banner>
+    );
+  }
+  if (isStaff) {
+    return (
+      <Banner>
+        {formatMessage(messages.staffAccessOnly)}
       </Banner>
     );
   }

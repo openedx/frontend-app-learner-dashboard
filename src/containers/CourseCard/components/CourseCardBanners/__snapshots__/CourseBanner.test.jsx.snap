@@ -31,3 +31,21 @@ exports[`CourseBanner course run active and cannot upgrade snapshot: (upgradseDe
   </Hyperlink>
 </Banner>
 `;
+
+exports[`CourseBanner staff snapshot: isStaff 1`] = `
+<Banner>
+  Staff access only.
+</Banner>
+`;
+
+exports[`CourseBanner too early snapshot: tooEarly 1`] = `
+<Banner>
+  You can't access this course just yet because the course hasn't started yet. The course will start on 11/11/3030.
+</Banner>
+`;
+
+exports[`CourseBanner unmet prerequisites snapshot: unmetPrerequisites 1`] = `
+<Banner>
+  You can't access this course just yet because you have not met the pre-requisites.
+</Banner>
+`;

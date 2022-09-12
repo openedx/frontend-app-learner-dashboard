@@ -96,6 +96,21 @@ export const messages = StrictDict({
     description: 'Entitlement session selection link text',
     defaultMessage: 'select a session',
   },
+  prerequisitesNotMet: {
+    id: 'learner-dash.courseCard.banners.prerequisitesNotMet',
+    description: 'Message to learners with unmet prerequisites',
+    defaultMessage: 'You can\'t access this course just yet because you have not met the pre-requisites.',
+  },
+  courseHasNotStarted: {
+    id: 'learner-dash.courseCard.banners.courseHasNotStarted',
+    description: 'Course has not started message',
+    defaultMessage: 'You can\'t access this course just yet because the course hasn\'t started yet. The course will start on {startDate}.',
+  },
+  staffAccessOnly: {
+    id: 'learner-dash.courseCard.banners.staffAccessOnly',
+    description: 'Message to learners with staff access only',
+    defaultMessage: 'Staff access only.',
+  },
 });
 
 export default messages;
