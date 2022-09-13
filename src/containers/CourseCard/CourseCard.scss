@@ -1,3 +1,5 @@
+@import "@edx/paragon/scss/core/core";
+
 .course-card {
   .card {
     overflow: hidden;
@@ -17,6 +19,8 @@
     > .alert {
       border-top-left-radius: 0;
       border-top-right-radius: 0;
+      box-shadow: none;
+      padding: map-get($spacers, 3) map-get($spacers, 4);
     }
   }
 }

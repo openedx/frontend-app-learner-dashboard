@@ -25,59 +25,61 @@ export const CourseBanner = ({ cardId }) => {
     isTooEarly,
   } = coursewareAccess;
 
+  const bannerStackComponents = [];
+
   if (isVerified) { return null; }
 
   if (isAuditAccessExpired) {
     if (canUpgrade) {
-      return (
+      bannerStackComponents.push(
         <Banner>
           {formatMessage(messages.auditAccessExpired)}
           {'  '}
           {formatMessage(messages.upgradeToAccess)}
-        </Banner>
+        </Banner>,
       );
     }
-    return (
+    bannerStackComponents.push(
       <Banner>
         {formatMessage(messages.auditAccessExpired)}
         {'  '}
         <Hyperlink destination="">{formatMessage(messages.findAnotherCourse)}</Hyperlink>
-      </Banner>
+      </Banner>,
     );
   }
   if (courseRun.isActive && !canUpgrade) {
-    return (
+    bannerStackComponents.push(
       <Banner>
         {formatMessage(messages.upgradeDeadlinePassed)}
         {'  '}
         <Hyperlink destination={course.website || ''}>
           {formatMessage(messages.exploreCourseDetails)}
         </Hyperlink>
-      </Banner>
+      </Banner>,
     );
   }
   if (isTooEarly) {
-    return (
+    bannerStackComponents.push(
       <Banner>
         {formatMessage(messages.courseHasNotStarted, { startDate: courseRun.startDate })}
-      </Banner>
+      </Banner>,
     );
   }
   if (hasUnmetPrerequisites) {
-    return (
+    bannerStackComponents.push(
       <Banner>
         {formatMessage(messages.prerequisitesNotMet)}
-      </Banner>
+      </Banner>,
     );
   }
   if (isStaff) {
-    return (
+    bannerStackComponents.push(
       <Banner>
         {formatMessage(messages.staffAccessOnly)}
-      </Banner>
+      </Banner>,
     );
   }
-  return null;
+  return <>{bannerStackComponents}</>;
 };
 CourseBanner.propTypes = {
   cardId: PropTypes.string.isRequired,
