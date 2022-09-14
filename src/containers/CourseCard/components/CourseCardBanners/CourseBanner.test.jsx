@@ -111,9 +111,10 @@ describe('CourseBanner', () => {
   });
   test('no display if audit access not expired and (course is not active or can upgrade)', () => {
     render();
-    expect(el.isEmptyRender()).toEqual(true);
+    // isEmptyRender() isn't true because the minimal is <Fragment />
+    expect(el.html()).toEqual('');
     render({ enrollment: { canUpgrade: true }, courseRun: { isActive: true } });
-    expect(el.isEmptyRender()).toEqual(true);
+    expect(el.html()).toEqual('');
   });
   describe('unmet prerequisites', () => {
     beforeEach(() => {
@@ -147,5 +148,17 @@ describe('CourseBanner', () => {
     test('messages: staffAccessOnly', () => {
       expect(el.text()).toContain(messages.staffAccessOnly.defaultMessage);
     });
+  });
+  test('snapshot: stacking banners', () => {
+    render({
+      enrollment: {
+        coursewareAccess: {
+          isStaff: true,
+          isTooEarly: true,
+          hasUnmetPrerequisites: true,
+        },
+      },
+    });
+    expect(el).toMatchSnapshot();
   });
 });
