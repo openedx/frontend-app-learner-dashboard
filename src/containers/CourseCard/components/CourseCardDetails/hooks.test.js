@@ -11,7 +11,7 @@ jest.mock('data/redux', () => ({
     useCardCourseData: jest.fn(),
     useCardCourseRunData: jest.fn(),
     useCardEnrollmentData: jest.fn(),
-    useCardEntitlementsData: jest.fn(),
+    useCardEntitlementData: jest.fn(),
     useCardProviderData: jest.fn(),
     useUpdateSelectSessionModalCallback: (...args) => ({ updateSelectSessionModalCallback: args }),
   },
@@ -49,7 +49,7 @@ describe('CourseCardDetails hooks', () => {
         ...providerData,
         ...provider,
       });
-      appHooks.useCardEntitlementsData.mockReturnValueOnce({
+      appHooks.useCardEntitlementData.mockReturnValueOnce({
         ...entitlementData,
         ...entitlement,
       });

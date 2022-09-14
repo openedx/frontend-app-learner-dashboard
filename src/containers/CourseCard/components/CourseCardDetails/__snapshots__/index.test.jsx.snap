@@ -2,6 +2,7 @@
 
 exports[`CourseCard Details component does not have change session button on regular course 1`] = `
 <span
+  className="small"
   data-testid="CourseCardDetails"
 >
   provider-name
@@ -13,10 +14,12 @@ exports[`CourseCard Details component does not have change session button on reg
 
 exports[`CourseCard Details component has change session button on entitlement course 1`] = `
 <span
+  className="small"
   data-testid="CourseCardDetails"
 >
   provider-name
    • 
+  test-course-number
    • 
   access-message
    • 

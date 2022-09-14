@@ -12,6 +12,7 @@ import { nullMethod } from 'hooks';
 import { dateFormatter } from 'utils';
 
 import useSelectSessionModalData from './hooks';
+import { LEAVE_OPTION } from './constants';
 import messages from './messages';
 
 export const SelectSessionModal = () => {
@@ -20,8 +21,11 @@ export const SelectSessionModal = () => {
     showModal,
     closeSessionModal,
     showLeaveOption,
+    handleSelection,
+    handleSubmit,
     header,
     hint,
+    selectedSession,
   } = useSelectSessionModalData();
 
   const { formatMessage, formatDate } = useIntl();
@@ -38,14 +42,19 @@ export const SelectSessionModal = () => {
       <h3>{header}</h3>
       <Form.Group className="pt-3">
         <Form.Label>{hint}</Form.Label>
-        <Form.RadioSet name="sessions" className="pt-3 pb-4">
+        <Form.RadioSet
+          name="sessions"
+          className="pt-3 pb-4"
+          onChange={handleSelection}
+          value={selectedSession}
+        >
           {entitlementSessions?.map((session) => (
-            <Form.Radio key={session.courseId} value={session.startDate}>
+            <Form.Radio key={session.courseId} value={session.courseId}>
               {dateFormatter(formatDate, session.startDate)} - {dateFormatter(formatDate, session.endDate)}
             </Form.Radio>
           ))}
           {showLeaveOption && (
-            <Form.Radio value="leave">
+            <Form.Radio value={LEAVE_OPTION}>
               {formatMessage(messages.leaveSessionOption)}
             </Form.Radio>
           )}
@@ -55,7 +64,7 @@ export const SelectSessionModal = () => {
         <Button variant="tertiary" onClick={closeSessionModal}>
           {formatMessage(messages.nevermind)}
         </Button>
-        <Button>{formatMessage(messages.confirmSession)}</Button>
+        <Button onClick={handleSubmit}>{formatMessage(messages.confirmSession)}</Button>
       </ActionRow>
     </ModalDialog>
   );

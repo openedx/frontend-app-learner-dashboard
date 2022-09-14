@@ -3,7 +3,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { CardGrid, ModalDialog } from '@edx/paragon';
+import {
+  Container, Row, Col, ModalDialog,
+} from '@edx/paragon';
 
 import ProgramCard from './components/ProgramCard';
 import messages from './messages';
@@ -36,13 +38,15 @@ export const RelatedProgramsModal = ({
       </ModalDialog.Header>
       <ModalDialog.Body className="pl-0 overflow-hidden">
         <p>{formatMessage(messages.description)}</p>
-        <CardGrid
-          columnSizes={{ lg: 6, xlg: 4, xs: 12 }}
-        >
-          {relatedPrograms.map((programData) => (
-            <ProgramCard key={programData.programUrl} data={programData} />
-          ))}
-        </CardGrid>
+        <Container>
+          <Row>
+            {relatedPrograms.map((programData) => (
+              <Col key={programData.programUrl} lg={6} sm={12}>
+                <ProgramCard data={programData} />
+              </Col>
+            ))}
+          </Row>
+        </Container>
       </ModalDialog.Body>
     </ModalDialog>
   );

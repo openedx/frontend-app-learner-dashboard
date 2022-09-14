@@ -9,12 +9,12 @@ export const state = StrictDict({
 
 export const useEnterpriseDashboardHook = () => {
   const [showModal, setShowModal] = module.state.showModal(true);
-  const { mostRecentDashboard } = appHooks.useEnterpriseDashboardData();
+  const dashboard = appHooks.useEnterpriseDashboardData();
   const handleClick = () => setShowModal(false);
   return {
     showModal,
     handleClick,
-    mostRecentDashboard,
+    dashboard,
   };
 };
 

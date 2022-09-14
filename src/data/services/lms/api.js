@@ -1,4 +1,9 @@
-import { get } from './utils';
+import {
+  client,
+  get,
+  post,
+  stringifyUrl,
+} from './utils';
 import urls from './urls';
 
 /*********************************************************************************
@@ -6,4 +11,18 @@ import urls from './urls';
  *********************************************************************************/
 const initializeList = () => get(urls.init).then(({ data }) => data);
 
-export default { initializeList };
+const updateEntitlementEnrollment = ({ uuid, courseId }) => post(stringifyUrl(
+  urls.entitlementEnrollment(uuid),
+  { course_run_id: courseId },
+));
+
+const deleteEntitlementEnrollment = ({ uuid }) => client().delete(stringifyUrl(
+  urls.entitlementEnrollment(uuid),
+  { course_run_id: null },
+));
+
+export default {
+  initializeList,
+  updateEntitlementEnrollment,
+  deleteEntitlementEnrollment,
+};

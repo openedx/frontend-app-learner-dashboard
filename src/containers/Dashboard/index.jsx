@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { Container, Col, Row } from '@edx/paragon';
 
 import {
   thunkActions,
@@ -25,23 +26,28 @@ export const Dashboard = () => {
   const hasAvailableDashboards = appHooks.useHasAvailableDashboards();
   const showSelectSessionModal = appHooks.useShowSelectSessionModal();
   return (
-    <div className="d-flex flex-column p-2" id="course-dashboard">
+    <div id="dashboard-container" className="d-flex flex-column p-2">
       {hasAvailableDashboards && <EnterpriseDashboardModal />}
       {hasCourses ? (
-        <>
-          <div className="d-flex" style={{ margin: 'auto' }}>
-            <div className="w-100 mw-md mr-4">
+        <Container fluid size="xl">
+          <Row>
+            <Col
+              xs={{ span: 12, offset: 0 }}
+              sm={{ span: 8, offset: 2 }}
+              md={{ span: 12, offset: 0 }}
+              lg={{ span: 10, offset: 1 }}
+              xl={{ span: 8, offset: 0 }}
+              className="p-0 px-4"
+            >
               {showSelectSessionModal && (<SelectSessionModal />)}
               <CourseList />
-            </div>
-            <div id="dashboard-sidebar-container mw-xs">
+            </Col>
+            <Col md={12} xl={4} className="p-0 pr-4 pl-1">
               <WidgetSidebar />
-            </div>
-          </div>
-        </>
-      ) : (
-        <EmptyCourse />
-      )}
+            </Col>
+          </Row>
+        </Container>
+      ) : (<EmptyCourse />)}
     </div>
   );
 };

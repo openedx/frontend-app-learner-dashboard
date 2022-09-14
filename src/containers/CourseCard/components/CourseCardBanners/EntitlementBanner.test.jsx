@@ -9,7 +9,7 @@ jest.mock('components/Banner', () => 'Banner');
 jest.mock('data/redux', () => ({
   hooks: {
     usePlatformSettingsData: jest.fn(),
-    useCardEntitlementsData: jest.fn(),
+    useCardEntitlementData: jest.fn(),
     useUpdateSelectSessionModalCallback: jest.fn(
       (_, cardId) => jest.fn().mockName(`updateSelectSessionModalCallback(${cardId})`),
     ),
@@ -20,7 +20,7 @@ const cardId = 'my-test-course-number';
 
 let el;
 
-const entitlementsData = {
+const entitlementData = {
   isEntitlement: true,
   hasSessions: true,
   isFulfilled: false,
@@ -30,8 +30,8 @@ const entitlementsData = {
 const platformData = { supportEmail: 'test-support-email' };
 
 const render = (overrides = {}) => {
-  const { entitlements = {} } = overrides;
-  appHooks.useCardEntitlementsData.mockReturnValueOnce({ ...entitlementsData, ...entitlements });
+  const { entitlement = {} } = overrides;
+  appHooks.useCardEntitlementData.mockReturnValueOnce({ ...entitlementData, ...entitlement });
   appHooks.usePlatformSettingsData.mockReturnValueOnce(platformData);
   el = shallow(<EntitlementBanner cardId={cardId} />);
 };
@@ -39,21 +39,21 @@ const render = (overrides = {}) => {
 const dispatch = useDispatch();
 
 describe('EntitlementBanner', () => {
-  it('initializes data with course number from entitlements', () => {
+  it('initializes data with course number from entitlement', () => {
     render();
-    expect(appHooks.useCardEntitlementsData).toHaveBeenCalledWith(cardId);
+    expect(appHooks.useCardEntitlementData).toHaveBeenCalledWith(cardId);
     expect(appHooks.useUpdateSelectSessionModalCallback).toHaveBeenCalledWith(dispatch, cardId);
   });
   test('no display if not an entitlement', () => {
-    render({ entitlements: { isEntitlement: false } });
+    render({ entitlement: { isEntitlement: false } });
     expect(el.isEmptyRender()).toEqual(true);
   });
   test('snapshot: no sessions available', () => {
-    render({ entitlements: { isFulfilled: false, hasSessions: false } });
+    render({ entitlement: { isFulfilled: false, hasSessions: false } });
     expect(el).toMatchSnapshot();
   });
   test('snapshot: expiration warning', () => {
-    render({ entitlements: { showExpirationWarning: true } });
+    render({ entitlement: { showExpirationWarning: true } });
     expect(el).toMatchSnapshot();
   });
   test('no display if sessions available and not displaying warning', () => {

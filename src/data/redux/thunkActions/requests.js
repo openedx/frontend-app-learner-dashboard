@@ -42,6 +42,35 @@ export const initializeList = ({ onSuccess, onFailure }) => (dispatch) => {
   }));
 };
 
+export const updateEntitlementEnrollment = ({
+  uuid,
+  courseId,
+  onSuccess,
+  onFailure,
+}) => (dispatch) => {
+  dispatch(networkRequest({
+    requestKey: RequestKeys.enrollEntitlementSession,
+    onFailure,
+    onSuccess,
+    promise: api.updateEntitlementEnrollment({ uuid, courseId }),
+  }));
+};
+
+export const leaveEntitlementSession = ({
+  uuid,
+  onSuccess,
+  onFailure,
+}) => (dispatch) => {
+  dispatch(networkRequest({
+    requestKey: RequestKeys.leaveEntitlementSession,
+    onFailure,
+    onSuccess,
+    promise: api.leaveEntitlementEnrollment({ uuid }),
+  }));
+};
+
 export default StrictDict({
   initializeList,
+  updateEntitlementEnrollment,
+  leaveEntitlementSession,
 });

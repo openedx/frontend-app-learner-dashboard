@@ -11,26 +11,15 @@ import './index.scss';
 export const WidgetSidebar = () => (
   <div className="widget-sidebar">
     <div className="d-flex">
-
-      {/* <img src='more-courses-sidewidget.svg' />
-      <div>
-        <h3>
-          <FormattedMessage {...messages.lookingForChallengePrompt} />
-        </h3>
-        <Hyperlink variant='brand' destination='#'>
-          <FormattedMessage {...messages.findCoursesButton} />
-        </Hyperlink>
-      </div> */}
-
-      <Card orientation="horizontal" className="mb-4">
+      <Card orientation="horizontal">
         <Card.ImageCap
           src={moreCoursesSVG}
           srcAlt="course side widget"
         />
         <Card.Body className="m-auto pr-2">
-          <h3>
+          <h4>
             <FormattedMessage {...messages.lookingForChallengePrompt} />
-          </h3>
+          </h4>
           <Hyperlink variant="brand" destination="#">
             <FormattedMessage {...messages.findCoursesButton} />
           </Hyperlink>

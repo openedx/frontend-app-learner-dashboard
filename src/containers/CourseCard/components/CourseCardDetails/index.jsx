@@ -22,7 +22,7 @@ export const CourseCardDetails = ({ cardId }) => {
   } = useCardDetailsData({ cardId, dispatch });
 
   return (
-    <span data-testid="CourseCardDetails">
+    <span className="small" data-testid="CourseCardDetails">
       {providerName} • {courseNumber}
       {!(isEntitlement && !isFulfilled) && (
         <>

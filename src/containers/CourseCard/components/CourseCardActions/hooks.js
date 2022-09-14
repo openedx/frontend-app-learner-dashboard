@@ -23,7 +23,7 @@ export const useCardActionData = ({ cardId }) => {
     isExpired,
     canChange,
     hasSessions,
-  } = appHooks.useCardEntitlementsData(cardId);
+  } = appHooks.useCardEntitlementData(cardId);
   const openSessionModal = appHooks.useUpdateSelectSessionModalCallback(dispatch, cardId);
 
   let primary;

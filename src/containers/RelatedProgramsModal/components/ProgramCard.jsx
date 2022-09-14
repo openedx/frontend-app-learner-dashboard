@@ -23,7 +23,7 @@ export const ProgramCard = ({ data }) => {
   );
   return (
     <Card
-      className="program-card d-inline-block bg-primary-500 text-white pb-3.5"
+      className="program-card mx-auto bg-primary-500 text-white mb-3.5 pb-3.5"
       style={{ width: '18rem', color: 'white' }}
     >
       <Card.ImageCap

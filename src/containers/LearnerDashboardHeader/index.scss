@@ -1,4 +1,10 @@
-.greetings-slash-container {
+.greetings-slash-container-small {
+  height: 4px;
+  width: 40px;
+  transform-origin: center;
+  transform: rotate(-70deg);
+}
+.greetings-slash-container-large {
   height: 8px;
   width: 120px;
   transform-origin: center;
