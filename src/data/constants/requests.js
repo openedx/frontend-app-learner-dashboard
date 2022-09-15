@@ -15,6 +15,9 @@ export const RequestKeys = StrictDict({
   switchEntitlementSession: 'switchEntitlementSession',
   unenrollFromCourse: 'unenrollFromCourse',
   updateEmailSettings: 'updateEmailSettings',
+  enrollEntitlementSession: 'enrollEntitlementSession',
+  leaveEntitlementSession: 'leaveEntitlementSession',
+  masquerade: 'masquerade',
 });
 
 export const ErrorCodes = StrictDict({

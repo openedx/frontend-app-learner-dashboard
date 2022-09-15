@@ -50,7 +50,7 @@ export const GreetingBanner = ({ size }) => {
   );
 };
 GreetingBanner.propTypes = {
-  size: PropTypes.oneOf('small', 'large').isRequired,
+  size: PropTypes.oneOf(['small', 'large']).isRequired,
 };
 
 export default GreetingBanner;

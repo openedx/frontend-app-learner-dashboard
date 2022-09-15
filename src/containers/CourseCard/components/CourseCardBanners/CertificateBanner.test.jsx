@@ -104,8 +104,8 @@ describe('CourseBanner', () => {
   });
   test('no display if audit access not expired and (course is not active or can upgrade)', () => {
     render();
-    expect(el.isEmptyRender()).toEqual(true);
+    expect(el.html()).toEqual('');
     render({ enrollment: { canUpgrade: true }, courseRun: { isActive: true } });
-    expect(el.isEmptyRender()).toEqual(true);
+    expect(el.html()).toEqual('');
   });
 });

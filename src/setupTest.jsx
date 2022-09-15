@@ -52,6 +52,7 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
     Section: 'Card.Section',
   },
   CardGrid: 'CardGrid',
+  Chip: 'Chip',
   Col: 'Col',
   Collapsible: {
     Advanced: 'Collapsible.Advanced',
@@ -82,7 +83,10 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
     RadioSet: 'Form.RadioSet',
     Switch: 'Form.Switch',
   },
+  FormControl: 'FormControl',
   FormControlFeedback: 'FormControlFeedback',
+  FormGroup: 'FormGroup',
+  FormLabel: 'FormLabel',
   FullscreenModal: 'FullscreenModal',
   Hyperlink: 'Hyperlink',
   Icon: 'Icon',
@@ -118,11 +122,18 @@ jest.mock('@edx/paragon/icons', () => ({
   ArrowDropDown: jest.fn().mockName('icons.ArrowDropDown'),
   ArrowDropUp: jest.fn().mockName('icons.ArrowDropUp'),
   Cancel: jest.fn().mockName('icons.Cancel'),
+  Close: jest.fn().mockName('icons.Close'),
+  CheckCircle: jest.fn().mockName('icons.CheckCircle'),
   ChevronLeft: jest.fn().mockName('icons.ChevronLeft'),
   ChevronRight: jest.fn().mockName('icons.ChevronRight'),
   Highlight: jest.fn().mockName('icons.Highlight'),
+  Info: jest.fn().mockName('icons.Info'),
   InfoOutline: jest.fn().mockName('icons.InfoOutline'),
   Launch: jest.fn().mockName('icons.Launch'),
+  Locked: jest.fn().mockName('icons.Locked'),
+  MoreVert: jest.fn().mockName('icons.MoreVert'),
+  Tune: jest.fn().mockName('icons.Tune'),
+  Program: jest.fn().mockName('icons.Program'),
 }));
 
 jest.mock('data/constants/app', () => ({

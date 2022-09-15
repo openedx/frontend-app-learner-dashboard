@@ -84,8 +84,23 @@ export const updateEmailSettings = ({ courseId, enable, ...options }) => module.
   options,
 );
 
+export const masqueradeAs = ({ user, onSuccess, onFailure }) => (dispatch) => {
+  dispatch(networkRequest({
+    requestKey: RequestKeys.masquerade,
+    onFailure,
+    onSuccess,
+    promise: api.initializeList({ user }),
+  }));
+};
+
+export const clearMasquerade = () => (dispatch) => dispatch(
+  actions.requests.clearRequest({ requestKey: RequestKeys.masquerade }),
+);
+
 export default StrictDict({
   initializeList,
+  masqueradeAs,
+  clearMasquerade,
   leaveEntitlementSession,
   newEntitlementEnrollment,
   switchEntitlementEnrollment,
