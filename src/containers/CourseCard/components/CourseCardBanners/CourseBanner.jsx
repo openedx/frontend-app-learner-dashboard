@@ -13,43 +13,59 @@ export const CourseBanner = ({ cardId }) => {
     isVerified,
     isAuditAccessExpired,
     canUpgrade,
+    coursewareAccess = {},
   } = appHooks.useCardEnrollmentData(cardId);
   const courseRun = appHooks.useCardCourseRunData(cardId);
   const course = appHooks.useCardCourseData(cardId);
   const { formatMessage } = useIntl();
 
+  const { hasUnmetPrerequisites, isStaff, isTooEarly } = coursewareAccess;
+
   if (isVerified) { return null; }
 
-  if (isAuditAccessExpired) {
-    if (canUpgrade) {
-      return (
+  return (
+    <>
+      {isAuditAccessExpired
+        && (canUpgrade ? (
+          <Banner>
+            {formatMessage(messages.auditAccessExpired)}
+            {'  '}
+            {formatMessage(messages.upgradeToAccess)}
+          </Banner>
+        ) : (
+          <Banner>
+            {formatMessage(messages.auditAccessExpired)}
+            {'  '}
+            {
+              <Hyperlink destination="">
+                {formatMessage(messages.findAnotherCourse)}
+              </Hyperlink>
+            }
+          </Banner>
+        ))}
+
+      {courseRun.isActive && !canUpgrade && (
         <Banner>
-          {formatMessage(messages.auditAccessExpired)}
+          {formatMessage(messages.upgradeDeadlinePassed)}
           {'  '}
-          {formatMessage(messages.upgradeToAccess)}
+          <Hyperlink destination={course.website || ''}>
+            {formatMessage(messages.exploreCourseDetails)}
+          </Hyperlink>
         </Banner>
-      );
-    }
-    return (
-      <Banner>
-        {formatMessage(messages.auditAccessExpired)}
-        {'  '}
-        <Hyperlink destination="">{formatMessage(messages.findAnotherCourse)}</Hyperlink>
-      </Banner>
-    );
-  }
-  if (courseRun.isActive && !canUpgrade) {
-    return (
-      <Banner>
-        {formatMessage(messages.upgradeDeadlinePassed)}
-        {'  '}
-        <Hyperlink destination={course.website || ''}>
-          {formatMessage(messages.exploreCourseDetails)}
-        </Hyperlink>
-      </Banner>
-    );
-  }
-  return null;
+      )}
+      {isTooEarly && (
+        <Banner>
+          {formatMessage(messages.courseHasNotStarted, {
+            startDate: courseRun.startDate,
+          })}
+        </Banner>
+      )}
+      {hasUnmetPrerequisites && (
+        <Banner>{formatMessage(messages.prerequisitesNotMet)}</Banner>
+      )}
+      {isStaff && <Banner>{formatMessage(messages.staffAccessOnly)}</Banner>}
+    </>
+  );
 };
 CourseBanner.propTypes = {
   cardId: PropTypes.string.isRequired,
