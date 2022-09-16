@@ -35,6 +35,7 @@ export const SelectSessionModal = () => {
       isOpen={showModal}
       onClose={nullMethod}
       hasCloseButton={false}
+      isFullscreenOnMobile
       size="md"
       className="p-4 px-4.5"
       title={header}

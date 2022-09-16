@@ -4,6 +4,7 @@ exports[`SelectSessionModal snapshot empty modal with leave option  1`] = `
 <ModalDialog
   className="p-4 px-4.5"
   hasCloseButton={false}
+  isFullscreenOnMobile={true}
   isOpen={true}
   onClose={[MockFunction hooks.nullMethod]}
   size="md"
@@ -47,6 +48,7 @@ exports[`SelectSessionModal snapshot modal with leave option  1`] = `
 <ModalDialog
   className="p-4 px-4.5"
   hasCloseButton={false}
+  isFullscreenOnMobile={true}
   isOpen={true}
   onClose={[MockFunction hooks.nullMethod]}
   size="md"
@@ -114,6 +116,7 @@ exports[`SelectSessionModal snapshot modal without leave option  1`] = `
 <ModalDialog
   className="p-4 px-4.5"
   hasCloseButton={false}
+  isFullscreenOnMobile={true}
   isOpen={true}
   onClose={[MockFunction hooks.nullMethod]}
   size="md"
