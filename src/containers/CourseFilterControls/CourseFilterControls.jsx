@@ -3,11 +3,16 @@ import PropTypes from 'prop-types';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import {
-  Form,
   Button,
+  Form,
+  Icon,
   ModalPopup,
+  Sheet,
+  breakpoints,
+  useWindowSize,
+  ModalCloseButton,
 } from '@edx/paragon';
-import { Tune } from '@edx/paragon/icons';
+import { Close, Tune } from '@edx/paragon/icons';
 
 import FilterForm from './components/FilterForm';
 import SortForm from './components/SortForm';
@@ -35,6 +40,9 @@ export const CourseFilterControls = ({
     setFilters,
     setSortBy,
   });
+  const { width } = useWindowSize();
+  const isMobile = width < breakpoints.small.minWidth;
+
   return (
     <div id="course-filter-controls">
       <Button
@@ -45,27 +53,53 @@ export const CourseFilterControls = ({
       >
         {formatMessage(messages.refine)}
       </Button>
-      <ModalPopup
-        positionRef={target}
-        isOpen={isOpen}
-        onClose={close}
-        placement="bottom-end"
-      >
-        <Form>
-          <div
-            id="course-filter-controls-card"
-            className="bg-white p-3 rounded shadow d-flex flex-row"
-          >
-            <div className="filter-form-col">
-              <FilterForm {...{ filters, handleFilterChange }} />
-            </div>
-            <hr className="h-100 bg-primary-200 m-1" />
-            <div className="filter-form-col text-left m-1">
-              <SortForm {...{ sortBy, handleSortChange }} />
-            </div>
-          </div>
-        </Form>
-      </ModalPopup>
+      <Form>
+        {isMobile
+          ? (
+            <Sheet
+              className="w-75"
+              position="left"
+              show={isOpen}
+              onClose={close}
+            >
+              <div className="p-1 mr-3">
+                <b>Refine</b>
+              </div>
+              <hr />
+              <div className="filter-form-row">
+                <FilterForm {...{ filters, handleFilterChange }} />
+              </div>
+              <div className="filter-form-row text-left m-1">
+                <SortForm {...{ sortBy, handleSortChange }} />
+              </div>
+              <div className="pgn__modal-close-container">
+                <ModalCloseButton variant="tertiary" onClick={close}>
+                  <Icon src={Close} />
+                </ModalCloseButton>
+              </div>
+            </Sheet>
+          ) : (
+            <ModalPopup
+              positionRef={target}
+              isOpen={isOpen}
+              onClose={close}
+              placement="bottom-end"
+            >
+              <div
+                id="course-filter-controls-card"
+                className="bg-white p-3 rounded shadow d-flex flex-row"
+              >
+                <div className="filter-form-col">
+                  <FilterForm {...{ filters, handleFilterChange }} />
+                </div>
+                <hr className="h-100 bg-primary-200 m-1" />
+                <div className="filter-form-col text-left m-1">
+                  <SortForm {...{ sortBy, handleSortChange }} />
+                </div>
+              </div>
+            </ModalPopup>
+          )}
+      </Form>
     </div>
   );
 };
