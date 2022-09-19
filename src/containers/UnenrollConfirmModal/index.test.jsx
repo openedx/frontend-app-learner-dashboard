@@ -51,7 +51,7 @@ describe('UnenrollConfirmModal component', () => {
     });
     expect(shallow(<UnenrollConfirmModal {...{ closeModal, show }} />)).toMatchSnapshot();
   });
-  test('snapshot: modalStates.reason', () => {
+  test('snapshot: modalStates.reason, should be fullscreen with no shadow', () => {
     hooks.useUnenrollData.mockReturnValueOnce({ ...hookProps, modalState: hooks.modalStates.reason });
     expect(shallow(<UnenrollConfirmModal {...{ closeModal, show }} />)).toMatchSnapshot();
   });

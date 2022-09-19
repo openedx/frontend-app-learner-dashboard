@@ -3,6 +3,7 @@
 exports[`UnenrollConfirmModal component snapshot: modalStates.confirm 1`] = `
 <ModalDialog
   hasCloseButton={false}
+  isFullscreenOnMobile={false}
   isOpen={true}
   onClose={[MockFunction hooks.nullMethod]}
   title=""
@@ -26,6 +27,7 @@ exports[`UnenrollConfirmModal component snapshot: modalStates.confirm 1`] = `
 exports[`UnenrollConfirmModal component snapshot: modalStates.finished, reason given 1`] = `
 <ModalDialog
   hasCloseButton={false}
+  isFullscreenOnMobile={false}
   isOpen={true}
   onClose={[MockFunction hooks.nullMethod]}
   title=""
@@ -49,6 +51,7 @@ exports[`UnenrollConfirmModal component snapshot: modalStates.finished, reason g
 exports[`UnenrollConfirmModal component snapshot: modalStates.finished, reason skipped 1`] = `
 <ModalDialog
   hasCloseButton={false}
+  isFullscreenOnMobile={false}
   isOpen={true}
   onClose={[MockFunction hooks.nullMethod]}
   title=""
@@ -69,15 +72,16 @@ exports[`UnenrollConfirmModal component snapshot: modalStates.finished, reason s
 </ModalDialog>
 `;
 
-exports[`UnenrollConfirmModal component snapshot: modalStates.reason 1`] = `
+exports[`UnenrollConfirmModal component snapshot: modalStates.reason, should be fullscreen with no shadow 1`] = `
 <ModalDialog
   hasCloseButton={false}
+  isFullscreenOnMobile={true}
   isOpen={true}
   onClose={[MockFunction hooks.nullMethod]}
   title=""
 >
   <div
-    className="bg-white p-3 rounded shadow"
+    className="bg-white p-3 rounded"
     style={
       Object {
         "textAlign": "start",

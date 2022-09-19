@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -26,14 +27,19 @@ export const UnenrollConfirmModal = ({
     close,
     modalState,
   } = useUnenrollData({ dispatch, closeModal });
+  const showFullscreen = modalState === modalStates.reason;
   return (
     <ModalDialog
       isOpen={show}
       onClose={nullMethod}
       hasCloseButton={false}
+      isFullscreenOnMobile={showFullscreen}
       title=""
     >
-      <div className="bg-white p-3 rounded shadow" style={{ textAlign: 'start' }}>
+      <div
+        className={classNames('bg-white p-3 rounded', { shadow: !showFullscreen })}
+        style={{ textAlign: 'start' }}
+      >
         {(modalState === modalStates.confirm) && (
           <ConfirmPane handleClose={close} handleConfirm={confirm} />
         )}
