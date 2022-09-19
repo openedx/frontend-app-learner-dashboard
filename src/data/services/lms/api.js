@@ -1,5 +1,3 @@
-import { handleEvent } from 'data/services/segment/utils';
-import { eventNames } from 'data/services/segment/constants';
 import {
   client,
   get,
