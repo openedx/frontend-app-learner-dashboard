@@ -4,7 +4,7 @@ import { RequestKeys } from 'data/constants/requests';
 import { actions } from 'data/redux';
 import api from 'data/services/lms/api';
 
-// import * as module from './requests';
+import * as module from './requests';
 
 /**
  * Wrapper around a network request promise, that sends actions to the redux store to
@@ -33,44 +33,62 @@ export const networkRequest = ({
   });
 };
 
-export const initializeList = ({ onSuccess, onFailure }) => (dispatch) => {
-  dispatch(networkRequest({
-    requestKey: RequestKeys.initialize,
-    onFailure,
-    onSuccess,
-    promise: api.initializeList(),
-  }));
-};
+export const networkAction = (requestKey, promise, options) => (dispatch) => (
+  dispatch(module.networkRequest({
+    requestKey,
+    promise,
+    ...options,
+  })));
 
-export const updateEntitlementEnrollment = ({
+export const initializeList = (options) => module.networkAction(
+  RequestKeys.initialize,
+  api.initializeList(),
+  options,
+);
+
+export const newEntitlementEnrollment = ({
   uuid,
   courseId,
-  onSuccess,
-  onFailure,
-}) => (dispatch) => {
-  dispatch(networkRequest({
-    requestKey: RequestKeys.enrollEntitlementSession,
-    onFailure,
-    onSuccess,
-    promise: api.updateEntitlementEnrollment({ uuid, courseId }),
-  }));
-};
+  ...options
+}) => module.networkAction(
+  RequestKeys.newEntitlementEnrollment,
+  api.updateEntitlementEnrollment({ uuid, courseId }),
+  options,
+);
 
-export const leaveEntitlementSession = ({
+export const switchEntitlementEnrollment = ({
   uuid,
-  onSuccess,
-  onFailure,
-}) => (dispatch) => {
-  dispatch(networkRequest({
-    requestKey: RequestKeys.leaveEntitlementSession,
-    onFailure,
-    onSuccess,
-    promise: api.leaveEntitlementEnrollment({ uuid }),
-  }));
-};
+  courseId,
+  ...options
+}) => module.networkAction(
+  RequestKeys.switchEntitlementSession,
+  api.updateEntitlementEnrollment({ uuid, courseId }),
+  options,
+);
+
+export const leaveEntitlementSession = ({ uuid, ...options }) => module.networkAction(
+  RequestKeys.leaveEntitlementSession,
+  api.leaveEntitlementEnrollment({ uuid }),
+  options,
+);
+
+export const unenrollFromCourse = ({ courseId, ...options }) => module.networkAction(
+  RequestKeys.unenrollFromCourse,
+  api.unenrollFromCourse({ courseId }),
+  options,
+);
+
+export const updateEmailSettings = ({ courseId, enable, ...options }) => module.networkAction(
+  RequestKeys.updateEmailSettings,
+  api.updateEmailSettings({ courseId, enable }),
+  options,
+);
 
 export default StrictDict({
   initializeList,
-  updateEntitlementEnrollment,
   leaveEntitlementSession,
+  newEntitlementEnrollment,
+  switchEntitlementEnrollment,
+  unenrollFromCourse,
+  updateEmailSettings,
 });

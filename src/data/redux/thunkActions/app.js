@@ -1,4 +1,6 @@
 import { StrictDict } from 'utils';
+import { handleEvent } from 'data/services/segment/utils';
+import { eventNames } from 'data/services/segment/constants';
 import { actions, selectors } from 'data/redux';
 import { post } from 'data/services/lms/utils';
 
@@ -36,25 +38,54 @@ export const sendConfirmEmail = () => (dispatch, getState) => post(
   selectors.app.emailConfirmation(getState()).sendEmailUrl,
 );
 
-export const updateEntitlementSession = (cardId, selection) => (dispatch, getState) => {
-  const entitlement = selectors.app.courseCard.entitlement(getState(), cardId);
-  const { uuid } = entitlement;
-  console.log({
-    cardId,
-    selection,
-    entitlement,
-    uuid,
+export const newEntitlementEnrollment = (cardId, selection) => (dispatch, getState) => {
+  const { uuid } = selectors.app.courseCard.entitlement(getState(), cardId);
+  handleEvent(eventNames.sessionChange({ action: 'new' }), {
+    fromCourseRun: null,
+    toCourseRun: selection,
   });
+  return dispatch(requests.newEntitlementEnrollment({ uuid, courseId: selection }));
 };
 
-export const unenroll = (courseId) => (dispatch, getState) => post(
-  selectors.app.courseCard.courseRun(getState(), courseId),
-).then(() => dispatch(module.refreshList()));
+export const switchEntitlementEnrollment = (cardId, selection) => (dispatch, getState) => {
+  const { courseId } = selectors.app.courseCard.courseRun(getState(), cardId);
+  const { uuid } = selectors.app.courseCard.entitlement(getState(), cardId);
+  handleEvent(eventNames.sessionChange({ action: 'switch' }), {
+    fromCourseRun: courseId,
+    toCourseRun: selection,
+  });
+  return dispatch(requests.switchEntitlementEnrollment({ uuid, courseId: selection }));
+};
+
+export const leaveEntitlementSession = (cardId) => (dispatch, getState) => {
+  const { courseId } = selectors.app.courseCard.courseRun(getState(), cardId);
+  const { uuid } = selectors.app.courseCard.entitlement(getState(), cardId);
+  handleEvent(eventNames.entitlementUnenroll({ action: 'leave' }), {
+    fromCourseRun: courseId,
+    toCourseRun: null,
+  });
+  return dispatch(requests.leaveEntitlementSession({ uuid }));
+};
+
+export const unenrollFromCourse = (courseId, reason) => (dispatch) => {
+  handleEvent(eventNames.unenrollReason, {
+    category: 'user-engagement',
+    displayName: 'v1',
+    label: reason,
+    course_id: courseId,
+  });
+  dispatch(requests.unenrollFromCourse({
+    courseId,
+    onSuccess: () => dispatch(module.refreshList()),
+  }));
+};
 
 export default StrictDict({
   initialize,
   refreshList,
   sendConfirmEmail,
-  updateEntitlementSession,
-  unenroll,
+  newEntitlementEnrollment,
+  switchEntitlementEnrollment,
+  leaveEntitlementSession,
+  unenrollFromCourse,
 });
