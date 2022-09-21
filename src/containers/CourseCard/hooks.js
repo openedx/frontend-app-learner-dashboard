@@ -9,13 +9,13 @@ export const useIsCollapsed = () => {
 
 export const useCardData = ({ cardId }) => {
   const { formatMessage } = useIntl();
-  const { title, bannerUrl } = appHooks.useCardCourseData(cardId);
+  const { title, bannerImgSrc } = appHooks.useCardCourseData(cardId);
   const { isEnrolled } = appHooks.useCardEnrollmentData(cardId);
 
   return {
     isEnrolled,
     title,
-    bannerUrl,
+    bannerImgSrc,
     formatMessage,
   };
 };

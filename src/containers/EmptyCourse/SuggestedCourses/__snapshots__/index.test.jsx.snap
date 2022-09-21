@@ -17,8 +17,6 @@ exports[`SuggestedCourses snapshot has 3 suggested courses 1`] = `
       key="Suggested course 1"
     >
       <Card.ImageCap
-        logoAlt="Course institute logo"
-        logoSrc="https://prod-discovery.edx-cdn.org/organization/certificate_logos/b9dc96da-b3fc-45a6-b6b7-b8e12eb79335-ac60112330e3.png"
         src="https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg"
         srcAlt="Course image banner"
       />
@@ -38,8 +36,6 @@ exports[`SuggestedCourses snapshot has 3 suggested courses 1`] = `
       key="Suggested course 2"
     >
       <Card.ImageCap
-        logoAlt="Course institute logo"
-        logoSrc="https://prod-discovery.edx-cdn.org/organization/certificate_logos/b9dc96da-b3fc-45a6-b6b7-b8e12eb79335-ac60112330e3.png"
         src="https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg"
         srcAlt="Course image banner"
       />
@@ -59,8 +55,6 @@ exports[`SuggestedCourses snapshot has 3 suggested courses 1`] = `
       key="Suggested course 3"
     >
       <Card.ImageCap
-        logoAlt="Course institute logo"
-        logoSrc="https://prod-discovery.edx-cdn.org/organization/certificate_logos/b9dc96da-b3fc-45a6-b6b7-b8e12eb79335-ac60112330e3.png"
         src="https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg"
         srcAlt="Course image banner"
       />

@@ -16,16 +16,16 @@ import CourseCardDetails from './CourseCardDetails';
 
 export const CourseCardContent = ({ cardId, orientation }) => {
   const { formatMessage } = useIntl();
-  const { title, bannerUrl } = appHooks.useCardCourseData(cardId);
+  const { courseName, bannerImgSrc } = appHooks.useCardCourseData(cardId);
   return (
     <>
       <Card.ImageCap
-        src={bannerUrl}
+        src={bannerImgSrc}
         srcAlt={formatMessage(messages.bannerAlt)}
       />
       <Card.Body>
         <Card.Header
-          title={<span data-testid="CourseCardTitle">{title}</span>}
+          title={<span data-testid="CourseCardTitle">{courseName}</span>}
           actions={<CourseCardMenu cardId={cardId} />}
         />
         <Card.Section className="pt-0">

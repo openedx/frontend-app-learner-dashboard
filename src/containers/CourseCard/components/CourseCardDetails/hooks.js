@@ -1,7 +1,7 @@
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { hooks as appHooks } from 'data/redux';
 
-import * as module from './hooks';
+import * as hooks from './hooks';
 import messages from './messages';
 
 export const useAccessMessage = ({ cardId }) => {
@@ -9,7 +9,8 @@ export const useAccessMessage = ({ cardId }) => {
   const enrollment = appHooks.useCardEnrollmentData(cardId);
   const courseRun = appHooks.useCardCourseRunData(cardId);
   if (!courseRun.isStarted) {
-    return formatMessage(messages.courseStarts, { startDate: courseRun.startDate });
+    const startDate = formatDate(courseRun.startDate);
+    return formatMessage(messages.courseStarts, { startDate });
   }
   if (enrollment.isEnrolled) {
     if (enrollment.isAudit) {
@@ -45,7 +46,7 @@ export const useCardDetailsData = ({ dispatch, cardId }) => {
 
   return {
     providerName: providerName || formatMessage(messages.unknownProviderName),
-    accessMessage: module.useAccessMessage({ cardId }),
+    accessMessage: hooks.useAccessMessage({ cardId }),
     isEntitlement,
     isFulfilled,
     canChange,

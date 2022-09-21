@@ -13,9 +13,9 @@ exports[`RelatedProgramsModal ProgramCard snapshot 1`] = `
   <Card.ImageCap
     className="program-card-banner"
     logoAlt="Provider logo"
-    logoSrc="props.data.logoUrl"
-    src="props.data.bannerUrl"
-    srcAlt="Programm banner"
+    logoSrc="props.data.logoImgSrc"
+    src="props.data.bannerImgSrc"
+    srcAlt="Program banner"
   />
   <Card.Header
     subtitle={

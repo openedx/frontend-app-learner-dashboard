@@ -11,56 +11,67 @@ export const useCardActionData = ({ cardId }) => {
   const dispatch = useDispatch();
   const {
     canUpgrade,
+    coursewareAccess,
+    hasStarted,
     isAudit,
     isAuditAccessExpired,
     isVerified,
   } = appHooks.useCardEnrollmentData(cardId);
-  const { isPending, isArchived } = appHooks.useCardCourseRunData(cardId);
+  const { isArchived } = appHooks.useCardCourseRunData(cardId);
   const {
-    isEntitlement,
-    canViewCourse,
-    isFulfilled,
-    isExpired,
     canChange,
     hasSessions,
+    isEntitlement,
+    isExpired,
+    isFulfilled,
   } = appHooks.useCardEntitlementData(cardId);
   const openSessionModal = appHooks.useUpdateSelectSessionModalCallback(dispatch, cardId);
 
+  const hasAccess = coursewareAccess.isStaff || !(
+    coursewareAccess.hasUnmetPrereqs
+    || coursewareAccess.isTooEarly
+    || isArchived);
+
+  const selectSessionButton = {
+    children: formatMessage(messages.selectSession),
+    onClick: openSessionModal,
+    disabled: !hasAccess || (!canChange || !hasSessions),
+  };
+
+  const viewCourseButton = {
+    children: formatMessage(messages.viewCourse),
+    disabled: !hasAccess || (isEntitlement && isExpired),
+  };
+
+  const beginCourseButton = {
+    children: formatMessage(messages.beginCourse),
+    disabled: !hasAccess,
+  };
+
+  const resumeButton = {
+    children: formatMessage(messages.resume),
+    disabled: isAudit && isAuditAccessExpired,
+  };
+
+  const upgradeButton = {
+    iconBefore: Locked,
+    variant: 'outline-primary',
+    children: formatMessage(messages.upgrade),
+    disabled: !canUpgrade,
+  };
+
   let primary;
-  let secondary = null;
   if (isEntitlement) {
-    if (!isFulfilled) {
-      primary = {
-        children: formatMessage(messages.selectSession),
-        disabled: !(canChange && hasSessions),
-        onClick: openSessionModal,
-      };
-    } else {
-      primary = {
-        children: formatMessage(messages.viewCourse),
-        disabled: !canViewCourse || isExpired,
-      };
-    }
+    primary = isFulfilled ? selectSessionButton : viewCourseButton;
+  } else if (!hasStarted) {
+    primary = beginCourseButton;
+  } else if (isArchived) {
+    primary = viewCourseButton;
   } else {
-    if (!isVerified) {
-      secondary = {
-        iconBefore: Locked,
-        variant: 'outline-primary',
-        disabled: !canUpgrade,
-        children: formatMessage(messages.upgrade),
-      };
-    }
-    if (isPending) {
-      primary = { children: formatMessage(messages.beginCourse) };
-    } else if (!isArchived) {
-      primary = {
-        children: formatMessage(messages.resume),
-        disabled: isAudit && isAuditAccessExpired,
-      };
-    } else {
-      primary = { children: formatMessage(messages.viewCourse) };
-    }
+    primary = resumeButton;
   }
+
+  const secondary = (isEntitlement || !isVerified) ? null : upgradeButton;
   return { primary, secondary };
 };
 

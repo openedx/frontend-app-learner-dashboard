@@ -16,11 +16,6 @@ const messages = defineMessages({
     defaultMessage: 'Course image banner',
     description: 'alt for course image',
   },
-  institueLogoAlt: {
-    id: 'leanerDashboard.emptyCourse.suggestedCourses.institueLogoAlt',
-    defaultMessage: 'Course institute logo',
-    description: 'alt for institute logo',
-  },
 });
 
 export default messages;

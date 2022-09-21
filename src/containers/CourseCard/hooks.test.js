@@ -23,7 +23,7 @@ describe('CourseCard hooks', () => {
   describe('useCardData', () => {
     const courseData = {
       title: 'fake-title',
-      bannerUrl: 'my-banner-url',
+      bannerImgSrc: 'my-banner-url',
     };
     const runHook = ({ course = {} }) => {
       appHooks.useCardCourseData.mockReturnValueOnce({
@@ -42,7 +42,7 @@ describe('CourseCard hooks', () => {
     it('passes course title and banner URL form course data', () => {
       expect(appHooks.useCardCourseData).toHaveBeenCalledWith(cardId);
       expect(out.title).toEqual(courseData.title);
-      expect(out.bannerUrl).toEqual(courseData.bannerUrl);
+      expect(out.bannerImgSrc).toEqual(courseData.bannerImgSrc);
     });
   });
 });

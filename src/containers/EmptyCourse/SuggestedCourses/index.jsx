@@ -15,14 +15,12 @@ export const SuggestedCourses = () => {
       <h3 className="text-center">{formatMessage(messages.header)}</h3>
       <div className="d-flex">
         {suggestedCourses.map((course) => (
-          <Card key={course.title} className="m-3">
+          <Card key={course.courseName} className="m-3">
             <Card.ImageCap
-              src={course.bannerUrl}
+              src={course.bannerImgSrc}
               srcAlt={formatMessage(messages.courseImageAlt)}
-              logoSrc={course.logoUrl}
-              logoAlt={formatMessage(messages.institueLogoAlt)}
             />
-            <Card.Header title={course.title} />
+            <Card.Header title={course.courseName} />
             <Card.Footer>
               <Button as="a">{formatMessage(messages.viewCourseButton)}</Button>
             </Card.Footer>

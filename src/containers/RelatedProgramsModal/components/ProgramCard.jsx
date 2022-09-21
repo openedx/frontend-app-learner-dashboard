@@ -28,9 +28,9 @@ export const ProgramCard = ({ data }) => {
     >
       <Card.ImageCap
         className="program-card-banner"
-        src={data.bannerUrl}
+        src={data.bannerImgSrc}
         srcAlt={formatMessage(messages.bannerAlt)}
-        logoSrc={data.logoUrl}
+        logoSrc={data.logoImgSrc}
         logoAlt={formatMessage(messages.logoAlt)}
       />
       <Card.Header
@@ -50,8 +50,8 @@ export const ProgramCard = ({ data }) => {
 };
 ProgramCard.propTypes = {
   data: PropTypes.shape({
-    bannerUrl: PropTypes.string,
-    logoUrl: PropTypes.string,
+    bannerImgSrc: PropTypes.string,
+    logoImgSrc: PropTypes.string,
     numberOfCourses: PropTypes.number,
     programType: PropTypes.string,
     programUrl: PropTypes.string,
