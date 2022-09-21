@@ -42,6 +42,7 @@ exports[`RelatedProgramsModal ProgramCard snapshot 1`] = `
     >
       <Icon
         className="d-inline-block"
+        src={[MockFunction icons.Program]}
       />
        
       props.data.programType

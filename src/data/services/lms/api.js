@@ -9,7 +9,11 @@ import urls from './urls';
 /*********************************************************************************
  * GET Actions
  *********************************************************************************/
-const initializeList = () => get(urls.init).then(({ data }) => data);
+const initializeList = ({ user } = {}) => new Promise((resolve, reject) => {
+  get(stringifyUrl(urls.init, { user }))
+    .then(({ data }) => resolve(data))
+    .catch(({ response }) => reject(response ? response.statusText : 'Unknown Error'));
+});
 
 const updateEntitlementEnrollment = ({ uuid, courseId }) => post(stringifyUrl(
   urls.entitlementEnrollment(uuid),

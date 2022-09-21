@@ -1,0 +1,115 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MasqueradeBar snapshot can masquerade 1`] = `
+<div
+  className="masquerade-bar"
+>
+  <FormLabel
+    className="masquerade-form-label"
+    inline={true}
+  >
+    View as: 
+  </FormLabel>
+  <FormGroup
+    className="masquerade-form-input"
+    isInvalid={false}
+  >
+    <FormControl
+      floatingLabel="Student username or email"
+      onChange={[MockFunction handleMasqueradeInputChange]}
+      value=""
+    />
+  </FormGroup>
+  <Button
+    disabled={true}
+    variant="danger"
+  >
+    Submit
+  </Button>
+</div>
+`;
+
+exports[`MasqueradeBar snapshot can masquerade with input 1`] = `
+<div
+  className="masquerade-bar"
+>
+  <FormLabel
+    className="masquerade-form-label"
+    inline={true}
+  >
+    View as: 
+  </FormLabel>
+  <FormGroup
+    className="masquerade-form-input"
+    isInvalid={false}
+  >
+    <FormControl
+      floatingLabel="Student username or email"
+      onChange={[MockFunction handleMasqueradeInputChange]}
+      value="test"
+    />
+  </FormGroup>
+  <Button
+    disabled={false}
+    variant="danger"
+  >
+    Submit
+  </Button>
+</div>
+`;
+
+exports[`MasqueradeBar snapshot cannot masquerade 1`] = `""`;
+
+exports[`MasqueradeBar snapshot is masquerading failed with error 1`] = `
+<div
+  className="masquerade-bar"
+>
+  <FormLabel
+    className="masquerade-form-label"
+    inline={true}
+  >
+    View as: 
+  </FormLabel>
+  <FormGroup
+    className="masquerade-form-input"
+    isInvalid={true}
+  >
+    <FormControl
+      floatingLabel="Student username or email"
+      onChange={[MockFunction handleMasqueradeInputChange]}
+      value=""
+    />
+    <FormControlFeedback
+      type="invalid"
+    >
+      test-error
+    </FormControlFeedback>
+  </FormGroup>
+  <Button
+    disabled={true}
+    variant="danger"
+  >
+    Submit
+  </Button>
+</div>
+`;
+
+exports[`MasqueradeBar snapshot is masquerading with input 1`] = `
+<div
+  className="masquerade-bar"
+>
+  <FormLabel
+    className="masquerade-form-label"
+    inline={true}
+  >
+    Viewing as: 
+  </FormLabel>
+  <Chip
+    className="masquerade-chip"
+    iconAfter={[MockFunction icons.Close]}
+    onClick={[MockFunction handleClearMasquerade]}
+  >
+    test
+  </Chip>
+</div>
+`;

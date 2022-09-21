@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 
 import { actions as appActions } from './app/reducer';
 import appSelectors from './app/selectors';
+import requestSelectors from './requests/selectors';
 
 const { courseCard } = appSelectors;
 
@@ -36,3 +37,5 @@ export const useCardRelatedProgramsData = useCourseCardData(courseCard.relatedPr
 export const useUpdateSelectSessionModalCallback = (dispatch, cardId) => () => dispatch(
   appActions.updateSelectSessionModal(cardId),
 );
+
+export const useMasqueradeData = () => useSelector(requestSelectors.masquerade);

@@ -5,6 +5,7 @@ exports[`RelatedProgramsBadge component snapshot: 3 programs 1`] = `
   <Button
     className="pr-0 mr-0"
     data-testid="RelatedProgramsBadge"
+    iconBefore={[MockFunction icons.Program]}
     onClick={[MockFunction useRelatedProgramsBadge.openModal]}
     size="sm"
     variant="tertiary"

@@ -80,6 +80,20 @@ export const unenrollFromCourse = (courseId, reason) => (dispatch) => {
   }));
 };
 
+export const masqueradeAs = (user) => (dispatch) => (
+  dispatch(requests.masqueradeAs({
+    user,
+    onSuccess: (({ courses }) => {
+      dispatch(actions.app.loadCourses({ courses }));
+    }),
+  }))
+);
+
+export const clearMasquerade = () => (dispatch) => {
+  dispatch(requests.clearMasquerade());
+  dispatch(module.refreshList());
+};
+
 export default StrictDict({
   initialize,
   refreshList,
@@ -88,4 +102,6 @@ export default StrictDict({
   switchEntitlementEnrollment,
   leaveEntitlementSession,
   unenrollFromCourse,
+  masqueradeAs,
+  clearMasquerade,
 });

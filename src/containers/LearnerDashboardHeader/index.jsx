@@ -5,6 +5,7 @@ import { AppContext } from '@edx/frontend-platform/react';
 import { Program } from '@edx/paragon/icons';
 import { Button } from '@edx/paragon';
 
+import MasqueradeBar from 'containers/MasqueradeBar';
 import AuthenticatedUserDropdown from './AuthenticatedUserDropdown';
 
 import GreetingBanner from './GreetingBanner';
@@ -43,6 +44,8 @@ export const LearnerDashboardHeader = () => {
         </header>
         {!isCollapsed && <GreetingBanner size="large" />}
       </div>
+      <MasqueradeBar />
+      <hr />
     </>
   );
 };
