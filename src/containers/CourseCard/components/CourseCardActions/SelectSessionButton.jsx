@@ -1,0 +1,32 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+
+import { Button } from '@edx/paragon';
+import { useIntl } from '@edx/frontend-platform/i18n';
+
+import { hooks } from 'data/redux';
+import messages from './messages';
+
+export const SelectSessionButton = ({ cardId }) => {
+  const { resumeUrl } = hooks.useCardCourseRunData(cardId);
+  const { hasAccess } = hooks.useCardEnrollmentData(cardId);
+  const { canChange, hasSessions } = hooks.useCardEntitlementData(cardId);
+  const { formatMessage } = useIntl();
+  const dispatch = useDispatch();
+  const openSessionModal = hooks.useUpdateSelectSessionModalCallback(dispatch, cardId);
+  return (
+    <Button
+      disabled={!hasAccess || (!canChange || !hasSessions)}
+      onClick={openSessionModal}
+      as="a"
+      href={resumeUrl}
+    >
+      {formatMessage(messages.resume)}
+    </Button>
+  );
+};
+SelectSessionButton.propTypes = {
+  cardId: PropTypes.string.isRequired,
+};
+export default SelectSessionButton;
