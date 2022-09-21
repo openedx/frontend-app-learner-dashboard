@@ -704,7 +704,7 @@ export const entitlementData = entitlementCourses.map(
   },
 );
 
-
+/*
 console.log('%j', {
   courses: [
     ...courseRunData,
@@ -712,6 +712,7 @@ console.log('%j', {
   ],
   ...globalData,
 });
+*/
 
 export default {
   courseRunData,

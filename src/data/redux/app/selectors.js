@@ -167,7 +167,6 @@ export const currentList = (state, {
   }
   if (sortBy === 'enrolled') {
     list = list.sort((a, b) => {
-      const { course, courseRun, enrollment } = a;
       const dateA = new Date(a.enrollment.lastEnrolled);
       const dateB = new Date(b.enrollment.lastEnrolled);
       if (dateA < dateB) { return isAscending ? -1 : 1; }
