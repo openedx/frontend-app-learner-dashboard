@@ -24,7 +24,7 @@ export const useMasqueradeBarData = ({
 }) => {
   const dispatch = useDispatch();
   const { formatMessage } = useIntl();
-  const canMasquerade = authenticatedUser?.roles.includes('staff') || authenticatedUser?.administrator;
+  const canMasquerade = authenticatedUser?.administrator;
 
   const handleMasqueradeSubmit = (user) => () => dispatch(thunkActions.app.masqueradeAs(user));
   const handleClearMasquerade = () => dispatch(thunkActions.app.clearMasquerade());

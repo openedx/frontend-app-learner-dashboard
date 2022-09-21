@@ -23,8 +23,7 @@ const state = new MockUseState(hooks);
 describe('MasqueradeBar hooks', () => {
   let out;
   const authenticatedUser = {
-    administrator: false,
-    roles: ['staff'],
+    administrator: true,
   };
   describe('state values', () => {
     state.testGetter(state.keys.masqueradeInput);
@@ -37,10 +36,11 @@ describe('MasqueradeBar hooks', () => {
     afterEach(state.restore);
     test('canMasquerade', () => {
       expect(out.canMasquerade).toEqual(true);
+    });
+    test('cannotMasquerade', () => {
       out = hooks.useMasqueradeBarData({
         authenticatedUser: {
           administrator: false,
-          roles: [],
         },
       });
       expect(out.canMasquerade).toEqual(false);
