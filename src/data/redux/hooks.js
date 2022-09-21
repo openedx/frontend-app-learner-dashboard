@@ -25,13 +25,13 @@ export const useCourseCardData = (selector) => (cardId) => useSelector(
   (state) => selector(state, cardId),
 );
 
-export const useCardCertificateData = useCourseCardData(courseCard.certificates);
+export const useCardCertificateData = useCourseCardData(courseCard.certificate);
 export const useCardCourseData = useCourseCardData(courseCard.course);
 export const useCardCourseRunData = useCourseCardData(courseCard.courseRun);
 export const useCardEnrollmentData = useCourseCardData(courseCard.enrollment);
 export const useCardEntitlementData = useCourseCardData(courseCard.entitlement);
-export const useCardGradeData = useCourseCardData(courseCard.grades);
-export const useCardProviderData = useCourseCardData(courseCard.provider);
+export const useCardGradeData = useCourseCardData(courseCard.gradeData);
+export const useCardProviderData = useCourseCardData(courseCard.courseProvider);
 export const useCardRelatedProgramsData = useCourseCardData(courseCard.relatedPrograms);
 
 export const useUpdateSelectSessionModalCallback = (dispatch, cardId) => () => dispatch(

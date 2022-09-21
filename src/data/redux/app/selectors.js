@@ -44,29 +44,30 @@ const mkCardSelector = (sel) => (state, cardId) => {
 
 const dateSixMonthsFromNow = new Date();
 dateSixMonthsFromNow.setDate(dateSixMonthsFromNow.getDate() + 180);
+const today = new Date();
 
 export const courseCard = StrictDict({
-  certificates: mkCardSelector(({ certificates }) => ({
-    availableDate: certificates.availableDate,
-    certPreviewUrl: certificates.certPreviewUrl,
-    isDownloadable: certificates.isDownloadable,
-    isEarnedButUnavailable: certificates.isEarned && !certificates.isAvailable,
-    isRestricted: certificates.isRestricted,
+  certificate: mkCardSelector(({ certificate }) => ({
+    availableDate: new Date(certificate.availableDate),
+    certPreviewUrl: certificate.certPreviewUrl,
+    isDownloadable: certificate.isDownloadable,
+    isEarnedButUnavailable: certificate.isEarned && new Date(certificate.availableDate) > today,
+    isRestricted: certificate.isRestricted,
   })),
   course: mkCardSelector(({ course }) => ({
-    bannerUrl: course.bannerUrl,
+    bannerImgSrc: course.bannerImgSrc,
     courseNumber: course.courseNumber,
-    title: course.title,
+    courseName: course.courseName,
     website: course.website,
   })),
   courseRun: mkCardSelector(({ courseRun }) => (courseRun === null ? {} : {
-    endDate: courseRun?.endDate,
+    endDate: new Date(courseRun?.endDate),
     courseId: courseRun.courseId,
     isArchived: courseRun.isArchived,
     isStarted: courseRun.isStarted,
     isFinished: courseRun.isFinished,
-    minPassingGrade: courseRun.minPassingGrade,
-    startDate: courseRun.startDate,
+    minPassingGrade: Math.floor(courseRun.minPassingGrade * 100),
+    startDate: new Date(courseRun.startDate),
   })),
   enrollment: mkCardSelector(({ enrollment }) => {
     if (enrollment == null) {
@@ -75,7 +76,7 @@ export const courseCard = StrictDict({
       };
     }
     return {
-      accessExpirationDate: enrollment.accessExpirationDate,
+      accessExpirationDate: new Date(enrollment.accessExpirationDate),
       canUpgrade: enrollment.canUpgrade,
       hasStarted: enrollment.hasStarted,
       coursewareAccess: enrollment.coursewareAccess,
@@ -90,30 +91,29 @@ export const courseCard = StrictDict({
   }),
   entitlement: mkCardSelector(({ entitlement }) => {
     if (!entitlement) {
-      return {};
+      return { isEntitlement: false };
     }
     const deadline = new Date(entitlement.changeDeadline);
     const deadlinePassed = deadline < new Date();
     const showExpirationWarning = !deadlinePassed && deadline <= dateSixMonthsFromNow;
     return {
       canChange: !deadlinePassed,
-      canViewCourse: entitlement.canViewCourse,
       entitlementSessions: entitlement.availableSessions,
-      isEntitlement: entitlement.isEntitlement,
+      isEntitlement: true,
       isExpired: entitlement.isExpired,
       isFulfilled: entitlement.isFulfilled,
       hasSessions: entitlement.availableSessions?.length > 0,
-      changeDeadline: entitlement.changeDeadline,
+      changeDeadline: deadline,
       uuid: entitlement.uuid,
       showExpirationWarning,
     };
   }),
-  grades: mkCardSelector(({ grades }) => ({ isPassing: grades.isPassing })),
-  provider: mkCardSelector(({ provider }) => ({ name: provider?.name })),
-  relatedPrograms: mkCardSelector(({ relatedPrograms }) => ({
+  gradeData: mkCardSelector(({ gradeData }) => ({ isPassing: gradeData.isPassing })),
+  courseProvider: mkCardSelector(({ courseProvider }) => ({ name: courseProvider?.name })),
+  relatedPrograms: mkCardSelector(({ programs: { relatedPrograms } }) => ({
     list: relatedPrograms.map(program => ({
-      bannerUrl: program.bannerUrl,
-      logoUrl: program.logoUrl,
+      bannerImgSrc: program.bannerImgSrc,
+      logoImgSrc: program.logoImgSrc,
       numberOfCourses: program.numberOfCourses,
       programType: program.programType,
       programUrl: program.programUrl,
@@ -165,6 +165,7 @@ export const currentList = (state, {
   }
   if (sortBy === 'enrolled') {
     list = list.sort((a, b) => {
+      const { course, courseRun, enrollment } = a;
       const dateA = new Date(a.enrollment.lastEnrolled);
       const dateB = new Date(b.enrollment.lastEnrolled);
       if (dateA < dateB) { return isAscending ? -1 : 1; }
@@ -173,10 +174,10 @@ export const currentList = (state, {
     });
   } else {
     list = list.sort((a, b) => {
-      const titleA = a.course.title.toLowerCase();
-      const titleB = b.course.title.toLowerCase();
-      if (titleA < titleB) { return isAscending ? -1 : 1; }
-      if (titleA > titleB) { return isAscending ? 1 : 1; }
+      const nameA = a.course.courseName.toLowerCase();
+      const nameB = b.course.courseName.toLowerCase();
+      if (nameA < nameB) { return isAscending ? -1 : 1; }
+      if (nameA > nameB) { return isAscending ? 1 : 1; }
       return 0;
     });
   }
