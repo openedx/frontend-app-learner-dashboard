@@ -75,11 +75,13 @@ export const courseCard = StrictDict({
         isEnrolled: false,
       };
     }
+    const { isStaff, hasUnmetPrereqs, isTooEarly } = enrollment.coursewareAccess;
     return {
       accessExpirationDate: new Date(enrollment.accessExpirationDate),
       canUpgrade: enrollment.canUpgrade,
       hasStarted: enrollment.hasStarted,
       coursewareAccess: enrollment.coursewareAccess,
+      hasAccess: isStaff || !(hasUnmetPrereqs || isTooEarly),
       hasFinished: enrollment.hasFinished,
       isAudit: enrollment.isAudit,
       isAuditAccessExpired: enrollment.isAuditAccessExpired,
