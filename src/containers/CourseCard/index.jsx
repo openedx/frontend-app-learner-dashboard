@@ -19,14 +19,9 @@ export const CourseCard = ({
     <div className="mb-4.5 course-card" data-testid="CourseCard">
       <Card orientation={orientation}>
         <div className="d-flex flex-column w-100">
-          {isCollapsed
-            ? (
-              <CourseCardContent cardId={cardId} orientation={orientation} />
-            ) : (
-              <div className="d-flex">
-                <CourseCardContent cardId={cardId} orientation={orientation} />
-              </div>
-            )}
+          <div {...(!isCollapsed && { className: 'd-flex' })}>
+            <CourseCardContent cardId={cardId} orientation={orientation} />
+          </div>
           <div className="course-card-banners" data-testid="CourseCardBanners">
             <CourseCardBanners cardId={cardId} />
           </div>
