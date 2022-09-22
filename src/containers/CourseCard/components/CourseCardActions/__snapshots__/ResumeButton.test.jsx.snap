@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ResumeButton snapshot renders default button 1`] = `
+<Button
+  as="a"
+  href="resumeUrl"
+>
+  Resume
+</Button>
+`;
+
+exports[`ResumeButton snapshot renders disabled button 1`] = `
+<Button
+  as="a"
+  disabled={true}
+  href="resumeUrl"
+>
+  Resume
+</Button>
+`;

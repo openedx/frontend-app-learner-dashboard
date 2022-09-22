@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UpgradeButton snapshot can upgrade 1`] = `
+<Button
+  as="a"
+  disabled={false}
+  href="upgradeUrl"
+  iconBefore={[MockFunction icons.Locked]}
+  variant="outline-primary"
+>
+  Upgrade
+</Button>
+`;
+
+exports[`UpgradeButton snapshot cannot upgrade 1`] = `
+<Button
+  as="a"
+  disabled={true}
+  href="upgradeUrl"
+  iconBefore={[MockFunction icons.Locked]}
+  variant="outline-primary"
+>
+  Upgrade
+</Button>
+`;
