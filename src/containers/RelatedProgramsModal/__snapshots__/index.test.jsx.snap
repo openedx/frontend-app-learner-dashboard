@@ -20,9 +20,7 @@ exports[`RelatedProgramsModal snapshot: closed 1`] = `
   <ModalDialog.Header
     as="h4"
     className="programs-header p-0"
-  >
-    hookProps.courseTitle
-  </ModalDialog.Header>
+  />
   <ModalDialog.Body
     className="pl-0 overflow-hidden"
   >
@@ -105,9 +103,7 @@ exports[`RelatedProgramsModal snapshot: open 1`] = `
   <ModalDialog.Header
     as="h4"
     className="programs-header p-0"
-  >
-    hookProps.courseTitle
-  </ModalDialog.Header>
+  />
   <ModalDialog.Body
     className="pl-0 overflow-hidden"
   >

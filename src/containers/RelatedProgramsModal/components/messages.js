@@ -16,7 +16,7 @@ export const messages = {
   },
   bannerAlt: {
     id: 'learnerDashboard.programCard.bannerAlt',
-    defaultMessage: 'Programm banner',
+    defaultMessage: 'Program banner',
     description: 'Program banner logo alt-text',
   },
 };

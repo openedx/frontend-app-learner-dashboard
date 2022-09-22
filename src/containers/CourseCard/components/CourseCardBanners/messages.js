@@ -106,11 +106,6 @@ export const messages = StrictDict({
     description: 'Course has not started message',
     defaultMessage: 'You can\'t access this course just yet because the course hasn\'t started yet. The course will start on {startDate}.',
   },
-  staffAccessOnly: {
-    id: 'learner-dash.courseCard.banners.staffAccessOnly',
-    description: 'Message to learners with staff access only',
-    defaultMessage: 'Staff access only.',
-  },
 });
 
 export default messages;

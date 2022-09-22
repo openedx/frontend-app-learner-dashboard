@@ -1,23 +1,15 @@
 import { StrictDict } from 'utils';
 
 export const providers = StrictDict({
-  edx: {
-    name: 'edX Course Provider',
-    website: 'www.edx.com',
-    email: 'support@edx.com',
-  },
-  mit: {
-    name: 'MIT',
-    website: 'www.mit.edu',
-    email: 'support@mit.edu',
-  },
+  edx: { name: 'edX Course Provider' },
+  mit: { name: 'MIT' },
 });
 
 export const relatedPrograms = [
   {
     provider: 'HarvardX',
-    bannerUrl: 'https://prod-discovery.edx-cdn.org/media/course/image/327c8e4f-315a-417b-9857-046dfc90c243-677b97464958.small.jpg',
-    logoUrl: 'https://prod-discovery.edx-cdn.org/organization/certificate_logos/44022f13-20df-4666-9111-cede3e5dc5b6-770e00385e7e.png',
+    bannerImgSrc: 'https://prod-discovery.edx-cdn.org/media/course/image/327c8e4f-315a-417b-9857-046dfc90c243-677b97464958.small.jpg',
+    logoImgSrc: 'https://prod-discovery.edx-cdn.org/organization/certificate_logos/44022f13-20df-4666-9111-cede3e5dc5b6-770e00385e7e.png',
     title: 'Relativity in Modern Mechanics',
     programUrl: 'www.edx/my-program',
     programType: 'MicroBachelors Program',
@@ -25,8 +17,8 @@ export const relatedPrograms = [
   },
   {
     provider: 'University  of Maryland',
-    bannerUrl: 'https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg',
-    logoUrl: 'https://prod-discovery.edx-cdn.org/organization/certificate_logos/b9dc96da-b3fc-45a6-b6b7-b8e12eb79335-ac60112330e3.png',
+    bannerImgSrc: 'https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg',
+    logoImgSrc: 'https://prod-discovery.edx-cdn.org/organization/certificate_logos/b9dc96da-b3fc-45a6-b6b7-b8e12eb79335-ac60112330e3.png',
     title: 'Pandering for Modern Professionals',
     programUrl: 'www.edx/my-program-2',
     programType: 'MicroBachelors Program',
@@ -41,16 +33,12 @@ export const genCourseNumber = (index) => `course-number${index}`;
 export const genCourseTitle = (index) => `Course Name ${index}`;
 export const genEntitlementUUID = (index) => `entitlement-course-uuid-${index}`;
 
-const logos = {
-  edx: 'https://edx-cdn.org/v3/prod/logo.svg',
-  social: 'https://courses.edx.org/asset-v1:USMx+LDT200x+2T2021+type@thumbnail+block@course_image-375x200.jpg',
-  science: 'https://courses.edx.org/asset-v1:HarvardX+PH525.5x+3T2020+type@thumbnail+block@course_image-375x200.jpg',
-};
+const bannerImgSrc = '/asset-v1:edX+DemoX+Demo_Course+type@asset+block@images_course_image.jpg';
 
-const farPastDate = '11/11/1900';
-const pastDate = '11/11/2000';
-const futureDate = '11/11/3030';
-const farFutureDate = '11/11/4040';
+const farPastDate = '1900-11-11T00:00:00Z';
+const pastDate = '2000-11-11T00:00:00Z';
+const futureDate = '3030-11-11T00:00:00Z';
+const farFutureDate = '4040-11-11T00:00:00Z';
 const soonDate = new Date();
 soonDate.setDate(soonDate.getDate() + 60);
 const soonDateStr = soonDate.toDateString();
@@ -68,27 +56,23 @@ const globalData = {
   },
   suggestedCourses: [
     {
-      bannerUrl: 'https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg',
-      logoUrl: 'https://prod-discovery.edx-cdn.org/organization/certificate_logos/b9dc96da-b3fc-45a6-b6b7-b8e12eb79335-ac60112330e3.png',
-      title: 'Suggested course 1',
+      bannerImgSrc: 'https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg',
+      courseName: 'Suggested course 1',
       courseUrl: 'www.edx/suggested-course',
     },
     {
-      bannerUrl: 'https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg',
-      logoUrl: 'https://prod-discovery.edx-cdn.org/organization/certificate_logos/b9dc96da-b3fc-45a6-b6b7-b8e12eb79335-ac60112330e3.png',
-      title: 'Suggested course 2',
+      bannerImgSrc: 'https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg',
+      courseName: 'Suggested course 2',
       courseUrl: 'www.edx/suggested-course',
     },
     {
-      bannerUrl: 'https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg',
-      logoUrl: 'https://prod-discovery.edx-cdn.org/organization/certificate_logos/b9dc96da-b3fc-45a6-b6b7-b8e12eb79335-ac60112330e3.png',
-      title: 'Suggested course 3',
+      bannerImgSrc: 'https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg',
+      courseName: 'Suggested course 3',
       courseUrl: 'www.edx/suggested-course',
     },
     {
-      bannerUrl: 'https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg',
-      logoUrl: 'https://prod-discovery.edx-cdn.org/organization/certificate_logos/b9dc96da-b3fc-45a6-b6b7-b8e12eb79335-ac60112330e3.png',
-      title: 'Suggested course 4',
+      bannerImgSrc: 'https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg',
+      courseName: 'Suggested course 4',
       courseUrl: 'www.edx/suggested-course',
     },
   ],
@@ -99,7 +83,7 @@ export const genCourseRunData = (data = {}) => ({
   isArchived: false,
   startDate: data.isStarted ? farPastDate : futureDate,
   endDate: farFutureDate,
-  minPassingGrade: 70,
+  minPassingGrade: '0.70',
   homeUrl: 'edx.com/courses/my-course-url/home',
   marketingUrl: 'edx.com/courses/my-course-url/marketing',
   progressUrl: 'edx.com/courses/my-course-url/progress',
@@ -109,6 +93,11 @@ export const genCourseRunData = (data = {}) => ({
 });
 
 export const genEnrollmentData = (data = {}) => ({
+  coursewareAccess: {
+    isTooEarly: false,
+    hasUnmetPrerequisites: false,
+    isStaff: false,
+  },
   accessExpirationDate: ((data.isEnrolled === false) ? null : futureDate),
   canUpgrade: (data.isVerified ? null : true),
   hasFinished: false,
@@ -132,18 +121,69 @@ export const genCertificateData = (data = {}) => ({
 });
 
 export const availableSessions = [
-  { startDate: '1/2/2000', endDate: '1/2/2020', courseId: genCourseId(1000) },
-  { startDate: '2/3/2000', endDate: '2/3/2020', courseId: genCourseId(1001) },
-  { startDate: '3/4/2000', endDate: '3/4/2020', courseId: genCourseId(1002) },
-  { startDate: '4/5/2000', endDate: '4/6/2020', courseId: genCourseId(1003) },
-  { startDate: '5/6/2000', endDate: '5/7/2020', courseId: genCourseId(1004) },
+  {
+    startDate: '2000-01-02T00:00:00Z',
+    endDate: '2020-01-02T00:00:00Z',
+    courseId: genCourseId(1000),
+  },
+  {
+    startDate: '2000-02-03T00:00:00Z',
+    endDate: '2020-02-03T00:00:00Z',
+    courseId: genCourseId(1001),
+  },
+  {
+    startDate: '2000-03-04T00:00:00Z',
+    endDate: '2020-03-04T00:00:00Z',
+    courseId: genCourseId(1002),
+  },
+  {
+    startDate: '2000-04-05T00:00:00Z',
+    endDate: '2020-04-05T00:00:00Z',
+    courseId: genCourseId(1003),
+  },
+  {
+    startDate: '2000-05-06T00:00:00Z',
+    endDate: '2020-05-06T00:00:00Z',
+    courseId: genCourseId(1004),
+  },
 ];
 
 export const courseRuns = [
   // audit, course run not started
   {},
+  // audit, course run not started, too early to view
+  {
+    enrollment: {
+      coursewareAccess: {
+        isTooEarly: true,
+        hasUnmetPrerequisites: false,
+        isStaff: false,
+      },
+    },
+  },
+  // audit, course run not started, too early to view and unmet prereqs
+  {
+    enrollment: {
+      coursewareAccess: {
+        isTooEarly: true,
+        hasUnmetPrerequisites: true,
+        isStaff: false,
+      },
+    },
+  },
   // audit, course run started
   {
+    courseRun: { isStarted: true },
+  },
+  // audit, course run started, unmet prereqs
+  {
+    enrollment: {
+      coursewareAccess: {
+        isTooEarly: true,
+        hasUnmetPrerequisites: true,
+        isStaff: false,
+      },
+    },
     courseRun: { isStarted: true },
   },
   // audit, course run started, access expired, learner not started
@@ -189,7 +229,7 @@ export const courseRuns = [
   // audit, course run and learner started, passing
   {
     courseRun: { isStarted: true },
-    enrollment: { isStarted: true },
+    enrollment: { hasStarted: true },
   },
   // audit, course run and learner started, access expired
   {
@@ -199,7 +239,7 @@ export const courseRuns = [
     enrollment: {
       accessExpirationDate: pastDate,
       isAuditAccessExpired: true,
-      isStarted: true,
+      hasStarted: true,
     },
   },
   // audit, course run and learner started, access expired, cannot upgrade
@@ -211,7 +251,7 @@ export const courseRuns = [
       accessExpirationDate: pastDate,
       canUpgrade: false,
       isAuditAccessExpired: true,
-      isStarted: true,
+      hasStarted: true,
     },
   },
   // audit, course run ended, learner started, expired, cannot upgraded, not passing
@@ -226,7 +266,7 @@ export const courseRuns = [
       accessExpirationDate: pastDate,
       canUpgrade: false,
       isAuditAccessExpired: true,
-      isStarted: true,
+      hasStarted: true,
     },
     grade: { isPassing: false },
   },
@@ -243,7 +283,7 @@ export const courseRuns = [
       accessExpirationDate: pastDate,
       canUpgrade: false,
       isAuditAccessExpired: true,
-      isStarted: true,
+      hasStarted: true,
     },
     grade: { isPassing: false },
   },
@@ -262,7 +302,7 @@ export const courseRuns = [
   // verified, course started, learner started, not passing
   {
     courseRun: { isStarted: true },
-    grades: { isPassing: false },
+    gradeData: { isPassing: false },
     enrollment: { hasStarted: true, isVerified: true },
   },
   // verified, learner finished, not passing, cert not earned
@@ -273,8 +313,8 @@ export const courseRuns = [
       isVerified: true,
     },
     courseRun: { isStarted: true },
-    grades: { isPassing: false },
-    certificates: {
+    gradeData: { isPassing: false },
+    certificate: {
       isEarned: false,
     },
   },
@@ -286,10 +326,9 @@ export const courseRuns = [
       isVerified: true,
     },
     courseRun: { isStarted: true },
-    certificates: {
+    certificate: {
       isEarned: true,
       availableDate: futureDate,
-      isAvailable: false,
     },
   },
   // verified, learner finished, passing, restricted
@@ -300,7 +339,7 @@ export const courseRuns = [
       isVerified: true,
     },
     courseRun: { isStarted: true },
-    certificates: { isRestricted: true },
+    certificate: { isRestricted: true },
   },
   // verified, learner finished, cert earned, downloadable (web + link)
   {
@@ -310,12 +349,11 @@ export const courseRuns = [
       isVerified: true,
     },
     courseRun: { isStarted: true },
-    certificates: {
+    certificate: {
       isEarned: true,
-      isAvailable: true,
       isDownloadable: true,
       availableDate: pastDate,
-      certPreviewUrl: logos.edx,
+      certPreviewUrl: bannerImgSrc,
     },
   },
   // verified, course ended, learner finished, cert earned, downloadable (link only),
@@ -329,9 +367,8 @@ export const courseRuns = [
       isStarted: true,
       endDate: pastDate,
     },
-    certificates: {
+    certificate: {
       isEarned: true,
-      isAvailable: true,
       isDownloadable: true,
       availableDate: pastDate,
     },
@@ -348,41 +385,47 @@ export const courseRuns = [
       isArchived: true,
       endDate: pastDate,
     },
-    certificates: {
+    certificate: {
       isEarned: true,
-      isAvailable: true,
       isDownloadable: true,
       availableDate: pastDate,
-      certPreviewUrl: logos.edx,
+      certPreviewUrl: bannerImgSrc,
     },
   },
   // Entitlement - not started
   {
-    enrollment: { isVerified: true },
+    enrollment: {
+      isVerified: true,
+      coursewareAccess: {
+        isTooEarly: true,
+        hasUnmetPrerequisites: false,
+        isStaff: false,
+      },
+    },
     courseRun: { isStarted: false },
     entitlement: {
       uuid: genEntitlementUUID(0),
       availableSessions,
-      canViewCourse: false,
       changeDeadline: futureDate,
       enrollmentUrl: '/entitlement-enrollment',
-      isEntitlement: true,
       isExpired: false,
       isFulfilled: true,
       isRefundable: true,
     },
   },
-  // Entitlement - Course run started, learner not started
+  // Entitlement - Course run started, learner not started, unmet prereqs
   {
-    enrollment: { isVerified: true },
+    enrollment: {
+      isVerified: true,
+      coursewareAccess: {
+      },
+    },
     courseRun: { isStarted: true },
     entitlement: {
       uuid: genEntitlementUUID(1),
       availableSessions,
-      canViewCourse: true,
       changeDeadline: futureDate,
       enrollmentUrl: '/entitlement-enrollment',
-      isEntitlement: true,
       isExpired: false,
       isFulfilled: true,
       isRefundable: true,
@@ -398,15 +441,13 @@ export const courseRuns = [
     entitlement: {
       uuid: genEntitlementUUID(2),
       availableSessions,
-      canViewCourse: true,
       changeDeadline: futureDate,
       enrollmentUrl: '/entitlement-enrollment',
-      isEntitlement: true,
       isExpired: false,
       isFulfilled: true,
       isRefundable: true,
     },
-    grades: { isPassing: false },
+    gradeData: { isPassing: false },
   },
   // Entitlement - Course run started, learner started, passing, cannot change
   {
@@ -418,10 +459,8 @@ export const courseRuns = [
     entitlement: {
       uuid: genEntitlementUUID(3),
       availableSessions,
-      canViewCourse: true,
       changeDeadline: pastDate,
       enrollmentUrl: '/entitlement-enrollment',
-      isEntitlement: true,
       isExpired: false,
       isFulfilled: true,
       isRefundable: true,
@@ -437,15 +476,13 @@ export const courseRuns = [
     entitlement: {
       uuid: genEntitlementUUID(4),
       availableSessions: null,
-      canViewCourse: true,
       changeDeadline: pastDate,
       enrollmentUrl: '/entitlement-enrollment',
-      isEntitlement: true,
       isExpired: false,
       isFulfilled: true,
       isRefundable: false,
     },
-    grades: { isPassing: false },
+    gradeData: { isPassing: false },
   },
   // Entitlement - Learner finished, and passed.  cannot refund.  previewable cert.
   {
@@ -457,20 +494,17 @@ export const courseRuns = [
     entitlement: {
       uuid: genEntitlementUUID(5),
       availableSessions: null,
-      canViewCourse: true,
       changeDeadline: pastDate,
       enrollmentUrl: '/entitlement-enrollment',
-      isEntitlement: true,
       isExpired: false,
       isFulfilled: true,
       isRefundable: false,
     },
-    certificates: {
+    certificate: {
       isEarned: true,
-      isAvailable: true,
       isDownloadable: true,
       availableDate: pastDate,
-      certPreviewUrl: logos.edx,
+      certPreviewUrl: bannerImgSrc,
     },
   },
   // Entitlement - Learner finished and failed.  cannot refund.  course ended.
@@ -487,14 +521,12 @@ export const courseRuns = [
       uuid: genEntitlementUUID(6),
       availableSessions: null,
       enrollmentUrl: '/entitlement-enrollment',
-      isEntitlement: true,
       isFulfilled: true,
       isRefundable: false,
-      canViewCourse: true,
       changeDeadline: pastDate,
       isExpired: false,
     },
-    grades: { isPassing: false },
+    gradeData: { isPassing: false },
   },
   // Entitlement - Learner finished and passed.  cannot refund.  course archived.   cert downloadable
   {
@@ -510,20 +542,17 @@ export const courseRuns = [
     entitlement: {
       uuid: genEntitlementUUID(7),
       availableSessions: null,
-      canViewCourse: false,
       changeDeadline: pastDate,
       enrollmentUrl: '/entitlement-enrollment',
-      isEntitlement: true,
       isExpired: false,
       isRefundable: false,
       isFulfilled: true,
     },
-    certificates: {
+    certificate: {
       isEarned: true,
-      isAvailable: true,
       isDownloadable: true,
       availableDate: pastDate,
-      certPreviewUrl: logos.edx,
+      certPreviewUrl: bannerImgSrc,
     },
   },
 ];
@@ -537,10 +566,8 @@ export const entitlementCourses = [
     entitlement: {
       uuid: genEntitlementUUID(10),
       availableSessions,
-      canViewCourse: false,
       changeDeadline: futureDate,
       enrollmentUrl: '/entitlement-enrollment',
-      isEntitlement: true,
       isExpired: false,
       isFulfilled: false,
       isRefundable: true,
@@ -549,10 +576,8 @@ export const entitlementCourses = [
     entitlement: {
       uuid: genEntitlementUUID(11),
       availableSessions,
-      canViewCourse: false,
       changeDeadline: soonDateStr,
       enrollmentUrl: '/entitlement-enrollment',
-      isEntitlement: true,
       isExpired: false,
       isFulfilled: false,
       isRefundable: true,
@@ -561,10 +586,8 @@ export const entitlementCourses = [
     entitlement: {
       uuid: genEntitlementUUID(12),
       availableSessions,
-      canViewCourse: false,
       changeDeadline: pastDate,
       enrollmentUrl: '/entitlement-enrollment',
-      isEntitlement: true,
       isExpired: false,
       isFulfilled: false,
       isRefundable: true,
@@ -573,10 +596,8 @@ export const entitlementCourses = [
     entitlement: {
       uuid: genEntitlementUUID(13),
       availableSessions: [],
-      canViewCourse: false,
       changeDeadline: pastDate,
       enrollmentUrl: '/entitlement-enrollment',
-      isEntitlement: true,
       isExpired: true,
       isFulfilled: false,
       isRefundable: true,
@@ -590,78 +611,74 @@ export const entitlementCourses = [
 // Entitlement Course - expired
 export const courseRunData = courseRuns.map(
   (data, index) => {
-    const title = genCourseTitle(index);
-    const cardId = genCardId(index);
+    const courseName = genCourseTitle(index);
     const courseId = genCourseId(index);
     const courseNumber = genCourseNumber(index);
     const providerIndex = index % 3;
-    const lastEnrolled = new Date();
-    lastEnrolled.setDate(lastEnrolled.getDate() - index);
+    const lastEnrolledDate = new Date();
+    lastEnrolledDate.setDate(lastEnrolledDate.getDate() - index);
+    const lastEnrolled = lastEnrolledDate.toISOString();
     const iteratedData = [
       {
-        course: { title, bannerUrl: logos.edx, courseNumber },
+        course: { courseName, bannerImgSrc, courseNumber },
         emailSettings: { isEmailEnabled: false, hasOptedOutOfEmail: false },
-        relatedPrograms,
-        provider: providers.edx,
+        programs: { relatedPrograms },
+        courseProvider: providers.edx,
       },
       {
-        course: { title, bannerUrl: logos.science, courseNumber },
+        course: { courseName, bannerImgSrc, courseNumber },
         emailSettings: { isEmailEnabled: true, hasOptedOutOfEmail: false },
-        provider: providers.mit,
-        relatedPrograms: [relatedPrograms[0]],
+        courseProvider: providers.mit,
+        programs: { relatedPrograms: [relatedPrograms[0]] },
       },
       {
-        course: { title, bannerUrl: logos.social, courseNumber },
+        course: { courseName, bannerImgSrc, courseNumber },
         emailSettings: { isEmailEnabled: true, hasOptedOutOfEmail: true },
-        provider: null,
-        relatedPrograms: [],
+        courseProvider: null,
+        programs: { relatedPrograms: [] },
       },
     ];
     return {
-      cardId,
-      grades: { isPassing: true },
+      gradeData: { isPassing: true },
       entitlement: null,
       ...data,
-      certificates: genCertificateData(data.certificates),
-      enrollment: genEnrollmentData(data.enrollment),
+      certificate: genCertificateData(data.certificate),
+      enrollment: genEnrollmentData({ lastEnrolled, ...data.enrollment }),
       courseRun: genCourseRunData({
         ...data.courseRun,
         ...iteratedData.emailSettings,
         courseId,
-        lastEnrolled,
       }),
-      provider: iteratedData[providerIndex].provider,
+      courseProvider: iteratedData[providerIndex].courseProvider,
       course: iteratedData[providerIndex].course,
-      relatedPrograms: iteratedData[providerIndex].relatedPrograms,
+      programs: iteratedData[providerIndex].programs,
     };
   },
 );
 
 export const entitlementData = entitlementCourses.map(
   (data, index) => {
-    const title = genCourseTitle(100 + index);
-    const cardId = genCardId(100 + index);
+    const courseName = genCourseTitle(100 + index);
     const courseNumber = genCourseNumber(100 + index);
     const providerIndex = index % 3;
     const iteratedData = [
       {
-        provider: providers.edx,
-        course: { courseNumber, title, bannerUrl: logos.edx },
-        relatedPrograms,
+        courseProvider: providers.edx,
+        course: { courseNumber, courseName, bannerImgSrc },
+        programs: { relatedPrograms },
       },
       {
-        provider: providers.mit,
-        course: { courseNumber, title, bannerUrl: logos.science },
-        relatedPrograms: [relatedPrograms[0]],
+        courseProvider: providers.mit,
+        course: { courseNumber, courseName, bannerImgSrc },
+        programs: { relatedPrograms: [relatedPrograms[0]] },
       },
       {
-        provider: null,
-        course: { courseNumber, title, bannerUrl: logos.social },
-        relatedPrograms: [],
+        courseProvider: null,
+        course: { courseNumber, courseName, bannerImgSrc },
+        programs: { relatedPrograms: [] },
       },
     ];
     return {
-      cardId,
       enrollment: genEnrollmentData({
         isEnrolled: false,
         lastEnrolled: null,
@@ -674,14 +691,22 @@ export const entitlementData = entitlementCourses.map(
         isEmailEnabled: false,
         isVerified: false,
       }),
-      grades: null,
-      certificates: null,
+      gradeData: null,
+      certificate: null,
       courseRun: null,
       ...data,
       ...iteratedData[providerIndex],
     };
   },
 );
+
+console.log('%j', {
+  courses: [
+    ...courseRunData,
+    ...entitlementData,
+  ],
+  ...globalData,
+});
 
 export default {
   courseRunData,

@@ -12,7 +12,7 @@ import {
 import userEvent from '@testing-library/user-event';
 
 import thunk from 'redux-thunk';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { useIntl, IntlProvider } from '@edx/frontend-platform/i18n';
 
 import api from 'data/services/lms/api';
 import fakeData from 'data/services/lms/fakeData/courses';
@@ -33,6 +33,14 @@ jest.unmock('@edx/frontend-component-footer');
 jest.unmock('react');
 jest.unmock('react-redux');
 jest.unmock('hooks');
+
+jest.mock('@edx/frontend-platform/i18n', () => ({
+  ...jest.requireActual('@edx/frontend-platform/i18n'),
+  useIntl: () => ({
+    formatMessage: jest.requireActual('testUtils').formatMessage,
+    formatDate: (date) => `Date-${date}`,
+  }),
+}));
 
 jest.mock('@edx/frontend-platform/auth', () => ({
   getAuthenticatedHttpClient: jest.fn(),
@@ -128,9 +136,10 @@ describe('ESG app integration tests', () => {
   });
 
   test('course cards', async () => {
+    const { formatDate } = useIntl();
     resolveFns.init.success();
     await waitForRequestStatus(RequestKeys.initialize, RequestStates.completed);
-    await inspector.findByText(fakeData.courseRunData[0].course.title);
+    await inspector.findByText(fakeData.courseRunData[0].course.courseName);
     const cards = inspector.get.courseCards;
 
     let cardId;
@@ -149,14 +158,14 @@ describe('ESG app integration tests', () => {
 
     inspector.verifyText(
       inspector.get.card.header(card),
-      courseData.course.title,
+      courseData.course.courseName,
     );
     cardDetails = inspector.get.card.details(card);
     [
-      courseData.provider.name,
+      courseData.courseProvider.name,
       courseData.course.courseNumber,
       appMessages.withValues.CourseCardDetails.courseStarts({
-        startDate: courseData.courseRun.startDate,
+        startDate: formatDate(new Date(courseData.courseRun.startDate)),
       }),
     ].forEach(value => inspector.verifyTextIncludes(cardDetails, value));
   });

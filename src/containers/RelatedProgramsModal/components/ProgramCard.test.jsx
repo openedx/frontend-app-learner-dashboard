@@ -6,8 +6,8 @@ import ProgramCard from './ProgramCard';
 const props = {
   data: {
     numberOfCourses: 2,
-    bannerUrl: 'props.data.bannerUrl',
-    logoUrl: 'props.data.logoUrl',
+    bannerImgSrc: 'props.data.bannerImgSrc',
+    logoImgSrc: 'props.data.logoImgSrc',
     title: 'props.data.title',
     provider: 'props.data.provider',
     programType: 'props.data.programType',

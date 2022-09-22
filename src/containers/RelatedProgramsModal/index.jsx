@@ -7,9 +7,9 @@ import {
   Container, Row, Col, ModalDialog,
 } from '@edx/paragon';
 
+import { hooks } from 'data/redux';
 import ProgramCard from './components/ProgramCard';
 import messages from './messages';
-import { useProgramData } from './hooks';
 import './index.scss';
 
 export const RelatedProgramsModal = ({
@@ -18,7 +18,8 @@ export const RelatedProgramsModal = ({
   cardId,
 }) => {
   const { formatMessage } = useIntl();
-  const { courseTitle, relatedPrograms } = useProgramData({ cardId });
+  const { courseName } = hooks.useCardCourseData(cardId);
+  const relatedPrograms = hooks.useCardRelatedProgramsData(cardId).list;
   return (
     <ModalDialog
       title={formatMessage(messages.header)}
@@ -34,7 +35,7 @@ export const RelatedProgramsModal = ({
         {formatMessage(messages.header)}
       </ModalDialog.Header>
       <ModalDialog.Header as="h4" className="programs-header p-0">
-        {courseTitle}
+        {courseName}
       </ModalDialog.Header>
       <ModalDialog.Body className="pl-0 overflow-hidden">
         <p>{formatMessage(messages.description)}</p>

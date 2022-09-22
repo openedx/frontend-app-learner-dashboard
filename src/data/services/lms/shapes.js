@@ -3,7 +3,7 @@ import { StrictDict, keyStore } from 'utils';
 
 export const shapes = StrictDict({
   course: PropTypes.shape({
-    bannerUrl: PropTypes.string,
+    bannerImgSrc: PropTypes.string,
     title: PropTypes.string,
     website: PropTypes.string,
   }),
@@ -21,13 +21,12 @@ export const shapes = StrictDict({
     isStarted: PropTypes.bool,
     minPassingGrade: PropTypes.number,
   }),
-  certificates: PropTypes.shape({
+  certificate: PropTypes.shape({
     availableDate: PropTypes.string,
     downloadUrls: PropTypes.shape({
       preview: PropTypes.string,
       download: PropTypes.string,
     }),
-    isAvailable: PropTypes.bool,
     isDownloadable: PropTypes.bool,
     isEarned: PropTypes.bool,
     isRestricted: PropTypes.bool,
@@ -52,13 +51,13 @@ export const shapes = StrictDict({
     isExpired: PropTypes.bool,
     canViewCourse: PropTypes.bool,
   }),
-  grades: PropTypes.shape({
+  gradeData: PropTypes.shape({
     isPassing: PropTypes.bool,
   }),
   programCard: PropTypes.shape({
     provider: PropTypes.string,
-    bannerUrl: PropTypes.string,
-    logoUrl: PropTypes.string,
+    bannerImgSrc: PropTypes.string,
+    logoImgSrc: PropTypes.string,
     title: PropTypes.string,
     programUrl: PropTypes.string,
     programType: PropTypes.string,
@@ -72,10 +71,10 @@ shapes.courseRunCardData = PropTypes.shape({
   course: shapes.course,
   provider: shapes.provider,
   courseRun: shapes.courseRun,
-  certificates: shapes.certificates,
+  certificate: shapes.certificate,
   enrollment: shapes.enrollment,
   entitlement: shapes.entitlement,
-  grades: shapes.grades,
+  gradeData: shapes.gradeData,
   relatedPrograms: PropTypes.arrayOf(shapes.programCard),
 });
 
@@ -84,10 +83,10 @@ export const keys = StrictDict({
   course: keyStore(shapes.course),
   provider: keyStore(shapes.provider),
   courseRun: keyStore(shapes.courseRun),
-  certificates: keyStore(shapes.certificates),
+  certificate: keyStore(shapes.certificate),
   enrollment: keyStore(shapes.enrollment),
   entitlement: keyStore(shapes.entitlement),
-  grades: keyStore(shapes.grades),
+  gradeData: keyStore(shapes.gradeData),
   program: keyStore(shapes.programCard),
 });
 

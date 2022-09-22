@@ -21,7 +21,7 @@ export const CertificateBanner = ({ cardId }) => {
   const { isPassing } = appHooks.useCardGradeData(cardId);
   const { minPassingGrade, progressUrl } = appHooks.useCardCourseRunData(cardId);
   const { supportEmail, billingEmail } = appHooks.usePlatformSettingsData();
-  const { formatMessage } = useIntl();
+  const { formatMessage, formatDate } = useIntl();
 
   const emailLink = address => address && <MailtoLink to={address}>{address}</MailtoLink>;
 
@@ -76,7 +76,7 @@ export const CertificateBanner = ({ cardId }) => {
       <Banner>
         {formatMessage(
           messages.gradeAndCertReadyAfter,
-          { availableDate: certificate.availableDate },
+          { availableDate: formatDate(certificate.availableDate) },
         )}
       </Banner>
     );

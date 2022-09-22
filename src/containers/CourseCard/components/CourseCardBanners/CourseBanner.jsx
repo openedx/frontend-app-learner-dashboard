@@ -17,7 +17,7 @@ export const CourseBanner = ({ cardId }) => {
   } = appHooks.useCardEnrollmentData(cardId);
   const courseRun = appHooks.useCardCourseRunData(cardId);
   const course = appHooks.useCardCourseData(cardId);
-  const { formatMessage } = useIntl();
+  const { formatMessage, formatDate } = useIntl();
 
   const { hasUnmetPrerequisites, isStaff, isTooEarly } = coursewareAccess;
 
@@ -53,17 +53,17 @@ export const CourseBanner = ({ cardId }) => {
           </Hyperlink>
         </Banner>
       )}
-      {isTooEarly && (
+
+      {(!isStaff && isTooEarly) && (
         <Banner>
           {formatMessage(messages.courseHasNotStarted, {
-            startDate: courseRun.startDate,
+            startDate: formatDate(courseRun.startDate),
           })}
         </Banner>
       )}
-      {hasUnmetPrerequisites && (
+      {(!isStaff && hasUnmetPrerequisites) && (
         <Banner>{formatMessage(messages.prerequisitesNotMet)}</Banner>
       )}
-      {isStaff && <Banner>{formatMessage(messages.staffAccessOnly)}</Banner>}
     </>
   );
 };
