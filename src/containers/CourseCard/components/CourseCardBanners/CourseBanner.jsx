@@ -53,17 +53,17 @@ export const CourseBanner = ({ cardId }) => {
           </Hyperlink>
         </Banner>
       )}
-      {isTooEarly && (
+
+      {(!isStaff && isTooEarly) && (
         <Banner>
           {formatMessage(messages.courseHasNotStarted, {
             startDate: formatDate(courseRun.startDate),
           })}
         </Banner>
       )}
-      {hasUnmetPrerequisites && (
+      {(!isStaff && hasUnmetPrerequisites) && (
         <Banner>{formatMessage(messages.prerequisitesNotMet)}</Banner>
       )}
-      {isStaff && <Banner>{formatMessage(messages.staffAccessOnly)}</Banner>}
     </>
   );
 };

@@ -33,11 +33,7 @@ export const genCourseNumber = (index) => `course-number${index}`;
 export const genCourseTitle = (index) => `Course Name ${index}`;
 export const genEntitlementUUID = (index) => `entitlement-course-uuid-${index}`;
 
-const logos = {
-  edx: 'https://edx-cdn.org/v3/prod/logo.svg',
-  social: 'https://courses.edx.org/asset-v1:USMx+LDT200x+2T2021+type@thumbnail+block@course_image-375x200.jpg',
-  science: 'https://courses.edx.org/asset-v1:HarvardX+PH525.5x+3T2020+type@thumbnail+block@course_image-375x200.jpg',
-};
+const bannerImgSrc = '/asset-v1:edX+DemoX+Demo_Course+type@asset+block@images_course_image.jpg';
 
 const farPastDate = '1900-11-11T00:00:00Z';
 const pastDate = '2000-11-11T00:00:00Z';
@@ -357,7 +353,7 @@ export const courseRuns = [
       isEarned: true,
       isDownloadable: true,
       availableDate: pastDate,
-      certPreviewUrl: logos.edx,
+      certPreviewUrl: bannerImgSrc,
     },
   },
   // verified, course ended, learner finished, cert earned, downloadable (link only),
@@ -393,7 +389,7 @@ export const courseRuns = [
       isEarned: true,
       isDownloadable: true,
       availableDate: pastDate,
-      certPreviewUrl: logos.edx,
+      certPreviewUrl: bannerImgSrc,
     },
   },
   // Entitlement - not started
@@ -508,7 +504,7 @@ export const courseRuns = [
       isEarned: true,
       isDownloadable: true,
       availableDate: pastDate,
-      certPreviewUrl: logos.edx,
+      certPreviewUrl: bannerImgSrc,
     },
   },
   // Entitlement - Learner finished and failed.  cannot refund.  course ended.
@@ -556,7 +552,7 @@ export const courseRuns = [
       isEarned: true,
       isDownloadable: true,
       availableDate: pastDate,
-      certPreviewUrl: logos.edx,
+      certPreviewUrl: bannerImgSrc,
     },
   },
 ];
@@ -624,19 +620,19 @@ export const courseRunData = courseRuns.map(
     const lastEnrolled = lastEnrolledDate.toISOString();
     const iteratedData = [
       {
-        course: { courseName, bannerImgSrc: logos.edx, courseNumber },
+        course: { courseName, bannerImgSrc, courseNumber },
         emailSettings: { isEmailEnabled: false, hasOptedOutOfEmail: false },
         programs: { relatedPrograms },
         courseProvider: providers.edx,
       },
       {
-        course: { courseName, bannerImgSrc: logos.science, courseNumber },
+        course: { courseName, bannerImgSrc, courseNumber },
         emailSettings: { isEmailEnabled: true, hasOptedOutOfEmail: false },
         courseProvider: providers.mit,
         programs: { relatedPrograms: [relatedPrograms[0]] },
       },
       {
-        course: { courseName, bannerImgSrc: logos.social, courseNumber },
+        course: { courseName, bannerImgSrc, courseNumber },
         emailSettings: { isEmailEnabled: true, hasOptedOutOfEmail: true },
         courseProvider: null,
         programs: { relatedPrograms: [] },
@@ -668,17 +664,17 @@ export const entitlementData = entitlementCourses.map(
     const iteratedData = [
       {
         courseProvider: providers.edx,
-        course: { courseNumber, courseName, bannerImgSrc: logos.edx },
+        course: { courseNumber, courseName, bannerImgSrc },
         programs: { relatedPrograms },
       },
       {
         courseProvider: providers.mit,
-        course: { courseNumber, courseName, bannerImgSrc: logos.science },
+        course: { courseNumber, courseName, bannerImgSrc },
         programs: { relatedPrograms: [relatedPrograms[0]] },
       },
       {
         courseProvider: null,
-        course: { courseNumber, courseName, bannerImgSrc: logos.social },
+        course: { courseNumber, courseName, bannerImgSrc },
         programs: { relatedPrograms: [] },
       },
     ];
@@ -704,7 +700,6 @@ export const entitlementData = entitlementCourses.map(
   },
 );
 
-/*
 console.log('%j', {
   courses: [
     ...courseRunData,
@@ -712,7 +707,6 @@ console.log('%j', {
   ],
   ...globalData,
 });
-*/
 
 export default {
   courseRunData,

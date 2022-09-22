@@ -55,7 +55,7 @@ export const courseCard = StrictDict({
     isRestricted: certificate.isRestricted,
   })),
   course: mkCardSelector(({ course }) => ({
-    bannerImgSrc: course.bannerImgSrc,
+    bannerImgSrc: process.env.LMS_BASE_URL + course.bannerImgSrc,
     courseNumber: course.courseNumber,
     courseName: course.courseName,
     website: course.website,
@@ -92,7 +92,7 @@ export const courseCard = StrictDict({
     };
   }),
   entitlement: mkCardSelector(({ entitlement }) => {
-    if (!entitlement) {
+    if (!entitlement || Object.keys(entitlement).length === 0) {
       return { isEntitlement: false };
     }
     const deadline = new Date(entitlement.changeDeadline);
