@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CourseCardMenu snapshot 1`] = `
+<Fragment>
+  <Dropdown>
+    <Dropdown.Toggle
+      alt="Actions dropdown"
+      as="IconButton"
+      iconAs="Icon"
+      id="dropdown-toggle-with-iconbutton"
+      src={[MockFunction icons.MoreVert]}
+      variant="primary"
+    />
+    <Dropdown.Menu>
+      <Dropdown.Item
+        onClick={[MockFunction unenrollShow]}
+      >
+        Unenroll
+      </Dropdown.Item>
+      <Dropdown.Item
+        onClick={[MockFunction emailSettingShow]}
+      >
+        Email Settings
+      </Dropdown.Item>
+      <Dropdown.Item
+        href="#/action-3"
+      >
+        Share to Facebook
+      </Dropdown.Item>
+      <Dropdown.Item
+        href="#/action-3"
+      >
+        Share to Twitter
+      </Dropdown.Item>
+    </Dropdown.Menu>
+  </Dropdown>
+  <UnenrollConfirmModal
+    cardId="test-card-id"
+    closeModal={[MockFunction unenrollHide]}
+    show={false}
+  />
+  <EmailSettingsModal
+    cardId="test-card-id"
+    closeModal={[MockFunction emailSettingHide]}
+    show={false}
+  />
+</Fragment>
+`;

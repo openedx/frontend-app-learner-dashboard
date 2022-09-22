@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CourseCardContent snapshot orientation horizontal 1`] = `
+<Fragment>
+  <Card.ImageCap
+    src="test-banner-img-src"
+    srcAlt="Course thumbnail"
+  />
+  <Card.Body>
+    <Card.Header
+      actions={
+        <CourseCardMenu
+          cardId="test-card-id"
+        />
+      }
+      title={
+        <span
+          data-testid="CourseCardTitle"
+        >
+          test-course-name
+        </span>
+      }
+    />
+    <Card.Section
+      className="pt-0"
+    >
+      <CourseCardDetails
+        cardId="test-card-id"
+      />
+    </Card.Section>
+    <Card.Footer
+      orientation="vertical"
+      textElement={
+        <RelatedProgramsBadge
+          cardId="test-card-id"
+        />
+      }
+    >
+      <CourseCardActions
+        cardId="test-card-id"
+      />
+    </Card.Footer>
+  </Card.Body>
+</Fragment>
+`;
+
+exports[`CourseCardContent snapshot orientation vertical 1`] = `
+<Fragment>
+  <Card.ImageCap
+    src="test-banner-img-src"
+    srcAlt="Course thumbnail"
+  />
+  <Card.Body>
+    <Card.Header
+      actions={
+        <CourseCardMenu
+          cardId="test-card-id"
+        />
+      }
+      title={
+        <span
+          data-testid="CourseCardTitle"
+        >
+          test-course-name
+        </span>
+      }
+    />
+    <Card.Section
+      className="pt-0"
+    >
+      <CourseCardDetails
+        cardId="test-card-id"
+      />
+    </Card.Section>
+    <RelatedProgramsBadge
+      cardId="test-card-id"
+    />
+    <Card.Footer
+      orientation="horizontal"
+    >
+      <CourseCardActions
+        cardId="test-card-id"
+      />
+    </Card.Footer>
+  </Card.Body>
+</Fragment>
+`;
