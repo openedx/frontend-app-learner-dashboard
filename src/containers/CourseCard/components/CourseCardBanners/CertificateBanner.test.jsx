@@ -1,7 +1,7 @@
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 
-import CertificateBanner from './CertificateBanner';
 import { hooks } from 'data/redux';
+import CertificateBanner from './CertificateBanner';
 import messages from './messages';
 
 jest.mock('data/redux', () => ({
@@ -48,8 +48,8 @@ describe('CertificateBanner', () => {
     grade = {},
   }) => {
     hooks.useCardGradeData.mockReturnValueOnce({ ...defaultGrade, ...grade });
-    hooks.useCardCertificateData.mockReturnValueOnce({ ...defaultCertificate, ...certificate});
-    hooks.useCardEnrollmentData.mockReturnValueOnce({ ...defaultEnrollment, ...enrollment});
+    hooks.useCardCertificateData.mockReturnValueOnce({ ...defaultCertificate, ...certificate });
+    hooks.useCardEnrollmentData.mockReturnValueOnce({ ...defaultEnrollment, ...enrollment });
     return shallow(<CertificateBanner {...props} />);
   };
   describe('snapshot', () => {

@@ -1,8 +1,7 @@
 import { shallow } from 'enzyme';
 
-import ActiveCourseFilters from './ActiveCourseFilters';
-
 import { FilterKeys } from 'data/constants/app';
+import ActiveCourseFilters from './ActiveCourseFilters';
 
 describe('ActiveCourseFilters', () => {
   const props = {

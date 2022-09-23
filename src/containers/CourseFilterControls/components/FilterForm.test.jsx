@@ -1,8 +1,7 @@
 import { shallow } from 'enzyme';
 
-import FilterForm, { filterOrder } from './FilterForm';
-
 import { FilterKeys } from 'data/constants/app';
+import FilterForm, { filterOrder } from './FilterForm';
 
 jest.mock('./Checkbox', () => 'Checkbox');
 

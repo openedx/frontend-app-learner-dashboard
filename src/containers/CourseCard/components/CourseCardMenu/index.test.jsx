@@ -19,7 +19,7 @@ describe('CourseCardMenu', () => {
     show: jest.fn().mockName('unenrollShow'),
     hide: jest.fn().mockName('unenrollHide'),
   };
-  
+
   it('snapshot', () => {
     useCourseCardMenuData.mockReturnValue({
       emailSettingsModal: defaultEmailSettingsModal,

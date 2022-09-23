@@ -1,8 +1,7 @@
 import { shallow } from 'enzyme';
 
-import SortForm from './SortForm';
-
 import { SortKeys } from 'data/constants/app';
+import SortForm from './SortForm';
 
 jest.mock('./Checkbox', () => 'Checkbox');
 

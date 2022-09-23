@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 
-import SelectSessionButton from './SelectSessionButton';
 import { hooks } from 'data/redux';
+import SelectSessionButton from './SelectSessionButton';
 
 jest.mock('data/redux', () => ({
   hooks: {
@@ -17,11 +17,11 @@ describe('SelectSessionButton', () => {
     cardId: 'cardId',
   };
   hooks.useCardCourseRunData.mockReturnValue({
-    resumeUrl: 'resumeUrl'
+    resumeUrl: 'resumeUrl',
   });
-  const createWrapper = ({ hasAccess, canChange, hasSessions}) => {
+  const createWrapper = ({ hasAccess, canChange, hasSessions }) => {
     hooks.useCardEnrollmentData.mockReturnValueOnce({
-      hasAccess
+      hasAccess,
     });
     hooks.useCardEntitlementData.mockReturnValueOnce({
       canChange,

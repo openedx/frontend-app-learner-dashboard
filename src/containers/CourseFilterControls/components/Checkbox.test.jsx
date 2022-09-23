@@ -1,8 +1,7 @@
 import { shallow } from 'enzyme';
 
-import Checkbox from './Checkbox';
-
 import { FilterKeys } from 'data/constants/app';
+import Checkbox from './Checkbox';
 
 describe('Checkbox', () => {
   describe('snapshot', () => {

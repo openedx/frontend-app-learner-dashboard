@@ -33,7 +33,7 @@ describe('CourseFilterControls', () => {
   // hacky way to mock breakpoints
   breakpoints.small = {
     minWidth: 100,
-  }
+  };
 
   describe('snapshot', () => {
     it('is mobile', () => {

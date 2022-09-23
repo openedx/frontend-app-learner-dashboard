@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 
-import ViewCourseButton from './ViewCourseButton';
 import { hooks } from 'data/redux';
+import ViewCourseButton from './ViewCourseButton';
 
 jest.mock('data/redux', () => ({
   hooks: {
@@ -17,7 +17,7 @@ describe('ViewCourseButton', () => {
   };
   const marketingUrl = 'marketingUrl';
   hooks.useCardCourseRunData.mockReturnValue({ marketingUrl });
-  const createWrapper = ({hasAccess, isEntitlement, isExpired}) => {
+  const createWrapper = ({ hasAccess, isEntitlement, isExpired }) => {
     hooks.useCardEnrollmentData.mockReturnValueOnce({ hasAccess });
     hooks.useCardEntitlementData.mockReturnValueOnce({ isEntitlement, isExpired });
     return shallow(<ViewCourseButton {...props} />);

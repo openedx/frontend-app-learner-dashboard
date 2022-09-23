@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 
-import BeginCourseButton from './BeginCourseButton';
 import { hooks } from 'data/redux';
+import BeginCourseButton from './BeginCourseButton';
 
 jest.mock('data/redux', () => ({
   hooks: {
