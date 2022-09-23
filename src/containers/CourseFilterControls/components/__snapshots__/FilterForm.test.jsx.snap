@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FilterForm snapshot renders 1`] = `
+<Form.Group>
+  <div
+    className="filter-form-heading mb-1"
+  >
+    Course Status
+  </div>
+  <Form.CheckboxSet
+    name="course-status-filters"
+    onChange={[MockFunction handleFilterChange]}
+    value={
+      Array [
+        "test-filter",
+      ]
+    }
+  >
+    <Checkbox
+      filterKey="inProgress"
+      key="inProgress"
+    />
+    <Checkbox
+      filterKey="notStarted"
+      key="notStarted"
+    />
+    <Checkbox
+      filterKey="done"
+      key="done"
+    />
+    <Checkbox
+      filterKey="notEnrolled"
+      key="notEnrolled"
+    />
+    <Checkbox
+      filterKey="upgraded"
+      key="upgraded"
+    />
+  </Form.CheckboxSet>
+</Form.Group>
+`;
