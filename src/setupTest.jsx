@@ -114,8 +114,29 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
   Spinner: 'Spinner',
   PageBanner: 'PageBanner',
 
-  useWindowSize: jest.fn(),
-  breakpoints: jest.fn(),
+  useWindowSize: () => jest.fn(),
+  breakpoints: () => ({
+    extraSmall: {
+      minWidth: 0,
+      maxWidth: 575,
+    },
+    small: {
+      minWidth: 576,
+      maxWidth: 767,
+    },
+    medium: {
+      minWidth: 768,
+      maxWidth: 991,
+    },
+    large: {
+      minWidth: 992,
+      maxWidth: 1199,
+    },
+    extraLarge: {
+      minWidth: 1200,
+      maxWidth: 100000,
+    },
+  }),
 }));
 
 jest.mock('@fortawesome/react-fontawesome', () => ({

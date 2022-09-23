@@ -30,11 +30,6 @@ describe('CourseFilterControls', () => {
     handleSortChange: jest.fn().mockName('handleSortChange'),
   });
 
-  // hacky way to mock breakpoints
-  breakpoints.small = {
-    minWidth: 100,
-  };
-
   describe('snapshot', () => {
     it('is mobile', () => {
       useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth - 1 });
