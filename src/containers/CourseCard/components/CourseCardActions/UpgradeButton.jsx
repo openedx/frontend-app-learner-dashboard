@@ -11,12 +11,13 @@ import messages from './messages';
 export const UpgradeButton = ({ cardId }) => {
   const { upgradeUrl } = hooks.useCardCourseRunData(cardId);
   const { canUpgrade } = hooks.useCardEnrollmentData(cardId);
+  const { isMasquerading } = hooks.useMasqueradeData();
   const { formatMessage } = useIntl();
   return (
     <Button
       iconBefore={Locked}
       variant="outline-primary"
-      disabled={!canUpgrade}
+      disabled={isMasquerading || !canUpgrade}
       as="a"
       href={upgradeUrl}
     >

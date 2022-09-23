@@ -72,12 +72,15 @@ export const CourseList = () => {
         {visibleList.map(({ cardId }) => (
           <CourseCard key={cardId} cardId={cardId} />
         ))}
-        <Pagination
-          variant="secondary"
-          paginationLabel="Course List"
-          pageCount={numPages}
-          onPageSelect={setPageNumber}
-        />
+        {(numPages > 1) && (
+          <Pagination
+            variant="secondary"
+            paginationLabel="Course List"
+            className="mx-auto"
+            pageCount={numPages}
+            onPageSelect={setPageNumber}
+          />
+        )}
       </div>
     </div>
   );
