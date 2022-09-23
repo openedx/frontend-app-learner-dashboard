@@ -72,6 +72,8 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
     Item: 'Dropdown.Item',
     Menu: 'Dropdown.Menu',
     Toggle: 'Dropdown.Toggle',
+    Header: 'Dropdown.Header',
+    Divider: 'Dropdown.Divider',
   },
   Form: {
     Checkbox: 'Form.Checkbox',
@@ -113,8 +115,10 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
   TextFilter: 'TextFilter',
   Spinner: 'Spinner',
   PageBanner: 'PageBanner',
+  Pagination: 'Pagination',
 
   useWindowSize: () => jest.fn(),
+  useCheckboxSetValues: () => jest.fn(),
   breakpoints: () => ({
     extraSmall: {
       minWidth: 0,

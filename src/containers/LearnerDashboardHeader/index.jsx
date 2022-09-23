@@ -6,10 +6,11 @@ import { Program } from '@edx/paragon/icons';
 import { Button } from '@edx/paragon';
 
 import MasqueradeBar from 'containers/MasqueradeBar';
-import AuthenticatedUserDropdown from './AuthenticatedUserDropdown';
 
+import AuthenticatedUserDropdown from './AuthenticatedUserDropdown';
 import GreetingBanner from './GreetingBanner';
 import ConfirmEmailBanner from './ConfirmEmailBanner';
+
 import { useIsCollapsed } from './hooks';
 import messages from './messages';
 import './index.scss';
