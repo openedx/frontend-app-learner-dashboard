@@ -74,6 +74,8 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
     Toggle: 'Dropdown.Toggle',
   },
   Form: {
+    Checkbox: 'Form.Checkbox',
+    CheckboxSet: 'Form.CheckboxSet',
     Control: {
       Feedback: 'Form.Control.Feedback',
     },
@@ -98,16 +100,22 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
     Body: 'ModalDialog.Body',
     Hero: 'ModalDialog.Hero',
   },
+  ModalPopup: 'ModalPopup',
+  ModalCloseButton: 'ModalCloseButton',
   MultiSelectDropdownFilter: 'MultiSelectDropdownFilter',
   OverlayTrigger: 'OverlayTrigger',
   Popover: {
     Content: 'Popover.Content',
   },
   Row: 'Row',
+  Sheet: 'Sheet',
   StatefulButton: 'StatefulButton',
   TextFilter: 'TextFilter',
   Spinner: 'Spinner',
   PageBanner: 'PageBanner',
+
+  useWindowSize: jest.fn(),
+  breakpoints: jest.fn(),
 }));
 
 jest.mock('@fortawesome/react-fontawesome', () => ({

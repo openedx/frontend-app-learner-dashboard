@@ -35,7 +35,7 @@ export const formatMessage = (msg, values) => {
  *   mockNestedComponent('IconButton', 'IconButton');
  */
 export const mockNestedComponent = (name, contents) => {
-  if (typeof contents !== 'object') {
+  if (typeof contents !== 'object' || typeof contents === 'function') {
     return contents;
   }
   const fn = () => name;
