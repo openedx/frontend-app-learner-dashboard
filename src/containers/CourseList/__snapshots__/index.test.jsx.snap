@@ -1,0 +1,114 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CourseList snapshots with filters 1`] = `
+<div
+  className="course-list-container"
+>
+  <div
+    id="course-list-heading-container"
+  >
+    <h2
+      className="my-2"
+    >
+      My Courses
+    </h2>
+    <div
+      className="text-right"
+      id="course-filter-controls-container"
+    >
+      <CourseFilterControls
+        abitary="filter"
+      />
+    </div>
+  </div>
+  <div
+    id="course-list-active-filters-container"
+  >
+    <ActiveCourseFilters
+      abitary="filter"
+    />
+  </div>
+  <div
+    className="d-flex flex-column flex-grow-1"
+  >
+    <Pagination
+      onPageSelect={[MockFunction setPageNumber]}
+      pageCount={1}
+      paginationLabel="Course List"
+      variant="secondary"
+    />
+  </div>
+</div>
+`;
+
+exports[`CourseList snapshots with multiple courses 1`] = `
+<div
+  className="course-list-container"
+>
+  <div
+    id="course-list-heading-container"
+  >
+    <h2
+      className="my-2"
+    >
+      My Courses
+    </h2>
+    <div
+      className="text-right"
+      id="course-filter-controls-container"
+    >
+      <CourseFilterControls />
+    </div>
+  </div>
+  <div
+    className="d-flex flex-column flex-grow-1"
+  >
+    <CourseCard
+      cardId="foo"
+      key="foo"
+    />
+    <CourseCard
+      cardId="bar"
+      key="bar"
+    />
+    <Pagination
+      onPageSelect={[MockFunction setPageNumber]}
+      pageCount={1}
+      paginationLabel="Course List"
+      variant="secondary"
+    />
+  </div>
+</div>
+`;
+
+exports[`CourseList snapshots with no filters 1`] = `
+<div
+  className="course-list-container"
+>
+  <div
+    id="course-list-heading-container"
+  >
+    <h2
+      className="my-2"
+    >
+      My Courses
+    </h2>
+    <div
+      className="text-right"
+      id="course-filter-controls-container"
+    >
+      <CourseFilterControls />
+    </div>
+  </div>
+  <div
+    className="d-flex flex-column flex-grow-1"
+  >
+    <Pagination
+      onPageSelect={[MockFunction setPageNumber]}
+      pageCount={1}
+      paginationLabel="Course List"
+      variant="secondary"
+    />
+  </div>
+</div>
+`;

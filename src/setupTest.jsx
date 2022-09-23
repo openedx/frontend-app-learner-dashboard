@@ -118,7 +118,10 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
   Pagination: 'Pagination',
 
   useWindowSize: () => jest.fn(),
-  useCheckboxSetValues: () => jest.fn(),
+  useCheckboxSetValues: () => jest.fn().mockImplementation((values) => ([values, {
+    add: jest.fn().mockName('useCheckboxSetValues.add'),
+    remove: jest.fn().mockName('useCheckboxSetValues.remove'),
+  }])),
   breakpoints: () => ({
     extraSmall: {
       minWidth: 0,

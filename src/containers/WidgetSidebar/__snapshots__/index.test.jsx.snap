@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WidgetSidebar snapshots default 1`] = `
+<div
+  className="widget-sidebar"
+>
+  <div
+    className="d-flex"
+  >
+    <Card
+      orientation="horizontal"
+    >
+      <Card.ImageCap
+        src="icon/mock/path"
+        srcAlt="course side widget"
+      />
+      <Card.Body
+        className="m-auto pr-2"
+      >
+        <h4>
+          Looking for a new challenge?
+        </h4>
+        <Hyperlink
+          destination="#"
+          variant="brand"
+        >
+          Explore courses
+        </Hyperlink>
+      </Card.Body>
+    </Card>
+  </div>
+</div>
+`;
