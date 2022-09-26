@@ -42,18 +42,14 @@ describe('CourseList hooks', () => {
       expect(out.numPages).toEqual(result.numPages);
       expect(out.visibleList).toEqual(result.visible);
     });
-    test('show filter and handle filter', () => {
+    test('handle remove filter', () => {
       appHooks.useCurrentCourseList.mockReturnValueOnce({
         numPages: 1,
         visible: [],
       });
       out = hooks.useCourseListData();
-      out.filterOptions.setFilters.add('a');
-      expect(out.showFilters).toEqual(true);
       out.filterOptions.handleRemoveFilter('a')();
       expect(out.filterOptions.setFilters.remove).toHaveBeenCalledWith('a');
-      expect(out.filterOptions.filters).toEqual([]);
-      expect(out.showFilters).toEqual(false);
     });
   });
 });

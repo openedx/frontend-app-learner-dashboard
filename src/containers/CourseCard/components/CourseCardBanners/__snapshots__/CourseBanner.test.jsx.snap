@@ -38,27 +38,9 @@ exports[`CourseBanner course run active and cannot upgrade snapshot: (upgradseDe
 </Fragment>
 `;
 
-exports[`CourseBanner snapshot: stacking banners 1`] = `
-<Fragment>
-  <Banner>
-    You can't access this course just yet because the course hasn't started yet. The course will start on 11/11/3030.
-  </Banner>
-  <Banner>
-    You can't access this course just yet because you have not met the pre-requisites.
-  </Banner>
-  <Banner>
-    Staff access only.
-  </Banner>
-</Fragment>
-`;
+exports[`CourseBanner snapshot: stacking banners 1`] = `<Fragment />`;
 
-exports[`CourseBanner staff snapshot: isStaff 1`] = `
-<Fragment>
-  <Banner>
-    Staff access only.
-  </Banner>
-</Fragment>
-`;
+exports[`CourseBanner staff snapshot: isStaff 1`] = `<Fragment />`;
 
 exports[`CourseBanner too early snapshot: tooEarly 1`] = `
 <Fragment>

@@ -145,9 +145,6 @@ describe('CourseBanner', () => {
     test('snapshot: isStaff', () => {
       expect(el).toMatchSnapshot();
     });
-    test('messages: staffAccessOnly', () => {
-      expect(el.text()).toContain(messages.staffAccessOnly.defaultMessage);
-    });
   });
   test('snapshot: stacking banners', () => {
     render({
