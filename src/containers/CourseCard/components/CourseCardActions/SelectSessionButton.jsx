@@ -12,12 +12,13 @@ export const SelectSessionButton = ({ cardId }) => {
   const { resumeUrl } = hooks.useCardCourseRunData(cardId);
   const { hasAccess } = hooks.useCardEnrollmentData(cardId);
   const { canChange, hasSessions } = hooks.useCardEntitlementData(cardId);
+  const { isMasquerading } = hooks.useMasqueradeData();
   const { formatMessage } = useIntl();
   const dispatch = useDispatch();
   const openSessionModal = hooks.useUpdateSelectSessionModalCallback(dispatch, cardId);
   return (
     <Button
-      disabled={!hasAccess || (!canChange || !hasSessions)}
+      disabled={isMasquerading || !hasAccess || (!canChange || !hasSessions)}
       onClick={openSessionModal}
       as="a"
       href={resumeUrl}

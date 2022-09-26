@@ -18,7 +18,7 @@ export const AuthenticatedUserDropdown = ({ username }) => {
   const isCollapsed = useIsCollapsed();
 
   return (
-    <Dropdown className="user-dropdown">
+    <Dropdown variant={isCollapsed ? 'light' : 'dark'} className="user-dropdown">
       <Dropdown.Toggle
         as={AvatarButton}
         src={profileImage}

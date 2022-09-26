@@ -10,10 +10,11 @@ import messages from './messages';
 export const BeginCourseButton = ({ cardId }) => {
   const { homeUrl } = hooks.useCardCourseRunData(cardId);
   const { hasAccess } = hooks.useCardEnrollmentData(cardId);
+  const { isMasquerading } = hooks.useMasqueradeData();
   const { formatMessage } = useIntl();
   return (
     <Button
-      disabled={!hasAccess}
+      disabled={isMasquerading || !hasAccess}
       as="a"
       href={homeUrl}
     >

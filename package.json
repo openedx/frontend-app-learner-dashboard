@@ -27,9 +27,10 @@
   },
   "dependencies": {
     "@edx/brand": "npm:@edx/brand-edx.org@^2.0.3",
+    "@edx/browserslist-config": "^1.1.0",
     "@edx/frontend-component-footer": "11.1.0",
     "@edx/frontend-platform": "^2.3.0",
-    "@edx/paragon": "19.25.0",
+    "@edx/paragon": "20.12.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",

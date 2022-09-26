@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Dropdown, Icon, IconButton } from '@edx/paragon';
 import { MoreVert } from '@edx/paragon/icons';
 
+import { hooks as appHooks } from 'data/redux';
 import EmailSettingsModal from 'containers/EmailSettingsModal';
 import UnenrollConfirmModal from 'containers/UnenrollConfirmModal';
 import useCourseCardMenuData from './hooks';
@@ -13,6 +14,7 @@ export const CourseCardMenu = ({ cardId }) => {
     emailSettingsModal,
     unenrollModal,
   } = useCourseCardMenuData();
+  const { isMasquerading } = appHooks.useMasqueradeData();
   return (
     <>
       <Dropdown>
@@ -25,8 +27,12 @@ export const CourseCardMenu = ({ cardId }) => {
           alt="Actions dropdown"
         />
         <Dropdown.Menu>
-          <Dropdown.Item onClick={unenrollModal.show}>Unenroll</Dropdown.Item>
-          <Dropdown.Item onClick={emailSettingsModal.show}>Email Settings</Dropdown.Item>
+          <Dropdown.Item disabled={isMasquerading} onClick={unenrollModal.show}>
+            Unenroll
+          </Dropdown.Item>
+          <Dropdown.Item disabled={isMasquerading} onClick={emailSettingsModal.show}>
+            Email Settings
+          </Dropdown.Item>
           <Dropdown.Item href="#/action-3">Share to Facebook</Dropdown.Item>
           <Dropdown.Item href="#/action-3">Share to Twitter</Dropdown.Item>
         </Dropdown.Menu>
