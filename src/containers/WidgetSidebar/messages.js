@@ -8,7 +8,7 @@ const messages = defineMessages({
   },
   findCoursesButton: {
     id: 'WidgetSidebar.findCoursesButton',
-    defaultMessage: 'Explore courses',
+    defaultMessage: 'Find a course {arrow}',
     description: 'Button to explore more courses',
   },
 });

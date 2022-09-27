@@ -24,7 +24,7 @@ export const CourseList = () => {
   return (
     <div className="course-list-container">
       <div id="course-list-heading-container">
-        <h2 className="my-2">
+        <h2 className="my-3">
           {formatMessage(messages.myCourses)}
         </h2>
         <div
