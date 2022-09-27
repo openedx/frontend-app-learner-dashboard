@@ -11,13 +11,13 @@ describe('FilterForm', () => {
     handleFilterChange: jest.fn().mockName('handleFilterChange'),
   };
   describe('snapshot', () => {
-    it('renders', () => {
+    test('renders', () => {
       const wrapper = shallow(<FilterForm {...props} />);
       expect(wrapper).toMatchSnapshot();
     });
   });
 
-  it('filterOrder', () => {
+  test('filterOrder', () => {
     expect(filterOrder).toEqual([
       FilterKeys.inProgress,
       FilterKeys.notStarted,

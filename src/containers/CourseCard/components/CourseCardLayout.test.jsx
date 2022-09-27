@@ -15,12 +15,12 @@ describe('CourseCardLayout', () => {
     cardId: 'test-card-id',
   };
   describe('snapshot', () => {
-    it('is collapsed', () => {
+    test('is collapsed', () => {
       useIsCollapsed.mockReturnValue(true);
       const wrapper = shallow(<CourseCardLayout {...props} />);
       expect(wrapper).toMatchSnapshot();
     });
-    it('is not collapsed', () => {
+    test('is not collapsed', () => {
       useIsCollapsed.mockReturnValue(false);
       const wrapper = shallow(<CourseCardLayout {...props} />);
       expect(wrapper).toMatchSnapshot();

@@ -23,11 +23,11 @@ describe('ViewCourseButton', () => {
     return shallow(<ViewCourseButton {...props} />);
   };
   describe('snapshot', () => {
-    it('default button', () => {
+    test('default button', () => {
       const wrapper = createWrapper({ hasAccess: true, isEntitlement: false, isExpired: false });
       expect(wrapper).toMatchSnapshot();
     });
-    it('disabled button', () => {
+    test('disabled button', () => {
       const wrapper = createWrapper({ hasAccess: false, isEntitlement: false, isExpired: false });
       expect(wrapper).toMatchSnapshot();
     });

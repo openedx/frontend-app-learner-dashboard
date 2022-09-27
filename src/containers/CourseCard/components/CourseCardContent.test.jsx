@@ -24,11 +24,11 @@ describe('CourseCardContent', () => {
     bannerImgSrc: 'test-banner-img-src',
   });
   describe('snapshot', () => {
-    it('orientation vertical', () => {
+    test('orientation vertical', () => {
       const wrapper = shallow(<CourseCardContent {...props} />);
       expect(wrapper).toMatchSnapshot();
     });
-    it('orientation horizontal', () => {
+    test('orientation horizontal', () => {
       const wrapper = shallow(<CourseCardContent {...props} orientation="horizontal" />);
       expect(wrapper).toMatchSnapshot();
     });

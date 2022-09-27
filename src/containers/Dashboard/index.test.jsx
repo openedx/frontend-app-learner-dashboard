@@ -2,6 +2,12 @@ import { shallow } from 'enzyme';
 
 import { hooks } from 'data/redux';
 
+import CourseList from 'containers/CourseList';
+import WidgetSidebar from 'containers/WidgetSidebar';
+import EmptyCourse from 'containers/EmptyCourse';
+import SelectSessionModal from 'containers/SelectSessionModal';
+import EnterpriseDashboardModal from 'containers/EnterpriseDashboardModal';
+
 import Dashboard from '.';
 
 jest.mock('data/redux', () => ({
@@ -80,11 +86,11 @@ describe('Dashboard', () => {
         hasAvailableDashboards: false,
         showSelectSessionModal: false,
       });
-      expect(wrapper.find('EmptyCourse').length).toEqual(1);
-      expect(wrapper.find('CourseList').length).toEqual(0);
-      expect(wrapper.find('WidgetSidebar').length).toEqual(0);
-      expect(wrapper.find('SelectSessionModal').length).toEqual(0);
-      expect(wrapper.find('EnterpriseDashboardModal').length).toEqual(0);
+      expect(wrapper.find(EmptyCourse).length).toEqual(1);
+      expect(wrapper.find(CourseList).length).toEqual(0);
+      expect(wrapper.find(WidgetSidebar).length).toEqual(0);
+      expect(wrapper.find(SelectSessionModal).length).toEqual(0);
+      expect(wrapper.find(EnterpriseDashboardModal).length).toEqual(0);
     });
     it('initializes the app with courses, dashboard and select', () => {
       const wrapper = createWrapper({
@@ -92,11 +98,11 @@ describe('Dashboard', () => {
         hasAvailableDashboards: true,
         showSelectSessionModal: true,
       });
-      expect(wrapper.find('EmptyCourse').length).toEqual(0);
-      expect(wrapper.find('CourseList').length).toEqual(1);
-      expect(wrapper.find('WidgetSidebar').length).toEqual(1);
-      expect(wrapper.find('SelectSessionModal').length).toEqual(1);
-      expect(wrapper.find('EnterpriseDashboardModal').length).toEqual(1);
+      expect(wrapper.find(EmptyCourse).length).toEqual(0);
+      expect(wrapper.find(CourseList).length).toEqual(1);
+      expect(wrapper.find(WidgetSidebar).length).toEqual(1);
+      expect(wrapper.find(SelectSessionModal).length).toEqual(1);
+      expect(wrapper.find(EnterpriseDashboardModal).length).toEqual(1);
     });
     it('initializes the app with courses, dashboard and no select', () => {
       const wrapper = createWrapper({
@@ -104,11 +110,11 @@ describe('Dashboard', () => {
         hasAvailableDashboards: true,
         showSelectSessionModal: false,
       });
-      expect(wrapper.find('EmptyCourse').length).toEqual(0);
-      expect(wrapper.find('CourseList').length).toEqual(1);
-      expect(wrapper.find('WidgetSidebar').length).toEqual(1);
-      expect(wrapper.find('SelectSessionModal').length).toEqual(0);
-      expect(wrapper.find('EnterpriseDashboardModal').length).toEqual(1);
+      expect(wrapper.find(EmptyCourse).length).toEqual(0);
+      expect(wrapper.find(CourseList).length).toEqual(1);
+      expect(wrapper.find(WidgetSidebar).length).toEqual(1);
+      expect(wrapper.find(SelectSessionModal).length).toEqual(0);
+      expect(wrapper.find(EnterpriseDashboardModal).length).toEqual(1);
     });
   });
 });

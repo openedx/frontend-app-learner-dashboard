@@ -31,12 +31,12 @@ describe('CourseFilterControls', () => {
   });
 
   describe('snapshot', () => {
-    it('is mobile', () => {
+    test('is mobile', () => {
       useWindowSize.mockReturnValueOnce({ width: breakpoints.small.minWidth - 1 });
       const wrapper = shallow(<CourseFilterControls {...props} />);
       expect(wrapper).toMatchSnapshot();
     });
-    it('is not mobile', () => {
+    test('is not mobile', () => {
       useWindowSize.mockReturnValueOnce({ width: breakpoints.small.minWidth });
       const wrapper = shallow(<CourseFilterControls {...props} />);
       expect(wrapper).toMatchSnapshot();

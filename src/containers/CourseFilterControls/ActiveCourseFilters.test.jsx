@@ -13,7 +13,7 @@ describe('ActiveCourseFilters', () => {
     handleRemoveFilter: jest.fn().mockName('handleRemoveFilter'),
   };
   describe('snapshot', () => {
-    it('renders', () => {
+    test('renders', () => {
       const wrapper = shallow(<ActiveCourseFilters {...props} />);
       expect(wrapper).toMatchSnapshot();
     });

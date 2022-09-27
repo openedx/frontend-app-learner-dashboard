@@ -39,7 +39,7 @@ const render = (overrides = {}) => {
 const dispatch = useDispatch();
 
 describe('EntitlementBanner', () => {
-  it('initializes data with course number from entitlement', () => {
+  test('initializes data with course number from entitlement', () => {
     render();
     expect(appHooks.useCardEntitlementData).toHaveBeenCalledWith(cardId);
     expect(appHooks.useUpdateSelectSessionModalCallback).toHaveBeenCalledWith(dispatch, cardId);

@@ -11,7 +11,7 @@ describe('SortForm', () => {
     sortBy: SortKeys.enrolled,
   };
   describe('snapshot', () => {
-    it('renders', () => {
+    test('renders', () => {
       const wrapper = shallow(<SortForm {...props} />);
       expect(wrapper).toMatchSnapshot();
     });

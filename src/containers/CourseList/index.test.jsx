@@ -43,9 +43,10 @@ describe('CourseList', () => {
       });
       expect(wrapper).toMatchSnapshot();
     });
-    test('with multiple courses', () => {
+    test('with multiple courses and pages', () => {
       const wrapper = createWrapper({
-        visibleList: [{ cardId: 'foo' }, { cardId: 'bar' }],
+        visibleList: [{ cardId: 'foo' }, { cardId: 'bar' }, { cardId: 'baz' }],
+        numPages: 3,
       });
       expect(wrapper).toMatchSnapshot();
     });

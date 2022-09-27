@@ -18,14 +18,14 @@ describe('ResumeButton', () => {
     resumeUrl: 'resumeUrl',
   });
   describe('snapshot', () => {
-    it('renders default button when learner has access to the course', () => {
+    test('renders default button when learner has access to the course', () => {
       hooks.useCardEnrollmentData.mockReturnValueOnce({
         hasAccess: true,
       });
       const wrapper = shallow(<ResumeButton {...props} />);
       expect(wrapper).toMatchSnapshot();
     });
-    it('renders disabled button when learner does not have access to the course', () => {
+    test('renders disabled button when learner does not have access to the course', () => {
       hooks.useCardEnrollmentData.mockReturnValueOnce({
         hasAccess: false,
       });

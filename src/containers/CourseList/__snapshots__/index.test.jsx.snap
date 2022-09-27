@@ -41,7 +41,7 @@ exports[`CourseList snapshots with filters 1`] = `
 </div>
 `;
 
-exports[`CourseList snapshots with multiple courses 1`] = `
+exports[`CourseList snapshots with multiple courses and pages 1`] = `
 <div
   className="course-list-container"
 >
@@ -71,9 +71,13 @@ exports[`CourseList snapshots with multiple courses 1`] = `
       cardId="bar"
       key="bar"
     />
+    <CourseCard
+      cardId="baz"
+      key="baz"
+    />
     <Pagination
       onPageSelect={[MockFunction setPageNumber]}
-      pageCount={1}
+      pageCount={3}
       paginationLabel="Course List"
       variant="secondary"
     />

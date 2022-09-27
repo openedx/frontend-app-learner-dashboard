@@ -30,7 +30,7 @@ describe('SelectSessionButton', () => {
     return shallow(<SelectSessionButton {...props} />);
   };
   describe('snapshot', () => {
-    it('renders default button', () => {
+    test('renders default button', () => {
       const wrapper = createWrapper({ hasAccess: true, canChange: true, hasSessions: true });
       expect(wrapper).toMatchSnapshot();
     });

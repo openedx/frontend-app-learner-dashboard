@@ -53,7 +53,7 @@ describe('CertificateBanner', () => {
     return shallow(<CertificateBanner {...props} />);
   };
   describe('snapshot', () => {
-    it('is restricted', () => {
+    test('is restricted', () => {
       const wrapper = createWrapper({
         certificate: {
           isRestricted: true,
@@ -61,7 +61,7 @@ describe('CertificateBanner', () => {
       });
       expect(wrapper).toMatchSnapshot();
     });
-    it('is restricted and verified', () => {
+    test('is restricted and verified', () => {
       const wrapper = createWrapper({
         certificate: {
           isRestricted: true,
@@ -72,7 +72,7 @@ describe('CertificateBanner', () => {
       });
       expect(wrapper).toMatchSnapshot();
     });
-    it('not passing and audit', () => {
+    test('not passing and audit', () => {
       const wrapper = createWrapper({
         enrollment: {
           isAudit: true,
@@ -80,7 +80,7 @@ describe('CertificateBanner', () => {
       });
       expect(wrapper).toMatchSnapshot();
     });
-    it('not passing and has finished', () => {
+    test('not passing and has finished', () => {
       const wrapper = createWrapper({
         enrollment: {
           hasFinished: true,
@@ -88,11 +88,11 @@ describe('CertificateBanner', () => {
       });
       expect(wrapper).toMatchSnapshot();
     });
-    it('not passing and not audit and not finished', () => {
+    test('not passing and not audit and not finished', () => {
       const wrapper = createWrapper({});
       expect(wrapper).toMatchSnapshot();
     });
-    it('is passing and is downloadable', () => {
+    test('is passing and is downloadable', () => {
       const wrapper = createWrapper({
         grade: {
           isPassing: true,
@@ -103,7 +103,7 @@ describe('CertificateBanner', () => {
       });
       expect(wrapper).toMatchSnapshot();
     });
-    it('is passing and is earned but unavailable', () => {
+    test('is passing and is earned but unavailable', () => {
       const wrapper = createWrapper({
         grade: {
           isPassing: true,
@@ -114,7 +114,7 @@ describe('CertificateBanner', () => {
       });
       expect(wrapper).toMatchSnapshot();
     });
-    it('is passing and not downloadable render empty', () => {
+    test('is passing and not downloadable render empty', () => {
       const wrapper = createWrapper({
         grade: {
           isPassing: true,

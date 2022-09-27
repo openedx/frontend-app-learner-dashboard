@@ -17,12 +17,12 @@ describe('UpgradeButton', () => {
   const upgradeUrl = 'upgradeUrl';
   hooks.useCardCourseRunData.mockReturnValue({ upgradeUrl });
   describe('snapshot', () => {
-    it('can upgrade', () => {
+    test('can upgrade', () => {
       hooks.useCardEnrollmentData.mockReturnValueOnce({ canUpgrade: true });
       const wrapper = shallow(<UpgradeButton {...props} />);
       expect(wrapper).toMatchSnapshot();
     });
-    it('cannot upgrade', () => {
+    test('cannot upgrade', () => {
       hooks.useCardEnrollmentData.mockReturnValueOnce({ canUpgrade: false });
       const wrapper = shallow(<UpgradeButton {...props} />);
       expect(wrapper).toMatchSnapshot();

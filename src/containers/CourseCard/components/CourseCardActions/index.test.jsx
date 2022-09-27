@@ -30,31 +30,31 @@ describe('CourseCardActions', () => {
     return shallow(<CourseCardActions {...props} />);
   };
   describe('snapshot', () => {
-    it('show upgrade button when not verified and not entitlement', () => {
+    test('show upgrade button when not verified and not entitlement', () => {
       const wrapper = createWrapper({
         isEntitlement: false, isFulfilled: false, isArchived: false, isVerified: false, hasStarted: false,
       });
       expect(wrapper).toMatchSnapshot();
     });
-    it('show select session button when not verified and entitlement', () => {
+    test('show select session button when not verified and entitlement', () => {
       const wrapper = createWrapper({
         isEntitlement: true, isFulfilled: false, isArchived: false, isVerified: false, hasStarted: false,
       });
       expect(wrapper).toMatchSnapshot();
     });
-    it('show begin course button when verified and not entitlement and has started', () => {
+    test('show begin course button when verified and not entitlement and has started', () => {
       const wrapper = createWrapper({
         isEntitlement: false, isFulfilled: false, isArchived: false, isVerified: true, hasStarted: false,
       });
       expect(wrapper).toMatchSnapshot();
     });
-    it('show resume button when verified and not entitlement and has started', () => {
+    test('show resume button when verified and not entitlement and has started', () => {
       const wrapper = createWrapper({
         isEntitlement: false, isFulfilled: false, isArchived: false, isVerified: true, hasStarted: true,
       });
       expect(wrapper).toMatchSnapshot();
     });
-    it('show view course button when not verified and entitlement and fulfilled', () => {
+    test('show view course button when not verified and entitlement and fulfilled', () => {
       const wrapper = createWrapper({
         isEntitlement: true, isFulfilled: true, isArchived: false, isVerified: false, hasStarted: false,
       });
