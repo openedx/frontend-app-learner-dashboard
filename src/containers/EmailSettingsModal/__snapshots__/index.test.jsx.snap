@@ -32,7 +32,7 @@ exports[`EmailSettingsModal render snapshot: emails disabled, show: false 1`] = 
         onClick={[MockFunction closeModal]}
         variant="tertiary"
       >
-        Nevermind
+        Never mind
       </Button>
       <Button
         onClick={[MockFunction hooks.save]}
@@ -76,7 +76,7 @@ exports[`EmailSettingsModal render snapshot: emails disabled, show: true 1`] = `
         onClick={[MockFunction closeModal]}
         variant="tertiary"
       >
-        Nevermind
+        Never mind
       </Button>
       <Button
         onClick={[MockFunction hooks.save]}
@@ -120,7 +120,7 @@ exports[`EmailSettingsModal render snapshot: emails enabled, show: true 1`] = `
         onClick={[MockFunction closeModal]}
         variant="tertiary"
       >
-        Nevermind
+        Never mind
       </Button>
       <Button
         onClick={[MockFunction hooks.save]}

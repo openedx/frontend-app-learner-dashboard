@@ -35,7 +35,7 @@ exports[`SelectSessionModal snapshot empty modal with leave option  1`] = `
       onClick={[MockFunction useSelectSessionModalData.closeSessionModal]}
       variant="tertiary"
     >
-      Nevermind
+      Never mind
     </Button>
     <Button>
       Confirm Session
@@ -103,7 +103,7 @@ exports[`SelectSessionModal snapshot modal with leave option  1`] = `
       onClick={[MockFunction useSelectSessionModalData.closeSessionModal]}
       variant="tertiary"
     >
-      Nevermind
+      Never mind
     </Button>
     <Button>
       Confirm Session
@@ -166,7 +166,7 @@ exports[`SelectSessionModal snapshot modal without leave option  1`] = `
       onClick={[MockFunction useSelectSessionModalData.closeSessionModal]}
       variant="tertiary"
     >
-      Nevermind
+      Never mind
     </Button>
     <Button>
       Confirm Session

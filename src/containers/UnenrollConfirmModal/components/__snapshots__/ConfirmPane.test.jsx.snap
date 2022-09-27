@@ -13,7 +13,7 @@ exports[`UnenrollConfirmModal ConfirmPane snapshot 1`] = `
       onClick={[MockFunction props.handleClose]}
       variant="tertiary"
     >
-      Nevermind
+      Never mind
     </Button>
     <Button
       onClick={[MockFunction props.handleConfirm]}

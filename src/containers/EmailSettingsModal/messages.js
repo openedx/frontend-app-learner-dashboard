@@ -25,7 +25,7 @@ export const messages = StrictDict({
   nevermind: {
     id: 'learner-dash.emailSettings.nevermind',
     description: 'Cancel action for email settings modal',
-    defaultMessage: 'Nevermind',
+    defaultMessage: 'Never mind',
   },
   save: {
     id: 'learner-dash.emailSettings.save',
