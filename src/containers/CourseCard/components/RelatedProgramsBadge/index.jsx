@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button } from '@edx/paragon';
+import { Button, Icon } from '@edx/paragon';
 import { Program } from '@edx/paragon/icons';
 
 import RelatedProgramsBadgeModal from 'containers/RelatedProgramsModal';
@@ -20,13 +20,12 @@ export const RelatedProgramsBadge = ({ cardId }) => {
     <>
       <Button
         data-testid="RelatedProgramsBadge"
-        className="pr-0 mr-0"
+        className="pl-0 mr-0"
         variant="tertiary"
         size="sm"
-        iconBefore={Program}
         onClick={openModal}
       >
-        {programsMessage}
+        <Icon src={Program} className="mr-2 pr-0" /> {programsMessage}
       </Button>
       <RelatedProgramsBadgeModal {...{ isOpen, closeModal, cardId }} />
     </>
