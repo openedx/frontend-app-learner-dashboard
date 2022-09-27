@@ -30,7 +30,7 @@ export const messages = StrictDict({
   nevermind: {
     id: 'learner-dash.selectSession.nevermind',
     description: 'Cancel action for select session modal',
-    defaultMessage: 'Nevermind',
+    defaultMessage: 'Never mind',
   },
   confirmSession: {
     id: 'learner-dash.selectSession.confirmSession',
