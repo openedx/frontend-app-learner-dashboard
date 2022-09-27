@@ -9,7 +9,7 @@ import messages from './messages';
 import './index.scss';
 
 export const WidgetSidebar = () => (
-  <div className="widget-sidebar">
+  <div className="widget-sidebar px-2 mt-5 pt-3">
     <div className="d-flex">
       <Card orientation="horizontal">
         <Card.ImageCap
