@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BeginCourseButton snapshot renders default button when learner has access to the course 1`] = `
+<Button
+  as="a"
+  disabled={false}
+  href="homeUrl"
+>
+  Begin Course
+</Button>
+`;
+
+exports[`BeginCourseButton snapshot renders disabled button when learner does not have access to the course 1`] = `
+<Button
+  as="a"
+  disabled={true}
+  href="homeUrl"
+>
+  Begin Course
+</Button>
+`;

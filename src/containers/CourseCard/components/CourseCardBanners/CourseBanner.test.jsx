@@ -61,7 +61,7 @@ const render = (overrides = {}) => {
 };
 
 describe('CourseBanner', () => {
-  it('initializes data with course number from enrollment, course and course run data', () => {
+  test('initializes data with course number from enrollment, course and course run data', () => {
     render();
     expect(appHooks.useCardCourseData).toHaveBeenCalledWith(cardId);
     expect(appHooks.useCardCourseRunData).toHaveBeenCalledWith(cardId);
@@ -144,9 +144,6 @@ describe('CourseBanner', () => {
     });
     test('snapshot: isStaff', () => {
       expect(el).toMatchSnapshot();
-    });
-    test('messages: staffAccessOnly', () => {
-      expect(el.text()).toContain(messages.staffAccessOnly.defaultMessage);
     });
   });
   test('snapshot: stacking banners', () => {

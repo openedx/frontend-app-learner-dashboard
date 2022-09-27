@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Checkbox snapshot renders done 1`] = `
+<Form.Checkbox
+  className="py-2"
+  value="done"
+>
+  Done
+</Form.Checkbox>
+`;
+
+exports[`Checkbox snapshot renders inProgress 1`] = `
+<Form.Checkbox
+  className="py-2"
+  value="inProgress"
+>
+  In-Progress
+</Form.Checkbox>
+`;
+
+exports[`Checkbox snapshot renders notEnrolled 1`] = `
+<Form.Checkbox
+  className="py-2"
+  value="notEnrolled"
+>
+  Not Enrolled
+</Form.Checkbox>
+`;
+
+exports[`Checkbox snapshot renders notStarted 1`] = `
+<Form.Checkbox
+  className="py-2"
+  value="notStarted"
+>
+  Not Started
+</Form.Checkbox>
+`;
+
+exports[`Checkbox snapshot renders upgraded 1`] = `
+<Form.Checkbox
+  className="py-2"
+  value="upgraded"
+>
+  Upgraded
+</Form.Checkbox>
+`;

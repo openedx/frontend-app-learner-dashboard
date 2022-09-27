@@ -12,6 +12,7 @@ jest.mock('react', () => ({
   useRef: jest.fn((val) => ({ current: val, useRef: true })),
   useCallback: jest.fn((cb, prereqs) => ({ useCallback: { cb, prereqs } })),
   useEffect: jest.fn((cb, prereqs) => ({ useEffect: { cb, prereqs } })),
+  useMemo: jest.fn((cb, prereqs) => cb(prereqs)),
   useContext: jest.fn(context => context),
 }));
 
@@ -72,8 +73,12 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
     Item: 'Dropdown.Item',
     Menu: 'Dropdown.Menu',
     Toggle: 'Dropdown.Toggle',
+    Header: 'Dropdown.Header',
+    Divider: 'Dropdown.Divider',
   },
   Form: {
+    Checkbox: 'Form.Checkbox',
+    CheckboxSet: 'Form.CheckboxSet',
     Control: {
       Feedback: 'Form.Control.Feedback',
     },
@@ -98,16 +103,53 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
     Body: 'ModalDialog.Body',
     Hero: 'ModalDialog.Hero',
   },
+  ModalPopup: 'ModalPopup',
+  ModalCloseButton: 'ModalCloseButton',
   MultiSelectDropdownFilter: 'MultiSelectDropdownFilter',
   OverlayTrigger: 'OverlayTrigger',
   Popover: {
     Content: 'Popover.Content',
   },
   Row: 'Row',
+  Sheet: 'Sheet',
   StatefulButton: 'StatefulButton',
   TextFilter: 'TextFilter',
   Spinner: 'Spinner',
   PageBanner: 'PageBanner',
+  Pagination: 'Pagination',
+
+  useWindowSize: () => jest.fn(),
+  useToggle: () => jest.fn().mockImplementation((val) => [
+    val,
+    jest.fn().mockName('useToggle.setTrue'),
+    jest.fn().mockName('useToggle.setFalse'),
+  ]),
+  useCheckboxSetValues: () => jest.fn().mockImplementation((values) => ([values, {
+    add: jest.fn().mockName('useCheckboxSetValues.add'),
+    remove: jest.fn().mockName('useCheckboxSetValues.remove'),
+  }])),
+  breakpoints: () => ({
+    extraSmall: {
+      minWidth: 0,
+      maxWidth: 575,
+    },
+    small: {
+      minWidth: 576,
+      maxWidth: 767,
+    },
+    medium: {
+      minWidth: 768,
+      maxWidth: 991,
+    },
+    large: {
+      minWidth: 992,
+      maxWidth: 1199,
+    },
+    extraLarge: {
+      minWidth: 1200,
+      maxWidth: 100000,
+    },
+  }),
 }));
 
 jest.mock('@fortawesome/react-fontawesome', () => ({

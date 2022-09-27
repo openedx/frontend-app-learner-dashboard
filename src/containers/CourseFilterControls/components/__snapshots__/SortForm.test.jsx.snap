@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SortForm snapshot renders 1`] = `
+<Fragment>
+  <div
+    className="filter-form-heading mb-1"
+  >
+    Sort
+  </div>
+  <Form.RadioSet
+    name="sort"
+    onChange={[MockFunction handleSortChange]}
+    value="enrolled"
+  >
+    <Form.Radio
+      className="py-2"
+      value="enrolled"
+    >
+      Last enrolled
+    </Form.Radio>
+    <Form.Radio
+      className="py-2"
+      value="title"
+    >
+      Title (A-Z)
+    </Form.Radio>
+  </Form.RadioSet>
+</Fragment>
+`;

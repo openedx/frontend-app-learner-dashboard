@@ -15,7 +15,7 @@ jest.mock('./hooks', () => ({
 const cardId = 'test-card-id';
 
 describe('CourseCard Details component', () => {
-  it('has change session button on entitlement course', () => {
+  test('has change session button on entitlement course', () => {
     const mockHook = (args) => () => ({
       providerName: 'provider-name',
       accessMessage: 'access-message',
@@ -34,7 +34,7 @@ describe('CourseCard Details component', () => {
     expect(el.text().match(/•/g)).toHaveLength(3);
   });
 
-  it('does not have change session button on regular course', () => {
+  test('does not have change session button on regular course', () => {
     const mockHook = (args) => () => ({
       providerName: 'provider-name',
       accessMessage: 'acess-message',

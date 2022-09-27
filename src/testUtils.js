@@ -35,6 +35,9 @@ export const formatMessage = (msg, values) => {
  *   mockNestedComponent('IconButton', 'IconButton');
  */
 export const mockNestedComponent = (name, contents) => {
+  if (typeof contents === 'function') {
+    return contents();
+  }
   if (typeof contents !== 'object') {
     return contents;
   }
@@ -167,6 +170,10 @@ export class MockUseState {
 
   expectInitializedWith(key, value) {
     expect(this.hooks.state[key]).toHaveBeenCalledWith(value);
+  }
+
+  expectSetStateCalledWith(key, value) {
+    expect(this.setState[key]).toHaveBeenCalledWith(value);
   }
 
   /**

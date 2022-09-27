@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LearnerDashboardHeader UserMenu snapshots with authenticated user 1`] = `
+<AuthenticatedUserDropdown
+  username="test-username"
+/>
+`;
+
+exports[`LearnerDashboardHeader UserMenu snapshots without authenticated user 1`] = `""`;
+
+exports[`LearnerDashboardHeader snapshots with collapsed 1`] = `
+<Fragment>
+  <ConfirmEmailBanner />
+  <div
+    className="flex-column bg-primary"
+  >
+    <header
+      className="learner-dashboard-header"
+    >
+      <div
+        className="d-flex"
+      >
+        <div
+          className="flex-grow-1"
+        >
+          <GreetingBanner
+            size="small"
+          />
+        </div>
+        <div
+          className="my-auto ml-1"
+        >
+          <UserMenu />
+        </div>
+      </div>
+    </header>
+  </div>
+  <MasqueradeBar />
+  <hr />
+</Fragment>
+`;
+
+exports[`LearnerDashboardHeader snapshots without collapsed 1`] = `
+<Fragment>
+  <ConfirmEmailBanner />
+  <div
+    className="flex-column bg-primary"
+  >
+    <header
+      className="learner-dashboard-header"
+    >
+      <div
+        className="d-flex"
+      >
+        <Button
+          iconBefore={[MockFunction icons.Program]}
+          variant="inverse-tertiary"
+        >
+          Switch to Programs
+        </Button>
+        <div
+          className="flex-grow-1"
+        />
+        <UserMenu />
+      </div>
+    </header>
+    <GreetingBanner
+      size="large"
+    />
+  </div>
+  <MasqueradeBar />
+  <hr />
+</Fragment>
+`;

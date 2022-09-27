@@ -9,10 +9,10 @@ import { hooks as appHooks } from 'data/redux';
 
 import RelatedProgramsBadge from './RelatedProgramsBadge';
 import CourseCardMenu from './CourseCardMenu';
-
-import messages from '../messages';
 import CourseCardActions from './CourseCardActions';
 import CourseCardDetails from './CourseCardDetails';
+
+import messages from '../messages';
 
 export const CourseCardContent = ({ cardId, orientation }) => {
   const { formatMessage } = useIntl();

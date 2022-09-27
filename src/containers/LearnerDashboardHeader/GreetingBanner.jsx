@@ -3,12 +3,14 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
 import { getConfig } from '@edx/frontend-platform';
-import { FormattedMessage } from '@edx/frontend-platform/i18n';
+import { useIntl } from '@edx/frontend-platform/i18n';
 import { Image } from '@edx/paragon';
 
 import messages from './messages';
 
 export const GreetingBanner = ({ size }) => {
+  const { formatMessage } = useIntl();
+
   let greetMessage;
   const hour = new Date().getHours();
 
@@ -39,11 +41,11 @@ export const GreetingBanner = ({ size }) => {
       {isSmall
         ? (
           <h5 className="text-center text-accent-b">
-            <FormattedMessage {...greetMessage} />
+            {formatMessage(greetMessage)}
           </h5>
         ) : (
           <h1 className="text-center text-accent-b">
-            <FormattedMessage {...greetMessage} />
+            {formatMessage(greetMessage)}
           </h1>
         )}
     </div>

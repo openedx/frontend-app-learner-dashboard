@@ -1,36 +1,54 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CourseCard Actions component does not render secondary button if null is returned for secondary props 1`] = `
+exports[`CourseCardActions snapshot show begin course button when verified and not entitlement and has started 1`] = `
 <ActionRow
   data-test-id="CourseCardActions"
 >
-  <Button
-    cardId="test-course-number"
-    prop1="primary-prop1"
-    prop2="primary-prop2"
-  >
-    primary-children
-  </Button>
+  <BeginCourseButton
+    cardId="cardId"
+  />
 </ActionRow>
 `;
 
-exports[`CourseCard Actions component loads primary and secondary button props from hook 1`] = `
+exports[`CourseCardActions snapshot show resume button when verified and not entitlement and has started 1`] = `
 <ActionRow
   data-test-id="CourseCardActions"
 >
-  <Button
-    cardId="test-course-number"
-    prop1="primary-prop1"
-    prop2="primary-prop2"
-  >
-    primary-children
-  </Button>
-  <Button
-    cardId="test-course-number"
-    prop1="primary-prop1"
-    prop2="primary-prop2"
-  >
-    primary-children
-  </Button>
+  <ResumeButton
+    cardId="cardId"
+  />
+</ActionRow>
+`;
+
+exports[`CourseCardActions snapshot show select session button when not verified and entitlement 1`] = `
+<ActionRow
+  data-test-id="CourseCardActions"
+>
+  <SelectSessionButton
+    cardId="cardId"
+  />
+</ActionRow>
+`;
+
+exports[`CourseCardActions snapshot show upgrade button when not verified and not entitlement 1`] = `
+<ActionRow
+  data-test-id="CourseCardActions"
+>
+  <UpgradeButton
+    cardId="cardId"
+  />
+  <BeginCourseButton
+    cardId="cardId"
+  />
+</ActionRow>
+`;
+
+exports[`CourseCardActions snapshot show view course button when not verified and entitlement and fulfilled 1`] = `
+<ActionRow
+  data-test-id="CourseCardActions"
+>
+  <ViewCourseButton
+    cardId="cardId"
+  />
 </ActionRow>
 `;
