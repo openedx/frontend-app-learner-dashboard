@@ -11,25 +11,25 @@ import requests from './requests';
 // import { } from './requests';
 import * as module from './app';
 
+export const loadData = ({ courses, ...globalData }) => dispatch => {
+  dispatch(actions.app.setPageNumber(1));
+  dispatch(actions.app.loadGlobalData(globalData));
+  dispatch(actions.app.loadCourses({ courses }));
+};
+
 /**
  * initialize the app, loading ora and course metadata from the api, and loading the initial
  * submission list data.
  */
 export const initialize = () => (dispatch) => (
   dispatch(requests.initializeList({
-    onSuccess: (({ courses, ...globalData }) => {
-      dispatch(actions.app.loadGlobalData(globalData));
-      dispatch(actions.app.loadCourses({ courses }));
-    }),
+    onSuccess: (response) => dispatch(module.loadData(response)),
   }))
 );
 
 export const refreshList = () => (dispatch) => (
   dispatch(requests.initializeList({
-    onSuccess: (({ courses, ...globalData }) => {
-      dispatch(actions.app.loadGlobalData(globalData));
-      dispatch(actions.app.loadCourses({ courses }));
-    }),
+    onSuccess: (response) => dispatch(module.loadData(response)),
   }))
 );
 
@@ -95,6 +95,7 @@ export const clearMasquerade = () => (dispatch) => {
 };
 
 export default StrictDict({
+  loadData,
   initialize,
   refreshList,
   sendConfirmEmail,

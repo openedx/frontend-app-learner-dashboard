@@ -1,7 +1,12 @@
 import React from 'react';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { ActionRow, Card, Button, Container } from '@edx/paragon';
+import {
+  ActionRow,
+  Card,
+  Button,
+  Container,
+} from '@edx/paragon';
 import { hooks as appHooks } from 'data/redux';
 
 import messages from './messages';

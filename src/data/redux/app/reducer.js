@@ -1,12 +1,14 @@
-import { StrictDict } from 'utils';
 import { createSlice } from '@reduxjs/toolkit';
 
+import { StrictDict } from 'utils';
+
 const initialState = {
+  pageNumber: 1,
   enrollments: [],
   courseData: {},
   entitlement: [],
   emailConfirmation: {},
-  enterpriseDashboards: {},
+  enterpriseDashboard: {},
   platformSettings: {},
   suggestedCourses: [],
   filterState: {},
@@ -41,6 +43,7 @@ const app = createSlice({
       ...state,
       selectSessionModal: { cardId: payload },
     }),
+    setPageNumber: (state, { payload }) => ({ ...state, pageNumber: payload }),
   },
 });
 

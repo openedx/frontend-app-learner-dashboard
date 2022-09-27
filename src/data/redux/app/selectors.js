@@ -17,6 +17,7 @@ export const simpleSelectors = {
   emailConfirmation: mkSimpleSelector(app => app.emailConfirmation),
   enterpriseDashboard: mkSimpleSelector(app => app.enterpriseDashboard),
   selectSessionModal: mkSimpleSelector(app => app.selectSessionModal),
+  pageNumber: mkSimpleSelector(app => app.pageNumber),
 };
 
 export const numCourses = createSelector(
@@ -130,9 +131,9 @@ export const currentList = (state, {
   sortBy,
   isAscending,
   filters,
-  pageNumber,
   pageSize,
 }) => {
+  const pageNumber = module.simpleSelectors.pageNumber(state);
   let list = Object.values(module.simpleSelectors.courseData(state));
   const hasFilter = filters.reduce((obj, filter) => ({ ...obj, [filter]: true }), {});
   if (filters.length) {

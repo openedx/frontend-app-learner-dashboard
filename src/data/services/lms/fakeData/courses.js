@@ -25,6 +25,25 @@ export const relatedPrograms = [
     programTypeUrl: 'www.edx/my-program-type',
     numberOfCourses: 3,
   },
+  {
+    provider: 'HarvardX',
+    bannerImgSrc: 'https://prod-discovery.edx-cdn.org/media/course/image/327c8e4f-315a-417b-9857-046dfc90c243-677b97464958.small.jpg',
+    logoImgSrc: 'https://prod-discovery.edx-cdn.org/organization/certificate_logos/44022f13-20df-4666-9111-cede3e5dc5b6-770e00385e7e.png',
+    title: 'Relativity in Modern Mechanics',
+    programUrl: 'www.edx/my-program-3',
+    programType: 'MicroBachelors Program',
+    numberOfCourses: 3,
+  },
+  {
+    provider: 'University  of Maryland',
+    bannerImgSrc: 'https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg',
+    logoImgSrc: 'https://prod-discovery.edx-cdn.org/organization/certificate_logos/b9dc96da-b3fc-45a6-b6b7-b8e12eb79335-ac60112330e3.png',
+    title: 'Pandering for Modern Professionals',
+    programUrl: 'www.edx/my-program-4',
+    programType: 'MicroBachelors Program',
+    programTypeUrl: 'www.edx/my-program-type',
+    numberOfCourses: 3,
+  },
 ];
 
 export const genCardId = (index) => `card-id${index}`;
@@ -62,7 +81,7 @@ const globalData = {
     },
     {
       bannerImgSrc: 'https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg',
-      courseName: 'Suggested course 2',
+      courseName: 'Suggested course 2 with a really really really long name for some reason',
       courseUrl: 'www.edx/suggested-course',
     },
     {
@@ -699,14 +718,6 @@ export const entitlementData = entitlementCourses.map(
     };
   },
 );
-
-console.log('%j', {
-  courses: [
-    ...courseRunData,
-    ...entitlementData,
-  ],
-  ...globalData,
-});
 
 export default {
   courseRunData,
