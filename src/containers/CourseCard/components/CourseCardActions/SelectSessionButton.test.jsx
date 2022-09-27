@@ -34,7 +34,7 @@ describe('SelectSessionButton', () => {
       const wrapper = createWrapper({ hasAccess: true, canChange: true, hasSessions: true });
       expect(wrapper).toMatchSnapshot();
     });
-    it('renders disabled button', () => {
+    it('renders disabled button when user does not have access to the course', () => {
       const wrapper = createWrapper({ hasAccess: false, canChange: true, hasSessions: true });
       expect(wrapper).toMatchSnapshot();
     });
@@ -47,7 +47,7 @@ describe('SelectSessionButton', () => {
       expect(wrapper.prop('onClick').getMockName())
         .toEqual(hooks.useUpdateSelectSessionModalCallback().getMockName());
     });
-    it('disabled iif doesn\'t have access or user cannot change or doesn\'t have sessions', () => {
+    it('disabled if learner doesn\'t have access, cannot change sessions, or does not have sessions', () => {
       const noAccess = createWrapper({ hasAccess: false, canChange: true, hasSessions: true });
       expect(noAccess.prop('disabled')).toEqual(true);
 

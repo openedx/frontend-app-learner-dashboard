@@ -18,14 +18,14 @@ describe('BeginCourseButton', () => {
     homeUrl: 'homeUrl',
   });
   describe('snapshot', () => {
-    it('renders default button', () => {
+    it('renders default button when learner has access to the course', () => {
       hooks.useCardEnrollmentData.mockReturnValueOnce({
         hasAccess: true,
       });
       const wrapper = shallow(<BeginCourseButton {...props} />);
       expect(wrapper).toMatchSnapshot();
     });
-    it('renders disabled button', () => {
+    it('renders disabled button when learner does not have access to the course', () => {
       hooks.useCardEnrollmentData.mockReturnValueOnce({
         hasAccess: false,
       });
