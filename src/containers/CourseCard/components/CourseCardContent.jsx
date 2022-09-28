@@ -17,15 +17,23 @@ import messages from '../messages';
 export const CourseCardContent = ({ cardId, orientation }) => {
   const { formatMessage } = useIntl();
   const { courseName, bannerImgSrc } = appHooks.useCardCourseData(cardId);
+  const { homeUrl } = appHooks.useCardCourseRunData(cardId);
   return (
     <>
-      <Card.ImageCap
-        src={bannerImgSrc}
-        srcAlt={formatMessage(messages.bannerAlt)}
-      />
+      <a className="pgn__card-wrapper-image-cap horizontal" href={homeUrl}>
+        <img
+          className="pgn__card-image-cap"
+          src={bannerImgSrc}
+          alt={formatMessage(messages.bannerAlt)}
+        />
+      </a>
       <Card.Body>
         <Card.Header
-          title={<span data-testid="CourseCardTitle">{courseName}</span>}
+          title={(
+            <a href={homeUrl} data-testid="CourseCardTitle">
+              {courseName}
+            </a>
+          )}
           actions={<CourseCardMenu cardId={cardId} />}
         />
         <Card.Section className="pt-0">

@@ -2,8 +2,11 @@ import { createSelector } from 'reselect';
 
 import { StrictDict } from 'utils';
 import { FilterKeys } from 'data/constants/app';
+import urls from 'data/services/lms/urls';
 
 import * as module from './selectors';
+
+const { baseAppUrl, learningMfeUrl } = urls;
 
 export const appSelector = (state) => state.app;
 
@@ -56,7 +59,7 @@ export const courseCard = StrictDict({
     isRestricted: certificate.isRestricted,
   })),
   course: mkCardSelector(({ course }) => ({
-    bannerImgSrc: process.env.LMS_BASE_URL + course.bannerImgSrc,
+    bannerImgSrc: baseAppUrl(course.bannerImgSrc),
     courseNumber: course.courseNumber,
     courseName: course.courseName,
     website: course.website,
@@ -69,6 +72,12 @@ export const courseCard = StrictDict({
     isFinished: courseRun.isFinished,
     minPassingGrade: Math.floor(courseRun.minPassingGrade * 100),
     startDate: new Date(courseRun.startDate),
+    homeUrl: courseRun.homeUrl,
+    marketingUrl: courseRun.marketingUrl,
+    progressUrl: learningMfeUrl(courseRun.progressUrl),
+    unenrollUrl: learningMfeUrl(courseRun.unenrollUrl),
+    upgradeUrl: courseRun.upgradeUrl,
+    resumeUrl: learningMfeUrl(courseRun.resumeUrl),
   })),
   enrollment: mkCardSelector(({ enrollment }) => {
     if (enrollment == null) {

@@ -2,10 +2,16 @@
 
 exports[`CourseCardContent snapshot orientation horizontal 1`] = `
 <Fragment>
-  <Card.ImageCap
-    src="test-banner-img-src"
-    srcAlt="Course thumbnail"
-  />
+  <a
+    className="pgn__card-wrapper-image-cap horizontal"
+    href="test-home-url"
+  >
+    <img
+      alt="Course thumbnail"
+      className="pgn__card-image-cap"
+      src="test-banner-img-src"
+    />
+  </a>
   <Card.Body>
     <Card.Header
       actions={
@@ -14,11 +20,12 @@ exports[`CourseCardContent snapshot orientation horizontal 1`] = `
         />
       }
       title={
-        <span
+        <a
           data-testid="CourseCardTitle"
+          href="test-home-url"
         >
           test-course-name
-        </span>
+        </a>
       }
     />
     <Card.Section
@@ -46,10 +53,16 @@ exports[`CourseCardContent snapshot orientation horizontal 1`] = `
 
 exports[`CourseCardContent snapshot orientation vertical 1`] = `
 <Fragment>
-  <Card.ImageCap
-    src="test-banner-img-src"
-    srcAlt="Course thumbnail"
-  />
+  <a
+    className="pgn__card-wrapper-image-cap horizontal"
+    href="test-home-url"
+  >
+    <img
+      alt="Course thumbnail"
+      className="pgn__card-image-cap"
+      src="test-banner-img-src"
+    />
+  </a>
   <Card.Body>
     <Card.Header
       actions={
@@ -58,11 +71,12 @@ exports[`CourseCardContent snapshot orientation vertical 1`] = `
         />
       }
       title={
-        <span
+        <a
           data-testid="CourseCardTitle"
+          href="test-home-url"
         >
           test-course-name
-        </span>
+        </a>
       }
     />
     <Card.Section
