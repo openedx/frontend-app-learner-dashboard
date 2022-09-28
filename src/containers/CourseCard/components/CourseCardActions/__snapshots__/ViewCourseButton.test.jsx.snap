@@ -4,17 +4,7 @@ exports[`ViewCourseButton snapshot default button 1`] = `
 <Button
   as="a"
   disabled={false}
-  href="marketingUrl"
->
-  View Course
-</Button>
-`;
-
-exports[`ViewCourseButton snapshot disabled button 1`] = `
-<Button
-  as="a"
-  disabled={true}
-  href="marketingUrl"
+  href="marketing-url"
 >
   View Course
 </Button>

@@ -1,61 +1,66 @@
 import { shallow } from 'enzyme';
 
 import { hooks } from 'data/redux';
+import { htmlProps } from 'testKeys';
 import SelectSessionButton from './SelectSessionButton';
 
 jest.mock('data/redux', () => ({
   hooks: {
-    useCardCourseRunData: jest.fn(),
-    useCardEnrollmentData: jest.fn(),
-    useCardEntitlementData: jest.fn(),
+    useCardEnrollmentData: jest.fn(() => ({ hasAccess: true })),
+    useCardEntitlementData: jest.fn(() => ({ canChange: true, hasSessions: true })),
+    useMasqueradeData: jest.fn(() => ({ isMasquerading: false })),
     useUpdateSelectSessionModalCallback: () => jest.fn().mockName('mockOpenSessionModal'),
   },
 }));
 
+let wrapper;
+
 describe('SelectSessionButton', () => {
-  const props = {
-    cardId: 'cardId',
-  };
-  hooks.useCardCourseRunData.mockReturnValue({
-    resumeUrl: 'resumeUrl',
-  });
-  const createWrapper = ({ hasAccess, canChange, hasSessions }) => {
-    hooks.useCardEnrollmentData.mockReturnValueOnce({
-      hasAccess,
-    });
-    hooks.useCardEntitlementData.mockReturnValueOnce({
-      canChange,
-      hasSessions,
-    });
-    return shallow(<SelectSessionButton {...props} />);
-  };
+  const props = { cardId: 'cardId' };
   describe('snapshot', () => {
     test('renders default button', () => {
-      const wrapper = createWrapper({ hasAccess: true, canChange: true, hasSessions: true });
+      wrapper = shallow(<SelectSessionButton {...props} />);
       expect(wrapper).toMatchSnapshot();
     });
     it('renders disabled button when user does not have access to the course', () => {
-      const wrapper = createWrapper({ hasAccess: false, canChange: true, hasSessions: true });
+      hooks.useCardEnrollmentData.mockReturnValueOnce({ hasAccess: false });
+      wrapper = shallow(<SelectSessionButton {...props} />);
+      expect(wrapper).toMatchSnapshot();
+    });
+    it('renders disabled button if masquerading', () => {
+      hooks.useMasqueradeData.mockReturnValueOnce({ isMasquerading: true });
+      wrapper = shallow(<SelectSessionButton {...props} />);
       expect(wrapper).toMatchSnapshot();
     });
   });
   describe('behavior', () => {
     it('default render', () => {
-      const wrapper = createWrapper({ hasAccess: true, canChange: true, hasSessions: true });
-      expect(wrapper.prop('disabled')).toEqual(false);
-      expect(wrapper.prop('href')).toEqual('resumeUrl');
-      expect(wrapper.prop('onClick').getMockName())
+      wrapper = shallow(<SelectSessionButton {...props} />);
+      expect(wrapper.prop(htmlProps.disabled)).toEqual(false);
+      expect(wrapper.prop(htmlProps.onClick).getMockName())
         .toEqual(hooks.useUpdateSelectSessionModalCallback().getMockName());
     });
-    it('disabled if learner doesn\'t have access, cannot change sessions, or does not have sessions', () => {
-      const noAccess = createWrapper({ hasAccess: false, canChange: true, hasSessions: true });
-      expect(noAccess.prop('disabled')).toEqual(true);
-
-      const cannotChange = createWrapper({ hasAccess: true, canChange: false, hasSessions: true });
-      expect(cannotChange.prop('disabled')).toEqual(true);
-
-      const noSessions = createWrapper({ hasAccess: true, canChange: true, hasSessions: false });
-      expect(noSessions.prop('disabled')).toEqual(true);
+    describe('disabled states', () => {
+      test('learner does not have access', () => {
+        hooks.useCardEnrollmentData.mockReturnValueOnce({ hasAccess: false });
+        wrapper = shallow(<SelectSessionButton {...props} />);
+        expect(wrapper.prop(htmlProps.disabled)).toEqual(true);
+      });
+      test('learner cannot change sessions', () => {
+        hooks.useCardEntitlementData.mockReturnValueOnce({ canChange: false, hasSessions: true });
+        wrapper = shallow(<SelectSessionButton {...props} />);
+        expect(wrapper.prop(htmlProps.disabled)).toEqual(true);
+      });
+      test('entitlement does not have available sessions', () => {
+        hooks.useCardEntitlementData.mockReturnValueOnce({ canChange: true, hasSessions: false });
+        wrapper = shallow(<SelectSessionButton {...props} />);
+        expect(wrapper.prop(htmlProps.disabled)).toEqual(true);
+      });
+      test('user is masquerading', () => {
+        hooks.useMasqueradeData.mockReturnValueOnce({ isMasquerading: true });
+        wrapper = shallow(<SelectSessionButton {...props} />);
+        expect(wrapper.prop(htmlProps.disabled)).toEqual(true);
+      });
     });
   });
 });

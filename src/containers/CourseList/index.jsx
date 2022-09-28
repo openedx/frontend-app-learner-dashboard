@@ -1,5 +1,4 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { Pagination } from '@edx/paragon';
@@ -15,14 +14,13 @@ import './index.scss';
 
 export const CourseList = () => {
   const { formatMessage } = useIntl();
-  const dispatch = useDispatch();
   const {
     filterOptions,
     setPageNumber,
     numPages,
     showFilters,
     visibleList,
-  } = useCourseListData(dispatch);
+  } = useCourseListData();
   return (
     <div className="course-list-container">
       <div id="course-list-heading-container">

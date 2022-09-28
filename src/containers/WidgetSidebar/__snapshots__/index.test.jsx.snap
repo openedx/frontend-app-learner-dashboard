@@ -2,7 +2,7 @@
 
 exports[`WidgetSidebar snapshots default 1`] = `
 <div
-  className="widget-sidebar"
+  className="widget-sidebar px-2 mt-5 pt-3"
 >
   <div
     className="d-flex"
@@ -21,10 +21,26 @@ exports[`WidgetSidebar snapshots default 1`] = `
           Looking for a new challenge?
         </h4>
         <Hyperlink
+          className="d-flex"
           destination="#"
           variant="brand"
         >
-          Explore courses
+          <format-message-function
+            message={
+              Object {
+                "defaultMessage": "Find a course {arrow}",
+                "description": "Button to explore more courses",
+                "id": "WidgetSidebar.findCoursesButton",
+              }
+            }
+            values={
+              Object {
+                "arrow": <Icon
+                  className="mx-1"
+                />,
+              }
+            }
+          />
         </Hyperlink>
       </Card.Body>
     </Card>

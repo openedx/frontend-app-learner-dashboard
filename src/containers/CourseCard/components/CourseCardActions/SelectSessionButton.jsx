@@ -9,7 +9,6 @@ import { hooks } from 'data/redux';
 import messages from './messages';
 
 export const SelectSessionButton = ({ cardId }) => {
-  const { resumeUrl } = hooks.useCardCourseRunData(cardId);
   const { hasAccess } = hooks.useCardEnrollmentData(cardId);
   const { canChange, hasSessions } = hooks.useCardEntitlementData(cardId);
   const { isMasquerading } = hooks.useMasqueradeData();
@@ -20,8 +19,6 @@ export const SelectSessionButton = ({ cardId }) => {
     <Button
       disabled={isMasquerading || !hasAccess || (!canChange || !hasSessions)}
       onClick={openSessionModal}
-      as="a"
-      href={resumeUrl}
     >
       {formatMessage(messages.resume)}
     </Button>

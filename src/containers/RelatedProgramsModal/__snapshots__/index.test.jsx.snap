@@ -22,7 +22,7 @@ exports[`RelatedProgramsModal snapshot: closed 1`] = `
     className="programs-header p-0"
   />
   <ModalDialog.Body
-    className="pl-0 overflow-hidden"
+    className="pl-0 overflow-scroll"
   >
     <p>
       Are you looking to expand your knowledge?  Enrolling in a Program lets you take a series of courses in the subject that you're interested in
@@ -105,7 +105,7 @@ exports[`RelatedProgramsModal snapshot: open 1`] = `
     className="programs-header p-0"
   />
   <ModalDialog.Body
-    className="pl-0 overflow-hidden"
+    className="pl-0 overflow-scroll"
   >
     <p>
       Are you looking to expand your knowledge?  Enrolling in a Program lets you take a series of courses in the subject that you're interested in

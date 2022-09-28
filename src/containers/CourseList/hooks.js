@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 
 import { useCheckboxSetValues } from '@edx/paragon';
 
@@ -9,11 +10,11 @@ import { ListPageSize, SortKeys } from 'data/constants/app';
 import * as module from './hooks';
 
 export const state = StrictDict({
-  pageNumber: (val) => React.useState(val), // eslint-disable-line
   sortBy: (val) => React.useState(val), // eslint-disable-line
 });
 
-export const useCourseListData = (dispatch) => {
+export const useCourseListData = () => {
+  const dispatch = useDispatch();
   const pageNumber = appHooks.usePageNumber();
   const [filters, setFilters] = useCheckboxSetValues([]);
   const [sortBy, setSortBy] = module.state.sortBy(SortKeys.title);

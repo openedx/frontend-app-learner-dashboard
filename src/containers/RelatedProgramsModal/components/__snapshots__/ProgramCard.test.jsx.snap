@@ -2,7 +2,9 @@
 
 exports[`RelatedProgramsModal ProgramCard snapshot 1`] = `
 <Card
+  as="a"
   className="program-card mx-auto bg-primary-500 text-white mb-3.5 pb-3.5"
+  href="props.data.programUrl"
   style={
     Object {
       "color": "white",

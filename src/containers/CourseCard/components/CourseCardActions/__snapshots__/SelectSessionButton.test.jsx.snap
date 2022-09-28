@@ -2,9 +2,16 @@
 
 exports[`SelectSessionButton snapshot renders default button 1`] = `
 <Button
-  as="a"
   disabled={false}
-  href="resumeUrl"
+  onClick={[MockFunction mockOpenSessionModal]}
+>
+  Resume
+</Button>
+`;
+
+exports[`SelectSessionButton snapshot renders disabled button if masquerading 1`] = `
+<Button
+  disabled={true}
   onClick={[MockFunction mockOpenSessionModal]}
 >
   Resume
@@ -13,9 +20,7 @@ exports[`SelectSessionButton snapshot renders default button 1`] = `
 
 exports[`SelectSessionButton snapshot renders disabled button when user does not have access to the course 1`] = `
 <Button
-  as="a"
   disabled={true}
-  href="resumeUrl"
   onClick={[MockFunction mockOpenSessionModal]}
 >
   Resume
