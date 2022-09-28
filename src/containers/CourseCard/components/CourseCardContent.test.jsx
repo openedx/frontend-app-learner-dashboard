@@ -6,6 +6,7 @@ import CourseCardContent from './CourseCardContent';
 jest.mock('data/redux', () => ({
   hooks: {
     useCardCourseData: jest.fn(),
+    useCardCourseRunData: jest.fn(),
   },
 }));
 
@@ -22,6 +23,9 @@ describe('CourseCardContent', () => {
   hooks.useCardCourseData.mockReturnValue({
     courseName: 'test-course-name',
     bannerImgSrc: 'test-banner-img-src',
+  });
+  hooks.useCardCourseRunData.mockReturnValue({
+    homeUrl: 'test-home-url',
   });
   describe('snapshot', () => {
     test('orientation vertical', () => {

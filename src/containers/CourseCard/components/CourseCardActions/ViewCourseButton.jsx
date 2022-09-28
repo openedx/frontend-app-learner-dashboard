@@ -8,7 +8,7 @@ import { hooks } from 'data/redux';
 import messages from './messages';
 
 export const ViewCourseButton = ({ cardId }) => {
-  const { marketingUrl } = hooks.useCardCourseRunData(cardId);
+  const { homeUrl } = hooks.useCardCourseRunData(cardId);
   const { hasAccess } = hooks.useCardEnrollmentData(cardId);
   const { isEntitlement, isExpired } = hooks.useCardEntitlementData(cardId);
   const { isMasquerading } = hooks.useMasqueradeData();
@@ -17,7 +17,7 @@ export const ViewCourseButton = ({ cardId }) => {
     <Button
       disabled={isMasquerading || !hasAccess || (isEntitlement && isExpired)}
       as="a"
-      href={marketingUrl}
+      href={homeUrl}
     >
       {formatMessage(messages.viewCourse)}
     </Button>

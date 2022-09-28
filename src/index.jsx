@@ -41,7 +41,7 @@ subscribe(APP_INIT_ERROR, (error) => {
   );
 });
 
-export const appName = 'OraGradingAppConfig';
+export const appName = 'LearnerHomeAppConfig';
 
 initialize({
   handlers: {

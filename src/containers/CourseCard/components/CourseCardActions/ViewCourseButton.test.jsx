@@ -6,48 +6,60 @@ import ViewCourseButton from './ViewCourseButton';
 
 jest.mock('data/redux', () => ({
   hooks: {
-    useCardCourseRunData: jest.fn(() => ({ marketingUrl: 'marketing-url' })),
-    useCardEnrollmentData: jest.fn(() => ({ hasAccess: true })),
-    useCardEntitlementData: jest.fn(() => ({ isEntitlement: false, isExpired: false })),
-    useMasqueradeData: jest.fn(() => ({ isMasquerading: false })),
+    useCardCourseRunData: jest.fn(),
+    useCardEnrollmentData: jest.fn(),
+    useCardEntitlementData: jest.fn(),
+    useMasqueradeData: jest.fn(),
   },
 }));
-
-let wrapper;
 
 describe('ViewCourseButton', () => {
   const props = {
     cardId: 'cardId',
   };
-  const { marketingUrl } = hooks.useCardCourseRunData();
+  const homeUrl = 'homeUrl';
+  hooks.useCardCourseRunData.mockReturnValue({ homeUrl });
+  const createWrapper = ({
+    hasAccess = false,
+    isEntitlement = false,
+    isExpired = false,
+    isMasquerading = false,
+  }) => {
+    hooks.useCardEnrollmentData.mockReturnValueOnce({ hasAccess });
+    hooks.useCardEntitlementData.mockReturnValueOnce({ isEntitlement, isExpired });
+    hooks.useMasqueradeData.mockReturnValueOnce({ isMasquerading });
+    return shallow(<ViewCourseButton {...props} />);
+  };
   describe('snapshot', () => {
     test('default button', () => {
-      wrapper = shallow(<ViewCourseButton {...props} />);
+      const wrapper = createWrapper({ hasAccess: true });
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.prop(htmlProps.disabled)).toEqual(false);
-      expect(wrapper.prop(htmlProps.href)).toEqual(marketingUrl);
+      expect(wrapper.prop(htmlProps.href)).toEqual(homeUrl);
+    });
+    test('disabled button', () => {
+      const wrapper = createWrapper({});
+      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.prop(htmlProps.disabled)).toEqual(true);
+      expect(wrapper.prop(htmlProps.href)).toEqual(homeUrl);
     });
   });
   describe('behavior', () => {
-    describe('disabled states', () => {
-      test('learner does not have access', () => {
-        hooks.useCardEnrollmentData.mockReturnValueOnce({ hasAccess: false });
-        wrapper = shallow(<ViewCourseButton {...props} />);
-        expect(wrapper.prop(htmlProps.disabled)).toEqual(true);
-      });
-      test('expired entitlement', () => {
-        hooks.useCardEntitlementData.mockReturnValueOnce({
-          isEntitlement: true,
-          isExpired: true,
-        });
-        wrapper = shallow(<ViewCourseButton {...props} />);
-        expect(wrapper.prop(htmlProps.disabled)).toEqual(true);
-      });
-      test('masquerading', () => {
-        hooks.useMasqueradeData.mockReturnValueOnce({ isMasquerading: true });
-        wrapper = shallow(<ViewCourseButton {...props} />);
-        expect(wrapper.prop(htmlProps.disabled)).toEqual(true);
-      });
+    it('disabled button when masquerading', () => {
+      const wrapper = createWrapper({ isMasquerading: true });
+      expect(wrapper.prop('disabled')).toEqual(true);
+    });
+    it('disabled button without access', () => {
+      const wrapper = createWrapper({ hasAccess: false, isEntitlement: false, isExpired: false });
+      expect(wrapper.prop('disabled')).toEqual(true);
+    });
+    it('disabled button with access', () => {
+      const wrapper = createWrapper({ hasAccess: true, isEntitlement: true, isExpired: true });
+      expect(wrapper.prop('disabled')).toEqual(true);
+    });
+    it('enabled button', () => {
+      const wrapper = createWrapper({ hasAccess: true, isEntitlement: false, isExpired: false });
+      expect(wrapper.prop('disabled')).toEqual(false);
     });
   });
 });

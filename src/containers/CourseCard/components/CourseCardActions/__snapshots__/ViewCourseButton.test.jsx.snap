@@ -4,7 +4,17 @@ exports[`ViewCourseButton snapshot default button 1`] = `
 <Button
   as="a"
   disabled={false}
-  href="marketing-url"
+  href="homeUrl"
+>
+  View Course
+</Button>
+`;
+
+exports[`ViewCourseButton snapshot disabled button 1`] = `
+<Button
+  as="a"
+  disabled={true}
+  href="homeUrl"
 >
   View Course
 </Button>
