@@ -37,7 +37,7 @@ export const RelatedProgramsModal = ({
       <ModalDialog.Header as="h4" className="programs-header p-0">
         {courseName}
       </ModalDialog.Header>
-      <ModalDialog.Body className="pl-0 overflow-hidden">
+      <ModalDialog.Body className="pl-0 overflow-scroll">
         <p>{formatMessage(messages.description)}</p>
         <Container>
           <Row>

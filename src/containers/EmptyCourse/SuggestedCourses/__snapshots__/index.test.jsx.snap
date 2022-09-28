@@ -21,14 +21,20 @@ exports[`SuggestedCourses snapshot has 3 suggested courses 1`] = `
         srcAlt="Course image banner"
       />
       <Card.Header
+        className="mb-2"
         title="Suggested course 1"
       />
+      <Card.Body
+        className="h-100"
+      />
       <Card.Footer>
-        <Button
-          as="a"
-        >
-          View Course
-        </Button>
+        <ActionRow>
+          <Button
+            as="a"
+          >
+            View Course
+          </Button>
+        </ActionRow>
       </Card.Footer>
     </Card>
     <Card
@@ -40,14 +46,20 @@ exports[`SuggestedCourses snapshot has 3 suggested courses 1`] = `
         srcAlt="Course image banner"
       />
       <Card.Header
+        className="mb-2"
         title="Suggested course 2"
       />
+      <Card.Body
+        className="h-100"
+      />
       <Card.Footer>
-        <Button
-          as="a"
-        >
-          View Course
-        </Button>
+        <ActionRow>
+          <Button
+            as="a"
+          >
+            View Course
+          </Button>
+        </ActionRow>
       </Card.Footer>
     </Card>
     <Card
@@ -59,14 +71,20 @@ exports[`SuggestedCourses snapshot has 3 suggested courses 1`] = `
         srcAlt="Course image banner"
       />
       <Card.Header
+        className="mb-2"
         title="Suggested course 3"
       />
+      <Card.Body
+        className="h-100"
+      />
       <Card.Footer>
-        <Button
-          as="a"
-        >
-          View Course
-        </Button>
+        <ActionRow>
+          <Button
+            as="a"
+          >
+            View Course
+          </Button>
+        </ActionRow>
       </Card.Footer>
     </Card>
   </div>

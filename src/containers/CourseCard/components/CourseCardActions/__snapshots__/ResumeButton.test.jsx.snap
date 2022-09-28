@@ -3,16 +3,7 @@
 exports[`ResumeButton snapshot renders default button when learner has access to the course 1`] = `
 <Button
   as="a"
-  href="resumeUrl"
->
-  Resume
-</Button>
-`;
-
-exports[`ResumeButton snapshot renders disabled button when learner does not have access to the course 1`] = `
-<Button
-  as="a"
-  disabled={true}
+  disabled={false}
   href="resumeUrl"
 >
   Resume

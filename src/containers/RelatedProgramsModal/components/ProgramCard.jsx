@@ -25,6 +25,8 @@ export const ProgramCard = ({ data }) => {
     <Card
       className="program-card mx-auto bg-primary-500 text-white mb-3.5 pb-3.5"
       style={{ width: '18rem', color: 'white' }}
+      as="a"
+      href={data.programUrl}
     >
       <Card.ImageCap
         className="program-card-banner"

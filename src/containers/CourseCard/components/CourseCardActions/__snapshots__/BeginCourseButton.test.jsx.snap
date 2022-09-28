@@ -4,17 +4,7 @@ exports[`BeginCourseButton snapshot renders default button when learner has acce
 <Button
   as="a"
   disabled={false}
-  href="homeUrl"
->
-  Begin Course
-</Button>
-`;
-
-exports[`BeginCourseButton snapshot renders disabled button when learner does not have access to the course 1`] = `
-<Button
-  as="a"
-  disabled={true}
-  href="homeUrl"
+  href="home-url"
 >
   Begin Course
 </Button>

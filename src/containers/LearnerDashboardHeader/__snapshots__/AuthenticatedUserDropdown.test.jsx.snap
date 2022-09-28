@@ -3,6 +3,7 @@
 exports[`AuthenticatedUserDropdown snapshots with enterprise dashboard 1`] = `
 <Dropdown
   className="user-dropdown"
+  variant="light"
 >
   <Dropdown.Toggle
     id="user"
@@ -54,7 +55,9 @@ exports[`AuthenticatedUserDropdown snapshots with enterprise dashboard 1`] = `
     >
       Account
     </Dropdown.Item>
-    <Dropdown.Item>
+    <Dropdown.Item
+      href="http://localhost:18000/support"
+    >
       Help
     </Dropdown.Item>
     <Dropdown.Divider />
@@ -70,6 +73,7 @@ exports[`AuthenticatedUserDropdown snapshots with enterprise dashboard 1`] = `
 exports[`AuthenticatedUserDropdown snapshots without enterprise dashboard and expanded 1`] = `
 <Dropdown
   className="user-dropdown"
+  variant="dark"
 >
   <Dropdown.Toggle
     id="user"
@@ -107,7 +111,9 @@ exports[`AuthenticatedUserDropdown snapshots without enterprise dashboard and ex
     >
       Account
     </Dropdown.Item>
-    <Dropdown.Item>
+    <Dropdown.Item
+      href="http://localhost:18000/support"
+    >
       Help
     </Dropdown.Item>
     <Dropdown.Divider />

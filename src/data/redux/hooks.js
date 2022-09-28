@@ -6,6 +6,7 @@ import requestSelectors from './requests/selectors';
 
 const { courseCard } = appSelectors;
 
+export const usePageNumber = () => useSelector(appSelectors.pageNumber);
 export const useEmailConfirmationData = () => useSelector(appSelectors.emailConfirmation);
 export const useEnterpriseDashboardData = () => useSelector(appSelectors.enterpriseDashboard);
 export const usePlatformSettingsData = () => useSelector(appSelectors.platformSettings);

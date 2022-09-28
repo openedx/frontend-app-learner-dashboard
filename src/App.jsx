@@ -2,9 +2,10 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
+import { AppContext } from '@edx/frontend-platform/react';
 import Footer from '@edx/frontend-component-footer';
 
-import { actions } from 'data/redux';
+import { thunkActions } from 'data/redux';
 import fakeData from 'data/services/lms/fakeData/courses';
 import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
 import Dashboard from 'containers/Dashboard';
@@ -14,16 +15,22 @@ import './App.scss';
 export const App = () => {
   const dispatch = useDispatch();
   // TODO: made development-only
+  const { authenticatedUser } = React.useContext(AppContext);
   React.useEffect(() => {
-    window.loadMockData = () => {
-      dispatch(actions.app.loadGlobalData(fakeData.globalData));
-      dispatch(actions.app.loadCourses({
-        courses: [
-          ...fakeData.courseRunData,
-          ...fakeData.entitlementData,
-        ],
-      }));
-    };
+    if (authenticatedUser?.administrator || process.env.NODE_ENV === 'development') {
+      window.loadEmptyData = () => {
+        dispatch(thunkActions.app.loadData({ ...fakeData.globalData, courses: [] }));
+      };
+      window.loadMockData = () => {
+        dispatch(thunkActions.app.loadData({
+          ...fakeData.globalData,
+          courses: [
+            ...fakeData.courseRunData,
+            ...fakeData.entitlementData,
+          ],
+        }));
+      };
+    }
   });
   return (
     <Router>
