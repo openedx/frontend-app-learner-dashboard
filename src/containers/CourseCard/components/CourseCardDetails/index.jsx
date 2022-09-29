@@ -24,7 +24,7 @@ export const CourseCardDetails = ({ cardId }) => {
   return (
     <span className="small" data-testid="CourseCardDetails">
       {providerName} • {courseNumber}
-      {!(isEntitlement && !isFulfilled) && (
+      {!(isEntitlement && !isFulfilled) && accessMessage && (
         <>
           {' • '}
           {accessMessage}

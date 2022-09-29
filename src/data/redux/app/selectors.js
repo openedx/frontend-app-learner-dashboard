@@ -51,13 +51,17 @@ dateSixMonthsFromNow.setDate(dateSixMonthsFromNow.getDate() + 180);
 const today = new Date();
 
 export const courseCard = StrictDict({
-  certificate: mkCardSelector(({ certificate }) => ({
-    availableDate: new Date(certificate.availableDate),
-    certPreviewUrl: certificate.certPreviewUrl,
-    isDownloadable: certificate.isDownloadable,
-    isEarnedButUnavailable: certificate.isEarned && new Date(certificate.availableDate) > today,
-    isRestricted: certificate.isRestricted,
-  })),
+  certificate: mkCardSelector(({ certificate }) => {
+    const availableDate = certificate.availableDate ? new Date(certificate.availableDate) : null;
+
+    return {
+      availableDate,
+      certPreviewUrl: certificate.certPreviewUrl,
+      isDownloadable: certificate.isDownloadable,
+      isEarnedButUnavailable: certificate.isEarned && availableDate > today,
+      isRestricted: certificate.isRestricted,
+    };
+  }),
   course: mkCardSelector(({ course }) => ({
     bannerImgSrc: baseAppUrl(course.bannerImgSrc),
     courseNumber: course.courseNumber,
@@ -65,13 +69,13 @@ export const courseCard = StrictDict({
     website: course.website,
   })),
   courseRun: mkCardSelector(({ courseRun }) => (courseRun === null ? {} : {
-    endDate: new Date(courseRun?.endDate),
+    endDate: courseRun.endDate ? new Date(courseRun?.endDate) : null,
     courseId: courseRun.courseId,
     isArchived: courseRun.isArchived,
     isStarted: courseRun.isStarted,
     isFinished: courseRun.isFinished,
     minPassingGrade: Math.floor(courseRun.minPassingGrade * 100),
-    startDate: new Date(courseRun.startDate),
+    startDate: courseRun.startDate ? new Date(courseRun.startDate) : null,
     homeUrl: courseRun.homeUrl,
     marketingUrl: courseRun.marketingUrl,
     progressUrl: learningMfeUrl(courseRun.progressUrl),
@@ -87,7 +91,7 @@ export const courseCard = StrictDict({
     }
     const { isStaff, hasUnmetPrereqs, isTooEarly } = enrollment.coursewareAccess;
     return {
-      accessExpirationDate: new Date(enrollment.accessExpirationDate),
+      accessExpirationDate: enrollment.accessExpirationDate ? new Date(enrollment.accessExpirationDate) : null,
       canUpgrade: enrollment.canUpgrade,
       hasStarted: enrollment.hasStarted,
       coursewareAccess: enrollment.coursewareAccess,

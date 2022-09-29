@@ -15,40 +15,42 @@ jest.mock('./hooks', () => ({
 const cardId = 'test-card-id';
 
 describe('CourseCard Details component', () => {
-  test('has change session button on entitlement course', () => {
-    const mockHook = (args) => () => ({
-      providerName: 'provider-name',
-      accessMessage: 'access-message',
-      openSessionModal: jest.fn().mockName('useSelectSession.openSessionModal'),
-      formatMessage,
-      isEntitlement: true,
-      isFulfilled: true,
-      canChange: true,
-      courseNumber: 'test-course-number',
-      ...args,
+  const defaultHooks = {
+    providerName: 'provider-name',
+    accessMessage: 'access-message',
+    openSessionModal: jest.fn().mockName('useSelectSession.openSessionModal'),
+    formatMessage,
+    isEntitlement: true,
+    isFulfilled: true,
+    canChange: true,
+    courseNumber: 'test-course-number',
+  };
+  const createWrapper = (hookOverrides = {}) => {
+    hooks.mockReturnValueOnce({
+      ...defaultHooks,
+      ...hookOverrides,
     });
-    hooks.mockImplementationOnce(mockHook({ isEntitlement: true }));
-    const el = shallow(<CourseCardDetails cardId={cardId} />);
-    expect(el).toMatchSnapshot();
+    return shallow(<CourseCardDetails cardId={cardId} />);
+  };
+
+  test('has change session button on entitlement course', () => {
+    const wrapper = createWrapper();
+    expect(wrapper).toMatchSnapshot();
     // it has 3 separator, 4 column
-    expect(el.text().match(/•/g)).toHaveLength(3);
+    expect(wrapper.text().match(/•/g)).toHaveLength(3);
+  });
+
+  test('has change session button on entitlement course but no access message', () => {
+    const wrapper = createWrapper({ accessMessage: null });
+    expect(wrapper).toMatchSnapshot();
+    // it has 2 separator, 3 column
+    expect(wrapper.text().match(/•/g)).toHaveLength(2);
   });
 
   test('does not have change session button on regular course', () => {
-    const mockHook = (args) => () => ({
-      providerName: 'provider-name',
-      accessMessage: 'acess-message',
-      openSessionModal: jest.fn().mockName('useSelectSession.openSessionModal'),
-      formatMessage: (message, values) => <div {...{ message, values }} />,
-      isEntitlement: true,
-      isFulfilled: true,
-      canChange: true,
-      ...args,
-    });
-    hooks.mockImplementationOnce(mockHook({ isEntitlement: false }));
-    const el = shallow(<CourseCardDetails cardId={cardId} />);
-    expect(el).toMatchSnapshot();
+    const wrapper = createWrapper({ isEntitlement: false });
+    expect(wrapper).toMatchSnapshot();
     // it has 2 separator, 3 column
-    expect(el.text().match(/•/g)).toHaveLength(2);
+    expect(wrapper.text().match(/•/g)).toHaveLength(2);
   });
 });
