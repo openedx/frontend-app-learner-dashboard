@@ -20,12 +20,16 @@ exports[`MasqueradeBar snapshot can masquerade 1`] = `
       value=""
     />
   </FormGroup>
-  <Button
+  <StatefulButton
     disabled={true}
-    variant="danger"
-  >
-    Submit
-  </Button>
+    labels={
+      Object {
+        "default": "Submit",
+      }
+    }
+    state="default"
+    variant="brand"
+  />
 </div>
 `;
 
@@ -49,12 +53,16 @@ exports[`MasqueradeBar snapshot can masquerade with input 1`] = `
       value="test"
     />
   </FormGroup>
-  <Button
+  <StatefulButton
     disabled={false}
-    variant="danger"
-  >
-    Submit
-  </Button>
+    labels={
+      Object {
+        "default": "Submit",
+      }
+    }
+    state="default"
+    variant="brand"
+  />
 </div>
 `;
 
@@ -80,17 +88,55 @@ exports[`MasqueradeBar snapshot is masquerading failed with error 1`] = `
       value=""
     />
     <FormControlFeedback
+      hasIcon={false}
       type="invalid"
     >
       test-error
     </FormControlFeedback>
   </FormGroup>
-  <Button
+  <StatefulButton
     disabled={true}
-    variant="danger"
+    labels={
+      Object {
+        "default": "Submit",
+      }
+    }
+    state="default"
+    variant="brand"
+  />
+</div>
+`;
+
+exports[`MasqueradeBar snapshot is masquerading pending 1`] = `
+<div
+  className="masquerade-bar"
+>
+  <FormLabel
+    className="masquerade-form-label"
+    inline={true}
   >
-    Submit
-  </Button>
+    View as: 
+  </FormLabel>
+  <FormGroup
+    className="masquerade-form-input"
+    isInvalid={false}
+  >
+    <FormControl
+      floatingLabel="Student username or email"
+      onChange={[MockFunction handleMasqueradeInputChange]}
+      value=""
+    />
+  </FormGroup>
+  <StatefulButton
+    disabled={true}
+    labels={
+      Object {
+        "default": "Submit",
+      }
+    }
+    state="pending"
+    variant="brand"
+  />
 </div>
 `;
 

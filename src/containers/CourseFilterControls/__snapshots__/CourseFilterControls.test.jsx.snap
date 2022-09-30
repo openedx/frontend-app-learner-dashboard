@@ -98,7 +98,7 @@ exports[`CourseFilterControls snapshot is not mobile 1`] = `
           />
         </div>
         <hr
-          className="h-100 bg-primary-200 m-1"
+          className="h-100 bg-primary-200 mx-3 my-0"
         />
         <div
           className="filter-form-col text-left m-1"

@@ -1,8 +1,8 @@
 import React from 'react';
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { thunkActions, selectors } from 'data/redux';
+import { thunkActions, hooks as appHooks } from 'data/redux';
 import { StrictDict } from 'utils';
 import * as module from './hooks';
 
@@ -32,14 +32,16 @@ export const useMasqueradeBarData = ({
   const {
     isMasquerading,
     isMasqueradingFailed,
+    isMasqueradingPending,
     masqueradeError,
-  } = useSelector(selectors.requests.masquerade);
+  } = appHooks.useMasqueradeData();
   const { masqueradeInput, handleMasqueradeInputChange } = module.useMasqueradeInput();
 
   return {
     canMasquerade,
     isMasquerading,
     isMasqueradingFailed,
+    isMasqueradingPending,
     masqueradeError,
     masqueradeInput,
     handleMasqueradeSubmit,

@@ -1,5 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`CourseList snapshots renders loading 1`] = `
+<div
+  className="course-list-loading"
+>
+  <Spinner
+    animation="border"
+    className="mie-3"
+    screenReaderText="loading"
+  />
+</div>
+`;
+
 exports[`CourseList snapshots with filters 1`] = `
 <div
   className="course-list-container"
