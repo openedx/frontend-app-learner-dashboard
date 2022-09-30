@@ -10,7 +10,7 @@ exports[`Dashboard snapshots there are available dashboards 1`] = `
 </div>
 `;
 
-exports[`Dashboard snapshots there are courses 1`] = `
+exports[`Dashboard snapshots there are courses, or they are still loading 1`] = `
 <div
   className="d-flex flex-column p-2"
   id="dashboard-container"

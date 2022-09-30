@@ -20,22 +20,23 @@ const testState = {
     [requestKey]: requestData,
   },
 };
+const mockUseSelector = (selector, state) => selector(state);
 const genRequests = (request) => ({
   requests: { [requestKey]: request },
 });
 const select = (selector, request) => (
-  selector(genRequests(request), { requestKey })
+  mockUseSelector(
+    selector(requestKey), genRequests(request),
+  )
 );
 describe('requests selectors unit tests', () => {
   test('requestStatus returns data associated with given key', () => {
     expect(selectors.requestStatus(testState, { requestKey })).toEqual(requestData);
   });
   const testStatusSelector = (selector, matchingRequest) => {
-    expect(selector(testState, { requestKey })).toEqual(false);
-    expect(selector(
-      { requests: { [requestKey]: matchingRequest } },
-      { requestKey },
-    )).toEqual(true);
+    expect(mockUseSelector(selector(requestKey), testState)).toEqual(false);
+    expect(mockUseSelector(selector(requestKey),
+      { requests: { [requestKey]: matchingRequest } })).toEqual(true);
   };
   test('isInactive returns true iff the given request is inactive', () => {
     testStatusSelector(selectors.isInactive, inactiveRequest);
@@ -78,6 +79,13 @@ describe('requests selectors unit tests', () => {
     expect(selectors.masquerade(mockResponse(completedRequest))).toEqual({
       isMasquerading: true,
       isMasqueradingFailed: false,
+      isMasqueradingPending: false,
+      masqueradeError: undefined,
+    });
+    expect(selectors.masquerade(mockResponse(pendingRequest))).toEqual({
+      isMasquerading: false,
+      isMasqueradingFailed: false,
+      isMasqueradingPending: true,
       masqueradeError: undefined,
     });
     expect(selectors.masquerade(mockResponse({
@@ -86,6 +94,7 @@ describe('requests selectors unit tests', () => {
     }))).toEqual({
       isMasquerading: false,
       isMasqueradingFailed: true,
+      isMasqueradingPending: false,
       masqueradeError: testValue,
     });
   });

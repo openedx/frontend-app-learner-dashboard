@@ -4,7 +4,7 @@ import { RequestStates, RequestKeys } from 'data/constants/requests';
 
 export const requestStatus = (state, { requestKey }) => state.requests[requestKey];
 
-const statusSelector = (fn) => (state, { requestKey }) => fn(state.requests[requestKey]);
+const statusSelector = (fn) => (requestKey) => (state) => fn(state.requests[requestKey]);
 
 export const isInactive = ({ status }) => status === RequestStates.inactive;
 export const isPending = ({ status }) => status === RequestStates.pending;
@@ -21,6 +21,7 @@ export const masquerade = (state) => {
   return {
     isMasquerading: isCompleted(request),
     isMasqueradingFailed: isFailed(request),
+    isMasqueradingPending: isPending(request),
     masqueradeError: error(request),
   };
 };

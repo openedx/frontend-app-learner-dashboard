@@ -6,6 +6,7 @@ import {
   thunkActions,
   hooks as appHooks,
 } from 'data/redux';
+import { RequestKeys } from 'data/constants/requests';
 
 import CourseList from 'containers/CourseList';
 import WidgetSidebar from 'containers/WidgetSidebar';
@@ -25,10 +26,12 @@ export const Dashboard = () => {
   const hasCourses = appHooks.useHasCourses();
   const hasAvailableDashboards = appHooks.useHasAvailableDashboards();
   const showSelectSessionModal = appHooks.useShowSelectSessionModal();
+  const initIsPending = appHooks.useIsPendingRequest(RequestKeys.initialize);
+
   return (
     <div id="dashboard-container" className="d-flex flex-column p-2">
       {hasAvailableDashboards && <EnterpriseDashboardModal />}
-      {hasCourses ? (
+      {initIsPending || (!initIsPending && hasCourses) ? (
         <Container fluid size="xl">
           <Row>
             <Col

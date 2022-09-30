@@ -20,6 +20,7 @@ describe('CourseList', () => {
     setPageNumber: jest.fn().mockName('setPageNumber'),
     showFilters: false,
     visibleList: [],
+    initIsPending: false,
   };
   const createWrapper = (courseListData) => {
     useCourseListData.mockReturnValueOnce({
@@ -30,6 +31,10 @@ describe('CourseList', () => {
   };
 
   describe('snapshots', () => {
+    it('renders loading', () => {
+      const wrapper = createWrapper({ initIsPending: true });
+      expect(wrapper).toMatchSnapshot();
+    });
     test('with no filters', () => {
       const wrapper = createWrapper();
       expect(wrapper).toMatchSnapshot();

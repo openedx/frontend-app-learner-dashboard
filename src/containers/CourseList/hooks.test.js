@@ -15,6 +15,7 @@ jest.mock('data/redux', () => ({
   hooks: {
     useCurrentCourseList: jest.fn(),
     usePageNumber: jest.fn(() => 23),
+    useIsPendingRequest: jest.fn(),
   },
 }));
 
@@ -34,6 +35,11 @@ const testCheckboxSetValues = [testFilters, testSetFilters];
 
 describe('CourseList hooks', () => {
   let out;
+
+  appHooks.useCurrentCourseList.mockReturnValue(testListData);
+  appHooks.useIsPendingRequest.mockReturnValue(false);
+  paragon.useCheckboxSetValues.mockImplementation(() => testCheckboxSetValues);
+
   describe('state values', () => {
     state.testGetter(state.keys.sortBy);
     jest.clearAllMocks();
@@ -44,8 +50,6 @@ describe('CourseList hooks', () => {
     beforeEach(() => {
       state.mock();
       state.mockVal(state.keys.sortBy, testSortBy);
-      paragon.useCheckboxSetValues.mockImplementationOnce(() => testCheckboxSetValues);
-      appHooks.useCurrentCourseList.mockReturnValueOnce(testListData);
       out = hooks.useCourseListData();
     });
     describe('behavior', () => {
@@ -72,11 +76,16 @@ describe('CourseList hooks', () => {
       test('showFilters is true iff filters is not empty', () => {
         expect(out.showFilters).toEqual(true);
         state.mockVal(state.keys.sortBy, testSortBy);
-        appHooks.useCurrentCourseList.mockReturnValueOnce(testListData);
+        paragon.useCheckboxSetValues.mockReturnValueOnce([[], testSetFilters]);
         out = hooks.useCourseListData();
-        // checkbox values default to returning a list, and were only overridden once.
-        // Thus this time, the values for the list should be empty.
+        // don't show filter when list is empty.
         expect(out.showFilters).toEqual(false);
+      });
+      test('initIsPending loads from useIsPendingRequest', () => {
+        expect(out.initIsPending).toEqual(false);
+        appHooks.useIsPendingRequest.mockReturnValueOnce(true);
+        out = hooks.useCourseListData();
+        expect(out.initIsPending).toEqual(true);
       });
       describe('filterOptions', () => {
         test('sortBy and setSortBy are connected to the state value', () => {

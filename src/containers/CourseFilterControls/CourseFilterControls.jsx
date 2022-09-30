@@ -92,7 +92,7 @@ export const CourseFilterControls = ({
                 <div className="filter-form-col">
                   <FilterForm {...{ filters, handleFilterChange }} />
                 </div>
-                <hr className="h-100 bg-primary-200 m-1" />
+                <hr className="h-100 bg-primary-200 mx-3 my-0" />
                 <div className="filter-form-col text-left m-1">
                   <SortForm {...{ sortBy, handleSortChange }} />
                 </div>

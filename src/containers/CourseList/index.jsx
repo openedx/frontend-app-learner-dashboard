@@ -1,9 +1,12 @@
 import React from 'react';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { Pagination } from '@edx/paragon';
+import { Pagination, Spinner } from '@edx/paragon';
 
-import { ActiveCourseFilters, CourseFilterControls } from 'containers/CourseFilterControls';
+import {
+  ActiveCourseFilters,
+  CourseFilterControls,
+} from 'containers/CourseFilterControls';
 import CourseCard from 'containers/CourseCard';
 
 import { useCourseListData } from './hooks';
@@ -20,21 +23,21 @@ export const CourseList = () => {
     numPages,
     showFilters,
     visibleList,
+    initIsPending,
   } = useCourseListData();
-  return (
+  return initIsPending ? (
+    <div className="course-list-loading">
+      <Spinner animation="border" className="mie-3" screenReaderText="loading" />
+    </div>
+  ) : (
     <div className="course-list-container">
       <div id="course-list-heading-container">
-        <h2 className="my-3">
-          {formatMessage(messages.myCourses)}
-        </h2>
-        <div
-          id="course-filter-controls-container"
-          className="text-right"
-        >
+        <h2 className="my-3">{formatMessage(messages.myCourses)}</h2>
+        <div id="course-filter-controls-container" className="text-right">
           <CourseFilterControls {...filterOptions} />
         </div>
       </div>
-      { showFilters && (
+      {showFilters && (
         <div id="course-list-active-filters-container">
           <ActiveCourseFilters {...filterOptions} />
         </div>
@@ -43,7 +46,7 @@ export const CourseList = () => {
         {visibleList.map(({ cardId }) => (
           <CourseCard key={cardId} cardId={cardId} />
         ))}
-        {(numPages > 1) && (
+        {numPages > 1 && (
           <Pagination
             variant="secondary"
             paginationLabel="Course List"
@@ -57,7 +60,6 @@ export const CourseList = () => {
   );
 };
 
-CourseList.propTypes = {
-};
+CourseList.propTypes = {};
 
 export default CourseList;

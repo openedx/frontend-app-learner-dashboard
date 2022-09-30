@@ -6,6 +6,7 @@ import { useCheckboxSetValues } from '@edx/paragon';
 import { StrictDict } from 'utils';
 import { actions, hooks as appHooks } from 'data/redux';
 import { ListPageSize, SortKeys } from 'data/constants/app';
+import { RequestKeys } from 'data/constants/requests';
 
 import * as module from './hooks';
 
@@ -27,6 +28,8 @@ export const useCourseListData = () => {
   });
   const handleRemoveFilter = (filter) => () => setFilters.remove(filter);
   const setPageNumber = (value) => dispatch(actions.app.setPageNumber(value));
+  const initIsPending = appHooks.useIsPendingRequest(RequestKeys.initialize);
+
   return {
     pageNumber,
     numPages,
@@ -40,6 +43,7 @@ export const useCourseListData = () => {
       handleRemoveFilter,
     },
     showFilters: filters.length > 0,
+    initIsPending,
   };
 };
 

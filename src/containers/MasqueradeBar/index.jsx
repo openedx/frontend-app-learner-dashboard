@@ -3,11 +3,11 @@ import { AppContext } from '@edx/frontend-platform/react';
 
 import {
   Chip,
-  Button,
   FormControl,
   FormControlFeedback,
   FormLabel,
   FormGroup,
+  StatefulButton,
 } from '@edx/paragon';
 import { Close } from '@edx/paragon/icons';
 
@@ -22,6 +22,7 @@ export const MasqueradeBar = () => {
     canMasquerade,
     isMasquerading,
     isMasqueradingFailed,
+    isMasqueradingPending,
     masqueradeInput,
     masqueradeError,
     handleMasqueradeInputChange,
@@ -59,18 +60,20 @@ export const MasqueradeBar = () => {
               floatingLabel={formatMessage(messages.StudentNameInput)}
             />
             {isMasqueradingFailed && (
-              <FormControlFeedback type="invalid">
+              <FormControlFeedback type="invalid" hasIcon={false}>
                 {masqueradeError}
               </FormControlFeedback>
             )}
           </FormGroup>
-          <Button
+          <StatefulButton
             disabled={!masqueradeInput.length}
-            variant="danger"
+            variant="brand"
             onClick={handleMasqueradeSubmit(masqueradeInput)}
-          >
-            {formatMessage(messages.SubmitButton)}
-          </Button>
+            labels={{
+              default: formatMessage(messages.SubmitButton),
+            }}
+            state={isMasqueradingPending ? 'pending' : 'default'}
+          />
         </>
       )}
     </div>

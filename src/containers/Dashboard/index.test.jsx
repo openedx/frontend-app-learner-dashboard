@@ -20,6 +20,7 @@ jest.mock('data/redux', () => ({
     useHasCourses: jest.fn(),
     useHasAvailableDashboards: jest.fn(),
     useShowSelectSessionModal: jest.fn(),
+    useIsPendingRequest: jest.fn(),
   },
 }));
 
@@ -34,21 +35,32 @@ describe('Dashboard', () => {
     hasCourses,
     hasAvailableDashboards,
     showSelectSessionModal,
+    initIsPending,
   }) => {
     hooks.useHasCourses.mockReturnValueOnce(hasCourses);
     hooks.useHasAvailableDashboards.mockReturnValueOnce(hasAvailableDashboards);
     hooks.useShowSelectSessionModal.mockReturnValueOnce(showSelectSessionModal);
+    hooks.useIsPendingRequest.mockReturnValueOnce(initIsPending);
     return shallow(<Dashboard />);
   };
 
   describe('snapshots', () => {
-    test('there are courses', () => {
-      const wrapper = createWrapper({
+    test('there are courses, or they are still loading', () => {
+      const pendingNoCoursesWrapper = createWrapper({
+        hasCourses: false,
+        hasAvailableDashboards: false,
+        showSelectSessionModal: false,
+        initIsPending: true,
+      });
+      expect(pendingNoCoursesWrapper).toMatchSnapshot();
+
+      const doneLoadingWithCoursesWrapper = createWrapper({
         hasCourses: true,
         hasAvailableDashboards: false,
         showSelectSessionModal: false,
+        initIsPending: false,
       });
-      expect(wrapper).toMatchSnapshot();
+      expect(doneLoadingWithCoursesWrapper).toEqual(pendingNoCoursesWrapper);
     });
 
     test('there are no courses', () => {
@@ -56,6 +68,7 @@ describe('Dashboard', () => {
         hasCourses: false,
         hasAvailableDashboards: false,
         showSelectSessionModal: false,
+        initIsPending: false,
       });
       expect(wrapper).toMatchSnapshot();
     });
@@ -65,6 +78,7 @@ describe('Dashboard', () => {
         hasCourses: false,
         hasAvailableDashboards: true,
         showSelectSessionModal: false,
+        initIsPending: false,
       });
       expect(wrapper).toMatchSnapshot();
     });
@@ -74,6 +88,7 @@ describe('Dashboard', () => {
         hasCourses: false,
         hasAvailableDashboards: false,
         showSelectSessionModal: true,
+        initIsPending: false,
       });
       expect(wrapper).toMatchSnapshot();
     });
@@ -85,6 +100,7 @@ describe('Dashboard', () => {
         hasCourses: false,
         hasAvailableDashboards: false,
         showSelectSessionModal: false,
+        initIsPending: false,
       });
       expect(wrapper.find(EmptyCourse).length).toEqual(1);
       expect(wrapper.find(CourseList).length).toEqual(0);
@@ -97,6 +113,7 @@ describe('Dashboard', () => {
         hasCourses: true,
         hasAvailableDashboards: true,
         showSelectSessionModal: true,
+        initIsPending: false,
       });
       expect(wrapper.find(EmptyCourse).length).toEqual(0);
       expect(wrapper.find(CourseList).length).toEqual(1);
@@ -109,6 +126,7 @@ describe('Dashboard', () => {
         hasCourses: true,
         hasAvailableDashboards: true,
         showSelectSessionModal: false,
+        initIsPending: false,
       });
       expect(wrapper.find(EmptyCourse).length).toEqual(0);
       expect(wrapper.find(CourseList).length).toEqual(1);

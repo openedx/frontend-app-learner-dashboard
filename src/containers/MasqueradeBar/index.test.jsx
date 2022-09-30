@@ -14,6 +14,7 @@ describe('MasqueradeBar', () => {
     canMasquerade: true,
     isMasquerading: false,
     isMasqueradingFailed: false,
+    isMasqueradingPending: false,
     masqueradeInput: '',
     masqueradeError: '',
     handleMasqueradeInputChange: jest.fn().mockName('handleMasqueradeInputChange'),
@@ -54,6 +55,13 @@ describe('MasqueradeBar', () => {
         ...masqueradeMockData,
         isMasqueradingFailed: true,
         masqueradeError: 'test-error',
+      });
+      expect(shallow(<MasqueradeBar />)).toMatchSnapshot();
+    });
+    test('is masquerading pending', () => {
+      hooks.useMasqueradeBarData.mockReturnValueOnce({
+        ...masqueradeMockData,
+        isMasqueradingPending: true,
       });
       expect(shallow(<MasqueradeBar />)).toMatchSnapshot();
     });
