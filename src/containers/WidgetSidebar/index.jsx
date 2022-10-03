@@ -6,6 +6,7 @@ import { ArrowForward } from '@edx/paragon/icons';
 import moreCoursesSVG from 'assets/more-courses-sidewidget.svg';
 
 import messages from './messages';
+import './index.scss';
 
 export const arrowIcon = (<Icon className="mx-1" src={ArrowForward} />);
 
@@ -14,7 +15,7 @@ export const WidgetSidebar = () => {
   return (
     <div className="widget-sidebar px-2 mt-5 pt-3">
       <div className="d-flex">
-        <Card orientation="horizontal">
+        <Card orientation="horizontal" id="looking-for-challenge-widget">
           <Card.ImageCap
             src={moreCoursesSVG}
             srcAlt="course side widget"
@@ -23,9 +24,11 @@ export const WidgetSidebar = () => {
             <h4>
               {formatMessage(messages.lookingForChallengePrompt)}
             </h4>
-            <Hyperlink variant="brand" destination="#" className="d-flex">
-              {formatMessage(messages.findCoursesButton, { arrow: arrowIcon })}
-            </Hyperlink>
+            <h5>
+              <Hyperlink variant="brand" destination="#" className="d-flex">
+                {formatMessage(messages.findCoursesButton, { arrow: arrowIcon })}
+              </Hyperlink>
+            </h5>
           </Card.Body>
         </Card>
       </div>

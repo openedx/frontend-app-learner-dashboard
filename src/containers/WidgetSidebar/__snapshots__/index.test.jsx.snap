@@ -8,6 +8,7 @@ exports[`WidgetSidebar snapshots default 1`] = `
     className="d-flex"
   >
     <Card
+      id="looking-for-challenge-widget"
       orientation="horizontal"
     >
       <Card.ImageCap
@@ -20,28 +21,30 @@ exports[`WidgetSidebar snapshots default 1`] = `
         <h4>
           Looking for a new challenge?
         </h4>
-        <Hyperlink
-          className="d-flex"
-          destination="#"
-          variant="brand"
-        >
-          <format-message-function
-            message={
-              Object {
-                "defaultMessage": "Find a course {arrow}",
-                "description": "Button to explore more courses",
-                "id": "WidgetSidebar.findCoursesButton",
+        <h5>
+          <Hyperlink
+            className="d-flex"
+            destination="#"
+            variant="brand"
+          >
+            <format-message-function
+              message={
+                Object {
+                  "defaultMessage": "Find a course {arrow}",
+                  "description": "Button to explore more courses",
+                  "id": "WidgetSidebar.findCoursesButton",
+                }
               }
-            }
-            values={
-              Object {
-                "arrow": <Icon
-                  className="mx-1"
-                />,
+              values={
+                Object {
+                  "arrow": <Icon
+                    className="mx-1"
+                  />,
+                }
               }
-            }
-          />
-        </Hyperlink>
+            />
+          </Hyperlink>
+        </h5>
       </Card.Body>
     </Card>
   </div>
