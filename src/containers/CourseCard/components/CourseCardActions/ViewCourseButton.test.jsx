@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
 
-import { htmlProps } from 'testKeys';
+import { htmlProps } from 'data/constants/htmlKeys';
 import { hooks } from 'data/redux';
 import ViewCourseButton from './ViewCourseButton';
 
