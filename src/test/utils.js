@@ -1,7 +1,3 @@
-export const mockSuccess = (returnValFn) => (...args) => (
-  new Promise((resolve) => resolve(returnValFn(...args)))
-);
+export const mockSuccess = (returnValFn) => (...args) => Promise.resolve(returnValFn(...args));
 
-export const mockFailure = (returnValFn) => (...args) => (
-  new Promise((resolve, reject) => reject(returnValFn(...args)))
-);
+export const mockFailure = (returnValFn) => (...args) => Promise.reject(returnValFn(...args));
