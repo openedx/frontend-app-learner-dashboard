@@ -1,5 +1,11 @@
 import { StrictDict } from 'utils';
 
+export const buttonStates = StrictDict({
+  default: 'default',
+  pending: 'pending',
+  error: 'error',
+});
+
 export const htmlProps = StrictDict({
   disabled: 'disabled',
   href: 'href',
@@ -9,5 +15,6 @@ export const htmlProps = StrictDict({
 });
 
 export default {
+  buttonStates,
   htmlProps,
 };

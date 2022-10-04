@@ -7,43 +7,7 @@ exports[`WidgetSidebar snapshots default 1`] = `
   <div
     className="d-flex"
   >
-    <Card
-      orientation="horizontal"
-    >
-      <Card.ImageCap
-        src="icon/mock/path"
-        srcAlt="course side widget"
-      />
-      <Card.Body
-        className="m-auto pr-2"
-      >
-        <h4>
-          Looking for a new challenge?
-        </h4>
-        <Hyperlink
-          className="d-flex"
-          destination="#"
-          variant="brand"
-        >
-          <format-message-function
-            message={
-              Object {
-                "defaultMessage": "Find a course {arrow}",
-                "description": "Button to explore more courses",
-                "id": "WidgetSidebar.findCoursesButton",
-              }
-            }
-            values={
-              Object {
-                "arrow": <Icon
-                  className="mx-1"
-                />,
-              }
-            }
-          />
-        </Hyperlink>
-      </Card.Body>
-    </Card>
+    <LookingForChallengeWidget />
   </div>
 </div>
 `;

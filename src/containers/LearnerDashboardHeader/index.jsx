@@ -3,8 +3,9 @@ import React, { useContext } from 'react';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
 import { Program } from '@edx/paragon/icons';
-import { Button } from '@edx/paragon';
+import { Button, Image } from '@edx/paragon';
 
+import topBanner from 'assets/top_stripe.svg';
 import MasqueradeBar from 'containers/MasqueradeBar';
 
 import AuthenticatedUserDropdown from './AuthenticatedUserDropdown';
@@ -28,6 +29,9 @@ export const LearnerDashboardHeader = () => {
     <>
       <ConfirmEmailBanner />
       <div className="flex-column bg-primary">
+        {!(isCollapsed) && (
+          <Image className="d-block w-100" src={topBanner} />
+        )}
         <header className="learner-dashboard-header">
           <div className="d-flex">
             {(!isCollapsed) && (

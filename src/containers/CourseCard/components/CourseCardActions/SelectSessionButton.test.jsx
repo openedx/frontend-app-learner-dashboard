@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 
 import { hooks } from 'data/redux';
-import { htmlProps } from 'testKeys';
+import { htmlProps } from 'data/constants/htmlKeys';
 import SelectSessionButton from './SelectSessionButton';
 
 jest.mock('data/redux', () => ({
