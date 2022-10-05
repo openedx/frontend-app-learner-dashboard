@@ -90,9 +90,7 @@ exports[`MasqueradeBar snapshot is masquerading failed with error 1`] = `
     <FormControlFeedback
       hasIcon={false}
       type="invalid"
-    >
-      test-error
-    </FormControlFeedback>
+    />
   </FormGroup>
   <StatefulButton
     disabled={true}

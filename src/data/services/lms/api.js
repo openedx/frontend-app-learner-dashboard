@@ -8,18 +8,16 @@ import {
   apiKeys,
   unenrollmentAction,
   enableEmailsAction,
-  unknownErrorMessage,
 } from './constants';
 import urls from './urls';
 
 /*********************************************************************************
  * GET Actions
  *********************************************************************************/
-const initializeList = ({ user } = {}) => new Promise((resolve, reject) => {
-  get(stringifyUrl(urls.init, { [apiKeys.user]: user }))
-    .then(({ data }) => resolve(data))
-    .catch(({ response }) => reject(response ? response.statusText : unknownErrorMessage));
-});
+const initializeList = ({ user } = {}) => get(stringifyUrl(
+  urls.init,
+  { [apiKeys.user]: user },
+));
 
 const updateEntitlementEnrollment = ({ uuid, courseId }) => post(stringifyUrl(
   urls.entitlementEnrollment(uuid),

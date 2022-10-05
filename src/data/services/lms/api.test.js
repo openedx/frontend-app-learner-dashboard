@@ -5,7 +5,6 @@ import {
   apiKeys,
   unenrollmentAction,
   enableEmailsAction,
-  unknownErrorMessage,
 } from './constants';
 
 jest.mock('./utils', () => {
@@ -40,18 +39,13 @@ describe('lms api methods', () => {
     });
     it('resolves data from response on success', () => {
       utils.get.mockReturnValueOnce(Promise.resolve({ data: mockData }));
-      expect(api.initializeList({ user: testUser })).resolves.toBe(mockData);
+      expect(api.initializeList({ user: testUser })).resolves.toEqual({
+        data: mockData,
+      });
     });
     it('rejects with statusText on failure if available', () => {
       utils.get.mockReturnValueOnce(Promise.reject(testError));
-      expect(api.initializeList({ user: testUser })).rejects.toMatch(
-        testError.response.statusText,
-      );
-    });
-    it('rejects with "Unknown Error" if response not available', () => {
-      // eslint-disable-next-line prefer-promise-reject-errors
-      utils.get.mockReturnValueOnce(Promise.reject({}));
-      expect(api.initializeList({ user: testUser })).rejects.toMatch(unknownErrorMessage);
+      expect(api.initializeList({ user: testUser })).rejects.toEqual(testError);
     });
   });
   describe('updateEntitlementEnrollment', () => {

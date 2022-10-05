@@ -22,7 +22,7 @@ export const masquerade = (state) => {
     isMasquerading: isCompleted(request),
     isMasqueradingFailed: isFailed(request),
     isMasqueradingPending: isPending(request),
-    masqueradeError: error(request),
+    masqueradeErrorStatus: errorStatus(request),
   };
 };
 

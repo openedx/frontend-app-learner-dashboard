@@ -15,5 +15,3 @@ export const apiValues = StrictDict({
 
 export const unenrollmentAction = { [apiKeys.enrollmentAction]: apiValues.unenroll };
 export const enableEmailsAction = { [apiKeys.receiveEmails]: apiValues.on };
-
-export const unknownErrorMessage = 'Unknown Error';

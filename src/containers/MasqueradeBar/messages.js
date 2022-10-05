@@ -21,6 +21,16 @@ const messages = defineMessages({
     defaultMessage: 'Student username or email',
     description: 'Label for the Student Name or email input',
   },
+  NoStudentFound: {
+    id: 'MasqueradeBar.NoStudentFound',
+    defaultMessage: 'No student with this username or email could be found',
+    description: 'Error message when no student is found',
+  },
+  UnknownError: {
+    id: 'MasqueradeBar.UnknownError',
+    defaultMessage: 'An unknown error occurred',
+    description: 'Error message when an unknown error occurs',
+  },
 });
 
 export default messages;

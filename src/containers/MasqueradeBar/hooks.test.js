@@ -2,6 +2,7 @@ import { MockUseState } from 'testUtils';
 import { thunkActions, hooks as appHooks } from 'data/redux';
 
 import * as hooks from './hooks';
+import messages from './messages';
 
 jest.mock('data/redux', () => ({
   thunkActions: {
@@ -25,7 +26,7 @@ describe('MasqueradeBar hooks', () => {
     isMasquerading: false,
     isMasqueradingFailed: false,
     isMasqueradingPending: false,
-    masqueradeError: null,
+    masqueradeErrorStatus: null,
   };
   const createHook = (masqueradeData = {}, user) => {
     appHooks.useMasqueradeData.mockReturnValueOnce({
@@ -49,11 +50,11 @@ describe('MasqueradeBar hooks', () => {
       const out = createHook({}, { administrator: false });
       expect(out.canMasquerade).toEqual(false);
     });
-    test('masqueradeError', () => {
+    test('masqueradeErrorStatus', () => {
       let out = createHook();
-      expect(out.masqueradeError).toBeNull();
-      out = createHook({ masqueradeError: 'test error' });
-      expect(out.masqueradeError).toEqual('test error');
+      expect(out.masqueradeErrorMessage).toBeNull();
+      out = createHook({ masqueradeErrorStatus: 0 });
+      expect(out.masqueradeErrorMessage).not.toBeNull();
     });
     test('isMasqueradePending', () => {
       let out = createHook();
@@ -76,6 +77,18 @@ describe('MasqueradeBar hooks', () => {
       const out = createHook();
       out.handleClearMasquerade();
       expect(thunkActions.app.clearMasquerade).toHaveBeenCalled();
+    });
+  });
+
+  describe('getMasqueradeErrorMessage', () => {
+    test('null', () => {
+      expect(hooks.getMasqueradeErrorMessage()).toBeNull();
+    });
+    test('404', () => {
+      expect(hooks.getMasqueradeErrorMessage(404)).toEqual(messages.NoStudentFound);
+    });
+    test('default', () => {
+      expect(hooks.getMasqueradeErrorMessage(500)).toEqual(messages.UnknownError);
     });
   });
 });

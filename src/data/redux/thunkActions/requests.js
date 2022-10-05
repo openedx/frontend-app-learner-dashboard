@@ -84,14 +84,11 @@ export const updateEmailSettings = ({ courseId, enable, ...options }) => module.
   options,
 );
 
-export const masqueradeAs = ({ user, onSuccess, onFailure }) => (dispatch) => {
-  dispatch(networkRequest({
-    requestKey: RequestKeys.masquerade,
-    onFailure,
-    onSuccess,
-    promise: api.initializeList({ user }),
-  }));
-};
+export const masqueradeAs = ({ user, ...options }) => module.networkAction(
+  RequestKeys.masquerade,
+  api.initializeList({ user }),
+  options,
+);
 
 export const clearMasquerade = () => (dispatch) => dispatch(
   actions.requests.clearRequest({ requestKey: RequestKeys.masquerade }),

@@ -24,7 +24,7 @@ export const MasqueradeBar = () => {
     isMasqueradingFailed,
     isMasqueradingPending,
     masqueradeInput,
-    masqueradeError,
+    masqueradeErrorMessage,
     handleMasqueradeInputChange,
     handleClearMasquerade,
     handleMasqueradeSubmit,
@@ -61,7 +61,7 @@ export const MasqueradeBar = () => {
             />
             {isMasqueradingFailed && (
               <FormControlFeedback type="invalid" hasIcon={false}>
-                {masqueradeError}
+                {formatMessage(masqueradeErrorMessage)}
               </FormControlFeedback>
             )}
           </FormGroup>

@@ -23,13 +23,13 @@ export const loadData = ({ courses, ...globalData }) => dispatch => {
  */
 export const initialize = () => (dispatch) => (
   dispatch(requests.initializeList({
-    onSuccess: (response) => dispatch(module.loadData(response)),
+    onSuccess: ({ data }) => dispatch(module.loadData(data)),
   }))
 );
 
 export const refreshList = () => (dispatch) => (
   dispatch(requests.initializeList({
-    onSuccess: (response) => dispatch(module.loadData(response)),
+    onSuccess: ({ data }) => dispatch(module.loadData(data)),
   }))
 );
 
@@ -83,8 +83,8 @@ export const unenrollFromCourse = (courseId, reason) => (dispatch) => {
 export const masqueradeAs = (user) => (dispatch) => (
   dispatch(requests.masqueradeAs({
     user,
-    onSuccess: (({ courses }) => {
-      dispatch(actions.app.loadCourses({ courses }));
+    onSuccess: (({ data }) => {
+      dispatch(actions.app.loadCourses({ courses: data.courses }));
     }),
   }))
 );
