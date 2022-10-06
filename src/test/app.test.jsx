@@ -88,11 +88,13 @@ const mockApi = () => {
     (resolve, reject) => {
       resolveFns.init = {
         success: () => resolve({
-          courses: [
-            ...fakeData.courseRunData,
-            ...fakeData.entitlementData,
-          ],
-          ...fakeData.globalData,
+          data: {
+            courses: [
+              ...fakeData.courseRunData,
+              ...fakeData.entitlementData,
+            ],
+            ...fakeData.globalData,
+          }
         }),
       };
     }));

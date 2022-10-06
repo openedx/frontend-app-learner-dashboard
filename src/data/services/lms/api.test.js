@@ -5,7 +5,6 @@ import {
   apiKeys,
   unenrollmentAction,
   enableEmailsAction,
-  unknownErrorMessage,
 } from './constants';
 
 jest.mock('./utils', () => {
@@ -13,7 +12,7 @@ jest.mock('./utils', () => {
   return {
     client: () => ({ delete: deleteFn }),
     delete: deleteFn,
-    get: jest.fn(),
+    get: (...args) => ({ get: args }),
     post: (...args) => ({ post: args }),
     stringifyUrl: (...args) => ({ stringifyUrl: args }),
   };
@@ -22,36 +21,16 @@ jest.mock('./utils', () => {
 const testUser = 'test-user';
 const testUuid = 'test-UUID';
 const testCourseId = 'TEST-course-ID';
-const testError = { response: { statusText: 'test-error-status-text' } };
-
-const mockData = { some: 'test', data: '!!!' };
 
 describe('lms api methods', () => {
   describe('initializeList', () => {
-    it('calls get to init url with user field', async () => {
-      utils.get.mockReturnValueOnce(Promise.resolve({ data: mockData }));
-      await api.initializeList({ user: testUser });
-      expect(utils.get).toHaveBeenCalledWith(utils.stringifyUrl(urls.init, { user: testUser }));
-    });
-    it('passes empty user if not provided', async () => {
-      utils.get.mockReturnValueOnce(Promise.resolve({ data: mockData }));
-      await api.initializeList();
-      expect(utils.get).toHaveBeenCalledWith(utils.stringifyUrl(urls.init, {}));
-    });
-    it('resolves data from response on success', () => {
-      utils.get.mockReturnValueOnce(Promise.resolve({ data: mockData }));
-      expect(api.initializeList({ user: testUser })).resolves.toBe(mockData);
-    });
-    it('rejects with statusText on failure if available', () => {
-      utils.get.mockReturnValueOnce(Promise.reject(testError));
-      expect(api.initializeList({ user: testUser })).rejects.toMatch(
-        testError.response.statusText,
+    test('calls get with the correct url and user', () => {
+      const userArg = {
+        [apiKeys.user]: testUser,
+      };
+      expect(api.initializeList(userArg)).toEqual(
+        utils.get(utils.stringifyUrl(urls.init, userArg)),
       );
-    });
-    it('rejects with "Unknown Error" if response not available', () => {
-      // eslint-disable-next-line prefer-promise-reject-errors
-      utils.get.mockReturnValueOnce(Promise.reject({}));
-      expect(api.initializeList({ user: testUser })).rejects.toMatch(unknownErrorMessage);
     });
   });
   describe('updateEntitlementEnrollment', () => {

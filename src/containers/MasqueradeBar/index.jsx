@@ -3,13 +3,15 @@ import { AppContext } from '@edx/frontend-platform/react';
 
 import {
   Chip,
+  Form,
   FormControl,
   FormControlFeedback,
   FormLabel,
   FormGroup,
   StatefulButton,
+  Icon,
 } from '@edx/paragon';
-import { Close } from '@edx/paragon/icons';
+import { Close, PersonSearch } from '@edx/paragon/icons';
 
 import messages from './messages';
 import { useMasqueradeBarData } from './hooks';
@@ -24,7 +26,7 @@ export const MasqueradeBar = () => {
     isMasqueradingFailed,
     isMasqueradingPending,
     masqueradeInput,
-    masqueradeError,
+    masqueradeErrorMessage,
     handleMasqueradeInputChange,
     handleClearMasquerade,
     handleMasqueradeSubmit,
@@ -34,10 +36,11 @@ export const MasqueradeBar = () => {
   if (!canMasquerade) { return null; }
 
   return (
-    <div className="masquerade-bar">
+    <Form className="masquerade-bar">
       {isMasquerading ? (
         <>
           <FormLabel inline className="masquerade-form-label">
+            <Icon src={PersonSearch} />
             {formatMessage(messages.ViewingAs)}
           </FormLabel>
           <Chip
@@ -51,6 +54,7 @@ export const MasqueradeBar = () => {
       ) : (
         <>
           <FormLabel inline className="masquerade-form-label">
+            <Icon src={PersonSearch} />
             {formatMessage(messages.ViewAs)}
           </FormLabel>
           <FormGroup isInvalid={isMasqueradingFailed} className="masquerade-form-input">
@@ -61,7 +65,7 @@ export const MasqueradeBar = () => {
             />
             {isMasqueradingFailed && (
               <FormControlFeedback type="invalid" hasIcon={false}>
-                {masqueradeError}
+                {formatMessage(masqueradeErrorMessage)}
               </FormControlFeedback>
             )}
           </FormGroup>
@@ -73,10 +77,11 @@ export const MasqueradeBar = () => {
               default: formatMessage(messages.SubmitButton),
             }}
             state={isMasqueradingPending ? 'pending' : 'default'}
+            type="submit"
           />
         </>
       )}
-    </div>
+    </Form>
   );
 };
 

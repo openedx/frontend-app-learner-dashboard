@@ -16,7 +16,7 @@ describe('MasqueradeBar', () => {
     isMasqueradingFailed: false,
     isMasqueradingPending: false,
     masqueradeInput: '',
-    masqueradeError: '',
+    masqueradeErrorMessage: '',
     handleMasqueradeInputChange: jest.fn().mockName('handleMasqueradeInputChange'),
     handleClearMasquerade: jest.fn().mockName('handleClearMasquerade'),
     handleMasqueradeSubmit: jest.fn().mockName('handleMasqueradeSubmit'),
@@ -54,7 +54,7 @@ describe('MasqueradeBar', () => {
       hooks.useMasqueradeBarData.mockReturnValueOnce({
         ...masqueradeMockData,
         isMasqueradingFailed: true,
-        masqueradeError: 'test-error',
+        masqueradeErrorMessage: 'test-error',
       });
       expect(shallow(<MasqueradeBar />)).toMatchSnapshot();
     });

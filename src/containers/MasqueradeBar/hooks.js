@@ -6,6 +6,8 @@ import { thunkActions, hooks as appHooks } from 'data/redux';
 import { StrictDict } from 'utils';
 import * as module from './hooks';
 
+import messages from './messages';
+
 export const state = StrictDict({
   masqueradeInput: (val) => React.useState(val), // eslint-disable-line
 });
@@ -19,6 +21,17 @@ export const useMasqueradeInput = () => {
   };
 };
 
+const masqueradeErrorMessageMap = {
+  404: messages.NoStudentFound,
+};
+
+export const getMasqueradeErrorMessage = (errorStatus) => {
+  if (errorStatus == null) {
+    return null;
+  }
+  return masqueradeErrorMessageMap[errorStatus] || messages.UnknownError;
+};
+
 export const useMasqueradeBarData = ({
   authenticatedUser,
 }) => {
@@ -26,23 +39,28 @@ export const useMasqueradeBarData = ({
   const { formatMessage } = useIntl();
   const canMasquerade = authenticatedUser?.administrator;
 
-  const handleMasqueradeSubmit = (user) => () => dispatch(thunkActions.app.masqueradeAs(user));
+  const handleMasqueradeSubmit = (user) => (e) => {
+    dispatch(thunkActions.app.masqueradeAs(user));
+    e.preventDefault();
+  };
   const handleClearMasquerade = () => dispatch(thunkActions.app.clearMasquerade());
 
   const {
     isMasquerading,
     isMasqueradingFailed,
     isMasqueradingPending,
-    masqueradeError,
+    masqueradeErrorStatus,
   } = appHooks.useMasqueradeData();
   const { masqueradeInput, handleMasqueradeInputChange } = module.useMasqueradeInput();
+
+  const masqueradeErrorMessage = getMasqueradeErrorMessage(masqueradeErrorStatus);
 
   return {
     canMasquerade,
     isMasquerading,
     isMasqueradingFailed,
     isMasqueradingPending,
-    masqueradeError,
+    masqueradeErrorMessage,
     masqueradeInput,
     handleMasqueradeSubmit,
     handleClearMasquerade,

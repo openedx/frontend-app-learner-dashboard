@@ -15,6 +15,13 @@ const failedRequest = { status: RequestStates.failed, some: 'request-data' };
 
 const testValue = 'my-test-value';
 
+const testErrorValue = {
+  response: {
+    status: 500,
+    data: 'my-test-error',
+  },
+};
+
 const testState = {
   requests: {
     [requestKey]: requestData,
@@ -59,6 +66,9 @@ describe('requests selectors unit tests', () => {
     expect(select(selectors.errorStatus, { error: { response: {} } })).toEqual(undefined);
     expect(select(selectors.errorStatus, { error: { response: { status: testValue } } }))
       .toEqual(testValue);
+    expect(select(selectors.errorStatus, { error: testErrorValue })).toEqual(
+      testErrorValue.response.status,
+    );
   });
   test('errorCode returns the error response data', () => {
     expect(select(selectors.errorCode, {})).toEqual(undefined);
@@ -66,6 +76,9 @@ describe('requests selectors unit tests', () => {
     expect(select(selectors.errorCode, { error: { response: {} } })).toEqual(undefined);
     expect(select(selectors.errorCode, { error: { response: { data: testValue } } }))
       .toEqual(testValue);
+    expect(select(selectors.errorCode, { error: testErrorValue })).toEqual(
+      testErrorValue.response.data,
+    );
   });
   test('data reurns the request data', () => {
     expect(select(selectors.data, { data: testValue })).toEqual(testValue);
@@ -80,22 +93,22 @@ describe('requests selectors unit tests', () => {
       isMasquerading: true,
       isMasqueradingFailed: false,
       isMasqueradingPending: false,
-      masqueradeError: undefined,
+      masqueradeErrorStatus: undefined,
     });
     expect(selectors.masquerade(mockResponse(pendingRequest))).toEqual({
       isMasquerading: false,
       isMasqueradingFailed: false,
       isMasqueradingPending: true,
-      masqueradeError: undefined,
+      masqueradeErrorStatus: undefined,
     });
     expect(selectors.masquerade(mockResponse({
       ...failedRequest,
-      error: testValue,
+      error: testErrorValue,
     }))).toEqual({
       isMasquerading: false,
       isMasqueradingFailed: true,
       isMasqueradingPending: false,
-      masqueradeError: testValue,
+      masqueradeErrorStatus: testErrorValue.response.status,
     });
   });
 });
