@@ -18,6 +18,7 @@ import { useUnenrollData, modalStates } from './hooks';
 export const UnenrollConfirmModal = ({
   closeModal,
   show,
+  cardId,
 }) => {
   const dispatch = useDispatch();
   const {
@@ -26,7 +27,7 @@ export const UnenrollConfirmModal = ({
     closeAndRefresh,
     close,
     modalState,
-  } = useUnenrollData({ dispatch, closeModal });
+  } = useUnenrollData({ dispatch, closeModal, cardId });
   const showFullscreen = modalState === modalStates.reason;
   return (
     <ModalDialog
@@ -56,6 +57,7 @@ export const UnenrollConfirmModal = ({
 UnenrollConfirmModal.propTypes = {
   closeModal: PropTypes.func.isRequired,
   show: PropTypes.bool.isRequired,
+  cardId: PropTypes.string.isRequired,
 };
 
 export default UnenrollConfirmModal;

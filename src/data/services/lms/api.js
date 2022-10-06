@@ -34,10 +34,10 @@ const updateEmailSettings = ({ courseId, enable }) => post(stringifyUrl(
   { [apiKeys.courseId]: courseId, ...(enable && enableEmailsAction) },
 ));
 
-const unenrollFromCourse = ({ courseId }) => post(stringifyUrl(
-  urls.courseUnenroll,
-  { [apiKeys.courseId]: courseId, ...unenrollmentAction },
-));
+const unenrollFromCourse = ({ courseId }) => post(stringifyUrl(urls.courseUnenroll), {
+  [apiKeys.courseId]: courseId,
+  ...unenrollmentAction,
+});
 
 export default {
   initializeList,

@@ -90,8 +90,7 @@ describe('lms api methods', () => {
       ).toEqual(
         utils.post(utils.stringifyUrl(
           urls.courseUnenroll,
-          { [apiKeys.courseId]: testCourseId, ...unenrollmentAction },
-        )),
+        ), { [apiKeys.courseId]: testCourseId, ...unenrollmentAction }),
       );
     });
   });

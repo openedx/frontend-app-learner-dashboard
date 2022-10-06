@@ -67,7 +67,8 @@ export const leaveEntitlementSession = (cardId) => (dispatch, getState) => {
   return dispatch(requests.leaveEntitlementSession({ uuid }));
 };
 
-export const unenrollFromCourse = (courseId, reason) => (dispatch) => {
+export const unenrollFromCourse = (cardId, reason) => (dispatch, getState) => {
+  const { courseId } = selectors.app.courseCard.courseRun(getState(), cardId);
   handleEvent(eventNames.unenrollReason, {
     category: 'user-engagement',
     displayName: 'v1',

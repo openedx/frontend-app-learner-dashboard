@@ -11,7 +11,6 @@ export const state = StrictDict({
   customOption: (val) => React.useState(val), // eslint-disable-line
   isSkipped: (val) => React.useState(val), // eslint-disable-line
   selectedReason: (val) => React.useState(val), // eslint-disable-line
-  submittedReason: (val) => React.useState(val), // eslint-disable-line
 });
 
 export const modalStates = StrictDict({
@@ -20,26 +19,24 @@ export const modalStates = StrictDict({
   finished: 'finished',
 });
 
-export const useUnenrollReasons = () => {
+export const useUnenrollReasons = ({
+  dispatch,
+  cardId,
+}) => {
   const [selectedReason, setSelectedReason] = module.state.selectedReason(null);
-  const [submittedReason, setSubmittedReason] = module.state.submittedReason(null);
   const [isSkipped, setIsSkipped] = module.state.isSkipped(false);
   const [customOption, setCustomOption] = module.state.customOption('');
 
   return {
     clear: React.useCallback(() => {
       setSelectedReason(null);
-      setSubmittedReason(null);
       setCustomOption('');
       setIsSkipped(false);
     }, [
       setSelectedReason,
-      setSubmittedReason,
       setCustomOption,
       setIsSkipped,
     ]),
-
-    value: submittedReason,
 
     customOption: {
       value: customOption,
@@ -52,23 +49,23 @@ export const useUnenrollReasons = () => {
     isSkipped,
     skip: React.useCallback(() => setIsSkipped(true), [setIsSkipped]),
 
-    isSubmitted: submittedReason !== null || isSkipped,
+    isSubmitted: isSkipped,
     submit: React.useCallback(() => {
-      if (selectedReason === 'custom') {
-        setSubmittedReason(customOption);
-      } else {
-        setSubmittedReason(selectedReason);
-      }
-    }, [setSubmittedReason, customOption, selectedReason]),
+      const submittedReason = selectedReason === 'custom' ? customOption : selectedReason;
+      dispatch(thunkActions.app.unenrollFromCourse(cardId, submittedReason));
+    }, [cardId, customOption, dispatch, selectedReason]),
   };
 };
 
-export const useUnenrollData = ({ closeModal, dispatch }) => {
+export const useUnenrollData = ({ closeModal, dispatch, cardId }) => {
   const [isConfirmed, setIsConfirmed] = module.state.confirmed(false);
 
   const confirm = React.useCallback(() => setIsConfirmed(true), [setIsConfirmed]);
 
-  const reason = module.useUnenrollReasons();
+  const reason = module.useUnenrollReasons({
+    dispatch,
+    cardId,
+  });
 
   const close = React.useCallback(() => {
     closeModal();

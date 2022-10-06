@@ -15,21 +15,25 @@ jest.mock('data/redux/thunkActions/app', () => ({
 const state = new MockUseState(hooks);
 const testValue = 'test-value';
 let out;
-let hook;
 
 describe('UnenrollConfirmModal hooks', () => {
+  const dispatch = jest.fn();
+  const closeModal = jest.fn();
+  const cardId = 'test-card-id';
+
+  const createUseUnenrollReasons = () => hooks.useUnenrollReasons({ dispatch, cardId });
+  const createUnenrollData = () => hooks.useUnenrollData({ closeModal, dispatch, cardId });
+
   describe('state fields', () => {
     state.testGetter(state.keys.confirmed);
     state.testGetter(state.keys.customOption);
     state.testGetter(state.keys.isSkipped);
     state.testGetter(state.keys.selectedReason);
-    state.testGetter(state.keys.submittedReason);
   });
   describe('useUnenrollReasons', () => {
     beforeEach(() => {
-      hook = hooks.useUnenrollReasons;
       state.mock();
-      out = hook();
+      out = createUseUnenrollReasons();
     });
     afterEach(() => {
       state.restore();
@@ -39,38 +43,32 @@ describe('UnenrollConfirmModal hooks', () => {
         const { cb, prereqs } = out.clear.useCallback;
         expect(prereqs).toEqual([
           state.setState.selectedReason,
-          state.setState.submittedReason,
           state.setState.customOption,
           state.setState.isSkipped,
         ]);
         cb();
         expect(state.setState.selectedReason).toHaveBeenCalledWith(null);
-        expect(state.setState.submittedReason).toHaveBeenCalledWith(null);
         expect(state.setState.customOption).toHaveBeenCalledWith('');
         expect(state.setState.isSkipped).toHaveBeenCalledWith(false);
       });
     });
-    test('value returns submitted reason', () => {
-      state.mockVal(state.keys.submittedReason, testValue);
-      expect(hook().value).toEqual(testValue);
-    });
     test('customOption.value returns custom option', () => {
       state.mockVal(state.keys.customOption, testValue);
-      expect(hook().customOption.value).toEqual(testValue);
+      expect(createUseUnenrollReasons().customOption.value).toEqual(testValue);
     });
     test('customOption.onChange returns valueCallback for setCustomOption', () => {
       expect(out.customOption.onChange).toEqual(useValueCallback(state.setState.customOption));
     });
     test('selected returns selectedReason', () => {
       state.mockVal(state.keys.selectedReason, testValue);
-      expect(hook().selected).toEqual(testValue);
+      expect(createUseUnenrollReasons().selected).toEqual(testValue);
     });
     test('selectedOption returns valueCallback for setSelectedReason', () => {
       expect(out.selectOption).toEqual(useValueCallback(state.setState.selectedReason));
     });
     test('isSkipped returns state value', () => {
       state.mockVal(state.keys.isSkipped, testValue);
-      expect(hook().isSkipped).toEqual(testValue);
+      expect(createUseUnenrollReasons().isSkipped).toEqual(testValue);
     });
     test('skip returns callback that sets isSkipped to true', () => {
       const { cb, prereqs } = out.skip.useCallback;
@@ -82,44 +80,25 @@ describe('UnenrollConfirmModal hooks', () => {
       it('returns false if submittedReason is null and not isSkipped', () => {
         expect(out.isSubmitted).toEqual(false);
       });
-      it('returns true if submittedReason is not null', () => {
-        state.mockVal(state.keys.submittedReason, testValue);
-        expect(hook().isSubmitted).toEqual(true);
-      });
       it('returns true if isSkipped', () => {
         state.mockVal(state.keys.isSkipped, true);
-        expect(hook().isSubmitted).toEqual(true);
+        expect(createUseUnenrollReasons().isSubmitted).toEqual(true);
       });
     });
     describe('submit', () => {
-      it('sets customOption as submittedReason if selectedReason is custom', () => {
-        state.mockVal(state.keys.selectedReason, 'custom');
-        state.mockVal(state.keys.customOption, testValue);
-        hook().submit.useCallback.cb();
-        expect(state.setState.submittedReason).toHaveBeenCalledWith(testValue);
-      });
-      it('sets selectedReason as submittedReason if selectedReason is not custom', () => {
-        state.mockVal(state.keys.selectedReason, testValue);
-        state.mockVal(state.keys.customOption, 'customValue');
-        hook().submit.useCallback.cb();
-        expect(state.setState.submittedReason).toHaveBeenCalledWith(testValue);
-      });
       it('depends on customOption and selectedReason', () => {
         const customValue = 'custom-value';
         state.mockVal(state.keys.selectedReason, testValue);
         state.mockVal(state.keys.customOption, customValue);
-        const { prereqs } = hook().submit.useCallback;
+        const { prereqs } = createUseUnenrollReasons().submit.useCallback;
         expect(prereqs).toContain(testValue);
         expect(prereqs).toContain(customValue);
       });
     });
   });
   describe('modalHooks', () => {
-    const closeModal = jest.fn();
-    const dispatch = jest.fn();
     let mockReason;
     beforeEach(() => {
-      hook = hooks.useUnenrollData;
       mockReason = {
         isSubmitted: false,
         clear: jest.fn(),
@@ -127,7 +106,7 @@ describe('UnenrollConfirmModal hooks', () => {
       state.mock();
       state.mockVal(state.keys.confirmed, testValue);
       hooks.useUnenrollReasons = jest.fn(() => mockReason);
-      out = hook({ closeModal, dispatch });
+      out = createUnenrollData();
     });
     afterEach(() => {
       state.restore();
@@ -184,17 +163,17 @@ describe('UnenrollConfirmModal hooks', () => {
       it('returns modalStates.finished if confirmed and submitted', () => {
         state.mockVal(state.keys.confirmed, true);
         hooks.useUnenrollReasons = jest.fn(() => ({ ...mockReason, isSubmitted: true }));
-        out = hook({ closeModal, dispatch });
+        out = createUnenrollData();
         expect(out.modalState).toEqual(hooks.modalStates.finished);
       });
       it('returns modalStates.reason if confirmed and not submitted', () => {
         state.mockVal(state.keys.confirmed, true);
-        out = hook({ closeModal, dispatch });
+        out = createUnenrollData();
         expect(out.modalState).toEqual(hooks.modalStates.reason);
       });
       it('returns modalStates.confirm if not confirmed', () => {
         state.mockVal(state.keys.confirmed, false);
-        out = hook({ closeModal, dispatch });
+        out = createUnenrollData();
         expect(out.modalState).toEqual(hooks.modalStates.confirm);
       });
     });

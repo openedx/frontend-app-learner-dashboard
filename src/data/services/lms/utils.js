@@ -10,10 +10,11 @@ export const get = (...args) => getAuthenticatedHttpClient().get(...args);
 /**
  * post(url, data)
  * simple wrapper providing an authenticated Http client post action
+ * queryString.stringify is used to convert the object to query string with = and &
  * @param {string} url - target url
- * @param {object|string} data - post payload
+ * @param {object|string} body - post payload
  */
-export const post = (...args) => getAuthenticatedHttpClient().post(...args);
+export const post = (url, body) => getAuthenticatedHttpClient().post(url, queryString.stringify(body));
 
 export const client = getAuthenticatedHttpClient;
 
