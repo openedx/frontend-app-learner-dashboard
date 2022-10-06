@@ -34,6 +34,12 @@ dates.tomorrow.setDate(dates.tomorrow.getDate() + 1);
 dates.nextYear.setDate(dates.nextYear.getDate() + 365);
 dates.yesterday.setDate(dates.yesterday.getDate() - 1);
 
+/*
+ * Takes a selector as input and fetches the referenced selector and simpleSelector for
+ * the selector to be tested, to be stored in global variables.
+ * Also sets `selected` global variable is loaded with the passed data, which is stored
+ * as `testData`.
+ */
 const loadSelector = (sel, data) => {
   ({ simpleSelector, selector } = sel.mkCardSelector);
   testData = data;
