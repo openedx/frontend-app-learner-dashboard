@@ -175,6 +175,7 @@ jest.mock('@edx/paragon/icons', () => ({
   Locked: jest.fn().mockName('icons.Locked'),
   MoreVert: jest.fn().mockName('icons.MoreVert'),
   Tune: jest.fn().mockName('icons.Tune'),
+  PersonSearch: jest.fn().mockName('icons.PersonSearch'),
   Program: jest.fn().mockName('icons.Program'),
 }));
 

@@ -21,31 +21,26 @@ jest.mock('./utils', () => {
 const testUser = 'test-user';
 const testUuid = 'test-UUID';
 const testCourseId = 'TEST-course-ID';
-const testError = { response: { statusText: 'test-error-status-text' } };
-
-const mockData = { some: 'test', data: '!!!' };
+const testError = 'test-error-status-text';
 
 describe('lms api methods', () => {
   describe('initializeList', () => {
-    it('calls get to init url with user field', async () => {
-      utils.get.mockReturnValueOnce(Promise.resolve({ data: mockData }));
-      await api.initializeList({ user: testUser });
-      expect(utils.get).toHaveBeenCalledWith(utils.stringifyUrl(urls.init, { user: testUser }));
+    test('calls init without a user', () => {
+      expect(api.initializeList()).toEqual(
+        utils.get(urls.init),
+      );
     });
-    it('passes empty user if not provided', async () => {
-      utils.get.mockReturnValueOnce(Promise.resolve({ data: mockData }));
-      await api.initializeList();
-      expect(utils.get).toHaveBeenCalledWith(utils.stringifyUrl(urls.init, {}));
+    test('call init with a user', () => {
+      expect(api.initializeList({ user: testUser })).toEqual(
+        utils.get(
+          urls.init,
+          { [apiKeys.user]: testUser },
+        ),
+      );
     });
-    it('resolves data from response on success', () => {
-      utils.get.mockReturnValueOnce(Promise.resolve({ data: mockData }));
-      expect(api.initializeList({ user: testUser })).resolves.toEqual({
-        data: mockData,
-      });
-    });
-    it('rejects with statusText on failure if available', () => {
-      utils.get.mockReturnValueOnce(Promise.reject(testError));
-      expect(api.initializeList({ user: testUser })).rejects.toEqual(testError);
+    test('rejects with an error', () => {
+      utils.get.mockRejectedValueOnce(testError);
+      expect(api.initializeList()).rejects.toEqual(testError);
     });
   });
   describe('updateEntitlementEnrollment', () => {
