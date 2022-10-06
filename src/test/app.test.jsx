@@ -32,6 +32,7 @@ jest.unmock('@edx/frontend-platform/i18n');
 jest.unmock('@edx/frontend-component-footer');
 jest.unmock('react');
 jest.unmock('react-redux');
+jest.unmock('reselect');
 jest.unmock('hooks');
 
 jest.mock('@edx/frontend-platform/i18n', () => ({
