@@ -13,6 +13,9 @@ export const UpgradeButton = ({ cardId }) => {
   const { canUpgrade } = hooks.useCardEnrollmentData(cardId);
   const { isMasquerading } = hooks.useMasqueradeData();
   const { formatMessage } = useIntl();
+  if (!upgradeUrl) {
+    return null;
+  }
   return (
     <Button
       iconBefore={Locked}

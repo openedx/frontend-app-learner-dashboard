@@ -24,6 +24,12 @@ describe('UpgradeButton', () => {
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.prop(htmlProps.disabled)).toEqual(false);
     });
+    test('no upgrade url', () => {
+      hooks.useCardCourseRunData.mockReturnValueOnce({});
+      const wrapper = shallow(<UpgradeButton {...props} />);
+      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.isEmptyRender()).toEqual(true);
+    });
     test('cannot upgrade', () => {
       hooks.useCardEnrollmentData.mockReturnValueOnce({ canUpgrade: false });
       const wrapper = shallow(<UpgradeButton {...props} />);

@@ -35,3 +35,5 @@ exports[`UpgradeButton snapshot masquerading 1`] = `
   Upgrade
 </Button>
 `;
+
+exports[`UpgradeButton snapshot no upgrade url 1`] = `""`;
