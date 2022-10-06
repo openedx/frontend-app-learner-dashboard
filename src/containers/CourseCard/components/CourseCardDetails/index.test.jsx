@@ -1,8 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { formatMessage } from 'testUtils';
-
 import CourseCardDetails from '.';
 
 import hooks from './hooks';
@@ -19,11 +17,11 @@ describe('CourseCard Details component', () => {
     providerName: 'provider-name',
     accessMessage: 'access-message',
     openSessionModal: jest.fn().mockName('useSelectSession.openSessionModal'),
-    formatMessage,
     isEntitlement: true,
     isFulfilled: true,
     canChange: true,
     courseNumber: 'test-course-number',
+    changeOrLeaveSessionMessage: 'change-or-leave-session-message',
   };
   const createWrapper = (hookOverrides = {}) => {
     hooks.mockReturnValueOnce({

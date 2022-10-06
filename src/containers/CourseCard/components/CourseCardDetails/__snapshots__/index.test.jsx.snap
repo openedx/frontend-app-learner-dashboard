@@ -8,8 +8,7 @@ exports[`CourseCard Details component does not have change session button on reg
   provider-name
    • 
   test-course-number
-   • 
-  access-message
+   • access-message
 </span>
 `;
 
@@ -21,8 +20,7 @@ exports[`CourseCard Details component has change session button on entitlement c
   provider-name
    • 
   test-course-number
-   • 
-  access-message
+   • access-message
    • 
   <Button
     className="m-0 p-0"
@@ -30,7 +28,7 @@ exports[`CourseCard Details component has change session button on entitlement c
     size="inline"
     variant="link"
   >
-    Change or leave session
+    change-or-leave-session-message
   </Button>
 </span>
 `;
@@ -50,7 +48,7 @@ exports[`CourseCard Details component has change session button on entitlement c
     size="inline"
     variant="link"
   >
-    Change or leave session
+    change-or-leave-session-message
   </Button>
 </span>
 `;
