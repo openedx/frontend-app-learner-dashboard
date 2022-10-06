@@ -12,7 +12,7 @@ jest.mock('./utils', () => {
   return {
     client: () => ({ delete: deleteFn }),
     delete: deleteFn,
-    get: jest.fn(),
+    get: (...args) => ({ get: args }),
     post: (...args) => ({ post: args }),
     stringifyUrl: (...args) => ({ stringifyUrl: args }),
   };
@@ -21,26 +21,16 @@ jest.mock('./utils', () => {
 const testUser = 'test-user';
 const testUuid = 'test-UUID';
 const testCourseId = 'TEST-course-ID';
-const testError = 'test-error-status-text';
 
 describe('lms api methods', () => {
   describe('initializeList', () => {
-    test('calls init without a user', () => {
-      expect(api.initializeList()).toEqual(
-        utils.get(urls.init),
+    test('calls get with the correct url and user', () => {
+      const userArg = {
+        [apiKeys.user]: testUser,
+      };
+      expect(api.initializeList(userArg)).toEqual(
+        utils.get(utils.stringifyUrl(urls.init, userArg)),
       );
-    });
-    test('call init with a user', () => {
-      expect(api.initializeList({ user: testUser })).toEqual(
-        utils.get(
-          urls.init,
-          { [apiKeys.user]: testUser },
-        ),
-      );
-    });
-    test('rejects with an error', () => {
-      utils.get.mockRejectedValueOnce(testError);
-      expect(api.initializeList()).rejects.toEqual(testError);
     });
   });
   describe('updateEntitlementEnrollment', () => {
