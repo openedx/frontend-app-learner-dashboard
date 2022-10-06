@@ -1,13 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MasqueradeBar snapshot can masquerade 1`] = `
-<div
+<Form
   className="masquerade-bar"
 >
   <FormLabel
     className="masquerade-form-label"
     inline={true}
   >
+    <Icon />
     View as: 
   </FormLabel>
   <FormGroup
@@ -28,19 +29,21 @@ exports[`MasqueradeBar snapshot can masquerade 1`] = `
       }
     }
     state="default"
+    type="submit"
     variant="brand"
   />
-</div>
+</Form>
 `;
 
 exports[`MasqueradeBar snapshot can masquerade with input 1`] = `
-<div
+<Form
   className="masquerade-bar"
 >
   <FormLabel
     className="masquerade-form-label"
     inline={true}
   >
+    <Icon />
     View as: 
   </FormLabel>
   <FormGroup
@@ -61,21 +64,23 @@ exports[`MasqueradeBar snapshot can masquerade with input 1`] = `
       }
     }
     state="default"
+    type="submit"
     variant="brand"
   />
-</div>
+</Form>
 `;
 
 exports[`MasqueradeBar snapshot cannot masquerade 1`] = `""`;
 
 exports[`MasqueradeBar snapshot is masquerading failed with error 1`] = `
-<div
+<Form
   className="masquerade-bar"
 >
   <FormLabel
     className="masquerade-form-label"
     inline={true}
   >
+    <Icon />
     View as: 
   </FormLabel>
   <FormGroup
@@ -100,19 +105,21 @@ exports[`MasqueradeBar snapshot is masquerading failed with error 1`] = `
       }
     }
     state="default"
+    type="submit"
     variant="brand"
   />
-</div>
+</Form>
 `;
 
 exports[`MasqueradeBar snapshot is masquerading pending 1`] = `
-<div
+<Form
   className="masquerade-bar"
 >
   <FormLabel
     className="masquerade-form-label"
     inline={true}
   >
+    <Icon />
     View as: 
   </FormLabel>
   <FormGroup
@@ -133,19 +140,21 @@ exports[`MasqueradeBar snapshot is masquerading pending 1`] = `
       }
     }
     state="pending"
+    type="submit"
     variant="brand"
   />
-</div>
+</Form>
 `;
 
 exports[`MasqueradeBar snapshot is masquerading with input 1`] = `
-<div
+<Form
   className="masquerade-bar"
 >
   <FormLabel
     className="masquerade-form-label"
     inline={true}
   >
+    <Icon />
     Viewing as: 
   </FormLabel>
   <Chip
@@ -155,5 +164,5 @@ exports[`MasqueradeBar snapshot is masquerading with input 1`] = `
   >
     test
   </Chip>
-</div>
+</Form>
 `;

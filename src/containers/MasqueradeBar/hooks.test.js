@@ -70,8 +70,13 @@ describe('MasqueradeBar hooks', () => {
     });
     test('handleMasqueradeSubmit', () => {
       const out = createHook();
-      out.handleMasqueradeSubmit('test')();
+      const preventDefault = jest.fn();
+      // make sure submit doesn't refresh the page
+      out.handleMasqueradeSubmit('test')({
+        preventDefault,
+      });
       expect(thunkActions.app.masqueradeAs).toHaveBeenCalledWith('test');
+      expect(preventDefault).toHaveBeenCalled();
     });
     test('handleClearMasquerade', () => {
       const out = createHook();

@@ -3,10 +3,17 @@
 .masquerade-bar {
   display: flex;
   align-items: flex-start;
-  padding: map-get($spacers, 4) map-get($spacers, 3) 0 map-get($spacers, 3);
+  padding: map-get($spacers, 3);
 
   .masquerade-form-label {
-    padding: map-get($spacers, 2) map-get($spacers, 1);
+    padding: map-get($spacers, 2) map-get($spacers, 3);
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+
+    &>.pgn__icon {
+      margin-right: map-get($spacers, 3);
+    }
   }
 
   .masquerade-form-input {
