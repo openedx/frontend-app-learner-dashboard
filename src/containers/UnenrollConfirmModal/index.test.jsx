@@ -28,20 +28,25 @@ describe('UnenrollConfirmModal component', () => {
     closeAndRefresh: jest.fn().mockName('hooks.closeAndRefresh'),
     modalState: hooks.modalStates.confirm,
   };
-  const closeModal = jest.fn().mockName('props.closeModal');
-  const show = true;
+  const closeModal = jest.fn().mockName('closeModal');
+  const cardId = 'cardId';
+  const props = {
+    closeModal,
+    show: true,
+    cardId,
+  };
   test('hooks called with dispatch and closeModal props', () => {
     hooks.useUnenrollData.mockReturnValueOnce(hookProps);
-    shallow(<UnenrollConfirmModal {...{ closeModal, show }} />);
-    expect(hooks.useUnenrollData).toHaveBeenCalledWith({ dispatch, closeModal });
+    shallow(<UnenrollConfirmModal {...props} />);
+    expect(hooks.useUnenrollData).toHaveBeenCalledWith({ dispatch, closeModal, cardId });
   });
   test('snapshot: modalStates.confirm', () => {
     hooks.useUnenrollData.mockReturnValueOnce(hookProps);
-    expect(shallow(<UnenrollConfirmModal {...{ closeModal, show }} />)).toMatchSnapshot();
+    expect(shallow(<UnenrollConfirmModal {...props} />)).toMatchSnapshot();
   });
   test('snapshot: modalStates.finished, reason given', () => {
     hooks.useUnenrollData.mockReturnValueOnce({ ...hookProps, modalState: hooks.modalStates.finished });
-    expect(shallow(<UnenrollConfirmModal {...{ closeModal, show }} />)).toMatchSnapshot();
+    expect(shallow(<UnenrollConfirmModal {...props} />)).toMatchSnapshot();
   });
   test('snapshot: modalStates.finished, reason skipped', () => {
     hooks.useUnenrollData.mockReturnValueOnce({
@@ -49,10 +54,10 @@ describe('UnenrollConfirmModal component', () => {
       modalState: hooks.modalStates.finished,
       isSkipped: true,
     });
-    expect(shallow(<UnenrollConfirmModal {...{ closeModal, show }} />)).toMatchSnapshot();
+    expect(shallow(<UnenrollConfirmModal {...props} />)).toMatchSnapshot();
   });
   test('snapshot: modalStates.reason, should be fullscreen with no shadow', () => {
     hooks.useUnenrollData.mockReturnValueOnce({ ...hookProps, modalState: hooks.modalStates.reason });
-    expect(shallow(<UnenrollConfirmModal {...{ closeModal, show }} />)).toMatchSnapshot();
+    expect(shallow(<UnenrollConfirmModal {...props} />)).toMatchSnapshot();
   });
 });

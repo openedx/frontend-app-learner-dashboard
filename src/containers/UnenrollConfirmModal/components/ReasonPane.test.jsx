@@ -6,7 +6,6 @@ import { ReasonPane } from './ReasonPane';
 describe('UnenrollConfirmModal ReasonPane', () => {
   const props = {
     reason: {
-      value: 'props.reason.value',
       skip: jest.fn().mockName('props.reason.skip'),
       selectOption: jest.fn().mockName('props.reason.selectOption'),
       customOption: {
