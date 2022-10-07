@@ -644,7 +644,7 @@ export const compileCourseRunData = (data, index) => {
       programs: { relatedPrograms: [] },
     },
   ];
-  return {
+  const out = {
     gradeData: { isPassing: true },
     entitlement: null,
     ...data,
@@ -659,6 +659,10 @@ export const compileCourseRunData = (data, index) => {
     course: iteratedData[providerIndex].course,
     programs: iteratedData[providerIndex].programs,
   };
+  if (out.enrollment.canUpgrade) {
+    out.courseRun.upgradeUrl = 'test-upgrade-url';
+  }
+  return out;
 };
 
 export const compileEntitlementData = (data, index) => {
