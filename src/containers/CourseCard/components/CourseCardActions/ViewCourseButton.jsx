@@ -11,11 +11,10 @@ export const ViewCourseButton = ({ cardId }) => {
   const { homeUrl } = hooks.useCardCourseRunData(cardId);
   const { hasAccess } = hooks.useCardEnrollmentData(cardId);
   const { isEntitlement, isExpired } = hooks.useCardEntitlementData(cardId);
-  const { isMasquerading } = hooks.useMasqueradeData();
   const { formatMessage } = useIntl();
   return (
     <Button
-      disabled={isMasquerading || !hasAccess || (isEntitlement && isExpired)}
+      disabled={!hasAccess || (isEntitlement && isExpired)}
       as="a"
       href={homeUrl}
     >
