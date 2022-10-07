@@ -103,7 +103,7 @@ const mockApi = () => {
             courses: initCourses(),
             ...fakeData.globalData,
           };
-          resolve(data);
+          resolve({ data });
         },
       };
     }));
@@ -140,7 +140,7 @@ const loadApp = async (courses) => {
 }
 
 describe('ESG app integration tests', () => {
-  beforeEach(async () => {
+  beforeEach(() => {
     mockApi();
   });
 
