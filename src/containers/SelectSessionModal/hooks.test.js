@@ -40,7 +40,7 @@ const selectSessionData = {
 };
 
 const entitlementData = {
-  ntitlementSessions: [
+  availableSessions: [
     { startDate: '1/2/2000', endDate: '1/2/2020', cardId: 'session-id-1' },
     { startDate: '2/3/2000', endDate: '2/3/2020', cardId: 'session-id-2' },
     { startDate: '3/4/2000', endDate: '3/4/2020', cardId: 'session-id-3' },

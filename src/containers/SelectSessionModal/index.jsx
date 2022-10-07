@@ -17,7 +17,7 @@ import messages from './messages';
 
 export const SelectSessionModal = () => {
   const {
-    entitlementSessions,
+    availableSessions,
     showModal,
     closeSessionModal,
     showLeaveOption,
@@ -49,7 +49,7 @@ export const SelectSessionModal = () => {
           onChange={handleSelection}
           value={selectedSession}
         >
-          {entitlementSessions?.map((session) => (
+          {availableSessions?.map((session) => (
             <Form.Radio key={session.courseId} value={session.courseId}>
               {dateFormatter(formatDate, session.startDate)} - {dateFormatter(formatDate, session.endDate)}
             </Form.Radio>

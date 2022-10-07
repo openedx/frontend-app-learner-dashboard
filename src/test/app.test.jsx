@@ -15,7 +15,7 @@ import thunk from 'redux-thunk';
 import { useIntl, IntlProvider } from '@edx/frontend-platform/i18n';
 
 import api from 'data/services/lms/api';
-import fakeData from 'data/services/lms/fakeData/courses';
+import * as fakeData from 'data/services/lms/fakeData/courses';
 import { RequestKeys, RequestStates } from 'data/constants/requests';
 import reducers from 'data/redux';
 import messages from 'i18n';
@@ -32,6 +32,7 @@ jest.unmock('@edx/frontend-platform/i18n');
 jest.unmock('@edx/frontend-component-footer');
 jest.unmock('react');
 jest.unmock('react-redux');
+jest.unmock('reselect');
 jest.unmock('hooks');
 
 jest.mock('@edx/frontend-platform/i18n', () => ({
@@ -83,19 +84,27 @@ const mockForbiddenError = (reject) => () => reject(new Error({
   response: { status: ErrorStatuses.forbidden },
 }));
 
+
+const allCourses = [
+  ...fakeData.courseRunData,
+  ...fakeData.entitlementData,
+];
+
+const { compileCourseRunData, compileEntitlementData } = fakeData;
+
+const initCourses = jest.fn(() => []);
+
 const mockApi = () => {
   api.initializeList = jest.fn(() => new Promise(
     (resolve, reject) => {
       resolveFns.init = {
-        success: () => resolve({
-          data: {
-            courses: [
-              ...fakeData.courseRunData,
-              ...fakeData.entitlementData,
-            ],
+        success: () => {
+          const data = {
+            courses: initCourses(),
             ...fakeData.globalData,
-          }
-        }),
+          };
+          resolve({ data });
+        },
       };
     }));
 };
@@ -124,51 +133,94 @@ const waitForRequestStatus = (key, status) => waitForEqual(
   key,
 );
 
+const loadApp = async (courses) => {
+  initCourses.mockReturnValue(courses);
+  await renderEl();
+  inspector = new Inspector(el);
+}
+
 describe('ESG app integration tests', () => {
-  beforeEach(async () => {
+  beforeEach(() => {
     mockApi();
-    await renderEl();
-    inspector = new Inspector(el);
   });
 
   test('initialization', async () => {
+    await loadApp([compileCourseRunData({}, 0)]);
     await waitForRequestStatus(RequestKeys.initialize, RequestStates.pending);
     resolveFns.init.success();
     await waitForRequestStatus(RequestKeys.initialize, RequestStates.completed);
   });
 
-  test('course cards', async () => {
-    const { formatDate } = useIntl();
-    resolveFns.init.success();
-    await waitForRequestStatus(RequestKeys.initialize, RequestStates.completed);
-    await inspector.findByText(fakeData.courseRunData[0].course.courseName);
-    const cards = inspector.get.courseCards;
+  describe('course cards', () => {
+    const loadCourses = async (courses, tests) => {
+      await loadApp(courses);
+      resolveFns.init.success();
+      await waitForRequestStatus(RequestKeys.initialize, RequestStates.completed);
+      await getState();
+      const cards = inspector.get.courseCards;
+      courses.forEach((course, index) => {
+        const card = cards.at(index);
+        const cardId = genCardId(index);
+        const cardDetails = inspector.get.card.details(card);
+        const { courseName } = selectors.app.courseCard.course(state, cardId);
+        inspector.verifyText(inspector.get.card.header(card), courseName);
+        if (tests.length > index) {
+          tests[index]({ cardId, cardDetails });
+        }
+      });
+    }
 
-    let cardId;
-    let courseData;
-    let cardDetails;
-    await getState();
-
-    // Card 1 is Audit, pending, and can upgrade
-    cardId = genCardId(0);
-    courseData = state.app.courseData[cardId];
-    expect(courseData.enrollment.isAudit).toEqual(true);
-    expect(courseData.courseRun.isStarted).toEqual(false);
-    expect(courseData.enrollment.canUpgrade).toEqual(true);
-
-    let card = cards.at(0);
-
-    inspector.verifyText(
-      inspector.get.card.header(card),
-      courseData.course.courseName,
-    );
-    cardDetails = inspector.get.card.details(card);
-    [
-      courseData.courseProvider.name,
-      courseData.course.courseNumber,
-      appMessages.withValues.CourseCardDetails.courseStarts({
-        startDate: formatDate(new Date(courseData.courseRun.startDate)),
-      }),
-    ].forEach(value => inspector.verifyTextIncludes(cardDetails, value));
+    test('audit', async () => {
+      const courses = [
+        {}, // audit, course run not started
+        {
+          enrollment: {
+            coursewareAccess: {
+              isTooEarly: true,
+              hasUnmetPrerequisites: false,
+              isStaff: false,
+            },
+          },
+        }, // audit, course run not started, is too early
+        {
+          courseRun: {
+            courseRun: { isStarted: true },
+          },
+          enrollment: {
+            accessExpirationDate: fakeData.pastDate,
+            canUpgrade: false,
+            isAuditAccessExpired: true,
+            hasStarted: true,
+          },
+        }, // audit, course run and learner started, access expired, cannot upgrade
+      ];
+      const { formatDate } = useIntl();
+      await loadCourses(courses.map(compileCourseRunData), [
+        ({ cardId, cardDetails }) => {
+          const enrollment = selectors.app.courseCard.enrollment(state, cardId);
+          const courseRun = selectors.app.courseCard.courseRun(state, cardId);
+          const courseProvider = selectors.app.courseCard.courseProvider(state, cardId);
+          const course = selectors.app.courseCard.course(state, cardId);
+          expect(enrollment.isAudit).toEqual(true);
+          expect(courseRun.isStarted).toEqual(false);
+          expect(enrollment.canUpgrade).toEqual(true);
+          [
+            courseProvider.name,
+            course.courseNumber,
+            appMessages.withValues.CourseCardDetails.courseStarts({
+              startDate: formatDate(new Date(courseRun.startDate)),
+            }),
+          ].forEach(value => inspector.verifyTextIncludes(cardDetails, value));
+        },
+        ({ cardId, cardDetails }) => {
+          const enrollment = selectors.app.courseCard.enrollment(state, cardId);
+          const courseRun = selectors.app.courseCard.courseRun(state, cardId);
+          expect(enrollment.isAudit).toEqual(true);
+          expect(courseRun.isStarted).toEqual(false);
+          expect(enrollment.coursewareAccess.isTooEarly).toEqual(true);
+          expect(enrollment.hasAccess).toEqual(false);
+        },
+      ]);
+    });
   });
 });

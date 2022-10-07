@@ -14,9 +14,7 @@ exports[`UpgradeButton snapshot can upgrade 1`] = `
 
 exports[`UpgradeButton snapshot cannot upgrade 1`] = `
 <Button
-  as="a"
   disabled={true}
-  href="upgradeUrl"
   iconBefore={[MockFunction icons.Locked]}
   variant="outline-primary"
 >
@@ -26,9 +24,7 @@ exports[`UpgradeButton snapshot cannot upgrade 1`] = `
 
 exports[`UpgradeButton snapshot masquerading 1`] = `
 <Button
-  as="a"
   disabled={true}
-  href="upgradeUrl"
   iconBefore={[MockFunction icons.Locked]}
   variant="outline-primary"
 >

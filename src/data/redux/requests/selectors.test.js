@@ -2,10 +2,6 @@ import { RequestStates, RequestKeys } from 'data/constants/requests';
 
 import selectors from './selectors';
 
-jest.mock('reselect', () => ({
-  createSelector: jest.fn((preSelectors, cb) => ({ preSelectors, cb })),
-}));
-
 const requestKey = 'my-test-request-key';
 const requestData = { some: 'request-data' };
 const inactiveRequest = { status: RequestStates.inactive, some: 'request-data' };

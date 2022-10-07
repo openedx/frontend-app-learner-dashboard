@@ -54,15 +54,15 @@ export const genEntitlementUUID = (index) => `entitlement-course-uuid-${index}`;
 
 const bannerImgSrc = '/asset-v1:edX+DemoX+Demo_Course+type@asset+block@images_course_image.jpg';
 
-const farPastDate = '1900-11-11T00:00:00Z';
-const pastDate = '2000-11-11T00:00:00Z';
-const futureDate = '3030-11-11T00:00:00Z';
-const farFutureDate = '4040-11-11T00:00:00Z';
-const soonDate = new Date();
+export const farPastDate = '1900-11-11T00:00:00Z';
+export const pastDate = '2000-11-11T00:00:00Z';
+export const futureDate = '3030-11-11T00:00:00Z';
+export const farFutureDate = '4040-11-11T00:00:00Z';
+export const soonDate = new Date();
 soonDate.setDate(soonDate.getDate() + 60);
-const soonDateStr = soonDate.toDateString();
+export const soonDateStr = soonDate.toDateString();
 
-const globalData = {
+export const globalData = {
   emailConfirmation: {
     isNeeded: true,
     sendEmailUrl: 'sendConfirmation@edx.org',
@@ -252,9 +252,7 @@ export const courseRuns = [
   },
   // audit, course run and learner started, access expired
   {
-    courseRun: {
-      courseRun: { isStarted: true },
-    },
+    courseRun: { isStarted: true },
     enrollment: {
       accessExpirationDate: pastDate,
       isAuditAccessExpired: true,
@@ -263,9 +261,7 @@ export const courseRuns = [
   },
   // audit, course run and learner started, access expired, cannot upgrade
   {
-    courseRun: {
-      courseRun: { isStarted: true },
-    },
+    courseRun: { isStarted: true },
     enrollment: {
       accessExpirationDate: pastDate,
       canUpgrade: false,
@@ -276,10 +272,8 @@ export const courseRuns = [
   // audit, course run ended, learner started, expired, cannot upgraded, not passing
   {
     courseRun: {
-      courseRun: {
-        isStarted: true,
-        endDate: pastDate,
-      },
+      isStarted: true,
+      endDate: pastDate,
     },
     enrollment: {
       accessExpirationDate: pastDate,
@@ -292,11 +286,9 @@ export const courseRuns = [
   // audit, course run archived, learner started, expired, cannot upgrade, not passing
   {
     courseRun: {
-      courseRun: {
-        isStarted: true,
-        isArchived: true,
-        endDate: pastDate,
-      },
+      isStarted: true,
+      isArchived: true,
+      endDate: pastDate,
     },
     enrollment: {
       accessExpirationDate: pastDate,
@@ -624,102 +616,107 @@ export const entitlementCourses = [
   },
 ];
 
+export const compileCourseRunData = (data, index) => {
+  const courseName = genCourseTitle(index);
+  const courseId = genCourseId(index);
+  const courseNumber = genCourseNumber(index);
+  const providerIndex = index % 3;
+  const lastEnrolledDate = new Date();
+  lastEnrolledDate.setDate(lastEnrolledDate.getDate() + index);
+  const lastEnrolled = lastEnrolledDate.toISOString();
+  const iteratedData = [
+    {
+      course: { courseName, bannerImgSrc, courseNumber },
+      emailSettings: { isEmailEnabled: false, hasOptedOutOfEmail: false },
+      programs: { relatedPrograms },
+      courseProvider: providers.edx,
+    },
+    {
+      course: { courseName, bannerImgSrc, courseNumber },
+      emailSettings: { isEmailEnabled: true, hasOptedOutOfEmail: false },
+      courseProvider: providers.mit,
+      programs: { relatedPrograms: [relatedPrograms[0]] },
+    },
+    {
+      course: { courseName, bannerImgSrc, courseNumber },
+      emailSettings: { isEmailEnabled: true, hasOptedOutOfEmail: true },
+      courseProvider: null,
+      programs: { relatedPrograms: [] },
+    },
+  ];
+  const out = {
+    gradeData: { isPassing: true },
+    entitlement: null,
+    ...data,
+    certificate: genCertificateData(data.certificate),
+    enrollment: genEnrollmentData({ lastEnrolled, ...data.enrollment }),
+    courseRun: genCourseRunData({
+      ...data.courseRun,
+      ...iteratedData.emailSettings,
+      courseId,
+    }),
+    courseProvider: iteratedData[providerIndex].courseProvider,
+    course: iteratedData[providerIndex].course,
+    programs: iteratedData[providerIndex].programs,
+  };
+  if (out.enrollment.canUpgrade) {
+    out.courseRun.upgradeUrl = 'test-upgrade-url';
+  }
+  return out;
+};
+
+export const compileEntitlementData = (data, index) => {
+  const courseName = genCourseTitle(100 + index);
+  const courseNumber = genCourseNumber(100 + index);
+  const providerIndex = index % 3;
+  const iteratedData = [
+    {
+      courseProvider: providers.edx,
+      course: { courseNumber, courseName, bannerImgSrc },
+      programs: { relatedPrograms },
+    },
+    {
+      courseProvider: providers.mit,
+      course: { courseNumber, courseName, bannerImgSrc },
+      programs: { relatedPrograms: [relatedPrograms[0]] },
+    },
+    {
+      courseProvider: null,
+      course: { courseNumber, courseName, bannerImgSrc },
+      programs: { relatedPrograms: [] },
+    },
+  ];
+  return {
+    enrollment: genEnrollmentData({
+      isEnrolled: false,
+      lastEnrolled: null,
+      accessExpirationDate: null,
+      canUpgrade: false,
+      hasFinished: false,
+      hasStarted: false,
+      isAudit: false,
+      isAuditAccessExpired: false,
+      isEmailEnabled: false,
+      isVerified: false,
+    }),
+    gradeData: null,
+    certificate: null,
+    courseRun: null,
+    ...data,
+    ...iteratedData[providerIndex],
+  };
+};
+
 // Entitlement Course - refundable
 // Entitlement Course - cannot view yet
 // Entitlement Course - can view and change
 // Entitlement Course - expired
-export const courseRunData = courseRuns.map(
-  (data, index) => {
-    const courseName = genCourseTitle(index);
-    const courseId = genCourseId(index);
-    const courseNumber = genCourseNumber(index);
-    const providerIndex = index % 3;
-    const lastEnrolledDate = new Date();
-    lastEnrolledDate.setDate(lastEnrolledDate.getDate() - index);
-    const lastEnrolled = lastEnrolledDate.toISOString();
-    const iteratedData = [
-      {
-        course: { courseName, bannerImgSrc, courseNumber },
-        emailSettings: { isEmailEnabled: false, hasOptedOutOfEmail: false },
-        programs: { relatedPrograms },
-        courseProvider: providers.edx,
-      },
-      {
-        course: { courseName, bannerImgSrc, courseNumber },
-        emailSettings: { isEmailEnabled: true, hasOptedOutOfEmail: false },
-        courseProvider: providers.mit,
-        programs: { relatedPrograms: [relatedPrograms[0]] },
-      },
-      {
-        course: { courseName, bannerImgSrc, courseNumber },
-        emailSettings: { isEmailEnabled: true, hasOptedOutOfEmail: true },
-        courseProvider: null,
-        programs: { relatedPrograms: [] },
-      },
-    ];
-    return {
-      gradeData: { isPassing: true },
-      entitlement: null,
-      ...data,
-      certificate: genCertificateData(data.certificate),
-      enrollment: genEnrollmentData({ lastEnrolled, ...data.enrollment }),
-      courseRun: genCourseRunData({
-        ...data.courseRun,
-        ...iteratedData.emailSettings,
-        courseId,
-      }),
-      courseProvider: iteratedData[providerIndex].courseProvider,
-      course: iteratedData[providerIndex].course,
-      programs: iteratedData[providerIndex].programs,
-    };
-  },
-);
-
-export const entitlementData = entitlementCourses.map(
-  (data, index) => {
-    const courseName = genCourseTitle(100 + index);
-    const courseNumber = genCourseNumber(100 + index);
-    const providerIndex = index % 3;
-    const iteratedData = [
-      {
-        courseProvider: providers.edx,
-        course: { courseNumber, courseName, bannerImgSrc },
-        programs: { relatedPrograms },
-      },
-      {
-        courseProvider: providers.mit,
-        course: { courseNumber, courseName, bannerImgSrc },
-        programs: { relatedPrograms: [relatedPrograms[0]] },
-      },
-      {
-        courseProvider: null,
-        course: { courseNumber, courseName, bannerImgSrc },
-        programs: { relatedPrograms: [] },
-      },
-    ];
-    return {
-      enrollment: genEnrollmentData({
-        isEnrolled: false,
-        lastEnrolled: null,
-        accessExpirationDate: null,
-        canUpgrade: false,
-        hasFinished: false,
-        hasStarted: false,
-        isAudit: false,
-        isAuditAccessExpired: false,
-        isEmailEnabled: false,
-        isVerified: false,
-      }),
-      gradeData: null,
-      certificate: null,
-      courseRun: null,
-      ...data,
-      ...iteratedData[providerIndex],
-    };
-  },
-);
+export const courseRunData = courseRuns.map(compileCourseRunData);
+export const entitlementData = entitlementCourses.map(compileEntitlementData);
 
 export default {
+  compileEntitlementData,
+  compileCourseRunData,
   courseRunData,
   entitlementData,
   globalData,

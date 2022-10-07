@@ -16,6 +16,32 @@ jest.mock('react', () => ({
   useContext: jest.fn(context => context),
 }));
 
+jest.mock('reselect', () => ({
+  createSelector: jest.fn((preSelectors, cb) => ({ preSelectors, cb })),
+}));
+
+// Mock react-redux hooks
+// unmock for integration tests
+jest.mock('react-redux', () => {
+  const dispatch = jest.fn((...args) => ({ dispatch: args })).mockName('react-redux.dispatch');
+  return {
+    connect: (mapStateToProps, mapDispatchToProps) => (component) => ({
+      mapStateToProps,
+      mapDispatchToProps,
+      component,
+    }),
+    useDispatch: jest.fn(() => dispatch),
+    useSelector: jest.fn((selector) => ({ useSelector: selector })),
+  };
+});
+
+jest.mock('moment', () => ({
+  __esModule: true,
+  default: (date) => ({
+    toDate: jest.fn().mockReturnValue(date),
+  }),
+}));
+
 jest.mock('@edx/frontend-platform/i18n', () => {
   const i18n = jest.requireActual('@edx/frontend-platform/i18n');
   const PropTypes = jest.requireActual('prop-types');
@@ -187,31 +213,4 @@ jest.mock('data/constants/app', () => ({
 jest.mock('hooks', () => ({
   ...jest.requireActual('hooks'),
   nullMethod: jest.fn().mockName('hooks.nullMethod'),
-}));
-
-// Mock react-redux hooks
-// unmock for integration tests
-jest.mock('react-redux', () => {
-  const dispatch = jest.fn((...args) => ({ dispatch: args })).mockName('react-redux.dispatch');
-  return {
-    connect: (mapStateToProps, mapDispatchToProps) => (component) => ({
-      mapStateToProps,
-      mapDispatchToProps,
-      component,
-    }),
-    useDispatch: jest.fn(() => dispatch),
-    useSelector: jest.fn((selector) => ({ useSelector: selector })),
-  };
-});
-
-jest.mock('hooks', () => ({
-  ...jest.requireActual('hooks'),
-  nullMethod: jest.fn().mockName('hooks.nullMethod'),
-}));
-
-jest.mock('moment', () => ({
-  __esModule: true,
-  default: (date) => ({
-    toDate: jest.fn().mockReturnValue(date),
-  }),
 }));

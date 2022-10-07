@@ -16,7 +16,7 @@ export const EnterpriseDashboardModal = () => {
     handleClick,
     dashboard,
   } = useEnterpriseDashboardHook();
-  if (!dashboard) {
+  if (!dashboard || !dashboard.label) {
     return null;
   }
   return (

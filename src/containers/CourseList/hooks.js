@@ -18,11 +18,10 @@ export const useCourseListData = () => {
   const dispatch = useDispatch();
   const pageNumber = appHooks.usePageNumber();
   const [filters, setFilters] = useCheckboxSetValues([]);
-  const [sortBy, setSortBy] = module.state.sortBy(SortKeys.title);
+  const [sortBy, setSortBy] = module.state.sortBy(SortKeys.enrolled);
 
   const { numPages, visible } = appHooks.useCurrentCourseList({
     sortBy,
-    isAscending: true,
     filters,
     pageSize: ListPageSize,
   });

@@ -13,13 +13,13 @@ export const UpgradeButton = ({ cardId }) => {
   const { canUpgrade } = hooks.useCardEnrollmentData(cardId);
   const { isMasquerading } = hooks.useMasqueradeData();
   const { formatMessage } = useIntl();
+  const isEnabled = (!isMasquerading && canUpgrade);
   return (
     <Button
       iconBefore={Locked}
       variant="outline-primary"
-      disabled={isMasquerading || !canUpgrade}
-      as="a"
-      href={upgradeUrl}
+      disabled={!isEnabled}
+      {...isEnabled && { as: 'a', href: upgradeUrl }}
     >
       {formatMessage(messages.upgrade)}
     </Button>
