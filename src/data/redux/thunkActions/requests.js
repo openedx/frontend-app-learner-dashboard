@@ -33,62 +33,62 @@ export const networkRequest = ({
   });
 };
 
-export const networkAction = (requestKey, promise, options) => (dispatch) => (
+export const networkAction = ({ requestKey, promise, options }) => (dispatch) => (
   dispatch(module.networkRequest({
     requestKey,
     promise,
     ...options,
   })));
 
-export const initializeList = (options) => module.networkAction(
-  RequestKeys.initialize,
-  api.initializeList(),
+export const initializeList = (options) => module.networkAction({
+  requestKey: RequestKeys.initialize,
+  promise: api.initializeList(),
   options,
-);
+});
 
 export const newEntitlementEnrollment = ({
   uuid,
   courseId,
   ...options
-}) => module.networkAction(
-  RequestKeys.newEntitlementEnrollment,
-  api.updateEntitlementEnrollment({ uuid, courseId }),
+}) => module.networkAction({
+  requestKey: RequestKeys.newEntitlementEnrollment,
+  promise: api.updateEntitlementEnrollment({ uuid, courseId }),
   options,
-);
+});
 
 export const switchEntitlementEnrollment = ({
   uuid,
   courseId,
   ...options
-}) => module.networkAction(
-  RequestKeys.switchEntitlementSession,
-  api.updateEntitlementEnrollment({ uuid, courseId }),
+}) => module.networkAction({
+  requestKey: RequestKeys.switchEntitlementSession,
+  promise: api.updateEntitlementEnrollment({ uuid, courseId }),
   options,
-);
+});
 
-export const leaveEntitlementSession = ({ uuid, ...options }) => module.networkAction(
-  RequestKeys.leaveEntitlementSession,
-  api.leaveEntitlementEnrollment({ uuid }),
+export const leaveEntitlementSession = ({ uuid, ...options }) => module.networkAction({
+  requestKey: RequestKeys.leaveEntitlementSession,
+  promise: api.deleteEntitlementEnrollment({ uuid }),
   options,
-);
+});
 
-export const unenrollFromCourse = ({ courseId, ...options }) => module.networkAction(
-  RequestKeys.unenrollFromCourse,
-  api.unenrollFromCourse({ courseId }),
+export const unenrollFromCourse = ({ courseId, ...options }) => module.networkAction({
+  requestKey: RequestKeys.unenrollFromCourse,
+  promise: api.unenrollFromCourse({ courseId }),
   options,
-);
+});
 
-export const updateEmailSettings = ({ courseId, enable, ...options }) => module.networkAction(
-  RequestKeys.updateEmailSettings,
-  api.updateEmailSettings({ courseId, enable }),
+export const updateEmailSettings = ({ courseId, enable, ...options }) => module.networkAction({
+  requestKey: RequestKeys.updateEmailSettings,
+  promise: api.updateEmailSettings({ courseId, enable }),
   options,
-);
+});
 
-export const masqueradeAs = ({ user, ...options }) => module.networkAction(
-  RequestKeys.masquerade,
-  api.initializeList({ user }),
+export const masqueradeAs = ({ user, ...options }) => module.networkAction({
+  requestKey: RequestKeys.masquerade,
+  promise: api.initializeList({ user }),
   options,
-);
+});
 
 export const clearMasquerade = () => (dispatch) => dispatch(
   actions.requests.clearRequest({ requestKey: RequestKeys.masquerade }),
