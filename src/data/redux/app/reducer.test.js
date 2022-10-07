@@ -1,9 +1,16 @@
 import {
-  cardId, initialState, reducer, actions,
+  cardId,
+  initialState,
+  reducer,
+  actions,
+  today,
 } from './reducer';
 
 describe('app reducer', () => {
   describe('reducers', () => {
+    beforeEach(() => {
+      jest.useFakeTimers();
+    });
     it('returns initial state', () => {
       expect(reducer(undefined, {})).toEqual(initialState);
     });
@@ -30,16 +37,19 @@ describe('app reducer', () => {
             courseRun: { cardId: courseIds[0] },
             course: 1,
             some: 'data',
+            enrollment: { lastEnrolled: 'test-last-enrolled' },
           },
           {
             courseRun: { cardId: courseIds[1] },
             course: 2,
             some: 'other data',
+            enrollment: { lastEnrolled: 'test-last-enrolled' },
           },
           {
             courseRun: { cardId: courseIds[2] },
             course: 3,
             some: 'still different data',
+            enrollment: { lastEnrolled: 'test-last-enrolled' },
           },
         ];
         const entitlementData = [
@@ -47,11 +57,13 @@ describe('app reducer', () => {
             courseRun: { cardId: entitlementIds[0] },
             course: 4,
             some: 'STILL different data',
+            enrollment: { lastEnrolled: null },
           },
           {
             courseRun: { cardId: entitlementIds[1] },
             course: 5,
             some: 'still DIFFERENT data',
+            enrollment: { lastEnrolled: null },
           },
         ];
         let out;
@@ -64,9 +76,20 @@ describe('app reducer', () => {
           expect(out.courseData).toEqual({
             [cardId(0)]: { ...enrollmentData[0], cardId: cardId(0) },
             [cardId(1)]: { ...enrollmentData[1], cardId: cardId(1) },
-            [cardId(2)]: { ...enrollmentData[2], cardId: cardId(2) },
-            [cardId(3)]: { ...entitlementData[0], cardId: cardId(3) },
-            [cardId(4)]: { ...entitlementData[1], cardId: cardId(4) },
+            [cardId(2)]: {
+              ...enrollmentData[2],
+              cardId: cardId(2),
+            },
+            [cardId(3)]: {
+              ...entitlementData[0],
+              cardId: cardId(3),
+              enrollment: { lastEnrolled: today },
+            },
+            [cardId(4)]: {
+              ...entitlementData[1],
+              cardId: cardId(4),
+              enrollment: { lastEnrolled: today },
+            },
           });
         });
       });
