@@ -9,7 +9,6 @@ jest.mock('data/redux', () => ({
     useCardCourseRunData: jest.fn(),
     useCardEnrollmentData: jest.fn(),
     useCardEntitlementData: jest.fn(),
-    useMasqueradeData: jest.fn(),
   },
 }));
 
@@ -23,11 +22,9 @@ describe('ViewCourseButton', () => {
     hasAccess = false,
     isEntitlement = false,
     isExpired = false,
-    isMasquerading = false,
   }) => {
     hooks.useCardEnrollmentData.mockReturnValueOnce({ hasAccess });
     hooks.useCardEntitlementData.mockReturnValueOnce({ isEntitlement, isExpired });
-    hooks.useMasqueradeData.mockReturnValueOnce({ isMasquerading });
     return shallow(<ViewCourseButton {...props} />);
   };
   describe('snapshot', () => {
@@ -45,10 +42,6 @@ describe('ViewCourseButton', () => {
     });
   });
   describe('behavior', () => {
-    it('disabled button when masquerading', () => {
-      const wrapper = createWrapper({ isMasquerading: true });
-      expect(wrapper.prop('disabled')).toEqual(true);
-    });
     it('disabled button without access', () => {
       const wrapper = createWrapper({ hasAccess: false, isEntitlement: false, isExpired: false });
       expect(wrapper.prop('disabled')).toEqual(true);

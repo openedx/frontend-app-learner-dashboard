@@ -4,10 +4,10 @@ import { FilterKeys, SortKeys } from 'data/constants/app';
 import simpleSelectors from './simpleSelectors';
 import * as module from './currentList';
 
-export const sortFn = (transform) => (v1, v2) => {
+export const sortFn = (transform, { reverse }) => (v1, v2) => {
   const [a, b] = [v1, v2].map(transform);
   if (a === b) { return 0; }
-  return (a > b) ? 1 : -1;
+  return ((a > b) ? 1 : -1) * (reverse ? -1 : 1);
 };
 
 export const courseFilters = StrictDict({
@@ -32,7 +32,7 @@ export const currentList = (allCourses, {
   filters,
 }) => allCourses
   .filter(module.courseFilterFn(filters))
-  .sort(module.sortFn(transforms[sortBy]));
+  .sort(module.sortFn(transforms[sortBy], { reverse: sortBy === SortKeys.enrolled }));
 
 export const visibleList = (state, {
   sortBy,

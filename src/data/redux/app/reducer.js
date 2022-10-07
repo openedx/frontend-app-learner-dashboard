@@ -4,7 +4,6 @@ import { StrictDict } from 'utils';
 
 const initialState = {
   pageNumber: 1,
-  enrollments: [],
   courseData: {},
   entitlement: [],
   emailConfirmation: {},
@@ -17,6 +16,8 @@ const initialState = {
 
 export const cardId = (val) => `card-${val}`;
 
+export const today = Date.now();
+
 // eslint-disable-next-line no-unused-vars
 const app = createSlice({
   name: 'app',
@@ -25,10 +26,13 @@ const app = createSlice({
     loadCourses: (state, { payload: { courses } }) => ({
       ...state,
       courseData: courses.reduce(
-        (obj, curr, index) => ({
-          ...obj,
-          [cardId(index)]: { ...curr, cardId: cardId(index) },
-        }),
+        (obj, curr, index) => {
+          const out = { ...curr, cardId: cardId(index) };
+          if (out.enrollment.lastEnrolled === null) {
+            out.enrollment.lastEnrolled = today;
+          }
+          return { ...obj, [cardId(index)]: out };
+        },
         {},
       ),
     }),
