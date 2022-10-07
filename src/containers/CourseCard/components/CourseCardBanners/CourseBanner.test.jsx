@@ -128,14 +128,24 @@ describe('CourseBanner', () => {
     });
   });
   describe('too early', () => {
-    beforeEach(() => {
-      render({ enrollment: { coursewareAccess: { isTooEarly: true } } });
+    describe('no start date', () => {
+      beforeEach(() => {
+        render({ enrollment: { coursewareAccess: { isTooEarly: true } }, courseRun: { startDate: null } });
+      });
+      test('snapshot', () => expect(el).toMatchSnapshot());
+      test('messages', () => expect(el.text()).toEqual(''));
     });
-    test('snapshot: tooEarly', () => {
-      expect(el).toMatchSnapshot();
-    });
-    test('messages: courseHasNotStarted', () => {
-      expect(el.text()).toContain(formatMessage(messages.courseHasNotStarted, { startDate: courseRunData.startDate }));
+    describe('has start date', () => {
+      beforeEach(() => {
+        render({ enrollment: { coursewareAccess: { isTooEarly: true } } });
+      });
+      test('snapshot', () => expect(el).toMatchSnapshot());
+
+      test('messages: courseHasNotStarted', () => {
+        expect(el.text()).toContain(
+          formatMessage(messages.courseHasNotStarted, { startDate: courseRunData.startDate }),
+        );
+      });
     });
   });
   describe('staff', () => {

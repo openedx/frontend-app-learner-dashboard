@@ -54,7 +54,7 @@ export const CourseBanner = ({ cardId }) => {
         </Banner>
       )}
 
-      {(!isStaff && isTooEarly) && (
+      {(!isStaff && isTooEarly && courseRun.startDate) && (
         <Banner>
           {formatMessage(messages.courseHasNotStarted, {
             startDate: formatDate(courseRun.startDate),

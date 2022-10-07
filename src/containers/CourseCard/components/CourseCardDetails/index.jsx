@@ -6,8 +6,6 @@ import { Button } from '@edx/paragon';
 
 import useCardDetailsData from './hooks';
 
-import messages from './messages';
-
 export const CourseCardDetails = ({ cardId }) => {
   const dispatch = useDispatch();
   const {
@@ -17,24 +15,21 @@ export const CourseCardDetails = ({ cardId }) => {
     isFulfilled,
     canChange,
     openSessionModal,
-    formatMessage,
     courseNumber,
+    changeOrLeaveSessionMessage,
   } = useCardDetailsData({ cardId, dispatch });
 
   return (
     <span className="small" data-testid="CourseCardDetails">
       {providerName} • {courseNumber}
-      {!(isEntitlement && !isFulfilled) && (
-        <>
-          {' • '}
-          {accessMessage}
-        </>
+      {!(isEntitlement && !isFulfilled) && accessMessage && (
+        ` • ${accessMessage}`
       )}
       {isEntitlement && isFulfilled && canChange ? (
         <>
           {' • '}
           <Button variant="link" size="inline" className="m-0 p-0" onClick={openSessionModal}>
-            {formatMessage(messages.changeOrLeaveSessionButton)}
+            {changeOrLeaveSessionMessage}
           </Button>
         </>
       ) : null}

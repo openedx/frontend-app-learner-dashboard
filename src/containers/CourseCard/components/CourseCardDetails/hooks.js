@@ -9,21 +9,24 @@ export const useAccessMessage = ({ cardId }) => {
   const enrollment = appHooks.useCardEnrollmentData(cardId);
   const courseRun = appHooks.useCardCourseRunData(cardId);
   if (!courseRun.isStarted) {
+    if (!courseRun.startDate) { return null; }
     const startDate = formatDate(courseRun.startDate);
     return formatMessage(messages.courseStarts, { startDate });
   }
   if (enrollment.isEnrolled) {
-    if (enrollment.isAudit) {
-      const {
-        accessExpirationDate,
-        isAuditAccessExpired,
-      } = enrollment;
+    const { isArchived, endDate } = courseRun;
+    const {
+      accessExpirationDate,
+      isAuditAccessExpired,
+    } = enrollment;
+
+    if (enrollment.isAudit && accessExpirationDate) {
       return formatMessage(
         isAuditAccessExpired ? messages.accessExpired : messages.accessExpires,
         { accessExpirationDate: formatDate(accessExpirationDate) },
       );
     }
-    const { isArchived, endDate } = courseRun;
+    if (!endDate) { return null; }
     return formatMessage(
       isArchived ? messages.courseEnded : messages.courseEnds,
       { endDate: formatDate(endDate) },
@@ -51,8 +54,8 @@ export const useCardDetailsData = ({ dispatch, cardId }) => {
     isFulfilled,
     canChange,
     openSessionModal,
-    formatMessage,
     courseNumber,
+    changeOrLeaveSessionMessage: formatMessage(messages.changeOrLeaveSessionButton),
   };
 };
 
