@@ -22,7 +22,6 @@ export const useCourseListData = () => {
 
   const { numPages, visible } = appHooks.useCurrentCourseList({
     sortBy,
-    isAscending: true,
     filters,
     pageSize: ListPageSize,
   });

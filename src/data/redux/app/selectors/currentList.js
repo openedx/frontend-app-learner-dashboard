@@ -4,17 +4,11 @@ import { FilterKeys, SortKeys } from 'data/constants/app';
 import simpleSelectors from './simpleSelectors';
 import * as module from './currentList';
 
-export const sortFn = (a, b, isAscending) => ((a === b)
-  ? 0
-  : 1 * ((a > b) ? 1 : -1) * (isAscending ? 1 : -1));
-
-export const dateSort = (a, b, isAscending) => (
-  module.sortFn(new Date(a), new Date(b), isAscending)
-);
-
-export const alphSort = (a, b, isAscending) => (
-  module.sortFn(a.toLowerCase(), b.toLowerCase(), isAscending)
-);
+export const sortFn = (transform) => (v1, v2) => {
+  const [a, b] = [v1, v2].map(transform);
+  if (a === b) { return 0; }
+  return (a > b) ? 1 : -1;
+};
 
 export const courseFilters = StrictDict({
   [FilterKeys.notEnrolled]: (course) => !course.enrollment.isEnrolled,
@@ -24,38 +18,34 @@ export const courseFilters = StrictDict({
   [FilterKeys.notStarted]: (course) => !course.enrollment.hasStarted,
 });
 
-export const currentList = (state, {
+export const transforms = StrictDict({
+  [SortKeys.enrolled]: ({ enrollment }) => new Date(enrollment.lastEnrolled),
+  [SortKeys.title]: ({ course }) => course.courseName.toLowerCase(),
+});
+
+export const courseFilterFn = filters => (filters.length
+  ? course => filters.reduce((match, filter) => match && courseFilters[filter](course), true)
+  : () => true);
+
+export const currentList = (allCourses, {
   sortBy,
-  isAscending,
+  filters,
+}) => allCourses
+  .filter(module.courseFilterFn(filters))
+  .sort(module.sortFn(transforms[sortBy]));
+
+export const visibleList = (state, {
+  sortBy,
   filters,
   pageSize,
 }) => {
+  const courses = Object.values(simpleSelectors.courseData(state));
+  const list = module.currentList(courses, { sortBy, filters });
   const pageNumber = simpleSelectors.pageNumber(state);
-  let list = Object.values(simpleSelectors.courseData(state));
-  const hasFilter = filters.reduce((obj, filter) => ({ ...obj, [filter]: true }), {});
-  if (filters.length) {
-    list = list.filter(course => filters.reduce(
-      (match, filter) => match && (!hasFilter[filter] || filter(course)),
-      true,
-    ));
-  }
-  if (sortBy === SortKeys.enrolled) {
-    list = list.sort((a, b) => module.dateSort(
-      a.enrollment.lastEnrolled,
-      b.enrollment.lastEnrolled,
-      isAscending,
-    ));
-  } else {
-    list = list.sort((a, b) => module.alphSort(
-      a.course.courseName,
-      b.course.courseName,
-      isAscending,
-    ));
-  }
   return {
     visible: list.slice((pageNumber - 1) * pageSize, pageNumber * pageSize),
     numPages: Math.ceil(list.length / pageSize),
   };
 };
 
-export default currentList;
+export default visibleList;
