@@ -622,7 +622,7 @@ export const compileCourseRunData = (data, index) => {
   const courseNumber = genCourseNumber(index);
   const providerIndex = index % 3;
   const lastEnrolledDate = new Date();
-  lastEnrolledDate.setDate(lastEnrolledDate.getDate() + index);
+  lastEnrolledDate.setDate(lastEnrolledDate.getDate() - index);
   const lastEnrolled = lastEnrolledDate.toISOString();
   const iteratedData = [
     {

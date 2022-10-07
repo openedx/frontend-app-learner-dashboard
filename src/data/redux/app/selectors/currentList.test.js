@@ -30,9 +30,12 @@ describe('courseList selector module', () => {
     describe('sortFn', () => {
       it('performs comparison sort after running both values through transform', () => {
         const transform = ({ val }) => val;
-        expect(sortFn(transform)({ val: 2 }, { val: 1 })).toEqual(1);
-        expect(sortFn(transform)({ val: 1 }, { val: 1 })).toEqual(0);
-        expect(sortFn(transform)({ val: 1 }, { val: 2 })).toEqual(-1);
+        expect(sortFn(transform, { reverse: false })({ val: 2 }, { val: 1 })).toEqual(1);
+        expect(sortFn(transform, { reverse: false })({ val: 1 }, { val: 1 })).toEqual(0);
+        expect(sortFn(transform, { reverse: false })({ val: 1 }, { val: 2 })).toEqual(-1);
+        expect(sortFn(transform, { reverse: true })({ val: 2 }, { val: 1 })).toEqual(-1);
+        expect(sortFn(transform, { reverse: true })({ val: 1 }, { val: 1 })).toEqual(0);
+        expect(sortFn(transform, { reverse: true })({ val: 1 }, { val: 2 })).toEqual(1);
       });
     });
     describe('courseFilters', () => {
@@ -115,13 +118,22 @@ describe('courseList selector module', () => {
           v2,
           v3,
         } = testCourses;
-        const sortBy = SortKeys.enrolled;
+        let sortBy = SortKeys.enrolled;
         const testFilters = [1, 2, 3];
         expect(currentList(
           [empty, v2, v1, empty, empty, v3, empty],
           { sortBy, filters: testFilters },
         )).toEqual([v1, v2, v3]);
-        expect(sortSpy).toHaveBeenCalledWith(transforms[sortBy]);
+        expect(sortSpy).toHaveBeenCalledWith(transforms[sortBy], { reverse: true });
+        expect(filterSpy).toHaveBeenCalledWith(testFilters);
+
+        sortSpy.mockClear();
+        sortBy = SortKeys.title;
+        expect(currentList(
+          [empty, v2, v1, empty, empty, v3, empty],
+          { sortBy, filters: testFilters },
+        )).toEqual([v1, v2, v3]);
+        expect(sortSpy).toHaveBeenCalledWith(transforms[sortBy], { reverse: false });
         expect(filterSpy).toHaveBeenCalledWith(testFilters);
         sortSpy.mockRestore();
         filterSpy.mockRestore();
