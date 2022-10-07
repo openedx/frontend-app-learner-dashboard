@@ -4,6 +4,7 @@ exports[`CourseCard component snapshot: collapsed 1`] = `
 <div
   className="mb-4.5 course-card"
   data-testid="CourseCard"
+  id="test-card-id"
 >
   <Card
     orientation="vertical"
@@ -34,6 +35,7 @@ exports[`CourseCard component snapshot: not collapsed 1`] = `
 <div
   className="mb-4.5 course-card"
   data-testid="CourseCard"
+  id="test-card-id"
 >
   <Card
     orientation="horizontal"
