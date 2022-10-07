@@ -56,10 +56,9 @@ describe('CourseList hooks', () => {
       it('initializes sort with enrollment date', () => {
         state.expectInitializedWith(state.keys.sortBy, SortKeys.enrolled);
       });
-      it('loads current course list with sortBy, isAscending, filters, and page size', () => {
+      it('loads current course list with sortBy, filters, and page size', () => {
         expect(appHooks.useCurrentCourseList).toHaveBeenCalledWith({
           sortBy: testSortBy,
-          isAscending: true,
           filters: testFilters,
           pageSize: ListPageSize,
         });
