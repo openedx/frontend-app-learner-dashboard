@@ -1,6 +1,7 @@
 import { StrictDict } from 'utils';
 import urls from 'data/services/lms/urls';
 
+import * as module from './courseCard';
 import * as simpleSelectors from './simpleSelectors';
 
 const { baseAppUrl, learningMfeUrl } = urls;
@@ -9,6 +10,8 @@ const { cardSimpleSelectors, mkCardSelector } = simpleSelectors;
 const today = new Date();
 const dateSixMonthsFromNow = new Date();
 dateSixMonthsFromNow.setDate(dateSixMonthsFromNow.getDate() + 180);
+
+export const loadDateVal = (date) => (date ? new Date(date) : null);
 
 export const courseCard = StrictDict({
   certificate: mkCardSelector(
@@ -41,8 +44,8 @@ export const courseCard = StrictDict({
   courseRun: mkCardSelector(
     cardSimpleSelectors.courseRun,
     (courseRun) => (courseRun === null ? {} : {
-      endDate: new Date(courseRun?.endDate),
-      startDate: new Date(courseRun.startDate),
+      endDate: module.loadDateVal(courseRun.endDate),
+      startDate: module.loadDateVal(courseRun.startDate),
 
       courseId: courseRun.courseId,
       isArchived: courseRun.isArchived,
@@ -75,7 +78,7 @@ export const courseCard = StrictDict({
         hasStarted: enrollment.hasStarted,
         hasFinished: enrollment.hasFinished,
 
-        accessExpirationDate: new Date(enrollment.accessExpirationDate),
+        accessExpirationDate: module.loadDateVal(enrollment.accessExpirationDate),
         canUpgrade: enrollment.canUpgrade,
         isAudit: enrollment.isAudit,
         isAuditAccessExpired: enrollment.isAuditAccessExpired,

@@ -1,3 +1,4 @@
+import { keyStore } from 'utils';
 import urls from 'data/services/lms/urls';
 
 import simpleSelectors from './simpleSelectors';
@@ -18,6 +19,8 @@ jest.mock('./simpleSelectors', () => ({
 const { courseCard } = module;
 const { cardSimpleSelectors } = simpleSelectors;
 const { baseAppUrl, learningMfeUrl } = urls;
+
+const moduleKeys = keyStore(module);
 
 let testData;
 let selector;
@@ -47,7 +50,24 @@ const loadSelector = (sel, data) => {
 };
 
 describe('courseCard selectors module', () => {
+  describe('loadDateVal helper function', () => {
+    it('returns passed date value converted to Date', () => {
+      const testDate = '2000-10-10';
+      expect(module.loadDateVal(testDate)).toEqual(new Date(testDate));
+    });
+    it('returns null if no value is passed', () => {
+      expect(module.loadDateVal()).toEqual(null);
+    });
+  });
   describe('courseCard selectors', () => {
+    let dateSpy;
+    beforeEach(() => {
+      dateSpy = jest.spyOn(module, moduleKeys.loadDateVal);
+      dateSpy.mockImplementation(v => new Date(v));
+    });
+    afterEach(() => {
+      dateSpy.mockRestore();
+    });
     describe('certificate selector', () => {
       beforeEach(() => {
         loadSelector(courseCard.certificate, {
