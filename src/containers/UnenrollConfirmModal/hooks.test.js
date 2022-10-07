@@ -22,7 +22,7 @@ describe('UnenrollConfirmModal hooks', () => {
   const cardId = 'test-card-id';
 
   const createUseUnenrollReasons = () => hooks.useUnenrollReasons({ dispatch, cardId });
-  const createUnenrollData = () => hooks.useUnenrollData({ closeModal, dispatch, cardId });
+  const createUseUnenrollData = () => hooks.useUnenrollData({ closeModal, dispatch, cardId });
 
   describe('state fields', () => {
     state.testGetter(state.keys.confirmed);
@@ -106,7 +106,7 @@ describe('UnenrollConfirmModal hooks', () => {
       state.mock();
       state.mockVal(state.keys.confirmed, testValue);
       hooks.useUnenrollReasons = jest.fn(() => mockReason);
-      out = createUnenrollData();
+      out = createUseUnenrollData();
     });
     afterEach(() => {
       state.restore();
@@ -163,17 +163,17 @@ describe('UnenrollConfirmModal hooks', () => {
       it('returns modalStates.finished if confirmed and submitted', () => {
         state.mockVal(state.keys.confirmed, true);
         hooks.useUnenrollReasons = jest.fn(() => ({ ...mockReason, isSubmitted: true }));
-        out = createUnenrollData();
+        out = createUseUnenrollData();
         expect(out.modalState).toEqual(hooks.modalStates.finished);
       });
       it('returns modalStates.reason if confirmed and not submitted', () => {
         state.mockVal(state.keys.confirmed, true);
-        out = createUnenrollData();
+        out = createUseUnenrollData();
         expect(out.modalState).toEqual(hooks.modalStates.reason);
       });
       it('returns modalStates.confirm if not confirmed', () => {
         state.mockVal(state.keys.confirmed, false);
-        out = createUnenrollData();
+        out = createUseUnenrollData();
         expect(out.modalState).toEqual(hooks.modalStates.confirm);
       });
     });
