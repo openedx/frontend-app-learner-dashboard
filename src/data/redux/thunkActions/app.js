@@ -17,6 +17,12 @@ export const loadData = ({ courses, ...globalData }) => dispatch => {
   dispatch(actions.app.loadCourses({ courses }));
 };
 
+export const recommendedCourses = () => (dispatch) => (
+  dispatch(requests.recommendedCourses({
+    onSuccess: ({ data }) => { dispatch(actions.app.loadRecommendedCourses(data)); },
+  }))
+);
+
 /**
  * initialize the app, loading ora and course metadata from the api, and loading the initial
  * submission list data.
@@ -108,4 +114,5 @@ export default StrictDict({
   unenrollFromCourse,
   masqueradeAs,
   clearMasquerade,
+  recommendedCourses,
 });

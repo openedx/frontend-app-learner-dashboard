@@ -15,6 +15,7 @@ export const simpleSelectors = StrictDict({
   enterpriseDashboard: mkSimpleSelector(app => app.enterpriseDashboard),
   selectSessionModal: mkSimpleSelector(app => app.selectSessionModal),
   pageNumber: mkSimpleSelector(app => app.pageNumber),
+  recommendedCourses: mkSimpleSelector(app => app.recommendedCourses),
 });
 
 export const cardSimpleSelectors = StrictDict({

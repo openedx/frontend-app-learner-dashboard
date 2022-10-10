@@ -12,6 +12,7 @@ export const useEnterpriseDashboardData = () => useSelector(appSelectors.enterpr
 export const usePlatformSettingsData = () => useSelector(appSelectors.platformSettings);
 // suggested courses is max at 3 at the moment.
 export const useSuggestedCoursesData = () => useSelector(appSelectors.suggestedCourses).slice(0, 3);
+export const useRecommendedCoursesData = () => useSelector(appSelectors.recommendedCourses);
 export const useSelectSessionModalData = () => useSelector(appSelectors.selectSessionModal);
 
 export const useHasCourses = () => useSelector(appSelectors.hasCourses);

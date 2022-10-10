@@ -10,6 +10,7 @@ const initialState = {
   [RequestKeys.enrollEntitlementSession]: { status: RequestStates.inactive },
   [RequestKeys.leaveEntitlementSession]: { status: RequestStates.inactive },
   [RequestKeys.masquerade]: { status: RequestStates.inactive },
+  [RequestKeys.recommendedCourses]: { status: RequestStates.inactive },
 };
 
 // eslint-disable-next-line no-unused-vars

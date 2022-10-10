@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RecommendationsPanel snapshot has 2 recommended courses 1`] = `
+<div
+  className="widget-sidebar p-4"
+>
+  <h3
+    className="pb-2"
+  >
+    Recommendations for you
+  </h3>
+  <div>
+    <CourseCard
+      course={
+        Object {
+          "course_key": "edX+cs50",
+          "logoImageUrl": "https://edx.org/small.jpg",
+          "marketingUrl": "https://edx.org",
+          "title": "Computer Science",
+        }
+      }
+    />
+    <CourseCard
+      course={
+        Object {
+          "course_key": "edX+cs50x",
+          "logoImageUrl": "https://edx.org/small.jpg",
+          "marketingUrl": "https://edx.org",
+          "title": "Course Test",
+        }
+      }
+    />
+  </div>
+  <div
+    className="text-center pt-2"
+  >
+    <Button
+      onClick={[Function]}
+      variant=""
+    >
+      Explore courses
+    </Button>
+  </div>
+</div>
+`;
+
+exports[`RecommendationsPanel snapshot no recommended courses 1`] = `
+<div
+  className="widget-sidebar p-4"
+>
+  <h3
+    className="pb-2"
+  >
+    Recommendations for you
+  </h3>
+  <div />
+  <div
+    className="text-center pt-2"
+  >
+    <Button
+      onClick={[Function]}
+      variant=""
+    >
+      Explore courses
+    </Button>
+  </div>
+</div>
+`;

@@ -61,6 +61,7 @@
     "react-intl": "^5.20.9",
     "react-pdf": "^5.5.0",
     "react-redux": "^7.2.4",
+    "react-responsive": "^9.0.0",
     "react-router": "5.2.0",
     "react-router-dom": "5.2.0",
     "react-router-redux": "^5.0.0-alpha.9",

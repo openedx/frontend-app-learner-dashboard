@@ -84,9 +84,18 @@ export const updateEmailSettings = ({ courseId, enable, ...options }) => module.
   options,
 );
 
-export const masqueradeAs = ({ user, ...options }) => module.networkAction(
-  RequestKeys.masquerade,
-  api.initializeList({ user }),
+export const masqueradeAs = ({ user, onSuccess, onFailure }) => (dispatch) => {
+  dispatch(networkRequest({
+    requestKey: RequestKeys.masquerade,
+    onFailure,
+    onSuccess,
+    promise: api.initializeList({ user }),
+  }));
+};
+
+export const recommendedCourses = (options) => module.networkAction(
+  RequestKeys.recommendedCourses,
+  api.recommendedCourses(),
   options,
 );
 
@@ -103,4 +112,5 @@ export default StrictDict({
   switchEntitlementEnrollment,
   unenrollFromCourse,
   updateEmailSettings,
+  recommendedCourses,
 });

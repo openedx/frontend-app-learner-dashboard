@@ -19,6 +19,11 @@ const initializeList = ({ user } = {}) => get(stringifyUrl(
   { [apiKeys.user]: user },
 ));
 
+const recommendedCourses = ({ user } = {}) => get(stringifyUrl(
+  urls.recommendedCourses,
+  { [apiKeys.user]: user },
+));
+
 const updateEntitlementEnrollment = ({ uuid, courseId }) => post(stringifyUrl(
   urls.entitlementEnrollment(uuid),
   { [apiKeys.courseRunId]: courseId },
@@ -45,4 +50,5 @@ export default {
   updateEmailSettings,
   updateEntitlementEnrollment,
   deleteEntitlementEnrollment,
+  recommendedCourses,
 };

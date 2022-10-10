@@ -33,6 +33,16 @@ describe('lms api methods', () => {
       );
     });
   });
+  describe('recommendedCourses', () => {
+    test('calls get with the recommendedCourses url', () => {
+      const userArg = {
+        [apiKeys.user]: testUser,
+      };
+      expect(api.recommendedCourses(userArg)).toEqual(
+        utils.get(utils.stringifyUrl(urls.recommendedCourses, userArg)),
+      );
+    });
+  });
   describe('updateEntitlementEnrollment', () => {
     it('calls post on entitlementEnrollment url with uuid and course run ID', () => {
       expect(

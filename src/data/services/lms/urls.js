@@ -11,6 +11,7 @@ const init = `${api}learner_home/init`;
 const courseUnenroll = `${baseUrl}/change_enrollment`;
 const updateEmailSettings = `${api}/change_email_settings`;
 const entitlementEnrollment = (uuid) => `${api}/entitlements/v1/entitlements/${uuid}/enrollments`;
+const recommendedCourses = `${api}learner_home/recommendation/courses/`;
 
 const baseAppUrl = (url) => baseUrl + url;
 const learningMfeUrl = (url) => configuration.LEARNING_MICROFRONTEND_URL + url;
@@ -23,4 +24,5 @@ export default StrictDict({
   entitlementEnrollment,
   baseAppUrl,
   learningMfeUrl,
+  recommendedCourses,
 });
