@@ -50,7 +50,6 @@ export const LearnerDashboardHeader = () => {
         {!isCollapsed && <GreetingBanner size="large" />}
       </div>
       <MasqueradeBar />
-      <hr className="mt-0" />
     </>
   );
 };

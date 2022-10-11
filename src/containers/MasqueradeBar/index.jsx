@@ -35,52 +35,51 @@ export const MasqueradeBar = () => {
 
   if (!canMasquerade) { return null; }
 
-  return (
+  return isMasquerading ? (
+    <Form className="masquerade-bar masquerade-bar-sticky">
+      <FormLabel inline className="masquerade-form-label">
+        <Icon src={PersonSearch} />
+        {formatMessage(messages.ViewingAs)}
+      </FormLabel>
+      <Chip
+        className="masquerade-chip"
+        iconAfter={Close}
+        onClick={handleClearMasquerade}
+      >
+        {masqueradeInput}
+      </Chip>
+    </Form>
+  ) : (
     <Form className="masquerade-bar">
-      {isMasquerading ? (
-        <>
-          <FormLabel inline className="masquerade-form-label">
-            <Icon src={PersonSearch} />
-            {formatMessage(messages.ViewingAs)}
-          </FormLabel>
-          <Chip
-            className="masquerade-chip"
-            iconAfter={Close}
-            onClick={handleClearMasquerade}
-          >
-            {masqueradeInput}
-          </Chip>
-        </>
-      ) : (
-        <>
-          <FormLabel inline className="masquerade-form-label">
-            <Icon src={PersonSearch} />
-            {formatMessage(messages.ViewAs)}
-          </FormLabel>
-          <FormGroup isInvalid={isMasqueradingFailed} className="masquerade-form-input">
-            <FormControl
-              value={masqueradeInput}
-              onChange={handleMasqueradeInputChange}
-              floatingLabel={formatMessage(messages.StudentNameInput)}
-            />
-            {isMasqueradingFailed && (
-              <FormControlFeedback type="invalid" hasIcon={false}>
-                {formatMessage(masqueradeErrorMessage)}
-              </FormControlFeedback>
-            )}
-          </FormGroup>
-          <StatefulButton
-            disabled={!masqueradeInput.length}
-            variant="brand"
-            onClick={handleMasqueradeSubmit(masqueradeInput)}
-            labels={{
-              default: formatMessage(messages.SubmitButton),
-            }}
-            state={isMasqueradingPending ? 'pending' : 'default'}
-            type="submit"
-          />
-        </>
-      )}
+      <FormLabel inline className="masquerade-form-label">
+        <Icon src={PersonSearch} />
+        {formatMessage(messages.ViewAs)}
+      </FormLabel>
+      <FormGroup
+        isInvalid={isMasqueradingFailed}
+        className="masquerade-form-input"
+      >
+        <FormControl
+          value={masqueradeInput}
+          onChange={handleMasqueradeInputChange}
+          floatingLabel={formatMessage(messages.StudentNameInput)}
+        />
+        {isMasqueradingFailed && (
+          <FormControlFeedback type="invalid" hasIcon={false}>
+            {formatMessage(masqueradeErrorMessage)}
+          </FormControlFeedback>
+        )}
+      </FormGroup>
+      <StatefulButton
+        disabled={!masqueradeInput.length}
+        variant="brand"
+        onClick={handleMasqueradeSubmit(masqueradeInput)}
+        labels={{
+          default: formatMessage(messages.SubmitButton),
+        }}
+        state={isMasqueradingPending ? 'pending' : 'default'}
+        type="submit"
+      />
     </Form>
   );
 };

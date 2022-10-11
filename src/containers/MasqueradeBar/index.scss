@@ -4,6 +4,14 @@
   display: flex;
   align-items: flex-start;
   padding: map-get($spacers, 3);
+  border-bottom: 1px solid $gray-100;
+
+  &.masquerade-bar-sticky {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: $white;
+  }
 
   .masquerade-form-label {
     padding: map-get($spacers, 2) map-get($spacers, 3);

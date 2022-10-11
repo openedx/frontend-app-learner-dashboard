@@ -29,7 +29,7 @@ export const Dashboard = () => {
   const initIsPending = appHooks.useIsPendingRequest(RequestKeys.initialize);
 
   return (
-    <div id="dashboard-container" className="d-flex flex-column p-2">
+    <div id="dashboard-container" className="d-flex flex-column p-2 mt-3">
       {hasAvailableDashboards && <EnterpriseDashboardModal />}
       {initIsPending || (!initIsPending && hasCourses) ? (
         <Container fluid size="xl">

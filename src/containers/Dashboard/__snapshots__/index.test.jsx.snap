@@ -2,7 +2,7 @@
 
 exports[`Dashboard snapshots there are available dashboards 1`] = `
 <div
-  className="d-flex flex-column p-2"
+  className="d-flex flex-column p-2 mt-3"
   id="dashboard-container"
 >
   <EnterpriseDashboardModal />
@@ -12,7 +12,7 @@ exports[`Dashboard snapshots there are available dashboards 1`] = `
 
 exports[`Dashboard snapshots there are courses, or they are still loading 1`] = `
 <div
-  className="d-flex flex-column p-2"
+  className="d-flex flex-column p-2 mt-3"
   id="dashboard-container"
 >
   <Container
@@ -69,7 +69,7 @@ exports[`Dashboard snapshots there are courses, or they are still loading 1`] = 
 
 exports[`Dashboard snapshots there are no courses 1`] = `
 <div
-  className="d-flex flex-column p-2"
+  className="d-flex flex-column p-2 mt-3"
   id="dashboard-container"
 >
   <EmptyCourse />
@@ -78,7 +78,7 @@ exports[`Dashboard snapshots there are no courses 1`] = `
 
 exports[`Dashboard snapshots there is a select session modal 1`] = `
 <div
-  className="d-flex flex-column p-2"
+  className="d-flex flex-column p-2 mt-3"
   id="dashboard-container"
 >
   <EmptyCourse />
