@@ -27,12 +27,6 @@ export const initialize = () => (dispatch) => (
   }))
 );
 
-export const refreshList = () => (dispatch) => (
-  dispatch(requests.initializeList({
-    onSuccess: ({ data }) => dispatch(module.loadData(data)),
-  }))
-);
-
 // TODO: connect hook to actual api later
 export const sendConfirmEmail = () => (dispatch, getState) => post(
   selectors.app.emailConfirmation(getState()).sendEmailUrl,
@@ -79,28 +73,26 @@ export const unenrollFromCourse = (cardId, reason) => (dispatch, getState) => {
   }
   dispatch(requests.unenrollFromCourse({
     courseId,
-    onSuccess: () => dispatch(module.refreshList()),
+    onSuccess: () => dispatch(module.initialize()),
   }));
 };
 
 export const masqueradeAs = (user) => (dispatch) => (
   dispatch(requests.masqueradeAs({
     user,
-    onSuccess: (({ data }) => {
-      dispatch(actions.app.loadCourses({ courses: data.courses }));
-    }),
+    onSuccess: ({ data }) => dispatch(module.loadData(data)),
   }))
 );
 
 export const clearMasquerade = () => (dispatch) => {
   dispatch(requests.clearMasquerade());
-  dispatch(module.refreshList());
+  dispatch(module.initialize());
 };
 
 export default StrictDict({
   loadData,
   initialize,
-  refreshList,
+  refreshList: initialize,
   sendConfirmEmail,
   newEntitlementEnrollment,
   switchEntitlementEnrollment,
