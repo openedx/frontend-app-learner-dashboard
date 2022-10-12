@@ -59,6 +59,8 @@ exports[`LearnerDashboardHeader snapshots without collapsed 1`] = `
         className="d-flex"
       >
         <Button
+          as="a"
+          href="http://localhost:18000/dashboard/programs"
           iconBefore={[MockFunction icons.Program]}
           variant="inverse-tertiary"
         >
