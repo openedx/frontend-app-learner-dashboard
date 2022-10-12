@@ -15,6 +15,9 @@ const entitlementEnrollment = (uuid) => `${api}/entitlements/v1/entitlements/${u
 const baseAppUrl = (url) => baseUrl + url;
 const learningMfeUrl = (url) => configuration.LEARNING_MICROFRONTEND_URL + url;
 
+// static view url
+const programsUrl = baseAppUrl('/dashboard/programs');
+
 export default StrictDict({
   api,
   init,
@@ -23,4 +26,5 @@ export default StrictDict({
   entitlementEnrollment,
   baseAppUrl,
   learningMfeUrl,
+  programsUrl,
 });
