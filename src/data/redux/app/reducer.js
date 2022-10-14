@@ -42,6 +42,7 @@ const app = createSlice({
       enterpriseDashboard: payload.enterpriseDashboard,
       platformSettings: payload.platformSettings,
       suggestedCourses: payload.suggestedCourses,
+      socialShareSettings: payload.socialShareSettings,
     }),
     updateSelectSessionModal: (state, { payload }) => ({
       ...state,

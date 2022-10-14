@@ -49,7 +49,7 @@ export const relatedPrograms = [
 export const genCardId = (index) => `card-id${index}`;
 export const genCourseId = (index) => `course-number${index}-course-id${index}`;
 export const genCourseNumber = (index) => `course-number${index}`;
-export const genCourseTitle = (index) => `Course Name ${index}`;
+export const genCourseShareUrl = (index) => `home.edx.org?social-share-url/${index}`;
 export const genEntitlementUUID = (index) => `entitlement-course-uuid-${index}`;
 
 const bannerImgSrc = '/asset-v1:edX+DemoX+Demo_Course+type@asset+block@images_course_image.jpg';
@@ -95,6 +95,18 @@ export const globalData = {
       courseUrl: 'www.edx/suggested-course',
     },
   ],
+  socialShareSettings: {
+    facebook: {
+      isEnabled: true,
+      socialBrand: 'edx.org',
+      utmParams: 'utm_campaign=social-sharing-db&utm_medium=social&utm_source=facebook',
+    },
+    twitter: {
+      isEnabled: true,
+      socialBrand: 'edx.org',
+      utmParams: 'utm_campaign=social-sharing-db&utm_medium=social&utm_source=twitter',
+    },
+  },
 };
 
 export const genCourseRunData = (data = {}) => ({
@@ -655,33 +667,33 @@ export const entitlementCourses = [
   },
 ];
 
+const providerOptions = [
+  providers.edx,
+  providers.mit,
+  null,
+];
+
+const emailOptions = [
+  { isEmailEnabled: false, hasOptedOutOfEmail: false },
+  { isEmailEnabled: true, hasOptedOutOfEmail: false },
+  { isEmailEnabled: true, hasOptedOutOfEmail: true },
+];
+
+const programsOptions = [
+  { relatedPrograms },
+  { relatedPrograms: [relatedPrograms[0]] },
+  { relatedPrograms: [] },
+];
+
+const getOption = (options, index) => options[index % options.length];
+
 export const compileCourseRunData = ({ courseName, ...data }, index) => {
   const courseId = genCourseId(index);
   const courseNumber = genCourseNumber(index);
-  const providerIndex = index % 3;
+  const socialShareUrl = genCourseShareUrl(index);
   const lastEnrolledDate = new Date();
-  lastEnrolledDate.setDate(lastEnrolledDate.getDate() - index);
+  lastEnrolledDate.setDate(lastEnrolledDate.getDate() - index - 1);
   const lastEnrolled = lastEnrolledDate.toISOString();
-  const iteratedData = [
-    {
-      course: { bannerImgSrc, courseNumber },
-      emailSettings: { isEmailEnabled: false, hasOptedOutOfEmail: false },
-      programs: { relatedPrograms },
-      courseProvider: providers.edx,
-    },
-    {
-      course: { bannerImgSrc, courseNumber },
-      emailSettings: { isEmailEnabled: true, hasOptedOutOfEmail: false },
-      courseProvider: providers.mit,
-      programs: { relatedPrograms: [relatedPrograms[0]] },
-    },
-    {
-      course: { bannerImgSrc, courseNumber },
-      emailSettings: { isEmailEnabled: true, hasOptedOutOfEmail: true },
-      courseProvider: null,
-      programs: { relatedPrograms: [] },
-    },
-  ];
   const out = {
     gradeData: { isPassing: true },
     entitlement: null,
@@ -690,15 +702,17 @@ export const compileCourseRunData = ({ courseName, ...data }, index) => {
     enrollment: genEnrollmentData({ lastEnrolled, ...data.enrollment }),
     courseRun: genCourseRunData({
       ...data.courseRun,
-      ...iteratedData.emailSettings,
+      ...getOption(emailOptions, index),
       courseId,
     }),
-    courseProvider: iteratedData[providerIndex].courseProvider,
     course: {
       courseName,
-      ...iteratedData[providerIndex].course,
+      bannerImgSrc,
+      courseNumber,
+      socialShareUrl,
     },
-    programs: iteratedData[providerIndex].programs,
+    courseProvider: getOption(providerOptions, index),
+    programs: getOption(programsOptions, index),
   };
   if (out.enrollment.canUpgrade) {
     out.courseRun.upgradeUrl = 'test-upgrade-url';
@@ -708,24 +722,7 @@ export const compileCourseRunData = ({ courseName, ...data }, index) => {
 
 export const compileEntitlementData = ({ courseName, ...data }, index) => {
   const courseNumber = genCourseNumber(100 + index);
-  const providerIndex = index % 3;
-  const iteratedData = [
-    {
-      courseProvider: providers.edx,
-      course: { courseNumber, bannerImgSrc },
-      programs: { relatedPrograms },
-    },
-    {
-      courseProvider: providers.mit,
-      course: { courseNumber, bannerImgSrc },
-      programs: { relatedPrograms: [relatedPrograms[0]] },
-    },
-    {
-      courseProvider: null,
-      course: { courseNumber, bannerImgSrc },
-      programs: { relatedPrograms: [] },
-    },
-  ];
+  const socialShareUrl = genCourseShareUrl(100 + index);
   return {
     enrollment: genEnrollmentData({
       isEnrolled: false,
@@ -743,12 +740,14 @@ export const compileEntitlementData = ({ courseName, ...data }, index) => {
     certificate: null,
     courseRun: null,
     ...data,
-    courseProvider: iteratedData[providerIndex],
     course: {
       courseName,
-      ...iteratedData[providerIndex].course,
+      courseNumber,
+      bannerImgSrc,
+      socialShareUrl,
     },
-    programs: iteratedData[providerIndex].programs,
+    courseProvider: getOption(providerOptions, index),
+    programs: getOption(programsOptions, index),
   };
 };
 

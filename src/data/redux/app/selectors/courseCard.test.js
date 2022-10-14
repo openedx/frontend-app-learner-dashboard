@@ -108,6 +108,7 @@ describe('courseCard selectors module', () => {
           courseNumber: 'test-course-number',
           courseName: 'test-course-name',
           website: 'test-website',
+          socialShareUrl: 'test-social-share-url',
         });
       });
       it('returns a card selector based on course cardSimpleSelector', () => {
@@ -116,8 +117,11 @@ describe('courseCard selectors module', () => {
       it('passes bannerImgSrc, converted to a baseAppUrl', () => {
         expect(selected.bannerImgSrc).toEqual(baseAppUrl(testData.bannerImgSrc));
       });
-      it('passes [courseNumber, courseName, website]', () => {
+      it('passes [courseNumber, courseName, website, socialShareUrl]', () => {
         expect(selected.courseNumber).toEqual(testData.courseNumber);
+        expect(selected.courseName).toEqual(testData.courseName);
+        expect(selected.website).toEqual(testData.website);
+        expect(selected.socialShareUrl).toEqual(testData.socialShareUrl);
       });
     });
     describe('courseProvider selector', () => {

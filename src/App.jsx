@@ -7,7 +7,8 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
 import Footer from '@edx/frontend-component-footer';
 
-import { thunkActions } from 'data/redux';
+import store from 'data/store';
+import { selectors, actions, thunkActions } from 'data/redux';
 import fakeData from 'data/services/lms/fakeData/courses';
 import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
 import Dashboard from 'containers/Dashboard';
@@ -34,6 +35,10 @@ export const App = () => {
           ],
         }));
       };
+      window.store = store;
+      window.selectors = selectors;
+      window.actions = actions;
+      window.thunkActions = thunkActions;
     }
   });
   return (

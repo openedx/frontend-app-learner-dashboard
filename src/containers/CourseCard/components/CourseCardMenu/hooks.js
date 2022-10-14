@@ -24,14 +24,3 @@ export const useEmailSettings = () => {
     isVisible,
   };
 };
-
-export const useCardMenuData = () => {
-  const unenrollModal = module.useUnenrollData();
-  const emailSettingsModal = module.useEmailSettings();
-  return {
-    emailSettingsModal,
-    unenrollModal,
-  };
-};
-
-export default useCardMenuData;

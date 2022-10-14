@@ -19,7 +19,7 @@ import * as fakeData from 'data/services/lms/fakeData/courses';
 import { RequestKeys, RequestStates } from 'data/constants/requests';
 import reducers from 'data/redux';
 import messages from 'i18n';
-import { selectors } from 'data/redux';
+import { selectors, thunkActions } from 'data/redux';
 import { cardId as genCardId } from 'data/redux/app/reducer';
 
 import App from 'App';
@@ -134,10 +134,19 @@ const waitForRequestStatus = (key, status) => waitForEqual(
 );
 
 const loadApp = async (courses) => {
-  initCourses.mockReturnValue(courses);
+  initCourses.mockReturnValue(courses.map(compileCourseRunData));
   await renderEl();
   inspector = new Inspector(el);
+  await waitForRequestStatus(RequestKeys.initialize, RequestStates.pending);
+  resolveFns.init.success();
+  await waitForRequestStatus(RequestKeys.initialize, RequestStates.completed);
 }
+
+const courseNames = [
+  'course-name-1',
+  'course-name-2',
+  'course-name-3',
+];
 
 describe('ESG app integration tests', () => {
   beforeEach(() => {
@@ -145,35 +154,43 @@ describe('ESG app integration tests', () => {
   });
 
   test('initialization', async () => {
-    await loadApp([compileCourseRunData({}, 0)]);
-    await waitForRequestStatus(RequestKeys.initialize, RequestStates.pending);
-    resolveFns.init.success();
-    await waitForRequestStatus(RequestKeys.initialize, RequestStates.completed);
+    await loadApp([{ courseName: courseNames[0] }]);
   });
 
   describe('course cards', () => {
-    const loadCourses = async (courses, tests) => {
-      await loadApp(courses);
-      resolveFns.init.success();
-      await waitForRequestStatus(RequestKeys.initialize, RequestStates.completed);
+    const courseNames = [
+      'course-name-0',
+      'course-name-1',
+      'course-name-2',
+    ];
+    const testCourse = async (tests) => {
       await getState();
       const cards = inspector.get.courseCards;
-      courses.forEach((course, index) => {
-        const card = cards.at(index);
-        const cardId = genCardId(index);
-        const cardDetails = inspector.get.card.details(card);
-        const { courseName } = selectors.app.courseCard.course(state, cardId);
-        inspector.verifyText(inspector.get.card.header(card), courseName);
-        if (tests.length > index) {
-          tests[index]({ cardId, cardDetails });
-        }
-      });
+      const index = 0;
+      const card = cards.at(index);
+      const cardId = genCardId(index);
+      const cardDetails = inspector.get.card.details(card);
+      const courseData = selectors.app.courseCard.course(state, cardId);
+      const { courseName } = selectors.app.courseCard.course(state, cardId);
+      inspector.verifyText(inspector.get.card.header(card), courseName);
+      if (tests.length > index) {
+        tests[index]({ cardId, cardDetails });
+      }
     }
+
+    const loadCourse = async (course) => {
+      initCourses.mockReturnValue([course].map(compileCourseRunData));
+      store.dispatch(thunkActions.app.initialize());
+      await waitForRequestStatus(RequestKeys.initialize, RequestStates.pending);
+      resolveFns.init.success();
+      await waitForRequestStatus(RequestKeys.initialize, RequestStates.completed);
+    };
 
     test('audit', async () => {
       const courses = [
-        {}, // audit, course run not started
+        { courseName: courseNames[0] }, // audit, course run not started
         {
+          courseName: courseNames[1],
           enrollment: {
             coursewareAccess: {
               isTooEarly: true,
@@ -183,6 +200,7 @@ describe('ESG app integration tests', () => {
           },
         }, // audit, course run not started, is too early
         {
+          courseName: courseNames[2],
           courseRun: {
             courseRun: { isStarted: true },
           },
@@ -195,7 +213,8 @@ describe('ESG app integration tests', () => {
         }, // audit, course run and learner started, access expired, cannot upgrade
       ];
       const { formatDate } = useIntl();
-      await loadCourses(courses.map(compileCourseRunData), [
+      await loadApp([courses[0]]);
+      await testCourse([
         ({ cardId, cardDetails }) => {
           const enrollment = selectors.app.courseCard.enrollment(state, cardId);
           const courseRun = selectors.app.courseCard.courseRun(state, cardId);
@@ -212,6 +231,9 @@ describe('ESG app integration tests', () => {
             }),
           ].forEach(value => inspector.verifyTextIncludes(cardDetails, value));
         },
+      ]);
+      await loadCourse(courses[1]);
+      await testCourse([
         ({ cardId, cardDetails }) => {
           const enrollment = selectors.app.courseCard.enrollment(state, cardId);
           const courseRun = selectors.app.courseCard.courseRun(state, cardId);
