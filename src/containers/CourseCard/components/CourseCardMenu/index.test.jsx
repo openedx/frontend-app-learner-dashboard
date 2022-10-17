@@ -59,7 +59,7 @@ describe('CourseCardMenu', () => {
   test('snapshot', () => {
     wrapper = shallow(<CourseCardMenu {...props} />);
     expect(wrapper).toMatchSnapshot();
-    expect(wrapper.find('FacebookShareButton').length).toEqual(1);
+    // expect(wrapper.find('FacebookShareButton').length).toEqual(1);
     expect(wrapper.find('TwitterShareButton').length).toEqual(1);
     expect(wrapper.find({
       'data-testid': 'unenrollModalToggle',
@@ -79,6 +79,7 @@ describe('CourseCardMenu', () => {
       'data-testid': 'emailSettingsModalToggle',
     }).props().disabled).toEqual(true);
   });
+  /*
   test('facebook share disabled', () => {
     appHooks.useCardSocialSettingsData.mockReturnValueOnce({
       ...defaultSocialShare,
@@ -88,6 +89,7 @@ describe('CourseCardMenu', () => {
     expect(wrapper).toMatchSnapshot();
     expect(wrapper.find('FacebookShareButton').length).toEqual(0);
   });
+  */
   test('twitter share disabled', () => {
     appHooks.useCardSocialSettingsData.mockReturnValueOnce({
       ...defaultSocialShare,

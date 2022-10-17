@@ -17,7 +17,10 @@ export const CourseCardMenu = ({ cardId }) => {
   const emailSettingsModal = useEmailSettings();
   const unenrollModal = useUnenrollData();
   const { courseName } = appHooks.useCardCourseData(cardId);
-  const { facebook, twitter } = appHooks.useCardSocialSettingsData(cardId);
+  const {
+    // facebook,
+    twitter,
+  } = appHooks.useCardSocialSettingsData(cardId);
   const { isMasquerading } = appHooks.useMasqueradeData();
   const { formatMessage } = useIntl();
 
@@ -47,19 +50,21 @@ export const CourseCardMenu = ({ cardId }) => {
           >
             {formatMessage(messages.emailSettings)}
           </Dropdown.Item>
-          {facebook.isEnabled && (
-            <Dropdown.Item>
-              <ReactShare.FacebookShareButton
-                url={facebook.shareUrl}
-                quote={formatMessage(messages.shareQuote, {
-                  courseName,
-                  socialBrand: facebook.socialBrand,
-                })}
-              >
-                {formatMessage(messages.shareToFacebook)}
-              </ReactShare.FacebookShareButton>
-            </Dropdown.Item>
-          )}
+          {/* Disabled pending PM decision on missing quote param in updated FB api.
+            {facebook.isEnabled && (
+              <Dropdown.Item>
+                <ReactShare.FacebookShareButton
+                  url={facebook.shareUrl}
+                  quote={formatMessage(messages.shareQuote, {
+                    courseName,
+                    socialBrand: facebook.socialBrand,
+                  })}
+                >
+                  {formatMessage(messages.shareToFacebook)}
+                </ReactShare.FacebookShareButton>
+              </Dropdown.Item>
+            )}
+          */}
           {twitter.isEnabled && (
             <Dropdown.Item>
               <ReactShare.TwitterShareButton
