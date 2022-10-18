@@ -2,7 +2,7 @@
 
 exports[`MasqueradeBar snapshot can masquerade 1`] = `
 <Form
-  className="masquerade-bar"
+  className="masquerade-bar shadow-sm mb-2"
 >
   <FormLabel
     className="masquerade-form-label"
@@ -39,7 +39,7 @@ exports[`MasqueradeBar snapshot can masquerade 1`] = `
 
 exports[`MasqueradeBar snapshot can masquerade with input 1`] = `
 <Form
-  className="masquerade-bar"
+  className="masquerade-bar shadow-sm mb-2"
 >
   <FormLabel
     className="masquerade-form-label"
@@ -78,7 +78,7 @@ exports[`MasqueradeBar snapshot cannot masquerade 1`] = `""`;
 
 exports[`MasqueradeBar snapshot is masquerading failed with error 1`] = `
 <Form
-  className="masquerade-bar"
+  className="masquerade-bar shadow-sm mb-2"
 >
   <FormLabel
     className="masquerade-form-label"
@@ -119,7 +119,7 @@ exports[`MasqueradeBar snapshot is masquerading failed with error 1`] = `
 
 exports[`MasqueradeBar snapshot is masquerading pending 1`] = `
 <Form
-  className="masquerade-bar"
+  className="masquerade-bar shadow-sm mb-2"
 >
   <FormLabel
     className="masquerade-form-label"
@@ -156,7 +156,7 @@ exports[`MasqueradeBar snapshot is masquerading pending 1`] = `
 
 exports[`MasqueradeBar snapshot is masquerading with input 1`] = `
 <Form
-  className="masquerade-bar"
+  className="masquerade-bar shadow-sm mb-2"
 >
   <FormLabel
     className="masquerade-form-label"

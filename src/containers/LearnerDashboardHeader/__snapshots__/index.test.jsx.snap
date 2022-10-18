@@ -36,9 +36,6 @@ exports[`LearnerDashboardHeader snapshots with collapsed 1`] = `
     </header>
   </div>
   <MasqueradeBar />
-  <hr
-    className="mt-0"
-  />
 </Fragment>
 `;
 
@@ -77,8 +74,5 @@ exports[`LearnerDashboardHeader snapshots without collapsed 1`] = `
     />
   </div>
   <MasqueradeBar />
-  <hr
-    className="mt-0"
-  />
 </Fragment>
 `;
