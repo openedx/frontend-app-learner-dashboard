@@ -45,6 +45,7 @@ jest.mock('./requests', () => ({
   unenrollFromCourse: jest.fn((args) => ({ unenrollFromCourse: args })),
   masqueradeAs: jest.fn((args) => ({ masqueradeAs: args })),
   clearMasquerade: jest.fn((args) => ({ clearMasquerade: args })),
+  updateEmailSettings: jest.fn((args) => ({ updateEmailSettings: args })),
 }));
 
 const dispatch = jest.fn(action => action);
@@ -202,6 +203,16 @@ describe('app thunk actions', () => {
       module.clearMasquerade()(dispatch);
       expect(dispatch).toHaveBeenCalledWith(requests.clearMasquerade());
       expect(dispatch).toHaveBeenCalledWith(mockInitialize());
+    });
+  });
+  describe('update email settings', () => {
+    it('dispatches updateEmailSettings request action', () => {
+      module.updateEmailSettings(cardId, testString)(dispatch, getState);
+      expect(selectors.app.courseCard.courseRun).toHaveBeenCalledWith(testState, cardId);
+      expect(dispatch).toHaveBeenCalledWith(requests.updateEmailSettings({
+        courseId,
+        enable: testString,
+      }));
     });
   });
 });

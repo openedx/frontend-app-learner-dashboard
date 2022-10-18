@@ -89,6 +89,14 @@ export const clearMasquerade = () => (dispatch) => {
   dispatch(module.initialize());
 };
 
+export const updateEmailSettings = (cardId, enable) => (dispatch, getState) => {
+  const { courseId } = selectors.app.courseCard.courseRun(getState(), cardId);
+  dispatch(requests.updateEmailSettings({
+    courseId,
+    enable,
+  }));
+};
+
 export default StrictDict({
   loadData,
   initialize,
@@ -100,4 +108,5 @@ export default StrictDict({
   unenrollFromCourse,
   masqueradeAs,
   clearMasquerade,
+  updateEmailSettings,
 });

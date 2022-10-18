@@ -29,10 +29,10 @@ const deleteEntitlementEnrollment = ({ uuid }) => client().delete(stringifyUrl(
   { [apiKeys.courseRunId]: null },
 ));
 
-const updateEmailSettings = ({ courseId, enable }) => post(stringifyUrl(
-  urls.updateEmailSettings,
+const updateEmailSettings = ({ courseId, enable }) => post(
+  stringifyUrl(urls.updateEmailSettings),
   { [apiKeys.courseId]: courseId, ...(enable && enableEmailsAction) },
-));
+);
 
 const unenrollFromCourse = ({ courseId }) => post(stringifyUrl(urls.courseUnenroll), {
   [apiKeys.courseId]: courseId,
