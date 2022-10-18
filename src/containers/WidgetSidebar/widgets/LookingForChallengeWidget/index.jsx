@@ -3,6 +3,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { Card, Hyperlink, Icon } from '@edx/paragon';
 import { ArrowForward } from '@edx/paragon/icons';
 
+import { hooks } from 'data/redux';
 import moreCoursesSVG from 'assets/more-courses-sidewidget.svg';
 
 import messages from './messages';
@@ -12,6 +13,7 @@ export const arrowIcon = (<Icon className="mx-1" src={ArrowForward} />);
 
 export const LookingForChallengeWidget = () => {
   const { formatMessage } = useIntl();
+  const { courseSearchUrl } = hooks.usePlatformSettingsData();
   return (
     <Card orientation="horizontal" id="looking-for-challenge-widget">
       <Card.ImageCap
@@ -23,7 +25,7 @@ export const LookingForChallengeWidget = () => {
           {formatMessage(messages.lookingForChallengePrompt)}
         </h4>
         <h5>
-          <Hyperlink variant="brand" destination="#" className="d-flex align-items-center">
+          <Hyperlink variant="brand" destination={courseSearchUrl} className="d-flex align-items-center">
             {formatMessage(messages.findCoursesButton, { arrow: arrowIcon })}
           </Hyperlink>
         </h5>

@@ -7,6 +7,7 @@ import { Button, Image } from '@edx/paragon';
 
 import topBanner from 'assets/top_stripe.svg';
 import MasqueradeBar from 'containers/MasqueradeBar';
+import urls from 'data/services/lms/urls';
 
 import AuthenticatedUserDropdown from './AuthenticatedUserDropdown';
 import GreetingBanner from './GreetingBanner';
@@ -15,6 +16,8 @@ import ConfirmEmailBanner from './ConfirmEmailBanner';
 import { useIsCollapsed } from './hooks';
 import messages from './messages';
 import './index.scss';
+
+const { programsUrl } = urls;
 
 export const UserMenu = () => {
   const { authenticatedUser } = useContext(AppContext);
@@ -35,7 +38,7 @@ export const LearnerDashboardHeader = () => {
         <header className="learner-dashboard-header">
           <div className="d-flex">
             {(!isCollapsed) && (
-              <Button variant="inverse-tertiary" iconBefore={Program}>
+              <Button as="a" href={programsUrl} variant="inverse-tertiary" iconBefore={Program}>
                 {formatMessage(messages.switchToProgram)}
               </Button>
             )}

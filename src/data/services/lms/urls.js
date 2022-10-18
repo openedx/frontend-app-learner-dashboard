@@ -3,10 +3,10 @@ import { configuration } from 'config';
 
 const baseUrl = `${configuration.LMS_BASE_URL}`;
 
-const api = `${baseUrl}/api/`;
+const api = `${baseUrl}/api`;
 
 // const init = `${api}learner_home/mock/init`; // mock endpoint for testing
-const init = `${api}learner_home/init`;
+const init = `${api}/learner_home/init`;
 
 const courseUnenroll = `${baseUrl}/change_enrollment`;
 const updateEmailSettings = `${api}/change_email_settings`;
@@ -14,6 +14,9 @@ const entitlementEnrollment = (uuid) => `${api}/entitlements/v1/entitlements/${u
 
 const baseAppUrl = (url) => baseUrl + url;
 const learningMfeUrl = (url) => configuration.LEARNING_MICROFRONTEND_URL + url;
+
+// static view url
+const programsUrl = baseAppUrl('/dashboard/programs');
 
 export default StrictDict({
   api,
@@ -23,4 +26,5 @@ export default StrictDict({
   entitlementEnrollment,
   baseAppUrl,
   learningMfeUrl,
+  programsUrl,
 });
