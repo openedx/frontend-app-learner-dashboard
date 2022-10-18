@@ -1,5 +1,5 @@
 import { MockUseState } from 'testUtils';
-import { hooks as appHooks } from 'data/redux';
+import { hooks as appHooks, thunkActions } from 'data/redux';
 
 import * as hooks from './hooks';
 
@@ -7,10 +7,16 @@ jest.mock('data/redux', () => ({
   hooks: {
     useCardEnrollmentData: jest.fn(),
   },
+  thunkActions: {
+    app: {
+      updateEmailSettings: jest.fn(),
+    },
+  },
 }));
 
 const cardId = 'my-test-course-number';
 const closeModal = jest.fn();
+const dispatch = jest.fn();
 
 const state = new MockUseState(hooks);
 
@@ -26,7 +32,7 @@ describe('EmailSettingsModal hooks', () => {
     beforeEach(() => {
       state.mock();
       appHooks.useCardEnrollmentData.mockReturnValueOnce({ isEmailEnabled: true });
-      out = hooks.useEmailData({ closeModal, cardId });
+      out = hooks.useEmailData({ closeModal, cardId, dispatch });
     });
     afterEach(state.restore);
 
@@ -53,8 +59,14 @@ describe('EmailSettingsModal hooks', () => {
       });
     });
     describe('save', () => {
-      it('returns a callback', () => {
-        expect(out.save.useCallback.prereqs).toEqual([closeModal]);
+      it('calls dispatch with thunkActions.app.updateEmailSettings', () => {
+        out.save.useCallback.cb();
+        expect(thunkActions.app.updateEmailSettings).toHaveBeenCalledWith(cardId, out.toggleValue);
+        expect(dispatch).toHaveBeenCalledWith(thunkActions.app.updateEmailSettings(cardId, out.toggleValue));
+      });
+      it('calls closeModal', () => {
+        out.save.useCallback.cb();
+        expect(closeModal).toHaveBeenCalled();
       });
     });
   });

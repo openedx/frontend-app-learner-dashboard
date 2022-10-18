@@ -63,10 +63,8 @@ describe('lms api methods', () => {
         expect(
           api.updateEmailSettings({ courseId: testCourseId, enable: false }),
         ).toEqual(
-          utils.post(utils.stringifyUrl(
-            urls.updateEmailSettings,
-            { [apiKeys.courseId]: testCourseId },
-          )),
+          utils.post(utils.stringifyUrl(urls.updateEmailSettings),
+            { [apiKeys.courseId]: testCourseId }),
         );
       });
     });
@@ -75,10 +73,8 @@ describe('lms api methods', () => {
         expect(
           api.updateEmailSettings({ courseId: testCourseId, enable: true }),
         ).toEqual(
-          utils.post(utils.stringifyUrl(
-            urls.updateEmailSettings,
-            { [apiKeys.courseId]: testCourseId, ...enableEmailsAction },
-          )),
+          utils.post(utils.stringifyUrl(urls.updateEmailSettings),
+            { [apiKeys.courseId]: testCourseId, ...enableEmailsAction }),
         );
       });
     });

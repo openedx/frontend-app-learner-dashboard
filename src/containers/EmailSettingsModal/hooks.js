@@ -1,8 +1,7 @@
 import React from 'react';
 
 import { StrictDict } from 'utils';
-// import { thunkActions } from 'data/redux';
-import { hooks as appHooks } from 'data/redux';
+import { hooks as appHooks, thunkActions } from 'data/redux';
 
 import * as module from './hooks';
 
@@ -13,7 +12,7 @@ export const state = StrictDict({
 export const useEmailData = ({
   closeModal,
   cardId,
-  // dispatch,
+  dispatch,
 }) => {
   const { isEmailEnabled } = appHooks.useCardEnrollmentData(cardId);
   const [toggleValue, setToggleValue] = module.state.toggle(isEmailEnabled);
@@ -23,9 +22,10 @@ export const useEmailData = ({
   );
   const save = React.useCallback(
     () => {
+      dispatch(thunkActions.app.updateEmailSettings(cardId, toggleValue));
       closeModal();
     },
-    [closeModal],
+    [cardId, closeModal, dispatch, toggleValue],
   );
 
   return {
