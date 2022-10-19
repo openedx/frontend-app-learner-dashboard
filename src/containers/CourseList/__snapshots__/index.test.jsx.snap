@@ -17,16 +17,15 @@ exports[`CourseList snapshots with filters 1`] = `
   className="course-list-container"
 >
   <div
-    id="course-list-heading-container"
+    className="course-list-heading-container"
   >
     <h2
-      className="my-3"
+      className="course-list-title"
     >
       My Courses
     </h2>
     <div
-      className="text-right"
-      id="course-filter-controls-container"
+      className="course-filter-controls-container"
     >
       <CourseFilterControls
         abitary="filter"
@@ -51,16 +50,15 @@ exports[`CourseList snapshots with multiple courses and pages 1`] = `
   className="course-list-container"
 >
   <div
-    id="course-list-heading-container"
+    className="course-list-heading-container"
   >
     <h2
-      className="my-3"
+      className="course-list-title"
     >
       My Courses
     </h2>
     <div
-      className="text-right"
-      id="course-filter-controls-container"
+      className="course-filter-controls-container"
     >
       <CourseFilterControls />
     </div>
@@ -85,7 +83,51 @@ exports[`CourseList snapshots with multiple courses and pages 1`] = `
       onPageSelect={[MockFunction setPageNumber]}
       pageCount={3}
       paginationLabel="Course List"
-      variant="secondary"
+      variant="reduced"
+    />
+  </div>
+</div>
+`;
+
+exports[`CourseList snapshots with multiple courses on mobile 1`] = `
+<div
+  className="course-list-container"
+>
+  <div
+    className="course-list-heading-container"
+  >
+    <h2
+      className="course-list-title"
+    >
+      My Courses
+    </h2>
+    <div
+      className="course-filter-controls-container"
+    >
+      <CourseFilterControls />
+    </div>
+  </div>
+  <div
+    className="d-flex flex-column flex-grow-1"
+  >
+    <CourseCard
+      cardId="foo"
+      key="foo"
+    />
+    <CourseCard
+      cardId="bar"
+      key="bar"
+    />
+    <CourseCard
+      cardId="baz"
+      key="baz"
+    />
+    <Pagination
+      className="mx-auto"
+      onPageSelect={[MockFunction setPageNumber]}
+      pageCount={3}
+      paginationLabel="Course List"
+      variant="reduced"
     />
   </div>
 </div>
@@ -96,16 +138,15 @@ exports[`CourseList snapshots with no filters 1`] = `
   className="course-list-container"
 >
   <div
-    id="course-list-heading-container"
+    className="course-list-heading-container"
   >
     <h2
-      className="my-3"
+      className="course-list-title"
     >
       My Courses
     </h2>
     <div
-      className="text-right"
-      id="course-filter-controls-container"
+      className="course-filter-controls-container"
     >
       <CourseFilterControls />
     </div>

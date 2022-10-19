@@ -20,7 +20,7 @@ export const CourseCardContent = ({ cardId, orientation }) => {
   const { homeUrl } = appHooks.useCardCourseRunData(cardId);
   return (
     <>
-      <a className="pgn__card-wrapper-image-cap horizontal" href={homeUrl}>
+      <a className={`pgn__card-wrapper-image-cap ${orientation}`} href={homeUrl}>
         <img
           className="pgn__card-image-cap"
           src={bannerImgSrc}

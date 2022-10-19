@@ -9,6 +9,8 @@ import {
 } from 'containers/CourseFilterControls';
 import CourseCard from 'containers/CourseCard';
 
+import { isDesktopSize } from 'data/responsive';
+
 import { useCourseListData } from './hooks';
 
 import messages from './messages';
@@ -25,15 +27,16 @@ export const CourseList = () => {
     visibleList,
     initIsPending,
   } = useCourseListData();
+  const isExpand = isDesktopSize();
   return initIsPending ? (
     <div className="course-list-loading">
       <Spinner animation="border" className="mie-3" screenReaderText="loading" />
     </div>
   ) : (
     <div className="course-list-container">
-      <div id="course-list-heading-container">
-        <h2 className="my-3">{formatMessage(messages.myCourses)}</h2>
-        <div id="course-filter-controls-container" className="text-right">
+      <div className="course-list-heading-container">
+        <h2 className="course-list-title">{formatMessage(messages.myCourses)}</h2>
+        <div className="course-filter-controls-container">
           <CourseFilterControls {...filterOptions} />
         </div>
       </div>
@@ -48,7 +51,7 @@ export const CourseList = () => {
         ))}
         {numPages > 1 && (
           <Pagination
-            variant="secondary"
+            variant={isExpand ? 'secondary' : 'reduced'}
             paginationLabel="Course List"
             className="mx-auto"
             pageCount={numPages}

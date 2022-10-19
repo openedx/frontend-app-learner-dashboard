@@ -8,11 +8,11 @@ import {
   Icon,
   ModalPopup,
   Sheet,
-  breakpoints,
-  useWindowSize,
   ModalCloseButton,
 } from '@edx/paragon';
 import { Close, Tune } from '@edx/paragon/icons';
+
+import { isMobileSize } from 'data/responsive';
 
 import FilterForm from './components/FilterForm';
 import SortForm from './components/SortForm';
@@ -40,8 +40,7 @@ export const CourseFilterControls = ({
     setFilters,
     setSortBy,
   });
-  const { width } = useWindowSize();
-  const isMobile = width < breakpoints.small.minWidth;
+  const isMobile = isMobileSize();
 
   return (
     <div id="course-filter-controls">

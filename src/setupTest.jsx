@@ -214,3 +214,9 @@ jest.mock('hooks', () => ({
   ...jest.requireActual('hooks'),
   nullMethod: jest.fn().mockName('hooks.nullMethod'),
 }));
+
+jest.mock('data/responsive', () => ({
+  isDesktopSize: jest.fn().mockName('responsive.isDesktopSize'),
+  isIpadSize: jest.fn().mockName('responsive.isIpadSize'),
+  isMobileSize: jest.fn().mockName('responsive.isMobileSize'),
+}));

@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
 
-import { breakpoints, useWindowSize } from '@edx/paragon';
+import { isMobileSize } from 'data/responsive';
 import CourseFilterControls from './CourseFilterControls';
 import useCourseFilterControlsData from './hooks';
 
@@ -32,12 +32,12 @@ describe('CourseFilterControls', () => {
 
   describe('snapshot', () => {
     test('is mobile', () => {
-      useWindowSize.mockReturnValueOnce({ width: breakpoints.small.minWidth - 1 });
+      isMobileSize.mockReturnValue(true);
       const wrapper = shallow(<CourseFilterControls {...props} />);
       expect(wrapper).toMatchSnapshot();
     });
     test('is not mobile', () => {
-      useWindowSize.mockReturnValueOnce({ width: breakpoints.small.minWidth });
+      isMobileSize.mockReturnValue(false);
       const wrapper = shallow(<CourseFilterControls {...props} />);
       expect(wrapper).toMatchSnapshot();
     });

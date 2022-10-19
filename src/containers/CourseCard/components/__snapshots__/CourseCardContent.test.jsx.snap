@@ -54,7 +54,7 @@ exports[`CourseCardContent snapshot orientation horizontal 1`] = `
 exports[`CourseCardContent snapshot orientation vertical 1`] = `
 <Fragment>
   <a
-    className="pgn__card-wrapper-image-cap horizontal"
+    className="pgn__card-wrapper-image-cap vertical"
     href="test-home-url"
   >
     <img

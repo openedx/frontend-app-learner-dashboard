@@ -1,8 +1,8 @@
 import { shallow } from 'enzyme';
 
 import { hooks as appHooks } from 'data/redux';
+import { isDesktopSize } from 'data/responsive';
 import { AuthenticatedUserDropdown } from './AuthenticatedUserDropdown';
-import { useIsCollapsed } from './hooks';
 
 jest.mock('@edx/frontend-platform/react', () => ({
   AppContext: {
@@ -15,9 +15,6 @@ jest.mock('data/redux', () => ({
   hooks: {
     useEnterpriseDashboardData: jest.fn(),
   },
-}));
-jest.mock('containers/LearnerDashboardHeader/hooks', () => ({
-  useIsCollapsed: jest.fn(),
 }));
 
 describe('AuthenticatedUserDropdown', () => {
@@ -32,13 +29,13 @@ describe('AuthenticatedUserDropdown', () => {
   describe('snapshots', () => {
     test('with enterprise dashboard', () => {
       appHooks.useEnterpriseDashboardData.mockReturnValueOnce(defaultDashboardData);
-      useIsCollapsed.mockReturnValueOnce(true);
+      isDesktopSize.mockReturnValueOnce(false);
       const wrapper = shallow(<AuthenticatedUserDropdown {...props} />);
       expect(wrapper).toMatchSnapshot();
     });
     test('without enterprise dashboard and expanded', () => {
       appHooks.useEnterpriseDashboardData.mockReturnValueOnce(null);
-      useIsCollapsed.mockReturnValueOnce(false);
+      isDesktopSize.mockReturnValueOnce(true);
       const wrapper = shallow(<AuthenticatedUserDropdown {...props} />);
       expect(wrapper).toMatchSnapshot();
     });

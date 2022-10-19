@@ -1,11 +1,7 @@
 import { shallow } from 'enzyme';
 
+import { isDesktopSize } from 'data/responsive';
 import CourseCardLayout from './CourseCardLayout';
-import { useIsCollapsed } from '../hooks';
-
-jest.mock('../hooks', () => ({
-  useIsCollapsed: jest.fn(),
-}));
 
 jest.mock('./CourseCardBanners', () => 'CourseCardBanners');
 jest.mock('./CourseCardContent', () => 'CourseCardContent');
@@ -16,12 +12,12 @@ describe('CourseCardLayout', () => {
   };
   describe('snapshot', () => {
     test('is collapsed', () => {
-      useIsCollapsed.mockReturnValue(true);
+      isDesktopSize.mockReturnValue(false);
       const wrapper = shallow(<CourseCardLayout {...props} />);
       expect(wrapper).toMatchSnapshot();
     });
     test('is not collapsed', () => {
-      useIsCollapsed.mockReturnValue(false);
+      isDesktopSize.mockReturnValue(true);
       const wrapper = shallow(<CourseCardLayout {...props} />);
       expect(wrapper).toMatchSnapshot();
     });

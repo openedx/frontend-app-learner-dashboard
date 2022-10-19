@@ -45,7 +45,14 @@ export const Dashboard = () => {
               {showSelectSessionModal && (<SelectSessionModal />)}
               <CourseList />
             </Col>
-            <Col md={12} xl={4} className="p-0 pr-4 pl-1">
+            <Col
+              xs={{ span: 12, offset: 0 }}
+              sm={{ span: 8, offset: 2 }}
+              md={{ span: 12, offset: 0 }}
+              lg={{ span: 10, offset: 1 }}
+              xl={{ span: 4, offset: 0 }}
+              className="p-0 pr-4 pl-1"
+            >
               <WidgetSidebar />
             </Col>
           </Row>

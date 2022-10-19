@@ -1,5 +1,7 @@
 import { shallow } from 'enzyme';
 
+import { isDesktopSize } from 'data/responsive';
+
 import CourseList from '.';
 import { useCourseListData } from './hooks';
 
@@ -49,6 +51,14 @@ describe('CourseList', () => {
       expect(wrapper).toMatchSnapshot();
     });
     test('with multiple courses and pages', () => {
+      const wrapper = createWrapper({
+        visibleList: [{ cardId: 'foo' }, { cardId: 'bar' }, { cardId: 'baz' }],
+        numPages: 3,
+      });
+      expect(wrapper).toMatchSnapshot();
+    });
+    test('with multiple courses on mobile', () => {
+      isDesktopSize.mockReturnValue(false);
       const wrapper = createWrapper({
         visibleList: [{ cardId: 'foo' }, { cardId: 'bar' }, { cardId: 'baz' }],
         numPages: 3,

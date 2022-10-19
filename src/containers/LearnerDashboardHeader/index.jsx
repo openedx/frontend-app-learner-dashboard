@@ -8,12 +8,12 @@ import { Button, Image } from '@edx/paragon';
 import topBanner from 'assets/top_stripe.svg';
 import MasqueradeBar from 'containers/MasqueradeBar';
 import urls from 'data/services/lms/urls';
+import { isDesktopSize } from 'data/responsive';
 
 import AuthenticatedUserDropdown from './AuthenticatedUserDropdown';
 import GreetingBanner from './GreetingBanner';
 import ConfirmEmailBanner from './ConfirmEmailBanner';
 
-import { useIsCollapsed } from './hooks';
 import messages from './messages';
 import './index.scss';
 
@@ -26,7 +26,7 @@ export const UserMenu = () => {
 
 export const LearnerDashboardHeader = () => {
   const { formatMessage } = useIntl();
-  const isCollapsed = useIsCollapsed();
+  const isCollapsed = !isDesktopSize();
 
   return (
     <>

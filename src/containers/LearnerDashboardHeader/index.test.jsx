@@ -1,9 +1,9 @@
 import { shallow } from 'enzyme';
 import { AppContext } from '@edx/frontend-platform/react';
 
-import LearnerDashboardHeader, { UserMenu } from '.';
+import { isDesktopSize } from 'data/responsive';
 
-import { useIsCollapsed } from './hooks';
+import LearnerDashboardHeader, { UserMenu } from '.';
 
 jest.mock('@edx/frontend-platform/react', () => ({
   AppContext: {
@@ -11,9 +11,6 @@ jest.mock('@edx/frontend-platform/react', () => ({
       username: 'test-username',
     },
   },
-}));
-jest.mock('./hooks', () => ({
-  useIsCollapsed: jest.fn(),
 }));
 jest.mock('containers/MasqueradeBar', () => 'MasqueradeBar');
 
@@ -24,12 +21,12 @@ jest.mock('./GreetingBanner', () => 'GreetingBanner');
 describe('LearnerDashboardHeader', () => {
   describe('snapshots', () => {
     test('with collapsed', () => {
-      useIsCollapsed.mockReturnValueOnce(true);
+      isDesktopSize.mockReturnValueOnce(false);
       const wrapper = shallow(<LearnerDashboardHeader />);
       expect(wrapper).toMatchSnapshot();
     });
     test('without collapsed', () => {
-      useIsCollapsed.mockReturnValueOnce(false);
+      isDesktopSize.mockReturnValueOnce(true);
       const wrapper = shallow(<LearnerDashboardHeader />);
       expect(wrapper).toMatchSnapshot();
     });

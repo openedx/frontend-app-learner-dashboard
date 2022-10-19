@@ -6,8 +6,9 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
 import { AvatarButton, Dropdown } from '@edx/paragon';
 
+import { isDesktopSize } from 'data/responsive';
 import { hooks as appHooks } from 'data/redux';
-import { useIsCollapsed } from './hooks';
+
 import messages from './messages';
 
 export const AuthenticatedUserDropdown = ({ username }) => {
@@ -15,7 +16,7 @@ export const AuthenticatedUserDropdown = ({ username }) => {
   const { authenticatedUser } = React.useContext(AppContext);
   const { profileImage } = authenticatedUser;
   const dashboard = appHooks.useEnterpriseDashboardData();
-  const isCollapsed = useIsCollapsed();
+  const isCollapsed = !isDesktopSize();
 
   return (
     <Dropdown variant={isCollapsed ? 'light' : 'dark'} className="user-dropdown">

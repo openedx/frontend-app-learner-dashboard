@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 
 import { Card } from '@edx/paragon';
 
-import { useIsCollapsed } from '../hooks';
+import { isDesktopSize } from 'data/responsive';
 import CourseCardBanners from './CourseCardBanners';
 import CourseCardContent from './CourseCardContent';
 
 export const CourseCardLayout = ({
   cardId,
 }) => {
-  const isCollapsed = useIsCollapsed();
+  const isCollapsed = !isDesktopSize();
   return (
     <div className="mb-4.5 course-card" data-testid="CourseCard">
       <Card orientation={isCollapsed ? 'vertical' : 'horizontal'}>

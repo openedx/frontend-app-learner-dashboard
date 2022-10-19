@@ -57,8 +57,36 @@ exports[`Dashboard snapshots there are courses, or they are still loading 1`] = 
       </Col>
       <Col
         className="p-0 pr-4 pl-1"
-        md={12}
-        xl={4}
+        lg={
+          Object {
+            "offset": 1,
+            "span": 10,
+          }
+        }
+        md={
+          Object {
+            "offset": 0,
+            "span": 12,
+          }
+        }
+        sm={
+          Object {
+            "offset": 2,
+            "span": 8,
+          }
+        }
+        xl={
+          Object {
+            "offset": 0,
+            "span": 4,
+          }
+        }
+        xs={
+          Object {
+            "offset": 0,
+            "span": 12,
+          }
+        }
       >
         <WidgetSidebar />
       </Col>
