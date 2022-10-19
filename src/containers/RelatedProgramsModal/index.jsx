@@ -31,7 +31,7 @@ export const RelatedProgramsModal = ({
       className="related-programs-modal p-4"
       data-testid="RelatedProgramsModal"
     >
-      <ModalDialog.Header className="programs-title m-0 p-0" as="h3">
+      <ModalDialog.Header className="programs-title m-0 p-0" as="h3" aria-level={2}>
         {formatMessage(messages.header)}
       </ModalDialog.Header>
       <ModalDialog.Header as="h4" className="programs-header p-0">

@@ -45,22 +45,23 @@ describe('Dashboard', () => {
   };
 
   describe('snapshots', () => {
-    test('there are courses, or they are still loading', () => {
-      const pendingNoCoursesWrapper = createWrapper({
+    test('courses still loading', () => {
+      const wrapper = createWrapper({
         hasCourses: false,
         hasAvailableDashboards: false,
         showSelectSessionModal: false,
         initIsPending: true,
       });
-      expect(pendingNoCoursesWrapper).toMatchSnapshot();
-
-      const doneLoadingWithCoursesWrapper = createWrapper({
+      expect(wrapper).toMatchSnapshot();
+    });
+    test('courses loaded', () => {
+      const wrapper = createWrapper({
         hasCourses: true,
         hasAvailableDashboards: false,
         showSelectSessionModal: false,
         initIsPending: false,
       });
-      expect(doneLoadingWithCoursesWrapper).toEqual(pendingNoCoursesWrapper);
+      expect(wrapper).toMatchSnapshot();
     });
 
     test('there are no courses', () => {

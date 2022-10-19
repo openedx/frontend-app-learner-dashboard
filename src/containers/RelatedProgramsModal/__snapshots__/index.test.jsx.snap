@@ -12,6 +12,7 @@ exports[`RelatedProgramsModal snapshot: closed 1`] = `
   title="Related Programs"
 >
   <ModalDialog.Header
+    aria-level={2}
     as="h3"
     className="programs-title m-0 p-0"
   >
@@ -95,6 +96,7 @@ exports[`RelatedProgramsModal snapshot: open 1`] = `
   title="Related Programs"
 >
   <ModalDialog.Header
+    aria-level={2}
     as="h3"
     className="programs-title m-0 p-0"
   >

@@ -1,6 +1,12 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { Container, Col, Row } from '@edx/paragon';
+import {
+  Container,
+  Col,
+  Row,
+  Spinner,
+} from '@edx/paragon';
+import { useIntl } from '@edx/frontend-platform/i18n';
 
 import {
   thunkActions,
@@ -14,6 +20,8 @@ import EmptyCourse from 'containers/EmptyCourse';
 import SelectSessionModal from 'containers/SelectSessionModal';
 import EnterpriseDashboardModal from 'containers/EnterpriseDashboardModal';
 
+import appMessages from 'messages';
+
 import './index.scss';
 
 export const Dashboard = () => {
@@ -22,6 +30,7 @@ export const Dashboard = () => {
     () => { dispatch(thunkActions.app.initialize()); },
     [dispatch],
   );
+  const { formatMessage } = useIntl();
 
   const hasCourses = appHooks.useHasCourses();
   const hasAvailableDashboards = appHooks.useHasAvailableDashboards();
@@ -30,8 +39,18 @@ export const Dashboard = () => {
 
   return (
     <div id="dashboard-container" className="d-flex flex-column p-2">
+      <h1 className="sr-only">{formatMessage(appMessages.pageTitle)}</h1>
       {hasAvailableDashboards && <EnterpriseDashboardModal />}
-      {initIsPending || (!initIsPending && hasCourses) ? (
+      {initIsPending && (
+        <div className="course-list-loading">
+          <Spinner
+            animation="border"
+            className="mie-3"
+            screenReaderText={formatMessage(appMessages.loadingSR)}
+          />
+        </div>
+      )}
+      {(!initIsPending && hasCourses) && (
         <Container fluid size="xl">
           <Row>
             <Col
@@ -50,7 +69,8 @@ export const Dashboard = () => {
             </Col>
           </Row>
         </Container>
-      ) : (<EmptyCourse />)}
+      )}
+      {(!initIsPending && !hasCourses) && (<EmptyCourse />)}
     </div>
   );
 };

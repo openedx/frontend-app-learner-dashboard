@@ -80,12 +80,6 @@ describe('CourseList hooks', () => {
         // don't show filter when list is empty.
         expect(out.showFilters).toEqual(false);
       });
-      test('initIsPending loads from useIsPendingRequest', () => {
-        expect(out.initIsPending).toEqual(false);
-        appHooks.useIsPendingRequest.mockReturnValueOnce(true);
-        out = hooks.useCourseListData();
-        expect(out.initIsPending).toEqual(true);
-      });
       describe('filterOptions', () => {
         test('sortBy and setSortBy are connected to the state value', () => {
           expect(out.filterOptions.sortBy).toEqual(testSortBy);

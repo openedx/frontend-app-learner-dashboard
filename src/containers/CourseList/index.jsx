@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { Pagination, Spinner } from '@edx/paragon';
+import { Pagination } from '@edx/paragon';
 
 import {
   ActiveCourseFilters,
@@ -23,13 +23,8 @@ export const CourseList = () => {
     numPages,
     showFilters,
     visibleList,
-    initIsPending,
   } = useCourseListData();
-  return initIsPending ? (
-    <div className="course-list-loading">
-      <Spinner animation="border" className="mie-3" screenReaderText="loading" />
-    </div>
-  ) : (
+  return (
     <div className="course-list-container">
       <div id="course-list-heading-container">
         <h2 className="my-3">{formatMessage(messages.myCourses)}</h2>

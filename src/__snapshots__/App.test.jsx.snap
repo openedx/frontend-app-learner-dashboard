@@ -2,6 +2,14 @@
 
 exports[`App router component snapshot: enabled 1`] = `
 <BrowserRouter>
+  <HelmetWrapper
+    defer={true}
+    encodeSpecialCharacters={true}
+  >
+    <title>
+      Learner Home
+    </title>
+  </HelmetWrapper>
   <div>
     <LearnerDashboardHeader />
     <main>

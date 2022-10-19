@@ -1,7 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { Helmet } from 'react-helmet';
 
+import { useIntl } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
 import Footer from '@edx/frontend-component-footer';
 
@@ -9,6 +11,7 @@ import { thunkActions } from 'data/redux';
 import fakeData from 'data/services/lms/fakeData/courses';
 import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
 import Dashboard from 'containers/Dashboard';
+import messages from './messages';
 
 import './App.scss';
 
@@ -16,6 +19,7 @@ export const App = () => {
   const dispatch = useDispatch();
   // TODO: made development-only
   const { authenticatedUser } = React.useContext(AppContext);
+  const { formatMessage } = useIntl();
   React.useEffect(() => {
     if (authenticatedUser?.administrator || process.env.NODE_ENV === 'development') {
       window.loadEmptyData = () => {
@@ -34,6 +38,9 @@ export const App = () => {
   });
   return (
     <Router>
+      <Helmet>
+        <title>{formatMessage(messages.pageTitle)}</title>
+      </Helmet>
       <div>
         <LearnerDashboardHeader />
         <main>

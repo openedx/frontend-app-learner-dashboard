@@ -31,20 +31,22 @@ export const GreetingBanner = ({ size }) => {
         { 'p-5': !isSmall, 'p-3.5': isSmall },
       )}
     >
-      <Image
-        style={{ width: isSmall ? '46px' : '148px' }}
-        className="d-block"
-        src={getConfig().LOGO_WHITE_URL}
-        alt={getConfig().SITE_NAME}
-      />
+      <a href={`${getConfig().LMS_BASE_URL}/dashboard`}>
+        <Image
+          style={{ width: isSmall ? '46px' : '148px' }}
+          className="d-block"
+          src={getConfig().LOGO_WHITE_URL}
+          alt={getConfig().SITE_NAME}
+        />
+      </a>
       <div className={`greetings-slash-container-${size} bg-brand-500`} />
       {isSmall
         ? (
-          <h5 className="text-center text-accent-b">
+          <h5 role="presentation" className="text-center text-accent-b">
             {formatMessage(greetMessage)}
           </h5>
         ) : (
-          <h1 className="text-center text-accent-b">
+          <h1 role="presentation" className="text-center text-accent-b">
             {formatMessage(greetMessage)}
           </h1>
         )}

@@ -4,21 +4,26 @@ exports[`GreetingBanner snapshots with size large and afternoon 1`] = `
 <div
   className="d-flex align-items-center justify-content-center p-5"
 >
-  <Image
-    alt="localhost"
-    className="d-block"
-    src="https://edx-cdn.org/v3/default/logo-white.svg"
-    style={
-      Object {
-        "width": "148px",
+  <a
+    href="http://localhost:18000/dashboard"
+  >
+    <Image
+      alt="localhost"
+      className="d-block"
+      src="https://edx-cdn.org/v3/default/logo-white.svg"
+      style={
+        Object {
+          "width": "148px",
+        }
       }
-    }
-  />
+    />
+  </a>
   <div
     className="greetings-slash-container-large bg-brand-500"
   />
   <h1
     className="text-center text-accent-b"
+    role="presentation"
   >
     Good Afternoon!
   </h1>
@@ -29,21 +34,26 @@ exports[`GreetingBanner snapshots with size large and evening 1`] = `
 <div
   className="d-flex align-items-center justify-content-center p-5"
 >
-  <Image
-    alt="localhost"
-    className="d-block"
-    src="https://edx-cdn.org/v3/default/logo-white.svg"
-    style={
-      Object {
-        "width": "148px",
+  <a
+    href="http://localhost:18000/dashboard"
+  >
+    <Image
+      alt="localhost"
+      className="d-block"
+      src="https://edx-cdn.org/v3/default/logo-white.svg"
+      style={
+        Object {
+          "width": "148px",
+        }
       }
-    }
-  />
+    />
+  </a>
   <div
     className="greetings-slash-container-large bg-brand-500"
   />
   <h1
     className="text-center text-accent-b"
+    role="presentation"
   >
     Good Evening!
   </h1>
@@ -54,21 +64,26 @@ exports[`GreetingBanner snapshots with size large and morning 1`] = `
 <div
   className="d-flex align-items-center justify-content-center p-5"
 >
-  <Image
-    alt="localhost"
-    className="d-block"
-    src="https://edx-cdn.org/v3/default/logo-white.svg"
-    style={
-      Object {
-        "width": "148px",
+  <a
+    href="http://localhost:18000/dashboard"
+  >
+    <Image
+      alt="localhost"
+      className="d-block"
+      src="https://edx-cdn.org/v3/default/logo-white.svg"
+      style={
+        Object {
+          "width": "148px",
+        }
       }
-    }
-  />
+    />
+  </a>
   <div
     className="greetings-slash-container-large bg-brand-500"
   />
   <h1
     className="text-center text-accent-b"
+    role="presentation"
   >
     Good Morning!
   </h1>
@@ -79,21 +94,26 @@ exports[`GreetingBanner snapshots with size small and afternoon 1`] = `
 <div
   className="d-flex align-items-center justify-content-center p-3.5"
 >
-  <Image
-    alt="localhost"
-    className="d-block"
-    src="https://edx-cdn.org/v3/default/logo-white.svg"
-    style={
-      Object {
-        "width": "46px",
+  <a
+    href="http://localhost:18000/dashboard"
+  >
+    <Image
+      alt="localhost"
+      className="d-block"
+      src="https://edx-cdn.org/v3/default/logo-white.svg"
+      style={
+        Object {
+          "width": "46px",
+        }
       }
-    }
-  />
+    />
+  </a>
   <div
     className="greetings-slash-container-small bg-brand-500"
   />
   <h5
     className="text-center text-accent-b"
+    role="presentation"
   >
     Good Afternoon!
   </h5>
@@ -104,21 +124,26 @@ exports[`GreetingBanner snapshots with size small and evening 1`] = `
 <div
   className="d-flex align-items-center justify-content-center p-3.5"
 >
-  <Image
-    alt="localhost"
-    className="d-block"
-    src="https://edx-cdn.org/v3/default/logo-white.svg"
-    style={
-      Object {
-        "width": "46px",
+  <a
+    href="http://localhost:18000/dashboard"
+  >
+    <Image
+      alt="localhost"
+      className="d-block"
+      src="https://edx-cdn.org/v3/default/logo-white.svg"
+      style={
+        Object {
+          "width": "46px",
+        }
       }
-    }
-  />
+    />
+  </a>
   <div
     className="greetings-slash-container-small bg-brand-500"
   />
   <h5
     className="text-center text-accent-b"
+    role="presentation"
   >
     Good Evening!
   </h5>
@@ -129,21 +154,26 @@ exports[`GreetingBanner snapshots with size small and morning 1`] = `
 <div
   className="d-flex align-items-center justify-content-center p-3.5"
 >
-  <Image
-    alt="localhost"
-    className="d-block"
-    src="https://edx-cdn.org/v3/default/logo-white.svg"
-    style={
-      Object {
-        "width": "46px",
+  <a
+    href="http://localhost:18000/dashboard"
+  >
+    <Image
+      alt="localhost"
+      className="d-block"
+      src="https://edx-cdn.org/v3/default/logo-white.svg"
+      style={
+        Object {
+          "width": "46px",
+        }
       }
-    }
-  />
+    />
+  </a>
   <div
     className="greetings-slash-container-small bg-brand-500"
   />
   <h5
     className="text-center text-accent-b"
+    role="presentation"
   >
     Good Morning!
   </h5>

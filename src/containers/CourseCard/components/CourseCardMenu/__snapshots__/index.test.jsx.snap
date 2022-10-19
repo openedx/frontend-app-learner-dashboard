@@ -7,7 +7,7 @@ exports[`CourseCardMenu snapshot 1`] = `
       alt="Actions dropdown"
       as="IconButton"
       iconAs="Icon"
-      id="dropdown-toggle-with-iconbutton"
+      id="course-actions-dropdown-test-card-id"
       src={[MockFunction icons.MoreVert]}
       variant="primary"
     />
