@@ -19,7 +19,7 @@ export const CourseCardMenu = ({ cardId }) => {
     <>
       <Dropdown>
         <Dropdown.Toggle
-          id="dropdown-toggle-with-iconbutton"
+          id={`course-actions-dropdown-${cardId}`}
           as={IconButton}
           src={MoreVert}
           iconAs={Icon}

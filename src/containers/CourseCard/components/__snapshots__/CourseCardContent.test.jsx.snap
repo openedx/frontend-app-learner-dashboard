@@ -20,12 +20,14 @@ exports[`CourseCardContent snapshot orientation horizontal 1`] = `
         />
       }
       title={
-        <a
-          data-testid="CourseCardTitle"
-          href="test-home-url"
-        >
-          test-course-name
-        </a>
+        <h3>
+          <a
+            data-testid="CourseCardTitle"
+            href="test-home-url"
+          >
+            test-course-name
+          </a>
+        </h3>
       }
     />
     <Card.Section
@@ -71,12 +73,14 @@ exports[`CourseCardContent snapshot orientation vertical 1`] = `
         />
       }
       title={
-        <a
-          data-testid="CourseCardTitle"
-          href="test-home-url"
-        >
-          test-course-name
-        </a>
+        <h3>
+          <a
+            data-testid="CourseCardTitle"
+            href="test-home-url"
+          >
+            test-course-name
+          </a>
+        </h3>
       }
     />
     <Card.Section

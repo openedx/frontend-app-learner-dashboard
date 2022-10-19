@@ -27,13 +27,14 @@ export const ProgramCard = ({ data }) => {
       style={{ width: '18rem', color: 'white' }}
       as="a"
       href={data.programUrl}
+      isClickable
     >
       <Card.ImageCap
         className="program-card-banner"
         src={data.bannerImgSrc}
         srcAlt={formatMessage(messages.bannerAlt)}
         logoSrc={data.logoImgSrc}
-        logoAlt={formatMessage(messages.logoAlt)}
+        logoAlt={formatMessage(messages.logoAlt, { provider: data.provider })}
       />
       <Card.Header
         title={whiteFontWrapper(data.title)}

@@ -11,12 +11,12 @@ export const messages = {
   },
   logoAlt: {
     id: 'learnerDashboard.programCard.logoAlt',
-    defaultMessage: 'Provider logo',
+    defaultMessage: '{provider} logo',
     description: 'Program provider logo alt-text',
   },
   bannerAlt: {
     id: 'learnerDashboard.programCard.bannerAlt',
-    defaultMessage: 'Program banner',
+    defaultMessage: '',
     description: 'Program banner logo alt-text',
   },
 };

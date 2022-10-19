@@ -58,6 +58,7 @@
     "query-string": "7.0.1",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
+    "react-helmet": "^6.1.0",
     "react-intl": "^5.20.9",
     "react-pdf": "^5.5.0",
     "react-redux": "^7.2.4",

@@ -5,6 +5,7 @@ exports[`RelatedProgramsModal ProgramCard snapshot 1`] = `
   as="a"
   className="program-card mx-auto bg-primary-500 text-white mb-3.5 pb-3.5"
   href="props.data.programUrl"
+  isClickable={true}
   style={
     Object {
       "color": "white",
@@ -14,10 +15,10 @@ exports[`RelatedProgramsModal ProgramCard snapshot 1`] = `
 >
   <Card.ImageCap
     className="program-card-banner"
-    logoAlt="Provider logo"
+    logoAlt="props.data.provider logo"
     logoSrc="props.data.logoImgSrc"
     src="props.data.bannerImgSrc"
-    srcAlt="Program banner"
+    srcAlt=""
   />
   <Card.Header
     subtitle={
