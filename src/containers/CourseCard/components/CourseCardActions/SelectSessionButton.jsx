@@ -20,7 +20,7 @@ export const SelectSessionButton = ({ cardId }) => {
       disabled={isMasquerading || !hasAccess || (!canChange || !hasSessions)}
       onClick={openSessionModal}
     >
-      {formatMessage(messages.resume)}
+      {formatMessage(messages.selectSession)}
     </Button>
   );
 };

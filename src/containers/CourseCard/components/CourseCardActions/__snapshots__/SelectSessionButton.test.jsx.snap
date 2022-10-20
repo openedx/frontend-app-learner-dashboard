@@ -5,7 +5,7 @@ exports[`SelectSessionButton snapshot renders default button 1`] = `
   disabled={false}
   onClick={[MockFunction mockOpenSessionModal]}
 >
-  Resume
+  Select Session
 </Button>
 `;
 
@@ -14,7 +14,7 @@ exports[`SelectSessionButton snapshot renders disabled button if masquerading 1`
   disabled={true}
   onClick={[MockFunction mockOpenSessionModal]}
 >
-  Resume
+  Select Session
 </Button>
 `;
 
@@ -23,6 +23,6 @@ exports[`SelectSessionButton snapshot renders disabled button when user does not
   disabled={true}
   onClick={[MockFunction mockOpenSessionModal]}
 >
-  Resume
+  Select Session
 </Button>
 `;
