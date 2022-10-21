@@ -31,7 +31,7 @@ describe('EmailSettingsModal hooks', () => {
   describe('useEmailData', () => {
     beforeEach(() => {
       state.mock();
-      appHooks.useCardEnrollmentData.mockReturnValueOnce({ isEmailEnabled: true });
+      appHooks.useCardEnrollmentData.mockReturnValueOnce({ hasOptedOutOfEmail: true });
       out = hooks.useEmailData({ closeModal, cardId, dispatch });
     });
     afterEach(state.restore);
@@ -40,29 +40,29 @@ describe('EmailSettingsModal hooks', () => {
       expect(appHooks.useCardEnrollmentData).toHaveBeenCalledWith(cardId);
     });
 
-    test('initializes toggle value to cardData.isEmailEnabled', () => {
+    test('initializes toggle value to cardData.hasOptedOutOfEmail', () => {
       state.expectInitializedWith(state.keys.toggle, true);
-      expect(out.toggleValue).toEqual(true);
+      expect(out.isOptedOut).toEqual(true);
 
-      appHooks.useCardEnrollmentData.mockReturnValueOnce({ isEmailEnabled: false });
+      appHooks.useCardEnrollmentData.mockReturnValueOnce({ hasOptedOutOfEmail: false });
       out = hooks.useEmailData({ closeModal, cardId });
       state.expectInitializedWith(state.keys.toggle, false);
-      expect(out.toggleValue).toEqual(false);
+      expect(out.isOptedOut).toEqual(false);
     });
     describe('onToggle - returned callback', () => {
       it('is based on toggle state value', () => {
-        expect(out.onToggle.useCallback.prereqs).toEqual([state.setState.toggle, out.toggleValue]);
+        expect(out.onToggle.useCallback.prereqs).toEqual([state.setState.toggle, out.isOptedOut]);
       });
       it('sets toggle state value to opposite current value', () => {
         out.onToggle.useCallback.cb();
-        expect(state.setState.toggle).toHaveBeenCalledWith(!out.toggleValue);
+        expect(state.setState.toggle).toHaveBeenCalledWith(!out.isOptedOut);
       });
     });
     describe('save', () => {
       it('calls dispatch with thunkActions.app.updateEmailSettings', () => {
         out.save.useCallback.cb();
-        expect(thunkActions.app.updateEmailSettings).toHaveBeenCalledWith(cardId, out.toggleValue);
-        expect(dispatch).toHaveBeenCalledWith(thunkActions.app.updateEmailSettings(cardId, out.toggleValue));
+        expect(thunkActions.app.updateEmailSettings).toHaveBeenCalledWith(cardId, out.isOptedOut);
+        expect(dispatch).toHaveBeenCalledWith(thunkActions.app.updateEmailSettings(cardId, out.isOptedOut));
       });
       it('calls closeModal', () => {
         out.save.useCallback.cb();

@@ -14,24 +14,24 @@ export const useEmailData = ({
   cardId,
   dispatch,
 }) => {
-  const { isEmailEnabled } = appHooks.useCardEnrollmentData(cardId);
-  const [toggleValue, setToggleValue] = module.state.toggle(isEmailEnabled);
+  const { hasOptedOutOfEmail } = appHooks.useCardEnrollmentData(cardId);
+  const [isOptedOut, setIsOptedOut] = module.state.toggle(hasOptedOutOfEmail);
   const onToggle = React.useCallback(
-    () => setToggleValue(!toggleValue),
-    [setToggleValue, toggleValue],
+    () => setIsOptedOut(!isOptedOut),
+    [setIsOptedOut, isOptedOut],
   );
   const save = React.useCallback(
     () => {
-      dispatch(thunkActions.app.updateEmailSettings(cardId, toggleValue));
+      dispatch(thunkActions.app.updateEmailSettings(cardId, isOptedOut));
       closeModal();
     },
-    [cardId, closeModal, dispatch, toggleValue],
+    [cardId, closeModal, dispatch, isOptedOut],
   );
 
   return {
     onToggle,
     save,
-    toggleValue,
+    isOptedOut,
   };
 };
 

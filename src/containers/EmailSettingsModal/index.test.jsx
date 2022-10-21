@@ -11,7 +11,7 @@ jest.mock('./hooks', () => ({
 }));
 
 const hookProps = {
-  toggleValue: false,
+  isOptedOut: true,
   onToggle: jest.fn().mockName('hooks.onToggle'),
   save: jest.fn().mockName('hooks.save'),
 };
@@ -53,7 +53,7 @@ describe('EmailSettingsModal', () => {
     test('snapshot: emails enabled, show: true', () => {
       hooks.mockReturnValueOnce({
         ...hookProps,
-        toggleValue: true,
+        isOptedOut: false,
       });
       expect(shallow(<EmailSettingsModal {...props} />)).toMatchSnapshot();
     });

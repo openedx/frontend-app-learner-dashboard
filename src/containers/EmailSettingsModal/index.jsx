@@ -22,7 +22,7 @@ export const EmailSettingsModal = ({
 }) => {
   const dispatch = useDispatch();
   const {
-    toggleValue,
+    isOptedOut,
     onToggle,
     save,
   } = useEmailData({ dispatch, closeModal, cardId });
@@ -37,8 +37,8 @@ export const EmailSettingsModal = ({
     >
       <div className="bg-white p-3 rounded shadow" style={{ textAlign: 'start' }}>
         <h4>{formatMessage(messages.header)}</h4>
-        <Form.Switch checked={toggleValue} onChange={onToggle}>
-          {formatMessage(!toggleValue ? messages.emailsOff : messages.emailsOn)}
+        <Form.Switch checked={!isOptedOut} onChange={onToggle}>
+          {formatMessage(isOptedOut ? messages.emailsOff : messages.emailsOn)}
         </Form.Switch>
         <p>{formatMessage(messages.description)}</p>
         <ActionRow>
