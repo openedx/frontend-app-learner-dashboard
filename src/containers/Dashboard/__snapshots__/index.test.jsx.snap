@@ -62,6 +62,43 @@ exports[`Dashboard snapshots courses loaded 1`] = `
 </div>
 `;
 
+exports[`Dashboard snapshots courses loaded, show select session modal, no available dashboards snapshot 1`] = `
+<div
+  className="d-flex flex-column p-2 pt-3"
+  id="dashboard-container"
+>
+  <h1
+    className="sr-only"
+  >
+    test-page-title
+  </h1>
+  <SelectSessionModal />
+  <div
+    id="dashboard-content"
+  >
+    <LoadedView />
+  </div>
+</div>
+`;
+
+exports[`Dashboard snapshots courses loaded, there are no available dashboards snapshot 1`] = `
+<div
+  className="d-flex flex-column p-2 pt-3"
+  id="dashboard-container"
+>
+  <h1
+    className="sr-only"
+  >
+    test-page-title
+  </h1>
+  <div
+    id="dashboard-content"
+  >
+    <LoadedView />
+  </div>
+</div>
+`;
+
 exports[`Dashboard snapshots courses still loading 1`] = `
 <div
   className="d-flex flex-column p-2"
@@ -80,6 +117,24 @@ exports[`Dashboard snapshots courses still loading 1`] = `
       className="mie-3"
       screenReaderText="Loading..."
     />
+  </div>
+</div>
+`;
+
+exports[`Dashboard snapshots courses still loading snapshot 1`] = `
+<div
+  className="d-flex flex-column p-2 pt-3"
+  id="dashboard-container"
+>
+  <h1
+    className="sr-only"
+  >
+    test-page-title
+  </h1>
+  <div
+    id="dashboard-content"
+  >
+    <LoadingView />
   </div>
 </div>
 `;
@@ -110,6 +165,25 @@ exports[`Dashboard snapshots there are no courses 1`] = `
     Learner Home
   </h1>
   <EmptyCourse />
+</div>
+`;
+
+exports[`Dashboard snapshots there are no courses, there ARE available dashboards snapshot 1`] = `
+<div
+  className="d-flex flex-column p-2 pt-3"
+  id="dashboard-container"
+>
+  <h1
+    className="sr-only"
+  >
+    test-page-title
+  </h1>
+  <EnterpriseDashboardModal />
+  <div
+    id="dashboard-content"
+  >
+    <EmptyCourse />
+  </div>
 </div>
 `;
 

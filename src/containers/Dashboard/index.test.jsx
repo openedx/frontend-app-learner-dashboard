@@ -1,13 +1,14 @@
 import { shallow } from 'enzyme';
 
-import { hooks } from 'data/redux';
+import { hooks as appHooks } from 'data/redux';
 
-import CourseList from 'containers/CourseList';
-import WidgetSidebar from 'containers/WidgetSidebar';
 import EmptyCourse from 'containers/EmptyCourse';
-import SelectSessionModal from 'containers/SelectSessionModal';
 import EnterpriseDashboardModal from 'containers/EnterpriseDashboardModal';
+import SelectSessionModal from 'containers/SelectSessionModal';
 
+import LoadedView from './LoadedView';
+import LoadingView from './LoadingView';
+import hooks from './hooks';
 import Dashboard from '.';
 
 jest.mock('data/redux', () => ({
@@ -24,116 +25,114 @@ jest.mock('data/redux', () => ({
   },
 }));
 
-jest.mock('containers/CourseList', () => 'CourseList');
-jest.mock('containers/WidgetSidebar', () => 'WidgetSidebar');
 jest.mock('containers/EmptyCourse', () => 'EmptyCourse');
-jest.mock('containers/SelectSessionModal', () => 'SelectSessionModal');
 jest.mock('containers/EnterpriseDashboardModal', () => 'EnterpriseDashboardModal');
+jest.mock('./LoadingView', () => 'LoadingView');
+jest.mock('./LoadedView', () => 'LoadedView');
+
+jest.mock('./hooks', () => ({
+  useInitializeDashboard: jest.fn(),
+  useDashboardMessages: jest.fn(),
+}));
+
+const pageTitle = 'test-page-title';
 
 describe('Dashboard', () => {
+  beforeEach(() => {
+    hooks.useDashboardMessages.mockReturnValue({ pageTitle });
+  });
   const createWrapper = ({
     hasCourses,
     hasAvailableDashboards,
-    showSelectSessionModal,
     initIsPending,
+    showSelectSessionModal,
   }) => {
-    hooks.useHasCourses.mockReturnValueOnce(hasCourses);
-    hooks.useHasAvailableDashboards.mockReturnValueOnce(hasAvailableDashboards);
-    hooks.useShowSelectSessionModal.mockReturnValueOnce(showSelectSessionModal);
-    hooks.useIsPendingRequest.mockReturnValueOnce(initIsPending);
+    appHooks.useHasCourses.mockReturnValueOnce(hasCourses);
+    appHooks.useHasAvailableDashboards.mockReturnValueOnce(hasAvailableDashboards);
+    appHooks.useIsPendingRequest.mockReturnValueOnce(initIsPending);
+    appHooks.useShowSelectSessionModal.mockReturnValueOnce(showSelectSessionModal);
     return shallow(<Dashboard />);
   };
 
+  let wrapper;
   describe('snapshots', () => {
-    test('courses still loading', () => {
-      const wrapper = createWrapper({
-        hasCourses: false,
-        hasAvailableDashboards: false,
-        showSelectSessionModal: false,
-        initIsPending: true,
+    const testTitle = () => {
+      test('page title is displayed in sr-only h1 tag', () => {
+        const heading = wrapper.find('h1');
+        expect(heading.props().className).toEqual('sr-only');
+        expect(heading.text()).toEqual(pageTitle);
       });
-      expect(wrapper).toMatchSnapshot();
-    });
-    test('courses loaded', () => {
-      const wrapper = createWrapper({
-        hasCourses: true,
-        hasAvailableDashboards: false,
-        showSelectSessionModal: false,
-        initIsPending: false,
+    };
+    const testSnapshot = () => {
+      test('snapshot', () => {
+        expect(wrapper).toMatchSnapshot();
       });
-      expect(wrapper).toMatchSnapshot();
+    };
+    const testContent = (el) => {
+      expect(wrapper.find('#dashboard-content').children()).toMatchObject(shallow(el));
+    };
+
+    const renderString = (show) => (show ? 'renders' : 'does not render');
+    const testView = ({
+      props,
+      content: [contentName, contentEl],
+      showEnterpriseModal,
+      showSelectSessionModal,
+    }) => {
+      beforeEach(() => { wrapper = createWrapper(props); });
+      testTitle();
+      testSnapshot();
+      it(`renders ${contentName}`, () => {
+        testContent(contentEl);
+      });
+      it(`${renderString(showEnterpriseModal)} dashbaord modal`, () => {
+        expect(wrapper.find(EnterpriseDashboardModal).length)
+          .toEqual(showEnterpriseModal ? 1 : 0);
+      });
+      it(`${renderString(showSelectSessionModal)} select session modal`, () => {
+        expect(wrapper.find(SelectSessionModal).length).toEqual(showSelectSessionModal ? 1 : 0);
+      });
+    };
+    describe('courses still loading', () => {
+      testView({
+        props: {
+          hasCourses: false,
+          hasAvailableDashboards: false,
+          initIsPending: true,
+          showSelectSessionModal: false,
+        },
+        content: ['LoadingView', <LoadingView />],
+        showEnterpriseModal: false,
+        showSelectSessionModal: false,
+      });
     });
 
-    test('there are no courses', () => {
-      const wrapper = createWrapper({
-        hasCourses: false,
-        hasAvailableDashboards: false,
-        showSelectSessionModal: false,
-        initIsPending: false,
-      });
-      expect(wrapper).toMatchSnapshot();
-    });
-
-    test('there are available dashboards', () => {
-      const wrapper = createWrapper({
-        hasCourses: false,
-        hasAvailableDashboards: true,
-        showSelectSessionModal: false,
-        initIsPending: false,
-      });
-      expect(wrapper).toMatchSnapshot();
-    });
-
-    test('there is a select session modal', () => {
-      const wrapper = createWrapper({
-        hasCourses: false,
-        hasAvailableDashboards: false,
+    describe('courses loaded, show select session modal, no available dashboards', () => {
+      testView({
+        props: {
+          hasCourses: true,
+          hasAvailableDashboards: false,
+          initIsPending: false,
+          showSelectSessionModal: true,
+        },
+        content: ['LoadedView', <LoadedView />],
+        showEnterpriseModal: false,
         showSelectSessionModal: true,
-        initIsPending: false,
       });
-      expect(wrapper).toMatchSnapshot();
     });
-  });
 
-  describe('behavior', () => {
-    it('initializes the app without courses', () => {
-      const wrapper = createWrapper({
-        hasCourses: false,
-        hasAvailableDashboards: false,
+    describe('there are no courses, there ARE available dashboards', () => {
+      testView({
+        props: {
+          hasCourses: false,
+          hasAvailableDashboards: true,
+          initIsPending: false,
+          showSelectSessionModal: false,
+        },
+        content: ['EmptyCourse', <EmptyCourse />],
+        showEnterpriseModal: true,
         showSelectSessionModal: false,
-        initIsPending: false,
       });
-      expect(wrapper.find(EmptyCourse).length).toEqual(1);
-      expect(wrapper.find(CourseList).length).toEqual(0);
-      expect(wrapper.find(WidgetSidebar).length).toEqual(0);
-      expect(wrapper.find(SelectSessionModal).length).toEqual(0);
-      expect(wrapper.find(EnterpriseDashboardModal).length).toEqual(0);
-    });
-    it('initializes the app with courses, dashboard and select', () => {
-      const wrapper = createWrapper({
-        hasCourses: true,
-        hasAvailableDashboards: true,
-        showSelectSessionModal: true,
-        initIsPending: false,
-      });
-      expect(wrapper.find(EmptyCourse).length).toEqual(0);
-      expect(wrapper.find(CourseList).length).toEqual(1);
-      expect(wrapper.find(WidgetSidebar).length).toEqual(1);
-      expect(wrapper.find(SelectSessionModal).length).toEqual(1);
-      expect(wrapper.find(EnterpriseDashboardModal).length).toEqual(1);
-    });
-    it('initializes the app with courses, dashboard and no select', () => {
-      const wrapper = createWrapper({
-        hasCourses: true,
-        hasAvailableDashboards: true,
-        showSelectSessionModal: false,
-        initIsPending: false,
-      });
-      expect(wrapper.find(EmptyCourse).length).toEqual(0);
-      expect(wrapper.find(CourseList).length).toEqual(1);
-      expect(wrapper.find(WidgetSidebar).length).toEqual(1);
-      expect(wrapper.find(SelectSessionModal).length).toEqual(0);
-      expect(wrapper.find(EnterpriseDashboardModal).length).toEqual(1);
     });
   });
 });

@@ -2,7 +2,7 @@
 
 exports[`GreetingBanner snapshots with size large and afternoon 1`] = `
 <div
-  className="d-flex align-items-center justify-content-center p-5"
+  className="d-flex align-items-center justify-content-center pb-5"
 >
   <a
     href="http://localhost:18000/dashboard"
@@ -22,7 +22,7 @@ exports[`GreetingBanner snapshots with size large and afternoon 1`] = `
     className="greetings-slash-container-large bg-brand-500"
   />
   <h1
-    className="text-center text-accent-b"
+    className="text-center text-accent-b display-1"
     role="presentation"
   >
     Good Afternoon!
@@ -32,7 +32,7 @@ exports[`GreetingBanner snapshots with size large and afternoon 1`] = `
 
 exports[`GreetingBanner snapshots with size large and evening 1`] = `
 <div
-  className="d-flex align-items-center justify-content-center p-5"
+  className="d-flex align-items-center justify-content-center pb-5"
 >
   <a
     href="http://localhost:18000/dashboard"
@@ -52,7 +52,7 @@ exports[`GreetingBanner snapshots with size large and evening 1`] = `
     className="greetings-slash-container-large bg-brand-500"
   />
   <h1
-    className="text-center text-accent-b"
+    className="text-center text-accent-b display-1"
     role="presentation"
   >
     Good Evening!
@@ -62,7 +62,7 @@ exports[`GreetingBanner snapshots with size large and evening 1`] = `
 
 exports[`GreetingBanner snapshots with size large and morning 1`] = `
 <div
-  className="d-flex align-items-center justify-content-center p-5"
+  className="d-flex align-items-center justify-content-center pb-5"
 >
   <a
     href="http://localhost:18000/dashboard"
@@ -82,7 +82,7 @@ exports[`GreetingBanner snapshots with size large and morning 1`] = `
     className="greetings-slash-container-large bg-brand-500"
   />
   <h1
-    className="text-center text-accent-b"
+    className="text-center text-accent-b display-1"
     role="presentation"
   >
     Good Morning!
