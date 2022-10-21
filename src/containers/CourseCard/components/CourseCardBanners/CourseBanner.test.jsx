@@ -36,7 +36,7 @@ const courseRunData = {
   startDate: '11/11/3030',
 };
 const courseData = {
-  website: 'test-course-website',
+  socialShareUrl: 'test-course-socialShareUrl',
 };
 
 const render = (overrides = {}) => {
@@ -106,7 +106,7 @@ describe('CourseBanner', () => {
       expect(el.text()).toContain(messages.upgradeDeadlinePassed.defaultMessage);
       const link = el.find(Hyperlink);
       expect(link.text()).toEqual(messages.exploreCourseDetails.defaultMessage);
-      expect(link.props().destination).toEqual(courseData.website);
+      expect(link.props().destination).toEqual(courseData.socialShareUrl);
     });
   });
   test('no display if audit access not expired and (course is not active or can upgrade)', () => {

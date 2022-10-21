@@ -34,7 +34,6 @@ export const courseCard = StrictDict({
       bannerImgSrc: baseAppUrl(course.bannerImgSrc),
       courseNumber: course.courseNumber,
       courseName: course.courseName,
-      website: course.website,
       socialShareUrl: course.socialShareUrl,
     }),
   ),
@@ -51,7 +50,6 @@ export const courseCard = StrictDict({
       courseId: courseRun.courseId,
       isArchived: courseRun.isArchived,
       isStarted: courseRun.isStarted,
-      isFinished: courseRun.isFinished,
 
       minPassingGrade: Math.floor(courseRun.minPassingGrade * 100),
 
@@ -86,6 +84,7 @@ export const courseCard = StrictDict({
         isVerified: enrollment.isVerified,
 
         isEmailEnabled: enrollment.isEmailEnabled,
+        hasOptedOutOfEmail: enrollment.hasOptedOutOfEmail,
       };
     },
   ),

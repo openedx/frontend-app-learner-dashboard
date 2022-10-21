@@ -48,7 +48,7 @@ export const CourseBanner = ({ cardId }) => {
         <Banner>
           {formatMessage(messages.upgradeDeadlinePassed)}
           {'  '}
-          <Hyperlink destination={course.website || ''}>
+          <Hyperlink destination={course.socialShareUrl || ''}>
             {formatMessage(messages.exploreCourseDetails)}
           </Hyperlink>
         </Banner>
