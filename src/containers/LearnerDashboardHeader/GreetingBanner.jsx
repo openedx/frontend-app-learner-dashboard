@@ -28,7 +28,7 @@ export const GreetingBanner = ({ size }) => {
     <div
       className={classNames(
         'd-flex align-items-center justify-content-center',
-        { 'p-5': !isSmall, 'p-3.5': isSmall },
+        { 'pb-5': !isSmall, 'p-3.5': isSmall },
       )}
     >
       <a href={`${getConfig().LMS_BASE_URL}/dashboard`}>
@@ -46,7 +46,10 @@ export const GreetingBanner = ({ size }) => {
             {formatMessage(greetMessage)}
           </h5>
         ) : (
-          <h1 role="presentation" className="text-center text-accent-b">
+          <h1
+            role="presentation"
+            className="text-center text-accent-b display-1"
+          >
             {formatMessage(greetMessage)}
           </h1>
         )}

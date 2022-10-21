@@ -1,5 +1,4 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import {
   Container,
   Col,
@@ -9,7 +8,6 @@ import {
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import {
-  thunkActions,
   hooks as appHooks,
 } from 'data/redux';
 import { RequestKeys } from 'data/constants/requests';
@@ -21,15 +19,13 @@ import SelectSessionModal from 'containers/SelectSessionModal';
 import EnterpriseDashboardModal from 'containers/EnterpriseDashboardModal';
 
 import appMessages from 'messages';
+import hooks from './hooks';
 
 import './index.scss';
 
 export const Dashboard = () => {
-  const dispatch = useDispatch();
-  React.useEffect(
-    () => { dispatch(thunkActions.app.initialize()); },
-    [dispatch],
-  );
+  hooks.useInitializeDashboard();
+  const isCollapsed = hooks.useIsDashboardCollapsed();
   const { formatMessage } = useIntl();
 
   const hasCourses = appHooks.useHasCourses();
@@ -38,7 +34,7 @@ export const Dashboard = () => {
   const initIsPending = appHooks.useIsPendingRequest(RequestKeys.initialize);
 
   return (
-    <div id="dashboard-container" className="d-flex flex-column p-2">
+    <div id="dashboard-container" className="d-flex flex-column p-2 pt-3">
       <h1 className="sr-only">{formatMessage(appMessages.pageTitle)}</h1>
       {hasAvailableDashboards && <EnterpriseDashboardModal />}
       {initIsPending && (
@@ -65,6 +61,9 @@ export const Dashboard = () => {
               <CourseList />
             </Col>
             <Col md={12} xl={4} className="p-0 pr-4 pl-1">
+              {!isCollapsed && (
+                <h2 className="mb-3 display-block">&nbsp;</h2>
+              )}
               <WidgetSidebar />
             </Col>
           </Row>

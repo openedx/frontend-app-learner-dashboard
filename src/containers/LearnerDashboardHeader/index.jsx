@@ -33,7 +33,7 @@ export const LearnerDashboardHeader = () => {
       <ConfirmEmailBanner />
       <div className="flex-column bg-primary">
         {!(isCollapsed) && (
-          <Image className="d-block w-100" src={topBanner} />
+          <Image className="d-block w-100 mb-4" src={topBanner} />
         )}
         <header className="learner-dashboard-header">
           <div className="d-flex">

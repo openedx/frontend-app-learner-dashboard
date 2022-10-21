@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { Button } from '@edx/paragon';
 
 import useCardDetailsData from './hooks';
+import './index.scss';
 
 export const CourseCardDetails = ({ cardId }) => {
   const dispatch = useDispatch();
