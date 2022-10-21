@@ -99,7 +99,7 @@ exports[`LoadedView not collapsed snapshot 1`] = `
       xl={4}
     >
       <h2
-        className="mb-3 display-block"
+        className="mb-4.5 display-block"
       >
          
       </h2>

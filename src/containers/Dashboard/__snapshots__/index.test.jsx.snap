@@ -1,67 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Dashboard snapshots courses loaded 1`] = `
-<div
-  className="d-flex flex-column p-2"
-  id="dashboard-container"
->
-  <h1
-    className="sr-only"
-  >
-    Learner Home
-  </h1>
-  <Container
-    fluid={true}
-    size="xl"
-  >
-    <Row>
-      <Col
-        className="p-0 px-4"
-        lg={
-          Object {
-            "offset": 1,
-            "span": 10,
-          }
-        }
-        md={
-          Object {
-            "offset": 0,
-            "span": 12,
-          }
-        }
-        sm={
-          Object {
-            "offset": 2,
-            "span": 8,
-          }
-        }
-        xl={
-          Object {
-            "offset": 0,
-            "span": 8,
-          }
-        }
-        xs={
-          Object {
-            "offset": 0,
-            "span": 12,
-          }
-        }
-      >
-        <CourseList />
-      </Col>
-      <Col
-        className="p-0 pr-4 pl-1"
-        md={12}
-        xl={4}
-      >
-        <WidgetSidebar />
-      </Col>
-    </Row>
-  </Container>
-</div>
-`;
-
 exports[`Dashboard snapshots courses loaded, show select session modal, no available dashboards snapshot 1`] = `
 <div
   className="d-flex flex-column p-2 pt-3"
@@ -77,46 +15,6 @@ exports[`Dashboard snapshots courses loaded, show select session modal, no avail
     id="dashboard-content"
   >
     <LoadedView />
-  </div>
-</div>
-`;
-
-exports[`Dashboard snapshots courses loaded, there are no available dashboards snapshot 1`] = `
-<div
-  className="d-flex flex-column p-2 pt-3"
-  id="dashboard-container"
->
-  <h1
-    className="sr-only"
-  >
-    test-page-title
-  </h1>
-  <div
-    id="dashboard-content"
-  >
-    <LoadedView />
-  </div>
-</div>
-`;
-
-exports[`Dashboard snapshots courses still loading 1`] = `
-<div
-  className="d-flex flex-column p-2"
-  id="dashboard-container"
->
-  <h1
-    className="sr-only"
-  >
-    Learner Home
-  </h1>
-  <div
-    className="course-list-loading"
-  >
-    <Spinner
-      animation="border"
-      className="mie-3"
-      screenReaderText="Loading..."
-    />
   </div>
 </div>
 `;
@@ -139,35 +37,6 @@ exports[`Dashboard snapshots courses still loading snapshot 1`] = `
 </div>
 `;
 
-exports[`Dashboard snapshots there are available dashboards 1`] = `
-<div
-  className="d-flex flex-column p-2"
-  id="dashboard-container"
->
-  <h1
-    className="sr-only"
-  >
-    Learner Home
-  </h1>
-  <EnterpriseDashboardModal />
-  <EmptyCourse />
-</div>
-`;
-
-exports[`Dashboard snapshots there are no courses 1`] = `
-<div
-  className="d-flex flex-column p-2"
-  id="dashboard-container"
->
-  <h1
-    className="sr-only"
-  >
-    Learner Home
-  </h1>
-  <EmptyCourse />
-</div>
-`;
-
 exports[`Dashboard snapshots there are no courses, there ARE available dashboards snapshot 1`] = `
 <div
   className="d-flex flex-column p-2 pt-3"
@@ -184,19 +53,5 @@ exports[`Dashboard snapshots there are no courses, there ARE available dashboard
   >
     <EmptyCourse />
   </div>
-</div>
-`;
-
-exports[`Dashboard snapshots there is a select session modal 1`] = `
-<div
-  className="d-flex flex-column p-2"
-  id="dashboard-container"
->
-  <h1
-    className="sr-only"
-  >
-    Learner Home
-  </h1>
-  <EmptyCourse />
 </div>
 `;

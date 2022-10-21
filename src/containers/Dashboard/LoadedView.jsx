@@ -26,7 +26,7 @@ export const LoadedView = () => {
           <CourseList />
         </Col>
         <Col {...columnConfig.sidebar} className="p-0 pr-4 pl-1">
-          {!isCollapsed && (<h2 className="mb-3 display-block">&nbsp;</h2>)}
+          {!isCollapsed && (<h2 className="mb-4.5 display-block">&nbsp;</h2>)}
           <WidgetSidebar />
         </Col>
       </Row>
