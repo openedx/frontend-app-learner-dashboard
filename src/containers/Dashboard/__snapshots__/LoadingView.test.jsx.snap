@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoadingView snapshot 1`] = `
+<div
+  className="course-list-loading"
+>
+  <Spinner
+    animation="border"
+    className="mie-3"
+    screenReaderText="test-sr-text"
+  />
+</div>
+`;

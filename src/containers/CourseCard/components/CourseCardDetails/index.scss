@@ -1,0 +1,7 @@
+@import "~@edx/brand/paragon/variables";
+@import "~@edx/paragon/scss/core/core";
+@import "~@edx/brand/paragon/overrides";
+
+a.course-card-title {
+  color: $black;
+}

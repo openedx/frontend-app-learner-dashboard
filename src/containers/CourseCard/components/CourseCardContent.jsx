@@ -31,7 +31,11 @@ export const CourseCardContent = ({ cardId, orientation }) => {
         <Card.Header
           title={(
             <h3>
-              <a href={homeUrl} data-testid="CourseCardTitle">
+              <a
+                href={homeUrl}
+                className="course-card-title"
+                data-testid="CourseCardTitle"
+              >
                 {courseName}
               </a>
             </h3>

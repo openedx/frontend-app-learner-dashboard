@@ -49,7 +49,7 @@ exports[`LearnerDashboardHeader snapshots without collapsed 1`] = `
     className="flex-column bg-primary"
   >
     <Image
-      className="d-block w-100"
+      className="d-block w-100 mb-4"
       src="icon/mock/path"
     />
     <header

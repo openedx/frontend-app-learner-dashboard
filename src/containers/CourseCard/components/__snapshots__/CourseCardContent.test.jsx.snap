@@ -22,6 +22,7 @@ exports[`CourseCardContent snapshot orientation horizontal 1`] = `
       title={
         <h3>
           <a
+            className="course-card-title"
             data-testid="CourseCardTitle"
             href="test-home-url"
           >
@@ -75,6 +76,7 @@ exports[`CourseCardContent snapshot orientation vertical 1`] = `
       title={
         <h3>
           <a
+            className="course-card-title"
             data-testid="CourseCardTitle"
             href="test-home-url"
           >

@@ -8,7 +8,7 @@ exports[`CourseList snapshots with filters 1`] = `
     id="course-list-heading-container"
   >
     <h2
-      className="my-3"
+      className="mb-4.5"
     >
       My Courses
     </h2>
@@ -42,7 +42,7 @@ exports[`CourseList snapshots with multiple courses and pages 1`] = `
     id="course-list-heading-container"
   >
     <h2
-      className="my-3"
+      className="mb-4.5"
     >
       My Courses
     </h2>
@@ -87,7 +87,7 @@ exports[`CourseList snapshots with no filters 1`] = `
     id="course-list-heading-container"
   >
     <h2
-      className="my-3"
+      className="mb-4.5"
     >
       My Courses
     </h2>
