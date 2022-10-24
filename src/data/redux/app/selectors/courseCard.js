@@ -21,7 +21,7 @@ export const courseCard = StrictDict({
       const isAvailable = availableDate <= new Date();
       return {
         availableDate,
-        certPreviewUrl: certificate.certPreviewUrl,
+        certPreviewUrl: baseAppUrl(certificate.certPreviewUrl),
         isDownloadable: certificate.isDownloadable,
         isEarnedButUnavailable: certificate.isEarned && !isAvailable,
         isRestricted: certificate.isRestricted,
@@ -96,7 +96,11 @@ export const courseCard = StrictDict({
       }
       const deadline = new Date(entitlement.changeDeadline);
       const deadlinePassed = deadline < today;
-      const showExpirationWarning = !deadlinePassed && deadline <= dateSixMonthsFromNow;
+      const showExpirationWarning = (
+        !entitlement.isFulfilled
+        && !deadlinePassed
+        && deadline <= dateSixMonthsFromNow
+      );
       return {
         isEntitlement: true,
 
