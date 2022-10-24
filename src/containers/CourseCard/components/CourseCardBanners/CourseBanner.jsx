@@ -16,7 +16,6 @@ export const CourseBanner = ({ cardId }) => {
     coursewareAccess = {},
   } = appHooks.useCardEnrollmentData(cardId);
   const courseRun = appHooks.useCardCourseRunData(cardId);
-  const course = appHooks.useCardCourseData(cardId);
   const { formatMessage, formatDate } = useIntl();
 
   const { hasUnmetPrerequisites, isStaff, isTooEarly } = coursewareAccess;
@@ -48,7 +47,7 @@ export const CourseBanner = ({ cardId }) => {
         <Banner>
           {formatMessage(messages.upgradeDeadlinePassed)}
           {'  '}
-          <Hyperlink destination={course.socialShareUrl || ''}>
+          <Hyperlink destination={courseRun.marketingUrl || ''}>
             {formatMessage(messages.exploreCourseDetails)}
           </Hyperlink>
         </Banner>

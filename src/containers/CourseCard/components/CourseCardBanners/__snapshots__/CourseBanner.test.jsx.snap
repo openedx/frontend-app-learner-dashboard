@@ -30,7 +30,7 @@ exports[`CourseBanner course run active and cannot upgrade snapshot: (upgradseDe
     Your upgrade deadline for this course has passed.  To upgrade, enroll in a session that is farther in the future.
       
     <Hyperlink
-      destination="test-course-socialShareUrl"
+      destination="marketing-url"
     >
       Explore course details.
     </Hyperlink>

@@ -11,7 +11,6 @@ import messages from './messages';
 jest.mock('components/Banner', () => 'Banner');
 jest.mock('data/redux', () => ({
   hooks: {
-    useCardCourseData: jest.fn(),
     useCardCourseRunData: jest.fn(),
     useCardEnrollmentData: jest.fn(),
   },
@@ -34,21 +33,14 @@ const enrollmentData = {
 const courseRunData = {
   isActive: false,
   startDate: '11/11/3030',
-};
-const courseData = {
-  socialShareUrl: 'test-course-socialShareUrl',
+  marketingUrl: 'marketing-url',
 };
 
 const render = (overrides = {}) => {
   const {
-    course = {},
     courseRun = {},
     enrollment = {},
   } = overrides;
-  appHooks.useCardCourseData.mockReturnValueOnce({
-    ...courseData,
-    ...course,
-  });
   appHooks.useCardCourseRunData.mockReturnValueOnce({
     ...courseRunData,
     ...courseRun,
@@ -63,7 +55,6 @@ const render = (overrides = {}) => {
 describe('CourseBanner', () => {
   test('initializes data with course number from enrollment, course and course run data', () => {
     render();
-    expect(appHooks.useCardCourseData).toHaveBeenCalledWith(cardId);
     expect(appHooks.useCardCourseRunData).toHaveBeenCalledWith(cardId);
     expect(appHooks.useCardEnrollmentData).toHaveBeenCalledWith(cardId);
   });
@@ -106,7 +97,7 @@ describe('CourseBanner', () => {
       expect(el.text()).toContain(messages.upgradeDeadlinePassed.defaultMessage);
       const link = el.find(Hyperlink);
       expect(link.text()).toEqual(messages.exploreCourseDetails.defaultMessage);
-      expect(link.props().destination).toEqual(courseData.socialShareUrl);
+      expect(link.props().destination).toEqual(courseRunData.marketingUrl);
     });
   });
   test('no display if audit access not expired and (course is not active or can upgrade)', () => {
