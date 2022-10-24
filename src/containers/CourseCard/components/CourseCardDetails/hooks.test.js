@@ -81,7 +81,7 @@ describe('CourseCardDetails hooks', () => {
     };
     const courseRunData = {
       isStarted: true,
-      isFinished: false,
+      isArchived: false,
       startDate: '10/10/1000',
       endDate: '10/20/2000',
     };

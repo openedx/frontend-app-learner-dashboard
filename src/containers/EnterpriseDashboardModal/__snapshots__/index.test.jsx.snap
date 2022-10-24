@@ -18,7 +18,7 @@ exports[`EnterpriseDashboard snapshot 1`] = `
       You have access to the edX, Inc. dashboard
     </h4>
     <p>
-      To access the coureses available to you through edX, Inc., visit the edX, Inc. dashboard now.
+      To access the courses available to you through edX, Inc., visit the edX, Inc. dashboard now.
     </p>
     <ActionRow>
       <Button
