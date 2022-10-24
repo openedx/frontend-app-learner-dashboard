@@ -16,9 +16,9 @@ export const CertificateBanner = ({ cardId }) => {
   const {
     isAudit,
     isVerified,
-    hasFinished,
   } = appHooks.useCardEnrollmentData(cardId);
   const { isPassing } = appHooks.useCardGradeData(cardId);
+  const { isArchived } = appHooks.useCardCourseRunData(cardId);
   const { minPassingGrade, progressUrl } = appHooks.useCardCourseRunData(cardId);
   const { supportEmail, billingEmail } = appHooks.usePlatformSettingsData();
   const { formatMessage, formatDate } = useIntl();
@@ -45,7 +45,7 @@ export const CertificateBanner = ({ cardId }) => {
         </Banner>
       );
     }
-    if (hasFinished) {
+    if (isArchived) {
       return (
         <Banner variant="warning">
           {formatMessage(messages.notEligibleForCert)}.

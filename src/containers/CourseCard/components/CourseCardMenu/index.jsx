@@ -1,20 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import * as ReactShare from 'react-share';
 
+import { useIntl } from '@edx/frontend-platform/i18n';
 import { Dropdown, Icon, IconButton } from '@edx/paragon';
 import { MoreVert } from '@edx/paragon/icons';
 
 import { hooks as appHooks } from 'data/redux';
 import EmailSettingsModal from 'containers/EmailSettingsModal';
 import UnenrollConfirmModal from 'containers/UnenrollConfirmModal';
-import useCourseCardMenuData from './hooks';
+import { useEmailSettings, useUnenrollData } from './hooks';
+
+import messages from './messages';
 
 export const CourseCardMenu = ({ cardId }) => {
+  const emailSettingsModal = useEmailSettings();
+  const unenrollModal = useUnenrollData();
+  const { courseName } = appHooks.useCardCourseData(cardId);
   const {
-    emailSettingsModal,
-    unenrollModal,
-  } = useCourseCardMenuData();
+    // facebook,
+    twitter,
+  } = appHooks.useCardSocialSettingsData(cardId);
   const { isMasquerading } = appHooks.useMasqueradeData();
+  const { formatMessage } = useIntl();
+
   return (
     <>
       <Dropdown>
@@ -24,17 +33,51 @@ export const CourseCardMenu = ({ cardId }) => {
           src={MoreVert}
           iconAs={Icon}
           variant="primary"
-          alt="Actions dropdown"
+          alt={formatMessage(messages.dropdownAlt)}
         />
         <Dropdown.Menu>
-          <Dropdown.Item disabled={isMasquerading} onClick={unenrollModal.show}>
-            Unenroll
+          <Dropdown.Item
+            disabled={isMasquerading}
+            onClick={unenrollModal.show}
+            data-testid="unenrollModalToggle"
+          >
+            {formatMessage(messages.unenroll)}
           </Dropdown.Item>
-          <Dropdown.Item disabled={isMasquerading} onClick={emailSettingsModal.show}>
-            Email Settings
+          <Dropdown.Item
+            disabled={isMasquerading}
+            onClick={emailSettingsModal.show}
+            data-testid="emailSettingsModalToggle"
+          >
+            {formatMessage(messages.emailSettings)}
           </Dropdown.Item>
-          <Dropdown.Item href="#/action-3">Share to Facebook</Dropdown.Item>
-          <Dropdown.Item href="#/action-3">Share to Twitter</Dropdown.Item>
+          {/* Disabled pending PM decision on missing quote param in updated FB api.
+            {facebook.isEnabled && (
+              <Dropdown.Item>
+                <ReactShare.FacebookShareButton
+                  url={facebook.shareUrl}
+                  quote={formatMessage(messages.shareQuote, {
+                    courseName,
+                    socialBrand: facebook.socialBrand,
+                  })}
+                >
+                  {formatMessage(messages.shareToFacebook)}
+                </ReactShare.FacebookShareButton>
+              </Dropdown.Item>
+            )}
+          */}
+          {twitter.isEnabled && (
+            <Dropdown.Item>
+              <ReactShare.TwitterShareButton
+                url={twitter.shareUrl}
+                title={formatMessage(messages.shareQuote, {
+                  courseName,
+                  socialBrand: twitter.socialBrand,
+                })}
+              >
+                {formatMessage(messages.shareToTwitter)}
+              </ReactShare.TwitterShareButton>
+            </Dropdown.Item>
+          )}
         </Dropdown.Menu>
       </Dropdown>
       <UnenrollConfirmModal

@@ -7,9 +7,9 @@ import messages from './messages';
 jest.mock('data/redux', () => ({
   hooks: {
     useCardCertificateData: jest.fn(),
+    useCardCourseRunData: jest.fn(),
     useCardEnrollmentData: jest.fn(),
     useCardGradeData: jest.fn(),
-    useCardCourseRunData: jest.fn(),
     usePlatformSettingsData: jest.fn(),
   },
 }));
@@ -17,9 +17,7 @@ jest.mock('data/redux', () => ({
 jest.mock('Components/Banner', () => 'Banner');
 
 describe('CertificateBanner', () => {
-  const props = {
-    cardId: 'cardId',
-  };
+  const props = { cardId: 'cardId' };
   hooks.usePlatformSettingsData.mockReturnValue({
     supportEmail: 'suport@email',
     billingEmail: 'billing@email',
@@ -37,19 +35,19 @@ describe('CertificateBanner', () => {
   const defaultEnrollment = {
     isAudit: false,
     isVerified: false,
-    hasFinished: false,
   };
-  const defaultGrade = {
-    isPassing: false,
-  };
+  const defaultCourseRun = { isArchived: false };
+  const defaultGrade = { isPassing: false };
   const createWrapper = ({
     certificate = {},
     enrollment = {},
     grade = {},
+    courseRun = {},
   }) => {
     hooks.useCardGradeData.mockReturnValueOnce({ ...defaultGrade, ...grade });
     hooks.useCardCertificateData.mockReturnValueOnce({ ...defaultCertificate, ...certificate });
     hooks.useCardEnrollmentData.mockReturnValueOnce({ ...defaultEnrollment, ...enrollment });
+    hooks.useCardCourseRunData.mockReturnValueOnce({ ...defaultCourseRun, ...courseRun });
     return shallow(<CertificateBanner {...props} />);
   };
   describe('snapshot', () => {
@@ -82,9 +80,7 @@ describe('CertificateBanner', () => {
     });
     test('not passing and has finished', () => {
       const wrapper = createWrapper({
-        enrollment: {
-          hasFinished: true,
-        },
+        courseRun: { isArchived: true },
       });
       expect(wrapper).toMatchSnapshot();
     });

@@ -28,6 +28,7 @@ describe('app simple selectors', () => {
       keys.enterpriseDashboard,
       keys.selectSessionModal,
       keys.pageNumber,
+      keys.socialShareSettings,
     ])('%s app simple selector forwards corresponding data from app store', (key) => {
       testState = { app: { [key]: testString, otherField: 'fake string' } };
       const { preSelectors, cb } = simpleSelectors[key];

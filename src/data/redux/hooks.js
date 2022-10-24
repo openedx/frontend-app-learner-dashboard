@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { actions as appActions } from './app/reducer';
 import appSelectors from './app/selectors';
 import requestSelectors from './requests/selectors';
+import * as module from './hooks';
 
 const { courseCard } = appSelectors;
 
@@ -13,6 +14,7 @@ export const usePlatformSettingsData = () => useSelector(appSelectors.platformSe
 // suggested courses is max at 3 at the moment.
 export const useSuggestedCoursesData = () => useSelector(appSelectors.suggestedCourses).slice(0, 3);
 export const useSelectSessionModalData = () => useSelector(appSelectors.selectSessionModal);
+export const useSocialSettingsData = () => useSelector(appSelectors.socialSettingsData);
 
 export const useHasCourses = () => useSelector(appSelectors.hasCourses);
 export const useHasAvailableDashboards = () => useSelector(appSelectors.hasAvailableDashboards);
@@ -34,6 +36,27 @@ export const useCardEntitlementData = useCourseCardData(courseCard.entitlement);
 export const useCardGradeData = useCourseCardData(courseCard.gradeData);
 export const useCardProviderData = useCourseCardData(courseCard.courseProvider);
 export const useCardRelatedProgramsData = useCourseCardData(courseCard.relatedPrograms);
+
+export const useCardSocialSettingsData = (cardId) => {
+  const { socialShareUrl } = module.useCardCourseData(cardId);
+  const socialShareSettings = useSelector(appSelectors.socialShareSettings);
+  if (!socialShareSettings) {
+    return {
+      facebook: { isEnabled: false, shareUrl: '' },
+      twitter: { isEnabled: false, shareUrl: '' },
+    };
+  }
+  return {
+    facebook: {
+      isEnabled: socialShareSettings.facebook.isEnabled,
+      shareUrl: `${socialShareUrl}?${socialShareSettings.facebook.utmParams}`,
+    },
+    twitter: {
+      isEnabled: socialShareSettings.twitter.isEnabled,
+      shareUrl: `${socialShareUrl}?${socialShareSettings.twitter.utmParams}`,
+    },
+  };
+};
 
 export const useUpdateSelectSessionModalCallback = (dispatch, cardId) => () => dispatch(
   appActions.updateSelectSessionModal(cardId),

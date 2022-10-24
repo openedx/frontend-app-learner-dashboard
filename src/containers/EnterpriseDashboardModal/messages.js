@@ -8,7 +8,7 @@ const messages = defineMessages({
   },
   enterpriseDialogBody: {
     id: 'leanerDashboard.enterpriseDialogBody',
-    defaultMessage: 'To access the coureses available to you through {label}, visit the {label} dashboard now.',
+    defaultMessage: 'To access the courses available to you through {label}, visit the {label} dashboard now.',
     description: 'Body text for enterpise dashboard dialog',
   },
   enterpriseDialogDismissButton: {
