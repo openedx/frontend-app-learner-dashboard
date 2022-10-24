@@ -10,7 +10,6 @@ jest.mock('data/redux', () => ({
     useCardCourseRunData: jest.fn(),
     useCardEnrollmentData: jest.fn(),
     useCardGradeData: jest.fn(),
-    useCardCourseRunData: jest.fn(),
     usePlatformSettingsData: jest.fn(),
   },
 }));
