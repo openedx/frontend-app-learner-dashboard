@@ -84,10 +84,12 @@ describe('courseCard selectors module', () => {
       it('passes availableDate, converted to a date', () => {
         expect(selected.availableDate).toMatchObject(new Date(testData.availableDate));
       });
-      it('passes [certPreviewUrl, isDownloadable, isRestricted]', () => {
-        expect(selected.certPreviewUrl).toEqual(testData.certPreviewUrl);
+      it('passes [isDownloadable, isRestricted]', () => {
         expect(selected.isDownloadable).toEqual(testData.isDownloadable);
         expect(selected.isRestricted).toEqual(testData.isRestricted);
+      });
+      it('passes certPreviewUrl as app url', () => {
+        expect(selected.certPreviewUrl).toEqual(baseAppUrl(testData.certPreviewUrl));
       });
       describe('isEarnedButUnavailable', () => {
         it('passes true iff certificate is earned but availableDate is in the future', () => {
@@ -278,16 +280,16 @@ describe('courseCard selectors module', () => {
         expect(selector({ ...testData, changeDeadline: dates.yesterday }).canChange).toEqual(false);
         expect(selector({ ...testData, changeDeadline: dates.tomorrow }).canChange).toEqual(true);
       });
-      it('passes showExpirationWarning if the deadline is 0-6 months in the future', () => {
-        expect(
-          selector({ ...testData, changeDeadline: dates.yesterday }).showExpirationWarning,
-        ).toEqual(false);
-        expect(
-          selector({ ...testData, changeDeadline: dates.tomorrow }).showExpirationWarning,
-        ).toEqual(true);
-        expect(
-          selector({ ...testData, changeDeadline: dates.nextYear }).showExpirationWarning,
-        ).toEqual(false);
+      it('passes showExpirationWarning if the deadline is 0-6 months in the future and not fulfilled', () => {
+        const testSelector = ({ isFulfilled, changeDeadline }, expected) => {
+          expect(
+            selector({ ...testData, isFulfilled, changeDeadline }).showExpirationWarning,
+          ).toEqual(expected);
+        };
+        testSelector({ isFulfilled: false, changeDeadline: dates.yesterday }, false);
+        testSelector({ isFulfilled: false, changeDeadline: dates.tomorrow }, true);
+        testSelector({ isFulfilled: false, changeDeadline: dates.nextYear }, false);
+        testSelector({ isFulfilled: true, changeDeadline: dates.nextYear }, false);
       });
     });
     describe('gradeData selector', () => {

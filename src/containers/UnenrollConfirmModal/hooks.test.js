@@ -10,6 +10,7 @@ jest.mock('hooks', () => ({
 
 jest.mock('data/redux/thunkActions/app', () => ({
   refreshList: jest.fn((args) => ({ refreshList: args })),
+  unenrollFromCourse: jest.fn((...args) => ({ unenrollFromCourse: args })),
 }));
 
 const state = new MockUseState(hooks);
@@ -70,11 +71,12 @@ describe('UnenrollConfirmModal hooks', () => {
       state.mockVal(state.keys.isSkipped, testValue);
       expect(createUseUnenrollReasons().isSkipped).toEqual(testValue);
     });
-    test('skip returns callback that sets isSkipped to true', () => {
+    test('skip returns callback that sets isSkipped to true and unenrolls with no reason', () => {
       const { cb, prereqs } = out.skip.useCallback;
-      expect(prereqs).toEqual([state.setState.isSkipped]);
+      expect(prereqs).toEqual([cardId, dispatch, state.setState.isSkipped]);
       cb();
       expect(state.setState.isSkipped).toHaveBeenCalledWith(true);
+      expect(dispatch).toHaveBeenCalledWith(thunkActions.app.unenrollFromCourse(cardId));
     });
     describe('isSubmitted', () => {
       it('returns false if submittedReason is null and not isSkipped', () => {
@@ -86,13 +88,27 @@ describe('UnenrollConfirmModal hooks', () => {
       });
     });
     describe('submit', () => {
+      const customValue = 'custom-value';
+      const loadHook = ({ selectedReason, customOption }) => {
+        state.mockVal(state.keys.selectedReason, selectedReason);
+        state.mockVal(state.keys.customOption, customOption);
+        return createUseUnenrollReasons().submit.useCallback;
+      };
       it('depends on customOption and selectedReason', () => {
-        const customValue = 'custom-value';
-        state.mockVal(state.keys.selectedReason, testValue);
-        state.mockVal(state.keys.customOption, customValue);
-        const { prereqs } = createUseUnenrollReasons().submit.useCallback;
+        const { prereqs } = loadHook({ selectedReason: testValue, customOption: customValue });
         expect(prereqs).toContain(testValue);
         expect(prereqs).toContain(customValue);
+      });
+      it('dispatches unenroll action with submitted reason', () => {
+        loadHook({ selectedReason: testValue, customOption: customValue }).cb();
+        expect(dispatch).toHaveBeenCalledWith(
+          thunkActions.app.unenrollFromCourse(cardId, testValue),
+        );
+        dispatch.mockClear();
+        loadHook({ selectedReason: 'custom', customOption: customValue }).cb();
+        expect(dispatch).toHaveBeenCalledWith(
+          thunkActions.app.unenrollFromCourse(cardId, customValue),
+        );
       });
     });
   });

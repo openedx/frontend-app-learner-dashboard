@@ -47,8 +47,10 @@ export const useUnenrollReasons = ({
     selectOption: useValueCallback(setSelectedReason),
 
     isSkipped,
-    skip: React.useCallback(() => setIsSkipped(true), [setIsSkipped]),
-
+    skip: React.useCallback(() => {
+      setIsSkipped(true);
+      dispatch(thunkActions.app.unenrollFromCourse(cardId));
+    }, [cardId, dispatch, setIsSkipped]),
     isSubmitted: isSkipped,
     submit: React.useCallback(() => {
       const submittedReason = selectedReason === 'custom' ? customOption : selectedReason;

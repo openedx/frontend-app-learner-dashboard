@@ -42,6 +42,11 @@ jest.mock('moment', () => ({
   }),
 }));
 
+jest.mock('@edx/frontend-platform/react', () => ({
+  ...jest.requireActual('@edx/frontend-platform/react'),
+  ErrorPage: () => 'ErrorPage',
+}));
+
 jest.mock('@edx/frontend-platform/i18n', () => {
   const i18n = jest.requireActual('@edx/frontend-platform/i18n');
   const PropTypes = jest.requireActual('prop-types');
@@ -214,3 +219,12 @@ jest.mock('hooks', () => ({
   ...jest.requireActual('hooks'),
   nullMethod: jest.fn().mockName('hooks.nullMethod'),
 }));
+
+jest.mock('utils/hooks', () => {
+  const formatDate = jest.fn(date => new Date(date).toLocaleDateString())
+    .mockName('utils.formatDate');
+  return {
+    formatDate,
+    useFormatDate: () => formatDate,
+  };
+});

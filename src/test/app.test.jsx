@@ -14,13 +14,16 @@ import userEvent from '@testing-library/user-event';
 import thunk from 'redux-thunk';
 import { useIntl, IntlProvider } from '@edx/frontend-platform/i18n';
 
+import { useFormatDate } from 'utils/hooks';
+
 import api from 'data/services/lms/api';
 import * as fakeData from 'data/services/lms/fakeData/courses';
 import { RequestKeys, RequestStates } from 'data/constants/requests';
 import reducers from 'data/redux';
-import messages from 'i18n';
 import { selectors, thunkActions } from 'data/redux';
 import { cardId as genCardId } from 'data/redux/app/reducer';
+
+import messages from 'i18n';
 
 import App from 'App';
 import Inspector from './inspector';
@@ -42,6 +45,14 @@ jest.mock('@edx/frontend-platform/i18n', () => ({
     formatDate: (date) => `Date-${date}`,
   }),
 }));
+
+jest.mock('utils/hooks', () => {
+  const formatDate = jest.fn(date => `Date-${date}`);
+  return {
+    formatDate,
+    useFormatDate: () => formatDate,
+  };
+});
 
 jest.mock('@edx/frontend-platform/auth', () => ({
   getAuthenticatedHttpClient: jest.fn(),
@@ -212,7 +223,7 @@ describe('ESG app integration tests', () => {
           },
         }, // audit, course run and learner started, access expired, cannot upgrade
       ];
-      const { formatDate } = useIntl();
+      const formatDate = useFormatDate();
       await loadApp([courses[0]]);
       await testCourse([
         ({ cardId, cardDetails }) => {

@@ -17,6 +17,7 @@ export const CourseCardMenu = ({ cardId }) => {
   const emailSettingsModal = useEmailSettings();
   const unenrollModal = useUnenrollData();
   const { courseName } = appHooks.useCardCourseData(cardId);
+  const { isEnrolled } = appHooks.useCardEnrollmentData(cardId);
   const {
     // facebook,
     twitter,
@@ -36,13 +37,15 @@ export const CourseCardMenu = ({ cardId }) => {
           alt={formatMessage(messages.dropdownAlt)}
         />
         <Dropdown.Menu>
-          <Dropdown.Item
-            disabled={isMasquerading}
-            onClick={unenrollModal.show}
-            data-testid="unenrollModalToggle"
-          >
-            {formatMessage(messages.unenroll)}
-          </Dropdown.Item>
+          {isEnrolled && (
+            <Dropdown.Item
+              disabled={isMasquerading}
+              onClick={unenrollModal.show}
+              data-testid="unenrollModalToggle"
+            >
+              {formatMessage(messages.unenroll)}
+            </Dropdown.Item>
+          )}
           <Dropdown.Item
             disabled={isMasquerading}
             onClick={emailSettingsModal.show}

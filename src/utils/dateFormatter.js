@@ -1,5 +1,9 @@
 import moment from 'moment';
 
-const dateFormatter = (formatDate, date) => formatDate(moment(date).toDate(), { year: 'numeric', month: 'long', day: '2-digit' });
+export const dateFormatter = (formatDate, date) => formatDate(moment(date).toDate(), {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
 
 export default dateFormatter;

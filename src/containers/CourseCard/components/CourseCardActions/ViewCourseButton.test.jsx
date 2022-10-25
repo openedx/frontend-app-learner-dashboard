@@ -12,47 +12,48 @@ jest.mock('data/redux', () => ({
   },
 }));
 
-describe('ViewCourseButton', () => {
-  const props = {
-    cardId: 'cardId',
-  };
-  const homeUrl = 'homeUrl';
+let wrapper;
+const props = { cardId: 'cardId' };
+const homeUrl = 'homeUrl';
+
+const createWrapper = ({
+  hasAccess = false,
+  isEntitlement = false,
+  isExpired = false,
+}) => {
   hooks.useCardCourseRunData.mockReturnValue({ homeUrl });
-  const createWrapper = ({
-    hasAccess = false,
-    isEntitlement = false,
-    isExpired = false,
-  }) => {
-    hooks.useCardEnrollmentData.mockReturnValueOnce({ hasAccess });
-    hooks.useCardEntitlementData.mockReturnValueOnce({ isEntitlement, isExpired });
-    return shallow(<ViewCourseButton {...props} />);
-  };
-  describe('snapshot', () => {
-    test('default button', () => {
-      const wrapper = createWrapper({ hasAccess: true });
+  hooks.useCardEnrollmentData.mockReturnValueOnce({ hasAccess });
+  hooks.useCardEntitlementData.mockReturnValueOnce({ isEntitlement, isExpired });
+  return shallow(<ViewCourseButton {...props} />);
+};
+
+describe('ViewCourseButton', () => {
+  describe('learner has access to course', () => {
+    beforeEach(() => {
+      wrapper = createWrapper({ hasAccess: true });
+    });
+    test('snapshot', () => {
       expect(wrapper).toMatchSnapshot();
-      expect(wrapper.prop(htmlProps.disabled)).toEqual(false);
+    });
+    test('links to home URL', () => {
       expect(wrapper.prop(htmlProps.href)).toEqual(homeUrl);
     });
-    test('disabled button', () => {
-      const wrapper = createWrapper({});
-      expect(wrapper).toMatchSnapshot();
-      expect(wrapper.prop(htmlProps.disabled)).toEqual(true);
-      expect(wrapper.prop(htmlProps.href)).toEqual(homeUrl);
+    test('link is enabled', () => {
+      expect(wrapper.prop(htmlProps.disabled)).toEqual(false);
     });
   });
-  describe('behavior', () => {
-    it('disabled button without access', () => {
-      const wrapper = createWrapper({ hasAccess: false, isEntitlement: false, isExpired: false });
-      expect(wrapper.prop('disabled')).toEqual(true);
+  describe('learner does not have access to course', () => {
+    beforeEach(() => {
+      wrapper = createWrapper({ hasAccess: false });
     });
-    it('disabled button with access', () => {
-      const wrapper = createWrapper({ hasAccess: true, isEntitlement: true, isExpired: true });
-      expect(wrapper.prop('disabled')).toEqual(true);
+    test('snapshot', () => {
+      expect(wrapper).toMatchSnapshot();
     });
-    it('enabled button', () => {
-      const wrapper = createWrapper({ hasAccess: true, isEntitlement: false, isExpired: false });
-      expect(wrapper.prop('disabled')).toEqual(false);
+    test('links to home URL', () => {
+      expect(wrapper.prop(htmlProps.href)).toEqual(homeUrl);
+    });
+    test('link is enabled', () => {
+      expect(wrapper.prop(htmlProps.disabled)).toEqual(true);
     });
   });
 });

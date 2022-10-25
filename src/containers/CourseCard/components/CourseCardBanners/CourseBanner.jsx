@@ -5,6 +5,7 @@ import { Hyperlink } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { hooks as appHooks } from 'data/redux';
+import { useFormatDate } from 'utils/hooks';
 import Banner from 'components/Banner';
 import messages from './messages';
 
@@ -16,7 +17,8 @@ export const CourseBanner = ({ cardId }) => {
     coursewareAccess = {},
   } = appHooks.useCardEnrollmentData(cardId);
   const courseRun = appHooks.useCardCourseRunData(cardId);
-  const { formatMessage, formatDate } = useIntl();
+  const { formatMessage } = useIntl();
+  const formatDate = useFormatDate();
 
   const { hasUnmetPrerequisites, isStaff, isTooEarly } = coursewareAccess;
 

@@ -1,6 +1,34 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`App router component snapshot: enabled 1`] = `
+exports[`App router component component initialize failure snapshot 1`] = `
+<BrowserRouter>
+  <HelmetWrapper
+    defer={true}
+    encodeSpecialCharacters={true}
+  >
+    <title>
+      Learner Home
+    </title>
+  </HelmetWrapper>
+  <div>
+    <LearnerDashboardHeader />
+    <main>
+      <Alert
+        variant="danger"
+      >
+        <ErrorPage
+          message="If you experience repeated failures, please email support at test-support-url"
+        />
+      </Alert>
+    </main>
+    <Footer
+      logo="fakeLogo.png"
+    />
+  </div>
+</BrowserRouter>
+`;
+
+exports[`App router component component no network failure snapshot 1`] = `
 <BrowserRouter>
   <HelmetWrapper
     defer={true}
@@ -16,7 +44,35 @@ exports[`App router component snapshot: enabled 1`] = `
       <Dashboard />
     </main>
     <Footer
-      logo="https://edx-cdn.org/v3/stage/open-edx-tag.svg"
+      logo="fakeLogo.png"
+    />
+  </div>
+</BrowserRouter>
+`;
+
+exports[`App router component component refresh failure snapshot 1`] = `
+<BrowserRouter>
+  <HelmetWrapper
+    defer={true}
+    encodeSpecialCharacters={true}
+  >
+    <title>
+      Learner Home
+    </title>
+  </HelmetWrapper>
+  <div>
+    <LearnerDashboardHeader />
+    <main>
+      <Alert
+        variant="danger"
+      >
+        <ErrorPage
+          message="If you experience repeated failures, please email support at test-support-url"
+        />
+      </Alert>
+    </main>
+    <Footer
+      logo="fakeLogo.png"
     />
   </div>
 </BrowserRouter>

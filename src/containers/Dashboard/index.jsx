@@ -17,7 +17,7 @@ export const Dashboard = () => {
   const { pageTitle } = hooks.useDashboardMessages();
   const hasCourses = appHooks.useHasCourses();
   const hasAvailableDashboards = appHooks.useHasAvailableDashboards();
-  const initIsPending = appHooks.useIsPendingRequest(RequestKeys.initialize);
+  const initIsPending = appHooks.useRequestIsPending(RequestKeys.initialize);
   const showSelectSessionModal = appHooks.useShowSelectSessionModal();
   return (
     <div id="dashboard-container" className="d-flex flex-column p-2 pt-3">
