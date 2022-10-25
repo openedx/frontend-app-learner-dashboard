@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CourseCardContent snapshot orientation horizontal 1`] = `
+exports[`CourseCardContent snapshot not verified 1`] = `
 <Fragment>
   <a
-    className="pgn__card-wrapper-image-cap horizontal"
+    className="pgn__card-wrapper-image-cap horizontal overflow-visible"
     href="test-home-url"
   >
     <img
@@ -11,6 +11,74 @@ exports[`CourseCardContent snapshot orientation horizontal 1`] = `
       className="pgn__card-image-cap"
       src="test-banner-img-src"
     />
+  </a>
+  <Card.Body>
+    <Card.Header
+      actions={
+        <CourseCardMenu
+          cardId="test-card-id"
+        />
+      }
+      title={
+        <h3>
+          <a
+            className="course-card-title"
+            data-testid="CourseCardTitle"
+            href="test-home-url"
+          >
+            test-course-name
+          </a>
+        </h3>
+      }
+    />
+    <Card.Section
+      className="pt-0"
+    >
+      <CourseCardDetails
+        cardId="test-card-id"
+      />
+    </Card.Section>
+    <RelatedProgramsBadge
+      cardId="test-card-id"
+    />
+    <Card.Footer
+      orientation="horizontal"
+    >
+      <CourseCardActions
+        cardId="test-card-id"
+      />
+    </Card.Footer>
+  </Card.Body>
+</Fragment>
+`;
+
+exports[`CourseCardContent snapshot orientation horizontal 1`] = `
+<Fragment>
+  <a
+    className="pgn__card-wrapper-image-cap horizontal overflow-visible"
+    href="test-home-url"
+  >
+    <img
+      alt="Course thumbnail"
+      className="pgn__card-image-cap"
+      src="test-banner-img-src"
+    />
+    <span
+      className="course-card-verify-ribbon-container"
+      title="You're enrolled as a verified student"
+    >
+      <Badge
+        as="div"
+        className="w-100"
+        variant="success"
+      >
+        Verified
+      </Badge>
+      <img
+        alt="ID Verified Ribbon/Badge"
+        src="test-file-stub"
+      />
+    </span>
   </a>
   <Card.Body>
     <Card.Header
@@ -57,7 +125,7 @@ exports[`CourseCardContent snapshot orientation horizontal 1`] = `
 exports[`CourseCardContent snapshot orientation vertical 1`] = `
 <Fragment>
   <a
-    className="pgn__card-wrapper-image-cap horizontal"
+    className="pgn__card-wrapper-image-cap horizontal overflow-visible"
     href="test-home-url"
   >
     <img
@@ -65,6 +133,22 @@ exports[`CourseCardContent snapshot orientation vertical 1`] = `
       className="pgn__card-image-cap"
       src="test-banner-img-src"
     />
+    <span
+      className="course-card-verify-ribbon-container"
+      title="You're enrolled as a verified student"
+    >
+      <Badge
+        as="div"
+        className="w-100"
+        variant="success"
+      >
+        Verified
+      </Badge>
+      <img
+        alt="ID Verified Ribbon/Badge"
+        src="test-file-stub"
+      />
+    </span>
   </a>
   <Card.Body>
     <Card.Header

@@ -5,8 +5,31 @@
     .pgn__card-image-cap {
       border-bottom-left-radius: 0 !important;
     }
+    .overflow-visible {
+      overflow: visible;
+    }
     .pgn__card-header-content {
       margin-top: 1.5rem;
+    }
+
+    .course-card-verify-ribbon-container {
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      text-align: center;
+
+      .badge {
+        border-radius: 0;
+      }
+
+      > img {
+        width: 40px;
+        z-index: 1000;
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
     }
   }
 
