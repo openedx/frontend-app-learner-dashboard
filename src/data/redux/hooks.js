@@ -64,4 +64,5 @@ export const useUpdateSelectSessionModalCallback = (dispatch, cardId) => () => d
 
 export const useMasqueradeData = () => useSelector(requestSelectors.masquerade);
 
-export const useIsPendingRequest = (requestName) => useSelector(requestSelectors.isPending(requestName));
+export const useRequestIsPending = (requestName) => useSelector(requestSelectors.isPending(requestName));
+export const useRequestIsFailed = (requestName) => useSelector(requestSelectors.isFailed(requestName));

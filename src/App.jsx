@@ -4,14 +4,23 @@ import { useDispatch } from 'react-redux';
 import { Helmet } from 'react-helmet';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { AppContext } from '@edx/frontend-platform/react';
+import { ErrorPage, AppContext } from '@edx/frontend-platform/react';
 import Footer from '@edx/frontend-component-footer';
+import { Alert } from '@edx/paragon';
 
+import { RequestKeys } from 'data/constants/requests';
 import store from 'data/store';
-import { selectors, actions, thunkActions } from 'data/redux';
-import fakeData from 'data/services/lms/fakeData/courses';
+import {
+  selectors,
+  actions,
+  thunkActions,
+  hooks as appHooks,
+} from 'data/redux';
 import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
 import Dashboard from 'containers/Dashboard';
+
+import fakeData from 'data/services/lms/fakeData/courses';
+
 import messages from './messages';
 
 import './App.scss';
@@ -21,6 +30,12 @@ export const App = () => {
   // TODO: made development-only
   const { authenticatedUser } = React.useContext(AppContext);
   const { formatMessage } = useIntl();
+  const isFailed = {
+    initialize: appHooks.useRequestIsFailed(RequestKeys.initialize),
+    refreshList: appHooks.useRequestIsFailed(RequestKeys.refreshList),
+  };
+  const hasNetworkFailure = isFailed.initialize || isFailed.refreshList;
+  const { supportEmail } = appHooks.usePlatformSettingsData();
   React.useEffect(() => {
     if (authenticatedUser?.administrator || process.env.NODE_ENV === 'development') {
       window.loadEmptyData = () => {
@@ -49,7 +64,12 @@ export const App = () => {
       <div>
         <LearnerDashboardHeader />
         <main>
-          <Dashboard />
+          {hasNetworkFailure
+            ? (
+              <Alert variant="danger">
+                <ErrorPage message={formatMessage(messages.errorMessage, { supportEmail })} />
+              </Alert>
+            ) : (<Dashboard />)}
         </main>
         <Footer logo={process.env.LOGO_POWERED_BY_OPEN_EDX_URL_SVG} />
       </div>

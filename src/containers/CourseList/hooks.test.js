@@ -15,7 +15,6 @@ jest.mock('data/redux', () => ({
   hooks: {
     useCurrentCourseList: jest.fn(),
     usePageNumber: jest.fn(() => 23),
-    useIsPendingRequest: jest.fn(),
   },
 }));
 
@@ -37,7 +36,6 @@ describe('CourseList hooks', () => {
   let out;
 
   appHooks.useCurrentCourseList.mockReturnValue(testListData);
-  appHooks.useIsPendingRequest.mockReturnValue(false);
   paragon.useCheckboxSetValues.mockImplementation(() => testCheckboxSetValues);
 
   describe('state values', () => {

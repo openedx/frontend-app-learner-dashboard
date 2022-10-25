@@ -17,7 +17,6 @@ export const CourseBanner = ({ cardId }) => {
     coursewareAccess = {},
   } = appHooks.useCardEnrollmentData(cardId);
   const courseRun = appHooks.useCardCourseRunData(cardId);
-  const course = appHooks.useCardCourseData(cardId);
   const { formatMessage } = useIntl();
   const formatDate = useFormatDate();
 

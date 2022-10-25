@@ -21,7 +21,7 @@ jest.mock('data/redux', () => ({
     useHasCourses: jest.fn(),
     useHasAvailableDashboards: jest.fn(),
     useShowSelectSessionModal: jest.fn(),
-    useIsPendingRequest: jest.fn(),
+    useRequestIsPending: jest.fn(),
   },
 }));
 
@@ -49,7 +49,7 @@ describe('Dashboard', () => {
   }) => {
     appHooks.useHasCourses.mockReturnValueOnce(hasCourses);
     appHooks.useHasAvailableDashboards.mockReturnValueOnce(hasAvailableDashboards);
-    appHooks.useIsPendingRequest.mockReturnValueOnce(initIsPending);
+    appHooks.useRequestIsPending.mockReturnValueOnce(initIsPending);
     appHooks.useShowSelectSessionModal.mockReturnValueOnce(showSelectSessionModal);
     return shallow(<Dashboard />);
   };
