@@ -1,12 +1,11 @@
 import { keyStore } from 'utils';
-import urls from 'data/services/lms/urls';
+import { baseAppUrl } from 'data/services/lms/urls';
 
 import simpleSelectors from './simpleSelectors';
 import * as module from './courseCard';
 
 jest.mock('data/services/lms/urls', () => ({
-  baseAppUrl: url => ({ baseAppUrl: url }),
-  learningMfeUrl: url => ({ learningMfeUrl: url }),
+  baseAppUrl: url => ({ baseAppUrl: url })
 }));
 
 jest.mock('./simpleSelectors', () => ({
@@ -18,7 +17,6 @@ jest.mock('./simpleSelectors', () => ({
 
 const { courseCard } = module;
 const { cardSimpleSelectors } = simpleSelectors;
-const { baseAppUrl, learningMfeUrl } = urls;
 
 const moduleKeys = keyStore(module);
 
@@ -181,10 +179,10 @@ describe('courseCard selectors module', () => {
         expect(selected.marketingUrl).toEqual(testData.marketingUrl);
         expect(selected.upgradeUrl).toEqual(testData.upgradeUrl);
       });
-      it('passes [progressUrl, unenrollUrl, resumeUrl], converted to learningMfeUrls', () => {
-        expect(selected.progressUrl).toEqual(learningMfeUrl(testData.progressUrl));
-        expect(selected.resumeUrl).toEqual(learningMfeUrl(testData.resumeUrl));
-        expect(selected.unenrollUrl).toEqual(learningMfeUrl(testData.unenrollUrl));
+      it('passes [progressUrl, unenrollUrl, resumeUrl], converted to baseAppUrl', () => {
+        expect(selected.progressUrl).toEqual(baseAppUrl(testData.progressUrl));
+        expect(selected.resumeUrl).toEqual(baseAppUrl(testData.resumeUrl));
+        expect(selected.unenrollUrl).toEqual(baseAppUrl(testData.unenrollUrl));
       });
     });
     describe('enrollment selector', () => {
