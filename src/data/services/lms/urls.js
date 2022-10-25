@@ -15,7 +15,7 @@ const entitlementEnrollment = (uuid) => `${api}/entitlements/v1/entitlements/${u
 const isAbsoluteUrl = (url) => url.startsWith('http://') || url.startsWith('https://');
 
 export const baseAppUrl = (url) => (isAbsoluteUrl(url) ? url : baseUrl + url);
-export const learningMfeUrl = (url) => (isAbsoluteUrl(url) ? url : configuration.LEARNING_MICROFRONTEND_URL + url);
+export const learningMfeUrl = (url) => (isAbsoluteUrl(url) ? url : configuration.LEARNING_BASE_URL + url);
 
 // static view url
 const programsUrl = baseAppUrl('/dashboard/programs');
