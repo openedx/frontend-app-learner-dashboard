@@ -69,7 +69,7 @@ describe('CourseCardMenu', () => {
     useEmailSettings.mockReturnValueOnce({
       ...defaultEmailSettingsModal,
       ...emailSettingsModal,
-    })
+    });
     useUnenrollData.mockReturnValueOnce({
       ...defaultUnenrollModal,
       ...unenrollModal,
@@ -78,10 +78,10 @@ describe('CourseCardMenu', () => {
       ...defaultSocialShare,
       ...socialShare,
     });
-    appHooks.useCardCourseData.mockReturnValueOnce({...defaultCardCourseData, ...courseCardData});
+    appHooks.useCardCourseData.mockReturnValueOnce({ ...defaultCardCourseData, ...courseCardData });
     appHooks.useCardEnrollmentData.mockReturnValueOnce({ ...defaultCardEnrollmentData, ...enrollmentData });
     appHooks.useMasqueradeData.mockReturnValueOnce({ ...defaultMasqueradeData, ...masqueradeData });
-    return  shallow(<CourseCardMenu {...props} />);
+    return shallow(<CourseCardMenu {...props} />);
   };
 
   describe('snapshots', () => {

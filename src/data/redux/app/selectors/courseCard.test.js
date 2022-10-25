@@ -5,7 +5,7 @@ import simpleSelectors from './simpleSelectors';
 import * as module from './courseCard';
 
 jest.mock('data/services/lms/urls', () => ({
-  baseAppUrl: url => ({ baseAppUrl: url })
+  baseAppUrl: url => ({ baseAppUrl: url }),
 }));
 
 jest.mock('./simpleSelectors', () => ({
