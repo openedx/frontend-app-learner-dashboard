@@ -1,10 +1,9 @@
 import { StrictDict } from 'utils';
-import urls from 'data/services/lms/urls';
+import { baseAppUrl, learningMfeUrl } from 'data/services/lms/urls';
 
 import * as module from './courseCard';
 import * as simpleSelectors from './simpleSelectors';
 
-const { baseAppUrl, learningMfeUrl } = urls;
 const { cardSimpleSelectors, mkCardSelector } = simpleSelectors;
 
 const today = new Date();

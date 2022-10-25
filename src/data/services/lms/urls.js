@@ -12,8 +12,10 @@ const courseUnenroll = `${baseUrl}/change_enrollment`;
 const updateEmailSettings = `${api}/change_email_settings`;
 const entitlementEnrollment = (uuid) => `${api}/entitlements/v1/entitlements/${uuid}/enrollments`;
 
-const baseAppUrl = (url) => baseUrl + url;
-const learningMfeUrl = (url) => configuration.LEARNING_MICROFRONTEND_URL + url;
+const isAbsoluteUrl = (url) => url.startsWith('http://') || url.startsWith('https://');
+
+export const baseAppUrl = (url) => (isAbsoluteUrl(url) ? url : baseUrl + url);
+export const learningMfeUrl = (url) => (isAbsoluteUrl(url) ? url : configuration.LEARNING_MICROFRONTEND_URL + url);
 
 // static view url
 const programsUrl = baseAppUrl('/dashboard/programs');
