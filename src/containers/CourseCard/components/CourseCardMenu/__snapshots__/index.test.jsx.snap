@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CourseCardMenu enrolled, share enabled snapshot 1`] = `
+exports[`CourseCardMenu snapshots default 1`] = `
 <Fragment>
   <Dropdown>
     <Dropdown.Toggle
@@ -49,7 +49,44 @@ exports[`CourseCardMenu enrolled, share enabled snapshot 1`] = `
 </Fragment>
 `;
 
-exports[`CourseCardMenu masquerading snapshot 1`] = `
+exports[`CourseCardMenu snapshots email disabled 1`] = `
+<Fragment>
+  <Dropdown>
+    <Dropdown.Toggle
+      alt="Course actions dropdown"
+      as="IconButton"
+      iconAs="Icon"
+      id="course-actions-dropdown-test-card-id"
+      src={[MockFunction icons.MoreVert]}
+      variant="primary"
+    />
+    <Dropdown.Menu>
+      <Dropdown.Item
+        data-testid="unenrollModalToggle"
+        disabled={false}
+        onClick={[MockFunction unenrollShow]}
+      >
+        Unenroll
+      </Dropdown.Item>
+      <Dropdown.Item>
+        <TwitterShareButton
+          title="I'm taking test-course-name online with facebook-social-brand.  Check it out!"
+          url="facebook-share-url"
+        >
+          Share to Twitter
+        </TwitterShareButton>
+      </Dropdown.Item>
+    </Dropdown.Menu>
+  </Dropdown>
+  <UnenrollConfirmModal
+    cardId="test-card-id"
+    closeModal={[MockFunction unenrollHide]}
+    show={false}
+  />
+</Fragment>
+`;
+
+exports[`CourseCardMenu snapshots masquerading 1`] = `
 <Fragment>
   <Dropdown>
     <Dropdown.Toggle
@@ -98,7 +135,7 @@ exports[`CourseCardMenu masquerading snapshot 1`] = `
 </Fragment>
 `;
 
-exports[`CourseCardMenu not enrolled, share disabled snapshot 1`] = `
+exports[`CourseCardMenu snapshots not enrolled 1`] = `
 <Fragment>
   <Dropdown>
     <Dropdown.Toggle
@@ -110,6 +147,55 @@ exports[`CourseCardMenu not enrolled, share disabled snapshot 1`] = `
       variant="primary"
     />
     <Dropdown.Menu>
+      <Dropdown.Item
+        data-testid="emailSettingsModalToggle"
+        disabled={false}
+        onClick={[MockFunction emailSettingShow]}
+      >
+        Email settings
+      </Dropdown.Item>
+      <Dropdown.Item>
+        <TwitterShareButton
+          title="I'm taking test-course-name online with facebook-social-brand.  Check it out!"
+          url="facebook-share-url"
+        >
+          Share to Twitter
+        </TwitterShareButton>
+      </Dropdown.Item>
+    </Dropdown.Menu>
+  </Dropdown>
+  <UnenrollConfirmModal
+    cardId="test-card-id"
+    closeModal={[MockFunction unenrollHide]}
+    show={false}
+  />
+  <EmailSettingsModal
+    cardId="test-card-id"
+    closeModal={[MockFunction emailSettingHide]}
+    show={false}
+  />
+</Fragment>
+`;
+
+exports[`CourseCardMenu snapshots share buttons disabled 1`] = `
+<Fragment>
+  <Dropdown>
+    <Dropdown.Toggle
+      alt="Course actions dropdown"
+      as="IconButton"
+      iconAs="Icon"
+      id="course-actions-dropdown-test-card-id"
+      src={[MockFunction icons.MoreVert]}
+      variant="primary"
+    />
+    <Dropdown.Menu>
+      <Dropdown.Item
+        data-testid="unenrollModalToggle"
+        disabled={false}
+        onClick={[MockFunction unenrollShow]}
+      >
+        Unenroll
+      </Dropdown.Item>
       <Dropdown.Item
         data-testid="emailSettingsModalToggle"
         disabled={false}

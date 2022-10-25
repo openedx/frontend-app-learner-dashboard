@@ -17,7 +17,7 @@ export const CourseCardMenu = ({ cardId }) => {
   const emailSettingsModal = useEmailSettings();
   const unenrollModal = useUnenrollData();
   const { courseName } = appHooks.useCardCourseData(cardId);
-  const { isEnrolled } = appHooks.useCardEnrollmentData(cardId);
+  const { isEnrolled, isEmailEnabled } = appHooks.useCardEnrollmentData(cardId);
   const {
     // facebook,
     twitter,
@@ -46,13 +46,15 @@ export const CourseCardMenu = ({ cardId }) => {
               {formatMessage(messages.unenroll)}
             </Dropdown.Item>
           )}
-          <Dropdown.Item
-            disabled={isMasquerading}
-            onClick={emailSettingsModal.show}
-            data-testid="emailSettingsModalToggle"
-          >
-            {formatMessage(messages.emailSettings)}
-          </Dropdown.Item>
+          {isEmailEnabled && (
+            <Dropdown.Item
+              disabled={isMasquerading}
+              onClick={emailSettingsModal.show}
+              data-testid="emailSettingsModalToggle"
+            >
+              {formatMessage(messages.emailSettings)}
+            </Dropdown.Item>
+          )}
           {/* Disabled pending PM decision on missing quote param in updated FB api.
             {facebook.isEnabled && (
               <Dropdown.Item>
@@ -88,11 +90,13 @@ export const CourseCardMenu = ({ cardId }) => {
         closeModal={unenrollModal.hide}
         cardId={cardId}
       />
-      <EmailSettingsModal
-        show={emailSettingsModal.isVisible}
-        closeModal={emailSettingsModal.hide}
-        cardId={cardId}
-      />
+      {isEmailEnabled && (
+        <EmailSettingsModal
+          show={emailSettingsModal.isVisible}
+          closeModal={emailSettingsModal.hide}
+          cardId={cardId}
+        />
+      )}
     </>
   );
 };
