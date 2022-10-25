@@ -1,13 +1,15 @@
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { hooks as appHooks } from 'data/redux';
+import { useFormatDate } from 'utils/hooks';
 
 import * as hooks from './hooks';
 import messages from './messages';
 
 export const useAccessMessage = ({ cardId }) => {
-  const { formatMessage, formatDate } = useIntl();
+  const { formatMessage } = useIntl();
   const enrollment = appHooks.useCardEnrollmentData(cardId);
   const courseRun = appHooks.useCardCourseRunData(cardId);
+  const formatDate = useFormatDate();
   if (!courseRun.isStarted) {
     if (!courseRun.startDate) { return null; }
     const startDate = formatDate(courseRun.startDate);

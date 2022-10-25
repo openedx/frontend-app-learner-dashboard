@@ -214,3 +214,12 @@ jest.mock('hooks', () => ({
   ...jest.requireActual('hooks'),
   nullMethod: jest.fn().mockName('hooks.nullMethod'),
 }));
+
+jest.mock('utils/hooks', () => {
+  const formatDate = jest.fn(date => new Date(date).toLocaleDateString())
+    .mockName('utils.formatDate');
+  return {
+    formatDate,
+    useFormatDate: () => formatDate,
+  };
+});

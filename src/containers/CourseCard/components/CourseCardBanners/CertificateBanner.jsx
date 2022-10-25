@@ -6,6 +6,7 @@ import { MailtoLink, Hyperlink } from '@edx/paragon';
 import { CheckCircle } from '@edx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
+import { useFormatDate } from 'utils/hooks';
 import { hooks as appHooks } from 'data/redux';
 import Banner from 'components/Banner';
 
@@ -21,7 +22,8 @@ export const CertificateBanner = ({ cardId }) => {
   const { isArchived } = appHooks.useCardCourseRunData(cardId);
   const { minPassingGrade, progressUrl } = appHooks.useCardCourseRunData(cardId);
   const { supportEmail, billingEmail } = appHooks.usePlatformSettingsData();
-  const { formatMessage, formatDate } = useIntl();
+  const { formatMessage } = useIntl();
+  const formatDate = useFormatDate();
 
   const emailLink = address => address && <MailtoLink to={address}>{address}</MailtoLink>;
 

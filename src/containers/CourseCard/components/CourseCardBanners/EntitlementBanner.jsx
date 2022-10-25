@@ -6,7 +6,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { Button, MailtoLink } from '@edx/paragon';
 
 import { hooks as appHooks } from 'data/redux';
-import { dateFormatter } from 'utils';
+import { useFormatDate } from 'utils/hooks';
 
 import Banner from 'components/Banner';
 import messages from './messages';
@@ -23,7 +23,8 @@ export const EntitlementBanner = ({ cardId }) => {
   } = appHooks.useCardEntitlementData(cardId);
   const { supportEmail } = appHooks.usePlatformSettingsData();
   const openSessionModal = appHooks.useUpdateSelectSessionModalCallback(dispatch, cardId);
-  const { formatDate, formatMessage } = useIntl();
+  const { formatMessage } = useIntl();
+  const formatDate = useFormatDate();
 
   if (!isEntitlement) {
     return null;
@@ -42,7 +43,7 @@ export const EntitlementBanner = ({ cardId }) => {
     return (
       <Banner>
         {formatMessage(messages.entitlementExpiringSoon, {
-          changeDeadline: dateFormatter(formatDate, changeDeadline),
+          changeDeadline: formatDate(changeDeadline),
           selectSessionButton: (
             <Button variant="link" size="inline" className="m-0 p-0" onClick={openSessionModal}>
               {formatMessage(messages.selectSession)}

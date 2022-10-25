@@ -10,11 +10,10 @@ import messages from './messages';
 export const ViewCourseButton = ({ cardId }) => {
   const { homeUrl } = hooks.useCardCourseRunData(cardId);
   const { hasAccess } = hooks.useCardEnrollmentData(cardId);
-  const { isEntitlement, isExpired } = hooks.useCardEntitlementData(cardId);
   const { formatMessage } = useIntl();
   return (
     <Button
-      disabled={!hasAccess || (isEntitlement && isExpired)}
+      disabled={!hasAccess}
       as="a"
       href={homeUrl}
     >

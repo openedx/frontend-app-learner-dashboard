@@ -1,19 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ViewCourseButton snapshot default button 1`] = `
+exports[`ViewCourseButton learner does not have access to course snapshot 1`] = `
 <Button
   as="a"
-  disabled={false}
+  disabled={true}
   href="homeUrl"
 >
   View Course
 </Button>
 `;
 
-exports[`ViewCourseButton snapshot disabled button 1`] = `
+exports[`ViewCourseButton learner has access to course snapshot 1`] = `
 <Button
   as="a"
-  disabled={true}
+  disabled={false}
   href="homeUrl"
 >
   View Course
