@@ -107,7 +107,6 @@ describe('courseCard selectors module', () => {
           bannerImgSrc: 'test-banner-img-src',
           courseNumber: 'test-course-number',
           courseName: 'test-course-name',
-          website: 'test-website',
           socialShareUrl: 'test-social-share-url',
         });
       });
@@ -117,10 +116,9 @@ describe('courseCard selectors module', () => {
       it('passes bannerImgSrc, converted to a baseAppUrl', () => {
         expect(selected.bannerImgSrc).toEqual(baseAppUrl(testData.bannerImgSrc));
       });
-      it('passes [courseNumber, courseName, website, socialShareUrl]', () => {
+      it('passes [courseNumber, courseName, socialShareUrl]', () => {
         expect(selected.courseNumber).toEqual(testData.courseNumber);
         expect(selected.courseName).toEqual(testData.courseName);
-        expect(selected.website).toEqual(testData.website);
         expect(selected.socialShareUrl).toEqual(testData.socialShareUrl);
       });
     });
@@ -149,7 +147,6 @@ describe('courseCard selectors module', () => {
           courseId: 'test-course-id',
           isArchived: 'test-is-archived',
           isStarted: 'test-is-started',
-          isFinished: 'test-is-finished',
 
           minPassingGrade: 0.9354,
 
@@ -169,11 +166,10 @@ describe('courseCard selectors module', () => {
         expect(selected.endDate).toEqual(new Date(testData.endDate));
         expect(selected.startDate).toEqual(new Date(testData.startDate));
       });
-      it('passes [courseId, isArchived, isStarted, isFinished]', () => {
+      it('passes [courseId, isArchived, isStarted]', () => {
         expect(selected.courseId).toEqual(testData.courseId);
         expect(selected.isArchived).toEqual(testData.isArchived);
         expect(selected.isStarted).toEqual(testData.isStarted);
-        expect(selected.isFinished).toEqual(testData.isFinished);
       });
       it('passes minPassingGrade floored from float to a percentage value', () => {
         expect(selected.minPassingGrade).toEqual(93);
