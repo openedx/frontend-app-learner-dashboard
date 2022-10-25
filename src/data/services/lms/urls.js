@@ -12,10 +12,11 @@ const courseUnenroll = `${baseUrl}/change_enrollment`;
 const updateEmailSettings = `${api}/change_email_settings`;
 const entitlementEnrollment = (uuid) => `${api}/entitlements/v1/entitlements/${uuid}/enrollments`;
 
-const isAbsoluteUrl = (url) => url.startsWith('http://') || url.startsWith('https://');
+// if url is null or absolute, return it as is
+const updateUrl = (base, url) => ((url == null || url.startsWith('http://') || url.startsWith('https://')) ? url : `${base}${url}`);
 
-export const baseAppUrl = (url) => (isAbsoluteUrl(url) ? url : baseUrl + url);
-export const learningMfeUrl = (url) => (isAbsoluteUrl(url) ? url : configuration.LEARNING_BASE_URL + url);
+export const baseAppUrl = (url) => updateUrl(baseUrl, url);
+export const learningMfeUrl = (url) => updateUrl(configuration.LEARNING_BASE_URL, url);
 
 // static view url
 const programsUrl = baseAppUrl('/dashboard/programs');
