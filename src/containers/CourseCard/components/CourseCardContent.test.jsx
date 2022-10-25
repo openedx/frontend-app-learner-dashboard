@@ -7,6 +7,7 @@ jest.mock('data/redux', () => ({
   hooks: {
     useCardCourseData: jest.fn(),
     useCardCourseRunData: jest.fn(),
+    useCardEnrollmentData: jest.fn(),
   },
 }));
 
@@ -29,11 +30,24 @@ describe('CourseCardContent', () => {
   });
   describe('snapshot', () => {
     test('orientation vertical', () => {
+      hooks.useCardEnrollmentData.mockReturnValue({
+        isVerified: true,
+      });
       const wrapper = shallow(<CourseCardContent {...props} />);
       expect(wrapper).toMatchSnapshot();
     });
     test('orientation horizontal', () => {
+      hooks.useCardEnrollmentData.mockReturnValue({
+        isVerified: true,
+      });
       const wrapper = shallow(<CourseCardContent {...props} orientation="horizontal" />);
+      expect(wrapper).toMatchSnapshot();
+    });
+    test('not verified', () => {
+      hooks.useCardEnrollmentData.mockReturnValue({
+        isVerified: false,
+      });
+      const wrapper = shallow(<CourseCardContent {...props} />);
       expect(wrapper).toMatchSnapshot();
     });
   });

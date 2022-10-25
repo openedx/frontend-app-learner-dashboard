@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 // import PropTypes from 'prop-types';
-import { Card } from '@edx/paragon';
+import { Card, Badge } from '@edx/paragon';
 
 import { hooks as appHooks } from 'data/redux';
 
+import verifiedRibbon from 'assets/verified-ribbon.png';
 import RelatedProgramsBadge from './RelatedProgramsBadge';
 import CourseCardMenu from './CourseCardMenu';
 import CourseCardActions from './CourseCardActions';
@@ -18,14 +19,23 @@ export const CourseCardContent = ({ cardId, orientation }) => {
   const { formatMessage } = useIntl();
   const { courseName, bannerImgSrc } = appHooks.useCardCourseData(cardId);
   const { homeUrl } = appHooks.useCardCourseRunData(cardId);
+  const { isVerified } = appHooks.useCardEnrollmentData(cardId);
   return (
     <>
-      <a className="pgn__card-wrapper-image-cap horizontal" href={homeUrl}>
+      <a className="pgn__card-wrapper-image-cap horizontal overflow-visible" href={homeUrl}>
         <img
           className="pgn__card-image-cap"
           src={bannerImgSrc}
           alt={formatMessage(messages.bannerAlt)}
         />
+        {
+          isVerified && (
+            <span className="course-card-verify-ribbon-container" title={formatMessage(messages.verifiedHoverDescription)}>
+              <Badge as="div" variant="success" className="w-100">{formatMessage(messages.verifiedBanner)}</Badge>
+              <img src={verifiedRibbon} alt={formatMessage(messages.verifiedBannerRibbonAlt)} />
+            </span>
+          )
+        }
       </a>
       <Card.Body>
         <Card.Header
