@@ -24,9 +24,9 @@ jest.mock('data/redux', () => ({
     },
   },
   thunkActions: {
-    requests: {
-      updateEntitlementEnrollment: jest.fn((...args) => ({ updateEntitlementSession: args })),
-      leaveEntitlementSession: jest.fn((...args) => ({ leaveEntitlementSession: args })),
+    app: {
+      leaveEntitlementSession: jest.fn(),
+      switchEntitlementEnrollment: jest.fn(),
     },
   },
 }));
@@ -111,14 +111,14 @@ describe('SelectSessionModal hooks', () => {
           state.mockVal(state.keys.selectedSession, testValue);
           runHook({});
           expect(out.handleSubmit()).toEqual(dispatch(
-            thunkActions.requests.updateEntitlementEnrollment({ courseId: testValue, uuid }),
+            thunkActions.app.switchEntitlementEnrollment({ courseId: testValue, uuid }),
           ));
         });
         it('dispatches leaveEntitlementSession if LEAVE_OPTION is selected', () => {
           state.mockVal(state.keys.selectedSession, LEAVE_OPTION);
           runHook({});
           expect(out.handleSubmit()).toEqual(dispatch(
-            thunkActions.requests.leaveEntitlementSession({ uuid }),
+            thunkActions.app.leaveEntitlementSession({ uuid }),
           ));
         });
       });
