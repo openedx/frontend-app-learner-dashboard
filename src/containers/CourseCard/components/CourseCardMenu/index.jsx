@@ -78,6 +78,7 @@ export const CourseCardMenu = ({ cardId }) => {
                   courseName,
                   socialBrand: twitter.socialBrand,
                 })}
+                className="w-100 text-left"
               >
                 {formatMessage(messages.shareToTwitter)}
               </ReactShare.TwitterShareButton>

@@ -28,6 +28,7 @@ exports[`CourseCardMenu default snapshot with everything enable 1`] = `
       </Dropdown.Item>
       <Dropdown.Item>
         <TwitterShareButton
+          className="w-100 text-left"
           title="I'm taking test-course-name online with twitter-social-brand.  Check it out!"
           url="twitter-share-url"
         >
@@ -70,6 +71,7 @@ exports[`CourseCardMenu email settings disabled snapshot 1`] = `
       </Dropdown.Item>
       <Dropdown.Item>
         <TwitterShareButton
+          className="w-100 text-left"
           title="I'm taking test-course-name online with twitter-social-brand.  Check it out!"
           url="twitter-share-url"
         >
@@ -138,6 +140,7 @@ exports[`CourseCardMenu is masquerading snapshot 1`] = `
       </Dropdown.Item>
       <Dropdown.Item>
         <TwitterShareButton
+          className="w-100 text-left"
           title="I'm taking test-course-name online with twitter-social-brand.  Check it out!"
           url="twitter-share-url"
         >
@@ -180,6 +183,7 @@ exports[`CourseCardMenu is not enrolled 1`] = `
       </Dropdown.Item>
       <Dropdown.Item>
         <TwitterShareButton
+          className="w-100 text-left"
           title="I'm taking test-course-name online with twitter-social-brand.  Check it out!"
           url="twitter-share-url"
         >
@@ -275,6 +279,7 @@ exports[`CourseCardMenu unenroll disabled snapshot 1`] = `
       </Dropdown.Item>
       <Dropdown.Item>
         <TwitterShareButton
+          className="w-100 text-left"
           title="I'm taking test-course-name online with twitter-social-brand.  Check it out!"
           url="twitter-share-url"
         >
