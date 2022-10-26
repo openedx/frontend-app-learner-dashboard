@@ -12,7 +12,7 @@ export const sortFn = (transform, { reverse }) => (v1, v2) => {
 
 export const courseFilters = StrictDict({
   [FilterKeys.notEnrolled]: (course) => !course.enrollment.isEnrolled,
-  [FilterKeys.done]: (course) => course.enrollment.hasFinished,
+  [FilterKeys.done]: (course) => course.courseRun.isArchived,
   [FilterKeys.upgraded]: (course) => course.enrollment.isVerified,
   [FilterKeys.inProgress]: (course) => course.enrollment.hasStarted,
   [FilterKeys.notStarted]: (course) => !course.enrollment.hasStarted,

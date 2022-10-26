@@ -196,7 +196,6 @@ describe('courseCard selectors module', () => {
           isEnrolled: 'test-is-enrolled',
           lastEnrolled: 'test-last-enrolled',
           hasStarted: 'test-has-started',
-          hasFinished: 'test-has-finished',
           accessExpirationDate: '3000-10-20',
           canUpgrade: 'test-can-upgrade',
           isAudit: 'test-is-audit',
@@ -211,10 +210,9 @@ describe('courseCard selectors module', () => {
       it('returns { isEnrolled: false } object if null enrollment received', () => {
         expect(selector(null)).toEqual({ isEnrolled: false });
       });
-      it('passes [coursewareAccess, hasStarted, hasFinished, isEnrolled, lastEnrolled]', () => {
+      it('passes [coursewareAccess, hasStarted, isEnrolled, lastEnrolled]', () => {
         expect(selected.coursewareAccess).toEqual(testData.coursewareAccess);
         expect(selected.hasStarted).toEqual(testData.hasStarted);
-        expect(selected.hasFinished).toEqual(testData.hasFinished);
         expect(selected.isEnrolled).toEqual(testData.isEnrolled);
         expect(selected.lastEnrolled).toEqual(testData.lastEnrolled);
       });
