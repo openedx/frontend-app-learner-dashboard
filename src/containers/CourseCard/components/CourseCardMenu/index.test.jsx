@@ -35,154 +35,103 @@ const defaultUnenrollModal = {
   hide: jest.fn().mockName('unenrollHide'),
 };
 const defaultSocialShare = {
-  // facebook: {
-  //   isEnabled: true,
-  //   shareUrl: 'facebook-share-url',
-  //   socialBrand: 'facebook-social-brand',
-  // },
+  facebook: {
+    isEnabled: true,
+    shareUrl: 'facebook-share-url',
+    socialBrand: 'facebook-social-brand',
+  },
   twitter: {
     isEnabled: true,
     shareUrl: 'twitter-share-url',
     socialBrand: 'twitter-social-brand',
   },
 };
-const defaultCardCourseData = {
-  courseName: 'test-course-name',
-};
-const defaultCardEnrollmentData = {
-  isEnrolled: true,
-  isEmailEnabled: true,
-};
-const defaultMasqueradeData = {
-  isMasquerading: false,
-};
+const courseName = 'test-course-name';
+let wrapper;
+let el;
 
 describe('CourseCardMenu', () => {
-  useEmailSettings.mockReturnValue({
-    ...defaultEmailSettingsModal,
+  beforeEach(() => {
+    useEmailSettings.mockReturnValue(defaultEmailSettingsModal);
+    useUnenrollData.mockReturnValue(defaultUnenrollModal);
+    appHooks.useCardSocialSettingsData.mockReturnValue(defaultSocialShare);
+    appHooks.useCardCourseData.mockReturnValue({ courseName });
+    appHooks.useCardEnrollmentData.mockReturnValue({ isEnrolled: true, isEmailEnabled: true });
+    appHooks.useMasqueradeData.mockReturnValue({ isMasquerading: false });
   });
-  useUnenrollData.mockReturnValue({
-    ...defaultUnenrollModal,
-  });
-  const createWrapper = ({
-    socialShare,
-    courseCardData,
-    enrollmentData,
-    masqueradeData,
-  } = {}) => {
-    appHooks.useCardSocialSettingsData.mockReturnValueOnce({
-      ...defaultSocialShare,
-      ...socialShare,
-    });
-    appHooks.useCardCourseData.mockReturnValueOnce({ ...defaultCardCourseData, ...courseCardData });
-    appHooks.useCardEnrollmentData.mockReturnValueOnce({ ...defaultCardEnrollmentData, ...enrollmentData });
-    appHooks.useMasqueradeData.mockReturnValueOnce({ ...defaultMasqueradeData, ...masqueradeData });
-    return shallow(<CourseCardMenu {...props} />);
-  };
-
-  test('default snapshot with everything enable', () => {
-    const wrapper = createWrapper();
-    expect(wrapper).toMatchSnapshot();
-  });
-
-  test('is not enrolled', () => {
-    const wrapper = createWrapper({ enrollmentData: { isEnrolled: false } });
-    expect(wrapper).toMatchSnapshot();
-  });
-
-  describe('share buttons', () => {
-    describe('enabled', () => {
-      const wrapper = createWrapper();
-      test('twitter share url', () => {
-        // expect(wrapper.find('FacebookShareButton')).toHaveLength(1);
-        const twitterEl = wrapper.find('TwitterShareButton');
-        expect(twitterEl.exists()).toBe(true);
-        expect(twitterEl.prop('url')).toEqual('twitter-share-url');
-      });
-    });
-    describe('disabled', () => {
-      const wrapper = createWrapper({
-        socialShare: {
-          // facebook: {
-          //   isEnabled: false,
-          // },
-          twitter: {
-            isEnabled: false,
-          },
-        },
-      });
-      test('snapshot', () => {
-        expect(wrapper).toMatchSnapshot();
-      });
-      test('remove on disabled', () => {
-        // expect(wrapper.find('FacebookShareButton').exists()).toBe(false);
-        expect(wrapper.find('TwitterShareButton').exists()).toBe(false);
-      });
-    });
-  });
-
-  describe('email settings', () => {
-    describe('enabled', () => {
-      const wrapper = createWrapper();
-      const el = wrapper.find({ 'data-testid': 'emailSettingsModalToggle' });
-      test('show email settings modal', () => {
-        el.simulate('click');
-        expect(useEmailSettings().show).toHaveBeenCalled();
-      });
-    });
-    describe('disabled', () => {
-      const wrapper = createWrapper({
-        enrollmentData: {
-          isEmailEnabled: false,
-        },
-      });
-      test('snapshot', () => {
-        expect(wrapper).toMatchSnapshot();
-      });
-      test('remove on disabled', () => {
-        expect(wrapper.find({ 'data-testid': 'emailSettingsModalToggle' }).exists()).toBe(false);
-      });
-    });
-  });
-
-  describe('unenroll', () => {
-    describe('enabled', () => {
-      const wrapper = createWrapper();
-      const el = wrapper.find({ 'data-testid': 'unenrollModalToggle' });
-      test('show unenroll modal', () => {
-        el.simulate('click');
-        expect(useUnenrollData().show).toHaveBeenCalled();
-      });
-    });
-    describe('disabled', () => {
-      const wrapper = createWrapper({
-        enrollmentData: {
-          isEnrolled: false,
-        },
-      });
-      test('snapshot', () => {
-        expect(wrapper).toMatchSnapshot();
-      });
-      test('remove on disabled', () => {
-        expect(wrapper.find({ 'data-testid': 'unenrollModalToggle' }).exists()).toBe(false);
-      });
-    });
-  });
-
-  describe('is masquerading', () => {
-    const wrapper = createWrapper({
-      masqueradeData: {
-        isMasquerading: true,
-      },
+  describe('enrolled, share enabled, email setting enable', () => {
+    beforeEach(() => {
+      wrapper = shallow(<CourseCardMenu {...props} />);
     });
     test('snapshot', () => {
       expect(wrapper).toMatchSnapshot();
     });
-    it('disables unenroll and email items but not share social button', () => {
-      expect(wrapper.find({ 'data-testid': 'unenrollModalToggle' }).prop('disabled')).toBe(true);
-      expect(wrapper.find({ 'data-testid': 'emailSettingsModalToggle' }).prop('disabled')).toBe(true);
-      // expect(wrapper.find('FacebookShareButton').exists()).toBe(true);
-      expect(wrapper.find('TwitterShareButton').exists()).toBe(true);
+    it('renders share buttons', () => {
+      // expect(wrapper.find('FacebookShareButton').length).toEqual(1);
+      el = wrapper.find('TwitterShareButton');
+      expect(el.length).toEqual(1);
+      expect(el.prop('url')).toEqual('twitter-share-url');
+    });
+    it('renders enabled unenroll modal toggle', () => {
+      el = wrapper.find({ 'data-testid': 'unenrollModalToggle' });
+      expect(el.props().disabled).toEqual(false);
+    });
+    it('renders enabled email settings modal toggle', () => {
+      el = wrapper.find({ 'data-testid': 'emailSettingsModalToggle' });
+      expect(el.props().disabled).toEqual(false);
+    });
+    it('renders enabled email settings modal toggle', () => {
+      el = wrapper.find({ 'data-testid': 'emailSettingsModalToggle' });
+      expect(el.props().disabled).toEqual(false);
+    });
+  });
+  describe('not enrolled, share disabled, email setting disabled', () => {
+    beforeEach(() => {
+      appHooks.useCardSocialSettingsData.mockReturnValueOnce({
+        ...defaultSocialShare,
+        twitter: { ...defaultSocialShare.twitter, isEnabled: false },
+        // facebook: { ...defaultSocialShare.facebook, isEnabled: false },
+      });
+      appHooks.useCardEnrollmentData.mockReturnValueOnce({ isEnrolled: false, isEmailEnabled: false });
+      wrapper = shallow(<CourseCardMenu {...props} />);
+    });
+    test('snapshot', () => {
+      expect(wrapper).toMatchSnapshot();
+    });
+    it('does not renders share buttons', () => {
+      // expect(wrapper.find('FacebookShareButton').length).toEqual(0);
+      expect(wrapper.find('TwitterShareButton').length).toEqual(0);
+    });
+    it('does not render unenroll modal toggle', () => {
+      el = wrapper.find({ 'data-testid': 'unenrollModalToggle' });
+      expect(el.length).toEqual(0);
+    });
+    it('does not render email settings modal toggle', () => {
+      el = wrapper.find({ 'data-testid': 'emailSettingsModalToggle' });
+      expect(el.length).toEqual(0);
+    });
+  });
+  describe('masquerading', () => {
+    beforeEach(() => {
+      appHooks.useMasqueradeData.mockReturnValue({ isMasquerading: true });
+      wrapper = shallow(<CourseCardMenu {...props} />);
+    });
+    test('snapshot', () => {
+      expect(wrapper).toMatchSnapshot();
+    });
+    it('renders share buttons', () => {
+      // expect(wrapper.find('FacebookShareButton').length).toEqual(1);
+      el = wrapper.find('TwitterShareButton');
+      expect(el.length).toEqual(1);
+      expect(el.prop('url')).toEqual('twitter-share-url');
+    });
+    it('renders disabled unenroll modal toggle', () => {
+      el = wrapper.find({ 'data-testid': 'unenrollModalToggle' });
+      expect(el.props().disabled).toEqual(true);
+    });
+    it('renders disabled email settings modal toggle', () => {
+      el = wrapper.find({ 'data-testid': 'emailSettingsModalToggle' });
+      expect(el.props().disabled).toEqual(true);
     });
   });
 });
