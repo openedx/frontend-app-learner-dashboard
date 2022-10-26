@@ -22,7 +22,8 @@ export const useEmailData = ({
   );
   const save = React.useCallback(
     () => {
-      dispatch(thunkActions.app.updateEmailSettings(cardId, isOptedOut));
+      // update email settings 2nd arg is true if opting in, false if opting out
+      dispatch(thunkActions.app.updateEmailSettings(cardId, !isOptedOut));
       closeModal();
     },
     [cardId, closeModal, dispatch, isOptedOut],

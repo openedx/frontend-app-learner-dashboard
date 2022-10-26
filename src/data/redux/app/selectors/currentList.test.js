@@ -47,8 +47,8 @@ describe('courseList selector module', () => {
       });
       test('done returns true iff learner has finished course', () => {
         filterFn = courseFilters[FilterKeys.done];
-        expect(filterFn({ enrollment: { hasFinished: true } })).toEqual(true);
-        expect(filterFn({ enrollment: { hasFinished: false } })).toEqual(false);
+        expect(filterFn({ courseRun: { isArchived: true } })).toEqual(true);
+        expect(filterFn({ courseRun: { isArchived: false } })).toEqual(false);
       });
       test('upgraded returns true if learner is verified', () => {
         filterFn = courseFilters[FilterKeys.upgraded];

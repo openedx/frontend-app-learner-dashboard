@@ -131,7 +131,6 @@ export const genEnrollmentData = (data = {}) => ({
   },
   accessExpirationDate: ((data.isEnrolled === false) ? null : futureDate),
   canUpgrade: (data.isVerified ? null : true),
-  hasFinished: false,
   hasStarted: false,
   isAudit: !data.isVerified && (data.isEnrolled !== false),
   isAuditAccessExpired: data.isVerified ? null : false,
@@ -353,11 +352,10 @@ export const courseRuns = [
   {
     courseName: 'Verified Course, Learner finished, cert not earned',
     enrollment: {
-      hasFinished: true,
       hasStarted: true,
       isVerified: true,
     },
-    courseRun: { isStarted: true },
+    courseRun: { isStarted: true, isArchived: true },
     gradeData: { isPassing: false },
     certificate: {
       isEarned: false,
@@ -367,11 +365,10 @@ export const courseRuns = [
   {
     courseName: 'Verified Course, Learner finished, Cert earned but not available',
     enrollment: {
-      hasFinished: true,
       hasStarted: true,
       isVerified: true,
     },
-    courseRun: { isStarted: true },
+    courseRun: { isStarted: true, isArchived: true },
     certificate: {
       isEarned: true,
       availableDate: futureDate,
@@ -381,22 +378,20 @@ export const courseRuns = [
   {
     courseName: 'Verified Course, Learner finished, Passing, Certificate restricted',
     enrollment: {
-      hasFinished: true,
       hasStarted: true,
       isVerified: true,
     },
-    courseRun: { isStarted: true },
+    courseRun: { isStarted: true, isArchived: true },
     certificate: { isRestricted: true },
   },
   // verified, learner finished, cert earned, downloadable (web + link)
   {
     courseName: 'Verified Course, Learner finished, Passing, Certificate downloadable and viewable',
     enrollment: {
-      hasFinished: true,
       hasStarted: true,
       isVerified: true,
     },
-    courseRun: { isStarted: true },
+    courseRun: { isStarted: true, isArchived: true },
     certificate: {
       isEarned: true,
       isDownloadable: true,
@@ -408,12 +403,12 @@ export const courseRuns = [
   {
     courseName: 'Verified Course, Course ended, Learner finished, Passing, Certificate downloadable',
     enrollment: {
-      hasFinished: true,
       hasStarted: true,
       isVerified: true,
     },
     courseRun: {
       isStarted: true,
+      isArchived: true,
       endDate: pastDate,
     },
     certificate: {
@@ -422,11 +417,10 @@ export const courseRuns = [
       availableDate: pastDate,
     },
   },
-  // verified, course archived, learner finished, cert earned, downloadable (web + link)
+  // verified, course ended, learner finished, cert earned, downloadable (web + link)
   {
-    courseName: 'Verified Course, Course archived, Learner finished, Passing, Certificate downloadable and viewable',
+    courseName: 'Verified Course, Course ended, Learner finished, Passing, Certificate downloadable and viewable',
     enrollment: {
-      hasFinished: true,
       hasStarted: true,
       isVerified: true,
     },
@@ -525,9 +519,8 @@ export const courseRuns = [
     courseName: 'Entitlement Course, Learner finished but did not pass',
     enrollment: {
       isVerified: true,
-      hasFinished: false,
     },
-    courseRun: { isStarted: true },
+    courseRun: { isStarted: true, isArchived: false },
     entitlement: {
       uuid: genEntitlementUUID(4),
       availableSessions: null,
@@ -544,9 +537,8 @@ export const courseRuns = [
     courseName: 'Entitlement course, Learner finished and passed, Cannot refund, Previewable Cert',
     enrollment: {
       isVerified: true,
-      hasFinished: false,
     },
-    courseRun: { isStarted: true },
+    courseRun: { isStarted: true, isArchived: false },
     entitlement: {
       uuid: genEntitlementUUID(5),
       availableSessions: null,
@@ -568,10 +560,10 @@ export const courseRuns = [
     courseName: 'Entitlement Course, Learner finished and failed, Cannot refund, Course ended',
     enrollment: {
       isVerified: true,
-      hasFinished: false,
     },
     courseRun: {
       isStarted: true,
+      isArchived: false,
       endDate: pastDate,
     },
     entitlement: {
@@ -585,12 +577,11 @@ export const courseRuns = [
     },
     gradeData: { isPassing: false },
   },
-  // Entitlement - Learner finished and passed.  cannot refund.  course archived.   cert downloadable
+  // Entitlement - Learner finished and passed.  cannot refund.  cert downloadable
   {
-    courseName: 'Entitlement Course, Learner finished and passed, Cannot refund, Course archived, Cert downloadable',
+    courseName: 'Entitlement Course, Learner finished and passed, Cannot refund, Cert downloadable',
     enrollment: {
       isVerified: true,
-      hasFinished: false,
     },
     courseRun: {
       isArchived: true,
@@ -729,7 +720,6 @@ export const compileEntitlementData = ({ courseName, ...data }, index) => {
       lastEnrolled: null,
       accessExpirationDate: null,
       canUpgrade: false,
-      hasFinished: false,
       hasStarted: false,
       isAudit: false,
       isAuditAccessExpired: false,

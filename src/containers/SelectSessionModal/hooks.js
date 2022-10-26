@@ -42,9 +42,9 @@ export const useSelectSessionModalData = () => {
   const handleSelection = ({ target: { value } }) => setSelectedSession(value);
   const handleSubmit = () => {
     if (selectedSession === LEAVE_OPTION) {
-      return dispatch(thunkActions.requests.leaveEntitlementSession({ uuid }));
+      return dispatch(thunkActions.app.leaveEntitlementSession({ uuid }));
     }
-    return dispatch(thunkActions.requests.updateEntitlementEnrollment({ uuid, courseId: selectedSession }));
+    return dispatch(thunkActions.app.switchEntitlementEnrollment({ uuid, courseId: selectedSession }));
   };
 
   return {

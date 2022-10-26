@@ -61,8 +61,8 @@ describe('EmailSettingsModal hooks', () => {
     describe('save', () => {
       it('calls dispatch with thunkActions.app.updateEmailSettings', () => {
         out.save.useCallback.cb();
-        expect(thunkActions.app.updateEmailSettings).toHaveBeenCalledWith(cardId, out.isOptedOut);
-        expect(dispatch).toHaveBeenCalledWith(thunkActions.app.updateEmailSettings(cardId, out.isOptedOut));
+        expect(thunkActions.app.updateEmailSettings).toHaveBeenCalledWith(cardId, !out.isOptedOut);
+        expect(dispatch).toHaveBeenCalledWith(thunkActions.app.updateEmailSettings(cardId, !out.isOptedOut));
       });
       it('calls closeModal', () => {
         out.save.useCallback.cb();

@@ -1,5 +1,5 @@
 import { StrictDict } from 'utils';
-import { baseAppUrl, learningMfeUrl } from 'data/services/lms/urls';
+import { baseAppUrl } from 'data/services/lms/urls';
 
 import * as module from './courseCard';
 import * as simpleSelectors from './simpleSelectors';
@@ -56,9 +56,9 @@ export const courseCard = StrictDict({
       marketingUrl: courseRun.marketingUrl,
       upgradeUrl: courseRun.upgradeUrl,
 
-      progressUrl: learningMfeUrl(courseRun.progressUrl),
-      resumeUrl: learningMfeUrl(courseRun.resumeUrl),
-      unenrollUrl: learningMfeUrl(courseRun.unenrollUrl),
+      progressUrl: baseAppUrl(courseRun.progressUrl),
+      resumeUrl: baseAppUrl(courseRun.resumeUrl), // resume will route this to learning mfe.
+      unenrollUrl: baseAppUrl(courseRun.unenrollUrl),
     }),
   ),
   enrollment: mkCardSelector(
@@ -74,7 +74,6 @@ export const courseCard = StrictDict({
         isEnrolled: enrollment.isEnrolled,
         lastEnrolled: enrollment.lastEnrolled,
         hasStarted: enrollment.hasStarted,
-        hasFinished: enrollment.hasFinished,
 
         accessExpirationDate: module.loadDateVal(enrollment.accessExpirationDate),
         canUpgrade: enrollment.canUpgrade,
