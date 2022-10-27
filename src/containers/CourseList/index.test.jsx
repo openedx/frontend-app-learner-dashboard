@@ -1,10 +1,11 @@
 import { shallow } from 'enzyme';
 
 import CourseList from '.';
-import { useCourseListData } from './hooks';
+import { useCourseListData, useIsCollapsed } from './hooks';
 
 jest.mock('./hooks', () => ({
   useCourseListData: jest.fn(),
+  useIsCollapsed: jest.fn(),
 }));
 
 jest.mock('containers/CourseCard', () => 'CourseCard');
@@ -21,6 +22,7 @@ describe('CourseList', () => {
     showFilters: false,
     visibleList: [],
   };
+  useIsCollapsed.mockReturnValue(false);
   const createWrapper = (courseListData) => {
     useCourseListData.mockReturnValueOnce({
       ...defaultCourseListData,
@@ -47,6 +49,15 @@ describe('CourseList', () => {
       const wrapper = createWrapper({
         visibleList: [{ cardId: 'foo' }, { cardId: 'bar' }, { cardId: 'baz' }],
         numPages: 3,
+      });
+      expect(wrapper).toMatchSnapshot();
+    });
+    test('collapsed with multiple courses and pages', () => {
+      useIsCollapsed.mockReturnValueOnce(true);
+      const wrapper = createWrapper({
+        visibleList: [{ cardId: 'foo' }, { cardId: 'bar' }, { cardId: 'baz' }],
+        numPages: 3,
+        showFilters: true,
       });
       expect(wrapper).toMatchSnapshot();
     });
