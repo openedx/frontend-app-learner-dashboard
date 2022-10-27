@@ -36,7 +36,7 @@ export const MasqueradeBar = () => {
   if (!canMasquerade) { return null; }
 
   return (
-    <Form className="masquerade-bar">
+    <Form className="masquerade-bar shadow-sm mb-2">
       {isMasquerading ? (
         <>
           <FormLabel inline className="masquerade-form-label">
