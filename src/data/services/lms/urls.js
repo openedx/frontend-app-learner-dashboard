@@ -11,6 +11,7 @@ const init = `${api}/learner_home/init`;
 const courseUnenroll = `${baseUrl}/change_enrollment`;
 const updateEmailSettings = `${api}/change_email_settings`;
 const entitlementEnrollment = (uuid) => `${api}/entitlements/v1/entitlements/${uuid}/enrollments`;
+const recommendedCourses = `${api}/learner_home/recommendation/courses/`;
 
 // if url is null or absolute, return it as is
 const updateUrl = (base, url) => ((url == null || url.startsWith('http://') || url.startsWith('https://')) ? url : `${base}${url}`);
@@ -30,4 +31,5 @@ export default StrictDict({
   baseAppUrl,
   learningMfeUrl,
   programsUrl,
+  recommendedCourses,
 });

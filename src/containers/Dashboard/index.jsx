@@ -14,6 +14,7 @@ import './index.scss';
 
 export const Dashboard = () => {
   hooks.useInitializeDashboard();
+  hooks.useRecommendationsPanel();
   const { pageTitle } = hooks.useDashboardMessages();
   const hasCourses = appHooks.useHasCourses();
   const hasAvailableDashboards = appHooks.useHasAvailableDashboards();

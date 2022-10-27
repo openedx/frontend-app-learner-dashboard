@@ -25,6 +25,7 @@ jest.mock('data/redux', () => ({
       setPageNumber: jest.fn(v => ({ setPageNumber: v })),
       loadGlobalData: jest.fn(v => ({ loadGlobalData: v })),
       loadCourses: jest.fn(v => ({ loadCourses: v })),
+      loadRecommendedCourses: jest.fn(v => ({ loadRecommendedCourses: v })),
     },
   },
   selectors: {
@@ -46,6 +47,7 @@ jest.mock('./requests', () => ({
   masqueradeAs: jest.fn((args) => ({ masqueradeAs: args })),
   clearMasquerade: jest.fn((args) => ({ clearMasquerade: args })),
   updateEmailSettings: jest.fn((args) => ({ updateEmailSettings: args })),
+  recommendedCourses: jest.fn((args) => ({ recommendedCourses: args })),
 }));
 
 const dispatch = jest.fn(action => action);
@@ -213,6 +215,17 @@ describe('app thunk actions', () => {
         courseId,
         enable: testString,
       }));
+    });
+  });
+  describe('recommendedCourses', () => {
+    const recommendedCoursesData = { courses: [], isPersonalizedRecommendation: false };
+    beforeEach(() => {
+      module.recommendedCourses()(dispatch);
+    });
+    it('dispatches recommendedCourses event, calling loadRecommendedCourses on response', () => {
+      const { onSuccess } = dispatch.mock.calls[0][0].recommendedCourses;
+      onSuccess({ data: recommendedCoursesData });
+      checkDispatch(actions.app.loadRecommendedCourses(recommendedCoursesData));
     });
   });
 });
