@@ -14,7 +14,6 @@ export const useIsCollapsed = () => {
   return width < breakpoints.medium.maxWidth;
 };
 
-
 export const state = StrictDict({
   sortBy: (val) => React.useState(val), // eslint-disable-line
 });

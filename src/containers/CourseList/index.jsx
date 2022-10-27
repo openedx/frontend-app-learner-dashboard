@@ -44,7 +44,7 @@ export const CourseList = () => {
         ))}
         {numPages > 1 && (
           <Pagination
-            variant={isCollapsed ? 'reduced': 'secondary'}
+            variant={isCollapsed ? 'reduced' : 'secondary'}
             paginationLabel="Course List"
             className="mx-auto"
             pageCount={numPages}
