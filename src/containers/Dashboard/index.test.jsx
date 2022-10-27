@@ -33,6 +33,7 @@ jest.mock('./LoadedView', () => 'LoadedView');
 jest.mock('./hooks', () => ({
   useInitializeDashboard: jest.fn(),
   useDashboardMessages: jest.fn(),
+  useRecommendationsPanel: jest.fn(),
 }));
 
 const pageTitle = 'test-page-title';

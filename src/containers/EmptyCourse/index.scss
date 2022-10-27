@@ -1,13 +1,17 @@
 @import "@edx/paragon/scss/core/core";
 
 .empty-course-hero {
-  display: flex;
   flex-direction: column;
-  align-items: center;
   padding-bottom: map-get($spacers, 5);
+  padding-top: map-get($spacers, 5);
+  height: 100%;
 
   & > * {
     margin-top: map-get($spacers, 3);
     margin-bottom: map-get($spacers, 3);
   }
+}
+
+.empty-course-border {
+  border: 2px solid $light-400;
 }

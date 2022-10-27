@@ -11,6 +11,13 @@ jest.mock('./hooks', () => ({
   useIsDashboardCollapsed: jest.fn(() => true),
 }));
 
+jest.mock('data/redux', () => ({
+  hooks: {
+    useRecommendedCoursesData: jest.fn(() => ({ courses: [], isPersonalizedRecommendation: false })),
+    useRequestIsPending: jest.fn(),
+  },
+}));
+
 describe('LoadedView', () => {
   const testColumns = () => {
     it('loads courseList and sidebar column layout', () => {

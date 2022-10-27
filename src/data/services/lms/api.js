@@ -39,10 +39,16 @@ const unenrollFromCourse = ({ courseId }) => post(stringifyUrl(urls.courseUnenro
   ...unenrollmentAction,
 });
 
+const recommendedCourses = ({ user } = {}) => get(stringifyUrl(
+  urls.recommendedCourses,
+  { [apiKeys.user]: user },
+));
+
 export default {
   initializeList,
   unenrollFromCourse,
   updateEmailSettings,
   updateEntitlementEnrollment,
   deleteEntitlementEnrollment,
+  recommendedCourses,
 };

@@ -55,12 +55,47 @@ exports[`LoadedView collapsed snapshot 1`] = `
           "span": 12,
         }
       }
+<<<<<<< HEAD
+=======
+    >
+      <CourseList />
+    </Col>
+    <Col
+      className="p-0"
+      lg={
+        Object {
+          "offset": 1,
+          "span": 10,
+        }
+      }
+      md={
+        Object {
+          "offset": 0,
+          "span": 12,
+        }
+      }
+      sm={
+        Object {
+          "offset": 2,
+          "span": 8,
+        }
+      }
+>>>>>>> d27abdd... feat: VAN-1123 - Add recommendations panel on home page
       xl={
         Object {
           "offset": 0,
           "span": 4,
         }
       }
+<<<<<<< HEAD
+=======
+      xs={
+        Object {
+          "offset": 0,
+          "span": 12,
+        }
+      }
+>>>>>>> d27abdd... feat: VAN-1123 - Add recommendations panel on home page
     >
       <WidgetSidebar />
     </Col>
@@ -123,12 +158,47 @@ exports[`LoadedView not collapsed snapshot 1`] = `
           "span": 12,
         }
       }
+<<<<<<< HEAD
+=======
+    >
+      <CourseList />
+    </Col>
+    <Col
+      className="p-0 pl-1 pr-3"
+      lg={
+        Object {
+          "offset": 1,
+          "span": 10,
+        }
+      }
+      md={
+        Object {
+          "offset": 0,
+          "span": 12,
+        }
+      }
+      sm={
+        Object {
+          "offset": 2,
+          "span": 8,
+        }
+      }
+>>>>>>> d27abdd... feat: VAN-1123 - Add recommendations panel on home page
       xl={
         Object {
           "offset": 0,
           "span": 4,
         }
       }
+<<<<<<< HEAD
+=======
+      xs={
+        Object {
+          "offset": 0,
+          "span": 12,
+        }
+      }
+>>>>>>> d27abdd... feat: VAN-1123 - Add recommendations panel on home page
     >
       <h2
         className="course-list-title"

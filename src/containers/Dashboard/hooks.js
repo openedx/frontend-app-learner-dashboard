@@ -16,6 +16,11 @@ export const useInitializeDashboard = () => {
   React.useEffect(() => { dispatch(thunkActions.app.initialize()); }, [dispatch]);
 };
 
+export const useRecommendationsPanel = () => {
+  const dispatch = useDispatch();
+  React.useEffect(() => { dispatch(thunkActions.app.recommendedCourses()); }, [dispatch]);
+};
+
 export const useDashboardMessages = () => {
   const { formatMessage } = useIntl();
   return {
@@ -28,4 +33,5 @@ export default {
   useIsDashboardCollapsed,
   useInitializeDashboard,
   useDashboardMessages,
+  useRecommendationsPanel,
 };

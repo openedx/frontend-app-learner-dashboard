@@ -109,6 +109,12 @@ export const updateEmailSettings = (cardId, enable) => (dispatch, getState) => {
   }));
 };
 
+export const recommendedCourses = () => (dispatch) => (
+  dispatch(requests.recommendedCourses({
+    onSuccess: ({ data }) => dispatch(actions.app.loadRecommendedCourses(data)),
+  }))
+);
+
 export default StrictDict({
   loadData,
   initialize,
@@ -121,4 +127,5 @@ export default StrictDict({
   masqueradeAs,
   clearMasquerade,
   updateEmailSettings,
+  recommendedCourses,
 });

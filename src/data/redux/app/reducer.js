@@ -12,6 +12,7 @@ const initialState = {
   suggestedCourses: [],
   filterState: {},
   selectSessionModal: {},
+  recommendedCourses: { courses: [], isPersonalizedRecommendation: false },
 };
 
 export const cardId = (val) => `card-${val}`;
@@ -49,6 +50,13 @@ const app = createSlice({
       selectSessionModal: { cardId: payload },
     }),
     setPageNumber: (state, { payload }) => ({ ...state, pageNumber: payload }),
+    loadRecommendedCourses: (state, { payload }) => ({
+      ...state,
+      recommendedCourses: {
+        courses: payload.courses,
+        isPersonalizedRecommendation: payload.is_personalized_recommendation,
+      },
+    }),
   },
 });
 

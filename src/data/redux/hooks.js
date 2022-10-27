@@ -11,6 +11,7 @@ export const usePageNumber = () => useSelector(appSelectors.pageNumber);
 export const useEmailConfirmationData = () => useSelector(appSelectors.emailConfirmation);
 export const useEnterpriseDashboardData = () => useSelector(appSelectors.enterpriseDashboard);
 export const usePlatformSettingsData = () => useSelector(appSelectors.platformSettings);
+export const useRecommendedCoursesData = () => useSelector(appSelectors.recommendedCourses);
 // suggested courses is max at 3 at the moment.
 export const useSuggestedCoursesData = () => useSelector(appSelectors.suggestedCourses).slice(0, 3);
 export const useSelectSessionModalData = () => useSelector(appSelectors.selectSessionModal);
