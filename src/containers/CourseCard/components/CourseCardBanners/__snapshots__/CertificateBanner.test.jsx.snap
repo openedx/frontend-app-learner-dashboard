@@ -101,7 +101,6 @@ exports[`CertificateBanner snapshot not passing and has finished 1`] = `
   variant="warning"
 >
   You are not eligible for a certificate.
-  .
     
   <Hyperlink
     destination="progressUrl"

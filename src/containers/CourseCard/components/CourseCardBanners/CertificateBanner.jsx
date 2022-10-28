@@ -50,7 +50,7 @@ export const CertificateBanner = ({ cardId }) => {
     if (isArchived) {
       return (
         <Banner variant="warning">
-          {formatMessage(messages.notEligibleForCert)}.
+          {formatMessage(messages.notEligibleForCert)}
           {'  '}
           <Hyperlink destination={progressUrl}>{formatMessage(messages.viewGrades)}</Hyperlink>
         </Banner>
