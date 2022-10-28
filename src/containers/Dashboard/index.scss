@@ -1,0 +1,16 @@
+@import "@edx/paragon/scss/core/core";
+
+.course-list-column {
+  padding: 0 map-get($spacers, 4);
+  margin: auto;
+}
+
+.sidebar-column {
+  padding: 0 map-get($spacers, 3) 0 map-get($spacers, 1);
+}
+
+@include media-breakpoint-down(xl) {
+  .sidebar-column {
+    padding: 0 map-get($spacers, 3) !important;
+  }
+}
