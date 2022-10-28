@@ -25,7 +25,7 @@ export const LookingForChallengeWidget = () => {
           {formatMessage(messages.lookingForChallengePrompt)}
         </h4>
         <h5>
-          <Hyperlink variant="brand" destination={courseSearchUrl || '#'} className="d-flex align-items-center">
+          <Hyperlink variant="brand" destination={courseSearchUrl} className="d-flex align-items-center">
             {formatMessage(messages.findCoursesButton, { arrow: arrowIcon })}
           </Hyperlink>
         </h5>

@@ -1,27 +1,18 @@
 import { shallow } from 'enzyme';
 
-import { hooks } from 'data/redux';
-
 import LookingForChallengeWidget from '.';
 
 jest.mock('data/redux', () => ({
   hooks: {
-    usePlatformSettingsData: jest.fn(),
+    usePlatformSettingsData: () => ({
+      courseSearchUrl: 'course-search-url',
+    }),
   },
 }));
 
 describe('LookingForChallengeWidget', () => {
   describe('snapshots', () => {
-    test('no course search url', () => {
-      hooks.usePlatformSettingsData.mockReturnValueOnce({});
-      const wrapper = shallow(<LookingForChallengeWidget />);
-      expect(wrapper).toMatchSnapshot();
-    });
-
-    test('with course-search-url', () => {
-      hooks.usePlatformSettingsData.mockReturnValueOnce({
-        courseSearchUrl: 'course-search-url',
-      });
+    test('default', () => {
       const wrapper = shallow(<LookingForChallengeWidget />);
       expect(wrapper).toMatchSnapshot();
     });
