@@ -36,52 +36,55 @@ export const MasqueradeBar = () => {
   if (!canMasquerade) { return null; }
 
   return (
-    <Form className="masquerade-bar">
-      {isMasquerading ? (
-        <>
-          <FormLabel inline className="masquerade-form-label">
-            <Icon src={PersonSearch} />
-            {formatMessage(messages.ViewingAs)}
-          </FormLabel>
-          <Chip
-            className="masquerade-chip"
-            iconAfter={Close}
-            onClick={handleClearMasquerade}
-          >
-            {masqueradeInput}
-          </Chip>
-        </>
-      ) : (
-        <>
-          <FormLabel inline className="masquerade-form-label">
-            <Icon src={PersonSearch} />
-            {formatMessage(messages.ViewAs)}
-          </FormLabel>
-          <FormGroup isInvalid={isMasqueradingFailed} className="masquerade-form-input">
-            <FormControl
-              value={masqueradeInput}
-              onChange={handleMasqueradeInputChange}
-              floatingLabel={formatMessage(messages.StudentNameInput)}
+    <div className="w-100 shadow-sm px-2">
+      <Form className="masquerade-bar col-sm-12 col-md-10 col-12">
+        {isMasquerading ? (
+          <>
+            <FormLabel inline className="masquerade-form-label">
+              <Icon src={PersonSearch} />
+              {formatMessage(messages.ViewingAs)}
+            </FormLabel>
+            <Chip
+              className="masquerade-chip"
+              iconAfter={Close}
+              onClick={handleClearMasquerade}
+            >
+              {masqueradeInput}
+            </Chip>
+          </>
+        ) : (
+          <>
+            <FormLabel inline className="masquerade-form-label">
+              <Icon src={PersonSearch} />
+              {formatMessage(messages.ViewAs)}
+            </FormLabel>
+            <FormGroup isInvalid={isMasqueradingFailed} className="masquerade-form-input">
+              <FormControl
+                value={masqueradeInput}
+                onChange={handleMasqueradeInputChange}
+                floatingLabel={formatMessage(messages.StudentNameInput)}
+              />
+              {isMasqueradingFailed && (
+                <FormControlFeedback type="invalid" hasIcon={false}>
+                  {formatMessage(masqueradeErrorMessage)}
+                </FormControlFeedback>
+              )}
+            </FormGroup>
+            <StatefulButton
+              disabled={!masqueradeInput.length}
+              variant="brand"
+              onClick={handleMasqueradeSubmit(masqueradeInput)}
+              labels={{
+                default: formatMessage(messages.SubmitButton),
+              }}
+              className="mr-3"
+              state={isMasqueradingPending ? 'pending' : 'default'}
+              type="submit"
             />
-            {isMasqueradingFailed && (
-              <FormControlFeedback type="invalid" hasIcon={false}>
-                {formatMessage(masqueradeErrorMessage)}
-              </FormControlFeedback>
-            )}
-          </FormGroup>
-          <StatefulButton
-            disabled={!masqueradeInput.length}
-            variant="brand"
-            onClick={handleMasqueradeSubmit(masqueradeInput)}
-            labels={{
-              default: formatMessage(messages.SubmitButton),
-            }}
-            state={isMasqueradingPending ? 'pending' : 'default'}
-            type="submit"
-          />
-        </>
-      )}
-    </Form>
+          </>
+        )}
+      </Form>
+    </div>
   );
 };
 

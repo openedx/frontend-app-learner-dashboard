@@ -2,6 +2,10 @@
 
 .course-card {
   .card {
+    .pgn__card-wrapper-image-cap.vertical {
+      display: flex;
+      min-height: $card-image-vertical-max-height;
+    }
     .pgn__card-image-cap {
       border-bottom-left-radius: 0 !important;
     }
@@ -10,6 +14,9 @@
     }
     .pgn__card-header-content {
       margin-top: 1.5rem;
+    }
+    .pgn__card-footer .pgn__action-row {
+      white-space: nowrap;
     }
 
     .course-card-verify-ribbon-container {

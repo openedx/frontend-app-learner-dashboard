@@ -1,13 +1,18 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { useCheckboxSetValues } from '@edx/paragon';
+import { useCheckboxSetValues, useWindowSize, breakpoints } from '@edx/paragon';
 
 import { StrictDict } from 'utils';
 import { actions, hooks as appHooks } from 'data/redux';
 import { ListPageSize, SortKeys } from 'data/constants/app';
 
 import * as module from './hooks';
+
+export const useIsCollapsed = () => {
+  const { width } = useWindowSize();
+  return width < breakpoints.medium.maxWidth;
+};
 
 export const state = StrictDict({
   sortBy: (val) => React.useState(val), // eslint-disable-line

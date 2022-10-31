@@ -1,178 +1,202 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MasqueradeBar snapshot can masquerade 1`] = `
-<Form
-  className="masquerade-bar"
+<div
+  className="w-100 shadow-sm px-2"
 >
-  <FormLabel
-    className="masquerade-form-label"
-    inline={true}
+  <Form
+    className="masquerade-bar col-sm-12 col-md-10 col-12"
   >
-    <Icon
-      src={[MockFunction icons.PersonSearch]}
-    />
-    View as: 
-  </FormLabel>
-  <FormGroup
-    className="masquerade-form-input"
-    isInvalid={false}
-  >
-    <FormControl
-      floatingLabel="Student username or email"
-      onChange={[MockFunction handleMasqueradeInputChange]}
-      value=""
-    />
-  </FormGroup>
-  <StatefulButton
-    disabled={true}
-    labels={
-      Object {
-        "default": "Submit",
+    <FormLabel
+      className="masquerade-form-label"
+      inline={true}
+    >
+      <Icon
+        src={[MockFunction icons.PersonSearch]}
+      />
+      View as: 
+    </FormLabel>
+    <FormGroup
+      className="masquerade-form-input"
+      isInvalid={false}
+    >
+      <FormControl
+        floatingLabel="Username or email"
+        onChange={[MockFunction handleMasqueradeInputChange]}
+        value=""
+      />
+    </FormGroup>
+    <StatefulButton
+      className="mr-3"
+      disabled={true}
+      labels={
+        Object {
+          "default": "Submit",
+        }
       }
-    }
-    state="default"
-    type="submit"
-    variant="brand"
-  />
-</Form>
+      state="default"
+      type="submit"
+      variant="brand"
+    />
+  </Form>
+</div>
 `;
 
 exports[`MasqueradeBar snapshot can masquerade with input 1`] = `
-<Form
-  className="masquerade-bar"
+<div
+  className="w-100 shadow-sm px-2"
 >
-  <FormLabel
-    className="masquerade-form-label"
-    inline={true}
+  <Form
+    className="masquerade-bar col-sm-12 col-md-10 col-12"
   >
-    <Icon
-      src={[MockFunction icons.PersonSearch]}
-    />
-    View as: 
-  </FormLabel>
-  <FormGroup
-    className="masquerade-form-input"
-    isInvalid={false}
-  >
-    <FormControl
-      floatingLabel="Student username or email"
-      onChange={[MockFunction handleMasqueradeInputChange]}
-      value="test"
-    />
-  </FormGroup>
-  <StatefulButton
-    disabled={false}
-    labels={
-      Object {
-        "default": "Submit",
+    <FormLabel
+      className="masquerade-form-label"
+      inline={true}
+    >
+      <Icon
+        src={[MockFunction icons.PersonSearch]}
+      />
+      View as: 
+    </FormLabel>
+    <FormGroup
+      className="masquerade-form-input"
+      isInvalid={false}
+    >
+      <FormControl
+        floatingLabel="Username or email"
+        onChange={[MockFunction handleMasqueradeInputChange]}
+        value="test"
+      />
+    </FormGroup>
+    <StatefulButton
+      className="mr-3"
+      disabled={false}
+      labels={
+        Object {
+          "default": "Submit",
+        }
       }
-    }
-    state="default"
-    type="submit"
-    variant="brand"
-  />
-</Form>
+      state="default"
+      type="submit"
+      variant="brand"
+    />
+  </Form>
+</div>
 `;
 
 exports[`MasqueradeBar snapshot cannot masquerade 1`] = `""`;
 
 exports[`MasqueradeBar snapshot is masquerading failed with error 1`] = `
-<Form
-  className="masquerade-bar"
+<div
+  className="w-100 shadow-sm px-2"
 >
-  <FormLabel
-    className="masquerade-form-label"
-    inline={true}
+  <Form
+    className="masquerade-bar col-sm-12 col-md-10 col-12"
   >
-    <Icon
-      src={[MockFunction icons.PersonSearch]}
-    />
-    View as: 
-  </FormLabel>
-  <FormGroup
-    className="masquerade-form-input"
-    isInvalid={true}
-  >
-    <FormControl
-      floatingLabel="Student username or email"
-      onChange={[MockFunction handleMasqueradeInputChange]}
-      value=""
-    />
-    <FormControlFeedback
-      hasIcon={false}
-      type="invalid"
-    />
-  </FormGroup>
-  <StatefulButton
-    disabled={true}
-    labels={
-      Object {
-        "default": "Submit",
+    <FormLabel
+      className="masquerade-form-label"
+      inline={true}
+    >
+      <Icon
+        src={[MockFunction icons.PersonSearch]}
+      />
+      View as: 
+    </FormLabel>
+    <FormGroup
+      className="masquerade-form-input"
+      isInvalid={true}
+    >
+      <FormControl
+        floatingLabel="Username or email"
+        onChange={[MockFunction handleMasqueradeInputChange]}
+        value=""
+      />
+      <FormControlFeedback
+        hasIcon={false}
+        type="invalid"
+      />
+    </FormGroup>
+    <StatefulButton
+      className="mr-3"
+      disabled={true}
+      labels={
+        Object {
+          "default": "Submit",
+        }
       }
-    }
-    state="default"
-    type="submit"
-    variant="brand"
-  />
-</Form>
+      state="default"
+      type="submit"
+      variant="brand"
+    />
+  </Form>
+</div>
 `;
 
 exports[`MasqueradeBar snapshot is masquerading pending 1`] = `
-<Form
-  className="masquerade-bar"
+<div
+  className="w-100 shadow-sm px-2"
 >
-  <FormLabel
-    className="masquerade-form-label"
-    inline={true}
+  <Form
+    className="masquerade-bar col-sm-12 col-md-10 col-12"
   >
-    <Icon
-      src={[MockFunction icons.PersonSearch]}
-    />
-    View as: 
-  </FormLabel>
-  <FormGroup
-    className="masquerade-form-input"
-    isInvalid={false}
-  >
-    <FormControl
-      floatingLabel="Student username or email"
-      onChange={[MockFunction handleMasqueradeInputChange]}
-      value=""
-    />
-  </FormGroup>
-  <StatefulButton
-    disabled={true}
-    labels={
-      Object {
-        "default": "Submit",
+    <FormLabel
+      className="masquerade-form-label"
+      inline={true}
+    >
+      <Icon
+        src={[MockFunction icons.PersonSearch]}
+      />
+      View as: 
+    </FormLabel>
+    <FormGroup
+      className="masquerade-form-input"
+      isInvalid={false}
+    >
+      <FormControl
+        floatingLabel="Username or email"
+        onChange={[MockFunction handleMasqueradeInputChange]}
+        value=""
+      />
+    </FormGroup>
+    <StatefulButton
+      className="mr-3"
+      disabled={true}
+      labels={
+        Object {
+          "default": "Submit",
+        }
       }
-    }
-    state="pending"
-    type="submit"
-    variant="brand"
-  />
-</Form>
+      state="pending"
+      type="submit"
+      variant="brand"
+    />
+  </Form>
+</div>
 `;
 
 exports[`MasqueradeBar snapshot is masquerading with input 1`] = `
-<Form
-  className="masquerade-bar"
+<div
+  className="w-100 shadow-sm px-2"
 >
-  <FormLabel
-    className="masquerade-form-label"
-    inline={true}
+  <Form
+    className="masquerade-bar col-sm-12 col-md-10 col-12"
   >
-    <Icon
-      src={[MockFunction icons.PersonSearch]}
-    />
-    Viewing as: 
-  </FormLabel>
-  <Chip
-    className="masquerade-chip"
-    iconAfter={[MockFunction icons.Close]}
-    onClick={[MockFunction handleClearMasquerade]}
-  >
-    test
-  </Chip>
-</Form>
+    <FormLabel
+      className="masquerade-form-label"
+      inline={true}
+    >
+      <Icon
+        src={[MockFunction icons.PersonSearch]}
+      />
+      Viewing as: 
+    </FormLabel>
+    <Chip
+      className="masquerade-chip"
+      iconAfter={[MockFunction icons.Close]}
+      onClick={[MockFunction handleClearMasquerade]}
+    >
+      test
+    </Chip>
+  </Form>
+</div>
 `;

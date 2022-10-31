@@ -22,7 +22,7 @@ export const CourseCardContent = ({ cardId, orientation }) => {
   const { isVerified } = appHooks.useCardEnrollmentData(cardId);
   return (
     <>
-      <a className="pgn__card-wrapper-image-cap horizontal overflow-visible" href={homeUrl}>
+      <a className={`pgn__card-wrapper-image-cap overflow-visible ${orientation}`} href={homeUrl}>
         <img
           className="pgn__card-image-cap"
           src={bannerImgSrc}

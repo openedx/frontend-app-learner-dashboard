@@ -9,7 +9,7 @@ import {
 } from 'containers/CourseFilterControls';
 import CourseCard from 'containers/CourseCard';
 
-import { useCourseListData } from './hooks';
+import { useCourseListData, useIsCollapsed } from './hooks';
 
 import messages from './messages';
 
@@ -24,11 +24,12 @@ export const CourseList = () => {
     showFilters,
     visibleList,
   } = useCourseListData();
+  const isCollapsed = useIsCollapsed();
   return (
     <div className="course-list-container">
-      <div id="course-list-heading-container">
-        <h2 className="mb-4.5">{formatMessage(messages.myCourses)}</h2>
-        <div id="course-filter-controls-container" className="text-right">
+      <div className="course-list-heading-container">
+        <h2 className="course-list-title">{formatMessage(messages.myCourses)}</h2>
+        <div className="course-filter-controls-container">
           <CourseFilterControls {...filterOptions} />
         </div>
       </div>
@@ -43,7 +44,7 @@ export const CourseList = () => {
         ))}
         {numPages > 1 && (
           <Pagination
-            variant="secondary"
+            variant={isCollapsed ? 'reduced' : 'secondary'}
             paginationLabel="Course List"
             className="mx-auto"
             pageCount={numPages}

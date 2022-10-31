@@ -3,7 +3,7 @@
 exports[`CourseCardContent snapshot not verified 1`] = `
 <Fragment>
   <a
-    className="pgn__card-wrapper-image-cap horizontal overflow-visible"
+    className="pgn__card-wrapper-image-cap overflow-visible vertical"
     href="test-home-url"
   >
     <img
@@ -55,7 +55,7 @@ exports[`CourseCardContent snapshot not verified 1`] = `
 exports[`CourseCardContent snapshot orientation horizontal 1`] = `
 <Fragment>
   <a
-    className="pgn__card-wrapper-image-cap horizontal overflow-visible"
+    className="pgn__card-wrapper-image-cap overflow-visible horizontal"
     href="test-home-url"
   >
     <img
@@ -125,7 +125,7 @@ exports[`CourseCardContent snapshot orientation horizontal 1`] = `
 exports[`CourseCardContent snapshot orientation vertical 1`] = `
 <Fragment>
   <a
-    className="pgn__card-wrapper-image-cap horizontal overflow-visible"
+    className="pgn__card-wrapper-image-cap overflow-visible vertical"
     href="test-home-url"
   >
     <img

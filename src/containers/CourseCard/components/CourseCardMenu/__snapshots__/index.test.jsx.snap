@@ -26,15 +26,14 @@ exports[`CourseCardMenu enrolled, share enabled, email setting enable snapshot 1
       >
         Email settings
       </Dropdown.Item>
-      <Dropdown.Item>
-        <TwitterShareButton
-          className="w-100 text-left"
-          title="I'm taking test-course-name online with twitter-social-brand.  Check it out!"
-          url="twitter-share-url"
-        >
-          Share to Twitter
-        </TwitterShareButton>
-      </Dropdown.Item>
+      <TwitterShareButton
+        className="pgn__dropdown-item dropdown-item"
+        resetButtonStyle={false}
+        title="I'm taking test-course-name online with twitter-social-brand.  Check it out!"
+        url="twitter-share-url"
+      >
+        Share to Twitter
+      </TwitterShareButton>
     </Dropdown.Menu>
   </Dropdown>
   <UnenrollConfirmModal
@@ -76,15 +75,14 @@ exports[`CourseCardMenu masquerading snapshot 1`] = `
       >
         Email settings
       </Dropdown.Item>
-      <Dropdown.Item>
-        <TwitterShareButton
-          className="w-100 text-left"
-          title="I'm taking test-course-name online with twitter-social-brand.  Check it out!"
-          url="twitter-share-url"
-        >
-          Share to Twitter
-        </TwitterShareButton>
-      </Dropdown.Item>
+      <TwitterShareButton
+        className="pgn__dropdown-item dropdown-item"
+        resetButtonStyle={false}
+        title="I'm taking test-course-name online with twitter-social-brand.  Check it out!"
+        url="twitter-share-url"
+      >
+        Share to Twitter
+      </TwitterShareButton>
     </Dropdown.Menu>
   </Dropdown>
   <UnenrollConfirmModal

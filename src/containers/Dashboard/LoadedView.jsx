@@ -7,13 +7,17 @@ import hooks from './hooks';
 
 export const columnConfig = {
   courseList: {
-    xs: { span: 12, offset: 0 },
-    sm: { span: 8, offset: 2 },
-    md: { span: 12, offset: 0 },
-    lg: { span: 10, offset: 1 },
+    sm: { span: 12, offset: 0 },
+    md: { span: 10, offset: 1 },
+    lg: { span: 12, offset: 0 },
     xl: { span: 8, offset: 0 },
   },
-  sidebar: { md: 12, xl: 4 },
+  sidebar: {
+    sm: { span: 12, offset: 0 },
+    md: { span: 10, offset: 1 },
+    lg: { span: 12, offset: 0 },
+    xl: { span: 4, offset: 0 },
+  },
 };
 
 export const LoadedView = () => {
@@ -22,11 +26,11 @@ export const LoadedView = () => {
   return (
     <Container fluid size="xl">
       <Row>
-        <Col {...columnConfig.courseList} className="p-0 px-4">
+        <Col {...columnConfig.courseList} className="course-list-column">
           <CourseList />
         </Col>
-        <Col {...columnConfig.sidebar} className="p-0 pr-4 pl-1">
-          {!isCollapsed && (<h2 className="mb-4.5 display-block">&nbsp;</h2>)}
+        <Col {...columnConfig.sidebar} className="sidebar-column">
+          {!isCollapsed && (<h2 className="course-list-title">&nbsp;</h2>)}
           <WidgetSidebar />
         </Col>
       </Row>
