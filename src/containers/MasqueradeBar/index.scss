@@ -3,7 +3,7 @@
 .masquerade-bar {
   display: flex;
   align-items: flex-start;
-  padding: map-get($spacers, 3) !important;
+  padding: map-get($spacers, 3);
   margin-bottom: map-get($spacers, 2);
 
   .masquerade-form-label {
@@ -33,6 +33,6 @@
 @include media-breakpoint-down(md) {
   .masquerade-bar {
     margin: auto;
-    padding: map-get($spacers, 3) map-get($spacers, 4) !important;
+    padding: map-get($spacers, 3) map-get($spacers, 4);
   }
 }
