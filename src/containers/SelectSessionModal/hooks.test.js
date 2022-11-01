@@ -11,10 +11,12 @@ import * as hooks from './hooks';
 
 jest.mock('data/redux', () => ({
   hooks: {
-    useCardEntitlementData: jest.fn(),
     useCardCourseData: jest.fn(),
+    useCardCourseRunData: jest.fn(),
+    useCardEnrollmentData: jest.fn(),
+    useCardEntitlementData: jest.fn(),
     useSelectSessionModalData: jest.fn(),
-    useUpdateSelectSessionModalCallback: jest.fn((...args) => ({
+    useUpdateSelectSessionModalCallback: jest.fn((...args) => () => ({
       updateSelectSession: args,
     })),
   },
@@ -25,19 +27,17 @@ jest.mock('data/redux', () => ({
   },
   thunkActions: {
     app: {
-      leaveEntitlementSession: jest.fn(),
-      switchEntitlementEnrollment: jest.fn(),
+      switchEntitlementEnrollment: jest.fn((...args) => ({ switchEntitlementEnrollment: args })),
+      leaveEntitlementSession: jest.fn((...args) => ({ leaveEntitlementSession: args })),
+      newEntitlementEnrollment: jest.fn((...args) => ({ newEntitlementEnrollment: args })),
     },
   },
 }));
 
 const state = new MockUseState(hooks);
 const selectedCardId = 'test-selected-card-id';
+const courseTitle = 'course-title: brown fox';
 const uuid = 'test-uuid';
-
-const selectSessionData = {
-  cardId: selectedCardId,
-};
 
 const entitlementData = {
   availableSessions: [
@@ -49,14 +49,13 @@ const entitlementData = {
   uuid,
 };
 
-const cardCourseData = {
-  title: 'course-title: brown fox',
-};
-
 const { formatMessage } = useIntl();
 const dispatch = useDispatch();
 
 const testValue = 'test-value';
+
+const courseId = 'test-course-id';
+appHooks.useCardCourseRunData.mockReturnValue({ courseId });
 
 describe('SelectSessionModal hooks', () => {
   let out;
@@ -68,19 +67,18 @@ describe('SelectSessionModal hooks', () => {
     jest.clearAllMocks();
   });
   describe('useSelectSessionModalData', () => {
-    const runHook = ({ selectSession = {}, entitlement = {}, course = {} }) => {
-      appHooks.useSelectSessionModalData.mockReturnValueOnce({
-        ...selectSessionData,
-        ...selectSession,
-      });
-      appHooks.useCardEntitlementData.mockReturnValueOnce({
-        ...entitlementData,
-        ...entitlement,
-      });
-      appHooks.useCardCourseData.mockReturnValueOnce({
-        ...cardCourseData,
-        ...course,
-      });
+    const runHook = ({
+      course = {},
+      courseRun = {},
+      enrollment = {},
+      entitlement = {},
+      selectSession = {},
+    }) => {
+      appHooks.useCardCourseData.mockReturnValueOnce({ title: courseTitle, ...course });
+      appHooks.useCardCourseRunData.mockReturnValueOnce({ courseId, ...courseRun });
+      appHooks.useCardEnrollmentData.mockReturnValueOnce({ isEnrolled: false, ...enrollment });
+      appHooks.useCardEntitlementData.mockReturnValueOnce({ ...entitlementData, ...entitlement });
+      appHooks.useSelectSessionModalData.mockReturnValueOnce({ cardId: selectedCardId, ...selectSession });
       out = hooks.useSelectSessionModalData();
     };
     beforeEach(() => {
@@ -97,8 +95,14 @@ describe('SelectSessionModal hooks', () => {
     });
 
     describe('output', () => {
-      test('selected session defaults to null', () => {
-        expect(out.selectedSession).toEqual(null);
+      describe('selectedSession', () => {
+        it('defaults to current courseId if enrolled', () => {
+          expect(out.selectedSession).toEqual(courseId);
+        });
+        it('defaults to null if not enrolled', () => {
+          runHook({ enrollment: { isEnrolled: false }, courseRun: { courseId: undefined } });
+          expect(out.selectedSession).toEqual(null);
+        });
       });
       describe('handleSelection', () => {
         it('sets selected session with event target value', () => {
@@ -107,19 +111,35 @@ describe('SelectSessionModal hooks', () => {
         });
       });
       describe('handleSubmit', () => {
-        it('dispatches updateEntitlementSession with selected card ID and session', () => {
-          state.mockVal(state.keys.selectedSession, testValue);
-          runHook({});
-          expect(out.handleSubmit()).toEqual(dispatch(
-            thunkActions.app.switchEntitlementEnrollment({ courseId: testValue, uuid }),
-          ));
+        describe('if LEAVE_OPTION is selected', () => {
+          it('dispatches leaveEntitlementSession', () => {
+            state.mockVal(state.keys.selectedSession, LEAVE_OPTION);
+            runHook({});
+            out.handleSubmit();
+            expect(dispatch).toHaveBeenCalledWith(
+              thunkActions.app.leaveEntitlementSession(selectedCardId),
+            );
+          });
         });
-        it('dispatches leaveEntitlementSession if LEAVE_OPTION is selected', () => {
-          state.mockVal(state.keys.selectedSession, LEAVE_OPTION);
-          runHook({});
-          expect(out.handleSubmit()).toEqual(dispatch(
-            thunkActions.app.leaveEntitlementSession({ uuid }),
-          ));
+        describe('if not enrolled in a session yet', () => {
+          it('dispatches newEntitlementEnrollment with selected card ID and session', () => {
+            state.mockVal(state.keys.selectedSession, testValue);
+            runHook({});
+            out.handleSubmit();
+            expect(dispatch).toHaveBeenCalledWith(
+              thunkActions.app.newEntitlementEnrollment(selectedCardId, testValue),
+            );
+          });
+        });
+        describe('if enrolled in a session already, selecting a new session', () => {
+          it('dispatches swtichEntitlementEnrollment with selected card ID and session', () => {
+            state.mockVal(state.keys.selectedSession, testValue);
+            runHook({ enrollment: { isEnrolled: true } });
+            out.handleSubmit();
+            expect(dispatch).toHaveBeenCalledWith(
+              thunkActions.app.switchEntitlementEnrollment(selectedCardId, testValue),
+            );
+          });
         });
       });
       test('showModal returns true if selectedCardId is not null or undefined', () => {
@@ -130,10 +150,7 @@ describe('SelectSessionModal hooks', () => {
         expect(out.showModal).toEqual(false);
       });
       test('displays change or leave header and hint if fulfilled', () => {
-        expect(out.header).toEqual(formatMessage(
-          messages.selectSessionHeader,
-          { courseTitle: cardCourseData.title },
-        ));
+        expect(out.header).toEqual(formatMessage(messages.selectSessionHeader, { courseTitle }));
         expect(out.hint).toEqual(formatMessage(messages.selectSessionHint));
       });
       test('displays select session header (w/ courseTitle) and hint if unfulfilled', () => {
@@ -142,8 +159,8 @@ describe('SelectSessionModal hooks', () => {
         expect(out.hint).toEqual(formatMessage(messages.changeOrLeaveHint));
       });
       test('closeSessionModal returns update callback wth dispatch and null card id', () => {
-        expect(out.closeSessionModal).toEqual(
-          appHooks.useUpdateSelectSessionModalCallback(dispatch, null),
+        expect(out.closeSessionModal()).toEqual(
+          appHooks.useUpdateSelectSessionModalCallback(null)(),
         );
       });
     });

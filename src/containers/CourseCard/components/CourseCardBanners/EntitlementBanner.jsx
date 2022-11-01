@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { Button, MailtoLink } from '@edx/paragon';
@@ -12,7 +11,6 @@ import Banner from 'components/Banner';
 import messages from './messages';
 
 export const EntitlementBanner = ({ cardId }) => {
-  const dispatch = useDispatch();
   const {
     isEntitlement,
     hasSessions,
@@ -22,7 +20,7 @@ export const EntitlementBanner = ({ cardId }) => {
     isExpired,
   } = appHooks.useCardEntitlementData(cardId);
   const { supportEmail } = appHooks.usePlatformSettingsData();
-  const openSessionModal = appHooks.useUpdateSelectSessionModalCallback(dispatch, cardId);
+  const openSessionModal = appHooks.useUpdateSelectSessionModalCallback(cardId);
   const { formatMessage } = useIntl();
   const formatDate = useFormatDate();
 

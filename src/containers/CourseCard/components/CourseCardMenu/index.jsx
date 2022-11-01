@@ -71,17 +71,17 @@ export const CourseCardMenu = ({ cardId }) => {
             )}
           */}
           {twitter.isEnabled && (
-          <ReactShare.TwitterShareButton
-            url={twitter.shareUrl}
-            title={formatMessage(messages.shareQuote, {
-              courseName,
-              socialBrand: twitter.socialBrand,
-            })}
-            resetButtonStyle={false}
-            className="pgn__dropdown-item dropdown-item"
-          >
-            {formatMessage(messages.shareToTwitter)}
-          </ReactShare.TwitterShareButton>
+            <ReactShare.TwitterShareButton
+              url={twitter.shareUrl}
+              title={formatMessage(messages.shareQuote, {
+                courseName,
+                socialBrand: twitter.socialBrand,
+              })}
+              resetButtonStyle={false}
+              className="pgn__dropdown-item dropdown-item"
+            >
+              {formatMessage(messages.shareToTwitter)}
+            </ReactShare.TwitterShareButton>
           )}
         </Dropdown.Menu>
       </Dropdown>

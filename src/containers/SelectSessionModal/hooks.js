@@ -15,16 +15,19 @@ export const state = StrictDict({
 });
 
 export const useSelectSessionModalData = () => {
-  const dispatch = useDispatch();
   const selectedCardId = appHooks.useSelectSessionModalData().cardId;
   const {
     availableSessions,
     isFulfilled,
-    uuid,
   } = appHooks.useCardEntitlementData(selectedCardId);
   const { title: courseTitle } = appHooks.useCardCourseData(selectedCardId);
+  const { courseId } = appHooks.useCardCourseRunData(selectedCardId) || {};
+  const { isEnrolled } = appHooks.useCardEnrollmentData(selectedCardId);
+
+  const dispatch = useDispatch();
   const { formatMessage } = useIntl();
-  const [selectedSession, setSelectedSession] = module.state.selectedSession(null);
+
+  const [selectedSession, setSelectedSession] = module.state.selectedSession(courseId || null);
 
   let header;
   let hint;
@@ -37,20 +40,24 @@ export const useSelectSessionModalData = () => {
     });
     hint = formatMessage(messages.selectSessionHint);
   }
-  const updateCallback = appHooks.useUpdateSelectSessionModalCallback;
+  const updateCardIdCallback = appHooks.useUpdateSelectSessionModalCallback;
+  const closeSessionModal = updateCardIdCallback(null);
 
   const handleSelection = ({ target: { value } }) => setSelectedSession(value);
   const handleSubmit = () => {
     if (selectedSession === LEAVE_OPTION) {
-      return dispatch(thunkActions.app.leaveEntitlementSession({ uuid }));
+      dispatch(thunkActions.app.leaveEntitlementSession(selectedCardId));
+    } else if (isEnrolled) {
+      dispatch(thunkActions.app.switchEntitlementEnrollment(selectedCardId, selectedSession));
+    } else {
+      dispatch(thunkActions.app.newEntitlementEnrollment(selectedCardId, selectedSession));
     }
-    return dispatch(thunkActions.app.switchEntitlementEnrollment({ uuid, courseId: selectedSession }));
+    closeSessionModal();
   };
 
   return {
     showModal: selectedCardId != null,
-    closeSessionModal: updateCallback(dispatch, null),
-    openSessionModal: (cardId) => updateCallback(dispatch, cardId),
+    closeSessionModal,
     showLeaveOption: isFulfilled,
     availableSessions,
     hint,
