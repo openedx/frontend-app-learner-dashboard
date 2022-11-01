@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
 
 import { Button } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
@@ -13,8 +12,7 @@ export const SelectSessionButton = ({ cardId }) => {
   const { canChange, hasSessions } = hooks.useCardEntitlementData(cardId);
   const { isMasquerading } = hooks.useMasqueradeData();
   const { formatMessage } = useIntl();
-  const dispatch = useDispatch();
-  const openSessionModal = hooks.useUpdateSelectSessionModalCallback(dispatch, cardId);
+  const openSessionModal = hooks.useUpdateSelectSessionModalCallback(cardId);
   return (
     <Button
       disabled={isMasquerading || !hasAccess || (!canChange || !hasSessions)}

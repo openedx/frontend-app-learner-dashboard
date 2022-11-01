@@ -37,7 +37,7 @@ export const useAccessMessage = ({ cardId }) => {
   return null;
 };
 
-export const useCardDetailsData = ({ dispatch, cardId }) => {
+export const useCardDetailsData = ({ cardId }) => {
   const { formatMessage } = useIntl();
   const providerName = appHooks.useCardProviderData(cardId).name;
   const { courseNumber } = appHooks.useCardCourseData(cardId);
@@ -47,7 +47,7 @@ export const useCardDetailsData = ({ dispatch, cardId }) => {
     canChange,
   } = appHooks.useCardEntitlementData(cardId);
 
-  const openSessionModal = appHooks.useUpdateSelectSessionModalCallback(dispatch, cardId);
+  const openSessionModal = appHooks.useUpdateSelectSessionModalCallback(cardId);
 
   return {
     providerName: providerName || formatMessage(messages.unknownProviderName),

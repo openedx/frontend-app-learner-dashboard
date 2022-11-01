@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { actions as appActions } from './app/reducer';
 import appSelectors from './app/selectors';
@@ -58,9 +58,10 @@ export const useCardSocialSettingsData = (cardId) => {
   };
 };
 
-export const useUpdateSelectSessionModalCallback = (dispatch, cardId) => () => dispatch(
-  appActions.updateSelectSessionModal(cardId),
-);
+export const useUpdateSelectSessionModalCallback = (cardId) => {
+  const dispatch = useDispatch();
+  return () => dispatch(appActions.updateSelectSessionModal(cardId));
+};
 
 export const useMasqueradeData = () => useSelector(requestSelectors.masquerade);
 
