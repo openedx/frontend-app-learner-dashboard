@@ -38,8 +38,11 @@ export const newEntitlementEnrollment = (cardId, selection) => (dispatch, getSta
     fromCourseRun: null,
     toCourseRun: selection,
   });
-  dispatch(requests.newEntitlementEnrollment({ uuid, courseId: selection }));
-  dispatch(initialize());
+  dispatch(requests.newEntitlementEnrollment({
+    uuid,
+    courseId: selection,
+    onSuccess: () => dispatch(module.initialize()),
+  }));
 };
 
 export const switchEntitlementEnrollment = (cardId, selection) => (dispatch, getState) => {
@@ -49,8 +52,11 @@ export const switchEntitlementEnrollment = (cardId, selection) => (dispatch, get
     fromCourseRun: courseId,
     toCourseRun: selection,
   });
-  dispatch(requests.switchEntitlementEnrollment({ uuid, courseId: selection }));
-  dispatch(initialize());
+  dispatch(requests.switchEntitlementEnrollment({
+    uuid,
+    courseId: selection,
+    onSuccess: () => dispatch(module.initialize()),
+  }));
 };
 
 export const leaveEntitlementSession = (cardId) => (dispatch, getState) => {
@@ -60,8 +66,11 @@ export const leaveEntitlementSession = (cardId) => (dispatch, getState) => {
     leaveCourseRun: courseId,
     isRefundable,
   });
-  dispatch(requests.leaveEntitlementSession({ uuid, isRefundable }));
-  dispatch(initialize());
+  dispatch(requests.leaveEntitlementSession({
+    uuid,
+    isRefundable,
+    onSuccess: () => dispatch(module.initialize()),
+  }));
 };
 
 export const unenrollFromCourse = (cardId, reason) => (dispatch, getState) => {

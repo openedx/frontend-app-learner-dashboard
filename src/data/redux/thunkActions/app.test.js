@@ -9,13 +9,6 @@ import * as module from './app';
 jest.mock('data/services/segment/utils', () => ({
   handleEvent: jest.fn(),
 }));
-// jest.mock('data/services/segment/constants', () => ({
-//   eventNames: {
-//     sessionChange: jest.fn(args => ({ sessionChange: args })),
-//     entitlementUnenroll: 'entitlement-unenroll',
-//     unenrollReason: 'unenroll-reason',
-//   },
-// }));
 jest.mock('data/services/lms/utils', () => ({
   post: jest.fn(),
 }));
@@ -121,10 +114,14 @@ describe('app thunk actions', () => {
         { fromCourseRun: null, toCourseRun: selection },
       );
     });
-    it('dispatches newEntitlementEnrollment request action', () => {
-      expect(dispatch).toHaveBeenCalledWith(
-        requests.newEntitlementEnrollment({ uuid, courseId: selection }),
-      );
+    it('dispatches newEntitlementEnrollment request then re-init on success', () => {
+      const request = dispatch.mock.calls[0][0];
+      expect(request.newEntitlementEnrollment.uuid).toEqual(uuid);
+      expect(request.newEntitlementEnrollment.courseId).toEqual(selection);
+      expect(request.newEntitlementEnrollment.onSuccess).toBeDefined();
+      expect(initializeSpy).not.toHaveBeenCalled();
+      request.newEntitlementEnrollment.onSuccess();
+      expect(initializeSpy).toHaveBeenCalled();
     });
   });
   describe('switchEntitlementEnrollmnent', () => {
@@ -139,10 +136,14 @@ describe('app thunk actions', () => {
         { fromCourseRun: courseId, toCourseRun: selection },
       );
     });
-    it('dispatches switchEntitlementEnrollment request action', () => {
-      expect(dispatch).toHaveBeenCalledWith(
-        requests.switchEntitlementEnrollment({ uuid, courseId: selection }),
-      );
+    it('dispatches switchEntitlementEnrollment request then re-init on success', () => {
+      const request = dispatch.mock.calls[0][0];
+      expect(request.switchEntitlementEnrollment.uuid).toEqual(uuid);
+      expect(request.switchEntitlementEnrollment.courseId).toEqual(selection);
+      expect(request.switchEntitlementEnrollment.onSuccess).toBeDefined();
+      expect(initializeSpy).not.toHaveBeenCalled();
+      request.switchEntitlementEnrollment.onSuccess();
+      expect(initializeSpy).toHaveBeenCalled();
     });
   });
   describe('leaveEntitlementSession', () => {
@@ -157,8 +158,14 @@ describe('app thunk actions', () => {
         { leaveCourseRun: courseId, isRefundable },
       );
     });
-    it('dispatches leaveEntitlementEnrollment request action', () => {
-      expect(dispatch).toHaveBeenCalledWith(requests.leaveEntitlementSession({ uuid, isRefundable }));
+    it('dispatches leaveEntitlementEnrollment request then re-init on success', () => {
+      const request = dispatch.mock.calls[0][0];
+      expect(request.leaveEntitlementSession.uuid).toEqual(uuid);
+      expect(request.leaveEntitlementSession.isRefundable).toEqual(isRefundable);
+      expect(request.leaveEntitlementSession.onSuccess).toBeDefined();
+      expect(initializeSpy).not.toHaveBeenCalled();
+      request.leaveEntitlementSession.onSuccess();
+      expect(initializeSpy).toHaveBeenCalled();
     });
   });
   describe('unenrollFromCourse', () => {
