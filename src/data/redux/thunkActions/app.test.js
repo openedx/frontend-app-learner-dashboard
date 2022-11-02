@@ -9,13 +9,13 @@ import * as module from './app';
 jest.mock('data/services/segment/utils', () => ({
   handleEvent: jest.fn(),
 }));
-jest.mock('data/services/segment/constants', () => ({
-  eventNames: {
-    sessionChange: jest.fn(args => ({ sessionChange: args })),
-    entitlementUnenroll: jest.fn(args => ({ entitlementUnenroll: args })),
-    unenrollReason: 'unenroll-reason',
-  },
-}));
+// jest.mock('data/services/segment/constants', () => ({
+//   eventNames: {
+//     sessionChange: jest.fn(args => ({ sessionChange: args })),
+//     entitlementUnenroll: 'entitlement-unenroll',
+//     unenrollReason: 'unenroll-reason',
+//   },
+// }));
 jest.mock('data/services/lms/utils', () => ({
   post: jest.fn(),
 }));
@@ -59,6 +59,7 @@ const uuid = 'test-UUID';
 const cardId = 'test-card-id';
 const selection = 'test-selection';
 const courseId = 'test-COURSE-id';
+const isRefundable = 'test-is-refundable';
 
 const loadDataSpy = jest.spyOn(module, moduleKeys.loadData);
 const mockLoadData = data => ({ loadData: data });
@@ -73,7 +74,7 @@ describe('app thunk actions', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     selectors.app.emailConfirmation.mockReturnValueOnce({ sendEmailUrl: testString });
-    selectors.app.courseCard.entitlement.mockReturnValueOnce({ uuid });
+    selectors.app.courseCard.entitlement.mockReturnValueOnce({ uuid, isRefundable });
     selectors.app.courseCard.courseRun.mockReturnValueOnce({ courseId });
   });
   describe('loadData', () => {
@@ -152,12 +153,12 @@ describe('app thunk actions', () => {
       expect(selectors.app.courseCard.courseRun).toHaveBeenCalledWith(testState, cardId);
       expect(selectors.app.courseCard.entitlement).toHaveBeenCalledWith(testState, cardId);
       expect(handleEvent).toHaveBeenCalledWith(
-        eventNames.entitlementUnenroll({ action: 'leave' }),
-        { fromCourseRun: courseId, toCourseRun: null },
+        eventNames.entitlementUnenroll,
+        { leaveCourseRun: courseId, isRefundable },
       );
     });
     it('dispatches leaveEntitlementEnrollment request action', () => {
-      expect(dispatch).toHaveBeenCalledWith(requests.leaveEntitlementSession({ uuid }));
+      expect(dispatch).toHaveBeenCalledWith(requests.leaveEntitlementSession({ uuid, isRefundable }));
     });
   });
   describe('unenrollFromCourse', () => {

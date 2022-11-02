@@ -21,6 +21,7 @@ jest.mock('./utils', () => {
 const testUser = 'test-user';
 const testUuid = 'test-UUID';
 const testCourseId = 'TEST-course-ID';
+const isRefundable = 'test-is-refundable';
 
 describe('lms api methods', () => {
   describe('initializeList', () => {
@@ -38,21 +39,21 @@ describe('lms api methods', () => {
       expect(
         api.updateEntitlementEnrollment({ uuid: testUuid, courseId: testCourseId }),
       ).toEqual(
-        utils.post(utils.stringifyUrl(
+        utils.post(
           urls.entitlementEnrollment(testUuid),
           { [apiKeys.courseRunId]: testCourseId },
-        )),
+        ),
       );
     });
   });
   describe('deleteEntitlementEnrollment', () => {
     it('calls delete on entitlementEnrollment url with uuid and null course run ID', () => {
       expect(
-        api.deleteEntitlementEnrollment({ uuid: testUuid }),
+        api.deleteEntitlementEnrollment({ uuid: testUuid, isRefundable }),
       ).toEqual(
         utils.client().delete(utils.stringifyUrl(
           urls.entitlementEnrollment(testUuid),
-          { [apiKeys.courseRunId]: null },
+          { [apiKeys.isRefund]: isRefundable },
         )),
       );
     });

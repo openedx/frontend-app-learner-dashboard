@@ -19,14 +19,14 @@ const initializeList = ({ user } = {}) => get(stringifyUrl(
   { [apiKeys.user]: user },
 ));
 
-const updateEntitlementEnrollment = ({ uuid, courseId }) => post(stringifyUrl(
+const updateEntitlementEnrollment = ({ uuid, courseId }) => post(
   urls.entitlementEnrollment(uuid),
   { [apiKeys.courseRunId]: courseId },
-));
+);
 
-const deleteEntitlementEnrollment = ({ uuid }) => client().delete(stringifyUrl(
+const deleteEntitlementEnrollment = ({ uuid, isRefundable }) => client().delete(stringifyUrl(
   urls.entitlementEnrollment(uuid),
-  { [apiKeys.courseRunId]: null },
+  { [apiKeys.isRefund]: isRefundable },
 ));
 
 const updateEmailSettings = ({ courseId, enable }) => post(
