@@ -55,12 +55,12 @@ export const switchEntitlementEnrollment = (cardId, selection) => (dispatch, get
 
 export const leaveEntitlementSession = (cardId) => (dispatch, getState) => {
   const { courseId } = selectors.app.courseCard.courseRun(getState(), cardId);
-  const { uuid } = selectors.app.courseCard.entitlement(getState(), cardId);
-  handleEvent(eventNames.entitlementUnenroll({ action: 'leave' }), {
-    fromCourseRun: courseId,
-    toCourseRun: null,
+  const { uuid, isRefundable } = selectors.app.courseCard.entitlement(getState(), cardId);
+  handleEvent(eventNames.entitlementUnenroll, {
+    leaveCourseRun: courseId,
+    isRefundable,
   });
-  dispatch(requests.leaveEntitlementSession({ uuid }));
+  dispatch(requests.leaveEntitlementSession({ uuid, isRefundable }));
   dispatch(initialize());
 };
 

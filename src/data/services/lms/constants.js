@@ -6,6 +6,7 @@ export const apiKeys = StrictDict({
   courseRunId: 'course_run_id',
   courseId: 'course_id',
   user: 'user',
+  isRefund: 'is_refund',
 });
 
 export const apiValues = StrictDict({

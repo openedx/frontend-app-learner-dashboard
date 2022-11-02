@@ -42,6 +42,7 @@ const promise = 'test-promise';
 const requestKey = 'test-request-key';
 const user = 'test-user';
 const uuid = 'test-uuid';
+const isRefundable = 'test-is-refundable';
 
 describe('requests thunkActions module', () => {
   beforeEach(jest.clearAllMocks);
@@ -170,10 +171,10 @@ describe('requests thunkActions module', () => {
 
     describe('leaveEntitlementSession', () => {
       it('dispatches leaveEntitlementSession networkAction', () => {
-        expect(module.leaveEntitlementSession({ uuid, ...options })).toEqual(
+        expect(module.leaveEntitlementSession({ uuid, isRefundable, ...options })).toEqual(
           mockNetworkAction({
             requestKey: RequestKeys.leaveEntitlementSession,
-            promise: api.deleteEntitlementEnrollment({ uuid }),
+            promise: api.deleteEntitlementEnrollment({ uuid, isRefundable }),
             options,
           }),
         );

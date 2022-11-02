@@ -66,9 +66,9 @@ export const switchEntitlementEnrollment = ({
   options,
 });
 
-export const leaveEntitlementSession = ({ uuid, ...options }) => module.networkAction({
+export const leaveEntitlementSession = ({ uuid, isRefundable, ...options }) => module.networkAction({
   requestKey: RequestKeys.leaveEntitlementSession,
-  promise: api.deleteEntitlementEnrollment({ uuid }),
+  promise: api.deleteEntitlementEnrollment({ uuid, isRefundable }),
   options,
 });
 
