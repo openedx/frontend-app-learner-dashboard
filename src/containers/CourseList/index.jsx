@@ -46,7 +46,7 @@ export const CourseList = () => {
           <Pagination
             variant={isCollapsed ? 'reduced' : 'secondary'}
             paginationLabel="Course List"
-            className="mx-auto pagination"
+            className="mx-auto mb-2"
             pageCount={numPages}
             onPageSelect={setPageNumber}
           />

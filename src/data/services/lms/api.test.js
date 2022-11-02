@@ -91,14 +91,4 @@ describe('lms api methods', () => {
       );
     });
   });
-  describe('recommendedCourses', () => {
-    test('calls get with the correct recommendation courses URL and user', () => {
-      const userArg = {
-        [apiKeys.user]: testUser,
-      };
-      expect(api.recommendedCourses(userArg)).toEqual(
-        utils.get(utils.stringifyUrl(urls.recommendedCourses, userArg)),
-      );
-    });
-  });
 });

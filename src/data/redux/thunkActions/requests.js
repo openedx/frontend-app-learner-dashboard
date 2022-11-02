@@ -94,12 +94,6 @@ export const clearMasquerade = () => (dispatch) => dispatch(
   actions.requests.clearRequest({ requestKey: RequestKeys.masquerade }),
 );
 
-export const recommendedCourses = (options) => module.networkAction({
-  requestKey: RequestKeys.recommendedCourses,
-  promise: api.recommendedCourses(),
-  options,
-});
-
 export default StrictDict({
   initializeList,
   masqueradeAs,
@@ -109,5 +103,4 @@ export default StrictDict({
   switchEntitlementEnrollment,
   unenrollFromCourse,
   updateEmailSettings,
-  recommendedCourses,
 });

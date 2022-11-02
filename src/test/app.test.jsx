@@ -38,6 +38,9 @@ jest.unmock('react-redux');
 jest.unmock('reselect');
 jest.unmock('hooks');
 
+jest.mock('containers/WidgetContainers/LoadedSidebar', () => 'loaded-widget-sidebar');
+jest.mock('containers/WidgetContainers/NoCoursesSidebar', () => 'no-courses-widget-sidebar');
+
 jest.mock('@edx/frontend-platform/i18n', () => ({
   ...jest.requireActual('@edx/frontend-platform/i18n'),
   useIntl: () => ({
@@ -84,9 +87,6 @@ const getState = () => {
  */
 const resolveFns = {
 };
-
-const resolveRecommendedCoursesFns = {
-};
 /**
  * Mock the api with jest functions that can be tested against.
  */
@@ -107,7 +107,6 @@ const allCourses = [
 const { compileCourseRunData, compileEntitlementData } = fakeData;
 
 const initCourses = jest.fn(() => []);
-const initRecommendedCourses = jest.fn(() => []);
 
 const mockApi = () => {
   api.initializeList = jest.fn(() => new Promise(
@@ -117,22 +116,6 @@ const mockApi = () => {
           const data = {
             courses: initCourses(),
             ...fakeData.globalData,
-          };
-          resolve({ data });
-        },
-      };
-    }));
-};
-
-const mockRecommendedCoursesApi = () => {
-  api.recommendedCourses = jest.fn(() => new Promise(
-    (resolve, reject) => {
-      resolveRecommendedCoursesFns.init = {
-        success: () => {
-          const data = {
-            courses: initRecommendedCourses(),
-            isPersonalizedRecommendation: false,
-            ...fakeData.recommendedCoursesData,
           };
           resolve({ data });
         },
@@ -166,20 +149,11 @@ const waitForRequestStatus = (key, status) => waitForEqual(
 
 const loadApp = async (courses) => {
   initCourses.mockReturnValue(courses.map(compileCourseRunData));
-  initRecommendedCourses.mockReturnValue([{
-    courseKey: 'edX+cs50',
-    title: 'Computer Science',
-    logoImageUrl: 'https://edx.org/small.jpg',
-    marketingUrl: 'https://edx.org',
-  }]);
   await renderEl();
   inspector = new Inspector(el);
   await waitForRequestStatus(RequestKeys.initialize, RequestStates.pending);
-  await waitForRequestStatus(RequestKeys.recommendedCourses, RequestStates.pending);
   resolveFns.init.success();
-  resolveRecommendedCoursesFns.init.success();
   await waitForRequestStatus(RequestKeys.initialize, RequestStates.completed);
-  await waitForRequestStatus(RequestKeys.recommendedCourses, RequestStates.completed);
 }
 
 const courseNames = [
@@ -191,7 +165,6 @@ const courseNames = [
 describe('ESG app integration tests', () => {
   beforeEach(() => {
     mockApi();
-    mockRecommendedCoursesApi();
   });
 
   test('initialization', async () => {
