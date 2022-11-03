@@ -21,6 +21,7 @@ const { resumeUrl } = hooks.useCardCourseRunData();
 describe('ResumeButton', () => {
   const props = {
     cardId: 'cardId',
+    isSmall: false,
   };
   describe('snapshot', () => {
     test('renders default button when learner has access to the course', () => {
@@ -28,6 +29,11 @@ describe('ResumeButton', () => {
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.prop(htmlProps.disabled)).toEqual(false);
       expect(wrapper.prop(htmlProps.href)).toEqual(resumeUrl);
+    });
+    test('render small button when isSmall is true', () => {
+      const wrapper = shallow(<ResumeButton {...props} isSmall />);
+      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.prop(htmlProps.size)).toEqual('sm');
     });
   });
   describe('behavior', () => {

@@ -15,8 +15,17 @@
     .pgn__card-header-content {
       margin-top: 1.5rem;
     }
-    .pgn__card-footer .pgn__action-row {
-      white-space: nowrap;
+    .pgn__card-footer {
+      flex-wrap: nowrap;
+
+      &.vertical {
+        flex-direction: column;
+      }
+
+      .pgn__action-row {
+        align-self: flex-end;
+        white-space: nowrap;
+      }
     }
 
     .course-card-verify-ribbon-container {

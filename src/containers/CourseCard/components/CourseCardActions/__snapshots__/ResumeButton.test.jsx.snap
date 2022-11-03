@@ -1,5 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`ResumeButton snapshot render small button when isSmall is true 1`] = `
+<Button
+  as="a"
+  disabled={false}
+  href="resumeUrl"
+  size="sm"
+>
+  Resume
+</Button>
+`;
+
 exports[`ResumeButton snapshot renders default button when learner has access to the course 1`] = `
 <Button
   as="a"

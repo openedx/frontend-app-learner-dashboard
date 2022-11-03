@@ -6,6 +6,7 @@ exports[`CourseCardActions snapshot show begin course button when verified and n
 >
   <BeginCourseButton
     cardId="cardId"
+    isSmall={false}
   />
 </ActionRow>
 `;
@@ -16,6 +17,7 @@ exports[`CourseCardActions snapshot show resume button when verified and not ent
 >
   <ResumeButton
     cardId="cardId"
+    isSmall={false}
   />
 </ActionRow>
 `;
@@ -26,6 +28,7 @@ exports[`CourseCardActions snapshot show select session button when not verified
 >
   <SelectSessionButton
     cardId="cardId"
+    isSmall={false}
   />
 </ActionRow>
 `;
@@ -36,9 +39,11 @@ exports[`CourseCardActions snapshot show upgrade button when not verified and no
 >
   <UpgradeButton
     cardId="cardId"
+    isSmall={false}
   />
   <BeginCourseButton
     cardId="cardId"
+    isSmall={false}
   />
 </ActionRow>
 `;
@@ -49,6 +54,22 @@ exports[`CourseCardActions snapshot show view course button when not verified an
 >
   <ViewCourseButton
     cardId="cardId"
+    isSmall={false}
+  />
+</ActionRow>
+`;
+
+exports[`CourseCardActions snapshot small button 1`] = `
+<ActionRow
+  data-test-id="CourseCardActions"
+>
+  <UpgradeButton
+    cardId="cardId"
+    isSmall={true}
+  />
+  <BeginCourseButton
+    cardId="cardId"
+    isSmall={true}
   />
 </ActionRow>
 `;

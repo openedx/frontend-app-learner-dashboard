@@ -20,7 +20,7 @@ export const RelatedProgramsBadge = ({ cardId }) => {
     <>
       <Button
         data-testid="RelatedProgramsBadge"
-        className="pl-0 mr-0"
+        className="pl-0 mr-0 justify-content-start align-self-start flex-shrink-1"
         variant="tertiary"
         size="sm"
         onClick={openModal}

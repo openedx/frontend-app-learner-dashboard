@@ -7,7 +7,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { hooks } from 'data/redux';
 import messages from './messages';
 
-export const BeginCourseButton = ({ cardId }) => {
+export const BeginCourseButton = ({ cardId, isSmall }) => {
   const { homeUrl } = hooks.useCardCourseRunData(cardId);
   const { hasAccess } = hooks.useCardEnrollmentData(cardId);
   const { isMasquerading } = hooks.useMasqueradeData();
@@ -17,6 +17,7 @@ export const BeginCourseButton = ({ cardId }) => {
       disabled={isMasquerading || !hasAccess}
       as="a"
       href={homeUrl}
+      {...isSmall && { size: 'sm' }}
     >
       {formatMessage(messages.beginCourse)}
     </Button>
@@ -24,5 +25,6 @@ export const BeginCourseButton = ({ cardId }) => {
 };
 BeginCourseButton.propTypes = {
   cardId: PropTypes.string.isRequired,
+  isSmall: PropTypes.bool.isRequired,
 };
 export default BeginCourseButton;

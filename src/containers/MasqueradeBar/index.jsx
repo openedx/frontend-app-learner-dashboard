@@ -37,7 +37,7 @@ export const MasqueradeBar = () => {
 
   return (
     <div className="w-100 shadow-sm px-2">
-      <Form className="masquerade-bar col-sm-12 col-md-10 col-12">
+      <Form className="masquerade-bar w-100">
         {isMasquerading ? (
           <>
             <FormLabel inline className="masquerade-form-label">

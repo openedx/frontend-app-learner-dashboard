@@ -15,6 +15,7 @@ jest.mock('data/redux', () => ({
 describe('UpgradeButton', () => {
   const props = {
     cardId: 'cardId',
+    isSmall: false,
   };
   const upgradeUrl = 'upgradeUrl';
   hooks.useCardCourseRunData.mockReturnValue({ upgradeUrl });
@@ -35,6 +36,11 @@ describe('UpgradeButton', () => {
       const wrapper = shallow(<UpgradeButton {...props} />);
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.prop(htmlProps.disabled)).toEqual(true);
+    });
+    test('small button', () => {
+      const wrapper = shallow(<UpgradeButton {...props} isSmall />);
+      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.prop(htmlProps.size)).toEqual('sm');
     });
   });
 });

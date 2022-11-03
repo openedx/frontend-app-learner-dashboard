@@ -7,7 +7,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { hooks } from 'data/redux';
 import messages from './messages';
 
-export const SelectSessionButton = ({ cardId }) => {
+export const SelectSessionButton = ({ cardId, isSmall }) => {
   const { hasAccess } = hooks.useCardEnrollmentData(cardId);
   const { canChange, hasSessions } = hooks.useCardEntitlementData(cardId);
   const { isMasquerading } = hooks.useMasqueradeData();
@@ -17,6 +17,7 @@ export const SelectSessionButton = ({ cardId }) => {
     <Button
       disabled={isMasquerading || !hasAccess || (!canChange || !hasSessions)}
       onClick={openSessionModal}
+      {...isSmall && { size: 'sm' }}
     >
       {formatMessage(messages.selectSession)}
     </Button>
@@ -24,5 +25,6 @@ export const SelectSessionButton = ({ cardId }) => {
 };
 SelectSessionButton.propTypes = {
   cardId: PropTypes.string.isRequired,
+  isSmall: PropTypes.bool.isRequired,
 };
 export default SelectSessionButton;

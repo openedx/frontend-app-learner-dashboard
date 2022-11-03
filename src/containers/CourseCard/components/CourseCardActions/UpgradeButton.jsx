@@ -8,7 +8,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { hooks } from 'data/redux';
 import messages from './messages';
 
-export const UpgradeButton = ({ cardId }) => {
+export const UpgradeButton = ({ cardId, isSmall }) => {
   const { upgradeUrl } = hooks.useCardCourseRunData(cardId);
   const { canUpgrade } = hooks.useCardEnrollmentData(cardId);
   const { isMasquerading } = hooks.useMasqueradeData();
@@ -20,6 +20,7 @@ export const UpgradeButton = ({ cardId }) => {
       variant="outline-primary"
       disabled={!isEnabled}
       {...isEnabled && { as: 'a', href: upgradeUrl }}
+      {...isSmall && { size: 'sm' }}
     >
       {formatMessage(messages.upgrade)}
     </Button>
@@ -27,5 +28,6 @@ export const UpgradeButton = ({ cardId }) => {
 };
 UpgradeButton.propTypes = {
   cardId: PropTypes.string.isRequired,
+  isSmall: PropTypes.bool.isRequired,
 };
 export default UpgradeButton;

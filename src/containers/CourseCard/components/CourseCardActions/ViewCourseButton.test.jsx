@@ -13,18 +13,19 @@ jest.mock('data/redux', () => ({
 }));
 
 let wrapper;
-const props = { cardId: 'cardId' };
+const defaultProps = { cardId: 'cardId', isSmall: false };
 const homeUrl = 'homeUrl';
 
 const createWrapper = ({
   hasAccess = false,
   isEntitlement = false,
   isExpired = false,
+  propsOveride = {},
 }) => {
   hooks.useCardCourseRunData.mockReturnValue({ homeUrl });
   hooks.useCardEnrollmentData.mockReturnValueOnce({ hasAccess });
   hooks.useCardEntitlementData.mockReturnValueOnce({ isEntitlement, isExpired });
-  return shallow(<ViewCourseButton {...props} />);
+  return shallow(<ViewCourseButton {...defaultProps} {...propsOveride} />);
 };
 
 describe('ViewCourseButton', () => {
@@ -55,5 +56,9 @@ describe('ViewCourseButton', () => {
     test('link is enabled', () => {
       expect(wrapper.prop(htmlProps.disabled)).toEqual(true);
     });
+  });
+  test('small button when isSmall is true', () => {
+    wrapper = createWrapper({ propsOveride: { isSmall: true } });
+    expect(wrapper.prop(htmlProps.size)).toEqual('sm');
   });
 });

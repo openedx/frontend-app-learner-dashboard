@@ -7,14 +7,10 @@ import hooks from './hooks';
 
 export const columnConfig = {
   courseList: {
-    sm: { span: 12, offset: 0 },
-    md: { span: 10, offset: 1 },
     lg: { span: 12, offset: 0 },
     xl: { span: 8, offset: 0 },
   },
   sidebar: {
-    sm: { span: 12, offset: 0 },
-    md: { span: 10, offset: 1 },
     lg: { span: 12, offset: 0 },
     xl: { span: 4, offset: 0 },
   },

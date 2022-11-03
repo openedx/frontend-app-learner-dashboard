@@ -7,7 +7,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { hooks } from 'data/redux';
 import messages from './messages';
 
-export const ResumeButton = ({ cardId }) => {
+export const ResumeButton = ({ cardId, isSmall }) => {
   const { resumeUrl } = hooks.useCardCourseRunData(cardId);
   const { hasAccess, isAudit, isAuditAccessExpired } = hooks.useCardEnrollmentData(cardId);
   const { isMasquerading } = hooks.useMasqueradeData();
@@ -17,6 +17,7 @@ export const ResumeButton = ({ cardId }) => {
       disabled={isMasquerading || !hasAccess || (isAudit && isAuditAccessExpired)}
       as="a"
       href={resumeUrl}
+      {...isSmall && { size: 'sm' }}
     >
       {formatMessage(messages.resume)}
     </Button>
@@ -24,5 +25,6 @@ export const ResumeButton = ({ cardId }) => {
 };
 ResumeButton.propTypes = {
   cardId: PropTypes.string.isRequired,
+  isSmall: PropTypes.bool.isRequired,
 };
 export default ResumeButton;

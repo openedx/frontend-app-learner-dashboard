@@ -31,3 +31,16 @@ exports[`UpgradeButton snapshot masquerading 1`] = `
   Upgrade
 </Button>
 `;
+
+exports[`UpgradeButton snapshot small button 1`] = `
+<Button
+  as="a"
+  disabled={false}
+  href="upgradeUrl"
+  iconBefore={[MockFunction icons.Locked]}
+  size="sm"
+  variant="outline-primary"
+>
+  Upgrade
+</Button>
+`;

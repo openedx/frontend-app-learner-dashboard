@@ -3,7 +3,7 @@
 exports[`RelatedProgramsBadge component snapshot: 3 programs 1`] = `
 <Fragment>
   <Button
-    className="pl-0 mr-0"
+    className="pl-0 mr-0 justify-content-start align-self-start flex-shrink-1"
     data-testid="RelatedProgramsBadge"
     onClick={[MockFunction useRelatedProgramsBadge.openModal]}
     size="sm"

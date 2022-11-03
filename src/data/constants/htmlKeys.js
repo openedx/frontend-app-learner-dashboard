@@ -12,6 +12,7 @@ export const htmlProps = StrictDict({
   onClick: 'onClick',
   onChange: 'onChange',
   onBlur: 'onBlur',
+  size: 'size',
 });
 
 export default {
