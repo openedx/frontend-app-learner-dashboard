@@ -12,14 +12,14 @@ exports[`EmptyCourse snapshot 1`] = `
     <FormattedMessage
       defaultMessage="Looking for a new challenge?"
       description="Prompt user for new challenge"
-      id="EmptyCourse.lookingForChallengePrompt"
+      id="Dashboard.NoCoursesView.lookingForChallengePrompt"
     />
   </h1>
   <p>
     <FormattedMessage
       defaultMessage="Explore our courses to add them to your dashboard."
       description="Prompt user to explore more courses"
-      id="EmptyCourse.exploreCoursesPrompt"
+      id="Dashboard.NoCoursesView.exploreCoursesPrompt"
     />
   </p>
   <Button
@@ -30,7 +30,7 @@ exports[`EmptyCourse snapshot 1`] = `
     <FormattedMessage
       defaultMessage="Explore courses"
       description="Button to explore more courses"
-      id="EmptyCourse.exploreCoursesButton"
+      id="Dashboard.NoCoursesView.exploreCoursesButton"
     />
   </Button>
 </div>

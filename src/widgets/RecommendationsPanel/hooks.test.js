@@ -38,15 +38,15 @@ describe('RecommendationsPanel hooks', () => {
         it('calls useEffect once', () => {
           expect(calls.length).toEqual(1);
         });
-        it('is memoized based on setData and setRequestState', () => {
-          expect(prereqs).toEqual([setData, setRequestState]);
+        it('it is only run once (no prereqs)', () => {
+          expect(prereqs).toEqual(undefined);
         });
         it('calls fetchRecommendedCourses', () => {
           api.fetchRecommendedCourses.mockReturnValueOnce(Promise.resolve(response));
           cb();
           expect(api.fetchRecommendedCourses).toHaveBeenCalledWith();
         });
-        it('sets request state to completed and loads response if fetch succeeds and not cancelled', async () => {
+        it('sets request state to completed and loads response if fetch succeeds', async () => {
           let resolveFn;
           api.fetchRecommendedCourses.mockReturnValueOnce(new Promise(resolve => {
             resolveFn = resolve;
@@ -58,20 +58,6 @@ describe('RecommendationsPanel hooks', () => {
           await resolveFn(response);
           expect(setRequestState).toHaveBeenCalledWith(RequestStates.completed);
           expect(setData).toHaveBeenCalledWith(response);
-        });
-        it('does not update state if cancelled', () => {
-          let resolveFn;
-          api.fetchRecommendedCourses.mockReturnValueOnce(new Promise(resolve => {
-            resolveFn = resolve;
-          }));
-          const cancelFn = cb();
-          expect(api.fetchRecommendedCourses).toHaveBeenCalledWith();
-          expect(setRequestState).not.toHaveBeenCalled();
-          expect(setData).not.toHaveBeenCalledWith(response);
-          cancelFn();
-          resolveFn();
-          expect(setRequestState).not.toHaveBeenCalled();
-          expect(setData).not.toHaveBeenCalledWith(response);
         });
       });
     });

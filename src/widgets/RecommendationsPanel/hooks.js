@@ -13,19 +13,13 @@ export const state = StrictDict({
 
 export const useFetchCourses = (setRequestState, setData) => {
   React.useEffect(() => {
-    let isCancelled = false;
     api.fetchRecommendedCourses().then((response) => {
-      if (!isCancelled) {
-        setRequestState(RequestStates.completed);
-        setData(response);
-      }
+      setRequestState(RequestStates.completed);
+      setData(response);
     }).catch(() => {
-      if (!isCancelled) {
-        setRequestState(RequestStates.failed);
-      }
+      setRequestState(RequestStates.failed);
     });
-    return () => { isCancelled = true; };
-  }, [setData, setRequestState]);
+  });
 };
 
 export const useRecommendationPanelData = () => {
