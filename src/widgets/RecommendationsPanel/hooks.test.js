@@ -46,18 +46,36 @@ describe('RecommendationsPanel hooks', () => {
           cb();
           expect(api.fetchRecommendedCourses).toHaveBeenCalledWith();
         });
-        it('sets request state to completed and loads response if fetch succeeds', async () => {
-          let resolveFn;
-          api.fetchRecommendedCourses.mockReturnValueOnce(new Promise(resolve => {
-            resolveFn = resolve;
-          }));
-          cb();
-          expect(api.fetchRecommendedCourses).toHaveBeenCalledWith();
-          expect(setRequestState).not.toHaveBeenCalled();
-          expect(setData).not.toHaveBeenCalledWith(response);
-          await resolveFn(response);
-          expect(setRequestState).toHaveBeenCalledWith(RequestStates.completed);
-          expect(setData).toHaveBeenCalledWith(response);
+        describe('successful fetch on mounted component', () => {
+          it('sets request state to completed and loads response', async () => {
+            let resolveFn;
+            api.fetchRecommendedCourses.mockReturnValueOnce(new Promise(resolve => {
+              resolveFn = resolve;
+            }));
+            cb();
+            expect(api.fetchRecommendedCourses).toHaveBeenCalledWith();
+            expect(setRequestState).not.toHaveBeenCalled();
+            expect(setData).not.toHaveBeenCalledWith(response);
+            await resolveFn(response);
+            expect(setRequestState).toHaveBeenCalledWith(RequestStates.completed);
+            expect(setData).toHaveBeenCalledWith(response);
+          });
+        });
+        describe('successful fetch on unmounted component', () => {
+          it('it does nothing', async () => {
+            let resolveFn;
+            api.fetchRecommendedCourses.mockReturnValueOnce(new Promise(resolve => {
+              resolveFn = resolve;
+            }));
+            const unMount = cb();
+            expect(api.fetchRecommendedCourses).toHaveBeenCalledWith();
+            expect(setRequestState).not.toHaveBeenCalled();
+            expect(setData).not.toHaveBeenCalledWith(response);
+            unMount();
+            await resolveFn(response);
+            expect(setRequestState).not.toHaveBeenCalled();
+            expect(setData).not.toHaveBeenCalled();
+          });
         });
       });
     });

@@ -2,7 +2,7 @@
 
 exports[`RecommendationsPanel LoadedView snapshot 1`] = `
 <div
-  className="p-4 panel-background"
+  className="p-4 w-100 panel-background"
 >
   <h3
     className="pb-2"

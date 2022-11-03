@@ -18,7 +18,7 @@ export const LoadedView = ({
   const { formatMessage } = useIntl();
 
   return (
-    <div className="p-4 panel-background">
+    <div className="p-4 w-100 panel-background">
       <h3 className="pb-2">{formatMessage(messages.recommendationsHeading)}</h3>
       <div>
         {courses.map((course) => (

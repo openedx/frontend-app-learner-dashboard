@@ -2,36 +2,25 @@
 
 exports[`EmptyCourse snapshot 1`] = `
 <div
-  className="d-flex align-items-center justify-content-center empty-course-hero"
+  className="d-flex align-items-center justify-content-center"
+  id="no-courses-content-view"
 >
   <Image
-    alt="empty course banner"
+    alt="No Courses view banner"
     src="icon/mock/path"
   />
   <h1>
-    <FormattedMessage
-      defaultMessage="Looking for a new challenge?"
-      description="Prompt user for new challenge"
-      id="Dashboard.NoCoursesView.lookingForChallengePrompt"
-    />
+    Looking for a new challenge?
   </h1>
   <p>
-    <FormattedMessage
-      defaultMessage="Explore our courses to add them to your dashboard."
-      description="Prompt user to explore more courses"
-      id="Dashboard.NoCoursesView.exploreCoursesPrompt"
-    />
+    Explore our courses to add them to your dashboard.
   </p>
   <Button
     as="a"
     href="course-search-url"
     variant="brand"
   >
-    <FormattedMessage
-      defaultMessage="Explore courses"
-      description="Button to explore more courses"
-      id="Dashboard.NoCoursesView.exploreCoursesButton"
-    />
+    Explore courses
   </Button>
 </div>
 `;

@@ -13,12 +13,18 @@ export const state = StrictDict({
 
 export const useFetchCourses = (setRequestState, setData) => {
   React.useEffect(() => {
+    let isMounted = true;
     api.fetchRecommendedCourses().then((response) => {
-      setRequestState(RequestStates.completed);
-      setData(response);
+      if (isMounted) {
+        setRequestState(RequestStates.completed);
+        setData(response);
+      }
     }).catch(() => {
-      setRequestState(RequestStates.failed);
+      if (isMounted) {
+        setRequestState(RequestStates.failed);
+      }
     });
+    return () => { isMounted = false; };
   });
 };
 

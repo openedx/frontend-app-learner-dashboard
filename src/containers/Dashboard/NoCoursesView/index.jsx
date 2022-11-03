@@ -1,6 +1,5 @@
 import React from 'react';
-import classNames from 'classnames';
-import { FormattedMessage } from '@edx/frontend-platform/i18n';
+import { useIntl } from '@edx/frontend-platform/i18n';
 import { Button, Image } from '@edx/paragon';
 import { Search } from '@edx/paragon/icons';
 
@@ -13,18 +12,18 @@ import './index.scss';
 
 export const NoCoursesView = () => {
   const { courseSearchUrl } = appHooks.usePlatformSettingsData();
+  const { formatMessage } = useIntl();
   return (
     <div
-      className={classNames(
-        'd-flex align-items-center justify-content-center empty-course-hero',
-      )}
+      id="no-courses-content-view"
+      className="d-flex align-items-center justify-content-center"
     >
-      <Image src={emptyCourseSVG} alt="empty course banner" />
+      <Image src={emptyCourseSVG} alt={formatMessage(messages.bannerAlt)} />
       <h1>
-        <FormattedMessage {...messages.lookingForChallengePrompt} />
+        {formatMessage(messages.lookingForChallengePrompt)}
       </h1>
       <p>
-        <FormattedMessage {...messages.exploreCoursesPrompt} />
+        {formatMessage(messages.exploreCoursesPrompt)}
       </p>
       <Button
         variant="brand"
@@ -32,7 +31,7 @@ export const NoCoursesView = () => {
         href={courseSearchUrl}
         iconBefore={Search}
       >
-        <FormattedMessage {...messages.exploreCoursesButton} />
+        {formatMessage(messages.exploreCoursesButton)}
       </Button>
     </div>
   );

@@ -16,6 +16,11 @@ const messages = defineMessages({
     defaultMessage: 'Explore courses',
     description: 'Button to explore more courses',
   },
+  bannerAlt: {
+    id: 'Dashboard.NoCoursesView.bannerAlt',
+    defaultMessage: 'No Courses view banner',
+    description: 'No Courses view basnner',
+  },
 });
 
 export default messages;
