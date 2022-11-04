@@ -92,7 +92,7 @@ exports[`CertificateBanner snapshot is restricted and verified 1`] = `
 
 exports[`CertificateBanner snapshot not passing and audit 1`] = `
 <Banner>
-  Grade required to pass the course: 0.8
+  Grade required to pass the course: 0.8‏%
 </Banner>
 `;
 
@@ -114,6 +114,6 @@ exports[`CertificateBanner snapshot not passing and not audit and not finished 1
 <Banner
   variant="warning"
 >
-  Grade required for a certificate: 0.8
+  Grade required for a certificate: 0.8‏%
 </Banner>
 `;
