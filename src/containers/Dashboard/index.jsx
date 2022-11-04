@@ -2,14 +2,16 @@ import React from 'react';
 
 import { hooks as appHooks } from 'data/redux';
 import { RequestKeys } from 'data/constants/requests';
-import EmptyCourse from 'containers/EmptyCourse';
 import EnterpriseDashboardModal from 'containers/EnterpriseDashboardModal';
 import SelectSessionModal from 'containers/SelectSessionModal';
+import CourseList from 'containers/CourseList';
+
+import LoadedSidebar from 'containers/WidgetContainers/LoadedSidebar';
+import NoCoursesSidebar from 'containers/WidgetContainers/NoCoursesSidebar';
 
 import LoadingView from './LoadingView';
-import LoadedView from './LoadedView';
+import DashboardLayout from './DashboardLayout';
 import hooks from './hooks';
-
 import './index.scss';
 
 export const Dashboard = () => {
@@ -20,7 +22,7 @@ export const Dashboard = () => {
   const initIsPending = appHooks.useRequestIsPending(RequestKeys.initialize);
   const showSelectSessionModal = appHooks.useShowSelectSessionModal();
   return (
-    <div id="dashboard-container" className="d-flex flex-column p-2 pt-3">
+    <div id="dashboard-container" className="d-flex flex-column p-2 pt-0">
       <h1 className="sr-only">{pageTitle}</h1>
       {!initIsPending && (
         <>
@@ -29,9 +31,13 @@ export const Dashboard = () => {
         </>
       )}
       <div id="dashboard-content">
-        {initIsPending && (<LoadingView />)}
-        {(!initIsPending && hasCourses) && (<LoadedView />)}
-        {(!initIsPending && !hasCourses) && (<EmptyCourse />)}
+        {initIsPending
+          ? (<LoadingView />)
+          : (
+            <DashboardLayout sidebar={hasCourses ? <LoadedSidebar /> : <NoCoursesSidebar />}>
+              <CourseList />
+            </DashboardLayout>
+          )}
       </div>
     </div>
   );

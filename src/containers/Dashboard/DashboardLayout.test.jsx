@@ -1,20 +1,22 @@
 import { shallow } from 'enzyme';
 import { Col, Row } from '@edx/paragon';
 
-import CourseList from 'containers/CourseList';
-import WidgetSidebar from 'containers/WidgetSidebar';
-
 import hooks from './hooks';
-import LoadedView, { columnConfig } from './LoadedView';
+import DashboardLayout, { columnConfig } from './DashboardLayout';
 
 jest.mock('./hooks', () => ({
   useIsDashboardCollapsed: jest.fn(() => true),
 }));
 
-describe('LoadedView', () => {
+describe('DashboardLayout', () => {
+  const children = 'test-children';
+  const props = {
+    sidebar: 'test-sidebar-content',
+  };
+  const render = () => shallow(<DashboardLayout sidebar={props.sidebar}>{children}</DashboardLayout>);
   const testColumns = () => {
     it('loads courseList and sidebar column layout', () => {
-      const columns = shallow(<LoadedView />).find(Row).find(Col);
+      const columns = render().find(Row).find(Col);
       Object.keys(columnConfig.courseList).forEach(size => {
         expect(columns.at(0).props()[size]).toEqual(columnConfig.courseList[size]);
       });
@@ -22,25 +24,25 @@ describe('LoadedView', () => {
         expect(columns.at(1).props()[size]).toEqual(columnConfig.sidebar[size]);
       });
     });
-    it('displays CourseList in first column', () => {
-      const columns = shallow(<LoadedView />).find(Row).find(Col);
-      expect(columns.at(0).find(CourseList).length).toEqual(1);
+    it('displays children in first column', () => {
+      const columns = render().find(Row).find(Col);
+      expect(columns.at(0).contains(children)).toEqual(true);
     });
-    it('displays WidgetSidebar in second column', () => {
-      const columns = shallow(<LoadedView />).find(Row).find(Col);
-      expect(columns.at(1).find(WidgetSidebar).length).toEqual(1);
+    it('displays sidebar prop in second column', () => {
+      const columns = render().find(Row).find(Col);
+      expect(columns.at(1).contains(props.sidebar)).toEqual(true);
     });
   };
   const testSnapshot = () => {
     test('snapshot', () => {
-      expect(shallow(<LoadedView />)).toMatchSnapshot();
+      expect(render()).toMatchSnapshot();
     });
   };
   describe('collapsed', () => {
     testColumns();
     testSnapshot();
     it('does not show spacer component above widget sidebar', () => {
-      const columns = shallow(<LoadedView />).find(Col);
+      const columns = render().find(Col);
       expect(columns.at(1).find('h2').length).toEqual(0);
     });
   });
@@ -50,7 +52,7 @@ describe('LoadedView', () => {
     testColumns();
     testSnapshot();
     it('shows a blank (nbsp) h2 spacer component above widget sidebar', () => {
-      const columns = shallow(<LoadedView />).find(Col);
+      const columns = render().find(Col);
       // nonbreaking space equivalent
       expect(columns.at(1).find('h2').text()).toEqual('\xA0');
     });

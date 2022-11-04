@@ -1,11 +1,11 @@
 import React from 'react';
 
-import LookingForChallengeWidget from './widgets/LookingForChallengeWidget';
+import RecommendationsPanel from 'widgets/RecommendationsPanel';
 
 export const WidgetSidebar = () => (
   <div className="widget-sidebar">
     <div className="d-flex">
-      <LookingForChallengeWidget />
+      <RecommendationsPanel />
     </div>
   </div>
 );

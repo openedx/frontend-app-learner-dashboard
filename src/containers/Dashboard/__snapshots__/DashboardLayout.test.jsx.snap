@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LoadedView collapsed snapshot 1`] = `
+exports[`DashboardLayout collapsed snapshot 1`] = `
 <Container
   fluid={true}
   size="xl"
@@ -33,7 +33,7 @@ exports[`LoadedView collapsed snapshot 1`] = `
         }
       }
     >
-      <CourseList />
+      test-children
     </Col>
     <Col
       className="sidebar-column"
@@ -62,13 +62,13 @@ exports[`LoadedView collapsed snapshot 1`] = `
         }
       }
     >
-      <WidgetSidebar />
+      test-sidebar-content
     </Col>
   </Row>
 </Container>
 `;
 
-exports[`LoadedView not collapsed snapshot 1`] = `
+exports[`DashboardLayout not collapsed snapshot 1`] = `
 <Container
   fluid={true}
   size="xl"
@@ -101,7 +101,7 @@ exports[`LoadedView not collapsed snapshot 1`] = `
         }
       }
     >
-      <CourseList />
+      test-children
     </Col>
     <Col
       className="sidebar-column"
@@ -135,7 +135,7 @@ exports[`LoadedView not collapsed snapshot 1`] = `
       >
          
       </h2>
-      <WidgetSidebar />
+      test-sidebar-content
     </Col>
   </Row>
 </Container>

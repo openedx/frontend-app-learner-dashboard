@@ -2,12 +2,12 @@
 
 exports[`WidgetSidebar snapshots default 1`] = `
 <div
-  className="widget-sidebar"
+  className="widget-sidebar px-2"
 >
   <div
     className="d-flex"
   >
-    <LookingForChallengeWidget />
+    <RecommendationsPanel />
   </div>
 </div>
 `;

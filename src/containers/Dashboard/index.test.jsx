@@ -2,11 +2,14 @@ import { shallow } from 'enzyme';
 
 import { hooks as appHooks } from 'data/redux';
 
-import EmptyCourse from 'containers/EmptyCourse';
 import EnterpriseDashboardModal from 'containers/EnterpriseDashboardModal';
 import SelectSessionModal from 'containers/SelectSessionModal';
+import CourseList from 'containers/CourseList';
 
-import LoadedView from './LoadedView';
+import LoadedWidgetSidebar from 'containers/WidgetContainers/LoadedSidebar';
+import NoCoursesWidgetSidebar from 'containers/WidgetContainers/NoCoursesSidebar';
+
+import DashboardLayout from './DashboardLayout';
 import LoadingView from './LoadingView';
 import hooks from './hooks';
 import Dashboard from '.';
@@ -25,10 +28,12 @@ jest.mock('data/redux', () => ({
   },
 }));
 
-jest.mock('containers/EmptyCourse', () => 'EmptyCourse');
 jest.mock('containers/EnterpriseDashboardModal', () => 'EnterpriseDashboardModal');
+jest.mock('containers/CourseList', () => 'CourseList');
+jest.mock('containers/WidgetContainers/LoadedSidebar', () => 'LoadedWidgetSidebar');
+jest.mock('containers/WidgetContainers/NoCoursesSidebar', () => 'NoCoursesWidgetSidebar');
 jest.mock('./LoadingView', () => 'LoadingView');
-jest.mock('./LoadedView', () => 'LoadedView');
+jest.mock('./DashboardLayout', () => 'DashboardLayout');
 
 jest.mock('./hooks', () => ({
   useInitializeDashboard: jest.fn(),
@@ -115,7 +120,9 @@ describe('Dashboard', () => {
           initIsPending: false,
           showSelectSessionModal: true,
         },
-        content: ['LoadedView', <LoadedView />],
+        content: ['LoadedView', (
+          <DashboardLayout sidebar={<LoadedWidgetSidebar />}><CourseList /></DashboardLayout>
+        )],
         showEnterpriseModal: false,
         showSelectSessionModal: true,
       });
@@ -129,7 +136,9 @@ describe('Dashboard', () => {
           initIsPending: false,
           showSelectSessionModal: false,
         },
-        content: ['EmptyCourse', <EmptyCourse />],
+        content: ['Dashboard layout with no courses sidebar and content', (
+          <DashboardLayout sidebar={<NoCoursesWidgetSidebar />}><CourseList /></DashboardLayout>
+        )],
         showEnterpriseModal: true,
         showSelectSessionModal: false,
       });

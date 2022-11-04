@@ -39,7 +39,7 @@ export const messages = StrictDict({
   passingGrade: {
     id: 'learner-dash.courseCard.banners.passingGrade',
     description: 'Message to learners with minimum passing grade for the course',
-    defaultMessage: 'Grade required to pass the course: {minPassingGrade}',
+    defaultMessage: 'Grade required to pass the course: {minPassingGrade}\u200f%',
   },
   notEligibleForCert: {
     id: 'learner-dash.courseCard.banners.notEligibleForCert',
@@ -64,7 +64,7 @@ export const messages = StrictDict({
   certMinGrade: {
     id: 'learner-dash.courseCard.banners.certMinGrade',
     description: 'Passing grade requirement message',
-    defaultMessage: 'Grade required for a certificate: {minPassingGrade}',
+    defaultMessage: 'Grade required for a certificate: {minPassingGrade}\u200f%',
   },
   downloadCertificate: {
     id: 'learner-dash.courseCard.banners.downloadCertificate',

@@ -2,7 +2,7 @@ import { shallow } from 'enzyme';
 
 import WidgetSidebar from '.';
 
-jest.mock('./widgets/LookingForChallengeWidget', () => 'LookingForChallengeWidget');
+jest.mock('widgets/LookingForChallengeWidget', () => 'LookingForChallengeWidget');
 
 describe('WidgetSidebar', () => {
   describe('snapshots', () => {

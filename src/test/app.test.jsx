@@ -38,6 +38,9 @@ jest.unmock('react-redux');
 jest.unmock('reselect');
 jest.unmock('hooks');
 
+jest.mock('containers/WidgetContainers/LoadedSidebar', () => 'loaded-widget-sidebar');
+jest.mock('containers/WidgetContainers/NoCoursesSidebar', () => 'no-courses-widget-sidebar');
+
 jest.mock('@edx/frontend-platform/i18n', () => ({
   ...jest.requireActual('@edx/frontend-platform/i18n'),
   useIntl: () => ({

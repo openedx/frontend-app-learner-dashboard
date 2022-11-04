@@ -1,7 +1,12 @@
 import { shallow } from 'enzyme';
 
-import CourseList from '.';
+import { hooks as appHooks } from 'data/redux';
 import { useCourseListData, useIsCollapsed } from './hooks';
+import CourseList from '.';
+
+jest.mock('data/redux', () => ({
+  hooks: { useHasCourses: jest.fn() },
+}));
 
 jest.mock('./hooks', () => ({
   useCourseListData: jest.fn(),
@@ -13,6 +18,8 @@ jest.mock('containers/CourseFilterControls', () => ({
   ActiveCourseFilters: 'ActiveCourseFilters',
   CourseFilterControls: 'CourseFilterControls',
 }));
+
+appHooks.useHasCourses.mockReturnValue(true);
 
 describe('CourseList', () => {
   const defaultCourseListData = {
@@ -31,28 +38,39 @@ describe('CourseList', () => {
     return shallow(<CourseList />);
   };
 
-  describe('snapshots', () => {
-    test('with no filters', () => {
+  describe('no courses', () => {
+    test('snapshot', () => {
+      appHooks.useHasCourses.mockReturnValue(true);
       const wrapper = createWrapper();
       expect(wrapper).toMatchSnapshot();
     });
-    test('with filters', () => {
+  });
+  describe('no filters', () => {
+    test('snapshot', () => {
+      const wrapper = createWrapper();
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
+  describe('with filters', () => {
+    test('snapshot', () => {
       const wrapper = createWrapper({
-        filterOptions: {
-          abitary: 'filter',
-        },
+        filterOptions: { abitary: 'filter' },
         showFilters: true,
       });
       expect(wrapper).toMatchSnapshot();
     });
-    test('with multiple courses and pages', () => {
+  });
+  describe('with multiple courses and pages', () => {
+    test('snapshot', () => {
       const wrapper = createWrapper({
         visibleList: [{ cardId: 'foo' }, { cardId: 'bar' }, { cardId: 'baz' }],
         numPages: 3,
       });
       expect(wrapper).toMatchSnapshot();
     });
-    test('collapsed with multiple courses and pages', () => {
+  });
+  describe('collapsed with multiple courses and pages', () => {
+    test('snapshot', () => {
       useIsCollapsed.mockReturnValueOnce(true);
       const wrapper = createWrapper({
         visibleList: [{ cardId: 'foo' }, { cardId: 'bar' }, { cardId: 'baz' }],

@@ -1,8 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { Container, Col, Row } from '@edx/paragon';
 
-import CourseList from 'containers/CourseList';
-import WidgetSidebar from 'containers/WidgetSidebar';
 import hooks from './hooks';
 
 export const columnConfig = {
@@ -20,22 +20,26 @@ export const columnConfig = {
   },
 };
 
-export const LoadedView = () => {
+export const DashboardLayout = ({ children, sidebar }) => {
   const isCollapsed = hooks.useIsDashboardCollapsed();
 
   return (
     <Container fluid size="xl">
       <Row>
         <Col {...columnConfig.courseList} className="course-list-column">
-          <CourseList />
+          {children}
         </Col>
         <Col {...columnConfig.sidebar} className="sidebar-column">
           {!isCollapsed && (<h2 className="course-list-title">&nbsp;</h2>)}
-          <WidgetSidebar />
+          {sidebar}
         </Col>
       </Row>
     </Container>
   );
 };
+DashboardLayout.propTypes = {
+  children: PropTypes.node.isRequired,
+  sidebar: PropTypes.node.isRequired,
+};
 
-export default LoadedView;
+export default DashboardLayout;

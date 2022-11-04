@@ -18,6 +18,7 @@ jest.mock('data/redux', () => ({
       setPageNumber: jest.fn(v => ({ setPageNumber: v })),
       loadGlobalData: jest.fn(v => ({ loadGlobalData: v })),
       loadCourses: jest.fn(v => ({ loadCourses: v })),
+      loadRecommendedCourses: jest.fn(v => ({ loadRecommendedCourses: v })),
     },
   },
   selectors: {
