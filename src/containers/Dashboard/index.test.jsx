@@ -9,7 +9,6 @@ import CourseList from 'containers/CourseList';
 import LoadedWidgetSidebar from 'containers/WidgetContainers/LoadedSidebar';
 import NoCoursesWidgetSidebar from 'containers/WidgetContainers/NoCoursesSidebar';
 
-import NoCoursesView from './NoCoursesView';
 import DashboardLayout from './DashboardLayout';
 import LoadingView from './LoadingView';
 import hooks from './hooks';
@@ -34,7 +33,6 @@ jest.mock('containers/CourseList', () => 'CourseList');
 jest.mock('containers/WidgetContainers/LoadedSidebar', () => 'LoadedWidgetSidebar');
 jest.mock('containers/WidgetContainers/NoCoursesSidebar', () => 'NoCoursesWidgetSidebar');
 jest.mock('./LoadingView', () => 'LoadingView');
-jest.mock('./NoCoursesView', () => 'NoCoursesView');
 jest.mock('./DashboardLayout', () => 'DashboardLayout');
 
 jest.mock('./hooks', () => ({
@@ -139,7 +137,7 @@ describe('Dashboard', () => {
           showSelectSessionModal: false,
         },
         content: ['Dashboard layout with no courses sidebar and content', (
-          <DashboardLayout sidebar={<NoCoursesWidgetSidebar />}><NoCoursesView /></DashboardLayout>
+          <DashboardLayout sidebar={<NoCoursesWidgetSidebar />}><CourseList /></DashboardLayout>
         )],
         showEnterpriseModal: true,
         showSelectSessionModal: false,

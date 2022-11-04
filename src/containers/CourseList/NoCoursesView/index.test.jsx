@@ -17,7 +17,7 @@ jest.mock('containers/Dashboard/hooks', () => ({
   useIsDashboardCollapsed: jest.fn(() => true),
 }));
 
-describe('EmptyCourse', () => {
+describe('NoCoursesView', () => {
   test('snapshot', () => {
     expect(shallow(<EmptyCourse />)).toMatchSnapshot();
   });

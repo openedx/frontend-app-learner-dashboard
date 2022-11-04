@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`EmptyCourse snapshot 1`] = `
+exports[`NoCoursesView snapshot 1`] = `
 <div
-  className="d-flex align-items-center justify-content-center"
+  className="d-flex align-items-center justify-content-center mb-4.5"
   id="no-courses-content-view"
 >
   <Image

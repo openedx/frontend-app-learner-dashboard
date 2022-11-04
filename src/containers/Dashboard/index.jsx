@@ -9,11 +9,9 @@ import CourseList from 'containers/CourseList';
 import LoadedSidebar from 'containers/WidgetContainers/LoadedSidebar';
 import NoCoursesSidebar from 'containers/WidgetContainers/NoCoursesSidebar';
 
-import NoCoursesView from './NoCoursesView';
 import LoadingView from './LoadingView';
 import DashboardLayout from './DashboardLayout';
 import hooks from './hooks';
-
 import './index.scss';
 
 export const Dashboard = () => {
@@ -24,7 +22,7 @@ export const Dashboard = () => {
   const initIsPending = appHooks.useRequestIsPending(RequestKeys.initialize);
   const showSelectSessionModal = appHooks.useShowSelectSessionModal();
   return (
-    <div id="dashboard-container" className="d-flex flex-column p-2 pt-3">
+    <div id="dashboard-container" className="d-flex flex-column p-2 pt-0">
       <h1 className="sr-only">{pageTitle}</h1>
       {!initIsPending && (
         <>
@@ -37,9 +35,7 @@ export const Dashboard = () => {
           ? (<LoadingView />)
           : (
             <DashboardLayout sidebar={hasCourses ? <LoadedSidebar /> : <NoCoursesSidebar />}>
-              {hasCourses
-                ? (<CourseList />)
-                : (<NoCoursesView />)}
+              <CourseList />
             </DashboardLayout>
           )}
       </div>
