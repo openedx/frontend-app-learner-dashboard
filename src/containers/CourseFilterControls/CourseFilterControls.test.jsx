@@ -1,13 +1,22 @@
 import { shallow } from 'enzyme';
 
 import { breakpoints, useWindowSize } from '@edx/paragon';
+
+import { hooks as appHooks } from 'data/redux';
+
 import CourseFilterControls from './CourseFilterControls';
 import useCourseFilterControlsData from './hooks';
+
+jest.mock('data/redux', () => ({
+  hooks: { useHasCourses: jest.fn() },
+}));
 
 jest.mock('./hooks', () => jest.fn().mockName('useCourseFilterControlsData'));
 
 jest.mock('./components/FilterForm', () => 'FilterForm');
 jest.mock('./components/SortForm', () => 'SortForm');
+
+appHooks.useHasCourses.mockReturnValue(true);
 
 describe('CourseFilterControls', () => {
   const props = {
@@ -30,13 +39,23 @@ describe('CourseFilterControls', () => {
     handleSortChange: jest.fn().mockName('handleSortChange'),
   });
 
-  describe('snapshot', () => {
-    test('is mobile', () => {
+  describe('no courses', () => {
+    test('snapshot', () => {
+      appHooks.useHasCourses.mockReturnValueOnce(false);
+      useWindowSize.mockReturnValueOnce({ width: breakpoints.small.minWidth });
+      const wrapper = shallow(<CourseFilterControls {...props} />);
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
+  describe('mobile', () => {
+    test('snapshot', () => {
       useWindowSize.mockReturnValueOnce({ width: breakpoints.small.minWidth - 1 });
       const wrapper = shallow(<CourseFilterControls {...props} />);
       expect(wrapper).toMatchSnapshot();
     });
-    test('is not mobile', () => {
+  });
+  describe('is not mobile', () => {
+    test('snapshot', () => {
       useWindowSize.mockReturnValueOnce({ width: breakpoints.small.minWidth });
       const wrapper = shallow(<CourseFilterControls {...props} />);
       expect(wrapper).toMatchSnapshot();

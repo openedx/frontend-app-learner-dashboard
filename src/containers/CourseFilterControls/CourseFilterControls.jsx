@@ -14,6 +14,8 @@ import {
 } from '@edx/paragon';
 import { Close, Tune } from '@edx/paragon/icons';
 
+import { hooks as appHooks } from 'data/redux';
+
 import FilterForm from './components/FilterForm';
 import SortForm from './components/SortForm';
 import useCourseFilterControlsData from './hooks';
@@ -28,6 +30,7 @@ export const CourseFilterControls = ({
   setFilters,
 }) => {
   const { formatMessage } = useIntl();
+  const hasCourses = appHooks.useHasCourses();
   const {
     isOpen,
     open,
@@ -50,6 +53,7 @@ export const CourseFilterControls = ({
         variant="outline-primary"
         iconBefore={Tune}
         onClick={open}
+        disabled={!hasCourses}
       >
         {formatMessage(messages.refine)}
       </Button>
