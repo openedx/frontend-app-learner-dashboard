@@ -1,38 +1,28 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SelectSessionButton snapshot render small button when isSmall is true 1`] = `
-<Button
-  disabled={false}
-  onClick={[MockFunction mockOpenSessionModal]}
-  size="sm"
->
-  Select Session
-</Button>
-`;
-
 exports[`SelectSessionButton snapshot renders default button 1`] = `
-<Button
+<ActionButton
   disabled={false}
   onClick={[MockFunction mockOpenSessionModal]}
 >
   Select Session
-</Button>
+</ActionButton>
 `;
 
 exports[`SelectSessionButton snapshot renders disabled button if masquerading 1`] = `
-<Button
+<ActionButton
   disabled={true}
   onClick={[MockFunction mockOpenSessionModal]}
 >
   Select Session
-</Button>
+</ActionButton>
 `;
 
 exports[`SelectSessionButton snapshot renders disabled button when user does not have access to the course 1`] = `
-<Button
+<ActionButton
   disabled={true}
   onClick={[MockFunction mockOpenSessionModal]}
 >
   Select Session
-</Button>
+</ActionButton>
 `;

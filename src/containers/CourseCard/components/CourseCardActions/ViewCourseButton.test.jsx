@@ -11,9 +11,10 @@ jest.mock('data/redux', () => ({
     useCardEntitlementData: jest.fn(),
   },
 }));
+jest.mock('./ActionButton', () => 'ActionButton');
 
 let wrapper;
-const defaultProps = { cardId: 'cardId', isSmall: false };
+const defaultProps = { cardId: 'cardId' };
 const homeUrl = 'homeUrl';
 
 const createWrapper = ({
@@ -56,9 +57,5 @@ describe('ViewCourseButton', () => {
     test('link is enabled', () => {
       expect(wrapper.prop(htmlProps.disabled)).toEqual(true);
     });
-  });
-  test('small button when isSmall is true', () => {
-    wrapper = createWrapper({ propsOveride: { isSmall: true } });
-    expect(wrapper.prop(htmlProps.size)).toEqual('sm');
   });
 });

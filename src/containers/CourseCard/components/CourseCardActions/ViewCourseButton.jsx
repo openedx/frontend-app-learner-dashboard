@@ -1,29 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { hooks } from 'data/redux';
+import ActionButton from './ActionButton';
 import messages from './messages';
 
-export const ViewCourseButton = ({ cardId, isSmall }) => {
+export const ViewCourseButton = ({ cardId }) => {
   const { homeUrl } = hooks.useCardCourseRunData(cardId);
   const { hasAccess } = hooks.useCardEnrollmentData(cardId);
   const { formatMessage } = useIntl();
   return (
-    <Button
+    <ActionButton
       disabled={!hasAccess}
       as="a"
       href={homeUrl}
-      {...isSmall && { size: 'sm' }}
     >
       {formatMessage(messages.viewCourse)}
-    </Button>
+    </ActionButton>
   );
 };
 ViewCourseButton.propTypes = {
   cardId: PropTypes.string.isRequired,
-  isSmall: PropTypes.bool.isRequired,
 };
 export default ViewCourseButton;

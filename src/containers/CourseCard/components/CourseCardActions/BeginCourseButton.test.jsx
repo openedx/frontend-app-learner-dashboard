@@ -11,6 +11,7 @@ jest.mock('data/redux', () => ({
     useMasqueradeData: jest.fn(() => ({ isMasquerading: false })),
   },
 }));
+jest.mock('./ActionButton', () => 'ActionButton');
 
 let wrapper;
 const { homeUrl } = hooks.useCardCourseRunData();
@@ -18,7 +19,6 @@ const { homeUrl } = hooks.useCardCourseRunData();
 describe('BeginCourseButton', () => {
   const props = {
     cardId: 'cardId',
-    isSmall: false,
   };
   beforeEach(() => {
     jest.clearAllMocks();
@@ -29,11 +29,6 @@ describe('BeginCourseButton', () => {
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.prop(htmlProps.disabled)).toEqual(false);
       expect(wrapper.prop(htmlProps.href)).toEqual(homeUrl);
-    });
-    test('render small button when isSmall is true', () => {
-      wrapper = shallow(<BeginCourseButton {...props} isSmall />);
-      expect(wrapper).toMatchSnapshot();
-      expect(wrapper.prop(htmlProps.size)).toEqual('sm');
     });
   });
   describe('behavior', () => {

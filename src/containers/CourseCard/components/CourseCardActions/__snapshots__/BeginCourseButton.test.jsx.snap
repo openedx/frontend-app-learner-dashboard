@@ -1,22 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BeginCourseButton snapshot render small button when isSmall is true 1`] = `
-<Button
-  as="a"
-  disabled={false}
-  href="home-url"
-  size="sm"
->
-  Begin Course
-</Button>
-`;
-
 exports[`BeginCourseButton snapshot renders default button when learner has access to the course 1`] = `
-<Button
+<ActionButton
   as="a"
   disabled={false}
   href="home-url"
 >
   Begin Course
-</Button>
+</ActionButton>
 `;

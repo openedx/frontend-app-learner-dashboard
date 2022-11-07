@@ -12,11 +12,12 @@ jest.mock('data/redux', () => ({
     useUpdateSelectSessionModalCallback: () => jest.fn().mockName('mockOpenSessionModal'),
   },
 }));
+jest.mock('./ActionButton', () => 'ActionButton');
 
 let wrapper;
 
 describe('SelectSessionButton', () => {
-  const props = { cardId: 'cardId', isSmall: false };
+  const props = { cardId: 'cardId' };
   describe('snapshot', () => {
     test('renders default button', () => {
       wrapper = shallow(<SelectSessionButton {...props} />);
@@ -31,11 +32,6 @@ describe('SelectSessionButton', () => {
       hooks.useMasqueradeData.mockReturnValueOnce({ isMasquerading: true });
       wrapper = shallow(<SelectSessionButton {...props} />);
       expect(wrapper).toMatchSnapshot();
-    });
-    it('render small button when isSmall is true', () => {
-      wrapper = shallow(<SelectSessionButton {...props} isSmall />);
-      expect(wrapper).toMatchSnapshot();
-      expect(wrapper.prop(htmlProps.size)).toEqual('sm');
     });
   });
   describe('behavior', () => {

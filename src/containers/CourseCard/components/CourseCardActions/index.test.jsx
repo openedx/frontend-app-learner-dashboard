@@ -2,7 +2,6 @@ import { shallow } from 'enzyme';
 
 import { hooks } from 'data/redux';
 
-import useIsCollapsed from './hooks';
 import CourseCardActions from '.';
 
 jest.mock('data/redux', () => ({
@@ -12,8 +11,6 @@ jest.mock('data/redux', () => ({
     useCardEntitlementData: jest.fn(),
   },
 }));
-
-jest.mock('./hooks', () => jest.fn());
 
 jest.mock('./UpgradeButton', () => 'UpgradeButton');
 jest.mock('./SelectSessionButton', () => 'SelectSessionButton');
@@ -34,7 +31,6 @@ describe('CourseCardActions', () => {
     return shallow(<CourseCardActions {...props} />);
   };
   describe('snapshot', () => {
-    useIsCollapsed.mockReturnValue(false);
     test('show upgrade button when not verified and not entitlement', () => {
       const wrapper = createWrapper({
         isEntitlement: false, isFulfilled: false, isArchived: false, isVerified: false, hasStarted: false,
@@ -62,13 +58,6 @@ describe('CourseCardActions', () => {
     test('show view course button when not verified and entitlement and fulfilled', () => {
       const wrapper = createWrapper({
         isEntitlement: true, isFulfilled: true, isArchived: false, isVerified: false, hasStarted: false,
-      });
-      expect(wrapper).toMatchSnapshot();
-    });
-    test('small button', () => {
-      useIsCollapsed.mockReturnValueOnce(true);
-      const wrapper = createWrapper({
-        isEntitlement: false, isFulfilled: false, isArchived: false, isVerified: false, hasStarted: false,
       });
       expect(wrapper).toMatchSnapshot();
     });
