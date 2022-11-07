@@ -25,7 +25,8 @@ export const useFetchCourses = (setRequestState, setData) => {
       }
     });
     return () => { isMounted = false; };
-  });
+    /* eslint-disable */
+  }, []);
 };
 
 export const useRecommendationPanelData = () => {
