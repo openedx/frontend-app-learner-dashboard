@@ -1,6 +1,7 @@
 import { shallow } from 'enzyme';
 
 import { hooks } from 'data/redux';
+
 import CourseCardActions from '.';
 
 jest.mock('data/redux', () => ({

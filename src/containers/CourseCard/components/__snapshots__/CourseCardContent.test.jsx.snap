@@ -38,12 +38,12 @@ exports[`CourseCardContent snapshot not verified 1`] = `
         cardId="test-card-id"
       />
     </Card.Section>
-    <RelatedProgramsBadge
-      cardId="test-card-id"
-    />
     <Card.Footer
-      orientation="horizontal"
+      orientation="vertical"
     >
+      <RelatedProgramsBadge
+        cardId="test-card-id"
+      />
       <CourseCardActions
         cardId="test-card-id"
       />
@@ -107,13 +107,11 @@ exports[`CourseCardContent snapshot orientation horizontal 1`] = `
       />
     </Card.Section>
     <Card.Footer
-      orientation="vertical"
-      textElement={
-        <RelatedProgramsBadge
-          cardId="test-card-id"
-        />
-      }
+      orientation="horizontal"
     >
+      <RelatedProgramsBadge
+        cardId="test-card-id"
+      />
       <CourseCardActions
         cardId="test-card-id"
       />
@@ -176,12 +174,12 @@ exports[`CourseCardContent snapshot orientation vertical 1`] = `
         cardId="test-card-id"
       />
     </Card.Section>
-    <RelatedProgramsBadge
-      cardId="test-card-id"
-    />
     <Card.Footer
-      orientation="horizontal"
+      orientation="vertical"
     >
+      <RelatedProgramsBadge
+        cardId="test-card-id"
+      />
       <CourseCardActions
         cardId="test-card-id"
       />

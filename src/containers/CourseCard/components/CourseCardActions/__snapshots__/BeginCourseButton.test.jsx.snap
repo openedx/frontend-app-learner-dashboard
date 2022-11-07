@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`BeginCourseButton snapshot renders default button when learner has access to the course 1`] = `
-<Button
+<ActionButton
   as="a"
   disabled={false}
   href="home-url"
 >
   Begin Course
-</Button>
+</ActionButton>
 `;

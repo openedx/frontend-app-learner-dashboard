@@ -12,6 +12,7 @@ jest.mock('data/redux', () => ({
     useUpdateSelectSessionModalCallback: () => jest.fn().mockName('mockOpenSessionModal'),
   },
 }));
+jest.mock('./ActionButton', () => 'ActionButton');
 
 let wrapper;
 

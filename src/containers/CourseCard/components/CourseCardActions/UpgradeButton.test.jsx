@@ -11,6 +11,7 @@ jest.mock('data/redux', () => ({
     useCardEnrollmentData: jest.fn(() => ({ canUpgrade: true })),
   },
 }));
+jest.mock('./ActionButton', () => 'ActionButton');
 
 describe('UpgradeButton', () => {
   const props = {

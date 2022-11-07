@@ -11,20 +11,22 @@ jest.mock('data/redux', () => ({
     useCardEntitlementData: jest.fn(),
   },
 }));
+jest.mock('./ActionButton', () => 'ActionButton');
 
 let wrapper;
-const props = { cardId: 'cardId' };
+const defaultProps = { cardId: 'cardId' };
 const homeUrl = 'homeUrl';
 
 const createWrapper = ({
   hasAccess = false,
   isEntitlement = false,
   isExpired = false,
+  propsOveride = {},
 }) => {
   hooks.useCardCourseRunData.mockReturnValue({ homeUrl });
   hooks.useCardEnrollmentData.mockReturnValueOnce({ hasAccess });
   hooks.useCardEntitlementData.mockReturnValueOnce({ isEntitlement, isExpired });
-  return shallow(<ViewCourseButton {...props} />);
+  return shallow(<ViewCourseButton {...defaultProps} {...propsOveride} />);
 };
 
 describe('ViewCourseButton', () => {

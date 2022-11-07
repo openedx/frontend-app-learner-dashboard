@@ -11,6 +11,7 @@ jest.mock('data/redux', () => ({
     useMasqueradeData: jest.fn(() => ({ isMasquerading: false })),
   },
 }));
+jest.mock('./ActionButton', () => 'ActionButton');
 
 let wrapper;
 const { homeUrl } = hooks.useCardCourseRunData();

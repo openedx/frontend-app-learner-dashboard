@@ -14,18 +14,6 @@ exports[`DashboardLayout collapsed snapshot 1`] = `
           "span": 12,
         }
       }
-      md={
-        Object {
-          "offset": 1,
-          "span": 10,
-        }
-      }
-      sm={
-        Object {
-          "offset": 0,
-          "span": 12,
-        }
-      }
       xl={
         Object {
           "offset": 0,
@@ -38,18 +26,6 @@ exports[`DashboardLayout collapsed snapshot 1`] = `
     <Col
       className="sidebar-column"
       lg={
-        Object {
-          "offset": 0,
-          "span": 12,
-        }
-      }
-      md={
-        Object {
-          "offset": 1,
-          "span": 10,
-        }
-      }
-      sm={
         Object {
           "offset": 0,
           "span": 12,
@@ -82,18 +58,6 @@ exports[`DashboardLayout not collapsed snapshot 1`] = `
           "span": 12,
         }
       }
-      md={
-        Object {
-          "offset": 1,
-          "span": 10,
-        }
-      }
-      sm={
-        Object {
-          "offset": 0,
-          "span": 12,
-        }
-      }
       xl={
         Object {
           "offset": 0,
@@ -106,18 +70,6 @@ exports[`DashboardLayout not collapsed snapshot 1`] = `
     <Col
       className="sidebar-column"
       lg={
-        Object {
-          "offset": 0,
-          "span": 12,
-        }
-      }
-      md={
-        Object {
-          "offset": 1,
-          "span": 10,
-        }
-      }
-      sm={
         Object {
           "offset": 0,
           "span": 12,

@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { hooks } from 'data/redux';
+import ActionButton from './ActionButton';
 import messages from './messages';
 
 export const ViewCourseButton = ({ cardId }) => {
@@ -12,13 +12,13 @@ export const ViewCourseButton = ({ cardId }) => {
   const { hasAccess } = hooks.useCardEnrollmentData(cardId);
   const { formatMessage } = useIntl();
   return (
-    <Button
+    <ActionButton
       disabled={!hasAccess}
       as="a"
       href={homeUrl}
     >
       {formatMessage(messages.viewCourse)}
-    </Button>
+    </ActionButton>
   );
 };
 ViewCourseButton.propTypes = {

@@ -55,22 +55,10 @@ export const CourseCardContent = ({ cardId, orientation }) => {
         <Card.Section className="pt-0">
           <CourseCardDetails cardId={cardId} />
         </Card.Section>
-        {orientation === 'vertical'
-          ? (
-            <>
-              <RelatedProgramsBadge cardId={cardId} />
-              <Card.Footer orientation="horizontal">
-                <CourseCardActions cardId={cardId} />
-              </Card.Footer>
-            </>
-          ) : (
-            <Card.Footer
-              orientation="vertical"
-              textElement={<RelatedProgramsBadge cardId={cardId} />}
-            >
-              <CourseCardActions cardId={cardId} />
-            </Card.Footer>
-          )}
+        <Card.Footer orientation={orientation}>
+          <RelatedProgramsBadge cardId={cardId} />
+          <CourseCardActions cardId={cardId} />
+        </Card.Footer>
       </Card.Body>
     </>
   );

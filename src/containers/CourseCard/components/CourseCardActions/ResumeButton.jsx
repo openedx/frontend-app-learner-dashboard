@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { hooks } from 'data/redux';
+import ActionButton from './ActionButton';
 import messages from './messages';
 
 export const ResumeButton = ({ cardId }) => {
@@ -13,13 +13,13 @@ export const ResumeButton = ({ cardId }) => {
   const { isMasquerading } = hooks.useMasqueradeData();
   const { formatMessage } = useIntl();
   return (
-    <Button
+    <ActionButton
       disabled={isMasquerading || !hasAccess || (isAudit && isAuditAccessExpired)}
       as="a"
       href={resumeUrl}
     >
       {formatMessage(messages.resume)}
-    </Button>
+    </ActionButton>
   );
 };
 ResumeButton.propTypes = {
