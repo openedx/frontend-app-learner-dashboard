@@ -73,6 +73,7 @@
     "redux-thunk": "2.3.0",
     "regenerator-runtime": "^0.13.9",
     "reselect": "^4.0.0",
+    "universal-cookie": "^4.0.4",
     "util": "^0.12.4",
     "whatwg-fetch": "^3.6.2"
   },

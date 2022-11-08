@@ -39,7 +39,7 @@ describe('RecommendationsPanel hooks', () => {
           expect(calls.length).toEqual(1);
         });
         it('it is only run once (no prereqs)', () => {
-          expect(prereqs).toEqual(undefined);
+          expect(prereqs).toEqual([]);
         });
         it('calls fetchRecommendedCourses', () => {
           api.fetchRecommendedCourses.mockReturnValueOnce(Promise.resolve(response));
