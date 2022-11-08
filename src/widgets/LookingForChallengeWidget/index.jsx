@@ -13,7 +13,7 @@ export const arrowIcon = (<Icon className="mx-1" src={ArrowForward} />);
 
 export const LookingForChallengeWidget = () => {
   const { formatMessage } = useIntl();
-  const { courseSearchUrl } = hooks.usePlatformSettingsData();
+  const { courseSearchUrl, courseSearchClickTracker } = hooks.useCourseSearch();
   return (
     <Card orientation="horizontal" id="looking-for-challenge-widget">
       <Card.ImageCap
@@ -25,7 +25,12 @@ export const LookingForChallengeWidget = () => {
           {formatMessage(messages.lookingForChallengePrompt)}
         </h4>
         <h5>
-          <Hyperlink variant="brand" destination={courseSearchUrl} className="d-flex align-items-center">
+          <Hyperlink
+            variant="brand"
+            destination={courseSearchUrl}
+            onClick={courseSearchClickTracker}
+            className="d-flex align-items-center"
+          >
             {formatMessage(messages.findCoursesButton, { arrow: arrowIcon })}
           </Hyperlink>
         </h5>

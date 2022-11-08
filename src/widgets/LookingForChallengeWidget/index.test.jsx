@@ -4,8 +4,9 @@ import LookingForChallengeWidget from '.';
 
 jest.mock('data/redux', () => ({
   hooks: {
-    usePlatformSettingsData: () => ({
+    useCourseSearch: () => ({
       courseSearchUrl: 'course-search-url',
+      courseSearchClickTracker: jest.fn().mockName('courseSearchClickTracker'),
     }),
   },
 }));

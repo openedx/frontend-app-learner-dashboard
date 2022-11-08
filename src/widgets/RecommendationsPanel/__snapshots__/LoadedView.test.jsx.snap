@@ -60,6 +60,8 @@ exports[`RecommendationsPanel LoadedView snapshot 1`] = `
   >
     <Button
       as="a"
+      href="course-search-url"
+      onClick={[MockFunction courseSearchClickTracker]}
       variant="tertiary"
     >
       Explore courses

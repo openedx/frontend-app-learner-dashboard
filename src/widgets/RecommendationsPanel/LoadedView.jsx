@@ -14,7 +14,7 @@ import './index.scss';
 export const LoadedView = ({
   courses,
 }) => {
-  const { courseSearchUrl } = hooks.usePlatformSettingsData();
+  const { courseSearchUrl, courseSearchClickTracker } = hooks.useCourseSearch();
   const { formatMessage } = useIntl();
 
   return (
@@ -31,6 +31,7 @@ export const LoadedView = ({
           iconBefore={Search}
           as="a"
           href={courseSearchUrl}
+          onClick={courseSearchClickTracker}
         >
           {formatMessage(messages.exploreCoursesButton)}
         </Button>

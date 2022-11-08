@@ -12,6 +12,9 @@ jest.mock('data/redux', () => ({
   },
 }));
 jest.mock('./ActionButton', () => 'ActionButton');
+jest.mock('./hooks', () => () => ({
+  trackUpgradeClick: jest.fn().mockName('trackUpgradeClick'),
+}));
 
 describe('UpgradeButton', () => {
   const props = {
