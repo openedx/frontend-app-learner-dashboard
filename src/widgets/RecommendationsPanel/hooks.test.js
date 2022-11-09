@@ -2,12 +2,17 @@ import React from 'react';
 
 import { MockUseState } from 'testUtils';
 import { RequestStates } from 'data/constants/requests';
+import { handleEvent } from 'data/services/segment/utils';
+import { eventNames } from 'data/services/segment/constants';
 
 import api from './api';
 import * as hooks from './hooks';
 
 jest.mock('./api', () => ({
   fetchRecommendedCourses: jest.fn(),
+}));
+jest.mock('data/services/segment/utils', () => ({
+  handleEvent: jest.fn(),
 }));
 
 const state = new MockUseState(hooks);
@@ -95,6 +100,16 @@ describe('RecommendationsPanel hooks', () => {
     });
     it('initializes requestState as RequestStates.pending', () => {
       state.expectInitializedWith(state.keys.requestState, RequestStates.pending);
+    });
+    describe('courseSearchClickTracker behavior', () => {
+      it('calls handleEvent with correct args', () => {
+        out.courseSearchClickTracker();
+        expect(handleEvent).toHaveBeenCalledWith(eventNames.searchCourse, {
+          pageName: 'learner_home',
+          linkType: 'button',
+          linkCategory: 'search_button',
+        });
+      });
     });
     describe('output', () => {
       describe('request is completed, with returned courses', () => {

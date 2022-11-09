@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { Card, Hyperlink, Icon } from '@edx/paragon';
 import { ArrowForward } from '@edx/paragon/icons';
@@ -11,9 +13,11 @@ import './index.scss';
 
 export const arrowIcon = (<Icon className="mx-1" src={ArrowForward} />);
 
-export const LookingForChallengeWidget = () => {
+export const LookingForChallengeWidget = ({
+  courseSearchClickTracker,
+}) => {
+  const { courseSearchUrl } = hooks.usePlatformSettingsData();
   const { formatMessage } = useIntl();
-  const { courseSearchUrl, courseSearchClickTracker } = hooks.useCourseSearch();
   return (
     <Card orientation="horizontal" id="looking-for-challenge-widget">
       <Card.ImageCap
@@ -37,6 +41,10 @@ export const LookingForChallengeWidget = () => {
       </Card.Body>
     </Card>
   );
+};
+
+LookingForChallengeWidget.propTypes = {
+  courseSearchClickTracker: PropTypes.func.isRequired,
 };
 
 export default LookingForChallengeWidget;

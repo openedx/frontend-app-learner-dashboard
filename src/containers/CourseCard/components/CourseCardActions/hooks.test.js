@@ -10,9 +10,7 @@ describe('CourseCardActions hooks', () => {
   describe('trackUpgradeClick', () => {
     it('calls handleEvent with correct params', () => {
       const out = hooks.useCourseCardActionData();
-      const { cb, prereqs } = out.trackUpgradeClick.useCallback;
-      expect(prereqs).toEqual([]);
-      cb();
+      out.trackUpgradeClick();
       expect(handleEvent).toHaveBeenCalledWith(eventNames.upgradeCourse, {
         pageName: 'learner_home',
         linkType: 'button',

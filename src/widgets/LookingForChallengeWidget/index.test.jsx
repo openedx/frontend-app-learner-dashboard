@@ -4,17 +4,19 @@ import LookingForChallengeWidget from '.';
 
 jest.mock('data/redux', () => ({
   hooks: {
-    useCourseSearch: () => ({
+    usePlatformSettingsData: () => ({
       courseSearchUrl: 'course-search-url',
-      courseSearchClickTracker: jest.fn().mockName('courseSearchClickTracker'),
     }),
   },
 }));
 
 describe('LookingForChallengeWidget', () => {
+  const props = {
+    courseSearchClickTracker: jest.fn().mockName('courseSearchClickTracker'),
+  };
   describe('snapshots', () => {
     test('default', () => {
-      const wrapper = shallow(<LookingForChallengeWidget />);
+      const wrapper = shallow(<LookingForChallengeWidget {...props} />);
       expect(wrapper).toMatchSnapshot();
     });
   });

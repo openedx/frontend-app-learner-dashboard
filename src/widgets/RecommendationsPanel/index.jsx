@@ -11,19 +11,20 @@ export const RecommendationsPanel = () => {
     isFailed,
     isLoaded,
     isLoading,
+    courseSearchClickTracker,
   } = hooks.useRecommendationPanelData();
 
   if (isLoading) {
     return (<LoadingView />);
   }
   if (isLoaded) {
-    return (<LoadedView courses={courses} />);
+    return (<LoadedView courses={courses} courseSearchClickTracker={courseSearchClickTracker} />);
   }
   if (isFailed) {
-    return (<LookingForChallengeWidget />);
+    return (<LookingForChallengeWidget courseSearchClickTracker={courseSearchClickTracker} />);
   }
   // default fallback
-  return (<LookingForChallengeWidget />);
+  return (<LookingForChallengeWidget courseSearchClickTracker={courseSearchClickTracker} />);
 };
 
 export default RecommendationsPanel;

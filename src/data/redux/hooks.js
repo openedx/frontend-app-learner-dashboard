@@ -1,7 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
 
-import { handleEvent } from 'data/services/segment/utils';
-import { eventNames } from 'data/services/segment/constants';
 import { actions as appActions } from './app/reducer';
 import appSelectors from './app/selectors';
 import requestSelectors from './requests/selectors';
@@ -67,13 +65,3 @@ export const useMasqueradeData = () => useSelector(requestSelectors.masquerade);
 
 export const useRequestIsPending = (requestName) => useSelector(requestSelectors.isPending(requestName));
 export const useRequestIsFailed = (requestName) => useSelector(requestSelectors.isFailed(requestName));
-
-export const useCourseSearch = () => {
-  const { courseSearchUrl } = useSelector(appSelectors.platformSettings);
-  const courseSearchClickTracker = () => handleEvent(eventNames.searchCourse, {
-    pageName: 'learner_home',
-    linkType: 'button',
-    linkCategory: 'search_button',
-  });
-  return { courseSearchUrl, courseSearchClickTracker };
-};
