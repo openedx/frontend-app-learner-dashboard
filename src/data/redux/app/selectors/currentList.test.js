@@ -49,6 +49,7 @@ describe('courseList selector module', () => {
         filterFn = courseFilters[FilterKeys.done];
         expect(filterFn({ courseRun: { isArchived: true } })).toEqual(true);
         expect(filterFn({ courseRun: { isArchived: false } })).toEqual(false);
+        expect(filterFn({ courseRun: null })).toEqual(false);
       });
       test('upgraded returns true if learner is verified', () => {
         filterFn = courseFilters[FilterKeys.upgraded];
