@@ -12,7 +12,7 @@ jest.mock('react', () => ({
   useRef: jest.fn((val) => ({ current: val, useRef: true })),
   useCallback: jest.fn((cb, prereqs) => ({ useCallback: { cb, prereqs } })),
   useEffect: jest.fn((cb, prereqs) => ({ useEffect: { cb, prereqs } })),
-  useMemo: jest.fn((cb, prereqs) => cb(prereqs)),
+  useMemo: jest.fn((cb, prereqs) => ({ useMemo: { cb, prereqs } })),
   useContext: jest.fn(context => context),
 }));
 

@@ -4,12 +4,18 @@ import { useIsCollapsed } from './hooks';
 describe('LearnerDashboardHeader hooks', () => {
   describe('useIsCollapsed', () => {
     test('large screen is not collapsed', () => {
+      const width = breakpoints.large.maxWidth + 1;
       useWindowSize.mockReturnValueOnce({ width: breakpoints.large.maxWidth + 1 });
-      expect(useIsCollapsed()).toEqual(false);
+      const { cb, prereqs } = useIsCollapsed().useMemo;
+      expect(prereqs).toEqual([width]);
+      expect(cb()).toEqual(false);
     });
     test('small screen is collapsed', () => {
-      useWindowSize.mockReturnValueOnce({ width: breakpoints.large.maxWidth - 1 });
-      expect(useIsCollapsed()).toEqual(true);
+      const width = breakpoints.large.maxWidth - 1;
+      useWindowSize.mockReturnValueOnce({ width });
+      const { cb, prereqs } = useIsCollapsed().useMemo;
+      expect(prereqs).toEqual([width]);
+      expect(cb()).toEqual(true);
     });
   });
 });
