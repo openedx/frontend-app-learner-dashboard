@@ -11,9 +11,12 @@ jest.mock('data/redux', () => ({
 }));
 
 describe('LookingForChallengeWidget', () => {
+  const props = {
+    courseSearchClickTracker: jest.fn().mockName('courseSearchClickTracker'),
+  };
   describe('snapshots', () => {
     test('default', () => {
-      const wrapper = shallow(<LookingForChallengeWidget />);
+      const wrapper = shallow(<LookingForChallengeWidget {...props} />);
       expect(wrapper).toMatchSnapshot();
     });
   });

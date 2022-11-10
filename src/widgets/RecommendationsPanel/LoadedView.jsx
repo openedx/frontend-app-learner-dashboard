@@ -13,6 +13,7 @@ import './index.scss';
 
 export const LoadedView = ({
   courses,
+  courseSearchClickTracker,
 }) => {
   const { courseSearchUrl } = hooks.usePlatformSettingsData();
   const { formatMessage } = useIntl();
@@ -31,6 +32,7 @@ export const LoadedView = ({
           iconBefore={Search}
           as="a"
           href={courseSearchUrl}
+          onClick={courseSearchClickTracker}
         >
           {formatMessage(messages.exploreCoursesButton)}
         </Button>
@@ -46,6 +48,7 @@ LoadedView.propTypes = {
     logoImageUrl: PropTypes.string,
     marketingUrl: PropTypes.string,
   })).isRequired,
+  courseSearchClickTracker: PropTypes.func.isRequired,
 };
 
 export default LoadedView;

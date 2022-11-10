@@ -1,22 +1,24 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { hooks } from 'data/redux';
 import LoadedView from './LoadedView';
 import mockData from './mockData';
 
 jest.mock('./components/CourseCard', () => 'CourseCard');
 jest.mock('data/redux', () => ({
   hooks: {
-    usePlatformSettingsData: jest.fn(),
+    usePlatformSettingsData: () => ({
+      courseSearchUrl: 'course-search-url',
+    }),
   },
 }));
 
-const courseSearchUrl = 'test-course-search-url';
-hooks.usePlatformSettingsData.mockReturnValue(courseSearchUrl);
-
 describe('RecommendationsPanel LoadedView', () => {
+  const props = {
+    courses: mockData.courses,
+    courseSearchClickTracker: jest.fn().mockName('courseSearchClickTracker'),
+  };
   test('snapshot', () => {
-    expect(shallow(<LoadedView courses={mockData.courses} />)).toMatchSnapshot();
+    expect(shallow(<LoadedView {...props} />)).toMatchSnapshot();
   });
 });

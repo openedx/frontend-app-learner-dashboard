@@ -5,6 +5,7 @@ import { Locked } from '@edx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { hooks } from 'data/redux';
+import useTrackUpgradeData from './hooks';
 import ActionButton from './ActionButton';
 import messages from './messages';
 
@@ -14,11 +15,14 @@ export const UpgradeButton = ({ cardId }) => {
   const { isMasquerading } = hooks.useMasqueradeData();
   const { formatMessage } = useIntl();
   const isEnabled = (!isMasquerading && canUpgrade);
+  const { trackUpgradeClick } = useTrackUpgradeData();
+
   return (
     <ActionButton
       iconBefore={Locked}
       variant="outline-primary"
       disabled={!isEnabled}
+      onClick={trackUpgradeClick}
       {...isEnabled && { as: 'a', href: upgradeUrl }}
     >
       {formatMessage(messages.upgrade)}

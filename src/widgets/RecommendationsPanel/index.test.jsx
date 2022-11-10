@@ -18,46 +18,48 @@ jest.mock('./LoadedView', () => 'LoadedView');
 const { courses } = mockData;
 
 describe('RecommendationsPanel snapshot', () => {
+  const defaultProps = {
+    courseSearchClickTracker: jest.fn().mockName('courseSearchClickTracker'),
+  };
+  const defaultValues = {
+    isFailed: false,
+    isLoaded: false,
+    isLoading: false,
+    courses: [],
+    ...defaultProps,
+  };
   it('displays LoadingView if request is loading', () => {
     hooks.useRecommendationPanelData.mockReturnValueOnce({
-      courses: [],
-      isFailed: false,
-      isLoaded: false,
+      ...defaultValues,
       isLoading: true,
     });
     expect(shallow(<RecommendationsPanel />)).toMatchObject(shallow(<LoadingView />));
   });
   it('displays LoadedView with courses if request is loaded', () => {
     hooks.useRecommendationPanelData.mockReturnValueOnce({
+      ...defaultValues,
       courses,
-      isFailed: false,
       isLoaded: true,
-      isLoading: false,
     });
     expect(shallow(<RecommendationsPanel />)).toMatchObject(
-      shallow(<LoadedView courses={courses} />),
+      shallow(<LoadedView courses={courses} {...defaultProps} />),
     );
   });
   it('displays LookingForChallengeWidget if request is failed', () => {
     hooks.useRecommendationPanelData.mockReturnValueOnce({
-      courses: [],
+      ...defaultValues,
       isFailed: true,
-      isLoaded: false,
-      isLoading: false,
     });
     expect(shallow(<RecommendationsPanel />)).toMatchObject(
-      shallow(<LookingForChallengeWidget />),
+      shallow(<LookingForChallengeWidget {...defaultProps} />),
     );
   });
   it('defaults to LookingForChallengeWidget if no flags are true', () => {
     hooks.useRecommendationPanelData.mockReturnValueOnce({
-      courses: [],
-      isFailed: false,
-      isLoaded: false,
-      isLoading: false,
+      ...defaultValues,
     });
     expect(shallow(<RecommendationsPanel />)).toMatchObject(
-      shallow(<LookingForChallengeWidget />),
+      shallow(<LookingForChallengeWidget {...defaultProps} />),
     );
   });
 });
