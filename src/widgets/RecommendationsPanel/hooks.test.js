@@ -3,7 +3,6 @@ import React from 'react';
 import { MockUseState } from 'testUtils';
 import { RequestStates } from 'data/constants/requests';
 import { handleEvent } from 'data/services/segment/utils';
-import { eventNames } from 'data/services/segment/constants';
 
 import api from './api';
 import * as hooks from './hooks';
@@ -104,7 +103,7 @@ describe('RecommendationsPanel hooks', () => {
     describe('courseSearchClickTracker behavior', () => {
       it('calls handleEvent with correct args', () => {
         out.courseSearchClickTracker();
-        expect(handleEvent).toHaveBeenCalledWith(eventNames.searchCourse, {
+        expect(handleEvent).toHaveBeenCalledWith('learner_home.widget.search_course', {
           pageName: 'learner_home',
           linkType: 'button',
           linkCategory: 'search_button',

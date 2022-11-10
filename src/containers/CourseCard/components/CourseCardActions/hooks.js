@@ -1,7 +1,7 @@
 import { handleEvent } from 'data/services/segment/utils';
 import { eventNames } from 'data/services/segment/constants';
 
-export const useCourseCardActionData = () => {
+export const useTrackUpgradeData = () => {
   const trackUpgradeClick = () => {
     handleEvent(eventNames.upgradeCourse, {
       pageName: 'learner_home',
@@ -15,4 +15,4 @@ export const useCourseCardActionData = () => {
   };
 };
 
-export default useCourseCardActionData;
+export default useTrackUpgradeData;

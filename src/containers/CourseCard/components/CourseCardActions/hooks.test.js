@@ -7,9 +7,9 @@ jest.mock('data/services/segment/utils', () => ({
 }));
 
 describe('CourseCardActions hooks', () => {
-  describe('trackUpgradeClick', () => {
+  describe('useTrackUpgradeData', () => {
     it('calls handleEvent with correct params', () => {
-      const out = hooks.useCourseCardActionData();
+      const out = hooks.useTrackUpgradeData();
       out.trackUpgradeClick();
       expect(handleEvent).toHaveBeenCalledWith(eventNames.upgradeCourse, {
         pageName: 'learner_home',

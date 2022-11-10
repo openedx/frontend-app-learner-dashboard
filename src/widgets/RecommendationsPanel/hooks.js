@@ -3,7 +3,6 @@ import React from 'react';
 import { StrictDict } from 'utils';
 import { RequestStates } from 'data/constants/requests';
 import { handleEvent } from 'data/services/segment/utils';
-import { eventNames } from 'data/services/segment/constants';
 
 import * as module from './hooks';
 import api from './api';
@@ -35,7 +34,7 @@ export const useRecommendationPanelData = () => {
   const [data, setData] = module.state.data({});
   module.useFetchCourses(setRequestState, setData);
   const courses = data.data?.courses || [];
-  const courseSearchClickTracker = () => handleEvent(eventNames.searchCourse, {
+  const courseSearchClickTracker = () => handleEvent('learner_home.widget.search_course', {
     pageName: 'learner_home',
     linkType: 'button',
     linkCategory: 'search_button',
