@@ -103,7 +103,7 @@ describe('RecommendationsPanel hooks', () => {
     describe('courseSearchClickTracker behavior', () => {
       it('calls handleEvent with correct args', () => {
         out.courseSearchClickTracker();
-        expect(handleEvent).toHaveBeenCalledWith('learner_home.widget.search_course', {
+        expect(handleEvent).toHaveBeenCalledWith(hooks.searchCourseEventName, {
           pageName: 'learner_home',
           linkType: 'button',
           linkCategory: 'search_button',

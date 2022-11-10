@@ -7,6 +7,8 @@ import { handleEvent } from 'data/services/segment/utils';
 import * as module from './hooks';
 import api from './api';
 
+export const searchCourseEventName = 'learner_home.widget.search_course';
+
 export const state = StrictDict({
   requestState: (val) => React.useState(val), // eslint-disable-line
   data: (val) => React.useState(val), // eslint-disable-line
@@ -34,7 +36,7 @@ export const useRecommendationPanelData = () => {
   const [data, setData] = module.state.data({});
   module.useFetchCourses(setRequestState, setData);
   const courses = data.data?.courses || [];
-  const courseSearchClickTracker = () => handleEvent('learner_home.widget.search_course', {
+  const courseSearchClickTracker = () => handleEvent(searchCourseEventName, {
     pageName: 'learner_home',
     linkType: 'button',
     linkCategory: 'search_button',
