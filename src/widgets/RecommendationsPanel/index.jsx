@@ -8,6 +8,7 @@ import hooks from './hooks';
 export const RecommendationsPanel = () => {
   const {
     courses,
+    isPersonalizedRecommendation,
     isFailed,
     isLoaded,
     isLoading,
@@ -18,7 +19,13 @@ export const RecommendationsPanel = () => {
     return (<LoadingView />);
   }
   if (isLoaded) {
-    return (<LoadedView courses={courses} courseSearchClickTracker={courseSearchClickTracker} />);
+    return (
+      <LoadedView
+        courses={courses}
+        isPersonalizedRecommendation={isPersonalizedRecommendation}
+        courseSearchClickTracker={courseSearchClickTracker}
+      />
+    );
   }
   if (isFailed) {
     return (<LookingForChallengeWidget courseSearchClickTracker={courseSearchClickTracker} />);

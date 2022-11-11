@@ -7,7 +7,7 @@ exports[`RecommendationsPanel LoadedView snapshot 1`] = `
   <h3
     className="pb-2"
   >
-    Recommendations for you
+    Popular on edX
   </h3>
   <div>
     <CourseCard

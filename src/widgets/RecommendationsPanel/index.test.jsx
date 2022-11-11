@@ -26,6 +26,7 @@ describe('RecommendationsPanel snapshot', () => {
     isLoaded: false,
     isLoading: false,
     courses: [],
+    isPersonalizedRecommendation: false,
     ...defaultProps,
   };
   it('displays LoadingView if request is loading', () => {
@@ -42,7 +43,13 @@ describe('RecommendationsPanel snapshot', () => {
       isLoaded: true,
     });
     expect(shallow(<RecommendationsPanel />)).toMatchObject(
-      shallow(<LoadedView courses={courses} {...defaultProps} />),
+      shallow(
+        <LoadedView
+          courses={courses}
+          isPersonalizedRecommendation={false}
+          {...defaultProps}
+        />,
+      ),
     );
   });
   it('displays LookingForChallengeWidget if request is failed', () => {

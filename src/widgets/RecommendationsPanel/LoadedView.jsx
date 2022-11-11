@@ -13,6 +13,7 @@ import './index.scss';
 
 export const LoadedView = ({
   courses,
+  isPersonalizedRecommendation,
   courseSearchClickTracker,
 }) => {
   const { courseSearchUrl } = hooks.usePlatformSettingsData();
@@ -20,10 +21,16 @@ export const LoadedView = ({
 
   return (
     <div className="p-4 w-100 panel-background">
-      <h3 className="pb-2">{formatMessage(messages.recommendationsHeading)}</h3>
+      <h3 className="pb-2">{isPersonalizedRecommendation
+        ? formatMessage(messages.recommendationsHeading) : formatMessage(messages.popularCoursesHeading)}
+      </h3>
       <div>
         {courses.map((course) => (
-          <CourseCard key={course.courseKey} course={course} />
+          <CourseCard
+            key={course.courseKey}
+            course={course}
+            isPersonalizedRecommendation={isPersonalizedRecommendation}
+          />
         ))}
       </div>
       <div className="text-center explore-courses-btn">
@@ -48,6 +55,7 @@ LoadedView.propTypes = {
     logoImageUrl: PropTypes.string,
     marketingUrl: PropTypes.string,
   })).isRequired,
+  isPersonalizedRecommendation: PropTypes.bool.isRequired,
   courseSearchClickTracker: PropTypes.func.isRequired,
 };
 

@@ -8,7 +8,7 @@ import { configuration } from '../../../config';
 import { setCookie, getCookie } from '../../../utils/cookies';
 import './index.scss';
 
-export const CourseCard = ({ course }) => {
+export const CourseCard = ({ course, isPersonalizedRecommendation }) => {
   const isCollapsed = useIsCollapsed();
 
   const handleCourseClick = () => {
@@ -19,6 +19,7 @@ export const CourseCard = ({ course }) => {
     } else if (!recommendedCourses.course_keys.includes(course.courseKey)) {
       recommendedCourses.course_keys.push(course.courseKey);
     }
+    recommendedCourses.is_personalized_recommendation = isPersonalizedRecommendation;
     setCookie(cookieName, JSON.stringify(recommendedCourses), 365);
   };
 
@@ -52,6 +53,7 @@ CourseCard.propTypes = {
     logoImageUrl: PropTypes.string,
     marketingUrl: PropTypes.string,
   }).isRequired,
+  isPersonalizedRecommendation: PropTypes.bool.isRequired,
 };
 
 export default CourseCard;
