@@ -4,8 +4,6 @@ import { getConfig } from '@edx/frontend-platform';
 
 import Zendesk from 'react-zendesk';
 
-// Take contact form as an example
-// Let's customise our contact form appearance, launcher and add prefill content
 const setting = {
   cookies: true,
   webWidget: {
