@@ -18,6 +18,7 @@ import {
 } from 'data/redux';
 import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
 import Dashboard from 'containers/Dashboard';
+import ZendeskFab from 'components/ZendeskFab';
 
 import fakeData from 'data/services/lms/fakeData/courses';
 
@@ -72,6 +73,7 @@ export const App = () => {
             ) : (<Dashboard />)}
         </main>
         <Footer logo={process.env.LOGO_POWERED_BY_OPEN_EDX_URL_SVG} />
+        <ZendeskFab />
       </div>
     </Router>
   );

@@ -18,6 +18,7 @@ import {
 import { messages as footerMessages } from '@edx/frontend-component-footer';
 
 import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { configuration } from './config';
 
 import messages from './i18n';
 
@@ -49,9 +50,7 @@ console.log({ SEGEMENT_KEY: process.env.SEGMENT_KEY });
 initialize({
   handlers: {
     config: () => {
-      mergeConfig({
-        SUPPORT_URL: process.env.SUPPORT_URL || null,
-      }, appName);
+      mergeConfig(configuration, appName);
     },
   },
   messages: [

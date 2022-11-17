@@ -24,6 +24,7 @@ exports[`App router component component initialize failure snapshot 1`] = `
     <Footer
       logo="fakeLogo.png"
     />
+    <ZendeskFab />
   </div>
 </BrowserRouter>
 `;
@@ -46,6 +47,7 @@ exports[`App router component component no network failure snapshot 1`] = `
     <Footer
       logo="fakeLogo.png"
     />
+    <ZendeskFab />
   </div>
 </BrowserRouter>
 `;
@@ -74,6 +76,7 @@ exports[`App router component component refresh failure snapshot 1`] = `
     <Footer
       logo="fakeLogo.png"
     />
+    <ZendeskFab />
   </div>
 </BrowserRouter>
 `;

@@ -10,6 +10,10 @@ import {
   prettyDOM,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import {
+  initialize,
+  mergeConfig,
+} from '@edx/frontend-platform';
 
 import thunk from 'redux-thunk';
 import { useIntl, IntlProvider } from '@edx/frontend-platform/i18n';
@@ -40,6 +44,11 @@ jest.unmock('hooks');
 
 jest.mock('containers/WidgetContainers/LoadedSidebar', () => 'loaded-widget-sidebar');
 jest.mock('containers/WidgetContainers/NoCoursesSidebar', () => 'no-courses-widget-sidebar');
+
+jest.mock('@edx/frontend-platform', () => ({
+  ...jest.requireActual('@edx/frontend-platform'),
+  getConfig: () => jest.requireActual('../config').configuration,
+}));
 
 jest.mock('@edx/frontend-platform/i18n', () => ({
   ...jest.requireActual('@edx/frontend-platform/i18n'),
