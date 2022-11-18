@@ -16,6 +16,7 @@ jest.mock('data/redux', () => ({
 describe('RecommendationsPanel LoadedView', () => {
   const props = {
     courses: mockData.courses,
+    isPersonalizedRecommendation: false,
     courseSearchClickTracker: jest.fn().mockName('courseSearchClickTracker'),
   };
   test('snapshot', () => {

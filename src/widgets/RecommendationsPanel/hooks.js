@@ -37,6 +37,7 @@ export const useRecommendationPanelData = () => {
   const [data, setData] = module.state.data({});
   module.useFetchCourses(setRequestState, setData);
   const courses = data.data?.courses || [];
+  const isPersonalizedRecommendation = data.data?.isPersonalizedRecommendation || false;
   const courseSearchClickTracker = () => handleEvent(searchCourseEventName, {
     pageName: 'learner_home',
     linkType: 'button',
@@ -44,6 +45,7 @@ export const useRecommendationPanelData = () => {
   });
   return {
     courses,
+    isPersonalizedRecommendation,
     isLoaded: requestState === RequestStates.completed && courses.length > 0,
     isFailed: requestState === RequestStates.failed
       || (requestState === RequestStates.completed && courses.length === 0),
