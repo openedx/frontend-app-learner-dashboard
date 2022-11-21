@@ -7,6 +7,8 @@ import { AppContext } from '@edx/frontend-platform/react';
 import { AvatarButton, Dropdown } from '@edx/paragon';
 
 import { hooks as appHooks } from 'data/redux';
+import urls from 'data/services/lms/urls';
+
 import { useIsCollapsed } from './hooks';
 import messages from './messages';
 
@@ -46,7 +48,7 @@ export const AuthenticatedUserDropdown = ({ username }) => {
           {formatMessage(messages.profile)}
         </Dropdown.Item>
         {isCollapsed && (
-          <Dropdown.Item href={`${getConfig().LMS_BASE_URL}/u/${username}`}>
+          <Dropdown.Item href={urls.programsUrl}>
             {formatMessage(messages.viewPrograms)}
           </Dropdown.Item>
         )}
