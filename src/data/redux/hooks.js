@@ -1,5 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
+import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 
+import { trackEvent } from 'data/services/segment/utils';
 import { actions as appActions } from './app/reducer';
 import appSelectors from './app/selectors';
 import requestSelectors from './requests/selectors';
@@ -65,3 +67,7 @@ export const useMasqueradeData = () => useSelector(requestSelectors.masquerade);
 
 export const useRequestIsPending = (requestName) => useSelector(requestSelectors.isPending(requestName));
 export const useRequestIsFailed = (requestName) => useSelector(requestSelectors.isFailed(requestName));
+
+export const useTrackCourseEvent = (cardId, tracker) => () => {
+  tracker(module.useCardCourseRunData(cardId).courseId);
+};
