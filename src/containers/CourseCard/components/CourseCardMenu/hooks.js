@@ -1,5 +1,9 @@
 import React from 'react';
 import { StrictDict } from 'utils';
+
+import track from 'data/services/segment/track';
+import { hooks as appHooks } from 'data/redux';
+
 import * as module from './hooks';
 
 export const state = StrictDict({
@@ -22,5 +26,13 @@ export const useEmailSettings = () => {
     show: () => setIsVisible(true),
     hide: () => setIsVisible(false),
     isVisible,
+  };
+};
+
+export const useHandleToggleDropdown = (cardId) => {
+  const eventName = track.course.courseOptionsDropdownClicked;
+  const trackCourseEvent = appHooks.useTrackCourseEvent(eventName, cardId);
+  return (isOpen) => {
+    if (isOpen) { trackCourseEvent(); }
   };
 };

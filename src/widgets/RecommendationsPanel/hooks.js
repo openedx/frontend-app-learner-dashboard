@@ -2,7 +2,7 @@ import React from 'react';
 
 import { StrictDict } from 'utils';
 import { RequestStates } from 'data/constants/requests';
-import { handleEvent } from 'data/services/segment/utils';
+import track from './track';
 
 import * as module from './hooks';
 import api from './api';
@@ -38,19 +38,13 @@ export const useRecommendationPanelData = () => {
   module.useFetchCourses(setRequestState, setData);
   const courses = data.data?.courses || [];
   const isPersonalizedRecommendation = data.data?.isPersonalizedRecommendation || false;
-  const courseSearchClickTracker = () => handleEvent(searchCourseEventName, {
-    pageName: 'learner_home',
-    linkType: 'button',
-    linkCategory: 'search_button',
-  });
   return {
     courses,
-    isPersonalizedRecommendation,
     isLoaded: requestState === RequestStates.completed && courses.length > 0,
     isFailed: requestState === RequestStates.failed
       || (requestState === RequestStates.completed && courses.length === 0),
     isLoading: requestState === RequestStates.pending,
-    courseSearchClickTracker,
+    trackFindCoursesClicked: track.findCoursesClicked,
   };
 };
 

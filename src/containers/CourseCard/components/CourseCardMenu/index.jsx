@@ -6,28 +6,38 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { Dropdown, Icon, IconButton } from '@edx/paragon';
 import { MoreVert } from '@edx/paragon/icons';
 
+import track from 'data/services/segment/track';
 import { hooks as appHooks } from 'data/redux';
 import EmailSettingsModal from 'containers/EmailSettingsModal';
 import UnenrollConfirmModal from 'containers/UnenrollConfirmModal';
-import { useEmailSettings, useUnenrollData } from './hooks';
+import {
+  useEmailSettings,
+  useUnenrollData,
+  useHandleToggleDropdown,
+} from './hooks';
 
 import messages from './messages';
 
 export const CourseCardMenu = ({ cardId }) => {
-  const emailSettingsModal = useEmailSettings();
-  const unenrollModal = useUnenrollData();
+  const { formatMessage } = useIntl();
+
   const { courseName } = appHooks.useCardCourseData(cardId);
   const { isEnrolled, isEmailEnabled } = appHooks.useCardEnrollmentData(cardId);
-  const {
-    // facebook,
-    twitter,
-  } = appHooks.useCardSocialSettingsData(cardId);
+  const { twitter } = appHooks.useCardSocialSettingsData(cardId);
   const { isMasquerading } = appHooks.useMasqueradeData();
-  const { formatMessage } = useIntl();
+  const handleTwitterShare = appHooks.useTrackCourseEvent(
+    track.socialShare,
+    cardId,
+    'twitter',
+  );
+
+  const emailSettingsModal = useEmailSettings();
+  const unenrollModal = useUnenrollData();
+  const handleToggleDropdown = useHandleToggleDropdown(cardId);
 
   return (
     <>
-      <Dropdown>
+      <Dropdown onToggle={handleToggleDropdown}>
         <Dropdown.Toggle
           id={`course-actions-dropdown-${cardId}`}
           as={IconButton}
@@ -73,6 +83,7 @@ export const CourseCardMenu = ({ cardId }) => {
           {twitter.isEnabled && (
             <ReactShare.TwitterShareButton
               url={twitter.shareUrl}
+              onClick={handleTwitterShare}
               title={formatMessage(messages.shareQuote, {
                 courseName,
                 socialBrand: twitter.socialBrand,

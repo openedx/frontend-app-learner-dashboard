@@ -5,6 +5,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { StrictDict } from 'utils';
 
+import track from 'data/services/segment/track';
 import { hooks as appHooks, thunkActions } from 'data/redux';
 import * as module from './hooks';
 import { LEAVE_OPTION } from './constants';
@@ -15,6 +16,9 @@ export const state = StrictDict({
 });
 
 export const useSelectSessionModalData = () => {
+  const dispatch = useDispatch();
+  const { formatMessage } = useIntl();
+
   const selectedCardId = appHooks.useSelectSessionModalData().cardId;
   const {
     availableSessions,
@@ -24,9 +28,6 @@ export const useSelectSessionModalData = () => {
   const { courseId } = appHooks.useCardCourseRunData(selectedCardId) || {};
   const { isEnrolled } = appHooks.useCardEnrollmentData(selectedCardId);
 
-  const dispatch = useDispatch();
-  const { formatMessage } = useIntl();
-
   const [selectedSession, setSelectedSession] = module.state.selectedSession(courseId || null);
 
   let header;
@@ -35,21 +36,26 @@ export const useSelectSessionModalData = () => {
     header = formatMessage(messages.changeOrLeaveHeader);
     hint = formatMessage(messages.changeOrLeaveHint);
   } else {
-    header = formatMessage(messages.selectSessionHeader, {
-      courseTitle,
-    });
+    header = formatMessage(messages.selectSessionHeader, { courseTitle });
     hint = formatMessage(messages.selectSessionHint);
   }
   const updateCardIdCallback = appHooks.useUpdateSelectSessionModalCallback;
   const closeSessionModal = updateCardIdCallback(null);
 
+  const trackNewSession = track.entitlements.newSession(selectedSession);
+  const trackSwitchSession = track.entitlements.switchSession(selectedCardId, selectedSession);
+  const trackLeaveSession = track.entitlements.leaveSession(selectedCardId);
+
   const handleSelection = ({ target: { value } }) => setSelectedSession(value);
   const handleSubmit = () => {
     if (selectedSession === LEAVE_OPTION) {
+      trackLeaveSession();
       dispatch(thunkActions.app.leaveEntitlementSession(selectedCardId));
     } else if (isEnrolled) {
+      trackSwitchSession();
       dispatch(thunkActions.app.switchEntitlementEnrollment(selectedCardId, selectedSession));
     } else {
+      trackNewSession();
       dispatch(thunkActions.app.newEntitlementEnrollment(selectedCardId, selectedSession));
     }
     closeSessionModal();

@@ -2,7 +2,16 @@
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { appName } from './constants';
 
-export const trackEvent = (name, options = {}) => sendTrackEvent(
+export const LINK_TIMEOUT = 300;
+
+export const createEventTracker = (name, options = {}) => () => sendTrackEvent(
   name,
   { ...options, app_name: appName },
 );
+
+export const createLinkTracker = (tracker, href) => (e) => {
+  e.preventDefault();
+  console.log({ linkTimeout: { e, tracker, href } });
+  tracker();
+  // return setTimeout(LINK_TIMEOUT, () => { global.location.href = href; });
+};

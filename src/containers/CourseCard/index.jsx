@@ -5,8 +5,13 @@ import PropTypes from 'prop-types';
 import { Card } from '@edx/paragon';
 
 import { useIsCollapsed } from './hooks';
-import CourseCardContent from './components/CourseCardContent';
 import CourseCardBanners from './components/CourseCardBanners';
+import CourseCardImage from './components/CourseCardImage';
+import CourseCardMenu from './components/CourseCardMenu';
+import CourseCardActions from './components/CourseCardActions';
+import CourseCardDetails from './components/CourseCardDetails';
+import CourseCardTitle from './components/CourseCardTitle';
+import RelatedProgramsBadge from './components/RelatedProgramsBadge';
 
 import './CourseCard.scss';
 
@@ -20,7 +25,20 @@ export const CourseCard = ({
       <Card orientation={orientation}>
         <div className="d-flex flex-column w-100">
           <div {...(!isCollapsed && { className: 'd-flex' })}>
-            <CourseCardContent cardId={cardId} orientation={orientation} />
+            <CourseCardImage cardId={cardId} />
+            <Card.Body>
+              <Card.Header
+                title={<CourseCardTitle cardId={cardId} />}
+                actions={<CourseCardMenu cardId={cardId} />}
+              />
+              <Card.Section className="pt-0">
+                <CourseCardDetails cardId={cardId} />
+              </Card.Section>
+              <Card.Footer orientation={orientation}>
+                <RelatedProgramsBadge cardId={cardId} />
+                <CourseCardActions cardId={cardId} />
+              </Card.Footer>
+            </Card.Body>
           </div>
           <div className="course-card-banners" data-testid="CourseCardBanners">
             <CourseCardBanners cardId={cardId} />

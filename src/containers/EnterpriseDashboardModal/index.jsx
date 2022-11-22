@@ -13,7 +13,9 @@ export const EnterpriseDashboardModal = () => {
   const { formatMessage } = useIntl();
   const {
     showModal,
-    handleClick,
+    handleClose,
+    handleCTAClick,
+    handleEscape,
     dashboard,
   } = useEnterpriseDashboardHook();
   if (!dashboard || !dashboard.label) {
@@ -22,7 +24,7 @@ export const EnterpriseDashboardModal = () => {
   return (
     <ModalDialog
       isOpen={showModal}
-      onClose={handleClick}
+      onClose={handleEscape}
       hasCloseButton={false}
       title=""
     >
@@ -41,10 +43,10 @@ export const EnterpriseDashboardModal = () => {
           })}
         </p>
         <ActionRow>
-          <Button variant="tertiary" onClick={handleClick}>
+          <Button variant="tertiary" onClick={handleClose}>
             {formatMessage(messages.enterpriseDialogDismissButton)}
           </Button>
-          <Button type="a" href={dashboard.url}>
+          <Button type="a" href={dashboard.url} onClick={handleCTAClick}>
             {formatMessage(messages.enterpriseDialogConfirmButton)}
           </Button>
         </ActionRow>
