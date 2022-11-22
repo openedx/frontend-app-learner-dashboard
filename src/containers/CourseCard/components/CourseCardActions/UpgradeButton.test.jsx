@@ -1,20 +1,28 @@
 import { shallow } from 'enzyme';
 
-import { htmlProps } from 'data/constants/htmlKeys';
+import track from 'data/services/segment/track';
 import { hooks } from 'data/redux';
+import { htmlProps } from 'data/constants/htmlKeys';
 import UpgradeButton from './UpgradeButton';
+
+jest.mock('data/services/segment/track', () => ({
+  course: {
+    upgradeClicked: jest.fn().mockName('segment.trackUpgradeClicked'),
+  },
+}));
 
 jest.mock('data/redux', () => ({
   hooks: {
     useMasqueradeData: jest.fn(() => ({ isMasquerading: false })),
     useCardCourseRunData: jest.fn(),
     useCardEnrollmentData: jest.fn(() => ({ canUpgrade: true })),
+    useTrackCourseEvent: jest.fn(
+      (eventName, cardId, upgradeUrl) => ({ trackCourseEvent: { eventName, cardId, upgradeUrl } }),
+    ),
   },
 }));
+
 jest.mock('./ActionButton', () => 'ActionButton');
-jest.mock('./hooks', () => () => ({
-  trackUpgradeClick: jest.fn().mockName('trackUpgradeClick'),
-}));
 
 describe('UpgradeButton', () => {
   const props = {
@@ -27,6 +35,11 @@ describe('UpgradeButton', () => {
       const wrapper = shallow(<UpgradeButton {...props} />);
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.prop(htmlProps.disabled)).toEqual(false);
+      expect(wrapper.prop(htmlProps.onClick)).toEqual(hooks.useTrackCourseEvent(
+        track.course.upgradeClicked,
+        props.cardId,
+        upgradeUrl,
+      ));
     });
     test('cannot upgrade', () => {
       hooks.useCardEnrollmentData.mockReturnValueOnce({ canUpgrade: false });

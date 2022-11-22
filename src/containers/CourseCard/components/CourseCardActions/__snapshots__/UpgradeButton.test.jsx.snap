@@ -6,7 +6,15 @@ exports[`UpgradeButton snapshot can upgrade 1`] = `
   disabled={false}
   href="upgradeUrl"
   iconBefore={[MockFunction icons.Locked]}
-  onClick={[MockFunction trackUpgradeClick]}
+  onClick={
+    Object {
+      "trackCourseEvent": Object {
+        "cardId": "cardId",
+        "eventName": [MockFunction segment.trackUpgradeClicked],
+        "upgradeUrl": "upgradeUrl",
+      },
+    }
+  }
   variant="outline-primary"
 >
   Upgrade
@@ -17,7 +25,6 @@ exports[`UpgradeButton snapshot cannot upgrade 1`] = `
 <ActionButton
   disabled={true}
   iconBefore={[MockFunction icons.Locked]}
-  onClick={[MockFunction trackUpgradeClick]}
   variant="outline-primary"
 >
   Upgrade
@@ -28,7 +35,6 @@ exports[`UpgradeButton snapshot masquerading 1`] = `
 <ActionButton
   disabled={true}
   iconBefore={[MockFunction icons.Locked]}
-  onClick={[MockFunction trackUpgradeClick]}
   variant="outline-primary"
 >
   Upgrade
