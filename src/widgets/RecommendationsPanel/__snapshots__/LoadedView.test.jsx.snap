@@ -1,6 +1,80 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`RecommendationsPanel LoadedView snapshot 1`] = `
+exports[`RecommendationsPanel LoadedView snapshot with personalize recommendation 1`] = `
+<div
+  className="p-4 w-100 panel-background"
+>
+  <h3
+    className="pb-2"
+  >
+    Recommendations for you
+  </h3>
+  <div>
+    <CourseCard
+      course={
+        Object {
+          "courseKey": "cs-1",
+          "logoImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg",
+          "marketingUrl": "www.edx/recommended-course",
+          "title": "Recommended course 1",
+        }
+      }
+      isPersonalizedRecommendation={true}
+      key="cs-1"
+    />
+    <CourseCard
+      course={
+        Object {
+          "courseKey": "cs-2",
+          "logoImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg",
+          "marketingUrl": "www.edx/recommended-course",
+          "title": "Recommended course 2 with a really really really long name for some reason",
+        }
+      }
+      isPersonalizedRecommendation={true}
+      key="cs-2"
+    />
+    <CourseCard
+      course={
+        Object {
+          "courseKey": "cs-3",
+          "logoImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg",
+          "marketingUrl": "www.edx/recommended-course",
+          "title": "Recommended course 3",
+        }
+      }
+      isPersonalizedRecommendation={true}
+      key="cs-3"
+    />
+    <CourseCard
+      course={
+        Object {
+          "courseKey": "cs-4",
+          "logoImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg",
+          "marketingUrl": "www.edx/recommended-course",
+          "title": "Recommended course 4",
+        }
+      }
+      isPersonalizedRecommendation={true}
+      key="cs-4"
+    />
+  </div>
+  <div
+    className="text-center explore-courses-btn"
+  >
+    <Button
+      as="a"
+      href="course-search-url"
+      onClick={[MockFunction courseSearchClickTracker]}
+      variant="tertiary"
+    >
+      Explore courses
+    </Button>
+  </div>
+</div>
+`;
+
+exports[`RecommendationsPanel LoadedView snapshot without personalize recommendation 1`] = `
 <div
   className="p-4 w-100 panel-background"
 >
@@ -19,6 +93,7 @@ exports[`RecommendationsPanel LoadedView snapshot 1`] = `
           "title": "Recommended course 1",
         }
       }
+      isPersonalizedRecommendation={false}
       key="cs-1"
     />
     <CourseCard
@@ -30,6 +105,7 @@ exports[`RecommendationsPanel LoadedView snapshot 1`] = `
           "title": "Recommended course 2 with a really really really long name for some reason",
         }
       }
+      isPersonalizedRecommendation={false}
       key="cs-2"
     />
     <CourseCard
@@ -41,6 +117,7 @@ exports[`RecommendationsPanel LoadedView snapshot 1`] = `
           "title": "Recommended course 3",
         }
       }
+      isPersonalizedRecommendation={false}
       key="cs-3"
     />
     <CourseCard
@@ -52,6 +129,7 @@ exports[`RecommendationsPanel LoadedView snapshot 1`] = `
           "title": "Recommended course 4",
         }
       }
+      isPersonalizedRecommendation={false}
       key="cs-4"
     />
   </div>

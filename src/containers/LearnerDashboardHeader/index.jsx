@@ -17,8 +17,6 @@ import { useIsCollapsed } from './hooks';
 import messages from './messages';
 import './index.scss';
 
-const { programsUrl } = urls;
-
 export const UserMenu = () => {
   const { authenticatedUser } = useContext(AppContext);
   return authenticatedUser ? (<AuthenticatedUserDropdown username={authenticatedUser.username} />) : null;
@@ -38,7 +36,7 @@ export const LearnerDashboardHeader = () => {
         <header className="learner-dashboard-header">
           <div className="d-flex">
             {(!isCollapsed) && (
-              <Button as="a" href={programsUrl} variant="inverse-tertiary" iconBefore={Program}>
+              <Button as="a" href={urls.programsUrl} variant="inverse-tertiary" iconBefore={Program}>
                 {formatMessage(messages.switchToProgram)}
               </Button>
             )}

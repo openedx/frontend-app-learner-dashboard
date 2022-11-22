@@ -46,7 +46,7 @@ exports[`AuthenticatedUserDropdown snapshots with enterprise dashboard 1`] = `
       Profile
     </Dropdown.Item>
     <Dropdown.Item
-      href="http://localhost:18000/u/username"
+      href="http://localhost:18000/dashboard/programs"
     >
       View Programs
     </Dropdown.Item>
