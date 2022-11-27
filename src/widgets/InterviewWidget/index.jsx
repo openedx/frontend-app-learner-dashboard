@@ -1,26 +1,25 @@
-import { React, useState } from 'react';
+import { React } from 'react';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { Button, Calendar, Card } from '@edx/paragon';
+import { Button, Card } from '@edx/paragon';
+import { Calendar } from '@edx/paragon/icons';
 
 import interviewWidgetImg from 'assets/interview-widget.png';
 
-import messages from './messages';
-import './index.scss';
-import { getCookie, setCookie } from '../../utils/cookies';
 import { configuration } from '../../config';
 
+import './index.scss';
+import messages from './messages';
+import { useDismissPanel } from './hooks';
+
 export const InterviewWidget = () => {
-  const dismissCookieName = configuration.INTERVIEW_WIDGET_DISMISS_COOKIE_NAME;
-  const [isDismised, setIsDismissed] = useState(!!getCookie(dismissCookieName));
+  const {
+    hideWidget,
+    handleDismiss,
+  } = useDismissPanel();
   const { formatMessage } = useIntl();
 
-  const handleDismiss = () => {
-    setIsDismissed(true);
-    setCookie(dismissCookieName, true, 365);
-  }
-
-  if (isDismised || !configuration.INTERVIEW_WIDGET_SIGNUP_URL) {
+  if (hideWidget) {
     return null;
   }
   return (

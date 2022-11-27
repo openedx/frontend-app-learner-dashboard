@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InterviewWidget snapshots default 1`] = `
+<Card
+  id="interview-widget"
+>
+  <Card.ImageCap
+    src="test-file-stub"
+    srcAlt="course side widget"
+  />
+  <Card.Header
+    title="Help shape the future of edX"
+  />
+  <Card.Section>
+    Sign up for a 30-minute Q&A session with an edX research expert!
+  </Card.Section>
+  <Card.Footer>
+    <Button
+      onClick={[MockFunction]}
+      variant="tertiary"
+    >
+      No thanks
+    </Button>
+    <Button
+      href="https://test.example.com"
+      variant="outline-primary"
+    >
+      Sign up
+    </Button>
+  </Card.Footer>
+</Card>
+`;
+
+exports[`InterviewWidget snapshots dismissed 1`] = `""`;
