@@ -1,5 +1,5 @@
-import { categories, eventNames } from '../constants';
-import { createEventTracker } from '../utils';
+import { categories, eventNames } from 'data/services/segment/constants';
+import { createEventTracker } from 'data/services/segment/utils';
 
 /** User Engagements events **/
 const engagementOptions = { category: categories.userEngagement, displayName: 'v1' };

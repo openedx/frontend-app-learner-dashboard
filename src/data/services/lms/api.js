@@ -1,3 +1,4 @@
+import eventKeys from 'data/services/segment/constants';
 import {
   client,
   get,
@@ -14,29 +15,51 @@ import urls from './urls';
 /*********************************************************************************
  * GET Actions
  *********************************************************************************/
-const initializeList = ({ user } = {}) => get(stringifyUrl(
-  urls.init,
-  { [apiKeys.user]: user },
-));
+export const initializeList = ({ user } = {}) => get(
+  stringifyUrl(urls.init, { [apiKeys.user]: user }),
+);
 
-const updateEntitlementEnrollment = ({ uuid, courseId }) => post(
+export const updateEntitlementEnrollment = ({ uuid, courseId }) => post(
   urls.entitlementEnrollment(uuid),
   { [apiKeys.courseRunId]: courseId },
 );
 
-const deleteEntitlementEnrollment = ({ uuid, isRefundable }) => client().delete(stringifyUrl(
-  urls.entitlementEnrollment(uuid),
-  { [apiKeys.isRefund]: isRefundable },
-));
+export const deleteEntitlementEnrollment = ({ uuid, isRefundable }) => client().delete(
+  stringifyUrl(urls.entitlementEnrollment(uuid), { [apiKeys.isRefund]: isRefundable }),
+);
 
-const updateEmailSettings = ({ courseId, enable }) => post(
-  stringifyUrl(urls.updateEmailSettings),
+export const updateEmailSettings = ({ courseId, enable }) => post(
+  urls.updateEmailSettings,
   { [apiKeys.courseId]: courseId, ...(enable && enableEmailsAction) },
 );
 
-const unenrollFromCourse = ({ courseId }) => post(stringifyUrl(urls.courseUnenroll), {
-  [apiKeys.courseId]: courseId,
-  ...unenrollmentAction,
+export const unenrollFromCourse = ({ courseId }) => post(
+  urls.courseUnenroll,
+  { [apiKeys.courseId]: courseId, ...unenrollmentAction },
+);
+
+export const logEvent = ({ eventKey, data, courseId }) => post(urls.event, {
+  data,
+  courserun_key: courseId,
+  event_type: eventKey,
+  page: window.location.href,
+  event: JSON.stringify(data),
+});
+
+export const logUpgrade = ({ courseId }) => logEvent({
+  eventKey: eventKeys.upgradeButtonClickedEnrollment,
+  courseId,
+  data: { location: 'learner-dashboard' },
+});
+
+export const logShare = ({ courseId, site }) => logEvent({
+  eventKey: eventKeys.shareClicked,
+  courseId,
+  data: {
+    course_id: courseId,
+    social_media_site: site,
+    location: 'dashboard',
+  },
 });
 
 export default {
@@ -45,4 +68,6 @@ export default {
   updateEmailSettings,
   updateEntitlementEnrollment,
   deleteEntitlementEnrollment,
+  logUpgrade,
+  logShare,
 };

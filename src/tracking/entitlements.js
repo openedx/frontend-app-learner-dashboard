@@ -1,5 +1,5 @@
-import { eventNames } from '../constants';
-import { createEventTracker } from '../utils';
+import { eventNames } from 'data/services/segment/constants';
+import { createEventTracker } from 'data/services/segment/utils';
 
 /** Entitlement Session Enrollment events **/
 export const leaveSession = (fromCourseRun) => () => {

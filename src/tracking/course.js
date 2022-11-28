@@ -1,5 +1,5 @@
-import { categories, eventNames } from '../constants';
-import { createEventTracker, createLinkTracker } from '../utils';
+import { categories, eventNames } from 'data/services/segment/constants';
+import { createEventTracker, createLinkTracker } from 'data/services/segment/utils';
 
 /** Course Link events **/
 const courseEventTracker = (eventName, courseId, options = {}) => createEventTracker(

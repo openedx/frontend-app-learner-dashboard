@@ -8,6 +8,7 @@ const api = `${baseUrl}/api`;
 // const init = `${api}learner_home/mock/init`; // mock endpoint for testing
 const init = `${api}/learner_home/init`;
 
+const event = `${baseUrl}/event`;
 const courseUnenroll = `${baseUrl}/change_enrollment`;
 const updateEmailSettings = `${api}/change_email_settings`;
 const entitlementEnrollment = (uuid) => `${api}/entitlements/v1/entitlements/${uuid}/enrollments`;
@@ -23,11 +24,12 @@ const programsUrl = baseAppUrl('/dashboard/programs');
 
 export default StrictDict({
   api,
-  init,
-  courseUnenroll,
-  updateEmailSettings,
-  entitlementEnrollment,
   baseAppUrl,
+  courseUnenroll,
+  entitlementEnrollment,
+  event,
+  init,
   learningMfeUrl,
   programsUrl,
+  updateEmailSettings,
 });
