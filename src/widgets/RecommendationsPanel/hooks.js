@@ -2,7 +2,6 @@ import React from 'react';
 
 import { StrictDict } from 'utils';
 import { RequestStates } from 'data/constants/requests';
-import track from './track';
 
 import * as module from './hooks';
 import api from './api';
@@ -44,7 +43,6 @@ export const useRecommendationPanelData = () => {
     isFailed: requestState === RequestStates.failed
       || (requestState === RequestStates.completed && courses.length === 0),
     isLoading: requestState === RequestStates.pending,
-    trackFindCoursesClicked: track.findCoursesClicked,
   };
 };
 

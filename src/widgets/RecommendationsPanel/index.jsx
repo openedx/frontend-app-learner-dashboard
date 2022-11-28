@@ -11,8 +11,6 @@ export const RecommendationsPanel = () => {
     isFailed,
     isLoaded,
     isLoading,
-    handleFindCoursesClicked,
-    handleRecommendedCourseClicked,
   } = hooks.useRecommendationPanelData();
 
   if (isLoading) {
@@ -20,17 +18,14 @@ export const RecommendationsPanel = () => {
   }
   if (isLoaded) {
     return (
-      <LoadedView
-        courses={courses}
-        {...{ handleFindCoursesClicked, handleRecommendedCourseClicked }}
-      />
+      <LoadedView courses={courses} />
     );
   }
   if (isFailed) {
-    return (<LookingForChallengeWidget {...{ handleFindCoursesClicked }} />);
+    return (<LookingForChallengeWidget />);
   }
   // default fallback
-  return (<LookingForChallengeWidget {...{ handleFindCoursesClicked }} />);
+  return (<LookingForChallengeWidget />);
 };
 
 export default RecommendationsPanel;

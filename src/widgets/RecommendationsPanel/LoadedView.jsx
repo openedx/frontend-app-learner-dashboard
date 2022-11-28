@@ -56,7 +56,6 @@ LoadedView.propTypes = {
     marketingUrl: PropTypes.string,
   })).isRequired,
   isPersonalizedRecommendation: PropTypes.bool.isRequired,
-  courseSearchClickTracker: PropTypes.func.isRequired,
 };
 
 export default LoadedView;
