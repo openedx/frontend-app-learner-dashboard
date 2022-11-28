@@ -15,6 +15,8 @@ const configuration = {
   SUPPORT_URL: process.env.SUPPORT_URL || null,
 };
 
-const features = {};
+const features = {
+  ENABLE_RECOMMENDATIONS_PANEL: process.env.ENABLE_RECOMMENDATIONS_PANEL,
+};
 
 export { configuration, features };
