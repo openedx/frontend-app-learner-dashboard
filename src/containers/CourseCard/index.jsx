@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// import PropTypes from 'prop-types';
 import { Card } from '@edx/paragon';
 
 import { useIsCollapsed } from './hooks';
@@ -25,7 +24,7 @@ export const CourseCard = ({
       <Card orientation={orientation}>
         <div className="d-flex flex-column w-100">
           <div {...(!isCollapsed && { className: 'd-flex' })}>
-            <CourseCardImage cardId={cardId} />
+            <CourseCardImage cardId={cardId} orientation="horizontal" />
             <Card.Body>
               <Card.Header
                 title={<CourseCardTitle cardId={cardId} />}

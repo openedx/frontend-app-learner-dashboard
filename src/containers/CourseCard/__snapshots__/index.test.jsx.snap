@@ -13,10 +13,41 @@ exports[`CourseCard component snapshot: collapsed 1`] = `
       className="d-flex flex-column w-100"
     >
       <div>
-        <CourseCardContent
+        <CourseCardImage
           cardId="test-card-id"
-          orientation="vertical"
+          orientation="horizontal"
         />
+        <Card.Body>
+          <Card.Header
+            actions={
+              <CourseCardMenu
+                cardId="test-card-id"
+              />
+            }
+            title={
+              <CourseCardTitle
+                cardId="test-card-id"
+              />
+            }
+          />
+          <Card.Section
+            className="pt-0"
+          >
+            <CourseCardDetails
+              cardId="test-card-id"
+            />
+          </Card.Section>
+          <Card.Footer
+            orientation="vertical"
+          >
+            <RelatedProgramsBadge
+              cardId="test-card-id"
+            />
+            <CourseCardActions
+              cardId="test-card-id"
+            />
+          </Card.Footer>
+        </Card.Body>
       </div>
       <div
         className="course-card-banners"
@@ -46,10 +77,41 @@ exports[`CourseCard component snapshot: not collapsed 1`] = `
       <div
         className="d-flex"
       >
-        <CourseCardContent
+        <CourseCardImage
           cardId="test-card-id"
           orientation="horizontal"
         />
+        <Card.Body>
+          <Card.Header
+            actions={
+              <CourseCardMenu
+                cardId="test-card-id"
+              />
+            }
+            title={
+              <CourseCardTitle
+                cardId="test-card-id"
+              />
+            }
+          />
+          <Card.Section
+            className="pt-0"
+          >
+            <CourseCardDetails
+              cardId="test-card-id"
+            />
+          </Card.Section>
+          <Card.Footer
+            orientation="horizontal"
+          >
+            <RelatedProgramsBadge
+              cardId="test-card-id"
+            />
+            <CourseCardActions
+              cardId="test-card-id"
+            />
+          </Card.Footer>
+        </Card.Body>
       </div>
       <div
         className="course-card-banners"

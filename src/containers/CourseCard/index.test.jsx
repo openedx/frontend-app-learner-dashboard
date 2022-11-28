@@ -9,7 +9,12 @@ jest.mock('./hooks', () => ({
 }));
 
 jest.mock('./components/CourseCardBanners', () => 'CourseCardBanners');
-jest.mock('./components/CourseCardContent', () => 'CourseCardContent');
+jest.mock('./components/CourseCardImage', () => 'CourseCardImage');
+jest.mock('./components/CourseCardMenu', () => 'CourseCardMenu');
+jest.mock('./components/CourseCardActions', () => 'CourseCardActions');
+jest.mock('./components/CourseCardDetails', () => 'CourseCardDetails');
+jest.mock('./components/CourseCardTitle', () => 'CourseCardTitle');
+jest.mock('./components/RelatedProgramsBadge', () => 'RelatedProgramsBadge');
 
 const cardId = 'test-card-id';
 

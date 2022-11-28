@@ -16,9 +16,9 @@ export const useEnterpriseDashboardHook = () => {
   const [showModal, setShowModal] = module.state.showModal(true);
   const dashboard = appHooks.useEnterpriseDashboardData();
 
-  const trackOpened = modalOpened(dashboard.enterpriseUUID);
-  const trackClose = modalClosed(dashboard.enterpriseUUID, 'Cancel button');
-  const trackEscape = modalClosed(dashboard.enterpriseUUID, 'Escape');
+  const trackOpened = () => modalOpened(dashboard.enterpriseUUID);
+  const trackClose = () => modalClosed(dashboard.enterpriseUUID, 'Cancel button');
+  const trackEscape = () => modalClosed(dashboard.enterpriseUUID, 'Escape');
 
   const handleCTAClick = () => {
     modalCTAClicked(dashboard.enterpriseUUID, dashboard.url);

@@ -14,11 +14,13 @@ jest.mock('data/redux', () => ({
     useCardEnrollmentData: jest.fn(),
     useCardSocialSettingsData: jest.fn(),
     useMasqueradeData: jest.fn(),
+    useTrackCourseEvent: jest.fn(),
   },
 }));
 jest.mock('./hooks', () => ({
   useEmailSettings: jest.fn(),
   useUnenrollData: jest.fn(),
+  useHandleToggleDropdown: jest.fn(),
 }));
 
 const props = {
@@ -58,6 +60,7 @@ describe('CourseCardMenu', () => {
     appHooks.useCardCourseData.mockReturnValue({ courseName });
     appHooks.useCardEnrollmentData.mockReturnValue({ isEnrolled: true, isEmailEnabled: true });
     appHooks.useMasqueradeData.mockReturnValue({ isMasquerading: false });
+    appHooks.useTrackCourseEvent.mockReturnValue(jest.fn().mockName('handleTwitterShare'));
   });
   describe('enrolled, share enabled, email setting enable', () => {
     beforeEach(() => {

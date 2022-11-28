@@ -11,7 +11,6 @@ export const createEventTracker = (name, options = {}) => () => sendTrackEvent(
 
 export const createLinkTracker = (tracker, href) => (e) => {
   e.preventDefault();
-  console.log({ linkTimeout: { e, tracker, href } });
   tracker();
-  // return setTimeout(LINK_TIMEOUT, () => { global.location.href = href; });
+  return setTimeout(() => { global.location.href = href; }, LINK_TIMEOUT);
 };
