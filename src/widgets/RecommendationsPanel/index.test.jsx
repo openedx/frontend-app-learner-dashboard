@@ -18,16 +18,15 @@ jest.mock('./LoadedView', () => 'LoadedView');
 const { courses } = mockData;
 
 describe('RecommendationsPanel snapshot', () => {
-  const defaultProps = {
-    courseSearchClickTracker: jest.fn().mockName('courseSearchClickTracker'),
+  const defaultLoadedViewProps = {
+    courses: [],
+    isPersonalizedRecommendation: false,
   };
   const defaultValues = {
     isFailed: false,
     isLoaded: false,
     isLoading: false,
-    courses: [],
-    isPersonalizedRecommendation: false,
-    ...defaultProps,
+    ...defaultLoadedViewProps,
   };
   it('displays LoadingView if request is loading', () => {
     hooks.useRecommendationPanelData.mockReturnValueOnce({
@@ -43,13 +42,7 @@ describe('RecommendationsPanel snapshot', () => {
       isLoaded: true,
     });
     expect(shallow(<RecommendationsPanel />)).toMatchObject(
-      shallow(
-        <LoadedView
-          courses={courses}
-          isPersonalizedRecommendation={false}
-          {...defaultProps}
-        />,
-      ),
+      shallow(<LoadedView {...defaultLoadedViewProps} courses={courses} />),
     );
   });
   it('displays LookingForChallengeWidget if request is failed', () => {
@@ -58,7 +51,7 @@ describe('RecommendationsPanel snapshot', () => {
       isFailed: true,
     });
     expect(shallow(<RecommendationsPanel />)).toMatchObject(
-      shallow(<LookingForChallengeWidget {...defaultProps} />),
+      shallow(<LookingForChallengeWidget />),
     );
   });
   it('defaults to LookingForChallengeWidget if no flags are true', () => {
@@ -66,7 +59,7 @@ describe('RecommendationsPanel snapshot', () => {
       ...defaultValues,
     });
     expect(shallow(<RecommendationsPanel />)).toMatchObject(
-      shallow(<LookingForChallengeWidget {...defaultProps} />),
+      shallow(<LookingForChallengeWidget />),
     );
   });
 });

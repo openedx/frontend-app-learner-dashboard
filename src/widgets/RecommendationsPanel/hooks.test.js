@@ -2,16 +2,12 @@ import React from 'react';
 
 import { MockUseState } from 'testUtils';
 import { RequestStates } from 'data/constants/requests';
-import { handleEvent } from 'data/services/segment/utils';
 
 import api from './api';
 import * as hooks from './hooks';
 
 jest.mock('./api', () => ({
   fetchRecommendedCourses: jest.fn(),
-}));
-jest.mock('data/services/segment/utils', () => ({
-  handleEvent: jest.fn(),
 }));
 
 const state = new MockUseState(hooks);
@@ -100,16 +96,6 @@ describe('RecommendationsPanel hooks', () => {
     it('initializes requestState as RequestStates.pending', () => {
       state.expectInitializedWith(state.keys.requestState, RequestStates.pending);
     });
-    describe('courseSearchClickTracker behavior', () => {
-      it('calls handleEvent with correct args', () => {
-        out.courseSearchClickTracker();
-        expect(handleEvent).toHaveBeenCalledWith(hooks.searchCourseEventName, {
-          pageName: 'learner_home',
-          linkType: 'button',
-          linkCategory: 'search_button',
-        });
-      });
-    });
     describe('output', () => {
       describe('request is completed, with returned courses', () => {
         beforeEach(() => {
@@ -128,6 +114,19 @@ describe('RecommendationsPanel hooks', () => {
         });
         it('returns passed courses list', () => {
           expect(out.courses).toEqual(testList);
+        });
+      });
+      describe('personalize recommendation', () => {
+        it('default to false', () => {
+          state.mockVal(state.keys.data, {});
+          out = hooks.useRecommendationPanelData();
+          expect(out.isPersonalizedRecommendation).toEqual(false);
+        });
+        it('is based on data', () => {
+          const expectOutput = { test: 'abirary' };
+          state.mockVal(state.keys.data, { data: { isPersonalizedRecommendation: expectOutput } });
+          out = hooks.useRecommendationPanelData();
+          expect(out.isPersonalizedRecommendation).toEqual(expectOutput);
         });
       });
       describe('request is completed, with no returned courses', () => {

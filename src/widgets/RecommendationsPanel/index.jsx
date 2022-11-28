@@ -11,6 +11,7 @@ export const RecommendationsPanel = () => {
     isFailed,
     isLoaded,
     isLoading,
+    isPersonalizedRecommendation,
   } = hooks.useRecommendationPanelData();
 
   if (isLoading) {
@@ -18,7 +19,7 @@ export const RecommendationsPanel = () => {
   }
   if (isLoaded) {
     return (
-      <LoadedView courses={courses} />
+      <LoadedView courses={courses} isPersonalizedRecommendation={isPersonalizedRecommendation} />
     );
   }
   if (isFailed) {

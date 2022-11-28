@@ -43,6 +43,7 @@ export const useRecommendationPanelData = () => {
     isFailed: requestState === RequestStates.failed
       || (requestState === RequestStates.completed && courses.length === 0),
     isLoading: requestState === RequestStates.pending,
+    isPersonalizedRecommendation,
   };
 };
 

@@ -25,6 +25,6 @@ export const useCourseCardData = (course, isPersonalized) => {
     );
   };
   return { handleCourseClick };
-}
+};
 
 export default useCourseCardData;
