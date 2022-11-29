@@ -1,5 +1,5 @@
-import { eventNames } from 'data/services/segment/constants';
 import { createEventTracker, createLinkTracker } from 'data/services/segment/utils';
+import { eventNames } from '../constants';
 
 /** Enterprise Dashboard events**/
 /**
