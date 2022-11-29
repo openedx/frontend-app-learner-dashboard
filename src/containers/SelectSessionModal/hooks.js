@@ -5,7 +5,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { StrictDict } from 'utils';
 
-import track from 'data/services/segment/track';
+import track from 'tracking';
 import { hooks as appHooks, thunkActions } from 'data/redux';
 import * as module from './hooks';
 import { LEAVE_OPTION } from './constants';

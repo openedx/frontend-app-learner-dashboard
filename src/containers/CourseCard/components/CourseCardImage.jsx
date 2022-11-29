@@ -4,7 +4,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { Badge } from '@edx/paragon';
 
-import track from 'data/services/segment/track';
+import track from 'tracking';
 import { hooks as appHooks } from 'data/redux';
 
 import verifiedRibbon from 'assets/verified-ribbon.png';

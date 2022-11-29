@@ -1,6 +1,6 @@
 import { MockUseState } from 'testUtils';
 import { hooks as appHooks } from 'data/redux';
-import track from 'data/services/segment/track';
+import track from 'tracking';
 
 import * as hooks from './hooks';
 
@@ -9,7 +9,7 @@ jest.mock('data/redux', () => ({
     useEnterpriseDashboardData: jest.fn(),
   },
 }));
-jest.mock('data/services/segment/track', () => ({
+jest.mock('tracking', () => ({
   __esModule: true,
   default: {
     enterpriseDashboard: {

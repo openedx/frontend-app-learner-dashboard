@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { StrictDict } from 'utils';
-import track from 'data/services/segment/track';
+import track from 'tracking';
 import { hooks as appHooks } from 'data/redux';
 
 import * as module from './hooks';

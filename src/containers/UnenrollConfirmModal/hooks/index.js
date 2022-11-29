@@ -2,9 +2,9 @@ import React from 'react';
 
 import { StrictDict } from 'utils';
 import { hooks as appHooks, thunkActions } from 'data/redux';
-import track from 'data/services/segment/track';
+import track from 'tracking';
 
-import useUnenrollReasons from './reasons';
+import { useUnenrollReasons } from './reasons';
 import * as module from '.';
 
 export const state = StrictDict({
@@ -24,6 +24,7 @@ export const useUnenrollData = ({ closeModal, dispatch, cardId }) => {
   const { isEntitlement } = appHooks.useCardEntitlementData(cardId);
   const handleTrackReasons = appHooks.useTrackCourseEvent(
     track.engagement.unenrollReason,
+    cardId,
     reason.submittedReason,
     isEntitlement,
   );

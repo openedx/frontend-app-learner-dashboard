@@ -1,11 +1,11 @@
 import { shallow } from 'enzyme';
 
-import track from 'data/services/segment/track';
+import track from 'tracking';
 import { htmlProps } from 'data/constants/htmlKeys';
 import { hooks } from 'data/redux';
 import ViewCourseButton from './ViewCourseButton';
 
-jest.mock('data/services/segment/track', () => ({
+jest.mock('tracking', () => ({
   course: {
     enterCourseClicked: jest.fn().mockName('segment.enterCourseClicked'),
   },

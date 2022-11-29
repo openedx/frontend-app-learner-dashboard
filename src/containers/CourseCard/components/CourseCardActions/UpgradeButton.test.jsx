@@ -1,11 +1,11 @@
 import { shallow } from 'enzyme';
 
-import track from 'data/services/segment/track';
+import track from 'tracking';
 import { hooks } from 'data/redux';
 import { htmlProps } from 'data/constants/htmlKeys';
 import UpgradeButton from './UpgradeButton';
 
-jest.mock('data/services/segment/track', () => ({
+jest.mock('tracking', () => ({
   course: {
     upgradeClicked: jest.fn().mockName('segment.trackUpgradeClicked'),
   },

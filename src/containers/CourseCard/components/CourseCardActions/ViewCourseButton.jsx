@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import track from 'data/services/segment/track';
+import track from 'tracking';
 import { hooks } from 'data/redux';
 import ActionButton from './ActionButton';
 import messages from './messages';

@@ -6,7 +6,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { Dropdown, Icon, IconButton } from '@edx/paragon';
 import { MoreVert } from '@edx/paragon/icons';
 
-import track from 'data/services/segment/track';
+import track from 'tracking';
 import { hooks as appHooks } from 'data/redux';
 import EmailSettingsModal from 'containers/EmailSettingsModal';
 import UnenrollConfirmModal from 'containers/UnenrollConfirmModal';

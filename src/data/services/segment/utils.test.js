@@ -1,6 +1,8 @@
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
+
+import { appName } from 'tracking/constants';
+
 import { createEventTracker, createLinkTracker, LINK_TIMEOUT } from './utils';
-import { appName } from './constants';
 
 jest.useFakeTimers();
 jest.spyOn(global, 'setTimeout');
@@ -10,10 +12,6 @@ jest.mock('@edx/frontend-platform/analytics', () => ({
 }));
 
 describe('segment service utils', () => {
-  beforeAll(() => {
-    global.window = Object.create(window);
-  });
-
   describe('createEventTracker', () => {
     const name = 'aName';
     const options = { field1: 'some data', field2: 'other data' };

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import track from 'data/services/segment/track';
+import track from 'tracking';
 import { hooks as appHooks } from 'data/redux';
 
 const { courseTitleClicked } = track.course;

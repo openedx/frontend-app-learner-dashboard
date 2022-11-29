@@ -1,4 +1,4 @@
-import eventKeys from 'data/services/segment/constants';
+import eventNames from 'tracking/constants';
 import {
   client,
   get,
@@ -11,6 +11,7 @@ import {
   enableEmailsAction,
 } from './constants';
 import urls from './urls';
+import * as module from './api';
 
 /*********************************************************************************
  * GET Actions
@@ -38,22 +39,21 @@ export const unenrollFromCourse = ({ courseId }) => post(
   { [apiKeys.courseId]: courseId, ...unenrollmentAction },
 );
 
-export const logEvent = ({ eventKey, data, courseId }) => post(urls.event, {
-  data,
+export const logEvent = ({ eventName, data, courseId }) => post(urls.event, {
   courserun_key: courseId,
-  event_type: eventKey,
+  event_type: eventName,
   page: window.location.href,
   event: JSON.stringify(data),
 });
 
-export const logUpgrade = ({ courseId }) => logEvent({
-  eventKey: eventKeys.upgradeButtonClickedEnrollment,
+export const logUpgrade = ({ courseId }) => module.logEvent({
+  eventName: eventNames.upgradeButtonClickedEnrollment,
   courseId,
   data: { location: 'learner-dashboard' },
 });
 
-export const logShare = ({ courseId, site }) => logEvent({
-  eventKey: eventKeys.shareClicked,
+export const logShare = ({ courseId, site }) => module.logEvent({
+  eventName: eventNames.shareClicked,
   courseId,
   data: {
     course_id: courseId,
