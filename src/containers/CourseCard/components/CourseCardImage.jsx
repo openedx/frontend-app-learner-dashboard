@@ -20,6 +20,7 @@ export const CourseCardImage = ({ cardId, orientation }) => {
   const { isVerified } = appHooks.useCardEnrollmentData(cardId);
   const { isEntitlement } = appHooks.useCardEntitlementData(cardId);
   const handleImageClicked = appHooks.useTrackCourseEvent(courseImageClicked, cardId, homeUrl);
+  const wrapperClassName = `pgn__card-wrapper-image-cap overflow-visible ${orientation}`;
   const image = (
     <>
       <img
@@ -43,10 +44,10 @@ export const CourseCardImage = ({ cardId, orientation }) => {
     </>
   );
   return isEntitlement
-    ? image
+    ? (<div className={wrapperClassName}>{image}</div>)
     : (
       <a
-        className={`pgn__card-wrapper-image-cap overflow-visible ${orientation}`}
+        className={wrapperClassName}
         href={homeUrl}
         onClick={handleImageClicked}
       >
