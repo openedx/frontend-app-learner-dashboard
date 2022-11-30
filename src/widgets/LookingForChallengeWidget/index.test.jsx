@@ -10,13 +10,14 @@ jest.mock('data/redux', () => ({
   },
 }));
 
+jest.mock('../RecommendationsPanel/track', () => ({
+  findCoursesClicked: jest.fn().mockName('track.findCoursesClicked'),
+}));
+
 describe('LookingForChallengeWidget', () => {
-  const props = {
-    courseSearchClickTracker: jest.fn().mockName('courseSearchClickTracker'),
-  };
   describe('snapshots', () => {
     test('default', () => {
-      const wrapper = shallow(<LookingForChallengeWidget {...props} />);
+      const wrapper = shallow(<LookingForChallengeWidget />);
       expect(wrapper).toMatchSnapshot();
     });
   });
