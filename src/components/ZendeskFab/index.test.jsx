@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
 
-import ZendeskFab from './ZendeskFab';
+import ZendeskFab from '.';
 
 jest.mock('react-zendesk', () => 'Zendesk');
 
