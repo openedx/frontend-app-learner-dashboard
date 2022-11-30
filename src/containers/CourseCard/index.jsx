@@ -39,9 +39,7 @@ export const CourseCard = ({
               </Card.Footer>
             </Card.Body>
           </div>
-          <div className="course-card-banners" data-testid="CourseCardBanners">
-            <CourseCardBanners cardId={cardId} />
-          </div>
+          <CourseCardBanners cardId={cardId} />
         </div>
       </Card>
     </div>
