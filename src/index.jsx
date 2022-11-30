@@ -37,15 +37,14 @@ subscribe(APP_READY, () => {
 
 subscribe(APP_INIT_ERROR, (error) => {
   ReactDOM.render(
-    <ErrorPage message={error.message} />,
+    <IntlProvider locale="en">
+      <ErrorPage message={error.message} />
+    </IntlProvider>,
     document.getElementById('root'),
   );
 });
 
 export const appName = 'LearnerHomeAppConfig';
-
-// TODO: remove dev debug
-console.log({ SEGEMENT_KEY: process.env.SEGMENT_KEY });
 
 initialize({
   handlers: {

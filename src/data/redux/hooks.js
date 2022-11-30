@@ -65,3 +65,8 @@ export const useMasqueradeData = () => useSelector(requestSelectors.masquerade);
 
 export const useRequestIsPending = (requestName) => useSelector(requestSelectors.isPending(requestName));
 export const useRequestIsFailed = (requestName) => useSelector(requestSelectors.isFailed(requestName));
+
+export const useTrackCourseEvent = (tracker, cardId, ...args) => {
+  const { courseId } = module.useCardCourseRunData(cardId);
+  return (e) => tracker(courseId, ...args)(e);
+};

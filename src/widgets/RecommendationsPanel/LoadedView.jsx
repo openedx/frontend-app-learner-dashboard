@@ -6,6 +6,7 @@ import { Button } from '@edx/paragon';
 import { Search } from '@edx/paragon/icons';
 
 import { hooks } from 'data/redux';
+import track from './track';
 import CourseCard from './components/CourseCard';
 import messages from './messages';
 
@@ -14,7 +15,6 @@ import './index.scss';
 export const LoadedView = ({
   courses,
   isPersonalizedRecommendation,
-  courseSearchClickTracker,
 }) => {
   const { courseSearchUrl } = hooks.usePlatformSettingsData();
   const { formatMessage } = useIntl();
@@ -39,7 +39,7 @@ export const LoadedView = ({
           iconBefore={Search}
           as="a"
           href={courseSearchUrl}
-          onClick={courseSearchClickTracker}
+          onClick={track.findCoursesClicked(courseSearchUrl)}
         >
           {formatMessage(messages.exploreCoursesButton)}
         </Button>
@@ -56,7 +56,6 @@ LoadedView.propTypes = {
     marketingUrl: PropTypes.string,
   })).isRequired,
   isPersonalizedRecommendation: PropTypes.bool.isRequired,
-  courseSearchClickTracker: PropTypes.func.isRequired,
 };
 
 export default LoadedView;

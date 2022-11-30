@@ -1,6 +1,4 @@
 import { StrictDict } from 'utils';
-import { handleEvent } from 'data/services/segment/utils';
-import { eventNames } from 'data/services/segment/constants';
 import { actions, selectors } from 'data/redux';
 import { post } from 'data/services/lms/utils';
 
@@ -34,10 +32,6 @@ export const sendConfirmEmail = () => (dispatch, getState) => post(
 
 export const newEntitlementEnrollment = (cardId, selection) => (dispatch, getState) => {
   const { uuid } = selectors.app.courseCard.entitlement(getState(), cardId);
-  handleEvent(eventNames.sessionChange({ action: 'new' }), {
-    fromCourseRun: null,
-    toCourseRun: selection,
-  });
   dispatch(requests.newEntitlementEnrollment({
     uuid,
     courseId: selection,
@@ -46,12 +40,7 @@ export const newEntitlementEnrollment = (cardId, selection) => (dispatch, getSta
 };
 
 export const switchEntitlementEnrollment = (cardId, selection) => (dispatch, getState) => {
-  const { courseId } = selectors.app.courseCard.courseRun(getState(), cardId);
   const { uuid } = selectors.app.courseCard.entitlement(getState(), cardId);
-  handleEvent(eventNames.sessionChange({ action: 'switch' }), {
-    fromCourseRun: courseId,
-    toCourseRun: selection,
-  });
   dispatch(requests.switchEntitlementEnrollment({
     uuid,
     courseId: selection,
@@ -60,12 +49,7 @@ export const switchEntitlementEnrollment = (cardId, selection) => (dispatch, get
 };
 
 export const leaveEntitlementSession = (cardId) => (dispatch, getState) => {
-  const { courseId } = selectors.app.courseCard.courseRun(getState(), cardId);
   const { uuid, isRefundable } = selectors.app.courseCard.entitlement(getState(), cardId);
-  handleEvent(eventNames.entitlementUnenroll, {
-    leaveCourseRun: courseId,
-    isRefundable,
-  });
   dispatch(requests.leaveEntitlementSession({
     uuid,
     isRefundable,
@@ -73,16 +57,8 @@ export const leaveEntitlementSession = (cardId) => (dispatch, getState) => {
   }));
 };
 
-export const unenrollFromCourse = (cardId, reason) => (dispatch, getState) => {
+export const unenrollFromCourse = (cardId) => (dispatch, getState) => {
   const { courseId } = selectors.app.courseCard.courseRun(getState(), cardId);
-  if (reason) {
-    handleEvent(eventNames.unenrollReason, {
-      category: 'user-engagement',
-      displayName: 'v1',
-      label: reason,
-      course_id: courseId,
-    });
-  }
   dispatch(requests.unenrollFromCourse({
     courseId,
     onSuccess: () => dispatch(module.initialize()),

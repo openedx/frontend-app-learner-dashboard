@@ -205,3 +205,9 @@ export class MockUseState {
     return StrictDict({ ...this.hooks.state });
   }
 }
+
+export const mockLocation = (href) => {
+  delete global.window.location;
+  global.window = Object.create(window);
+  global.window.location = { href };
+};

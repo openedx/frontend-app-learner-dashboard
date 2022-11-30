@@ -1,18 +1,16 @@
 /* eslint-disable import/prefer-default-export */
-import { trackEvent } from '@redux-beacon/segment';
-import { trackingCategory as category } from './constants';
+import { sendTrackEvent } from '@edx/frontend-platform/analytics';
+import { appName } from 'tracking/constants';
 
-export const handleEvent = (name, options = {}) => trackEvent(
-  (event = {}) => {
-    const { payload } = event;
-    const { propsFn, extrasFn } = options;
-    return {
-      name,
-      ...(extrasFn && extrasFn(payload)),
-      properties: {
-        category,
-        ...(propsFn && propsFn(payload)),
-      },
-    };
-  },
+export const LINK_TIMEOUT = 300;
+
+export const createEventTracker = (name, options = {}) => () => sendTrackEvent(
+  name,
+  { ...options, app_name: appName },
 );
+
+export const createLinkTracker = (tracker, href) => (e) => {
+  e.preventDefault();
+  tracker();
+  return setTimeout(() => { global.location.href = href; }, LINK_TIMEOUT);
+};

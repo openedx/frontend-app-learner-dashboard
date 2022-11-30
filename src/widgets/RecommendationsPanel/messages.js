@@ -4,12 +4,12 @@ const messages = defineMessages({
   recommendationsHeading: {
     id: 'RecommendationsPanel.recommendationsHeading',
     defaultMessage: 'Recommendations for you',
-    description: 'Heading on recommendations panel with personalized recommendations',
+    description: 'Personalize courses heading on recommendations panel',
   },
   popularCoursesHeading: {
     id: 'RecommendationsPanel.popularCoursesHeading',
-    defaultMessage: 'Popular on edX',
-    description: 'Heading on recommendations panel with general recommendations',
+    defaultMessage: 'Popular courses',
+    description: 'Popular courses heading on recommendations panel',
   },
   exploreCoursesButton: {
     id: 'RecommendationsPanel.exploreCoursesButton',

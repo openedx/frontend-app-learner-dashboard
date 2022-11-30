@@ -1,4 +1,7 @@
-import api from './api';
+import { mockLocation } from 'testUtils';
+import { keyStore } from 'utils';
+import eventNames from 'tracking/constants';
+import * as api from './api';
 import * as utils from './utils';
 import urls from './urls';
 import {
@@ -20,8 +23,10 @@ jest.mock('./utils', () => {
 
 const testUser = 'test-user';
 const testUuid = 'test-UUID';
-const testCourseId = 'TEST-course-ID';
+const courseId = 'TEST-course-ID';
 const isRefundable = 'test-is-refundable';
+
+const moduleKeys = keyStore(api);
 
 describe('lms api methods', () => {
   describe('initializeList', () => {
@@ -37,11 +42,11 @@ describe('lms api methods', () => {
   describe('updateEntitlementEnrollment', () => {
     it('calls post on entitlementEnrollment url with uuid and course run ID', () => {
       expect(
-        api.updateEntitlementEnrollment({ uuid: testUuid, courseId: testCourseId }),
+        api.updateEntitlementEnrollment({ uuid: testUuid, courseId }),
       ).toEqual(
         utils.post(
           urls.entitlementEnrollment(testUuid),
-          { [apiKeys.courseRunId]: testCourseId },
+          { [apiKeys.courseRunId]: courseId },
         ),
       );
     });
@@ -62,20 +67,19 @@ describe('lms api methods', () => {
     describe('disable', () => {
       it('calls post on updateEmailSettings url with course ID', () => {
         expect(
-          api.updateEmailSettings({ courseId: testCourseId, enable: false }),
+          api.updateEmailSettings({ courseId, enable: false }),
         ).toEqual(
-          utils.post(utils.stringifyUrl(urls.updateEmailSettings),
-            { [apiKeys.courseId]: testCourseId }),
+          utils.post(urls.updateEmailSettings, { [apiKeys.courseId]: courseId }),
         );
       });
     });
     describe('enable', () => {
       it('calls post on updateEmailSettings url with course ID and enableEmailsAction', () => {
         expect(
-          api.updateEmailSettings({ courseId: testCourseId, enable: true }),
+          api.updateEmailSettings({ courseId, enable: true }),
         ).toEqual(
-          utils.post(utils.stringifyUrl(urls.updateEmailSettings),
-            { [apiKeys.courseId]: testCourseId, ...enableEmailsAction }),
+          utils.post(urls.updateEmailSettings,
+            { [apiKeys.courseId]: courseId, ...enableEmailsAction }),
         );
       });
     });
@@ -83,12 +87,52 @@ describe('lms api methods', () => {
   describe('unenrollFromCourse', () => {
     it('calls post on unenrollFromCourse url with courseId and unenrollment action', () => {
       expect(
-        api.unenrollFromCourse({ courseId: testCourseId }),
+        api.unenrollFromCourse({ courseId }),
       ).toEqual(
-        utils.post(utils.stringifyUrl(
-          urls.courseUnenroll,
-        ), { [apiKeys.courseId]: testCourseId, ...unenrollmentAction }),
+        utils.post(urls.courseUnenroll,
+          { [apiKeys.courseId]: courseId, ...unenrollmentAction }),
       );
+    });
+  });
+  describe('logging events', () => {
+    describe('logEvent', () => {
+      it('posts to event url with event data', () => {
+        const href = 'test-href';
+        const eventName = 'test-event-key';
+        const data = { some: 'data' };
+        mockLocation(href);
+        expect(
+          api.logEvent({ courseId, eventName, data }),
+        ).toEqual(
+          utils.post(urls.event, {
+            courserun_key: courseId,
+            event_type: eventName,
+            page: href,
+            event: JSON.stringify(data),
+          }),
+        );
+      });
+    });
+    describe('logged events', () => {
+      const logEvent = (args) => ({ logEvent: args });
+      beforeEach(() => {
+        jest.spyOn(api, moduleKeys.logEvent).mockImplementation(logEvent);
+      });
+      test('logUpgrade sends enrollment upgrade click event with learner dashboard location', () => {
+        expect(api.logUpgrade({ courseId })).toEqual(logEvent({
+          eventName: eventNames.upgradeButtonClickedEnrollment,
+          courseId,
+          data: { location: 'learner-dashboard' },
+        }));
+      });
+      test('logShare sends share clicke vent with course id, side and location', () => {
+        const site = 'test-site';
+        expect(api.logShare({ courseId, site })).toEqual(logEvent({
+          eventName: eventNames.shareClicked,
+          courseId,
+          data: { course_id: courseId, social_media_site: site, location: 'dashboard' },
+        }));
+      });
     });
   });
 });

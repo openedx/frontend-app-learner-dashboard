@@ -4,7 +4,16 @@ exports[`ViewCourseButton learner does not have access to course snapshot 1`] = 
 <ActionButton
   as="a"
   disabled={true}
-  href="homeUrl"
+  href="#"
+  onClick={
+    Object {
+      "trackCourseEvent": Object {
+        "cardId": "cardId",
+        "eventName": [MockFunction segment.enterCourseClicked],
+        "upgradeUrl": "homeUrl",
+      },
+    }
+  }
 >
   View Course
 </ActionButton>
@@ -14,7 +23,16 @@ exports[`ViewCourseButton learner has access to course snapshot 1`] = `
 <ActionButton
   as="a"
   disabled={false}
-  href="homeUrl"
+  href="#"
+  onClick={
+    Object {
+      "trackCourseEvent": Object {
+        "cardId": "cardId",
+        "eventName": [MockFunction segment.enterCourseClicked],
+        "upgradeUrl": "homeUrl",
+      },
+    }
+  }
 >
   View Course
 </ActionButton>

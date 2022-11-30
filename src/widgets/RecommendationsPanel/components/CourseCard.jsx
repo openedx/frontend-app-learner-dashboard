@@ -4,27 +4,19 @@ import PropTypes from 'prop-types';
 import { Card, Hyperlink, Truncate } from '@edx/paragon';
 
 import { useIsCollapsed } from 'containers/CourseCard/hooks';
-import { configuration } from '../../../config';
-import { setCookie, getCookie } from '../../../utils/cookies';
+import useCourseCardData from './hooks';
 import './index.scss';
 
 export const CourseCard = ({ course, isPersonalizedRecommendation }) => {
   const isCollapsed = useIsCollapsed();
-
-  const handleCourseClick = () => {
-    const cookieName = configuration.PERSONALIZED_RECOMMENDATION_COOKIE_NAME;
-    let recommendedCourses = getCookie(cookieName);
-    if (typeof recommendedCourses === 'undefined') {
-      recommendedCourses = { course_keys: [course.courseKey] };
-    } else if (!recommendedCourses.course_keys.includes(course.courseKey)) {
-      recommendedCourses.course_keys.push(course.courseKey);
-    }
-    recommendedCourses.is_personalized_recommendation = isPersonalizedRecommendation;
-    setCookie(cookieName, JSON.stringify(recommendedCourses), 365);
-  };
+  const { handleCourseClick } = useCourseCardData(course, isPersonalizedRecommendation);
 
   return (
-    <Hyperlink destination={course?.marketingUrl} className="card-link" onClick={handleCourseClick}>
+    <Hyperlink
+      destination={course?.marketingUrl}
+      className="card-link"
+      onClick={handleCourseClick}
+    >
       <Card orientation={isCollapsed ? 'vertical' : 'horizontal'} className="p-3 mb-1 recommended-course-card">
         <div className={isCollapsed ? '' : 'd-flex align-items-center'}>
           <Card.ImageCap

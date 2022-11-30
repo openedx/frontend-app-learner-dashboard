@@ -1,14 +1,24 @@
 import { shallow } from 'enzyme';
 
+import track from 'tracking';
 import { htmlProps } from 'data/constants/htmlKeys';
 import { hooks } from 'data/redux';
 import ViewCourseButton from './ViewCourseButton';
+
+jest.mock('tracking', () => ({
+  course: {
+    enterCourseClicked: jest.fn().mockName('segment.enterCourseClicked'),
+  },
+}));
 
 jest.mock('data/redux', () => ({
   hooks: {
     useCardCourseRunData: jest.fn(),
     useCardEnrollmentData: jest.fn(),
     useCardEntitlementData: jest.fn(),
+    useTrackCourseEvent: jest.fn(
+      (eventName, cardId, upgradeUrl) => ({ trackCourseEvent: { eventName, cardId, upgradeUrl } }),
+    ),
   },
 }));
 jest.mock('./ActionButton', () => 'ActionButton');
@@ -38,7 +48,11 @@ describe('ViewCourseButton', () => {
       expect(wrapper).toMatchSnapshot();
     });
     test('links to home URL', () => {
-      expect(wrapper.prop(htmlProps.href)).toEqual(homeUrl);
+      expect(wrapper.prop(htmlProps.onClick)).toEqual(hooks.useTrackCourseEvent(
+        track.course.enterCourseClicked,
+        defaultProps.cardId,
+        homeUrl,
+      ));
     });
     test('link is enabled', () => {
       expect(wrapper.prop(htmlProps.disabled)).toEqual(false);
@@ -52,7 +66,11 @@ describe('ViewCourseButton', () => {
       expect(wrapper).toMatchSnapshot();
     });
     test('links to home URL', () => {
-      expect(wrapper.prop(htmlProps.href)).toEqual(homeUrl);
+      expect(wrapper.prop(htmlProps.onClick)).toEqual(hooks.useTrackCourseEvent(
+        track.course.enterCourseClicked,
+        defaultProps.cardId,
+        homeUrl,
+      ));
     });
     test('link is enabled', () => {
       expect(wrapper.prop(htmlProps.disabled)).toEqual(true);

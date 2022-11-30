@@ -1,19 +1,44 @@
 import React from 'react';
-import { hooks as appHooks } from 'data/redux';
+
 import { StrictDict } from 'utils';
+import track from 'tracking';
+import { hooks as appHooks } from 'data/redux';
+
 import * as module from './hooks';
 
 export const state = StrictDict({
   showModal: (val) => React.useState(val), // eslint-disable-line
 });
 
+const { modalOpened, modalClosed, modalCTAClicked } = track.enterpriseDashboard;
+
 export const useEnterpriseDashboardHook = () => {
   const [showModal, setShowModal] = module.state.showModal(true);
   const dashboard = appHooks.useEnterpriseDashboardData();
-  const handleClick = () => setShowModal(false);
+
+  const trackOpened = () => modalOpened(dashboard.enterpriseUUID);
+  const trackClose = () => modalClosed(dashboard.enterpriseUUID, 'Cancel button');
+  const trackEscape = () => modalClosed(dashboard.enterpriseUUID, 'Escape');
+
+  const handleCTAClick = () => {
+    modalCTAClicked(dashboard.enterpriseUUID, dashboard.url);
+  };
+  const handleClose = () => {
+    trackClose();
+    setShowModal(false);
+  };
+  const handleEscape = () => {
+    trackEscape();
+    setShowModal(false);
+  };
+
+  React.useEffect(trackOpened, []);
+
   return {
     showModal,
-    handleClick,
+    handleCTAClick,
+    handleClose,
+    handleEscape,
     dashboard,
   };
 };

@@ -13,12 +13,14 @@ jest.mock('data/redux', () => ({
     }),
   },
 }));
+jest.mock('./track', () => ({
+  findCoursesClicked: () => 'find-courses-clicked',
+}));
 
 describe('RecommendationsPanel LoadedView', () => {
   const props = {
     courses: mockData.courses,
     isPersonalizedRecommendation: false,
-    courseSearchClickTracker: jest.fn().mockName('courseSearchClickTracker'),
   };
   describe('snapshot', () => {
     test('without personalize recommendation', () => {

@@ -13,9 +13,16 @@ describe('EnterpriseDashboard', () => {
     const hookData = {
       dashboard: { label: 'edX, Inc.', url: '/edx-dashboard' },
       showDialog: false,
-      handleClick: jest.fn().mockName('useEnterpriseDashboardHook.handleClick'),
+      handleClose: jest.fn().mockName('useEnterpriseDashboardHook.handleClose'),
+      handleCTAClick: jest.fn().mockName('useEnterpriseDashboardHook.handleCTAClick'),
+      handleEscape: jest.fn().mockName('useEnterpriseDashboardHook.handleEscape'),
     };
     useEnterpriseDashboardHook.mockReturnValueOnce({ ...hookData });
+    const el = shallow(<EnterpriseDashboard />);
+    expect(el).toMatchSnapshot();
+  });
+  test('empty snapshot', () => {
+    useEnterpriseDashboardHook.mockReturnValueOnce({});
     const el = shallow(<EnterpriseDashboard />);
     expect(el).toMatchSnapshot();
   });

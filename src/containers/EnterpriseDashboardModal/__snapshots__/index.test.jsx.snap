@@ -1,9 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`EnterpriseDashboard empty snapshot 1`] = `""`;
+
 exports[`EnterpriseDashboard snapshot 1`] = `
 <ModalDialog
   hasCloseButton={false}
-  onClose={[MockFunction useEnterpriseDashboardHook.handleClick]}
+  onClose={[MockFunction useEnterpriseDashboardHook.handleEscape]}
   title=""
 >
   <div
@@ -22,13 +24,14 @@ exports[`EnterpriseDashboard snapshot 1`] = `
     </p>
     <ActionRow>
       <Button
-        onClick={[MockFunction useEnterpriseDashboardHook.handleClick]}
+        onClick={[MockFunction useEnterpriseDashboardHook.handleClose]}
         variant="tertiary"
       >
         Dismiss
       </Button>
       <Button
         href="/edx-dashboard"
+        onClick={[MockFunction useEnterpriseDashboardHook.handleCTAClick]}
         type="a"
       >
         Go To Dashboard

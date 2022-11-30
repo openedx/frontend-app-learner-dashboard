@@ -1,14 +1,11 @@
 import { keyStore } from 'utils';
-import { handleEvent } from 'data/services/segment/utils';
-import { eventNames } from 'data/services/segment/constants';
-import { post } from 'data/services/lms/utils';
 import { actions, selectors } from 'data/redux';
+import { post } from 'data/services/lms/utils';
+
 import requests from './requests';
+
 import * as module from './app';
 
-jest.mock('data/services/segment/utils', () => ({
-  handleEvent: jest.fn(),
-}));
 jest.mock('data/services/lms/utils', () => ({
   post: jest.fn(),
 }));
@@ -108,13 +105,6 @@ describe('app thunk actions', () => {
     beforeEach(() => {
       module.newEntitlementEnrollment(cardId, selection)(dispatch, getState);
     });
-    it('handles sessionChange(new) tracking event', () => {
-      expect(selectors.app.courseCard.entitlement).toHaveBeenCalledWith(testState, cardId);
-      expect(handleEvent).toHaveBeenCalledWith(
-        eventNames.sessionChange({ action: 'new' }),
-        { fromCourseRun: null, toCourseRun: selection },
-      );
-    });
     it('dispatches newEntitlementEnrollment request then re-init on success', () => {
       const request = dispatch.mock.calls[0][0];
       expect(request.newEntitlementEnrollment.uuid).toEqual(uuid);
@@ -128,14 +118,6 @@ describe('app thunk actions', () => {
   describe('switchEntitlementEnrollmnent', () => {
     beforeEach(() => {
       module.switchEntitlementEnrollment(cardId, selection)(dispatch, getState);
-    });
-    it('handles sessionChange(switch) tracking event', () => {
-      expect(selectors.app.courseCard.courseRun).toHaveBeenCalledWith(testState, cardId);
-      expect(selectors.app.courseCard.entitlement).toHaveBeenCalledWith(testState, cardId);
-      expect(handleEvent).toHaveBeenCalledWith(
-        eventNames.sessionChange({ action: 'switch' }),
-        { fromCourseRun: courseId, toCourseRun: selection },
-      );
     });
     it('dispatches switchEntitlementEnrollment request then re-init on success', () => {
       const request = dispatch.mock.calls[0][0];
@@ -151,14 +133,6 @@ describe('app thunk actions', () => {
     beforeEach(() => {
       module.leaveEntitlementSession(cardId)(dispatch, getState);
     });
-    it('handles sessionChange(leave) tracking event', () => {
-      expect(selectors.app.courseCard.courseRun).toHaveBeenCalledWith(testState, cardId);
-      expect(selectors.app.courseCard.entitlement).toHaveBeenCalledWith(testState, cardId);
-      expect(handleEvent).toHaveBeenCalledWith(
-        eventNames.entitlementUnenroll,
-        { leaveCourseRun: courseId, isRefundable },
-      );
-    });
     it('dispatches leaveEntitlementEnrollment request then re-init on success', () => {
       const request = dispatch.mock.calls[0][0];
       expect(request.leaveEntitlementSession.uuid).toEqual(uuid);
@@ -173,21 +147,6 @@ describe('app thunk actions', () => {
     const reason = 'test-reason';
     beforeEach(() => {
       initializeSpy.mockImplementationOnce(mockInitialize);
-    });
-    it('handles unenroll reason tracking event if reason provided', () => {
-      module.unenrollFromCourse(cardId, reason)(dispatch, getState);
-      expect(selectors.app.courseCard.courseRun).toHaveBeenCalledWith(testState, cardId);
-      expect(handleEvent).toHaveBeenCalledWith(eventNames.unenrollReason, {
-        category: 'user-engagement',
-        displayName: 'v1',
-        label: reason,
-        course_id: courseId,
-      });
-    });
-    it('does not handle unenroll reason event if reason not provided', () => {
-      module.unenrollFromCourse(cardId)(dispatch, getState);
-      expect(selectors.app.courseCard.courseRun).toHaveBeenCalledWith(testState, cardId);
-      expect(handleEvent).not.toHaveBeenCalled();
     });
     it('dispatches unenrollFromCourse request action, re-initializing on success', () => {
       module.unenrollFromCourse(cardId, reason)(dispatch, getState);
