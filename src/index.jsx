@@ -46,9 +46,6 @@ subscribe(APP_INIT_ERROR, (error) => {
 
 export const appName = 'LearnerHomeAppConfig';
 
-// TODO: remove dev debug
-console.log({ SEGEMENT_KEY: process.env.SEGMENT_KEY });
-
 initialize({
   handlers: {
     config: () => {
