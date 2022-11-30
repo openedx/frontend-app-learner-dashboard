@@ -22,7 +22,7 @@ export const useCourseCardData = (course, isPersonalized) => {
       course.courseKey,
       isPersonalized,
       course?.marketingUrl,
-    );
+    )(e);
   };
   return { handleCourseClick };
 };
