@@ -49,14 +49,9 @@ exports[`CourseCard component snapshot: collapsed 1`] = `
           </Card.Footer>
         </Card.Body>
       </div>
-      <div
-        className="course-card-banners"
-        data-testid="CourseCardBanners"
-      >
-        <CourseCardBanners
-          cardId="test-card-id"
-        />
-      </div>
+      <CourseCardBanners
+        cardId="test-card-id"
+      />
     </div>
   </Card>
 </div>
@@ -113,14 +108,9 @@ exports[`CourseCard component snapshot: not collapsed 1`] = `
           </Card.Footer>
         </Card.Body>
       </div>
-      <div
-        className="course-card-banners"
-        data-testid="CourseCardBanners"
-      >
-        <CourseCardBanners
-          cardId="test-card-id"
-        />
-      </div>
+      <CourseCardBanners
+        cardId="test-card-id"
+      />
     </div>
   </Card>
 </div>
