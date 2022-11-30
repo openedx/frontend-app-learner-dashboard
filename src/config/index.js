@@ -12,6 +12,8 @@ const configuration = {
   LEARNING_BASE_URL: process.env.LEARNING_BASE_URL,
   PERSONALIZED_RECOMMENDATION_COOKIE_NAME: process.env.PERSONALIZED_RECOMMENDATION_COOKIE_NAME || '',
   SESSION_COOKIE_DOMAIN: process.env.SESSION_COOKIE_DOMAIN || '',
+  ZENDESK_KEY: process.env.ZENDESK_KEY,
+  SUPPORT_URL: process.env.SUPPORT_URL || null,
 };
 
 const features = {};

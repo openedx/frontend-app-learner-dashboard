@@ -11,6 +11,7 @@ import {
 import { messages as footerMessages } from '@edx/frontend-component-footer';
 
 import appMessages from './i18n';
+import { configuration } from './config';
 import * as app from '.';
 
 jest.mock('react-dom', () => ({
@@ -34,7 +35,6 @@ jest.mock('@edx/frontend-component-footer', () => ({
 jest.mock('data/store', () => ({ redux: 'store' }));
 jest.mock('./App', () => 'App');
 
-const testValue = 'my-test-value';
 describe('app registry', () => {
   let getElement;
 
@@ -70,15 +70,9 @@ describe('app registry', () => {
     expect(initializeArg.messages).toEqual([appMessages, footerMessages]);
     expect(initializeArg.requireAuthenticatedUser).toEqual(true);
   });
-  test('initialize config loads support url if available', () => {
-    const oldEnv = process.env;
+  test('initialize config', () => {
     const initializeArg = initialize.mock.calls[0][0];
-    delete process.env.SUPPORT_URL;
     initializeArg.handlers.config();
-    expect(mergeConfig).toHaveBeenCalledWith({ SUPPORT_URL: null }, app.appName);
-    process.env.SUPPORT_URL = testValue;
-    initializeArg.handlers.config();
-    expect(mergeConfig).toHaveBeenCalledWith({ SUPPORT_URL: testValue }, app.appName);
-    process.env = oldEnv;
+    expect(mergeConfig).toHaveBeenCalledWith(configuration, app.appName);
   });
 });
