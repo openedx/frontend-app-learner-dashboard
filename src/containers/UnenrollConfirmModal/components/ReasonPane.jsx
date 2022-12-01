@@ -13,6 +13,7 @@ import messages from './messages';
 
 export const ReasonPane = ({
   reason,
+  handleSubmit,
 }) => {
   const { formatMessage } = useIntl();
   const option = (key) => (
@@ -40,7 +41,7 @@ export const ReasonPane = ({
         <Button variant="tertiary" onClick={reason.skip}>
           {formatMessage(messages.reasonSkip)}
         </Button>
-        <Button onClick={reason.submit}>
+        <Button onClick={handleSubmit}>
           {formatMessage(messages.reasonSubmit)}
         </Button>
       </ActionRow>
@@ -57,8 +58,8 @@ ReasonPane.propTypes = {
       onChange: PropTypes.func,
     }),
     selected: PropTypes.string,
-    submit: PropTypes.func,
   }).isRequired,
+  handleSubmit: PropTypes.func.isRequired,
 };
 
 export default ReasonPane;

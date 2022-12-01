@@ -13,8 +13,8 @@ describe('UnenrollConfirmModal ReasonPane', () => {
         onChange: jest.fn().mockName('props.reason.customOption.onChange'),
       },
       selected: 'props.reason.selected',
-      submit: jest.fn().mockName('props.reason.submit'),
     },
+    handleSubmit: jest.fn().mockName('props.handleSubmit'),
   };
   test('snapshot', () => {
     expect(shallow(<ReasonPane {...props} />)).toMatchSnapshot();
