@@ -59,8 +59,8 @@ export const enterCourseClicked = (...args) => (
   module.courseLinkTracker(eventNames.enterCourseClicked)(...args));
 export const upgradeClicked = (courseId, href) => createLinkTracker(
   () => {
-    module.upgradeButtonClicked(courseId);
-    module.upgradeButtonClickedUpsell(courseId);
+    module.upgradeButtonClicked(courseId)();
+    module.upgradeButtonClickedUpsell(courseId)();
     api.logUpgrade({ courseId });
   },
   href,

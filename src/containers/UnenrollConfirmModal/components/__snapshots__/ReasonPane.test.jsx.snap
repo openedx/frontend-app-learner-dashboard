@@ -82,7 +82,7 @@ exports[`UnenrollConfirmModal ReasonPane snapshot 1`] = `
       Skip
     </Button>
     <Button
-      onClick={[MockFunction props.reason.submit]}
+      onClick={[MockFunction props.handleSubmit]}
     >
       Submit
     </Button>

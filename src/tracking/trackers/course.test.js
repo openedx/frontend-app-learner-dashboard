@@ -103,15 +103,19 @@ describe('course trackers', () => {
       it('triggers upgrade actions and api.logUpgrade with courseId', () => {
         const upgradeButtonClicked = jest.fn();
         const upgradeButtonClickedUpsell = jest.fn();
+        const trackUpgradeButtonClicked = jest.fn(() => upgradeButtonClicked);
+        const trackUpgradeButtonClickedUpsell = jest.fn(() => upgradeButtonClickedUpsell);
         jest.spyOn(trackers, moduleKeys.upgradeButtonClicked)
-          .mockImplementationOnce(upgradeButtonClicked);
+          .mockImplementationOnce(trackUpgradeButtonClicked);
         jest.spyOn(trackers, moduleKeys.upgradeButtonClickedUpsell)
-          .mockImplementationOnce(upgradeButtonClickedUpsell);
+          .mockImplementationOnce(trackUpgradeButtonClickedUpsell);
         const out = trackers.upgradeClicked(courseId, href).createLinkTracker;
         expect(out.href).toEqual(href);
         out.cb();
-        expect(upgradeButtonClicked).toHaveBeenCalledWith(courseId);
-        expect(upgradeButtonClickedUpsell).toHaveBeenCalledWith(courseId);
+        expect(trackUpgradeButtonClicked).toHaveBeenCalledWith(courseId);
+        expect(trackUpgradeButtonClickedUpsell).toHaveBeenCalledWith(courseId);
+        expect(upgradeButtonClicked).toHaveBeenCalledWith();
+        expect(upgradeButtonClickedUpsell).toHaveBeenCalledWith();
         expect(api.logUpgrade).toHaveBeenCalledWith({ courseId });
       });
     });
