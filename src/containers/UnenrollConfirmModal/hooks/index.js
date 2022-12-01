@@ -28,10 +28,6 @@ export const useUnenrollData = ({ closeModal, dispatch, cardId }) => {
     reason.submittedReason,
     isEntitlement,
   );
-  const handleSubmit = () => {
-    handleTrackReasons();
-    dispatch(thunkActions.app.unenrollFromCourse(cardId, reason.submittedReason));
-  };
 
   let modalState;
   if (isConfirmed) {
@@ -40,6 +36,10 @@ export const useUnenrollData = ({ closeModal, dispatch, cardId }) => {
     modalState = modalStates.confirm;
   }
 
+  const handleSubmitReason = () => {
+    handleTrackReasons();
+    dispatch(thunkActions.app.unenrollFromCourse(cardId, reason.submittedReason));
+  };
   const close = () => {
     closeModal();
     setIsConfirmed(false);
@@ -57,7 +57,7 @@ export const useUnenrollData = ({ closeModal, dispatch, cardId }) => {
     close,
     closeAndRefresh,
     modalState,
-    handleSubmit,
+    handleSubmitReason,
   };
 };
 
