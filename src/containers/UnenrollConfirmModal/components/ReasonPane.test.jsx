@@ -6,15 +6,15 @@ import { ReasonPane } from './ReasonPane';
 describe('UnenrollConfirmModal ReasonPane', () => {
   const props = {
     reason: {
-      skip: jest.fn().mockName('props.reason.skip'),
+      handleSkip: jest.fn().mockName('props.reason.handleSkip'),
       selectOption: jest.fn().mockName('props.reason.selectOption'),
       customOption: {
         value: 'props.reason.customOption.value',
         onChange: jest.fn().mockName('props.reason.customOption.onChange'),
       },
       selected: 'props.reason.selected',
+      handleSubmit: jest.fn().mockName('props.reason.handleSubmit'),
     },
-    handleSubmit: jest.fn().mockName('props.handleSubmit'),
   };
   test('snapshot', () => {
     expect(shallow(<ReasonPane {...props} />)).toMatchSnapshot();

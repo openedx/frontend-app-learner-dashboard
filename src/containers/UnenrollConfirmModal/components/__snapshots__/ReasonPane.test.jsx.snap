@@ -76,13 +76,13 @@ exports[`UnenrollConfirmModal ReasonPane snapshot 1`] = `
   </Form.RadioSet>
   <ActionRow>
     <Button
-      onClick={[MockFunction props.reason.skip]}
+      onClick={[MockFunction props.reason.handleSkip]}
       variant="tertiary"
     >
       Skip
     </Button>
     <Button
-      onClick={[MockFunction props.handleSubmit]}
+      onClick={[MockFunction props.reason.handleSubmit]}
     >
       Submit
     </Button>

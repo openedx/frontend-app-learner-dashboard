@@ -27,7 +27,6 @@ export const UnenrollConfirmModal = ({
     closeAndRefresh,
     close,
     modalState,
-    handleSubmitReason,
   } = useUnenrollData({ dispatch, closeModal, cardId });
   const showFullscreen = modalState === modalStates.reason;
   return (
@@ -49,7 +48,7 @@ export const UnenrollConfirmModal = ({
           <FinishedPane handleClose={closeAndRefresh} gaveReason={!reason.isSkipped} />
         )}
         {(modalState === modalStates.reason) && (
-          <ReasonPane reason={reason} handleSubmit={handleSubmitReason} />
+          <ReasonPane reason={reason} />
         )}
       </div>
     </ModalDialog>
