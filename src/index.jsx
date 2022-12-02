@@ -33,10 +33,10 @@ subscribe(APP_READY, () => {
     <IntlProvider locale="en">
       <AppProvider store={store}>
         <Switch>
-          <PageRoute path="/courses">
+          <PageRoute path="/">
             <App />
           </PageRoute>
-          <Redirect to="/courses" />
+          <Redirect to="/" />
         </Switch>
       </AppProvider>
     </IntlProvider>,
