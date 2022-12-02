@@ -125,7 +125,6 @@ describe('UnenrollConfirmModal reasons hooks', () => {
         state.mockVal(state.keys.customOption, testValue2);
         out = createUseUnenrollReasons();
         expect(out.submittedReason).toEqual(testValue2);
-
       });
     });
   });
