@@ -37,7 +37,7 @@ export const useUnenrollReasons = ({
     selectOption: useValueCallback(setSelectedReason),
     isSkipped,
     skip,
-    isSubmitted: isSkipped,
+    isSubmitted: isSkipped || selectedReason !== null,
     submittedReason,
   };
 };

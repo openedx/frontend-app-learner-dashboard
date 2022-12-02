@@ -59,10 +59,7 @@ export const leaveEntitlementSession = (cardId) => (dispatch, getState) => {
 
 export const unenrollFromCourse = (cardId) => (dispatch, getState) => {
   const { courseId } = selectors.app.courseCard.courseRun(getState(), cardId);
-  dispatch(requests.unenrollFromCourse({
-    courseId,
-    onSuccess: () => dispatch(module.initialize()),
-  }));
+  dispatch(requests.unenrollFromCourse({ courseId }));
 };
 
 export const masqueradeAs = (user) => (dispatch) => (

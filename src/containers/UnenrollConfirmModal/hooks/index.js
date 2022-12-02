@@ -40,6 +40,7 @@ export const useUnenrollData = ({ closeModal, dispatch, cardId }) => {
     handleTrackReasons();
     dispatch(thunkActions.app.unenrollFromCourse(cardId, reason.submittedReason));
   };
+
   const close = () => {
     closeModal();
     setIsConfirmed(false);
