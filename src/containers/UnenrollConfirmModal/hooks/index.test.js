@@ -18,7 +18,7 @@ const testValue = 'test-value';
 let out;
 
 const mockReason = {
-  clear: jest.fn(),
+  handleClear: jest.fn(),
   isSubmitted: false,
   submittedReason: 'test-submitted-reason',
 };
@@ -58,19 +58,19 @@ describe('UnenrollConfirmModal hooks', () => {
       expect(out.reason).toEqual(mockReason);
     });
     describe('close', () => {
-      it('calls closeModal, sets isConfirmed to false, and calls reason.clear', () => {
+      it('calls closeModal, sets isConfirmed to false, and calls reason.handleClear', () => {
         out.close();
         expect(closeModal).toHaveBeenCalled();
         expect(state.setState.confirmed).toHaveBeenCalledWith(false);
-        expect(mockReason.clear).toHaveBeenCalled();
+        expect(mockReason.handleClear).toHaveBeenCalled();
       });
     });
     describe('closeAndRefresh', () => {
-      it('calls closeModal, sets isConfirmed to false, and calls reason.clear', () => {
+      it('calls closeModal, sets isConfirmed to false, and calls reason.handleClear', () => {
         out.closeAndRefresh();
         expect(closeModal).toHaveBeenCalled();
         expect(state.setState.confirmed).toHaveBeenCalledWith(false);
-        expect(mockReason.clear).toHaveBeenCalled();
+        expect(mockReason.handleClear).toHaveBeenCalled();
       });
       it('dispatches refreshList thunkAction', () => {
         out.closeAndRefresh();

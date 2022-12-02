@@ -145,15 +145,10 @@ describe('app thunk actions', () => {
   });
   describe('unenrollFromCourse', () => {
     const reason = 'test-reason';
-    beforeEach(() => {
-      initializeSpy.mockImplementationOnce(mockInitialize);
-    });
-    it('dispatches unenrollFromCourse request action, re-initializing on success', () => {
+    it('dispatches unenrollFromCourse request action', () => {
       module.unenrollFromCourse(cardId, reason)(dispatch, getState);
       const request = dispatch.mock.calls[0][0];
       expect(request.unenrollFromCourse.courseId).toEqual(courseId);
-      request.unenrollFromCourse.onSuccess();
-      expect(dispatch).toHaveBeenCalledWith(mockInitialize());
     });
   });
   describe('masqueradeAs', () => {

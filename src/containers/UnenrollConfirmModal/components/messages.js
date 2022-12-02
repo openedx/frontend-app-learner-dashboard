@@ -30,12 +30,12 @@ export const messages = StrictDict({
   reasonSkip: {
     id: 'learner-dash.unenrollConfirm.confirm.reason.skip',
     description: 'Skip action for unenroll reason modal',
-    defaultMessage: 'Skip',
+    defaultMessage: 'Skip survey',
   },
   reasonSubmit: {
     id: 'learner-dash.unenrollConfirm.confirm.reason.submit',
     description: 'Submit action for unenroll reason modal',
-    defaultMessage: 'Submit',
+    defaultMessage: 'Submit reason',
   },
   finishHeading: {
     id: 'learner-dash.unenrollConfirm.confirm.finish.heading',
