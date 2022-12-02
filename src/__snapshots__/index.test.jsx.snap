@@ -21,7 +21,16 @@ exports[`app registry subscribe: APP_READY.  links App to root element 1`] = `
       }
     }
   >
-    <App />
+    <Switch>
+      <PageRoute
+        path="/courses"
+      >
+        <App />
+      </PageRoute>
+      <Redirect
+        to="/courses"
+      />
+    </Switch>
   </AppProvider>
 </IntlProvider>
 `;

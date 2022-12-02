@@ -4,8 +4,13 @@ import 'regenerator-runtime/runtime';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { AppProvider, ErrorPage } from '@edx/frontend-platform/react';
+import { Switch, Redirect } from 'react-router-dom';
 
+import {
+  AppProvider,
+  ErrorPage,
+  PageRoute,
+} from '@edx/frontend-platform/react';
 import store from 'data/store';
 import {
   APP_READY,
@@ -16,7 +21,6 @@ import {
 } from '@edx/frontend-platform';
 
 import { messages as footerMessages } from '@edx/frontend-component-footer';
-
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { configuration } from './config';
 
@@ -28,7 +32,12 @@ subscribe(APP_READY, () => {
   ReactDOM.render(
     <IntlProvider locale="en">
       <AppProvider store={store}>
-        <App />
+        <Switch>
+          <PageRoute path="/courses">
+            <App />
+          </PageRoute>
+          <Redirect to="/courses" />
+        </Switch>
       </AppProvider>
     </IntlProvider>,
     document.getElementById('root'),

@@ -71,6 +71,10 @@ jest.mock('@edx/frontend-platform/auth', () => ({
   getLoginRedirectUrl: jest.fn(),
 }));
 
+jest.mock('@edx/frontend-platform/analytics', () => ({
+  sendTrackEvent: jest.fn(),
+}));
+
 const configureStore = () => redux.createStore(
   reducers,
   redux.compose(redux.applyMiddleware(thunk)),

@@ -9,16 +9,24 @@ jest.mock('data/redux', () => ({
     useEnterpriseDashboardData: jest.fn(),
   },
 }));
-jest.mock('tracking', () => ({
-  __esModule: true,
-  default: {
-    enterpriseDashboard: {
-      modalOpened: jest.fn(),
-      modalClosed: jest.fn(),
-      modalCTAClicked: jest.fn(),
+jest.mock('tracking', () => {
+  const modalOpenedEvent = jest.fn();
+  const modalClosedEvent = jest.fn();
+  const modalCTAClickedEvent = jest.fn();
+  return {
+    __esModule: true,
+    default: {
+      enterpriseDashboard: {
+        modalOpenedEvent,
+        modalClosedEvent,
+        modalCTAClickedEvent,
+        modalOpened: jest.fn(() => modalOpenedEvent),
+        modalClosed: jest.fn(() => modalClosedEvent),
+        modalCTAClicked: jest.fn(() => modalCTAClickedEvent),
+      },
     },
-  },
-}));
+  };
+});
 
 const state = new MockUseState(hooks);
 
