@@ -55,6 +55,7 @@ export const useUnenrollReasons = ({
   };
 
   const handleSubmit = (e) => {
+    console.log({ handleSubmit: { e } });
     handleTrackReasons(e);
     setIsSubmitted(true);
     dispatch(thunkActions.app.unenrollFromCourse(cardId, submittedReason));
