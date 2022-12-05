@@ -4,7 +4,16 @@ exports[`BeginCourseButton snapshot renders default button when learner has acce
 <ActionButton
   as="a"
   disabled={false}
-  href="home-url"
+  href="#"
+  onClick={
+    Object {
+      "trackCourseEvent": Object {
+        "cardId": "cardId",
+        "eventName": [MockFunction segment.enterCourseClicked],
+        "upgradeUrl": "home-url",
+      },
+    }
+  }
 >
   Begin Course
 </ActionButton>
