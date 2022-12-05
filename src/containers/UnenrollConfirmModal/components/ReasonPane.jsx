@@ -8,7 +8,7 @@ import {
   Form,
 } from '@edx/paragon';
 
-import reasons from '../reasons';
+import constants from '../constants';
 import messages from './messages';
 
 export const ReasonPane = ({
@@ -17,7 +17,7 @@ export const ReasonPane = ({
   const { formatMessage } = useIntl();
   const option = (key) => (
     <Form.Radio key={key} value={key}>
-      {formatMessage(reasons.messages[key])}
+      {formatMessage(constants.messages[key])}
     </Form.Radio>
   );
   return (
@@ -28,11 +28,11 @@ export const ReasonPane = ({
         onChange={reason.selectOption}
         value={reason.selected}
       >
-        {reasons.order.map(option)}
-        <Form.Radio value={reasons.reasonKeys.custom}>
+        {constants.order.map(option)}
+        <Form.Radio value={constants.reasonKeys.custom}>
           <Form.Control
             {...reason.customOption}
-            placeholder={formatMessage(reasons.messages.customPlaceholder)}
+            placeholder={formatMessage(constants.messages.customPlaceholder)}
           />
         </Form.Radio>
       </Form.RadioSet>

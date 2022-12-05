@@ -2,15 +2,26 @@ import { shallow } from 'enzyme';
 
 import { htmlProps } from 'data/constants/htmlKeys';
 import { hooks } from 'data/redux';
+import track from 'tracking';
 import BeginCourseButton from './BeginCourseButton';
+
+jest.mock('tracking', () => ({
+  course: {
+    enterCourseClicked: jest.fn().mockName('segment.enterCourseClicked'),
+  },
+}));
 
 jest.mock('data/redux', () => ({
   hooks: {
     useCardCourseRunData: jest.fn(() => ({ homeUrl: 'home-url' })),
     useCardEnrollmentData: jest.fn(() => ({ hasAccess: true })),
     useMasqueradeData: jest.fn(() => ({ isMasquerading: false })),
+    useTrackCourseEvent: jest.fn(
+      (eventName, cardId, upgradeUrl) => ({ trackCourseEvent: { eventName, cardId, upgradeUrl } }),
+    ),
   },
 }));
+
 jest.mock('./ActionButton', () => 'ActionButton');
 
 let wrapper;
@@ -28,7 +39,11 @@ describe('BeginCourseButton', () => {
       wrapper = shallow(<BeginCourseButton {...props} />);
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.prop(htmlProps.disabled)).toEqual(false);
-      expect(wrapper.prop(htmlProps.href)).toEqual(homeUrl);
+      expect(wrapper.prop(htmlProps.onClick)).toEqual(hooks.useTrackCourseEvent(
+        track.course.enterCourseClicked,
+        props.cardId,
+        homeUrl,
+      ));
     });
   });
   describe('behavior', () => {
