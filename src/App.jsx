@@ -20,6 +20,8 @@ import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
 import Dashboard from 'containers/Dashboard';
 import ZendeskFab from 'components/ZendeskFab';
 
+import track from 'tracking';
+
 import fakeData from 'data/services/lms/fakeData/courses';
 
 import messages from './messages';
@@ -55,8 +57,10 @@ export const App = () => {
       window.selectors = selectors;
       window.actions = actions;
       window.thunkActions = thunkActions;
+      window.track = track;
     }
   });
+
   return (
     <Router>
       <Helmet>
