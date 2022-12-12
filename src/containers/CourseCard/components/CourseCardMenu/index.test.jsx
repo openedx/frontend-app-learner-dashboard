@@ -14,7 +14,7 @@ jest.mock('data/redux', () => ({
     useCardEnrollmentData: jest.fn(),
     useCardSocialSettingsData: jest.fn(),
     useMasqueradeData: jest.fn(),
-    useTrackCourseEvent: (_, __, site) => jest.fn().mockName(`${site}ShareClick`),
+    useTrackCourseEvent: jest.fn(),
   },
 }));
 jest.mock('./hooks', () => ({
@@ -60,6 +60,7 @@ describe('CourseCardMenu', () => {
     appHooks.useCardCourseData.mockReturnValue({ courseName });
     appHooks.useCardEnrollmentData.mockReturnValue({ isEnrolled: true, isEmailEnabled: true });
     appHooks.useMasqueradeData.mockReturnValue({ isMasquerading: false });
+    appHooks.useTrackCourseEvent.mockReturnValue(jest.fn().mockName('handleTwitterShare'));
   });
   describe('enrolled, share enabled, email setting enable', () => {
     beforeEach(() => {
@@ -69,9 +70,7 @@ describe('CourseCardMenu', () => {
       expect(wrapper).toMatchSnapshot();
     });
     it('renders share buttons', () => {
-      el = wrapper.find('FacebookShareButton');
-      expect(el.length).toEqual(1);
-      expect(el.prop('url')).toEqual('facebook-share-url');
+      // expect(wrapper.find('FacebookShareButton').length).toEqual(1);
       el = wrapper.find('TwitterShareButton');
       expect(el.length).toEqual(1);
       expect(el.prop('url')).toEqual('twitter-share-url');
@@ -94,7 +93,7 @@ describe('CourseCardMenu', () => {
       appHooks.useCardSocialSettingsData.mockReturnValueOnce({
         ...defaultSocialShare,
         twitter: { ...defaultSocialShare.twitter, isEnabled: false },
-        facebook: { ...defaultSocialShare.facebook, isEnabled: false },
+        // facebook: { ...defaultSocialShare.facebook, isEnabled: false },
       });
       appHooks.useCardEnrollmentData.mockReturnValueOnce({ isEnrolled: false, isEmailEnabled: false });
       wrapper = shallow(<CourseCardMenu {...props} />);
@@ -103,7 +102,7 @@ describe('CourseCardMenu', () => {
       expect(wrapper).toMatchSnapshot();
     });
     it('does not renders share buttons', () => {
-      expect(wrapper.find('FacebookShareButton').length).toEqual(0);
+      // expect(wrapper.find('FacebookShareButton').length).toEqual(0);
       expect(wrapper.find('TwitterShareButton').length).toEqual(0);
     });
     it('does not render unenroll modal toggle', () => {
@@ -124,7 +123,7 @@ describe('CourseCardMenu', () => {
       expect(wrapper).toMatchSnapshot();
     });
     it('renders share buttons', () => {
-      expect(wrapper.find('FacebookShareButton').length).toEqual(1);
+      // expect(wrapper.find('FacebookShareButton').length).toEqual(1);
       el = wrapper.find('TwitterShareButton');
       expect(el.length).toEqual(1);
       expect(el.prop('url')).toEqual('twitter-share-url');
