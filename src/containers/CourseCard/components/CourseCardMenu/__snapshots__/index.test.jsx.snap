@@ -26,18 +26,9 @@ exports[`CourseCardMenu enrolled, share enabled, email setting enable snapshot 1
       >
         Email settings
       </Dropdown.Item>
-      <Dropdown.Item>
-        <FacebookShareButton
-          onClick={[MockFunction facebookShareClick]}
-          quote="I'm taking test-course-name online with facebook-social-brand.  Check it out!"
-          url="facebook-share-url"
-        >
-          Share to Facebook
-        </FacebookShareButton>
-      </Dropdown.Item>
       <TwitterShareButton
         className="pgn__dropdown-item dropdown-item"
-        onClick={[MockFunction twitterShareClick]}
+        onClick={[MockFunction handleTwitterShare]}
         resetButtonStyle={false}
         title="I'm taking test-course-name online with twitter-social-brand.  Check it out!"
         url="twitter-share-url"
@@ -85,18 +76,9 @@ exports[`CourseCardMenu masquerading snapshot 1`] = `
       >
         Email settings
       </Dropdown.Item>
-      <Dropdown.Item>
-        <FacebookShareButton
-          onClick={[MockFunction facebookShareClick]}
-          quote="I'm taking test-course-name online with facebook-social-brand.  Check it out!"
-          url="facebook-share-url"
-        >
-          Share to Facebook
-        </FacebookShareButton>
-      </Dropdown.Item>
       <TwitterShareButton
         className="pgn__dropdown-item dropdown-item"
-        onClick={[MockFunction twitterShareClick]}
+        onClick={[MockFunction handleTwitterShare]}
         resetButtonStyle={false}
         title="I'm taking test-course-name online with twitter-social-brand.  Check it out!"
         url="twitter-share-url"
