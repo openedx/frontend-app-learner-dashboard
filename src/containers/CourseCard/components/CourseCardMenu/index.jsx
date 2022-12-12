@@ -23,12 +23,17 @@ export const CourseCardMenu = ({ cardId }) => {
 
   const { courseName } = appHooks.useCardCourseData(cardId);
   const { isEnrolled, isEmailEnabled } = appHooks.useCardEnrollmentData(cardId);
-  const { twitter } = appHooks.useCardSocialSettingsData(cardId);
+  const { twitter, facebook } = appHooks.useCardSocialSettingsData(cardId);
   const { isMasquerading } = appHooks.useMasqueradeData();
   const handleTwitterShare = appHooks.useTrackCourseEvent(
     track.socialShare,
     cardId,
     'twitter',
+  );
+  const handleFacebookShare = appHooks.useTrackCourseEvent(
+    track.socialShare,
+    cardId,
+    'facebook',
   );
 
   const emailSettingsModal = useEmailSettings();
@@ -65,21 +70,20 @@ export const CourseCardMenu = ({ cardId }) => {
               {formatMessage(messages.emailSettings)}
             </Dropdown.Item>
           )}
-          {/* Disabled pending PM decision on missing quote param in updated FB api.
-            {facebook.isEnabled && (
-              <Dropdown.Item>
-                <ReactShare.FacebookShareButton
-                  url={facebook.shareUrl}
-                  quote={formatMessage(messages.shareQuote, {
-                    courseName,
-                    socialBrand: facebook.socialBrand,
-                  })}
-                >
-                  {formatMessage(messages.shareToFacebook)}
-                </ReactShare.FacebookShareButton>
-              </Dropdown.Item>
-            )}
-          */}
+          {facebook.isEnabled && (
+            <ReactShare.FacebookShareButton
+              url={facebook.shareUrl}
+              onClick={handleFacebookShare}
+              title={formatMessage(messages.shareQuote, {
+                courseName,
+                socialBrand: facebook.socialBrand,
+              })}
+              resetButtonStyle={false}
+              className="pgn__dropdown-item dropdown-item"
+            >
+              {formatMessage(messages.shareToFacebook)}
+            </ReactShare.FacebookShareButton>
+          )}
           {twitter.isEnabled && (
             <ReactShare.TwitterShareButton
               url={twitter.shareUrl}
