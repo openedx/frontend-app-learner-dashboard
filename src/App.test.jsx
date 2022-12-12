@@ -5,7 +5,7 @@ import { ErrorPage } from '@edx/frontend-platform/react';
 
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import Footer from '@edx/frontend-component-footer';
+import { Footer } from '@edx/frontend-component-footer';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { Alert } from '@edx/paragon';
 
@@ -16,7 +16,9 @@ import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
 import { App } from './App';
 import messages from './messages';
 
-jest.mock('@edx/frontend-component-footer', () => 'Footer');
+jest.mock('@edx/frontend-component-footer', () => ({
+  Footer: () => 'Footer',
+}));
 
 jest.mock('containers/Dashboard', () => 'Dashboard');
 jest.mock('containers/LearnerDashboardHeader', () => 'LearnerDashboardHeader');

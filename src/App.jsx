@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { ErrorPage, AppContext } from '@edx/frontend-platform/react';
-import Footer from '@edx/frontend-component-footer';
+import { Footer } from '@edx/frontend-component-footer';
 import { Alert } from '@edx/paragon';
 
 import { RequestKeys } from 'data/constants/requests';
