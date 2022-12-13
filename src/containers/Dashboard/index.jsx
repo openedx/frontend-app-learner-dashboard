@@ -6,6 +6,7 @@ import EnterpriseDashboardModal from 'containers/EnterpriseDashboardModal';
 import SelectSessionModal from 'containers/SelectSessionModal';
 import CourseList from 'containers/CourseList';
 
+import BottomWidgetContainer from 'containers/WidgetContainers/BottomWidgetContainer';
 import LoadedSidebar from 'containers/WidgetContainers/LoadedSidebar';
 import NoCoursesSidebar from 'containers/WidgetContainers/NoCoursesSidebar';
 
@@ -34,7 +35,10 @@ export const Dashboard = () => {
         {initIsPending
           ? (<LoadingView />)
           : (
-            <DashboardLayout sidebar={hasCourses ? <LoadedSidebar /> : <NoCoursesSidebar />}>
+            <DashboardLayout
+              sidebar={hasCourses ? <LoadedSidebar /> : <NoCoursesSidebar />}
+              bottomWidgetContainer={<BottomWidgetContainer />}
+            >
               <CourseList />
             </DashboardLayout>
           )}

@@ -16,7 +16,7 @@ export const columnConfig = {
   },
 };
 
-export const DashboardLayout = ({ children, sidebar }) => {
+export const DashboardLayout = ({ bottomWidgetContainer, children, sidebar }) => {
   const isCollapsed = hooks.useIsDashboardCollapsed();
 
   return (
@@ -30,10 +30,16 @@ export const DashboardLayout = ({ children, sidebar }) => {
           {sidebar}
         </Col>
       </Row>
+      <Row>
+        <Col>
+          {bottomWidgetContainer}
+        </Col>
+      </Row>
     </Container>
   );
 };
 DashboardLayout.propTypes = {
+  bottomWidgetContainer: PropTypes.node.isRequired,
   children: PropTypes.node.isRequired,
   sidebar: PropTypes.node.isRequired,
 };
