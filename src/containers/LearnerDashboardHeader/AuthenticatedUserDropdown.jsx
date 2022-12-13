@@ -9,7 +9,7 @@ import { AvatarButton, Dropdown } from '@edx/paragon';
 import { hooks as appHooks } from 'data/redux';
 import urls from 'data/services/lms/urls';
 
-import { useIsCollapsed } from './hooks';
+import { useIsCollapsed, findCoursesNavDropdownClicked } from './hooks';
 import messages from './messages';
 
 export const AuthenticatedUserDropdown = ({ username }) => {
@@ -17,6 +17,7 @@ export const AuthenticatedUserDropdown = ({ username }) => {
   const { authenticatedUser } = React.useContext(AppContext);
   const { profileImage } = authenticatedUser;
   const dashboard = appHooks.useEnterpriseDashboardData();
+  const { courseSearchUrl } = appHooks.usePlatformSettingsData();
   const isCollapsed = useIsCollapsed();
 
   return (
@@ -48,9 +49,14 @@ export const AuthenticatedUserDropdown = ({ username }) => {
           {formatMessage(messages.profile)}
         </Dropdown.Item>
         {isCollapsed && (
-          <Dropdown.Item href={urls.programsUrl}>
-            {formatMessage(messages.viewPrograms)}
-          </Dropdown.Item>
+          <>
+            <Dropdown.Item href={urls.programsUrl}>
+              {formatMessage(messages.viewPrograms)}
+            </Dropdown.Item>
+            <Dropdown.Item href={courseSearchUrl} onClick={findCoursesNavDropdownClicked(courseSearchUrl)}>
+              {formatMessage(messages.exploreCourses)}
+            </Dropdown.Item>
+          </>
         )}
         <Dropdown.Item href={`${getConfig().LMS_BASE_URL}/account/settings`}>
           {formatMessage(messages.account)}

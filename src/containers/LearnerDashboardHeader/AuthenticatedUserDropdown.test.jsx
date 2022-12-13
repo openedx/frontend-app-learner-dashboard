@@ -14,10 +14,14 @@ jest.mock('@edx/frontend-platform/react', () => ({
 jest.mock('data/redux', () => ({
   hooks: {
     useEnterpriseDashboardData: jest.fn(),
+    usePlatformSettingsData: jest.fn(() => ({
+      courseSearchUrl: 'test-course-search-url',
+    })),
   },
 }));
 jest.mock('containers/LearnerDashboardHeader/hooks', () => ({
   useIsCollapsed: jest.fn(),
+  findCoursesNavDropdownClicked: (href) => jest.fn().mockName(`findCoursesNavDropdownClicked(${href})`),
 }));
 
 describe('AuthenticatedUserDropdown', () => {

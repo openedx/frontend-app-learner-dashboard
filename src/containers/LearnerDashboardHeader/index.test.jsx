@@ -14,6 +14,14 @@ jest.mock('@edx/frontend-platform/react', () => ({
 }));
 jest.mock('./hooks', () => ({
   useIsCollapsed: jest.fn(),
+  findCoursesNavClicked: (href) => jest.fn().mockName(`findCoursesNavClicked(${href})`),
+}));
+jest.mock('data/redux', () => ({
+  hooks: {
+    usePlatformSettingsData: jest.fn(() => ({
+      courseSearchUrl: 'test-course-search-url',
+    })),
+  },
 }));
 jest.mock('containers/MasqueradeBar', () => 'MasqueradeBar');
 

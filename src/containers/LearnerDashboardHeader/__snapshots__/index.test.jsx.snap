@@ -66,6 +66,14 @@ exports[`LearnerDashboardHeader snapshots without collapsed 1`] = `
         <div
           className="flex-grow-1"
         />
+        <Button
+          as="a"
+          href="test-course-search-url"
+          onClick={[MockFunction findCoursesNavClickedtest-course-search-url]}
+          variant="inverse-tertiary"
+        >
+          Explore courses
+        </Button>
         <UserMenu />
       </div>
     </header>

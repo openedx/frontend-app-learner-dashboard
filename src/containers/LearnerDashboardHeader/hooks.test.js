@@ -1,5 +1,14 @@
 import { useWindowSize, breakpoints } from '@edx/paragon';
-import { useIsCollapsed } from './hooks';
+import track from 'tracking';
+import { useIsCollapsed, findCoursesNavClicked, findCoursesNavDropdownClicked } from './hooks';
+
+jest.mock('tracking', () => ({
+  findCourses: {
+    findCoursesClicked: jest.fn(),
+  },
+}));
+
+const url = 'http://example.com';
 
 describe('LearnerDashboardHeader hooks', () => {
   describe('useIsCollapsed', () => {
@@ -10,6 +19,24 @@ describe('LearnerDashboardHeader hooks', () => {
     test('small screen is collapsed', () => {
       useWindowSize.mockReturnValueOnce({ width: breakpoints.large.maxWidth - 1 });
       expect(useIsCollapsed()).toEqual(true);
+    });
+  });
+
+  describe('findCoursesNavClicked', () => {
+    test('calls tracking with nav link name', () => {
+      findCoursesNavClicked(url);
+      expect(track.findCourses.findCoursesClicked).toHaveBeenCalledWith(url, {
+        linkName: 'learner_home_nav_discover',
+      });
+    });
+  });
+
+  describe('findCoursesNavDropdownClicked', () => {
+    test('calls tracking with dropdown link name', () => {
+      findCoursesNavDropdownClicked(url);
+      expect(track.findCourses.findCoursesClicked).toHaveBeenCalledWith(url, {
+        linkName: 'learner_home_nav_dropdown_discover',
+      });
     });
   });
 });

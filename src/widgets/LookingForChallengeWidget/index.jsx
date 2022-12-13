@@ -30,7 +30,7 @@ export const LookingForChallengeWidget = () => {
           <Hyperlink
             variant="brand"
             destination={courseSearchUrl}
-            onClick={track.findCoursesClicked(courseSearchUrl)}
+            onClick={track.findCoursesWidgetClicked(courseSearchUrl)}
             className="d-flex align-items-center"
           >
             {formatMessage(messages.findCoursesButton, { arrow: arrowIcon })}

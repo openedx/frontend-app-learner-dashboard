@@ -2,18 +2,19 @@ import React, { useContext } from 'react';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
-import { Program } from '@edx/paragon/icons';
+import { Program, Search } from '@edx/paragon/icons';
 import { Button, Image } from '@edx/paragon';
 
 import topBanner from 'assets/top_stripe.svg';
 import MasqueradeBar from 'containers/MasqueradeBar';
 import urls from 'data/services/lms/urls';
+import { hooks as appHooks } from 'data/redux';
 
 import AuthenticatedUserDropdown from './AuthenticatedUserDropdown';
 import GreetingBanner from './GreetingBanner';
 import ConfirmEmailBanner from './ConfirmEmailBanner';
 
-import { useIsCollapsed } from './hooks';
+import { useIsCollapsed, findCoursesNavClicked } from './hooks';
 import messages from './messages';
 import './index.scss';
 
@@ -25,6 +26,7 @@ export const UserMenu = () => {
 export const LearnerDashboardHeader = () => {
   const { formatMessage } = useIntl();
   const isCollapsed = useIsCollapsed();
+  const { courseSearchUrl } = appHooks.usePlatformSettingsData();
 
   return (
     <>
@@ -43,9 +45,24 @@ export const LearnerDashboardHeader = () => {
             <div className="flex-grow-1">
               {isCollapsed && <GreetingBanner size="small" />}
             </div>
-            {isCollapsed
-              ? (<div className="my-auto ml-1"><UserMenu /></div>)
-              : (<UserMenu />)}
+            {isCollapsed ? (
+              <div className="my-auto ml-1">
+                <UserMenu />
+              </div>
+            ) : (
+              <>
+                <Button
+                  as="a"
+                  href={courseSearchUrl}
+                  variant="inverse-tertiary"
+                  iconBefore={Search}
+                  onClick={findCoursesNavClicked(courseSearchUrl)}
+                >
+                  {formatMessage(messages.exploreCourses)}
+                </Button>
+                <UserMenu />
+              </>
+            )}
           </div>
         </header>
         {!isCollapsed && <GreetingBanner size="large" />}

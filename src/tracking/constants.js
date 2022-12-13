@@ -4,6 +4,7 @@ export const categories = StrictDict({
   dashboard: 'dashboard',
   upgrade: 'upgrade',
   userEngagement: 'user-engagement',
+  searchButton: 'search_button',
 });
 
 export const events = StrictDict({
@@ -46,6 +47,7 @@ export const eventNames = StrictDict({
   enterpriseDashboardModalOpened: `${learnerPortal}.opened`,
   enterpriseDashboardModalCTAClicked: `${learnerPortal}.dashboard_cta.clicked`,
   enterpriseDashboardModalClosed: `${learnerPortal}.closed`,
+  findCoursesClicked: 'edx.bi.dashboard.find_courses_button.clicked',
 });
 
 export const appName = 'learner-home';

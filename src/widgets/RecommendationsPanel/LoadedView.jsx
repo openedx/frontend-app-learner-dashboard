@@ -39,7 +39,7 @@ export const LoadedView = ({
           iconBefore={Search}
           as="a"
           href={courseSearchUrl}
-          onClick={track.findCoursesClicked(courseSearchUrl)}
+          onClick={track.findCoursesWidgetClicked(courseSearchUrl)}
         >
           {formatMessage(messages.exploreCoursesButton)}
         </Button>
