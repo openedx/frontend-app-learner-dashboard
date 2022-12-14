@@ -185,6 +185,42 @@ describe('courseCard selectors module', () => {
         expect(selected.unenrollUrl).toEqual(baseAppUrl(testData.unenrollUrl));
       });
     });
+    describe('credit selector', () => {
+      const credit = {
+        providerStatusUrl: 'test-provider-status-url',
+        providerName: 'test-provider-name',
+        providerId: 'test-provider-id',
+        error: 'test-provider-id',
+        purchased: 'test-purchased',
+        requestStatus: 'test-request-status',
+      };
+      it('returns a card selector based on credit cardSimpleSelector', () => {
+        loadSelector(courseCard.credit, {});
+        expect(simpleSelector).toEqual(cardSimpleSelectors.credit);
+      });
+      it('returns { isEligible: false } if empty object received for credit', () => {
+        loadSelector(courseCard.credit, {});
+        expect(selected).toEqual({ isEligible: false });
+      });
+      describe('credit fields when credit object is passed', () => {
+        beforeEach(() => {
+          loadSelector(courseCard.credit, credit);
+        });
+        it('returns isEligible: true', () => {
+          expect(selected.isEligible).toEqual(true);
+        });
+        it('returns provider status url, name, and id', () => {
+          expect(selected.providerStatusUrl).toEqual(credit.providerStatusUrl);
+          expect(selected.providerName).toEqual(credit.providerName);
+          expect(selected.providerId).toEqual(credit.providerId);
+        });
+        it('returns error, purchased and requestStatus fields', () => {
+          expect(selected.error).toEqual(credit.error);
+          expect(selected.purchased).toEqual(credit.purchased);
+          expect(selected.requestStatus).toEqual(credit.requestStatus);
+        });
+      });
+    });
     describe('enrollment selector', () => {
       beforeEach(() => {
         loadSelector(courseCard.enrollment, {

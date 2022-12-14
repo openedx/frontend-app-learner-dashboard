@@ -42,6 +42,7 @@ describe('app simple selectors', () => {
         keys.course,
         keys.courseProvider,
         keys.courseRun,
+        keys.credit,
         keys.enrollment,
         keys.entitlement,
         keys.gradeData,
