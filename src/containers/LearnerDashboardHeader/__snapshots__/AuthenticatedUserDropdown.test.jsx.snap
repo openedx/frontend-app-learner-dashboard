@@ -2,7 +2,7 @@
 
 exports[`AuthenticatedUserDropdown snapshots with enterprise dashboard 1`] = `
 <Dropdown
-  className="user-dropdown"
+  className="user-dropdown ml-1"
   variant="light"
 >
   <Dropdown.Toggle
@@ -78,7 +78,7 @@ exports[`AuthenticatedUserDropdown snapshots with enterprise dashboard 1`] = `
 
 exports[`AuthenticatedUserDropdown snapshots without enterprise dashboard and expanded 1`] = `
 <Dropdown
-  className="user-dropdown"
+  className="user-dropdown ml-1"
   variant="dark"
 >
   <Dropdown.Toggle
