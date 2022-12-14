@@ -14,7 +14,7 @@ jest.mock('data/redux', () => ({
   },
 }));
 jest.mock('./track', () => ({
-  findCoursesWidgetClicked: (href) => jest.fn().mockName(`track.findCoursesWidgetClicked(${href})`),
+  findCoursesWidgetClicked: (href) => jest.fn().mockName(`track.findCoursesWidgetClicked('${href}')`),
 }));
 
 describe('RecommendationsPanel LoadedView', () => {

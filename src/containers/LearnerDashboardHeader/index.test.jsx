@@ -14,7 +14,7 @@ jest.mock('@edx/frontend-platform/react', () => ({
 }));
 jest.mock('./hooks', () => ({
   useIsCollapsed: jest.fn(),
-  findCoursesNavClicked: (href) => jest.fn().mockName(`findCoursesNavClicked(${href})`),
+  findCoursesNavClicked: (href) => jest.fn().mockName(`findCoursesNavClicked('${href}')`),
 }));
 jest.mock('data/redux', () => ({
   hooks: {

@@ -1,5 +1,6 @@
 import { useWindowSize, breakpoints } from '@edx/paragon';
 import track from 'tracking';
+import { linkNames } from 'tracking/constants';
 import { useIsCollapsed, findCoursesNavClicked, findCoursesNavDropdownClicked } from './hooks';
 
 jest.mock('tracking', () => ({
@@ -26,7 +27,7 @@ describe('LearnerDashboardHeader hooks', () => {
     test('calls tracking with nav link name', () => {
       findCoursesNavClicked(url);
       expect(track.findCourses.findCoursesClicked).toHaveBeenCalledWith(url, {
-        linkName: 'learner_home_nav_discover',
+        linkName: linkNames.learnerHomeNavExplore,
       });
     });
   });
@@ -35,7 +36,7 @@ describe('LearnerDashboardHeader hooks', () => {
     test('calls tracking with dropdown link name', () => {
       findCoursesNavDropdownClicked(url);
       expect(track.findCourses.findCoursesClicked).toHaveBeenCalledWith(url, {
-        linkName: 'learner_home_nav_dropdown_discover',
+        linkName: linkNames.learnerHomeNavDropdownExplore,
       });
     });
   });

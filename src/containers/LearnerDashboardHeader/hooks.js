@@ -1,6 +1,7 @@
 import React from 'react';
 import { useWindowSize, breakpoints } from '@edx/paragon';
 import track from 'tracking';
+import { linkNames } from 'tracking/constants';
 
 export const useIsCollapsed = () => {
   const { width } = useWindowSize();
@@ -9,11 +10,11 @@ export const useIsCollapsed = () => {
 };
 
 export const findCoursesNavClicked = (href) => track.findCourses.findCoursesClicked(href, {
-  linkName: 'learner_home_nav_discover',
+  linkName: linkNames.learnerHomeNavExplore,
 });
 
 export const findCoursesNavDropdownClicked = (href) => track.findCourses.findCoursesClicked(href, {
-  linkName: 'learner_home_nav_dropdown_discover',
+  linkName: linkNames.learnerHomeNavDropdownExplore,
 });
 
 export default {

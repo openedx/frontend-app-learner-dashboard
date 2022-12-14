@@ -50,6 +50,11 @@ export const eventNames = StrictDict({
   findCoursesClicked: 'edx.bi.dashboard.find_courses_button.clicked',
 });
 
+export const linkNames = StrictDict({
+  learnerHomeNavExplore: 'learner_home_nav_explore',
+  learnerHomeNavDropdownExplore: 'learner_home_nav_dropdown_explore',
+});
+
 export const appName = 'learner-home';
 
 export default eventNames;

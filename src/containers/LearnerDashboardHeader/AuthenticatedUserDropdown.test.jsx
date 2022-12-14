@@ -21,7 +21,7 @@ jest.mock('data/redux', () => ({
 }));
 jest.mock('containers/LearnerDashboardHeader/hooks', () => ({
   useIsCollapsed: jest.fn(),
-  findCoursesNavDropdownClicked: (href) => jest.fn().mockName(`findCoursesNavDropdownClicked(${href})`),
+  findCoursesNavDropdownClicked: (href) => jest.fn().mockName(`findCoursesNavDropdownClicked('${href}')`),
 }));
 
 describe('AuthenticatedUserDropdown', () => {

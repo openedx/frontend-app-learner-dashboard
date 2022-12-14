@@ -6,8 +6,12 @@ export const eventNames = StrictDict({
   recommendedCourseClicked: 'edx.bi.user.recommended.course.click',
 });
 
+export const linkNames = StrictDict({
+  findCoursesWidget: 'learner_home_widget_explore',
+});
+
 export const findCoursesWidgetClicked = (href) => track.findCourses.findCoursesClicked(href, {
-  linkName: 'learner_home_widget_explore',
+  linkName: linkNames.findCoursesWidget,
 });
 
 export const recommendedCourseClicked = (courseKey, isPersonalized, href) => createLinkTracker(

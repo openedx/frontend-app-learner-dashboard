@@ -3,7 +3,9 @@ import React, { useContext } from 'react';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
 import { Program, Search } from '@edx/paragon/icons';
-import { Button, Image } from '@edx/paragon';
+import {
+  Button, Image, IconButton, Icon,
+} from '@edx/paragon';
 
 import topBanner from 'assets/top_stripe.svg';
 import MasqueradeBar from 'containers/MasqueradeBar';
@@ -28,6 +30,8 @@ export const LearnerDashboardHeader = () => {
   const isCollapsed = useIsCollapsed();
   const { courseSearchUrl } = appHooks.usePlatformSettingsData();
 
+  const exploreCoursesClick = findCoursesNavClicked(courseSearchUrl);
+
   return (
     <>
       <ConfirmEmailBanner />
@@ -46,7 +50,16 @@ export const LearnerDashboardHeader = () => {
               {isCollapsed && <GreetingBanner size="small" />}
             </div>
             {isCollapsed ? (
-              <div className="my-auto ml-1">
+              <div className="my-auto ml-1 d-flex">
+                <IconButton
+                  as="a"
+                  href={courseSearchUrl}
+                  variant="primary"
+                  invertColors
+                  src={Search}
+                  iconAs={Icon}
+                  onClick={exploreCoursesClick}
+                />
                 <UserMenu />
               </div>
             ) : (
@@ -56,7 +69,7 @@ export const LearnerDashboardHeader = () => {
                   href={courseSearchUrl}
                   variant="inverse-tertiary"
                   iconBefore={Search}
-                  onClick={findCoursesNavClicked(courseSearchUrl)}
+                  onClick={exploreCoursesClick}
                 >
                   {formatMessage(messages.exploreCourses)}
                 </Button>
