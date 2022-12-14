@@ -1,4 +1,8 @@
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+
+import { AppContext } from '@edx/frontend-platform/react';
+import api from 'data/services/lms/api';
 
 import { actions as appActions } from './app/reducer';
 import appSelectors from './app/selectors';
