@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProviderLink component render snapshot 1`] = `
+<Hyperlink
+  href="test-credit-provider-status-url"
+  rel="noopener"
+  target="_blank"
+>
+  test-credit-provider-name
+</Hyperlink>
+`;
