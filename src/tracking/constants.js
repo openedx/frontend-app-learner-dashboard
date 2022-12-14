@@ -55,6 +55,7 @@ export const eventNames = StrictDict({
 export const linkNames = StrictDict({
   learnerHomeNavExplore: 'learner_home_nav_explore',
   learnerHomeNavDropdownExplore: 'learner_home_nav_dropdown_explore',
+  purchaseCredit: 'edx.bi.credit.clicked_purchase_credit',
 });
 
 export const appName = 'learner-home';
