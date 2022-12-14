@@ -1,4 +1,3 @@
-import { navigate } from 'react-router-dom';
 import eventNames from 'tracking/constants';
 import {
   client,
