@@ -1,19 +1,18 @@
 import { StrictDict } from 'utils';
 import { createLinkTracker, createEventTracker } from 'data/services/segment/utils';
+import track from 'tracking';
 
 export const eventNames = StrictDict({
-  findCoursesClicked: 'edx.bi.dashboard.find_courses_button.clicked',
   recommendedCourseClicked: 'edx.bi.user.recommended.course.click',
 });
 
-export const findCoursesClicked = (href) => createLinkTracker(
-  createEventTracker(eventNames.findCoursesClicked, {
-    pageName: 'learner_home',
-    linkType: 'button',
-    linkCategory: 'search_button',
-  }),
-  href,
-);
+export const linkNames = StrictDict({
+  findCoursesWidget: 'learner_home_widget_explore',
+});
+
+export const findCoursesWidgetClicked = (href) => track.findCourses.findCoursesClicked(href, {
+  linkName: linkNames.findCoursesWidget,
+});
 
 export const recommendedCourseClicked = (courseKey, isPersonalized, href) => createLinkTracker(
   createEventTracker(eventNames.recommendedCourseClicked, {
@@ -24,6 +23,6 @@ export const recommendedCourseClicked = (courseKey, isPersonalized, href) => cre
 );
 
 export default {
-  findCoursesClicked,
+  findCoursesWidgetClicked,
   recommendedCourseClicked,
 };

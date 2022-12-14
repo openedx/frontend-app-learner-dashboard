@@ -51,6 +51,12 @@ exports[`AuthenticatedUserDropdown snapshots with enterprise dashboard 1`] = `
       View Programs
     </Dropdown.Item>
     <Dropdown.Item
+      href="test-course-search-url"
+      onClick={[MockFunction findCoursesNavDropdownClicked('test-course-search-url')]}
+    >
+      Explore courses
+    </Dropdown.Item>
+    <Dropdown.Item
       href="http://localhost:18000/account/settings"
     >
       Account
