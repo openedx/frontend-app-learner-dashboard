@@ -1,4 +1,8 @@
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+
+import { AppContext } from '@edx/frontend-platform/react';
+import api from 'data/services/lms/api';
 
 import { actions as appActions } from './app/reducer';
 import appSelectors from './app/selectors';
@@ -29,6 +33,7 @@ export const useCourseCardData = (selector) => (cardId) => useSelector(
 export const useCardCertificateData = useCourseCardData(courseCard.certificate);
 export const useCardCourseData = useCourseCardData(courseCard.course);
 export const useCardCourseRunData = useCourseCardData(courseCard.courseRun);
+export const useCardCreditData = useCourseCardData(courseCard.credit);
 export const useCardEnrollmentData = useCourseCardData(courseCard.enrollment);
 export const useCardEntitlementData = useCourseCardData(courseCard.entitlement);
 export const useCardGradeData = useCourseCardData(courseCard.gradeData);
