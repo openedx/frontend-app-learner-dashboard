@@ -2,8 +2,9 @@ import { StrictDict } from 'utils';
 import { configuration } from 'config';
 
 const baseUrl = `${configuration.LMS_BASE_URL}`;
+export const ecommerceUrl = `${configuration.ECOMMERCE_PUBLIC_URL_ROOT}`;
 
-const api = `${baseUrl}/api`;
+export const api = `${baseUrl}/api`;
 
 // const init = `${api}learner_home/mock/init`; // mock endpoint for testing
 const init = `${api}/learner_home/init`;
@@ -22,10 +23,15 @@ export const learningMfeUrl = (url) => updateUrl(configuration.LEARNING_BASE_URL
 // static view url
 const programsUrl = baseAppUrl('/dashboard/programs');
 
+export const creditPurchaseUrl = (courseId) => `${ecommerceUrl}/credit/checkout/${courseId}`;
+export const creditRequestUrl = (providerId) => `${api}/credit/v1/providers/${providerId}/request`;
+
 export default StrictDict({
   api,
   baseAppUrl,
   courseUnenroll,
+  creditPurchaseUrl,
+  creditRequestUrl,
   entitlementEnrollment,
   event,
   init,
