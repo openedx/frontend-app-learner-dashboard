@@ -37,7 +37,7 @@ CreditContent.propTypes = {
     onClick: PropTypes.func,
     message: PropTypes.string,
   }),
-  message: PropTypes.string.isRequired,
+  message: PropTypes.node.isRequired,
   requestData: PropTypes.shape({
     url: PropTypes.string,
     parameters: PropTypes.objectOf(PropTypes.string),

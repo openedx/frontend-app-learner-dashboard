@@ -49,12 +49,12 @@ export const eventNames = StrictDict({
   enterpriseDashboardModalCTAClicked: `${learnerPortal}.dashboard_cta.clicked`,
   enterpriseDashboardModalClosed: `${learnerPortal}.closed`,
   findCoursesClicked: 'edx.bi.dashboard.find_courses_button.clicked',
+  purchaseCredit: 'edx.bi.credit.clicked_purchase_credit',
 });
 
 export const linkNames = StrictDict({
   learnerHomeNavExplore: 'learner_home_nav_explore',
   learnerHomeNavDropdownExplore: 'learner_home_nav_dropdown_explore',
-  purchaseCredit: 'edx.bi.credit.clicked_purchase_credit',
 });
 
 export const appName = 'learner-home';
