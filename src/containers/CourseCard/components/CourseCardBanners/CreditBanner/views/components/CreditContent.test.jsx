@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { ActionRow, Button } from '@edx/paragon';
 
 import CreditContent from './CreditContent';
 

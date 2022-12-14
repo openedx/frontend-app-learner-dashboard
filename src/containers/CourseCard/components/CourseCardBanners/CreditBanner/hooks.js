@@ -1,4 +1,3 @@
-import React from 'react';
 import { StrictDict } from 'utils';
 import { hooks as appHooks } from 'data/redux';
 

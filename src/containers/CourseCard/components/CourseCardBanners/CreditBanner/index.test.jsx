@@ -3,7 +3,6 @@ import { shallow } from 'enzyme';
 
 import { formatMessage } from 'testUtils';
 
-import Banner from 'components/Banner';
 import EmailLink from 'components/EmailLink';
 
 import hooks from './hooks';

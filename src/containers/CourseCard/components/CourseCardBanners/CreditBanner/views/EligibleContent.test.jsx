@@ -6,7 +6,6 @@ import { formatMessage } from 'testUtils';
 import track from 'tracking';
 
 import messages from './messages';
-import ProviderLink from './components/ProviderLink';
 import EligibleContent from './EligibleContent';
 
 jest.mock('data/redux', () => ({
@@ -16,7 +15,6 @@ jest.mock('data/redux', () => ({
   },
 }));
 jest.mock('./components/CreditContent', () => 'CreditContent');
-jest.mock('./components/ProviderLink', () => 'ProviderLink');
 jest.mock('tracking', () => ({
   credit: {
     purchase: (...args) => ({ trackCredit: args }),
