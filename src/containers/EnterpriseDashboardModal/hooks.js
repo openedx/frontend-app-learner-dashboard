@@ -30,7 +30,11 @@ export const useEnterpriseDashboardHook = () => {
     setShowModal(false);
   };
 
-  React.useEffect(trackOpened, []);
+  React.useEffect(() => {
+    if (dashboard && dashboard.label) {
+      trackOpened();
+    }
+  }, []); // eslint-disable-line
 
   return {
     showModal,
