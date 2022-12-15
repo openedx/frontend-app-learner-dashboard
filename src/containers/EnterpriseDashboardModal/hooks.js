@@ -20,9 +20,7 @@ export const useEnterpriseDashboardHook = () => {
   const trackClose = modalClosed(dashboard.enterpriseUUID, 'Cancel button');
   const trackEscape = modalClosed(dashboard.enterpriseUUID, 'Escape');
 
-  const handleCTAClick = () => {
-    modalCTAClicked(dashboard.enterpriseUUID, dashboard.url);
-  };
+  const handleCTAClick = modalCTAClicked(dashboard.enterpriseUUID, dashboard.url);
   const handleClose = () => {
     trackClose();
     setShowModal(false);

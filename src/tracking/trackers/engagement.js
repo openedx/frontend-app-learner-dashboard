@@ -13,7 +13,7 @@ export const engagementOptions = {
  * @param {bool} isEntitlement - is the course an entitlement course?
  * @return {callback} - callback that will send the appropriate segment message.
  */
-export const unenrollReason = (courseId, reason, isEntitlement) => () => createEventTracker(
+export const unenrollReason = (courseId, reason, isEntitlement) => createEventTracker(
   isEntitlement ? eventNames.entitlementUnenrollReason : eventNames.unenrollReason,
   { reason, course_id: courseId, ...engagementOptions },
 );

@@ -28,8 +28,16 @@ exports[`LearnerDashboardHeader snapshots with collapsed 1`] = `
           />
         </div>
         <div
-          className="my-auto ml-1"
+          className="my-auto ml-1 d-flex"
         >
+          <IconButton
+            as="a"
+            href="test-course-search-url"
+            iconAs="Icon"
+            invertColors={true}
+            onClick={[MockFunction findCoursesNavClicked('test-course-search-url')]}
+            variant="primary"
+          />
           <UserMenu />
         </div>
       </div>
@@ -66,6 +74,14 @@ exports[`LearnerDashboardHeader snapshots without collapsed 1`] = `
         <div
           className="flex-grow-1"
         />
+        <Button
+          as="a"
+          href="test-course-search-url"
+          onClick={[MockFunction findCoursesNavClicked('test-course-search-url')]}
+          variant="inverse-tertiary"
+        >
+          Explore courses
+        </Button>
         <UserMenu />
       </div>
     </header>

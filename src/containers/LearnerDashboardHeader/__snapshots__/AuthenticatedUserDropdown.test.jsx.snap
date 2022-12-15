@@ -2,7 +2,7 @@
 
 exports[`AuthenticatedUserDropdown snapshots with enterprise dashboard 1`] = `
 <Dropdown
-  className="user-dropdown"
+  className="user-dropdown ml-1"
   variant="light"
 >
   <Dropdown.Toggle
@@ -51,6 +51,12 @@ exports[`AuthenticatedUserDropdown snapshots with enterprise dashboard 1`] = `
       View Programs
     </Dropdown.Item>
     <Dropdown.Item
+      href="test-course-search-url"
+      onClick={[MockFunction findCoursesNavDropdownClicked('test-course-search-url')]}
+    >
+      Explore courses
+    </Dropdown.Item>
+    <Dropdown.Item
       href="http://localhost:18000/account/settings"
     >
       Account
@@ -72,7 +78,7 @@ exports[`AuthenticatedUserDropdown snapshots with enterprise dashboard 1`] = `
 
 exports[`AuthenticatedUserDropdown snapshots without enterprise dashboard and expanded 1`] = `
 <Dropdown
-  className="user-dropdown"
+  className="user-dropdown ml-1"
   variant="dark"
 >
   <Dropdown.Toggle

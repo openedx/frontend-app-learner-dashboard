@@ -12,7 +12,7 @@ const reason = 'test-reason';
 describe('engagement trackers', () => {
   describe('unenrollReason', () => {
     test('creates event tracker for unenrollReason if not entitlement', () => {
-      expect(trackers.unenrollReason(courseId, reason, false)()).toEqual(
+      expect(trackers.unenrollReason(courseId, reason, false)).toEqual(
         createEventTracker(
           eventNames.unenrollReason,
           { reason, course_id: courseId, ...trackers.engagementOptions },
@@ -20,7 +20,7 @@ describe('engagement trackers', () => {
       );
     });
     test('creates event tracker for entitlementUnenrollReason if entitlement', () => {
-      expect(trackers.unenrollReason(courseId, reason, false)()).toEqual(
+      expect(trackers.unenrollReason(courseId, reason, false)).toEqual(
         createEventTracker(
           eventNames.unenrollReason,
           { reason, course_id: courseId, ...trackers.engagementOptions },

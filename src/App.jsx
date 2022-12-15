@@ -4,6 +4,9 @@ import { useDispatch } from 'react-redux';
 import { Helmet } from 'react-helmet';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
+import { logError } from '@edx/frontend-platform/logging';
+import { initializeHotjar } from '@edx/frontend-enterprise-hotjar';
+
 import { ErrorPage, AppContext } from '@edx/frontend-platform/react';
 import Footer from '@edx/frontend-component-footer';
 import { Alert } from '@edx/paragon';
@@ -19,6 +22,8 @@ import {
 import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
 import Dashboard from 'containers/Dashboard';
 import ZendeskFab from 'components/ZendeskFab';
+
+import track from 'tracking';
 
 import fakeData from 'data/services/lms/fakeData/courses';
 
@@ -55,8 +60,20 @@ export const App = () => {
       window.selectors = selectors;
       window.actions = actions;
       window.thunkActions = thunkActions;
+      window.track = track;
     }
-  });
+    if (process.env.HOTJAR_APP_ID) {
+      try {
+        initializeHotjar({
+          hotjarId: process.env.HOTJAR_APP_ID,
+          hotjarVersion: process.env.HOTJAR_VERSION,
+          hotjarDebug: !!process.env.HOTJAR_DEBUG,
+        });
+      } catch (error) {
+        logError(error);
+      }
+    }
+  }, [authenticatedUser, dispatch]);
   return (
     <Router>
       <Helmet>

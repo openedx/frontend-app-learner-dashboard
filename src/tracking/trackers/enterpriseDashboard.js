@@ -19,7 +19,7 @@ export const modalOpened = (enterpriseUUID) => () => createEventTracker(
  * @return {func} - Callback that tracks the event when fired and then loads the passed href.
  */
 export const modalCTAClicked = (enterpriseUUID, href) => createLinkTracker(
-  () => createEventTracker(
+  createEventTracker(
     eventNames.enterpriseDashboardModalCTAClicked,
     { enterpriseUUID },
   ),
@@ -32,7 +32,7 @@ export const modalCTAClicked = (enterpriseUUID, href) => createLinkTracker(
  * @param {string} source - close event soruce ("Cancel button" vs "Escape")
  * @return {func} - Callback that tracks the event when fired.
  */
-export const modalClosed = (enterpriseUUID, source) => () => createEventTracker(
+export const modalClosed = (enterpriseUUID, source) => createEventTracker(
   eventNames.enterpriseDashboardModalClosed,
   { enterpriseUUID, source },
 );

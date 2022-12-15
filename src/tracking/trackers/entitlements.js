@@ -6,7 +6,7 @@ import { eventNames } from '../constants';
  * @param {string} fromCourseRun - course run identifier for leaving course
  * @return {callback} - callback that triggers the event tracker
  */
-export const leaveSession = (fromCourseRun) => () => (
+export const leaveSession = (fromCourseRun) => (
   createEventTracker(eventNames.leaveSession, { fromCourseRun, toCourseRun: null })
 );
 /**
@@ -14,7 +14,7 @@ export const leaveSession = (fromCourseRun) => () => (
  * @param {string} toCourseRun - course run identifier for new course
  * @return {callback} - callback that triggers the event tracker
  */
-export const newSession = (toCourseRun) => () => (
+export const newSession = (toCourseRun) => (
   createEventTracker(eventNames.newSession, { fromCourseRun: null, toCourseRun })
 );
 /**
@@ -23,7 +23,7 @@ export const newSession = (toCourseRun) => () => (
  * @param {string} toCourseRun - course run identifier for new course
  * @return {callback} - callback that triggers the event tracker
  */
-export const switchSession = (fromCourseRun, toCourseRun) => () => (
+export const switchSession = (fromCourseRun, toCourseRun) => (
   createEventTracker(eventNames.switchSession, { fromCourseRun, toCourseRun })
 );
 

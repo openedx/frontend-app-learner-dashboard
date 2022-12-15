@@ -57,6 +57,11 @@ const messages = defineMessages({
     defaultMessage: 'Switch to Programs',
     description: 'Header link for switching to program page.',
   },
+  exploreCourses: {
+    id: 'leanerDashboard.exploreCourses',
+    defaultMessage: 'Explore courses',
+    description: 'Header link for switching to course page.',
+  },
 });
 
 export default messages;
