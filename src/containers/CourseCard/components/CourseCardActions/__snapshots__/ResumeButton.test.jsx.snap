@@ -4,7 +4,8 @@ exports[`ResumeButton snapshot renders default button when learner has access to
 <ActionButton
   as="a"
   disabled={false}
-  href="resumeUrl"
+  href="#"
+  onClick={[MockFunction useTrackCourseEvent('enterCourseClicked', 'cardId', 'resumeUrl')]}
 >
   Resume
 </ActionButton>

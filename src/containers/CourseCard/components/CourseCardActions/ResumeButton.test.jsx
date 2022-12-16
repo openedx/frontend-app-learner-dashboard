@@ -2,6 +2,7 @@ import { shallow } from 'enzyme';
 
 import { htmlProps } from 'data/constants/htmlKeys';
 import { hooks } from 'data/redux';
+import track from 'tracking';
 import ResumeButton from './ResumeButton';
 
 jest.mock('data/redux', () => ({
@@ -13,6 +14,14 @@ jest.mock('data/redux', () => ({
       isAuditAccessExpired: false,
     })),
     useMasqueradeData: jest.fn(() => ({ isMasquerading: false })),
+    useTrackCourseEvent: (eventName, cardId, url) => jest
+      .fn()
+      .mockName(`useTrackCourseEvent('${eventName}', '${cardId}', '${url}')`),
+  },
+}));
+jest.mock('tracking', () => ({
+  course: {
+    enterCourseClicked: 'enterCourseClicked',
   },
 }));
 jest.mock('./ActionButton', () => 'ActionButton');
@@ -28,7 +37,12 @@ describe('ResumeButton', () => {
       const wrapper = shallow(<ResumeButton {...props} />);
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.prop(htmlProps.disabled)).toEqual(false);
-      expect(wrapper.prop(htmlProps.href)).toEqual(resumeUrl);
+      expect(wrapper.prop(htmlProps.onClick).getMockName()).toContain(
+        'useTrackCourseEvent',
+        track.course.enterCourseClicked,
+        props.cardId,
+        resumeUrl,
+      );
     });
   });
   describe('behavior', () => {
