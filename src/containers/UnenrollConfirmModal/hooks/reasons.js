@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { thunkActions, hooks as appHooks } from 'data/redux';
-import { useValueCallback } from 'hooks';
+import { reduxHooks, apiHooks, utilHooks } from 'hooks';
 import { StrictDict } from 'utils';
 import track from 'tracking';
 
@@ -14,18 +13,7 @@ export const state = StrictDict({
   isSubmitted: (val) => React.useState(val), //eslint-disable-line
 });
 
-export const useTrackUnenrollReasons = ({ cardId, submittedReason }) => {
-  const { isEntitlement } = appHooks.useCardEntitlementData(cardId);
-  return appHooks.useTrackCourseEvent(
-    track.engagement.unenrollReason,
-    cardId,
-    submittedReason,
-    isEntitlement,
-  );
-};
-
 export const useUnenrollReasons = ({
-  dispatch,
   cardId,
 }) => {
   // The selected option element from the menu
@@ -38,10 +26,19 @@ export const useUnenrollReasons = ({
   // Did the user submit an unenrollment reason
   const [isSubmitted, setIsSubmitted] = module.state.isSubmitted(false);
 
+  const { isEntitlement } = reduxHooks.useCardEntitlementData(cardId);
+
   const submittedReason = selectedReason === 'custom' ? customOption : selectedReason;
   const hasReason = ![null, ''].includes(submittedReason);
 
-  const handleTrackReasons = module.useTrackUnenrollReasons({ cardId, submittedReason });
+  const handleTrackReasons = reduxHooks.useTrackCourseEvent(
+    track.engagement.unenrollReason,
+    cardId,
+    submittedReason,
+    isEntitlement,
+  );
+
+  const unenrollFromCourse = apiHooks.useUnenrollFromCourse(cardId);
 
   const handleClear = () => {
     setSelectedReason(null);
@@ -52,24 +49,27 @@ export const useUnenrollReasons = ({
 
   const handleSkip = () => {
     setIsSkipped(true);
-    dispatch(thunkActions.app.unenrollFromCourse(cardId));
+    unenrollFromCourse();
   };
 
   const handleSubmit = (e) => {
     handleTrackReasons(e);
     setIsSubmitted(true);
-    dispatch(thunkActions.app.unenrollFromCourse(cardId, submittedReason));
+    unenrollFromCourse();
   };
 
+  const handleCustomOptionChange = utilHooks.useValueCallback(setCustomOption);
+  const handleSelectOption = utilHooks.useValueCallback(setSelectedReason);
+
   return {
-    customOption: { value: customOption, onChange: useValueCallback(setCustomOption) },
+    customOption: { value: customOption, onChange: handleCustomOptionChange },
     handleClear,
     handleSkip,
     handleSubmit,
     hasReason,
     isSkipped,
     isSubmitted,
-    selectOption: useValueCallback(setSelectedReason),
+    selectOption: handleSelectOption,
     submittedReason,
   };
 };

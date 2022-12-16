@@ -3,17 +3,17 @@ import PropTypes from 'prop-types';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { hooks } from 'data/redux';
 import track from 'tracking';
+import { reduxHooks } from 'hooks';
 import ActionButton from './ActionButton';
 import messages from './messages';
 
 export const ResumeButton = ({ cardId }) => {
-  const { resumeUrl } = hooks.useCardCourseRunData(cardId);
-  const { hasAccess, isAudit, isAuditAccessExpired } = hooks.useCardEnrollmentData(cardId);
-  const { isMasquerading } = hooks.useMasqueradeData();
+  const { resumeUrl } = reduxHooks.useCardCourseRunData(cardId);
+  const { hasAccess, isAudit, isAuditAccessExpired } = reduxHooks.useCardEnrollmentData(cardId);
+  const { isMasquerading } = reduxHooks.requests.useMasqueradeData();
   const { formatMessage } = useIntl();
-  const handleClick = hooks.useTrackCourseEvent(
+  const handleClick = reduxHooks.useTrackCourseEvent(
     track.course.enterCourseClicked,
     cardId,
     resumeUrl,

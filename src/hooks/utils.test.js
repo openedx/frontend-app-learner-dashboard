@@ -1,11 +1,11 @@
-import * as hooks from './hooks';
+import * as utils from './utils';
 
-jest.unmock('./hooks');
+jest.unmock('./utils');
 
 describe('app-level hooks', () => {
   describe('nullMethod', () => {
     it('returns an empty object', () => {
-      expect(hooks.nullMethod()).toEqual({});
+      expect(utils.nullMethod()).toEqual({});
     });
   });
   describe('useValuecallback', () => {
@@ -13,7 +13,7 @@ describe('app-level hooks', () => {
       const cb = val => ({ cb: val });
       const prereqs = ['test', 'prereqs'];
       const value = 'test-value';
-      const out = hooks.useValueCallback(cb, prereqs);
+      const out = utils.useValueCallback(cb, prereqs);
       expect(out.useCallback.cb({ target: { value } })).toEqual({ cb: value });
       expect(out.useCallback.prereqs).toEqual(prereqs);
     });

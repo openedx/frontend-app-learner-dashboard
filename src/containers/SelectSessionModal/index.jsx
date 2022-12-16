@@ -8,8 +8,8 @@ import {
   ModalDialog,
 } from '@edx/paragon';
 
-import { nullMethod } from 'hooks';
-import { dateFormatter } from 'utils';
+import { utilHooks } from 'hooks';
+import { nullMethod, dateFormatter } from 'utils';
 
 import useSelectSessionModalData from './hooks';
 import { LEAVE_OPTION } from './constants';
@@ -28,7 +28,8 @@ export const SelectSessionModal = () => {
     selectedSession,
   } = useSelectSessionModalData();
 
-  const { formatMessage, formatDate } = useIntl();
+  const formatDate = utilHooks.useFormatDate();
+  const { formatMessage } = useIntl();
 
   return (
     <ModalDialog

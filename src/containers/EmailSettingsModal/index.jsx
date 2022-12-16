@@ -1,5 +1,4 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
@@ -10,7 +9,7 @@ import {
   ModalDialog,
 } from '@edx/paragon';
 
-import { nullMethod } from 'hooks';
+import { nullMethod } from 'utils';
 
 import useEmailData from './hooks';
 import messages from './messages';
@@ -20,12 +19,11 @@ export const EmailSettingsModal = ({
   show,
   cardId,
 }) => {
-  const dispatch = useDispatch();
   const {
     isOptedOut,
     onToggle,
     save,
-  } = useEmailData({ dispatch, closeModal, cardId });
+  } = useEmailData({ closeModal, cardId });
   const { formatMessage } = useIntl();
 
   return (

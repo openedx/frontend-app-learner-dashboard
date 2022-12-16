@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import { Hyperlink } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { hooks as appHooks } from 'data/redux';
-import { useFormatDate } from 'utils/hooks';
+import { utilHooks, reduxHooks } from 'hooks';
 import Banner from 'components/Banner';
 import messages from './messages';
 
@@ -15,10 +14,10 @@ export const CourseBanner = ({ cardId }) => {
     isAuditAccessExpired,
     canUpgrade,
     coursewareAccess = {},
-  } = appHooks.useCardEnrollmentData(cardId);
-  const courseRun = appHooks.useCardCourseRunData(cardId);
+  } = reduxHooks.useCardEnrollmentData(cardId);
+  const courseRun = reduxHooks.useCardCourseRunData(cardId);
   const { formatMessage } = useIntl();
-  const formatDate = useFormatDate();
+  const formatDate = utilHooks.useFormatDate();
 
   const { hasUnmetPrerequisites, isStaff, isTooEarly } = coursewareAccess;
 

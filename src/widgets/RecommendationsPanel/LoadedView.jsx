@@ -5,7 +5,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { Button } from '@edx/paragon';
 import { Search } from '@edx/paragon/icons';
 
-import { hooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 import track from './track';
 import CourseCard from './components/CourseCard';
 import messages from './messages';
@@ -16,8 +16,8 @@ export const LoadedView = ({
   courses,
   isPersonalizedRecommendation,
 }) => {
-  const { courseSearchUrl } = hooks.usePlatformSettingsData();
   const { formatMessage } = useIntl();
+  const { courseSearchUrl } = reduxHooks.usePlatformSettingsData();
 
   return (
     <div className="p-4 w-100 panel-background">

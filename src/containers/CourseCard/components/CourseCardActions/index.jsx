@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { ActionRow } from '@edx/paragon';
 
-import { hooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 
 import UpgradeButton from './UpgradeButton';
 import SelectSessionButton from './SelectSessionButton';
@@ -12,9 +12,9 @@ import ResumeButton from './ResumeButton';
 import ViewCourseButton from './ViewCourseButton';
 
 export const CourseCardActions = ({ cardId }) => {
-  const { isEntitlement, isFulfilled } = hooks.useCardEntitlementData(cardId);
-  const { isVerified, hasStarted } = hooks.useCardEnrollmentData(cardId);
-  const { isArchived } = hooks.useCardCourseRunData(cardId);
+  const { isEntitlement, isFulfilled } = reduxHooks.useCardEntitlementData(cardId);
+  const { isVerified, hasStarted } = reduxHooks.useCardEnrollmentData(cardId);
+  const { isArchived } = reduxHooks.useCardCourseRunData(cardId);
   let PrimaryButton;
   if (isEntitlement) {
     PrimaryButton = isFulfilled ? ViewCourseButton : SelectSessionButton;

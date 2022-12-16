@@ -1,13 +1,10 @@
 import React from 'react';
 import classNames from 'classnames';
-import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import {
-  ModalDialog,
-} from '@edx/paragon';
+import { ModalDialog } from '@edx/paragon';
 
-import { nullMethod } from 'hooks';
+import { nullMethod } from 'utils';
 
 import ConfirmPane from './components/ConfirmPane';
 import ReasonPane from './components/ReasonPane';
@@ -20,14 +17,13 @@ export const UnenrollConfirmModal = ({
   show,
   cardId,
 }) => {
-  const dispatch = useDispatch();
   const {
     confirm,
     reason,
     closeAndRefresh,
     close,
     modalState,
-  } = useUnenrollData({ dispatch, closeModal, cardId });
+  } = useUnenrollData({ closeModal, cardId });
   const showFullscreen = modalState === modalStates.reason;
   return (
     <ModalDialog

@@ -1,8 +1,7 @@
 import React from 'react';
 import { useWindowSize, breakpoints } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { useDispatch } from 'react-redux';
-import { thunkActions } from 'data/redux';
+import { apiHooks } from 'hooks';
 
 import appMessages from 'messages';
 
@@ -12,8 +11,8 @@ export const useIsDashboardCollapsed = () => {
 };
 
 export const useInitializeDashboard = () => {
-  const dispatch = useDispatch();
-  React.useEffect(() => { dispatch(thunkActions.app.initialize()); }, [dispatch]);
+  const initialize = apiHooks.useInitializeApp();
+  React.useEffect(() => { initialize(); }, []);
 };
 
 export const useDashboardMessages = () => {

@@ -1,8 +1,7 @@
 import React from 'react';
+
 import { StrictDict } from 'utils';
-import { AppContext } from '@edx/frontend-platform/react';
-import { hooks as appHooks } from 'data/redux';
-import api from 'data/services/lms/api';
+import { apiHooks } from 'hooks';
 
 import * as module from './hooks';
 
@@ -12,17 +11,11 @@ export const state = StrictDict({
 
 export const useCreditRequestData = (cardId) => {
   const [requestData, setRequestData] = module.state.creditRequestData(null);
-  const { courseId } = appHooks.useCardCourseRunData(cardId);
-  const { providerId } = appHooks.useCardCreditData(cardId);
-  const { authenticatedUser } = React.useContext(AppContext);
-  const { username } = authenticatedUser;
-
+  const createCreditApiRequest = apiHooks.useCreateCreditRequest(cardId);
   const createCreditRequest = (e) => {
     e.preventDefault();
-    api.createCreditRequest({ providerId, courseId, username })
-      .then(setRequestData);
+    createCreditApiRequest().then(setRequestData);
   };
-
   return { requestData, createCreditRequest };
 };
 

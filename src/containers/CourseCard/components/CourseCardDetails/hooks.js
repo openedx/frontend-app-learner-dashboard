@@ -1,15 +1,14 @@
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { hooks as appHooks } from 'data/redux';
-import { useFormatDate } from 'utils/hooks';
+import { utilHooks, reduxHooks } from 'hooks';
 
 import * as hooks from './hooks';
 import messages from './messages';
 
 export const useAccessMessage = ({ cardId }) => {
   const { formatMessage } = useIntl();
-  const enrollment = appHooks.useCardEnrollmentData(cardId);
-  const courseRun = appHooks.useCardCourseRunData(cardId);
-  const formatDate = useFormatDate();
+  const enrollment = reduxHooks.useCardEnrollmentData(cardId);
+  const courseRun = reduxHooks.useCardCourseRunData(cardId);
+  const formatDate = utilHooks.useFormatDate();
   if (!courseRun.isStarted) {
     if (!courseRun.startDate) { return null; }
     const startDate = formatDate(courseRun.startDate);
@@ -39,15 +38,15 @@ export const useAccessMessage = ({ cardId }) => {
 
 export const useCardDetailsData = ({ cardId }) => {
   const { formatMessage } = useIntl();
-  const providerName = appHooks.useCardProviderData(cardId).name;
-  const { courseNumber } = appHooks.useCardCourseData(cardId);
+  const providerName = reduxHooks.useCardProviderData(cardId).name;
+  const { courseNumber } = reduxHooks.useCardCourseData(cardId);
   const {
     isEntitlement,
     isFulfilled,
     canChange,
-  } = appHooks.useCardEntitlementData(cardId);
+  } = reduxHooks.useCardEntitlementData(cardId);
 
-  const openSessionModal = appHooks.useUpdateSelectSessionModalCallback(cardId);
+  const openSessionModal = reduxHooks.useUpdateSelectSessionModalCallback(cardId);
 
   return {
     providerName: providerName || formatMessage(messages.unknownProviderName),

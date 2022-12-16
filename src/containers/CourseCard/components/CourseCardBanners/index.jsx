@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { hooks as appHooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 
 import CourseBanner from './CourseBanner';
 import CertificateBanner from './CertificateBanner';
@@ -9,7 +9,7 @@ import CreditBanner from './CreditBanner';
 import EntitlementBanner from './EntitlementBanner';
 
 export const CourseCardBanners = ({ cardId }) => {
-  const { isEnrolled } = appHooks.useCardEnrollmentData(cardId);
+  const { isEnrolled } = reduxHooks.useCardEnrollmentData(cardId);
   return (
     <div className="course-card-banners" data-testid="CourseCardBanners">
       <CourseBanner cardId={cardId} />

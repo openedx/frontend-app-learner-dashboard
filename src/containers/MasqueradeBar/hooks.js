@@ -1,8 +1,7 @@
 import React from 'react';
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { useDispatch } from 'react-redux';
 
-import { thunkActions, hooks as appHooks } from 'data/redux';
+import { apiHooks, reduxHooks } from 'hooks';
 import { StrictDict } from 'utils';
 import * as module from './hooks';
 
@@ -35,28 +34,26 @@ export const getMasqueradeErrorMessage = (errorStatus) => {
 export const useMasqueradeBarData = ({
   authenticatedUser,
 }) => {
-  const dispatch = useDispatch();
   const { formatMessage } = useIntl();
-  const canMasquerade = authenticatedUser?.administrator;
-
-  const handleMasqueradeSubmit = (user) => (e) => {
-    dispatch(thunkActions.app.masqueradeAs(user));
-    e.preventDefault();
-  };
-  const handleClearMasquerade = () => dispatch(thunkActions.app.clearMasquerade());
+  const handleMasqueradeAs = apiHooks.useMasqueradeAs();
+  const handleClearMasquerade = apiHooks.useClearMasquerade();
 
   const {
     isMasquerading,
     isMasqueradingFailed,
     isMasqueradingPending,
     masqueradeErrorStatus,
-  } = appHooks.useMasqueradeData();
+  } = reduxHooks.requests.useMasqueradeData();
   const { masqueradeInput, handleMasqueradeInputChange } = module.useMasqueradeInput();
 
   const masqueradeErrorMessage = getMasqueradeErrorMessage(masqueradeErrorStatus);
+  const handleMasqueradeSubmit = (user) => (e) => {
+    handleMasqueradeAs(user);
+    e.preventDefault();
+  };
 
   return {
-    canMasquerade,
+    canMasquerade: authenticatedUser?.administrator,
     isMasquerading,
     isMasqueradingFailed,
     isMasqueradingPending,

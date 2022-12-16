@@ -4,15 +4,14 @@ import { Button, Image } from '@edx/paragon';
 import { Search } from '@edx/paragon/icons';
 
 import emptyCourseSVG from 'assets/empty-course.svg';
+import { reduxHooks } from 'hooks';
 
-import { hooks as appHooks } from 'data/redux';
 import messages from './messages';
-
 import './index.scss';
 
 export const NoCoursesView = () => {
-  const { courseSearchUrl } = appHooks.usePlatformSettingsData();
   const { formatMessage } = useIntl();
+  const { courseSearchUrl } = reduxHooks.usePlatformSettingsData();
   return (
     <div
       id="no-courses-content-view"

@@ -6,8 +6,8 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
 import { AvatarButton, Dropdown } from '@edx/paragon';
 
-import { hooks as appHooks } from 'data/redux';
 import urls from 'data/services/lms/urls';
+import { reduxHooks } from 'hooks';
 
 import { useIsCollapsed, findCoursesNavDropdownClicked } from './hooks';
 import messages from './messages';
@@ -15,10 +15,10 @@ import messages from './messages';
 export const AuthenticatedUserDropdown = ({ username }) => {
   const { formatMessage } = useIntl();
   const { authenticatedUser } = React.useContext(AppContext);
-  const { profileImage } = authenticatedUser;
-  const dashboard = appHooks.useEnterpriseDashboardData();
-  const { courseSearchUrl } = appHooks.usePlatformSettingsData();
+  const dashboard = reduxHooks.useEnterpriseDashboardData();
+  const { courseSearchUrl } = reduxHooks.usePlatformSettingsData();
   const isCollapsed = useIsCollapsed();
+  const { profileImage } = authenticatedUser;
 
   return (
     <Dropdown variant={isCollapsed ? 'light' : 'dark'} className="user-dropdown ml-1">

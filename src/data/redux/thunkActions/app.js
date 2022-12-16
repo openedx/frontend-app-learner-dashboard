@@ -25,11 +25,6 @@ export const initialize = () => (dispatch) => (
   }))
 );
 
-// TODO: connect hook to actual api later
-export const sendConfirmEmail = () => (dispatch, getState) => post(
-  selectors.app.emailConfirmation(getState()).sendEmailUrl,
-);
-
 export const newEntitlementEnrollment = (cardId, selection) => (dispatch, getState) => {
   const { uuid } = selectors.app.courseCard.entitlement(getState(), cardId);
   dispatch(requests.newEntitlementEnrollment({
