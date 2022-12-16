@@ -8,6 +8,7 @@ const { courseTitleClicked } = track.course;
 
 export const CourseCardTitle = ({ cardId }) => {
   const { courseName } = appHooks.useCardCourseData(cardId);
+  const { isEntitlement, isFulfilled } = appHooks.useCardEntitlementData(cardId);
   const { homeUrl } = appHooks.useCardCourseRunData(cardId);
   const handleTitleClicked = appHooks.useTrackCourseEvent(courseTitleClicked, cardId, homeUrl);
   return (
@@ -17,6 +18,7 @@ export const CourseCardTitle = ({ cardId }) => {
         className="course-card-title"
         data-testid="CourseCardTitle"
         onClick={handleTitleClicked}
+        disabled={isEntitlement && !isFulfilled}
       >
         {courseName}
       </a>
