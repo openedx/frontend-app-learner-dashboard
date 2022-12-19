@@ -5,6 +5,7 @@ export const categories = StrictDict({
   upgrade: 'upgrade',
   userEngagement: 'user-engagement',
   searchButton: 'search_button',
+  credit: 'credit',
 });
 
 export const events = StrictDict({
@@ -48,6 +49,7 @@ export const eventNames = StrictDict({
   enterpriseDashboardModalCTAClicked: `${learnerPortal}.dashboard_cta.clicked`,
   enterpriseDashboardModalClosed: `${learnerPortal}.closed`,
   findCoursesClicked: 'edx.bi.dashboard.find_courses_button.clicked',
+  purchaseCredit: 'edx.bi.credit.clicked_purchase_credit',
 });
 
 export const linkNames = StrictDict({

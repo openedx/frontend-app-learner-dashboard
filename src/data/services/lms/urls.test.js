@@ -32,4 +32,20 @@ describe('urls', () => {
       expect(urls.learningMfeUrl(null)).toEqual(null);
     });
   });
+  describe('creditPurchaseUrl', () => {
+    it('builds from ecommerce url and loads courseId', () => {
+      const courseId = 'test-course-id';
+      const url = urls.creditPurchaseUrl(courseId);
+      expect(url.startsWith(urls.ecommerceUrl)).toEqual(true);
+      expect(url).toEqual(expect.stringContaining(courseId));
+    });
+  });
+  describe('creditRequestUrl', () => {
+    it('builds from api url and loads providerId', () => {
+      const providerId = 'test-provider-id';
+      const url = urls.creditRequestUrl(providerId);
+      expect(url.startsWith(urls.api)).toEqual(true);
+      expect(url).toEqual(expect.stringContaining(providerId));
+    });
+  });
 });

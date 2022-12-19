@@ -16,7 +16,7 @@ jest.mock('./utils', () => {
     client: () => ({ delete: deleteFn }),
     delete: deleteFn,
     get: (...args) => ({ get: args }),
-    post: (...args) => ({ post: args }),
+    post: jest.fn((...args) => ({ post: args })),
     stringifyUrl: (...args) => ({ stringifyUrl: args }),
   };
 });
@@ -29,6 +29,9 @@ const isRefundable = 'test-is-refundable';
 const moduleKeys = keyStore(api);
 
 describe('lms api methods', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
   describe('initializeList', () => {
     test('calls get with the correct url and user', () => {
       const userArg = {
@@ -132,6 +135,19 @@ describe('lms api methods', () => {
           courseId,
           data: { course_id: courseId, social_media_site: site, location: 'dashboard' },
         }));
+      });
+    });
+  });
+  describe('credit requests', () => {
+    describe('createCreditRequest', () => {
+      const providerId = 'test-provider-id';
+      const username = 'test-username';
+      it('posts course ID and username to credit request url', () => {
+        api.createCreditRequest({ providerId, courseId, username });
+        expect(utils.post).toHaveBeenCalledWith(
+          urls.creditRequestUrl(providerId),
+          { course_key: courseId, username },
+        );
       });
     });
   });

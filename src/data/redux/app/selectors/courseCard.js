@@ -61,6 +61,23 @@ export const courseCard = StrictDict({
       unenrollUrl: baseAppUrl(courseRun.unenrollUrl),
     }),
   ),
+  credit: mkCardSelector(
+    cardSimpleSelectors.credit,
+    (credit) => {
+      if (!credit || Object.keys(credit).length === 0) {
+        return { isEligible: false };
+      }
+      return {
+        isEligible: true,
+        providerStatusUrl: credit.providerStatusUrl,
+        providerName: credit.providerName,
+        providerId: credit.providerId,
+        error: credit.error,
+        purchased: credit.purchased,
+        requestStatus: credit.requestStatus,
+      };
+    },
+  ),
   enrollment: mkCardSelector(
     cardSimpleSelectors.enrollment,
     (enrollment) => {

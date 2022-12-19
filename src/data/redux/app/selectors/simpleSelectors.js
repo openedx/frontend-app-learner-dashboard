@@ -23,6 +23,7 @@ export const cardSimpleSelectors = StrictDict({
   course: ({ course }) => course,
   courseProvider: ({ courseProvider }) => courseProvider,
   courseRun: ({ courseRun }) => courseRun,
+  credit: ({ credit }) => credit,
   enrollment: ({ enrollment }) => enrollment,
   entitlement: ({ entitlement }) => entitlement,
   gradeData: ({ gradeData }) => gradeData,

@@ -5,6 +5,7 @@ import { hooks as appHooks } from 'data/redux';
 
 import CourseBanner from './CourseBanner';
 import CertificateBanner from './CertificateBanner';
+import CreditBanner from './CreditBanner';
 import EntitlementBanner from './EntitlementBanner';
 
 export const CourseCardBanners = ({ cardId }) => {
@@ -14,6 +15,7 @@ export const CourseCardBanners = ({ cardId }) => {
       <CourseBanner cardId={cardId} />
       <EntitlementBanner cardId={cardId} />
       {isEnrolled && <CertificateBanner cardId={cardId} />}
+      {isEnrolled && <CreditBanner cardId={cardId} />}
     </div>
   );
 };

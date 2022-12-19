@@ -25,9 +25,13 @@ export const updateEntitlementEnrollment = ({ uuid, courseId }) => post(
   { [apiKeys.courseRunId]: courseId },
 );
 
-export const deleteEntitlementEnrollment = ({ uuid, isRefundable }) => client().delete(
-  stringifyUrl(urls.entitlementEnrollment(uuid), { [apiKeys.isRefund]: isRefundable }),
-);
+export const deleteEntitlementEnrollment = ({ uuid, isRefundable }) => client()
+  .delete(
+    stringifyUrl(
+      urls.entitlementEnrollment(uuid),
+      { [apiKeys.isRefund]: isRefundable },
+    ),
+  );
 
 export const updateEmailSettings = ({ courseId, enable }) => post(
   urls.updateEmailSettings,
@@ -61,6 +65,12 @@ export const logShare = ({ courseId, site }) => module.logEvent({
     location: 'dashboard',
   },
 });
+
+export const formDataHeaders = { 'Content-Type': 'multipart/form-data' };
+export const createCreditRequest = ({ providerId, courseId, username }) => post(
+  urls.creditRequestUrl(providerId),
+  { course_key: courseId, username },
+);
 
 export default {
   initializeList,

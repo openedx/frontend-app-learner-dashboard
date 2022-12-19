@@ -1,4 +1,5 @@
 import { StrictDict } from 'utils';
+import creditVals from 'data/constants/credit';
 
 export const providers = StrictDict({
   edx: { name: 'edX Course Provider' },
@@ -123,6 +124,15 @@ export const genCourseRunData = (data = {}) => ({
   ...data,
 });
 
+export const creditData = {
+  providerStatusUrl: 'test-provider-status-url',
+  providerName: 'Credit Provider Name',
+  providerId: 'credit-provider-id',
+  error: false,
+  purchased: false,
+  requestStatus: null,
+};
+
 export const genEnrollmentData = (data = {}) => ({
   coursewareAccess: {
     isTooEarly: false,
@@ -178,7 +188,7 @@ export const availableSessions = [
   },
 ];
 
-export const courseRuns = [
+const auditCourses = [
   // audit, course run not started
   {
     courseName: 'Audit Course, Course run not started',
@@ -324,6 +334,8 @@ export const courseRuns = [
     },
     grade: { isPassing: false },
   },
+];
+const verifiedCourses = [
   // verified, course not started, learner not started
   {
     courseName: 'Verified Course, Course and learner not started',
@@ -436,6 +448,8 @@ export const courseRuns = [
       certPreviewUrl: bannerImgSrc,
     },
   },
+];
+const fulfilledEntitlementCourses = [
   // Entitlement - not started
   {
     courseName: 'Entitlement Course, not started',
@@ -605,6 +619,62 @@ export const courseRuns = [
     },
   },
 ];
+const creditCourses = [
+  {
+    courseName: 'Credit - Eligible for credit from unknown provider',
+    credit: {
+      ...creditData,
+      providerName: null,
+      providerId: null,
+    },
+    enrollment: { isEnrolled: true },
+  },
+  {
+    courseName: 'Credit - Eligible for credit from known provider',
+    credit: creditData,
+    enrollment: { isEnrolled: true },
+  },
+  {
+    courseName: 'Credit - Purchased but must request',
+    credit: { ...creditData, purchased: true },
+    enrollment: { isEnrolled: true },
+  },
+  {
+    courseName: 'Credit - Credit Request Pending',
+    credit: {
+      ...creditData,
+      purchased: true,
+      requestStatus: creditVals.requestStatuses.pending,
+    },
+    enrollment: { isEnrolled: true },
+  },
+  {
+    courseName: 'Credit - Credit Request Approved',
+    credit: {
+      ...creditData,
+      purchased: true,
+      requestStatus: creditVals.requestStatuses.approved,
+    },
+    enrollment: { isEnrolled: true },
+  },
+  {
+    courseName: 'Credit - Credit Request Rejected, Error thrown',
+    credit: {
+      ...creditData,
+      purchased: true,
+      requestStatus: creditVals.requestStatuses.rejected,
+      error: true,
+    },
+    enrollment: { isEnrolled: true },
+  },
+];
+
+export const courseRuns = [
+  ...auditCourses,
+  ...verifiedCourses,
+  ...fulfilledEntitlementCourses,
+  ...creditCourses,
+];
 
 // unfulfilled entitlement select session
 // unfulfilled entitlement select session with deadline
@@ -688,6 +758,7 @@ export const compileCourseRunData = ({ courseName, ...data }, index) => {
   const out = {
     gradeData: { isPassing: true },
     entitlement: null,
+    credit: {},
     ...data,
     certificate: genCertificateData(data.certificate),
     enrollment: genEnrollmentData({ lastEnrolled, ...data.enrollment }),
