@@ -14,9 +14,13 @@ describe('UnenrollConfirmModal ReasonPane', () => {
       },
       selected: 'props.reason.selected',
       handleSubmit: jest.fn().mockName('props.reason.handleSubmit'),
+      hasReason: true,
     },
   };
   test('snapshot', () => {
     expect(shallow(<ReasonPane {...props} />)).toMatchSnapshot();
+  });
+  test('snapshot: no reason provided', () => {
+    expect(shallow(<ReasonPane {...props} hasReason={false} />)).toMatchSnapshot();
   });
 });

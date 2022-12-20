@@ -39,6 +39,7 @@ export const useUnenrollReasons = ({
   const [isSubmitted, setIsSubmitted] = module.state.isSubmitted(false);
 
   const submittedReason = selectedReason === 'custom' ? customOption : selectedReason;
+  const hasReason = ![null, ''].includes(submittedReason);
 
   const handleTrackReasons = module.useTrackUnenrollReasons({ cardId, submittedReason });
 
@@ -65,6 +66,7 @@ export const useUnenrollReasons = ({
     handleClear,
     handleSkip,
     handleSubmit,
+    hasReason,
     isSkipped,
     isSubmitted,
     selectOption: useValueCallback(setSelectedReason),

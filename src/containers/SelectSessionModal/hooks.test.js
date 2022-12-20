@@ -4,11 +4,19 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { MockUseState } from 'testUtils';
 import { hooks as appHooks, thunkActions } from 'data/redux';
+import track from 'tracking';
 
 import { LEAVE_OPTION } from './constants';
 import messages from './messages';
 import * as hooks from './hooks';
 
+jest.mock('tracking', () => ({
+  entitlements: {
+    newSession: jest.fn(),
+    switchSession: jest.fn(),
+    leaveSession: jest.fn(),
+  },
+}));
 jest.mock('data/redux', () => ({
   hooks: {
     useCardCourseData: jest.fn(),
@@ -56,6 +64,13 @@ const testValue = 'test-value';
 
 const courseId = 'test-course-id';
 appHooks.useCardCourseRunData.mockReturnValue({ courseId });
+
+const newSession = jest.fn();
+const switchSession = jest.fn();
+const leaveSession = jest.fn();
+track.entitlements.newSession.mockReturnValue(newSession);
+track.entitlements.switchSession.mockReturnValue(switchSession);
+track.entitlements.leaveSession.mockReturnValue(leaveSession);
 
 describe('SelectSessionModal hooks', () => {
   let out;
@@ -116,6 +131,7 @@ describe('SelectSessionModal hooks', () => {
             state.mockVal(state.keys.selectedSession, LEAVE_OPTION);
             runHook({});
             out.handleSubmit();
+            expect(leaveSession).toHaveBeenCalledWith();
             expect(dispatch).toHaveBeenCalledWith(
               thunkActions.app.leaveEntitlementSession(selectedCardId),
             );
@@ -126,6 +142,7 @@ describe('SelectSessionModal hooks', () => {
             state.mockVal(state.keys.selectedSession, testValue);
             runHook({});
             out.handleSubmit();
+            expect(newSession).toHaveBeenCalledWith();
             expect(dispatch).toHaveBeenCalledWith(
               thunkActions.app.newEntitlementEnrollment(selectedCardId, testValue),
             );
@@ -136,6 +153,7 @@ describe('SelectSessionModal hooks', () => {
             state.mockVal(state.keys.selectedSession, testValue);
             runHook({ enrollment: { isEnrolled: true } });
             out.handleSubmit();
+            expect(switchSession).toHaveBeenCalledWith();
             expect(dispatch).toHaveBeenCalledWith(
               thunkActions.app.switchEntitlementEnrollment(selectedCardId, testValue),
             );
