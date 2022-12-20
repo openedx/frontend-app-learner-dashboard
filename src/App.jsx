@@ -70,7 +70,7 @@ export const App = () => {
         logError(error);
       }
     }
-  }, [authenticatedUser]);
+  }, [authenticatedUser, loadData]);
   return (
     <Router>
       <Helmet>

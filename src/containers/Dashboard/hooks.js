@@ -12,7 +12,7 @@ export const useIsDashboardCollapsed = () => {
 
 export const useInitializeDashboard = () => {
   const initialize = apiHooks.useInitializeApp();
-  React.useEffect(() => { initialize(); }, []);
+  React.useEffect(() => { initialize(); }, []); // eslint-disable-line
 };
 
 export const useDashboardMessages = () => {
