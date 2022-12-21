@@ -104,6 +104,30 @@ describe('UnenrollConfirmModal reasons hooks', () => {
         expect(dispatch).toHaveBeenCalledWith(thunkActions.app.unenrollFromCourse(cardId));
       });
     });
+    describe('hasReason', () => {
+      it('returns true if an option is selected other than custom', () => {
+        state.mockVal(state.keys.selectedReason, testValue);
+        out = createUseUnenrollReasons();
+        expect(out.hasReason).toEqual(true);
+      });
+      it('returns true if custom option is selected and provided', () => {
+        state.mockVal(state.keys.selectedReason, 'custom');
+        state.mockVal(state.keys.customOption, testValue2);
+        out = createUseUnenrollReasons();
+        expect(out.hasReason).toEqual(true);
+      });
+      it('returns false if no option is selected', () => {
+        state.mockVal(state.keys.selectedReason, null);
+        out = createUseUnenrollReasons();
+        expect(out.hasReason).toEqual(false);
+      });
+      it('returns false if custom option is selcted but not provided', () => {
+        state.mockVal(state.keys.selectedReason, 'custom');
+        state.mockVal(state.keys.customOption, '');
+        out = createUseUnenrollReasons();
+        expect(out.hasReason).toEqual(false);
+      });
+    });
     test('isSkipped returns state value', () => {
       state.mockVal(state.keys.isSkipped, testValue);
       expect(createUseUnenrollReasons().isSkipped).toEqual(testValue);

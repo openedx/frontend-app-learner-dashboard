@@ -40,7 +40,7 @@ export const ReasonPane = ({
         <Button variant="tertiary" onClick={reason.handleSkip}>
           {formatMessage(messages.reasonSkip)}
         </Button>
-        <Button onClick={reason.handleSubmit}>
+        <Button disabled={!reason.hasReason} onClick={reason.handleSubmit}>
           {formatMessage(messages.reasonSubmit)}
         </Button>
       </ActionRow>
@@ -51,6 +51,7 @@ ReasonPane.propTypes = {
   reason: PropTypes.shape({
     value: PropTypes.string,
     handleSkip: PropTypes.func,
+    hasReason: PropTypes.bool,
     selectOption: PropTypes.func,
     customOption: PropTypes.shape({
       value: PropTypes.string,
