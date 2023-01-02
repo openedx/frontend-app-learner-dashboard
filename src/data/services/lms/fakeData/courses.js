@@ -63,6 +63,7 @@ soonDate.setDate(soonDate.getDate() + 60);
 export const soonDateStr = soonDate.toDateString();
 
 export const globalData = {
+  countryCode: 'US',
   emailConfirmation: {
     isNeeded: true,
     sendEmailUrl: 'sendConfirmation@edx.org',

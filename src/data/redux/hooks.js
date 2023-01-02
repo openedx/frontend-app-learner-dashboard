@@ -9,6 +9,7 @@ const { courseCard } = appSelectors;
 
 export const usePageNumber = () => useSelector(appSelectors.pageNumber);
 export const useEmailConfirmationData = () => useSelector(appSelectors.emailConfirmation);
+export const useCountryCode = () => useSelector(appSelectors.countryCode);
 export const useEnterpriseDashboardData = () => useSelector(appSelectors.enterpriseDashboard);
 export const usePlatformSettingsData = () => useSelector(appSelectors.platformSettings);
 export const useSelectSessionModalData = () => useSelector(appSelectors.selectSessionModal);

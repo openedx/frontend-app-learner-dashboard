@@ -9,6 +9,10 @@ import { LEAVE_OPTION } from './constants';
 import messages from './messages';
 import * as hooks from './hooks';
 
+jest.mock('@edx/frontend-platform/analytics', () => ({
+  sendTrackEvent: jest.fn(),
+}));
+
 jest.mock('data/redux', () => ({
   hooks: {
     useCardCourseData: jest.fn(),

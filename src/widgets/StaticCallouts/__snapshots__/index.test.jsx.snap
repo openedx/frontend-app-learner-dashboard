@@ -1,0 +1,110 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StaticCallouts tests StaticCallouts snapshot 1`] = `
+<div
+  className="callouts-container"
+>
+  <div>
+    <h2>
+      <format-message-function
+        message={
+          Object {
+            "defaultMessage": "More opportunities for you <markup>to learn</markup>",
+            "description": "The heading for static callouts.",
+            "id": "StaticCallouts.heading",
+          }
+        }
+        values={
+          Object {
+            "markup": [Function],
+          }
+        }
+      />
+    </h2>
+    <p
+      className="mb-0 text-gray-700"
+    >
+      We've added 500+ learning opportunities to create one of the world's most comprehensive free-to-degree online learning platforms.
+    </p>
+  </div>
+  <div
+    className="static-callouts-container"
+  >
+    <Hyperlink
+      className="static-callouts-item"
+      destination="https://www.edx.org/executive-education?vanguards_click=execed"
+      key="execed"
+      showLaunchIcon={false}
+      target="_blank"
+    >
+      <Badge
+        className="item-badge mb-2"
+        variant="warning"
+      >
+        New
+      </Badge>
+      <h3>
+        Executive Education
+      </h3>
+      <div
+        className="card-description"
+      >
+        Short courses to develop leadership skills
+        <Icon
+          className="d-inline-block align-middle mx-1"
+        />
+      </div>
+    </Hyperlink>
+    <Hyperlink
+      className="static-callouts-item"
+      destination="https://www.edx.org/masters?vanguards_click=masters"
+      key="masters"
+      showLaunchIcon={false}
+      target="_blank"
+    >
+      <Badge
+        className="item-badge mb-2"
+        variant="warning"
+      >
+        New
+      </Badge>
+      <h3>
+        Master's Degrees
+      </h3>
+      <div
+        className="card-description"
+      >
+        Online degree programs from top universities
+        <Icon
+          className="d-inline-block align-middle mx-1"
+        />
+      </div>
+    </Hyperlink>
+    <Hyperlink
+      className="static-callouts-item"
+      destination="https://www.edx.org/bachelors?vanguards_click=bachelors"
+      key="bachelors"
+      showLaunchIcon={false}
+      target="_blank"
+    >
+      <Badge
+        className="item-badge mb-2"
+        variant="warning"
+      >
+        New
+      </Badge>
+      <h3>
+        Bachelor's Degrees
+      </h3>
+      <div
+        className="card-description"
+      >
+        Begin or complete a degree; fully online
+        <Icon
+          className="d-inline-block align-middle mx-1"
+        />
+      </div>
+    </Hyperlink>
+  </div>
+</div>
+`;
