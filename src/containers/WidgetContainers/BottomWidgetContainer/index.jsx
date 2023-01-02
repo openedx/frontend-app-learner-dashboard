@@ -1,5 +1,9 @@
 import React from 'react';
 
-export const BottomWidgetContainer = () => <></>;
+import StaticCallouts from 'widgets/StaticCallouts';
+
+export const BottomWidgetContainer = () => (
+  <StaticCallouts />
+);
 
 export default BottomWidgetContainer;

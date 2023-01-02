@@ -1,0 +1,83 @@
+@import "@edx/paragon/scss/core/core";
+
+.callouts-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 3rem;
+}
+
+.item-badge {
+  width: fit-content;
+}
+
+.card-description {
+  font-size: 0.875rem;
+  color: $gray-500;
+}
+
+.static-callouts-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.static-callouts-item {
+  @include hover() {
+    text-decoration: none;
+  }
+  display: flex;
+  flex-direction: column;
+  flex-basis: fit-content;
+  flex-grow: 1;
+  padding: 0 50px;
+  position: relative;
+}
+
+.static-callouts-item:not(:last-child)::after {
+  position: absolute;
+  right: -12px;
+  content: ' ';
+  height: 100%;
+  border-right: 4px solid $light-400;
+  transform: skew(-12deg);
+}
+
+.static-callouts-item:first-child {
+  padding-left: 0;
+}
+
+.static-callouts-item:last-child {
+  padding-right: 0;
+}
+
+@include media-breakpoint-down(sm) {
+  .static-callouts-container {
+    flex-direction: column;
+    row-gap: 1.5rem !important;
+  }
+
+  .static-callouts-item {
+    padding: 0 !important;
+  }
+
+  .static-callouts-item::after {
+    border: none !important;
+  }
+}
+
+@include media-breakpoint-down(md) {
+  .static-callouts-container-md {
+    flex-wrap: wrap;
+    row-gap: 3.125rem;
+  }
+
+  .static-callouts-item-md {
+    padding: 0;
+  }
+  .static-callouts-item-md:nth-child(even) {
+    padding-left: 3.125rem;
+  }
+
+  .static-callouts-item-md:nth-child(even)::after {
+    border: none !important;
+  }
+}

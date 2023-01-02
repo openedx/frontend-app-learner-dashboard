@@ -6,6 +6,7 @@ import EnterpriseDashboardModal from 'containers/EnterpriseDashboardModal';
 import SelectSessionModal from 'containers/SelectSessionModal';
 import CourseList from 'containers/CourseList';
 
+import BottomWidgetContainer from 'containers/WidgetContainers/BottomWidgetContainer';
 import LoadedWidgetSidebar from 'containers/WidgetContainers/LoadedSidebar';
 import NoCoursesWidgetSidebar from 'containers/WidgetContainers/NoCoursesSidebar';
 
@@ -121,7 +122,12 @@ describe('Dashboard', () => {
           showSelectSessionModal: true,
         },
         content: ['LoadedView', (
-          <DashboardLayout sidebar={<LoadedWidgetSidebar />}><CourseList /></DashboardLayout>
+          <DashboardLayout
+            sidebar={<LoadedWidgetSidebar />}
+            bottomWidgetContainer={<BottomWidgetContainer />}
+          >
+            <CourseList />
+          </DashboardLayout>
         )],
         showEnterpriseModal: false,
         showSelectSessionModal: true,
@@ -137,7 +143,12 @@ describe('Dashboard', () => {
           showSelectSessionModal: false,
         },
         content: ['Dashboard layout with no courses sidebar and content', (
-          <DashboardLayout sidebar={<NoCoursesWidgetSidebar />}><CourseList /></DashboardLayout>
+          <DashboardLayout
+            sidebar={<NoCoursesWidgetSidebar />}
+            bottomWidgetContainer={<BottomWidgetContainer />}
+          >
+            <CourseList />
+          </DashboardLayout>
         )],
         showEnterpriseModal: true,
         showSelectSessionModal: false,

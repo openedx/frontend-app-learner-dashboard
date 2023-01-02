@@ -31,7 +31,7 @@ export const DashboardLayout = ({ bottomWidgetContainer, children, sidebar }) =>
         </Col>
       </Row>
       <Row>
-        <Col>
+        <Col className="my-5.5">
           {bottomWidgetContainer}
         </Col>
       </Row>
