@@ -1,11 +1,11 @@
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { hooks as appHooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 
 import * as hooks from './hooks';
 
-jest.mock('data/redux', () => ({
-  hooks: {
+jest.mock('hooks', () => ({
+  reduxHooks: {
     useCardCourseData: jest.fn(),
     useCardEnrollmentData: jest.fn(),
   },
@@ -26,11 +26,11 @@ describe('CourseCard hooks', () => {
       bannerImgSrc: 'my-banner-url',
     };
     const runHook = ({ course = {} }) => {
-      appHooks.useCardCourseData.mockReturnValueOnce({
+      reduxHooks.useCardCourseData.mockReturnValueOnce({
         ...courseData,
         ...course,
       });
-      appHooks.useCardEnrollmentData.mockReturnValue({ isEnrolled: 'test-is-enrolled' });
+      reduxHooks.useCardEnrollmentData.mockReturnValue({ isEnrolled: 'test-is-enrolled' });
       out = hooks.useCardData({ cardId });
     };
     beforeEach(() => {
@@ -40,7 +40,7 @@ describe('CourseCard hooks', () => {
       expect(out.formatMessage).toEqual(formatMessage);
     });
     it('passes course title and banner URL form course data', () => {
-      expect(appHooks.useCardCourseData).toHaveBeenCalledWith(cardId);
+      expect(reduxHooks.useCardCourseData).toHaveBeenCalledWith(cardId);
       expect(out.title).toEqual(courseData.title);
       expect(out.bannerImgSrc).toEqual(courseData.bannerImgSrc);
     });

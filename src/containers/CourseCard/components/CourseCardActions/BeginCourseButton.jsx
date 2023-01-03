@@ -12,7 +12,7 @@ export const BeginCourseButton = ({ cardId }) => {
   const { formatMessage } = useIntl();
   const { homeUrl } = reduxHooks.useCardCourseRunData(cardId);
   const { hasAccess } = reduxHooks.useCardEnrollmentData(cardId);
-  const { isMasquerading } = reduxHooks.requests.useMasqueradeData();
+  const { isMasquerading } = reduxHooks.useMasqueradeData();
   const handleClick = reduxHooks.useTrackCourseEvent(
     track.course.enterCourseClicked,
     cardId,

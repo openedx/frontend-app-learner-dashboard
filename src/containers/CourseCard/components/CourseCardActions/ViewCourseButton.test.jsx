@@ -2,7 +2,7 @@ import { shallow } from 'enzyme';
 
 import track from 'tracking';
 import { htmlProps } from 'data/constants/htmlKeys';
-import { hooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 import ViewCourseButton from './ViewCourseButton';
 
 jest.mock('tracking', () => ({
@@ -11,8 +11,8 @@ jest.mock('tracking', () => ({
   },
 }));
 
-jest.mock('data/redux', () => ({
-  hooks: {
+jest.mock('hooks', () => ({
+  reduxHooks: {
     useCardCourseRunData: jest.fn(),
     useCardEnrollmentData: jest.fn(),
     useCardEntitlementData: jest.fn(),
@@ -33,9 +33,9 @@ const createWrapper = ({
   isExpired = false,
   propsOveride = {},
 }) => {
-  hooks.useCardCourseRunData.mockReturnValue({ homeUrl });
-  hooks.useCardEnrollmentData.mockReturnValueOnce({ hasAccess });
-  hooks.useCardEntitlementData.mockReturnValueOnce({ isEntitlement, isExpired });
+  reduxHooks.useCardCourseRunData.mockReturnValue({ homeUrl });
+  reduxHooks.useCardEnrollmentData.mockReturnValueOnce({ hasAccess });
+  reduxHooks.useCardEntitlementData.mockReturnValueOnce({ isEntitlement, isExpired });
   return shallow(<ViewCourseButton {...defaultProps} {...propsOveride} />);
 };
 
@@ -48,7 +48,7 @@ describe('ViewCourseButton', () => {
       expect(wrapper).toMatchSnapshot();
     });
     test('links to home URL', () => {
-      expect(wrapper.prop(htmlProps.onClick)).toEqual(hooks.useTrackCourseEvent(
+      expect(wrapper.prop(htmlProps.onClick)).toEqual(reduxHooks.useTrackCourseEvent(
         track.course.enterCourseClicked,
         defaultProps.cardId,
         homeUrl,
@@ -66,7 +66,7 @@ describe('ViewCourseButton', () => {
       expect(wrapper).toMatchSnapshot();
     });
     test('links to home URL', () => {
-      expect(wrapper.prop(htmlProps.onClick)).toEqual(hooks.useTrackCourseEvent(
+      expect(wrapper.prop(htmlProps.onClick)).toEqual(reduxHooks.useTrackCourseEvent(
         track.course.enterCourseClicked,
         defaultProps.cardId,
         homeUrl,

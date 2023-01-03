@@ -33,8 +33,8 @@ export const App = () => {
   const { authenticatedUser } = React.useContext(AppContext);
   const { formatMessage } = useIntl();
   const isFailed = {
-    initialize: reduxHooks.requests.useRequestIsFailed(RequestKeys.initialize),
-    refreshList: reduxHooks.requests.useRequestIsFailed(RequestKeys.refreshList),
+    initialize: reduxHooks.useRequestIsFailed(RequestKeys.initialize),
+    refreshList: reduxHooks.useRequestIsFailed(RequestKeys.refreshList),
   };
   const hasNetworkFailure = isFailed.initialize || isFailed.refreshList;
   const { supportEmail } = reduxHooks.usePlatformSettingsData();

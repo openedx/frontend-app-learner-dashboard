@@ -2,13 +2,13 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { formatMessage } from 'testUtils';
-import { hooks as appHooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 
 import messages from './messages';
 import hooks from './hooks';
 import PendingContent from './PendingContent';
 
-jest.mock('data/redux', () => ({ hooks: { useCardCreditData: jest.fn() } }));
+jest.mock('hooks', () => ({ reduxHooks: { useCardCreditData: jest.fn() } }));
 jest.mock('./hooks', () => ({ useCreditRequestData: jest.fn() }));
 jest.mock('./components/CreditContent', () => 'CreditContent');
 jest.mock('./components/ProviderLink', () => 'ProviderLink');
@@ -20,7 +20,7 @@ const cardId = 'test-card-id';
 const requestData = { test: 'requestData' };
 const providerName = 'test-credit-provider-name';
 const createCreditRequest = jest.fn().mockName('createCreditRequest');
-appHooks.useCardCreditData.mockReturnValue({ providerName });
+reduxHooks.useCardCreditData.mockReturnValue({ providerName });
 hooks.useCreditRequestData.mockReturnValue({ requestData, createCreditRequest });
 
 const render = () => {
@@ -32,7 +32,7 @@ describe('PendingContent component', () => {
   });
   describe('behavior', () => {
     it('initializes card credit data with cardId', () => {
-      expect(appHooks.useCardCreditData).toHaveBeenCalledWith(cardId);
+      expect(reduxHooks.useCardCreditData).toHaveBeenCalledWith(cardId);
     });
     it('initializes credit request data with cardId', () => {
       expect(hooks.useCreditRequestData).toHaveBeenCalledWith(cardId);

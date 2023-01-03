@@ -2,13 +2,13 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { formatMessage } from 'testUtils';
-import { hooks as appHooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 import messages from './messages';
 import ProviderLink from './components/ProviderLink';
 import RejectedContent from './RejectedContent';
 
-jest.mock('data/redux', () => ({
-  hooks: {
+jest.mock('hooks', () => ({
+  reduxHooks: {
     useCardCreditData: jest.fn(),
   },
 }));
@@ -20,7 +20,7 @@ const credit = {
   providerStatusUrl: 'test-credit-provider-status-url',
   providerName: 'test-credit-provider-name',
 };
-appHooks.useCardCreditData.mockReturnValue(credit);
+reduxHooks.useCardCreditData.mockReturnValue(credit);
 
 let el;
 let component;
@@ -31,7 +31,7 @@ describe('RejectedContent component', () => {
   beforeEach(render);
   describe('behavior', () => {
     it('initializes credit data with cardId', () => {
-      expect(appHooks.useCardCreditData).toHaveBeenCalledWith(cardId);
+      expect(reduxHooks.useCardCreditData).toHaveBeenCalledWith(cardId);
     });
   });
   describe('render', () => {

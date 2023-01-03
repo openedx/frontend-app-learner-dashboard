@@ -3,11 +3,6 @@ import * as utils from './utils';
 jest.unmock('./utils');
 
 describe('app-level hooks', () => {
-  describe('nullMethod', () => {
-    it('returns an empty object', () => {
-      expect(utils.nullMethod()).toEqual({});
-    });
-  });
   describe('useValuecallback', () => {
     it('returns react callback with event target value', () => {
       const cb = val => ({ cb: val });

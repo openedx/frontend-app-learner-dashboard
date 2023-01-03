@@ -1,6 +1,10 @@
 import React from 'react';
 
-import { reduxHooks, apiHooks, utilHooks } from 'hooks';
+import {
+  apiHooks,
+  reduxHooks,
+  utilHooks,
+} from 'hooks';
 import { StrictDict } from 'utils';
 import track from 'tracking';
 

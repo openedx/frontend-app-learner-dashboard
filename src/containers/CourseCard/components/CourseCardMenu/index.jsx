@@ -24,7 +24,7 @@ export const CourseCardMenu = ({ cardId }) => {
   const { courseName } = reduxHooks.useCardCourseData(cardId);
   const { isEnrolled, isEmailEnabled } = reduxHooks.useCardEnrollmentData(cardId);
   const { twitter, facebook } = reduxHooks.useCardSocialSettingsData(cardId);
-  const { isMasquerading } = reduxHooks.requests.useMasqueradeData();
+  const { isMasquerading } = reduxHooks.useMasqueradeData();
   const handleTwitterShare = reduxHooks.useTrackCourseEvent(
     track.socialShare,
     cardId,

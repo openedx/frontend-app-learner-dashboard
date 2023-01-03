@@ -10,7 +10,7 @@ import * as reduxHooks from 'data/redux/hooks';
 
 import * as module from './api';
 
-const { useMakeNetworkRequest } = reduxHooks.requests;
+const { useMakeNetworkRequest } = reduxHooks;
 
 export const useNetworkRequest = (action, args) => {
   const makeNetworkRequest = useMakeNetworkRequest();

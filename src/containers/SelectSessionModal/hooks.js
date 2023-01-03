@@ -28,7 +28,7 @@ export const useSelectSessionModalData = () => {
   const { courseId } = reduxHooks.useCardCourseRunData(selectedCardId) || {};
   const { isEnrolled } = reduxHooks.useCardEnrollmentData(selectedCardId);
   const leaveEntitlementSession = apiHooks.useLeaveEntitlementSession(selectedCardId);
-  const switchEntitlementEnrollment = apiHooks.useLeaveEntitlementSession(selectedCardId);
+  const switchEntitlementEnrollment = apiHooks.useSwitchEntitlementEnrollment(selectedCardId);
   const newEntitlementEnrollment = apiHooks.useNewEntitlementEnrollment(selectedCardId);
 
   const [selectedSession, setSelectedSession] = module.state.selectedSession(courseId || null);
@@ -42,8 +42,7 @@ export const useSelectSessionModalData = () => {
     header = formatMessage(messages.selectSessionHeader, { courseTitle });
     hint = formatMessage(messages.selectSessionHint);
   }
-  const updateCardIdCallback = reduxHooks.useUpdateSelectSessionModalCallback;
-  const closeSessionModal = updateCardIdCallback(null);
+  const closeSessionModal = reduxHooks.useUpdateSelectSessionModalCallback(null);
 
   const trackNewSession = track.entitlements.newSession(selectedSession);
   const trackSwitchSession = track.entitlements.switchSession(selectedCardId, selectedSession);

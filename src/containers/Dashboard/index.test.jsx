@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
 
-import { hooks as appHooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 
 import EnterpriseDashboardModal from 'containers/EnterpriseDashboardModal';
 import SelectSessionModal from 'containers/SelectSessionModal';
@@ -14,13 +14,8 @@ import LoadingView from './LoadingView';
 import hooks from './hooks';
 import Dashboard from '.';
 
-jest.mock('data/redux', () => ({
-  thunkActions: {
-    app: {
-      initialize: jest.fn(),
-    },
-  },
-  hooks: {
+jest.mock('hooks', () => ({
+  reduxHooks: {
     useHasCourses: jest.fn(),
     useHasAvailableDashboards: jest.fn(),
     useShowSelectSessionModal: jest.fn(),
@@ -52,10 +47,10 @@ describe('Dashboard', () => {
     initIsPending,
     showSelectSessionModal,
   }) => {
-    appHooks.useHasCourses.mockReturnValueOnce(hasCourses);
-    appHooks.useHasAvailableDashboards.mockReturnValueOnce(hasAvailableDashboards);
-    appHooks.useRequestIsPending.mockReturnValueOnce(initIsPending);
-    appHooks.useShowSelectSessionModal.mockReturnValueOnce(showSelectSessionModal);
+    reduxHooks.useHasCourses.mockReturnValueOnce(hasCourses);
+    reduxHooks.useHasAvailableDashboards.mockReturnValueOnce(hasAvailableDashboards);
+    reduxHooks.useRequestIsPending.mockReturnValueOnce(initIsPending);
+    reduxHooks.useShowSelectSessionModal.mockReturnValueOnce(showSelectSessionModal);
     return shallow(<Dashboard />);
   };
 

@@ -11,7 +11,7 @@ import messages from './messages';
 export const ResumeButton = ({ cardId }) => {
   const { resumeUrl } = reduxHooks.useCardCourseRunData(cardId);
   const { hasAccess, isAudit, isAuditAccessExpired } = reduxHooks.useCardEnrollmentData(cardId);
-  const { isMasquerading } = reduxHooks.requests.useMasqueradeData();
+  const { isMasquerading } = reduxHooks.useMasqueradeData();
   const { formatMessage } = useIntl();
   const handleClick = reduxHooks.useTrackCourseEvent(
     track.course.enterCourseClicked,

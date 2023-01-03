@@ -1,11 +1,11 @@
 import { MockUseState } from 'testUtils';
-import { hooks as appHooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 import track from 'tracking';
 
 import * as hooks from './hooks';
 
-jest.mock('data/redux', () => ({
-  hooks: {
+jest.mock('hooks', () => ({
+  reduxHooks: {
     useEnterpriseDashboardData: jest.fn(),
   },
 }));
@@ -33,7 +33,7 @@ const state = new MockUseState(hooks);
 const enterpriseDashboardData = { label: 'edX, Inc.', url: '/edx-dashboard' };
 
 describe('EnterpriseDashboard hooks', () => {
-  appHooks.useEnterpriseDashboardData.mockReturnValue({ ...enterpriseDashboardData });
+  reduxHooks.useEnterpriseDashboardData.mockReturnValue({ ...enterpriseDashboardData });
 
   describe('state values', () => {
     state.testGetter(state.keys.showModal);

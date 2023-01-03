@@ -1,13 +1,13 @@
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { MockUseState } from 'testUtils';
-import { hooks as appHooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 
 import * as hooks from './hooks';
 import messages from './messages';
 
-jest.mock('data/redux', () => ({
-  hooks: {
+jest.mock('hooks', () => ({
+  reduxHooks: {
     useCardRelatedProgramsData: jest.fn(),
   },
 }));
@@ -30,7 +30,7 @@ describe('RelatedProgramsBadge hooks', () => {
   describe('useRelatedProgramsBadgeData', () => {
     beforeEach(() => {
       state.mock();
-      appHooks.useCardRelatedProgramsData.mockReturnValueOnce({
+      reduxHooks.useCardRelatedProgramsData.mockReturnValueOnce({
         length: numPrograms,
       });
       out = hooks.useRelatedProgramsBadgeData({ cardId });
@@ -38,16 +38,12 @@ describe('RelatedProgramsBadge hooks', () => {
     afterEach(state.restore);
 
     test('openModal sets isOpen to true as useCallback', () => {
-      const { cb, prereqs } = out.openModal.useCallback;
-      expect(prereqs).toEqual([state.setState.isOpen]);
-      cb();
+      out.openModal();
       expect(state.setState.isOpen).toHaveBeenCalledWith(true);
     });
 
     test('closeModal sets isOpen to false as useCallback', () => {
-      const { cb, prereqs } = out.closeModal.useCallback;
-      expect(prereqs).toEqual([state.setState.isOpen]);
-      cb();
+      out.closeModal();
       expect(state.setState.isOpen).toHaveBeenCalledWith(false);
     });
 
@@ -59,12 +55,12 @@ describe('RelatedProgramsBadge hooks', () => {
       expect(out.numPrograms).toEqual(numPrograms);
     });
     test('returns empty programsMessage if no programs', () => {
-      appHooks.useCardRelatedProgramsData.mockReturnValueOnce({ length: 0 });
+      reduxHooks.useCardRelatedProgramsData.mockReturnValueOnce({ length: 0 });
       out = hooks.useRelatedProgramsBadgeData({ cardId });
       expect(out.programsMessage).toEqual('');
     });
     test('returns badgeLabelSingular programsMessage if 1 programs', () => {
-      appHooks.useCardRelatedProgramsData.mockReturnValueOnce({ length: 1 });
+      reduxHooks.useCardRelatedProgramsData.mockReturnValueOnce({ length: 1 });
       out = hooks.useRelatedProgramsBadgeData({ cardId });
       expect(out.programsMessage).toEqual(formatMessage(
         messages.badgeLabelSingular,

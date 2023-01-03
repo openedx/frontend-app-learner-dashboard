@@ -4,7 +4,7 @@ exports[`EmailSettingsModal render snapshot: emails disabled, show: false 1`] = 
 <ModalDialog
   hasCloseButton={false}
   isOpen={false}
-  onClose={[MockFunction hooks.nullMethod]}
+  onClose={[MockFunction utils.nullMethod]}
   title=""
 >
   <div
@@ -48,7 +48,7 @@ exports[`EmailSettingsModal render snapshot: emails disabled, show: true 1`] = `
 <ModalDialog
   hasCloseButton={false}
   isOpen={true}
-  onClose={[MockFunction hooks.nullMethod]}
+  onClose={[MockFunction utils.nullMethod]}
   title=""
 >
   <div
@@ -92,7 +92,7 @@ exports[`EmailSettingsModal render snapshot: emails enabled, show: true 1`] = `
 <ModalDialog
   hasCloseButton={false}
   isOpen={true}
-  onClose={[MockFunction hooks.nullMethod]}
+  onClose={[MockFunction utils.nullMethod]}
   title=""
 >
   <div

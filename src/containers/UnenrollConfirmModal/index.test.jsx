@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { useDispatch } from 'react-redux';
 
 import { UnenrollConfirmModal } from '.';
 
@@ -17,7 +16,6 @@ jest.mock('./hooks', () => ({
 }));
 
 describe('UnenrollConfirmModal component', () => {
-  const dispatch = useDispatch();
   const hookProps = {
     confirm: jest.fn().mockName('hooks.confirm'),
     reason: {
@@ -35,10 +33,10 @@ describe('UnenrollConfirmModal component', () => {
     show: true,
     cardId,
   };
-  test('hooks called with dispatch and closeModal props', () => {
+  test('hooks called with closeModal and cardId', () => {
     hooks.useUnenrollData.mockReturnValueOnce(hookProps);
     shallow(<UnenrollConfirmModal {...props} />);
-    expect(hooks.useUnenrollData).toHaveBeenCalledWith({ dispatch, closeModal, cardId });
+    expect(hooks.useUnenrollData).toHaveBeenCalledWith({ closeModal, cardId });
   });
   test('snapshot: modalStates.confirm', () => {
     hooks.useUnenrollData.mockReturnValueOnce(hookProps);

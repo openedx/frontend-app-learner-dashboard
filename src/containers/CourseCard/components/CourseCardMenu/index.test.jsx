@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
 
-import { hooks as appHooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 import { useEmailSettings, useUnenrollData } from './hooks';
 import CourseCardMenu from '.';
 
@@ -8,8 +8,8 @@ jest.mock('react-share', () => ({
   FacebookShareButton: () => 'FacebookShareButton',
   TwitterShareButton: () => 'TwitterShareButton',
 }));
-jest.mock('data/redux', () => ({
-  hooks: {
+jest.mock('hooks', () => ({
+  reduxHooks: {
     useCardCourseData: jest.fn(),
     useCardEnrollmentData: jest.fn(),
     useCardSocialSettingsData: jest.fn(),
@@ -56,10 +56,10 @@ describe('CourseCardMenu', () => {
   beforeEach(() => {
     useEmailSettings.mockReturnValue(defaultEmailSettingsModal);
     useUnenrollData.mockReturnValue(defaultUnenrollModal);
-    appHooks.useCardSocialSettingsData.mockReturnValue(defaultSocialShare);
-    appHooks.useCardCourseData.mockReturnValue({ courseName });
-    appHooks.useCardEnrollmentData.mockReturnValue({ isEnrolled: true, isEmailEnabled: true });
-    appHooks.useMasqueradeData.mockReturnValue({ isMasquerading: false });
+    reduxHooks.useCardSocialSettingsData.mockReturnValue(defaultSocialShare);
+    reduxHooks.useCardCourseData.mockReturnValue({ courseName });
+    reduxHooks.useCardEnrollmentData.mockReturnValue({ isEnrolled: true, isEmailEnabled: true });
+    reduxHooks.useMasqueradeData.mockReturnValue({ isMasquerading: false });
   });
   describe('enrolled, share enabled, email setting enable', () => {
     beforeEach(() => {
@@ -91,12 +91,12 @@ describe('CourseCardMenu', () => {
   });
   describe('not enrolled, share disabled, email setting disabled', () => {
     beforeEach(() => {
-      appHooks.useCardSocialSettingsData.mockReturnValueOnce({
+      reduxHooks.useCardSocialSettingsData.mockReturnValueOnce({
         ...defaultSocialShare,
         twitter: { ...defaultSocialShare.twitter, isEnabled: false },
         facebook: { ...defaultSocialShare.facebook, isEnabled: false },
       });
-      appHooks.useCardEnrollmentData.mockReturnValueOnce({ isEnrolled: false, isEmailEnabled: false });
+      reduxHooks.useCardEnrollmentData.mockReturnValueOnce({ isEnrolled: false, isEmailEnabled: false });
       wrapper = shallow(<CourseCardMenu {...props} />);
     });
     test('snapshot', () => {
@@ -117,7 +117,7 @@ describe('CourseCardMenu', () => {
   });
   describe('masquerading', () => {
     beforeEach(() => {
-      appHooks.useMasqueradeData.mockReturnValue({ isMasquerading: true });
+      reduxHooks.useMasqueradeData.mockReturnValue({ isMasquerading: true });
       wrapper = shallow(<CourseCardMenu {...props} />);
     });
     test('snapshot', () => {

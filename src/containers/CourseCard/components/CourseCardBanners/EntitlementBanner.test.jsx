@@ -1,12 +1,15 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { hooks as appHooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 import EntitlementBanner from './EntitlementBanner';
 
 jest.mock('components/Banner', () => 'Banner');
-jest.mock('data/redux', () => ({
-  hooks: {
+jest.mock('hooks', () => ({
+  utilHooks: {
+    useFormatDate: () => date => date,
+  },
+  reduxHooks: {
     usePlatformSettingsData: jest.fn(),
     useCardEntitlementData: jest.fn(),
     useUpdateSelectSessionModalCallback: jest.fn(
@@ -30,16 +33,16 @@ const platformData = { supportEmail: 'test-support-email' };
 
 const render = (overrides = {}) => {
   const { entitlement = {} } = overrides;
-  appHooks.useCardEntitlementData.mockReturnValueOnce({ ...entitlementData, ...entitlement });
-  appHooks.usePlatformSettingsData.mockReturnValueOnce(platformData);
+  reduxHooks.useCardEntitlementData.mockReturnValueOnce({ ...entitlementData, ...entitlement });
+  reduxHooks.usePlatformSettingsData.mockReturnValueOnce(platformData);
   el = shallow(<EntitlementBanner cardId={cardId} />);
 };
 
 describe('EntitlementBanner', () => {
   test('initializes data with course number from entitlement', () => {
     render();
-    expect(appHooks.useCardEntitlementData).toHaveBeenCalledWith(cardId);
-    expect(appHooks.useUpdateSelectSessionModalCallback).toHaveBeenCalledWith(cardId);
+    expect(reduxHooks.useCardEntitlementData).toHaveBeenCalledWith(cardId);
+    expect(reduxHooks.useUpdateSelectSessionModalCallback).toHaveBeenCalledWith(cardId);
   });
   test('no display if not an entitlement', () => {
     render({ entitlement: { isEntitlement: false } });

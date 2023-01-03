@@ -1,12 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { hooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 import RelatedProgramsModal from '.';
 
 jest.mock('./components/ProgramCard', () => 'ProgramCard');
-jest.mock('data/redux', () => ({
-  hooks: {
+jest.mock('hooks', () => ({
+  reduxHooks: {
     useCardCourseData: jest.fn(),
     useCardRelatedProgramsData: jest.fn(),
   },
@@ -41,13 +41,13 @@ const props = {
 
 describe('RelatedProgramsModal', () => {
   beforeEach(() => {
-    hooks.useCardCourseData.mockReturnValueOnce(courseData);
-    hooks.useCardRelatedProgramsData.mockReturnValueOnce(programData);
+    reduxHooks.useCardCourseData.mockReturnValueOnce(courseData);
+    reduxHooks.useCardRelatedProgramsData.mockReturnValueOnce(programData);
   });
   it('initializes hooks with cardId', () => {
     shallow(<RelatedProgramsModal {...props} />);
-    expect(hooks.useCardCourseData).toHaveBeenCalledWith(cardId);
-    expect(hooks.useCardRelatedProgramsData).toHaveBeenCalledWith(cardId);
+    expect(reduxHooks.useCardCourseData).toHaveBeenCalledWith(cardId);
+    expect(reduxHooks.useCardRelatedProgramsData).toHaveBeenCalledWith(cardId);
   });
   test('snapshot: open', () => {
     expect(shallow(<RelatedProgramsModal {...props} />)).toMatchSnapshot();

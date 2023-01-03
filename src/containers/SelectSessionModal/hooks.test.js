@@ -1,10 +1,8 @@
-import { useDispatch } from 'react-redux';
-
 import { useIntl } from '@edx/frontend-platform/i18n';
+import track from 'tracking';
 
 import { MockUseState } from 'testUtils';
-import { hooks as appHooks, thunkActions } from 'data/redux';
-import track from 'tracking';
+import { reduxHooks, apiHooks } from 'hooks';
 
 import { LEAVE_OPTION } from './constants';
 import messages from './messages';
@@ -17,30 +15,36 @@ jest.mock('tracking', () => ({
     leaveSession: jest.fn(),
   },
 }));
-jest.mock('data/redux', () => ({
-  hooks: {
+jest.mock('hooks', () => ({
+  reduxHooks: {
     useCardCourseData: jest.fn(),
     useCardCourseRunData: jest.fn(),
     useCardEnrollmentData: jest.fn(),
     useCardEntitlementData: jest.fn(),
     useSelectSessionModalData: jest.fn(),
-    useUpdateSelectSessionModalCallback: jest.fn((...args) => () => ({
-      updateSelectSession: args,
-    })),
+    useUpdateSelectSessionModalCallback: jest.fn(),
   },
-  actions: {
-    app: {
-      updateSelectSessionModal: jest.fn(),
-    },
-  },
-  thunkActions: {
-    app: {
-      switchEntitlementEnrollment: jest.fn((...args) => ({ switchEntitlementEnrollment: args })),
-      leaveEntitlementSession: jest.fn((...args) => ({ leaveEntitlementSession: args })),
-      newEntitlementEnrollment: jest.fn((...args) => ({ newEntitlementEnrollment: args })),
-    },
+  apiHooks: {
+    useSwitchEntitlementEnrollment: jest.fn((...args) => ({ switchEntitlementEnrollment: args })),
+    useLeaveEntitlementSession: jest.fn((...args) => ({ leaveEntitlementSession: args })),
+    useNewEntitlementEnrollment: jest.fn((...args) => ({ newEntitlementEnrollment: args })),
   },
 }));
+
+const updateSelectSessionModalCallback = jest.fn();
+reduxHooks.useUpdateSelectSessionModalCallback.mockReturnValue(updateSelectSessionModalCallback);
+const newEntitlementEnrollment = jest.fn();
+apiHooks.useNewEntitlementEnrollment.mockReturnValue(newEntitlementEnrollment);
+const switchEntitlementEnrollment = jest.fn();
+apiHooks.useSwitchEntitlementEnrollment.mockReturnValue(switchEntitlementEnrollment);
+const leaveEntitlementSession = jest.fn();
+apiHooks.useLeaveEntitlementSession.mockReturnValue(leaveEntitlementSession);
+const trackNewSession = jest.fn();
+track.entitlements.newSession.mockReturnValue(trackNewSession);
+const trackLeaveSession = jest.fn();
+track.entitlements.leaveSession.mockReturnValue(trackLeaveSession);
+const trackSwitchSession = jest.fn();
+track.entitlements.switchSession.mockReturnValue(trackSwitchSession);
 
 const state = new MockUseState(hooks);
 const selectedCardId = 'test-selected-card-id';
@@ -58,19 +62,11 @@ const entitlementData = {
 };
 
 const { formatMessage } = useIntl();
-const dispatch = useDispatch();
 
 const testValue = 'test-value';
 
 const courseId = 'test-course-id';
-appHooks.useCardCourseRunData.mockReturnValue({ courseId });
-
-const newSession = jest.fn();
-const switchSession = jest.fn();
-const leaveSession = jest.fn();
-track.entitlements.newSession.mockReturnValue(newSession);
-track.entitlements.switchSession.mockReturnValue(switchSession);
-track.entitlements.leaveSession.mockReturnValue(leaveSession);
+reduxHooks.useCardCourseRunData.mockReturnValue({ courseId });
 
 describe('SelectSessionModal hooks', () => {
   let out;
@@ -89,11 +85,11 @@ describe('SelectSessionModal hooks', () => {
       entitlement = {},
       selectSession = {},
     }) => {
-      appHooks.useCardCourseData.mockReturnValueOnce({ title: courseTitle, ...course });
-      appHooks.useCardCourseRunData.mockReturnValueOnce({ courseId, ...courseRun });
-      appHooks.useCardEnrollmentData.mockReturnValueOnce({ isEnrolled: false, ...enrollment });
-      appHooks.useCardEntitlementData.mockReturnValueOnce({ ...entitlementData, ...entitlement });
-      appHooks.useSelectSessionModalData.mockReturnValueOnce({ cardId: selectedCardId, ...selectSession });
+      reduxHooks.useCardCourseData.mockReturnValueOnce({ title: courseTitle, ...course });
+      reduxHooks.useCardCourseRunData.mockReturnValueOnce({ courseId, ...courseRun });
+      reduxHooks.useCardEnrollmentData.mockReturnValueOnce({ isEnrolled: false, ...enrollment });
+      reduxHooks.useCardEntitlementData.mockReturnValueOnce({ ...entitlementData, ...entitlement });
+      reduxHooks.useSelectSessionModalData.mockReturnValueOnce({ cardId: selectedCardId, ...selectSession });
       out = hooks.useSelectSessionModalData();
     };
     beforeEach(() => {
@@ -101,11 +97,30 @@ describe('SelectSessionModal hooks', () => {
       runHook({});
     });
     describe('initialization', () => {
-      test('loads entitlement data based on course number', () => {
-        expect(appHooks.useCardEntitlementData).toHaveBeenCalledWith(selectedCardId);
+      it('loads redux data based on selected card id', () => {
+        expect(reduxHooks.useCardEntitlementData).toHaveBeenCalledWith(selectedCardId);
+        expect(reduxHooks.useCardCourseData).toHaveBeenCalledWith(selectedCardId);
+        expect(reduxHooks.useCardEnrollmentData).toHaveBeenCalledWith(selectedCardId);
       });
-      test('get course title based on course number', () => {
-        expect(appHooks.useCardCourseData).toHaveBeenCalledWith(selectedCardId);
+      it('initializes enrollment hooks with selected card id', () => {
+        expect(apiHooks.useLeaveEntitlementSession).toHaveBeenCalledWith(selectedCardId);
+        expect(apiHooks.useNewEntitlementEnrollment).toHaveBeenCalledWith(selectedCardId);
+        expect(apiHooks.useSwitchEntitlementEnrollment).toHaveBeenCalledWith(selectedCardId);
+      });
+      it('initializes selected session with courseId if available', () => {
+        state.expectInitializedWith(state.keys.selectedSession, courseId);
+      });
+      it('initializes selected session with null if courseId not available', () => {
+        runHook({ courseRun: { courseId: undefined } });
+        state.expectInitializedWith(state.keys.selectedSession, null);
+      });
+      it('initializes update callback with null', () => {
+        expect(reduxHooks.useUpdateSelectSessionModalCallback).toHaveBeenCalledWith(null);
+      });
+      it('initializes tracking methods', () => {
+        expect(track.entitlements.newSession).toHaveBeenCalledWith(courseId);
+        expect(track.entitlements.leaveSession).toHaveBeenCalledWith(selectedCardId);
+        expect(track.entitlements.switchSession).toHaveBeenCalledWith(selectedCardId, courseId);
       });
     });
 
@@ -127,36 +142,30 @@ describe('SelectSessionModal hooks', () => {
       });
       describe('handleSubmit', () => {
         describe('if LEAVE_OPTION is selected', () => {
-          it('dispatches leaveEntitlementSession', () => {
+          it('calls and tracks leaveEntitlementSession', () => {
             state.mockVal(state.keys.selectedSession, LEAVE_OPTION);
             runHook({});
             out.handleSubmit();
-            expect(leaveSession).toHaveBeenCalledWith();
-            expect(dispatch).toHaveBeenCalledWith(
-              thunkActions.app.leaveEntitlementSession(selectedCardId),
-            );
+            expect(leaveEntitlementSession).toHaveBeenCalledWith();
+            expect(trackLeaveSession).toHaveBeenCalled();
           });
         });
         describe('if not enrolled in a session yet', () => {
-          it('dispatches newEntitlementEnrollment with selected card ID and session', () => {
+          it('calls and tracks newEntitlementEnrollment with selected card ID and session', () => {
             state.mockVal(state.keys.selectedSession, testValue);
             runHook({});
             out.handleSubmit();
-            expect(newSession).toHaveBeenCalledWith();
-            expect(dispatch).toHaveBeenCalledWith(
-              thunkActions.app.newEntitlementEnrollment(selectedCardId, testValue),
-            );
+            expect(newEntitlementEnrollment).toHaveBeenCalledWith(testValue);
+            expect(trackNewSession).toHaveBeenCalled();
           });
         });
         describe('if enrolled in a session already, selecting a new session', () => {
-          it('dispatches swtichEntitlementEnrollment with selected card ID and session', () => {
+          it('calls and tracks swtichEntitlementEnrollment w/ selected card ID and session', () => {
             state.mockVal(state.keys.selectedSession, testValue);
             runHook({ enrollment: { isEnrolled: true } });
             out.handleSubmit();
-            expect(switchSession).toHaveBeenCalledWith();
-            expect(dispatch).toHaveBeenCalledWith(
-              thunkActions.app.switchEntitlementEnrollment(selectedCardId, testValue),
-            );
+            expect(switchEntitlementEnrollment).toHaveBeenCalledWith(testValue);
+            expect(trackSwitchSession).toHaveBeenCalled();
           });
         });
       });
@@ -178,7 +187,7 @@ describe('SelectSessionModal hooks', () => {
       });
       test('closeSessionModal returns update callback wth dispatch and null card id', () => {
         expect(out.closeSessionModal()).toEqual(
-          appHooks.useUpdateSelectSessionModalCallback(null)(),
+          reduxHooks.useUpdateSelectSessionModalCallback(null)(),
         );
       });
     });

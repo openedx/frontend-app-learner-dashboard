@@ -6,8 +6,8 @@ import mockData from './mockData';
 import messages from './messages';
 
 jest.mock('./components/CourseCard', () => 'CourseCard');
-jest.mock('data/redux', () => ({
-  hooks: {
+jest.mock('hooks', () => ({
+  reduxHooks: {
     usePlatformSettingsData: () => ({
       courseSearchUrl: 'course-search-url',
     }),

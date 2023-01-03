@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 
 import track from 'tracking';
-import { hooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 import { htmlProps } from 'data/constants/htmlKeys';
 import UpgradeButton from './UpgradeButton';
 
@@ -11,8 +11,8 @@ jest.mock('tracking', () => ({
   },
 }));
 
-jest.mock('data/redux', () => ({
-  hooks: {
+jest.mock('hooks', () => ({
+  reduxHooks: {
     useMasqueradeData: jest.fn(() => ({ isMasquerading: false })),
     useCardCourseRunData: jest.fn(),
     useCardEnrollmentData: jest.fn(() => ({ canUpgrade: true })),
@@ -29,26 +29,26 @@ describe('UpgradeButton', () => {
     cardId: 'cardId',
   };
   const upgradeUrl = 'upgradeUrl';
-  hooks.useCardCourseRunData.mockReturnValue({ upgradeUrl });
+  reduxHooks.useCardCourseRunData.mockReturnValue({ upgradeUrl });
   describe('snapshot', () => {
     test('can upgrade', () => {
       const wrapper = shallow(<UpgradeButton {...props} />);
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.prop(htmlProps.disabled)).toEqual(false);
-      expect(wrapper.prop(htmlProps.onClick)).toEqual(hooks.useTrackCourseEvent(
+      expect(wrapper.prop(htmlProps.onClick)).toEqual(reduxHooks.useTrackCourseEvent(
         track.course.upgradeClicked,
         props.cardId,
         upgradeUrl,
       ));
     });
     test('cannot upgrade', () => {
-      hooks.useCardEnrollmentData.mockReturnValueOnce({ canUpgrade: false });
+      reduxHooks.useCardEnrollmentData.mockReturnValueOnce({ canUpgrade: false });
       const wrapper = shallow(<UpgradeButton {...props} />);
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.prop(htmlProps.disabled)).toEqual(true);
     });
     test('masquerading', () => {
-      hooks.useMasqueradeData.mockReturnValueOnce({ isMasquerading: true });
+      reduxHooks.useMasqueradeData.mockReturnValueOnce({ isMasquerading: true });
       const wrapper = shallow(<UpgradeButton {...props} />);
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.prop(htmlProps.disabled)).toEqual(true);

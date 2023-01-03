@@ -9,7 +9,7 @@ import messages from './messages';
 
 export const SelectSessionButton = ({ cardId }) => {
   const { formatMessage } = useIntl();
-  const { isMasquerading } = reduxHooks.requests.useMasqueradeData();
+  const { isMasquerading } = reduxHooks.useMasqueradeData();
   const { hasAccess } = reduxHooks.useCardEnrollmentData(cardId);
   const { canChange, hasSessions } = reduxHooks.useCardEntitlementData(cardId);
   const openSessionModal = reduxHooks.useUpdateSelectSessionModalCallback(cardId);

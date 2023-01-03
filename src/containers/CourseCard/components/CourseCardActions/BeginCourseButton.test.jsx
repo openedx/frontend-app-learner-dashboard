@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 
 import { htmlProps } from 'data/constants/htmlKeys';
-import { hooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 import track from 'tracking';
 import BeginCourseButton from './BeginCourseButton';
 
@@ -11,8 +11,8 @@ jest.mock('tracking', () => ({
   },
 }));
 
-jest.mock('data/redux', () => ({
-  hooks: {
+jest.mock('hooks', () => ({
+  reduxHooks: {
     useCardCourseRunData: jest.fn(() => ({ homeUrl: 'home-url' })),
     useCardEnrollmentData: jest.fn(() => ({ hasAccess: true })),
     useMasqueradeData: jest.fn(() => ({ isMasquerading: false })),
@@ -25,7 +25,7 @@ jest.mock('data/redux', () => ({
 jest.mock('./ActionButton', () => 'ActionButton');
 
 let wrapper;
-const { homeUrl } = hooks.useCardCourseRunData();
+const { homeUrl } = reduxHooks.useCardCourseRunData();
 
 describe('BeginCourseButton', () => {
   const props = {
@@ -39,7 +39,7 @@ describe('BeginCourseButton', () => {
       wrapper = shallow(<BeginCourseButton {...props} />);
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.prop(htmlProps.disabled)).toEqual(false);
-      expect(wrapper.prop(htmlProps.onClick)).toEqual(hooks.useTrackCourseEvent(
+      expect(wrapper.prop(htmlProps.onClick)).toEqual(reduxHooks.useTrackCourseEvent(
         track.course.enterCourseClicked,
         props.cardId,
         homeUrl,
@@ -49,20 +49,20 @@ describe('BeginCourseButton', () => {
   describe('behavior', () => {
     it('initializes course run data with cardId', () => {
       wrapper = shallow(<BeginCourseButton {...props} />);
-      expect(hooks.useCardCourseRunData).toHaveBeenCalledWith(props.cardId);
+      expect(reduxHooks.useCardCourseRunData).toHaveBeenCalledWith(props.cardId);
     });
     it('initializes enrollment data with cardId', () => {
       wrapper = shallow(<BeginCourseButton {...props} />);
-      expect(hooks.useCardEnrollmentData).toHaveBeenCalledWith(props.cardId);
+      expect(reduxHooks.useCardEnrollmentData).toHaveBeenCalledWith(props.cardId);
     });
     describe('disabled states', () => {
       test('learner does not have access', () => {
-        hooks.useCardEnrollmentData.mockReturnValueOnce({ hasAccess: false });
+        reduxHooks.useCardEnrollmentData.mockReturnValueOnce({ hasAccess: false });
         wrapper = shallow(<BeginCourseButton {...props} />);
         expect(wrapper.prop(htmlProps.disabled)).toEqual(true);
       });
       test('masquerading', () => {
-        hooks.useMasqueradeData.mockReturnValueOnce({ isMasquerading: true });
+        reduxHooks.useMasqueradeData.mockReturnValueOnce({ isMasquerading: true });
         wrapper = shallow(<BeginCourseButton {...props} />);
         expect(wrapper.prop(htmlProps.disabled)).toEqual(true);
       });

@@ -16,8 +16,8 @@ jest.mock('./hooks', () => ({
   useIsCollapsed: jest.fn(),
   findCoursesNavClicked: (href) => jest.fn().mockName(`findCoursesNavClicked('${href}')`),
 }));
-jest.mock('data/redux', () => ({
-  hooks: {
+jest.mock('hooks', () => ({
+  reduxHooks: {
     usePlatformSettingsData: jest.fn(() => ({
       courseSearchUrl: 'test-course-search-url',
     })),

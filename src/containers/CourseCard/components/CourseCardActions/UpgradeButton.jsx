@@ -15,7 +15,7 @@ export const UpgradeButton = ({ cardId }) => {
 
   const { upgradeUrl } = reduxHooks.useCardCourseRunData(cardId);
   const { canUpgrade } = reduxHooks.useCardEnrollmentData(cardId);
-  const { isMasquerading } = reduxHooks.requests.useMasqueradeData();
+  const { isMasquerading } = reduxHooks.useMasqueradeData();
   const trackUpgradeClick = reduxHooks.useTrackCourseEvent(
     track.course.upgradeClicked,
     cardId,

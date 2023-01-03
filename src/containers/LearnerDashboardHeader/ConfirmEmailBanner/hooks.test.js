@@ -1,18 +1,19 @@
 import { MockUseState } from 'testUtils';
-import { hooks as appHooks, thunkActions } from 'data/redux';
+import { reduxHooks, apiHooks } from 'hooks';
 
 import * as hooks from './hooks';
 
-jest.mock('data/redux', () => ({
-  hooks: {
+jest.mock('hooks', () => ({
+  reduxHooks: {
     useEmailConfirmationData: jest.fn(),
   },
-  thunkActions: {
-    app: {
-      sendConfirmEmail: jest.fn(),
-    },
+  apiHooks: {
+    useSendConfirmEmail: jest.fn(),
   },
 }));
+
+const sendConfirmEmail = jest.fn();
+apiHooks.useSendConfirmEmail.mockReturnValue(sendConfirmEmail);
 
 const emailConfirmation = {
   isNeeded: true,
@@ -34,14 +35,14 @@ describe('ConfirmEmailBanner hooks', () => {
     afterEach(state.restore);
 
     test('show page banner on unverified email', () => {
-      appHooks.useEmailConfirmationData.mockReturnValueOnce({ ...emailConfirmation });
+      reduxHooks.useEmailConfirmationData.mockReturnValueOnce({ ...emailConfirmation });
       out = hooks.useConfirmEmailBannerData();
       expect(out.isNeeded).toEqual(emailConfirmation.isNeeded);
-      appHooks.useEmailConfirmationData.mockReturnValueOnce({ isNeeded: false });
+      reduxHooks.useEmailConfirmationData.mockReturnValueOnce({ isNeeded: false });
     });
 
     test('hide page banner on verified email', () => {
-      appHooks.useEmailConfirmationData.mockReturnValueOnce({ isNeeded: false });
+      reduxHooks.useEmailConfirmationData.mockReturnValueOnce({ isNeeded: false });
       out = hooks.useConfirmEmailBannerData();
       expect(out.isNeeded).toEqual(false);
     });
@@ -50,7 +51,7 @@ describe('ConfirmEmailBanner hooks', () => {
   describe('behavior', () => {
     beforeEach(() => {
       state.mock();
-      appHooks.useEmailConfirmationData.mockReturnValueOnce({ ...emailConfirmation });
+      reduxHooks.useEmailConfirmationData.mockReturnValueOnce({ ...emailConfirmation });
       out = hooks.useConfirmEmailBannerData();
     });
     afterEach(state.restore);
@@ -65,7 +66,7 @@ describe('ConfirmEmailBanner hooks', () => {
     test('openConfirmModalButtonClick', () => {
       out.openConfirmModalButtonClick();
       expect(state.values.showConfirmModal).toEqual(true);
-      expect(thunkActions.app.sendConfirmEmail).toBeCalled();
+      expect(sendConfirmEmail).toBeCalled();
     });
     test('userConfirmEmailButtonClick', () => {
       out.userConfirmEmailButtonClick();

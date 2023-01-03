@@ -43,7 +43,7 @@ export const useMasqueradeBarData = ({
     isMasqueradingFailed,
     isMasqueradingPending,
     masqueradeErrorStatus,
-  } = reduxHooks.requests.useMasqueradeData();
+  } = reduxHooks.useMasqueradeData();
   const { masqueradeInput, handleMasqueradeInputChange } = module.useMasqueradeInput();
 
   const masqueradeErrorMessage = getMasqueradeErrorMessage(masqueradeErrorStatus);

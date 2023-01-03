@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
 
-import { hooks as appHooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 import { AuthenticatedUserDropdown } from './AuthenticatedUserDropdown';
 import { useIsCollapsed } from './hooks';
 
@@ -11,8 +11,8 @@ jest.mock('@edx/frontend-platform/react', () => ({
     },
   },
 }));
-jest.mock('data/redux', () => ({
-  hooks: {
+jest.mock('hooks', () => ({
+  reduxHooks: {
     useEnterpriseDashboardData: jest.fn(),
     usePlatformSettingsData: jest.fn(() => ({
       courseSearchUrl: 'test-course-search-url',
@@ -35,13 +35,13 @@ describe('AuthenticatedUserDropdown', () => {
 
   describe('snapshots', () => {
     test('with enterprise dashboard', () => {
-      appHooks.useEnterpriseDashboardData.mockReturnValueOnce(defaultDashboardData);
+      reduxHooks.useEnterpriseDashboardData.mockReturnValueOnce(defaultDashboardData);
       useIsCollapsed.mockReturnValueOnce(true);
       const wrapper = shallow(<AuthenticatedUserDropdown {...props} />);
       expect(wrapper).toMatchSnapshot();
     });
     test('without enterprise dashboard and expanded', () => {
-      appHooks.useEnterpriseDashboardData.mockReturnValueOnce(null);
+      reduxHooks.useEnterpriseDashboardData.mockReturnValueOnce(null);
       useIsCollapsed.mockReturnValueOnce(false);
       const wrapper = shallow(<AuthenticatedUserDropdown {...props} />);
       expect(wrapper).toMatchSnapshot();

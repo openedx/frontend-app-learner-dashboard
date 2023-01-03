@@ -215,9 +215,9 @@ jest.mock('data/constants/app', () => ({
   locationId: 'fake-location-id',
 }));
 
-jest.mock('hooks', () => ({
-  ...jest.requireActual('hooks'),
-  nullMethod: jest.fn().mockName('hooks.nullMethod'),
+jest.mock('utils', () => ({
+  ...jest.requireActual('utils'),
+  nullMethod: jest.fn().mockName('utils.nullMethod'),
 }));
 
 jest.mock('utils/hooks', () => {

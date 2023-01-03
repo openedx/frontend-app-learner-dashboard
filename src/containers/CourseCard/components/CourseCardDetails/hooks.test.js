@@ -1,13 +1,16 @@
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { keyStore, dateFormatter } from 'utils';
-import { hooks as appHooks } from 'data/redux';
+import { keyStore } from 'utils';
+import { utilHooks, reduxHooks } from 'hooks';
 
 import * as hooks from './hooks';
 import messages from './messages';
 
-jest.mock('data/redux', () => ({
-  hooks: {
+jest.mock('hooks', () => ({
+  utilHooks: {
+    useFormatDate: jest.fn(),
+  },
+  reduxHooks: {
     useCardCourseData: jest.fn(),
     useCardCourseRunData: jest.fn(),
     useCardEnrollmentData: jest.fn(),
@@ -21,11 +24,13 @@ const cardId = 'my-test-card-id';
 const courseNumber = 'test-course-number';
 const useAccessMessage = 'test-access-message';
 const mockAccessMessage = (args) => ({ cardId: args.cardId, useAccessMessage });
+const formatDate = jest.fn(date => `formatted-${date}`);
+utilHooks.useFormatDate.mockReturnValue(formatDate);
 const hookKeys = keyStore(hooks);
 
 describe('CourseCardDetails hooks', () => {
   let out;
-  const { formatMessage, formatDate } = useIntl();
+  const { formatMessage } = useIntl();
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -45,15 +50,15 @@ describe('CourseCardDetails hooks', () => {
     const runHook = ({ provider = {}, entitlement = {} }) => {
       jest.spyOn(hooks, hookKeys.useAccessMessage)
         .mockImplementationOnce(mockAccessMessage);
-      appHooks.useCardProviderData.mockReturnValueOnce({
+      reduxHooks.useCardProviderData.mockReturnValueOnce({
         ...providerData,
         ...provider,
       });
-      appHooks.useCardEntitlementData.mockReturnValueOnce({
+      reduxHooks.useCardEntitlementData.mockReturnValueOnce({
         ...entitlementData,
         ...entitlement,
       });
-      appHooks.useCardCourseData.mockReturnValueOnce({ courseNumber });
+      reduxHooks.useCardCourseData.mockReturnValueOnce({ courseNumber });
       out = hooks.useCardDetailsData({ cardId });
     };
     beforeEach(() => {
@@ -86,11 +91,11 @@ describe('CourseCardDetails hooks', () => {
       endDate: '10/20/2000',
     };
     const runHook = ({ enrollment = {}, courseRun = {} }) => {
-      appHooks.useCardCourseRunData.mockReturnValueOnce({
+      reduxHooks.useCardCourseRunData.mockReturnValueOnce({
         ...courseRunData,
         ...courseRun,
       });
-      appHooks.useCardEnrollmentData.mockReturnValueOnce({
+      reduxHooks.useCardEnrollmentData.mockReturnValueOnce({
         ...enrollmentData,
         ...enrollment,
       });
@@ -99,8 +104,8 @@ describe('CourseCardDetails hooks', () => {
 
     it('loads data from enrollment and course run data based on course number', () => {
       runHook({});
-      expect(appHooks.useCardCourseRunData).toHaveBeenCalledWith(cardId);
-      expect(appHooks.useCardEnrollmentData).toHaveBeenCalledWith(cardId);
+      expect(reduxHooks.useCardCourseRunData).toHaveBeenCalledWith(cardId);
+      expect(reduxHooks.useCardEnrollmentData).toHaveBeenCalledWith(cardId);
     });
 
     describe('if not started yet', () => {
@@ -111,7 +116,7 @@ describe('CourseCardDetails hooks', () => {
         });
         expect(out).toEqual(formatMessage(
           messages.courseStarts,
-          { startDate: dateFormatter(formatDate, courseRunData.startDate) },
+          { startDate: formatDate(courseRunData.startDate) },
         ));
       });
     });
@@ -123,7 +128,7 @@ describe('CourseCardDetails hooks', () => {
             runHook({ enrollment: { isAudit: true, isAuditAccessExpired: true } });
             expect(out).toEqual(formatMessage(
               messages.accessExpired,
-              { accessExpirationDate: dateFormatter(formatDate, enrollmentData.accessExpirationDate) },
+              { accessExpirationDate: formatDate(enrollmentData.accessExpirationDate) },
             ));
           });
         });
@@ -133,7 +138,7 @@ describe('CourseCardDetails hooks', () => {
             runHook({ enrollment: { isAudit: true } });
             expect(out).toEqual(formatMessage(
               messages.accessExpires,
-              { accessExpirationDate: dateFormatter(formatDate, enrollmentData.accessExpirationDate) },
+              { accessExpirationDate: formatDate(enrollmentData.accessExpirationDate) },
             ));
           });
           it('no endDate and no accessExpirationDate, returns null', () => {
@@ -144,14 +149,14 @@ describe('CourseCardDetails hooks', () => {
             runHook({ enrollment: { isAudit: true, accessExpirationDate: '' } });
             expect(out).toEqual(formatMessage(
               messages.courseEnds,
-              { endDate: dateFormatter(formatDate, courseRunData.endDate) },
+              { endDate: formatDate(courseRunData.endDate) },
             ));
           });
           it('no accessExpirationDate and is archived, return courseEnded with endDate', () => {
             runHook({ enrollment: { isAudit: true, accessExpirationDate: '' }, courseRun: { isArchived: true } });
             expect(out).toEqual(formatMessage(
               messages.courseEnded,
-              { endDate: dateFormatter(formatDate, courseRunData.endDate) },
+              { endDate: formatDate(courseRunData.endDate) },
             ));
           });
         });
@@ -162,7 +167,7 @@ describe('CourseCardDetails hooks', () => {
           runHook({});
           expect(out).toEqual(formatMessage(
             messages.courseEnds,
-            { endDate: dateFormatter(formatDate, courseRunData.endDate) },
+            { endDate: formatDate(courseRunData.endDate) },
           ));
         });
       });
@@ -172,7 +177,7 @@ describe('CourseCardDetails hooks', () => {
           runHook({ courseRun: { isArchived: true } });
           expect(out).toEqual(formatMessage(
             messages.courseEnded,
-            { endDate: dateFormatter(formatDate, courseRunData.endDate) },
+            { endDate: formatDate(courseRunData.endDate) },
           ));
         });
       });

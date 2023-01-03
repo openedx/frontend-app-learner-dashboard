@@ -1,11 +1,11 @@
 import { shallow } from 'enzyme';
 
-import { hooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 
 import CourseCardActions from '.';
 
-jest.mock('data/redux', () => ({
-  hooks: {
+jest.mock('hooks', () => ({
+  reduxHooks: {
     useCardCourseRunData: jest.fn(),
     useCardEnrollmentData: jest.fn(),
     useCardEntitlementData: jest.fn(),
@@ -25,9 +25,9 @@ describe('CourseCardActions', () => {
   const createWrapper = ({
     isEntitlement, isFulfilled, isArchived, isVerified, hasStarted,
   }) => {
-    hooks.useCardEntitlementData.mockReturnValueOnce({ isEntitlement, isFulfilled });
-    hooks.useCardCourseRunData.mockReturnValueOnce({ isArchived });
-    hooks.useCardEnrollmentData.mockReturnValueOnce({ isVerified, hasStarted });
+    reduxHooks.useCardEntitlementData.mockReturnValueOnce({ isEntitlement, isFulfilled });
+    reduxHooks.useCardCourseRunData.mockReturnValueOnce({ isArchived });
+    reduxHooks.useCardEnrollmentData.mockReturnValueOnce({ isVerified, hasStarted });
     return shallow(<CourseCardActions {...props} />);
   };
   describe('snapshot', () => {
