@@ -3,17 +3,17 @@ import { defineMessages } from '@edx/frontend-platform/i18n';
 
 const messages = defineMessages({
   badgeTitle: {
-    id: 'StaticCallouts.badgeTitle',
+    id: 'TwoUWidget.badgeTitle',
     defaultMessage: 'New',
     description: 'The title for item badge.',
   },
   heading: {
-    id: 'StaticCallouts.heading',
+    id: 'TwoUWidget.heading',
     defaultMessage: 'More opportunities for you <markup>to learn</markup>',
     description: 'The heading for static callouts.',
   },
   subheading: {
-    id: 'StaticCallouts.subheading',
+    id: 'TwoUWidget.subheading',
     defaultMessage: `We've added 500+ learning opportunities to create one of the world's most comprehensive free-to-degree online learning platforms.`,
     description: 'The subheading for static callouts.',
   },

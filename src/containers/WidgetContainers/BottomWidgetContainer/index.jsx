@@ -1,9 +1,9 @@
 import React from 'react';
 
-import StaticCallouts from 'widgets/StaticCallouts';
+import TwoUWidget from 'widgets/TwoUWidget';
 
 export const BottomWidgetContainer = () => (
-  <StaticCallouts />
+  <TwoUWidget />
 );
 
 export default BottomWidgetContainer;

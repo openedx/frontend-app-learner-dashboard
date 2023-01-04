@@ -16,42 +16,42 @@ const merchandisingKeys = StrictDict({
 
 const messages = StrictDict({
   [merchandisingKeys.execed]: {
-    id: 'StaticCallouts.execed',
+    id: 'TwoUWidget.execed',
     defaultMessage: 'Executive Education',
     description: 'The title for the link to the executive education page.',
   },
   [merchandisingKeys.execedDescription]: {
-    id: 'StaticCallouts.execedDescription',
+    id: 'TwoUWidget.execedDescription',
     defaultMessage: 'Short courses to develop leadership skills',
     description: 'The description for the link to the executive education page.',
   },
   [merchandisingKeys.masters]: {
-    id: 'StaticCallouts.masters',
+    id: 'TwoUWidget.masters',
     defaultMessage: `Master's Degrees`,
     description: 'The title for the link to the masters page.',
   },
   [merchandisingKeys.mastersDescription]: {
-    id: 'StaticCallouts.mastersDescription',
+    id: 'TwoUWidget.mastersDescription',
     defaultMessage: 'Online degree programs from top universities',
     description: 'The description for the link to the masters page.',
   },
   [merchandisingKeys.bachelors]: {
-    id: 'StaticCallouts.bachelors',
+    id: 'TwoUWidget.bachelors',
     defaultMessage: `Bachelor's Degrees`,
     description: 'The title for the link to the bachelors page.',
   },
   [merchandisingKeys.bachelorsDescription]: {
-    id: 'StaticCallouts.bachelorsDescription',
+    id: 'TwoUWidget.bachelorsDescription',
     defaultMessage: 'Begin or complete a degree; fully online',
     description: 'The description for the link to the bachelors page.',
   },
   [merchandisingKeys.bootcamps]: {
-    id: 'StaticCallouts.bootcamps',
+    id: 'TwoUWidget.bootcamps',
     defaultMessage: 'Boot Camps',
     description: 'The title for the link to the boot camps page.',
   },
   [merchandisingKeys.bootcampsDescription]: {
-    id: 'StaticCallouts.bootcampsDescription',
+    id: 'TwoUWidget.bootcampsDescription',
     defaultMessage: 'Intensive, hands-on, project-based training',
     description: 'The description for the link to the boot camps page.',
   },

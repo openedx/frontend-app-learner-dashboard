@@ -12,7 +12,6 @@ const initialState = {
   suggestedCourses: [],
   filterState: {},
   selectSessionModal: {},
-  countryCode: '',
 };
 
 export const cardId = (val) => `card-${val}`;
@@ -39,7 +38,6 @@ const app = createSlice({
     }),
     loadGlobalData: (state, { payload }) => ({
       ...state,
-      countryCode: payload.countryCode,
       emailConfirmation: payload.emailConfirmation,
       enterpriseDashboard: payload.enterpriseDashboard,
       platformSettings: payload.platformSettings,
