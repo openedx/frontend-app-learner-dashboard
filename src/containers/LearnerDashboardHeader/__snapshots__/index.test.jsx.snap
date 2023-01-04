@@ -31,6 +31,7 @@ exports[`LearnerDashboardHeader snapshots with collapsed 1`] = `
           className="my-auto ml-1 d-flex"
         >
           <IconButton
+            alt="Course search"
             as="a"
             href="test-course-search-url"
             iconAs="Icon"

@@ -5,5 +5,3 @@ import * as utils from './utils';
 export const reduxHooks = redux;
 export const apiHooks = api;
 export const utilHooks = utils;
-
-export default { redux, api, utils };

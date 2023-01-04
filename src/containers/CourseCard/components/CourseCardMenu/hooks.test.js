@@ -46,7 +46,6 @@ describe('CourseCardMenu hooks', () => {
   });
 
   describe('useEmailSettings', () => {
-    let out;
     beforeEach(() => {
       state.mock();
       out = hooks.useEmailSettings();

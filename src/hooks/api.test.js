@@ -1,181 +1,271 @@
+import React from 'react';
+import { AppContext } from '@edx/frontend-platform/react';
 import { keyStore } from 'utils';
-import { actions, selectors } from 'data/redux';
+import { RequestKeys } from 'data/constants/requests';
 import { post } from 'data/services/lms/utils';
+import api from 'data/services/lms/api';
 
-import requests from './requests';
+import * as reduxHooks from 'data/redux/hooks';
+import * as apiHooks from './api';
 
-import * as module from './app';
+const reduxKeys = keyStore(reduxHooks);
 
 jest.mock('data/services/lms/utils', () => ({
-  post: jest.fn(),
+  post: jest.fn((...args) => ({ post: args })),
 }));
-jest.mock('data/redux', () => ({
-  actions: {
-    app: {
-      setPageNumber: jest.fn(v => ({ setPageNumber: v })),
-      loadGlobalData: jest.fn(v => ({ loadGlobalData: v })),
-      loadCourses: jest.fn(v => ({ loadCourses: v })),
-      loadRecommendedCourses: jest.fn(v => ({ loadRecommendedCourses: v })),
-    },
-  },
-  selectors: {
-    app: {
-      emailConfirmation: jest.fn(),
-      courseCard: {
-        courseRun: jest.fn(),
-        entitlement: jest.fn(),
-      },
-    },
-  },
+jest.mock('data/services/lms/api', () => ({
+  initializeList: jest.fn(),
+  updateEntitlementEnrollment: jest.fn(),
+  unenrollFromCourse: jest.fn(),
+  deleteEntitlementEnrollment: jest.fn(),
+  updateEmailSettings: jest.fn(),
+  createCreditRequest: jest.fn(),
 }));
-jest.mock('./requests', () => ({
-  initializeList: jest.fn((args) => ({ initializeList: args })),
-  newEntitlementEnrollment: jest.fn((args) => ({ newEntitlementEnrollment: args })),
-  switchEntitlementEnrollment: jest.fn((args) => ({ switchEntitlementEnrollment: args })),
-  leaveEntitlementSession: jest.fn((args) => ({ leaveEntitlementSession: args })),
-  unenrollFromCourse: jest.fn((args) => ({ unenrollFromCourse: args })),
-  masqueradeAs: jest.fn((args) => ({ masqueradeAs: args })),
-  clearMasquerade: jest.fn((args) => ({ clearMasquerade: args })),
-  updateEmailSettings: jest.fn((args) => ({ updateEmailSettings: args })),
+jest.mock('data/redux/hooks', () => ({
+  useCardCourseRunData: jest.fn(),
+  useCardCreditData: jest.fn(),
+  useCardEntitlementData: jest.fn(),
+  useLoadData: jest.fn(),
+  useMakeNetworkRequest: jest.fn(),
+  useClearRequest: jest.fn(),
+  useEmailConfirmationData: jest.fn(),
 }));
 
-const dispatch = jest.fn(action => action);
-
-const checkDispatch = (call) => { expect(dispatch).toHaveBeenCalledWith(call); };
-
-const moduleKeys = keyStore(module);
-
+const moduleKeys = keyStore(apiHooks);
 const testString = 'TEST-string';
 const uuid = 'test-UUID';
 const cardId = 'test-card-id';
 const selection = 'test-selection';
 const courseId = 'test-COURSE-id';
 const isRefundable = 'test-is-refundable';
+const user = 'test-user';
 
-const loadDataSpy = jest.spyOn(module, moduleKeys.loadData);
-const mockLoadData = data => ({ loadData: data });
+const loadData = jest.fn();
+reduxHooks.useLoadData.mockReturnValue(loadData);
+const clearRequest = jest.fn();
+reduxHooks.useClearRequest.mockReturnValue(clearRequest);
 
-const initializeSpy = jest.spyOn(module, moduleKeys.initialize);
-const mockInitialize = () => 'mock-initialize';
+reduxHooks.useCardCourseRunData.mockReturnValue({ courseId });
+reduxHooks.useCardEntitlementData.mockReturnValue({ uuid, isRefundable });
 
-const testState = { test: 'state' };
-const getState = () => testState;
+let hook;
+let out;
 
-describe('app thunk actions', () => {
+const testInitCardHook = (hookKey) => {
+  test(`initializes ${hookKey} with cardId`, () => {
+    expect(reduxHooks[hookKey]).toHaveBeenCalledWith(cardId);
+  });
+};
+
+const initializeApp = jest.fn();
+
+const testRequestKey = (requestKey) => {
+  test('requestKey', () => { expect(out.requestKey).toEqual(requestKey); });
+};
+
+describe('api hooks', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    selectors.app.emailConfirmation.mockReturnValueOnce({ sendEmailUrl: testString });
-    selectors.app.courseCard.entitlement.mockReturnValueOnce({ uuid, isRefundable });
-    selectors.app.courseCard.courseRun.mockReturnValueOnce({ courseId });
   });
-  describe('loadData', () => {
-    const courses = 'test-courses';
-    const globalData = { some: 'global', data: 'fields' };
+  describe('useNetworkRequest', () => {
+    const makeNetworkRequest = jest.fn(args => ({ networkRequest: args }));
+    it('returns network request based on incoming action', () => {
+      reduxHooks.useMakeNetworkRequest.mockReturnValue(makeNetworkRequest);
+      const promise = Promise.resolve(testString);
+      const action = () => promise;
+      const args = { some: 'test', args: 'for you' };
+      hook = apiHooks.useNetworkRequest(action, args);
+      expect(hook()).toEqual(makeNetworkRequest({ promise, ...args }));
+    });
+  });
+  describe('network requests', () => {
+    const useNetworkRequest = (action, args) => () => ({ action, ...args });
     beforeEach(() => {
-      module.loadData({ courses, ...globalData })(dispatch);
+      jest.spyOn(apiHooks, moduleKeys.useNetworkRequest).mockImplementation(useNetworkRequest);
     });
-    it('initializes pageNumber to 1', () => {
-      checkDispatch(actions.app.setPageNumber(1));
+    describe('useInitializeApp', () => {
+      beforeEach(() => {
+        hook = apiHooks.useInitializeApp();
+        out = hook();
+      });
+      it('calls initialize api method', () => {
+        expect(out.action).toEqual(api.initializeList);
+      });
+      testRequestKey(RequestKeys.initialize);
+      it('initializes load data hook', () => {
+        expect(reduxHooks.useLoadData).toHaveBeenCalledWith();
+      });
+      it('calls loadData with data on success', () => {
+        out.onSuccess({ data: testString });
+        expect(loadData).toHaveBeenCalledWith(testString);
+      });
     });
-    it('loads courses', () => {
-      checkDispatch(actions.app.loadCourses({ courses }));
+
+    describe('entitlement enrollment hooks', () => {
+      const testInitialization = () => {
+        it('initializes useInitializeApp', () => {
+          expect(apiHooks.useInitializeApp).toHaveBeenCalledWith();
+        });
+        testInitCardHook(reduxKeys.useCardEntitlementData);
+      };
+      const testArgs = (requestKey) => {
+        testRequestKey(requestKey);
+        it('initializes app on success', () => {
+          expect(out.onSuccess).toEqual(initializeApp);
+        });
+      };
+      beforeEach(() => {
+        jest.spyOn(apiHooks, moduleKeys.useInitializeApp).mockReturnValue(initializeApp);
+      });
+      describe('useNewEntitlementEnrollment', () => {
+        beforeEach(() => {
+          hook = apiHooks.useNewEntitlementEnrollment(cardId);
+          out = hook(selection);
+        });
+        testInitialization();
+        testArgs(RequestKeys.newEntitlementEnrollment);
+        it('calls updateEntitlementEnrollment api method', () => {
+          out.action(selection);
+          expect(api.updateEntitlementEnrollment).toHaveBeenCalledWith({
+            uuid,
+            courseId: selection,
+          });
+        });
+      });
+
+      describe('useSwitchEntitlementEnrollment', () => {
+        beforeEach(() => {
+          hook = apiHooks.useSwitchEntitlementEnrollment(cardId);
+          out = hook(selection);
+        });
+        testInitialization();
+        testArgs(RequestKeys.switchEntitlementSession);
+        it('calls updateEntitlementEnrollment api method', () => {
+          out.action(selection);
+          expect(api.updateEntitlementEnrollment).toHaveBeenCalledWith({
+            uuid,
+            courseId: selection,
+          });
+        });
+      });
+
+      describe('useLeaveEntitlementSession', () => {
+        beforeEach(() => {
+          hook = apiHooks.useLeaveEntitlementSession(cardId);
+          out = hook(selection);
+        });
+        testInitialization();
+        testArgs(RequestKeys.leaveEntitlementSession);
+        it('calls updateEntitlementEnrollment api method', () => {
+          out.action();
+          expect(api.deleteEntitlementEnrollment).toHaveBeenCalledWith({
+            uuid,
+            isRefundable,
+          });
+        });
+      });
     });
-    it('loads remaining passed args as global data', () => {
-      checkDispatch(actions.app.loadGlobalData(globalData));
+
+    describe('useUnenrollFromCourse', () => {
+      beforeEach(() => {
+        hook = apiHooks.useUnenrollFromCourse(cardId);
+        out = hook();
+      });
+      testInitCardHook(reduxKeys.useCardCourseRunData);
+      testRequestKey(RequestKeys.unenrollFromCourse);
+      it('calls unenrollFromCourse api method with courseId', () => {
+        out.action();
+        expect(api.unenrollFromCourse).toHaveBeenCalledWith({ courseId });
+      });
     });
-  });
-  describe('initialize', () => {
-    beforeEach(() => {
-      loadDataSpy.mockImplementationOnce(mockLoadData);
-      module.initialize()(dispatch);
+
+    describe('useMasqueradeAs', () => {
+      beforeEach(() => {
+        hook = apiHooks.useMasqueradeAs(cardId);
+        out = hook(user);
+      });
+      it('initializes load data hook', () => {
+        expect(reduxHooks.useLoadData).toHaveBeenCalledWith();
+      });
+      testRequestKey(RequestKeys.masquerade);
+      it('calls initializeList api method', () => {
+        out.action();
+        expect(api.initializeList).toHaveBeenCalledWith({ user });
+      });
+      it('loads data on success', () => {
+        out.onSuccess({ data: testString });
+        expect(loadData).toHaveBeenCalledWith(testString);
+      });
     });
-    it('dispatches initializeList event, calling loadData on response', () => {
-      const { onSuccess } = dispatch.mock.calls[0][0].initializeList;
-      onSuccess({ data: testString });
-      checkDispatch(mockLoadData(testString));
+
+    describe('useClearMasquerade', () => {
+      beforeEach(() => {
+        jest.spyOn(apiHooks, moduleKeys.useInitializeApp).mockReturnValue(initializeApp);
+        hook = apiHooks.useClearMasquerade(cardId);
+      });
+      it('initializes clear request redux hook', () => {
+        expect(reduxHooks.useClearRequest).toHaveBeenCalledWith();
+      });
+      it('initializes useInitializeApp hook', () => {
+        expect(apiHooks.useInitializeApp).toHaveBeenCalledWith();
+      });
+      it('clears masquerade state and initializes app on call', () => {
+        hook();
+        expect(clearRequest).toHaveBeenCalledWith(RequestKeys.masquerade);
+        expect(initializeApp).toHaveBeenCalledWith();
+      });
     });
-  });
-  describe('sendConfirmEmail', () => {
-    it('sends post request fo sendEmailUrl', () => {
-      expect(module.sendConfirmEmail()(dispatch, getState)).toEqual(post(testString));
-      expect(selectors.app.emailConfirmation).toHaveBeenCalledWith(testState);
+
+    describe('useUpdateEmailSettings', () => {
+      const enable = 'test-enable';
+      beforeEach(() => {
+        hook = apiHooks.useUpdateEmailSettings(cardId);
+        out = hook(enable);
+      });
+      testInitCardHook(reduxKeys.useCardCourseRunData);
+      testRequestKey(RequestKeys.updateEmailSettings);
+      it('calls updateEmailSettings api method on call', () => {
+        out.action();
+        expect(api.updateEmailSettings).toHaveBeenCalledWith({ courseId, enable });
+      });
     });
-  });
-  describe('newEntitlementEnrollment', () => {
-    beforeEach(() => {
-      module.newEntitlementEnrollment(cardId, selection)(dispatch, getState);
+
+    describe('useSendConfirmEmail', () => {
+      const sendEmailUrl = 'test-send-email-url';
+      beforeEach(() => {
+        reduxHooks.useEmailConfirmationData.mockReturnValue({ sendEmailUrl });
+        hook = apiHooks.useSendConfirmEmail(cardId);
+        out = hook();
+      });
+      it('initializes useEmailConfirmationData hook', () => {
+        expect(reduxHooks.useEmailConfirmationData).toHaveBeenCalledWith();
+      });
+      it('posts to email url on call', () => {
+        expect(out).toEqual(post(sendEmailUrl));
+      });
     });
-    it('dispatches newEntitlementEnrollment request then re-init on success', () => {
-      const request = dispatch.mock.calls[0][0];
-      expect(request.newEntitlementEnrollment.uuid).toEqual(uuid);
-      expect(request.newEntitlementEnrollment.courseId).toEqual(selection);
-      expect(request.newEntitlementEnrollment.onSuccess).toBeDefined();
-      expect(initializeSpy).not.toHaveBeenCalled();
-      request.newEntitlementEnrollment.onSuccess();
-      expect(initializeSpy).toHaveBeenCalled();
-    });
-  });
-  describe('switchEntitlementEnrollmnent', () => {
-    beforeEach(() => {
-      module.switchEntitlementEnrollment(cardId, selection)(dispatch, getState);
-    });
-    it('dispatches switchEntitlementEnrollment request then re-init on success', () => {
-      const request = dispatch.mock.calls[0][0];
-      expect(request.switchEntitlementEnrollment.uuid).toEqual(uuid);
-      expect(request.switchEntitlementEnrollment.courseId).toEqual(selection);
-      expect(request.switchEntitlementEnrollment.onSuccess).toBeDefined();
-      expect(initializeSpy).not.toHaveBeenCalled();
-      request.switchEntitlementEnrollment.onSuccess();
-      expect(initializeSpy).toHaveBeenCalled();
-    });
-  });
-  describe('leaveEntitlementSession', () => {
-    beforeEach(() => {
-      module.leaveEntitlementSession(cardId)(dispatch, getState);
-    });
-    it('dispatches leaveEntitlementEnrollment request then re-init on success', () => {
-      const request = dispatch.mock.calls[0][0];
-      expect(request.leaveEntitlementSession.uuid).toEqual(uuid);
-      expect(request.leaveEntitlementSession.isRefundable).toEqual(isRefundable);
-      expect(request.leaveEntitlementSession.onSuccess).toBeDefined();
-      expect(initializeSpy).not.toHaveBeenCalled();
-      request.leaveEntitlementSession.onSuccess();
-      expect(initializeSpy).toHaveBeenCalled();
-    });
-  });
-  describe('unenrollFromCourse', () => {
-    const reason = 'test-reason';
-    it('dispatches unenrollFromCourse request action', () => {
-      module.unenrollFromCourse(cardId, reason)(dispatch, getState);
-      const request = dispatch.mock.calls[0][0];
-      expect(request.unenrollFromCourse.courseId).toEqual(courseId);
-    });
-  });
-  describe('masqueradeAs', () => {
-    it('dispatches masqueradeAS request action, loading data on success', () => {
-      loadDataSpy.mockImplementationOnce(mockLoadData);
-      module.masqueradeAs(testString)(dispatch);
-      const request = dispatch.mock.calls[0][0];
-      request.masqueradeAs.onSuccess({ data: testString });
-      expect(dispatch).toHaveBeenCalledWith(mockLoadData(testString));
-    });
-  });
-  describe('clearMasquerade', () => {
-    it('dispatches clearMasquerade action and re-initializes', () => {
-      initializeSpy.mockImplementationOnce(mockInitialize);
-      module.clearMasquerade()(dispatch);
-      expect(dispatch).toHaveBeenCalledWith(requests.clearMasquerade());
-      expect(dispatch).toHaveBeenCalledWith(mockInitialize());
-    });
-  });
-  describe('update email settings', () => {
-    it('dispatches updateEmailSettings request action', () => {
-      module.updateEmailSettings(cardId, testString)(dispatch, getState);
-      expect(selectors.app.courseCard.courseRun).toHaveBeenCalledWith(testState, cardId);
-      expect(dispatch).toHaveBeenCalledWith(requests.updateEmailSettings({
-        courseId,
-        enable: testString,
-      }));
+
+    describe('useCreateCreditRequest', () => {
+      const username = 'test-username';
+      const providerId = 'test-provider-id';
+      beforeEach(() => {
+        React.useContext.mockReturnValue({ authenticatedUser: { username } });
+        reduxHooks.useCardCreditData.mockReturnValue({ providerId });
+        hook = apiHooks.useCreateCreditRequest(cardId);
+      });
+      testInitCardHook(reduxKeys.useCardCreditData);
+      testInitCardHook(reduxKeys.useCardCourseRunData);
+      it('initializes username from app context', () => {
+        expect(React.useContext).toHaveBeenCalledWith(AppContext);
+      });
+      it('calls createCreditRequest api method on call', () => {
+        out = hook();
+        expect(api.createCreditRequest).toHaveBeenCalledWith({
+          providerId,
+          courseId,
+          username,
+        });
+      });
     });
   });
 });

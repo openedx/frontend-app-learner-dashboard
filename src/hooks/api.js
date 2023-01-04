@@ -7,7 +7,6 @@ import { post } from 'data/services/lms/utils';
 import api from 'data/services/lms/api';
 
 import * as reduxHooks from 'data/redux/hooks';
-
 import * as module from './api';
 
 const { useMakeNetworkRequest } = reduxHooks;
@@ -35,48 +34,43 @@ export const useInitializeApp = () => {
 export const useNewEntitlementEnrollment = (cardId) => {
   const { uuid } = reduxHooks.useCardEntitlementData(cardId);
   const onSuccess = module.useInitializeApp();
-  const requestKey = RequestKeys.newEntitlementEnrollment;
   return (selection) => module.useNetworkRequest(
     () => api.updateEntitlementEnrollment({ uuid, courseId: selection }),
-    { requestKey, onSuccess },
+    { onSuccess, requestKey: RequestKeys.newEntitlementEnrollment },
   )();
 };
 
 export const useSwitchEntitlementEnrollment = (cardId) => {
   const { uuid } = reduxHooks.useCardEntitlementData(cardId);
   const onSuccess = module.useInitializeApp();
-  const requestKey = RequestKeys.switchEntitlementSession;
   return (selection) => module.useNetworkRequest(
     () => api.updateEntitlementEnrollment({ uuid, courseId: selection }),
-    { requestKey, onSuccess },
+    { onSuccess, requestKey: RequestKeys.switchEntitlementSession },
   )();
 };
 
 export const useLeaveEntitlementSession = (cardId) => {
   const { uuid, isRefundable } = reduxHooks.useCardEntitlementData(cardId);
   const onSuccess = module.useInitializeApp();
-  const requestKey = RequestKeys.leaveEntitlementSession;
   return module.useNetworkRequest(
     () => api.deleteEntitlementEnrollment({ uuid, isRefundable }),
-    { requestKey, onSuccess },
+    { onSuccess, requestKey: RequestKeys.leaveEntitlementSession },
   );
 };
 
 export const useUnenrollFromCourse = (cardId) => {
   const { courseId } = reduxHooks.useCardCourseRunData(cardId);
-  const requestKey = RequestKeys.unenrollFromCourse;
   return module.useNetworkRequest(
     () => api.unenrollFromCourse({ courseId }),
-    { requestKey },
+    { requestKey: RequestKeys.unenrollFromCourse },
   );
 };
 
 export const useMasqueradeAs = () => {
-  const requestKey = RequestKeys.masquerade;
   const loadData = reduxHooks.useLoadData();
   return (user) => module.useNetworkRequest(
     () => api.initializeList({ user }),
-    { requestKey, onSuccess: ({ data }) => loadData(data) },
+    { onSuccess: ({ data }) => loadData(data), requestKey: RequestKeys.masquerade },
   )();
 };
 
@@ -91,10 +85,9 @@ export const useClearMasquerade = () => {
 
 export const useUpdateEmailSettings = (cardId) => {
   const { courseId } = reduxHooks.useCardCourseRunData(cardId);
-  const requestKey = RequestKeys.updateEmailSettings;
   return (enable) => module.useNetworkRequest(
     () => api.updateEmailSettings({ courseId, enable }),
-    { requestKey },
+    { requestKey: RequestKeys.updateEmailSettings },
   )();
 };
 
