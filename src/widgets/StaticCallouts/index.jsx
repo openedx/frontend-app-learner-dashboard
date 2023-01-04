@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import classNames from 'classnames';
 
+import { AppContext } from '@edx/frontend-platform/react';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { Badge, Hyperlink, Icon } from '@edx/paragon';
 import { ArrowForward } from '@edx/paragon/icons';
@@ -12,6 +13,33 @@ import messages from './messages';
 import './index.scss';
 
 export const StaticCallouts = () => {
+  // TODO will be remove after experiment
+  const [show2uLobs, setShow2uLobs] = useState(false);
+  const { authenticatedUser } = useContext(AppContext);
+  useEffect(() => {
+    const experimentId = '22164741776';
+    const optimizely = window.optimizely || null;
+    let timer = null;
+    if (optimizely) {
+      optimizely.push({
+        type: 'user',
+        attributes: {
+          isEnterpriseUser: authenticatedUser.administrator,
+        },
+      });
+      optimizely.push({
+        type: 'page',
+        pageName: 'van_1225_merchandise_2u_lobs_on_learner_home',
+      });
+      timer = setTimeout(() => {
+        const selectedVariant = optimizely.get('state').getVariationMap()[experimentId];
+        if (selectedVariant?.name === 'dashboard_with_2u_lobs') {
+          setShow2uLobs(true);
+        }
+      }, 500);
+    }
+    return () => clearTimeout(timer);
+  }, [authenticatedUser]);
   const { formatMessage } = useIntl();
   const countryCode = useCountryCode();
   const merchandisingItems = getMerchandisingItems(countryCode);
@@ -39,22 +67,24 @@ export const StaticCallouts = () => {
   ));
 
   return (
-    <div className="callouts-container">
-      <div>
-        <h2>
-          {formatMessage(messages.heading, markup)}
-        </h2>
-        <p className="mb-0 text-gray-700">
-          {formatMessage(messages.subheading)}
-        </p>
+    show2uLobs && (
+      <div className="callouts-container">
+        <div>
+          <h2>
+            {formatMessage(messages.heading, markup)}
+          </h2>
+          <p className="mb-0 text-gray-700">
+            {formatMessage(messages.subheading)}
+          </p>
+        </div>
+        <div className={classNames('static-callouts-container', {
+          'static-callouts-container-md': isMediumScreen && countryCode === countryCodeUS,
+        })}
+        >
+          {items}
+        </div>
       </div>
-      <div className={classNames('static-callouts-container', {
-        'static-callouts-container-md': isMediumScreen && countryCode === countryCodeUS,
-      })}
-      >
-        {items}
-      </div>
-    </div>
+    )
   );
 };
 
