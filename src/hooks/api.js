@@ -81,7 +81,7 @@ export const useMasqueradeAs = () => {
 };
 
 export const useClearMasquerade = () => {
-  const clearRequest = reduxHooks.requests.useClearRequest();
+  const clearRequest = reduxHooks.useClearRequest();
   const initializeApp = module.useInitializeApp();
   return () => {
     clearRequest(RequestKeys.masquerade);

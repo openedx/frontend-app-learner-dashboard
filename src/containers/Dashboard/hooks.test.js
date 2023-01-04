@@ -1,5 +1,4 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { useWindowSize, breakpoints } from '@edx/paragon';
@@ -42,7 +41,6 @@ describe('CourseCard hooks', () => {
   });
   describe('useInitializeDashboard', () => {
     it('dispatches initialize thunk action on component load', () => {
-      const dispatch = useDispatch();
       hooks.useInitializeDashboard();
       const [cb, prereqs] = React.useEffect.mock.calls[0];
       expect(prereqs).toEqual([]);

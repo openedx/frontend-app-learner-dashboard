@@ -52,6 +52,7 @@ export const LearnerDashboardHeader = () => {
             {isCollapsed ? (
               <div className="my-auto ml-1 d-flex">
                 <IconButton
+                  alt={formatMessage(messages.courseSearchAlt)}
                   as="a"
                   href={courseSearchUrl}
                   variant="primary"
