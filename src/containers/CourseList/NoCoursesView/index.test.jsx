@@ -5,7 +5,7 @@ import EmptyCourse from '.';
 
 jest.mock('data/redux', () => ({
   hooks: {
-    useRecommendedCoursesData: jest.fn(() => ({ courses: [], isPersonalizedRecommendation: false })),
+    useRecommendedCoursesData: jest.fn(() => ({ courses: [], isControl: false })),
     useRequestIsPending: jest.fn(),
     usePlatformSettingsData: () => ({
       courseSearchUrl: 'course-search-url',

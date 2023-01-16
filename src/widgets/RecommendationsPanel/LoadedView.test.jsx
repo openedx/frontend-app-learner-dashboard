@@ -20,7 +20,7 @@ jest.mock('./track', () => ({
 describe('RecommendationsPanel LoadedView', () => {
   const props = {
     courses: mockData.courses,
-    isPersonalizedRecommendation: false,
+    isControl: null,
   };
   describe('snapshot', () => {
     test('without personalize recommendation', () => {
@@ -29,7 +29,7 @@ describe('RecommendationsPanel LoadedView', () => {
       expect(el.find('h3').text()).toEqual(messages.popularCoursesHeading.defaultMessage);
     });
     test('with personalize recommendation', () => {
-      const el = shallow(<LoadedView {...props} isPersonalizedRecommendation />);
+      const el = shallow(<LoadedView {...props} isControl={false} />);
       expect(el).toMatchSnapshot();
       expect(el.find('h3').text()).toEqual(messages.recommendationsHeading.defaultMessage);
     });
