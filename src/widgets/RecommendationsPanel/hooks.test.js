@@ -117,16 +117,16 @@ describe('RecommendationsPanel hooks', () => {
         });
       });
       describe('personalize recommendation', () => {
-        it('default to false', () => {
+        it('default to null', () => {
           state.mockVal(state.keys.data, {});
           out = hooks.useRecommendationPanelData();
-          expect(out.isPersonalizedRecommendation).toEqual(false);
+          expect(out.isControl).toEqual(null);
         });
         it('is based on data', () => {
           const expectOutput = { test: 'abirary' };
-          state.mockVal(state.keys.data, { data: { isPersonalizedRecommendation: expectOutput } });
+          state.mockVal(state.keys.data, { data: { isControl: expectOutput } });
           out = hooks.useRecommendationPanelData();
-          expect(out.isPersonalizedRecommendation).toEqual(expectOutput);
+          expect(out.isControl).toEqual(expectOutput);
         });
       });
       describe('request is completed, with no returned courses', () => {

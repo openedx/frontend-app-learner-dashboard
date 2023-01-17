@@ -14,14 +14,14 @@ import './index.scss';
 
 export const LoadedView = ({
   courses,
-  isPersonalizedRecommendation,
+  isControl,
 }) => {
   const { courseSearchUrl } = hooks.usePlatformSettingsData();
   const { formatMessage } = useIntl();
 
   return (
     <div className="p-4 w-100 panel-background">
-      <h3 className="pb-2">{isPersonalizedRecommendation
+      <h3 className="pb-2">{isControl === false
         ? formatMessage(messages.recommendationsHeading) : formatMessage(messages.popularCoursesHeading)}
       </h3>
       <div>
@@ -29,7 +29,7 @@ export const LoadedView = ({
           <CourseCard
             key={course.courseKey}
             course={course}
-            isPersonalizedRecommendation={isPersonalizedRecommendation}
+            isControl={isControl}
           />
         ))}
       </div>
@@ -55,7 +55,7 @@ LoadedView.propTypes = {
     logoImageUrl: PropTypes.string,
     marketingUrl: PropTypes.string,
   })).isRequired,
-  isPersonalizedRecommendation: PropTypes.bool.isRequired,
+  isControl: PropTypes.oneOf([true, false, null]).isRequired,
 };
 
 export default LoadedView;

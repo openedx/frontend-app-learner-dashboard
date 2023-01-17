@@ -20,7 +20,7 @@ const { courses } = mockData;
 describe('RecommendationsPanel snapshot', () => {
   const defaultLoadedViewProps = {
     courses: [],
-    isPersonalizedRecommendation: false,
+    isControl: false,
   };
   const defaultValues = {
     isFailed: false,

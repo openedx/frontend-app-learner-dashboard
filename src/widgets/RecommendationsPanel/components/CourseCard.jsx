@@ -7,9 +7,9 @@ import { useIsCollapsed } from 'containers/CourseCard/hooks';
 import useCourseCardData from './hooks';
 import './index.scss';
 
-export const CourseCard = ({ course, isPersonalizedRecommendation }) => {
+export const CourseCard = ({ course, isControl }) => {
   const isCollapsed = useIsCollapsed();
-  const { handleCourseClick } = useCourseCardData(course, isPersonalizedRecommendation);
+  const { handleCourseClick } = useCourseCardData(course, isControl);
 
   return (
     <Hyperlink
@@ -45,7 +45,7 @@ CourseCard.propTypes = {
     logoImageUrl: PropTypes.string,
     marketingUrl: PropTypes.string,
   }).isRequired,
-  isPersonalizedRecommendation: PropTypes.bool.isRequired,
+  isControl: PropTypes.oneOf([true, false, null]).isRequired,
 };
 
 export default CourseCard;
