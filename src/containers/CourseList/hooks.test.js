@@ -1,26 +1,19 @@
-import { useDispatch } from 'react-redux';
 import * as paragon from '@edx/paragon';
 
 import { MockUseState } from 'testUtils';
-import { actions, hooks as appHooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 import { ListPageSize, SortKeys } from 'data/constants/app';
 import * as hooks from './hooks';
 
-jest.mock('data/redux', () => ({
-  actions: {
-    app: {
-      setPageNumber: (value) => ({ setPageNumber: value }),
-    },
-  },
-  hooks: {
+jest.mock('hooks', () => ({
+  reduxHooks: {
     useCurrentCourseList: jest.fn(),
     usePageNumber: jest.fn(() => 23),
+    useSetPageNumber: jest.fn(),
   },
 }));
 
 const state = new MockUseState(hooks);
-
-const dispatch = useDispatch();
 
 const testList = ['a', 'b'];
 const testListData = {
@@ -31,11 +24,13 @@ const testSortBy = 'fake sort option';
 const testFilters = ['some', 'fake', 'filters'];
 const testSetFilters = { add: jest.fn(), remove: jest.fn() };
 const testCheckboxSetValues = [testFilters, testSetFilters];
+const setPageNumber = jest.fn(val => ({ setPageNumber: val }));
+reduxHooks.useSetPageNumber.mockReturnValue(setPageNumber);
 
 describe('CourseList hooks', () => {
   let out;
 
-  appHooks.useCurrentCourseList.mockReturnValue(testListData);
+  reduxHooks.useCurrentCourseList.mockReturnValue(testListData);
   paragon.useCheckboxSetValues.mockImplementation(() => testCheckboxSetValues);
 
   describe('state values', () => {
@@ -55,7 +50,7 @@ describe('CourseList hooks', () => {
         state.expectInitializedWith(state.keys.sortBy, SortKeys.enrolled);
       });
       it('loads current course list with sortBy, filters, and page size', () => {
-        expect(appHooks.useCurrentCourseList).toHaveBeenCalledWith({
+        expect(reduxHooks.useCurrentCourseList).toHaveBeenCalledWith({
           sortBy: testSortBy,
           filters: testFilters,
           pageSize: ListPageSize,
@@ -64,7 +59,7 @@ describe('CourseList hooks', () => {
     });
     describe('output', () => {
       test('pageNumber loads from usePageNumber hook', () => {
-        expect(out.pageNumber).toEqual(appHooks.usePageNumber());
+        expect(out.pageNumber).toEqual(reduxHooks.usePageNumber());
       });
       test('numPages and visible list load from useCurrentCourseList hook', () => {
         expect(out.numPages).toEqual(testListData.numPages);
@@ -94,7 +89,7 @@ describe('CourseList hooks', () => {
           expect(testSetFilters.remove).toHaveBeenCalledWith(testFilters[0]);
         });
         test('setPageNumber dispatches setPageNumber action with passed value', () => {
-          expect(out.setPageNumber(2)).toEqual(dispatch(actions.app.setPageNumber(2)));
+          expect(out.setPageNumber(2)).toEqual(setPageNumber(2));
         });
       });
     });

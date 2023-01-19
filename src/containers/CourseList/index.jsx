@@ -3,7 +3,7 @@ import React from 'react';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { Pagination } from '@edx/paragon';
 
-import { hooks as appHooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 import {
   ActiveCourseFilters,
   CourseFilterControls,
@@ -19,7 +19,7 @@ import './index.scss';
 
 export const CourseList = () => {
   const { formatMessage } = useIntl();
-  const hasCourses = appHooks.useHasCourses();
+  const hasCourses = reduxHooks.useHasCourses();
   const {
     filterOptions,
     setPageNumber,

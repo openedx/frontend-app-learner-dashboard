@@ -14,7 +14,7 @@ import {
 } from '@edx/paragon';
 import { Close, Tune } from '@edx/paragon/icons';
 
-import { hooks as appHooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 
 import FilterForm from './components/FilterForm';
 import SortForm from './components/SortForm';
@@ -30,7 +30,7 @@ export const CourseFilterControls = ({
   setFilters,
 }) => {
   const { formatMessage } = useIntl();
-  const hasCourses = appHooks.useHasCourses();
+  const hasCourses = reduxHooks.useHasCourses();
   const {
     isOpen,
     open,

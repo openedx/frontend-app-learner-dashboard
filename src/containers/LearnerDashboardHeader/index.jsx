@@ -10,7 +10,7 @@ import {
 import topBanner from 'assets/top_stripe.svg';
 import MasqueradeBar from 'containers/MasqueradeBar';
 import urls from 'data/services/lms/urls';
-import { hooks as appHooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 
 import AuthenticatedUserDropdown from './AuthenticatedUserDropdown';
 import GreetingBanner from './GreetingBanner';
@@ -28,7 +28,7 @@ export const UserMenu = () => {
 export const LearnerDashboardHeader = () => {
   const { formatMessage } = useIntl();
   const isCollapsed = useIsCollapsed();
-  const { courseSearchUrl } = appHooks.usePlatformSettingsData();
+  const { courseSearchUrl } = reduxHooks.usePlatformSettingsData();
 
   const exploreCoursesClick = findCoursesNavClicked(courseSearchUrl);
 
@@ -52,6 +52,7 @@ export const LearnerDashboardHeader = () => {
             {isCollapsed ? (
               <div className="my-auto ml-1 d-flex">
                 <IconButton
+                  alt={formatMessage(messages.courseSearchAlt)}
                   as="a"
                   href={courseSearchUrl}
                   variant="primary"

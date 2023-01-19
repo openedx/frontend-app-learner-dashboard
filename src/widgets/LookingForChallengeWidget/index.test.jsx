@@ -2,8 +2,8 @@ import { shallow } from 'enzyme';
 
 import LookingForChallengeWidget from '.';
 
-jest.mock('data/redux', () => ({
-  hooks: {
+jest.mock('hooks', () => ({
+  reduxHooks: {
     usePlatformSettingsData: () => ({
       courseSearchUrl: 'course-search-url',
     }),

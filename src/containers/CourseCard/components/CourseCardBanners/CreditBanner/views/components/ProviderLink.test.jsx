@@ -1,12 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { hooks as appHooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 
 import ProviderLink from './ProviderLink';
 
-jest.mock('data/redux', () => ({
-  hooks: {
+jest.mock('hooks', () => ({
+  reduxHooks: {
     useCardCreditData: jest.fn(),
   },
 }));
@@ -20,12 +20,12 @@ let el;
 
 describe('ProviderLink component', () => {
   beforeEach(() => {
-    appHooks.useCardCreditData.mockReturnValue(credit);
+    reduxHooks.useCardCreditData.mockReturnValue(credit);
     el = shallow(<ProviderLink cardId={cardId} />);
   });
   describe('behavior', () => {
     it('initializes credit hook with cardId', () => {
-      expect(appHooks.useCardCreditData).toHaveBeenCalledWith(cardId);
+      expect(reduxHooks.useCardCreditData).toHaveBeenCalledWith(cardId);
     });
   });
   describe('render', () => {

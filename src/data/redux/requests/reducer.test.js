@@ -18,7 +18,7 @@ describe('requests reducer', () => {
       it('adds a pending status for the given key', () => {
         expect(reducer(
           testingState,
-          actions.startRequest(testKey),
+          actions.startRequest({ requestKey: testKey }),
         )).toEqual({
           ...testingState,
           [testKey]: { status: RequestStates.pending },

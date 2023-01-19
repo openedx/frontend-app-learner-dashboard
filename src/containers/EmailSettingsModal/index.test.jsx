@@ -1,5 +1,4 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { shallow } from 'enzyme';
 
 import hooks from './hooks';
@@ -22,8 +21,6 @@ const props = {
   cardId: 'test-course-number',
 };
 
-const dispatch = useDispatch();
-
 describe('EmailSettingsModal', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -33,10 +30,9 @@ describe('EmailSettingsModal', () => {
       hooks.mockReturnValueOnce(hookProps);
       shallow(<EmailSettingsModal {...props} />);
     });
-    it('calls hook w/ dispatch from redux hook, and closeModal, cardId from props', () => {
+    it('calls hook w/ closeModal and cardId from props', () => {
       expect(hooks).toHaveBeenCalledWith({
         closeModal: props.closeModal,
-        dispatch,
         cardId: props.cardId,
       });
     });

@@ -1,10 +1,9 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { useWindowSize, breakpoints } from '@edx/paragon';
 
-import { thunkActions } from 'data/redux';
+import { apiHooks } from 'hooks';
 
 import appMessages from 'messages';
 import * as hooks from './hooks';
@@ -14,14 +13,14 @@ jest.mock('@edx/paragon', () => ({
   breakpoints: {},
 }));
 
-jest.mock('data/redux', () => ({
-  thunkActions: {
-    app: {
-      initialize: jest.fn(() => 'thunkActions.app.initialize'),
-    },
+jest.mock('hooks', () => ({
+  apiHooks: {
+    useInitializeApp: jest.fn(),
   },
 }));
 
+const initializeApp = jest.fn();
+apiHooks.useInitializeApp.mockReturnValue(initializeApp);
 describe('CourseCard hooks', () => {
   const { formatMessage } = useIntl();
 
@@ -42,13 +41,12 @@ describe('CourseCard hooks', () => {
   });
   describe('useInitializeDashboard', () => {
     it('dispatches initialize thunk action on component load', () => {
-      const dispatch = useDispatch();
       hooks.useInitializeDashboard();
       const [cb, prereqs] = React.useEffect.mock.calls[0];
-      expect(prereqs).toEqual([dispatch]);
-      expect(dispatch).not.toHaveBeenCalled();
+      expect(prereqs).toEqual([]);
+      expect(initializeApp).not.toHaveBeenCalled();
       cb();
-      expect(dispatch).toHaveBeenCalledWith(thunkActions.app.initialize());
+      expect(initializeApp).toHaveBeenCalledWith();
     });
   });
   describe('useDashboardMessages', () => {

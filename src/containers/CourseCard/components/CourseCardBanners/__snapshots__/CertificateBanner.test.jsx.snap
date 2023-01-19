@@ -15,7 +15,7 @@ exports[`CertificateBanner snapshot is passing and is downloadable 1`] = `
 
 exports[`CertificateBanner snapshot is passing and is earned but unavailable 1`] = `
 <Banner>
-  Your grade and certificate will be ready after Invalid Date.
+  Your grade and certificate will be ready after 10/20/3030.
 </Banner>
 `;
 

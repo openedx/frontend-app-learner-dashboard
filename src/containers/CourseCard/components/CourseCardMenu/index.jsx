@@ -7,7 +7,7 @@ import { Dropdown, Icon, IconButton } from '@edx/paragon';
 import { MoreVert } from '@edx/paragon/icons';
 
 import track from 'tracking';
-import { hooks as appHooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 import EmailSettingsModal from 'containers/EmailSettingsModal';
 import UnenrollConfirmModal from 'containers/UnenrollConfirmModal';
 import {
@@ -21,16 +21,16 @@ import messages from './messages';
 export const CourseCardMenu = ({ cardId }) => {
   const { formatMessage } = useIntl();
 
-  const { courseName } = appHooks.useCardCourseData(cardId);
-  const { isEnrolled, isEmailEnabled } = appHooks.useCardEnrollmentData(cardId);
-  const { twitter, facebook } = appHooks.useCardSocialSettingsData(cardId);
-  const { isMasquerading } = appHooks.useMasqueradeData();
-  const handleTwitterShare = appHooks.useTrackCourseEvent(
+  const { courseName } = reduxHooks.useCardCourseData(cardId);
+  const { isEnrolled, isEmailEnabled } = reduxHooks.useCardEnrollmentData(cardId);
+  const { twitter, facebook } = reduxHooks.useCardSocialSettingsData(cardId);
+  const { isMasquerading } = reduxHooks.useMasqueradeData();
+  const handleTwitterShare = reduxHooks.useTrackCourseEvent(
     track.socialShare,
     cardId,
     'twitter',
   );
-  const handleFacebookShare = appHooks.useTrackCourseEvent(
+  const handleFacebookShare = reduxHooks.useTrackCourseEvent(
     track.socialShare,
     cardId,
     'facebook',

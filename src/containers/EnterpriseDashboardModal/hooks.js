@@ -2,7 +2,7 @@ import React from 'react';
 
 import { StrictDict } from 'utils';
 import track from 'tracking';
-import { hooks as appHooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 
 import * as module from './hooks';
 
@@ -14,7 +14,7 @@ const { modalOpened, modalClosed, modalCTAClicked } = track.enterpriseDashboard;
 
 export const useEnterpriseDashboardHook = () => {
   const [showModal, setShowModal] = module.state.showModal(true);
-  const dashboard = appHooks.useEnterpriseDashboardData();
+  const dashboard = reduxHooks.useEnterpriseDashboardData();
 
   const trackOpened = modalOpened(dashboard.enterpriseUUID);
   const trackClose = modalClosed(dashboard.enterpriseUUID, 'Cancel button');

@@ -1,10 +1,10 @@
-import { hooks as appHooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 
 export const useProgramData = ({
   cardId,
 }) => ({
-  courseTitle: appHooks.useCardCourseData(cardId).title,
-  relatedPrograms: appHooks.useCardRelatedProgramsData(cardId).list,
+  courseTitle: reduxHooks.useCardCourseData(cardId).title,
+  relatedPrograms: reduxHooks.useCardRelatedProgramsData(cardId).list,
 });
 
 export default useProgramData;

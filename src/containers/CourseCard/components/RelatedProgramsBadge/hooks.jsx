@@ -2,7 +2,7 @@ import React from 'react';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { StrictDict } from 'utils';
-import { hooks as appHooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 
 import messages from './messages';
 import * as module from './hooks';
@@ -14,7 +14,7 @@ export const state = StrictDict({
 export const useRelatedProgramsBadgeData = ({ cardId }) => {
   const [isOpen, setIsOpen] = module.state.isOpen(false);
   const { formatMessage } = useIntl();
-  const numPrograms = appHooks.useCardRelatedProgramsData(cardId).length;
+  const numPrograms = reduxHooks.useCardRelatedProgramsData(cardId).length;
   let programsMessage = '';
   if (numPrograms) {
     programsMessage = formatMessage(
@@ -27,8 +27,8 @@ export const useRelatedProgramsBadgeData = ({ cardId }) => {
     numPrograms,
     programsMessage,
     isOpen,
-    openModal: React.useCallback(() => setIsOpen(true), [setIsOpen]),
-    closeModal: React.useCallback(() => setIsOpen(false), [setIsOpen]),
+    openModal: () => setIsOpen(true),
+    closeModal: () => setIsOpen(false),
   };
 };
 

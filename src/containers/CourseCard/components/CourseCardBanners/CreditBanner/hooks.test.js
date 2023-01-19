@@ -1,5 +1,5 @@
 import { keyStore } from 'utils';
-import { hooks as appHooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 
 import ApprovedContent from './views/ApprovedContent';
 import EligibleContent from './views/EligibleContent';
@@ -9,8 +9,8 @@ import RejectedContent from './views/RejectedContent';
 
 import * as hooks from './hooks';
 
-jest.mock('data/redux', () => ({
-  hooks: {
+jest.mock('hooks', () => ({
+  reduxHooks: {
     useCardCreditData: jest.fn(),
     usePlatformSettingsData: jest.fn(),
   },
@@ -34,18 +34,18 @@ const defaultProps = {
 };
 
 const loadHook = (creditData = {}) => {
-  appHooks.useCardCreditData.mockReturnValue({ ...defaultProps, ...creditData });
+  reduxHooks.useCardCreditData.mockReturnValue({ ...defaultProps, ...creditData });
   out = hooks.useCreditBannerData(cardId);
 };
 
 describe('useCreditBannerData hook', () => {
   beforeEach(() => {
-    appHooks.usePlatformSettingsData.mockReturnValue({ supportEmail });
+    reduxHooks.usePlatformSettingsData.mockReturnValue({ supportEmail });
   });
   it('loads card credit data with cardID and loads platform settings data', () => {
     loadHook({ isEligible: false });
-    expect(appHooks.useCardCreditData).toHaveBeenCalledWith(cardId);
-    expect(appHooks.usePlatformSettingsData).toHaveBeenCalledWith();
+    expect(reduxHooks.useCardCreditData).toHaveBeenCalledWith(cardId);
+    expect(reduxHooks.usePlatformSettingsData).toHaveBeenCalledWith();
   });
   describe('non-credit-eligible learner', () => {
     it('returns null if the learner is not credit eligible', () => {

@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { Button, MailtoLink } from '@edx/paragon';
 
-import { hooks as appHooks } from 'data/redux';
-import { useFormatDate } from 'utils/hooks';
+import { utilHooks, reduxHooks } from 'hooks';
 
 import Banner from 'components/Banner';
 import messages from './messages';
 
 export const EntitlementBanner = ({ cardId }) => {
+  const { formatMessage } = useIntl();
   const {
     isEntitlement,
     hasSessions,
@@ -18,11 +18,10 @@ export const EntitlementBanner = ({ cardId }) => {
     changeDeadline,
     showExpirationWarning,
     isExpired,
-  } = appHooks.useCardEntitlementData(cardId);
-  const { supportEmail } = appHooks.usePlatformSettingsData();
-  const openSessionModal = appHooks.useUpdateSelectSessionModalCallback(cardId);
-  const { formatMessage } = useIntl();
-  const formatDate = useFormatDate();
+  } = reduxHooks.useCardEntitlementData(cardId);
+  const { supportEmail } = reduxHooks.usePlatformSettingsData();
+  const openSessionModal = reduxHooks.useUpdateSelectSessionModalCallback(cardId);
+  const formatDate = utilHooks.useFormatDate();
 
   if (!isEntitlement) {
     return null;

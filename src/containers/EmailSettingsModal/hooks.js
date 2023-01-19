@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { StrictDict } from 'utils';
-import { hooks as appHooks, thunkActions } from 'data/redux';
+import { reduxHooks, apiHooks } from 'hooks';
 
 import * as module from './hooks';
 
@@ -12,22 +12,15 @@ export const state = StrictDict({
 export const useEmailData = ({
   closeModal,
   cardId,
-  dispatch,
 }) => {
-  const { hasOptedOutOfEmail } = appHooks.useCardEnrollmentData(cardId);
+  const { hasOptedOutOfEmail } = reduxHooks.useCardEnrollmentData(cardId);
   const [isOptedOut, setIsOptedOut] = module.state.toggle(hasOptedOutOfEmail);
-  const onToggle = React.useCallback(
-    () => setIsOptedOut(!isOptedOut),
-    [setIsOptedOut, isOptedOut],
-  );
-  const save = React.useCallback(
-    () => {
-      // update email settings 2nd arg is true if opting in, false if opting out
-      dispatch(thunkActions.app.updateEmailSettings(cardId, !isOptedOut));
-      closeModal();
-    },
-    [cardId, closeModal, dispatch, isOptedOut],
-  );
+  const updateEmailSettings = apiHooks.useUpdateEmailSettings(cardId);
+  const onToggle = () => setIsOptedOut(!isOptedOut);
+  const save = () => {
+    updateEmailSettings(!isOptedOut);
+    closeModal();
+  };
 
   return {
     onToggle,

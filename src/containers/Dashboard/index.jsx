@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { hooks as appHooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 import { RequestKeys } from 'data/constants/requests';
 import EnterpriseDashboardModal from 'containers/EnterpriseDashboardModal';
 import SelectSessionModal from 'containers/SelectSessionModal';
@@ -17,10 +17,10 @@ import './index.scss';
 export const Dashboard = () => {
   hooks.useInitializeDashboard();
   const { pageTitle } = hooks.useDashboardMessages();
-  const hasCourses = appHooks.useHasCourses();
-  const hasAvailableDashboards = appHooks.useHasAvailableDashboards();
-  const initIsPending = appHooks.useRequestIsPending(RequestKeys.initialize);
-  const showSelectSessionModal = appHooks.useShowSelectSessionModal();
+  const hasCourses = reduxHooks.useHasCourses();
+  const hasAvailableDashboards = reduxHooks.useHasAvailableDashboards();
+  const initIsPending = reduxHooks.useRequestIsPending(RequestKeys.initialize);
+  const showSelectSessionModal = reduxHooks.useShowSelectSessionModal();
   return (
     <div id="dashboard-container" className="d-flex flex-column p-2 pt-0">
       <h1 className="sr-only">{pageTitle}</h1>

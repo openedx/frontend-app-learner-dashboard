@@ -5,10 +5,6 @@ import { StrictDict } from 'utils';
 import * as app from './app';
 import * as requests from './requests';
 
-import * as hooks from './hooks';
-
-export { default as thunkActions } from './thunkActions';
-
 const modules = {
   app,
   requests,
@@ -28,6 +24,6 @@ const actions = StrictDict(moduleProps('actions'));
 
 const selectors = StrictDict(moduleProps('selectors'));
 
-export { actions, selectors, hooks };
+export { actions, selectors };
 
 export default rootReducer;

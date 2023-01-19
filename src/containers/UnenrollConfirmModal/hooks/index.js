@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { StrictDict } from 'utils';
-import { thunkActions } from 'data/redux';
+import { apiHooks } from 'hooks';
 
 import { useUnenrollReasons } from './reasons';
 import * as module from '.';
@@ -16,10 +16,11 @@ export const modalStates = StrictDict({
   finished: 'finished',
 });
 
-export const useUnenrollData = ({ closeModal, dispatch, cardId }) => {
+export const useUnenrollData = ({ closeModal, cardId }) => {
   const [isConfirmed, setIsConfirmed] = module.state.confirmed(false);
   const confirm = () => setIsConfirmed(true);
-  const reason = useUnenrollReasons({ dispatch, cardId });
+  const reason = useUnenrollReasons({ cardId });
+  const refreshList = apiHooks.useInitializeApp();
 
   let modalState;
   if (isConfirmed) {
@@ -35,7 +36,7 @@ export const useUnenrollData = ({ closeModal, dispatch, cardId }) => {
     reason.handleClear();
   };
   const closeAndRefresh = () => {
-    dispatch(thunkActions.app.refreshList());
+    refreshList();
     close();
   };
 

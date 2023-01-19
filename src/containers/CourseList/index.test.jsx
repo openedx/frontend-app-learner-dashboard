@@ -1,11 +1,11 @@
 import { shallow } from 'enzyme';
 
-import { hooks as appHooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 import { useCourseListData, useIsCollapsed } from './hooks';
 import CourseList from '.';
 
-jest.mock('data/redux', () => ({
-  hooks: { useHasCourses: jest.fn() },
+jest.mock('hooks', () => ({
+  reduxHooks: { useHasCourses: jest.fn() },
 }));
 
 jest.mock('./hooks', () => ({
@@ -19,7 +19,7 @@ jest.mock('containers/CourseFilterControls', () => ({
   CourseFilterControls: 'CourseFilterControls',
 }));
 
-appHooks.useHasCourses.mockReturnValue(true);
+reduxHooks.useHasCourses.mockReturnValue(true);
 
 describe('CourseList', () => {
   const defaultCourseListData = {
@@ -40,7 +40,7 @@ describe('CourseList', () => {
 
   describe('no courses', () => {
     test('snapshot', () => {
-      appHooks.useHasCourses.mockReturnValue(true);
+      reduxHooks.useHasCourses.mockReturnValue(true);
       const wrapper = createWrapper();
       expect(wrapper).toMatchSnapshot();
     });

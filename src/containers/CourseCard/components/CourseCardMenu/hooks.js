@@ -2,7 +2,7 @@ import React from 'react';
 import { StrictDict } from 'utils';
 
 import track from 'tracking';
-import { hooks as appHooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 
 import * as module from './hooks';
 
@@ -31,7 +31,7 @@ export const useEmailSettings = () => {
 
 export const useHandleToggleDropdown = (cardId) => {
   const eventName = track.course.courseOptionsDropdownClicked;
-  const trackCourseEvent = appHooks.useTrackCourseEvent(eventName, cardId);
+  const trackCourseEvent = reduxHooks.useTrackCourseEvent(eventName, cardId);
   return (isOpen) => {
     if (isOpen) { trackCourseEvent(); }
   };

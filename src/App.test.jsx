@@ -10,7 +10,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { Alert } from '@edx/paragon';
 
 import { RequestKeys } from 'data/constants/requests';
-import { hooks as appHooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 import Dashboard from 'containers/Dashboard';
 import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
 import { App } from './App';
@@ -25,18 +25,24 @@ jest.mock('data/redux', () => ({
   selectors: 'redux.selectors',
   actions: 'redux.actions',
   thunkActions: 'redux.thunkActions',
-  hooks: {
+}));
+jest.mock('hooks', () => ({
+  reduxHooks: {
     useRequestIsFailed: jest.fn(),
     usePlatformSettingsData: jest.fn(),
+    useLoadData: jest.fn(),
   },
 }));
 jest.mock('data/store', () => 'data/store');
+
+const loadData = jest.fn();
+reduxHooks.useLoadData.mockReturnValue(loadData);
 
 const logo = 'fakeLogo.png';
 let el;
 
 const supportEmail = 'test-support-url';
-appHooks.usePlatformSettingsData.mockReturnValue({ supportEmail });
+reduxHooks.usePlatformSettingsData.mockReturnValue({ supportEmail });
 
 describe('App router component', () => {
   process.env.LOGO_POWERED_BY_OPEN_EDX_URL_SVG = logo;
@@ -59,7 +65,7 @@ describe('App router component', () => {
     };
     describe('no network failure', () => {
       beforeAll(() => {
-        appHooks.useRequestIsFailed.mockReturnValue(false);
+        reduxHooks.useRequestIsFailed.mockReturnValue(false);
         el = shallow(<App />);
       });
       runBasicTests();
@@ -71,7 +77,7 @@ describe('App router component', () => {
     });
     describe('initialize failure', () => {
       beforeAll(() => {
-        appHooks.useRequestIsFailed.mockImplementation((key) => key === RequestKeys.initialize);
+        reduxHooks.useRequestIsFailed.mockImplementation((key) => key === RequestKeys.initialize);
         el = shallow(<App />);
       });
       runBasicTests();
@@ -87,7 +93,7 @@ describe('App router component', () => {
     });
     describe('refresh failure', () => {
       beforeAll(() => {
-        appHooks.useRequestIsFailed.mockImplementation((key) => key === RequestKeys.refreshList);
+        reduxHooks.useRequestIsFailed.mockImplementation((key) => key === RequestKeys.refreshList);
         el = shallow(<App />);
       });
       runBasicTests();

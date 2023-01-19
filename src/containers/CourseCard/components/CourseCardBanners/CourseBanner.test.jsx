@@ -2,15 +2,18 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Hyperlink } from '@edx/paragon';
 
-import { hooks as appHooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 import { formatMessage } from 'testUtils';
 import { CourseBanner } from './CourseBanner';
 
 import messages from './messages';
 
 jest.mock('components/Banner', () => 'Banner');
-jest.mock('data/redux', () => ({
-  hooks: {
+jest.mock('hooks', () => ({
+  utilHooks: {
+    useFormatDate: () => date => date,
+  },
+  reduxHooks: {
     useCardCourseRunData: jest.fn(),
     useCardEnrollmentData: jest.fn(),
   },
@@ -41,11 +44,11 @@ const render = (overrides = {}) => {
     courseRun = {},
     enrollment = {},
   } = overrides;
-  appHooks.useCardCourseRunData.mockReturnValueOnce({
+  reduxHooks.useCardCourseRunData.mockReturnValueOnce({
     ...courseRunData,
     ...courseRun,
   });
-  appHooks.useCardEnrollmentData.mockReturnValueOnce({
+  reduxHooks.useCardEnrollmentData.mockReturnValueOnce({
     ...enrollmentData,
     ...enrollment,
   });
@@ -55,8 +58,8 @@ const render = (overrides = {}) => {
 describe('CourseBanner', () => {
   test('initializes data with course number from enrollment, course and course run data', () => {
     render();
-    expect(appHooks.useCardCourseRunData).toHaveBeenCalledWith(cardId);
-    expect(appHooks.useCardEnrollmentData).toHaveBeenCalledWith(cardId);
+    expect(reduxHooks.useCardCourseRunData).toHaveBeenCalledWith(cardId);
+    expect(reduxHooks.useCardEnrollmentData).toHaveBeenCalledWith(cardId);
   });
   test('no display if learner is verified', () => {
     render({ enrollment: { isVerified: true } });

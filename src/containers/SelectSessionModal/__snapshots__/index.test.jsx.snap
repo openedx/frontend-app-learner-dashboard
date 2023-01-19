@@ -6,7 +6,7 @@ exports[`SelectSessionModal snapshot empty modal with leave option  1`] = `
   hasCloseButton={false}
   isFullscreenOnMobile={true}
   isOpen={true}
-  onClose={[MockFunction hooks.nullMethod]}
+  onClose={[MockFunction utils.nullMethod]}
   size="md"
   title="test-header"
 >
@@ -50,7 +50,7 @@ exports[`SelectSessionModal snapshot modal with leave option  1`] = `
   hasCloseButton={false}
   isFullscreenOnMobile={true}
   isOpen={true}
-  onClose={[MockFunction hooks.nullMethod]}
+  onClose={[MockFunction utils.nullMethod]}
   size="md"
   title="test-header"
 >
@@ -118,7 +118,7 @@ exports[`SelectSessionModal snapshot modal without leave option  1`] = `
   hasCloseButton={false}
   isFullscreenOnMobile={true}
   isOpen={true}
-  onClose={[MockFunction hooks.nullMethod]}
+  onClose={[MockFunction utils.nullMethod]}
   size="md"
   title="test-header"
 >

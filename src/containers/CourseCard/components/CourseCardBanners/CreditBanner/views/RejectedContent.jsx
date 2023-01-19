@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { hooks as appHooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 import CreditContent from './components/CreditContent';
 import ProviderLink from './components/ProviderLink';
 import messages from './messages';
 
 export const RejectedContent = ({ cardId }) => {
-  const credit = appHooks.useCardCreditData(cardId);
+  const credit = reduxHooks.useCardCreditData(cardId);
   const { formatMessage } = useIntl();
   return (
     <CreditContent

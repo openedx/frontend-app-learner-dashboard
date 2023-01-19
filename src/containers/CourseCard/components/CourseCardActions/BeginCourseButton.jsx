@@ -4,16 +4,16 @@ import PropTypes from 'prop-types';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import track from 'tracking';
-import { hooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 import ActionButton from './ActionButton';
 import messages from './messages';
 
 export const BeginCourseButton = ({ cardId }) => {
-  const { homeUrl } = hooks.useCardCourseRunData(cardId);
-  const { hasAccess } = hooks.useCardEnrollmentData(cardId);
-  const { isMasquerading } = hooks.useMasqueradeData();
   const { formatMessage } = useIntl();
-  const handleClick = hooks.useTrackCourseEvent(
+  const { homeUrl } = reduxHooks.useCardCourseRunData(cardId);
+  const { hasAccess } = reduxHooks.useCardEnrollmentData(cardId);
+  const { isMasquerading } = reduxHooks.useMasqueradeData();
+  const handleClick = reduxHooks.useTrackCourseEvent(
     track.course.enterCourseClicked,
     cardId,
     homeUrl,

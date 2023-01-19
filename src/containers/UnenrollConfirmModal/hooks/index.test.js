@@ -1,4 +1,4 @@
-import { thunkActions } from 'data/redux';
+import { apiHooks } from 'hooks';
 import { MockUseState } from 'testUtils';
 
 import * as reasons from './reasons';
@@ -8,13 +8,16 @@ jest.mock('./reasons', () => ({
   useUnenrollReasons: jest.fn(),
 }));
 
-jest.mock('data/redux/thunkActions/app', () => ({
-  refreshList: jest.fn((args) => ({ refreshList: args })),
-  unenrollFromCourse: jest.fn((...args) => ({ unenrollFromCourse: args })),
+jest.mock('hooks', () => ({
+  apiHooks: {
+    useInitializeApp: jest.fn(),
+  },
 }));
 
 const state = new MockUseState(hooks);
 const testValue = 'test-value';
+const initializeApp = jest.fn();
+apiHooks.useInitializeApp.mockReturnValue(initializeApp);
 let out;
 
 const mockReason = {
@@ -29,11 +32,10 @@ describe('UnenrollConfirmModal hooks', () => {
   beforeEach(() => {
     reasons.useUnenrollReasons.mockImplementation(useUnenrollReasons);
   });
-  const dispatch = jest.fn();
   const closeModal = jest.fn();
   const cardId = 'test-card-id';
 
-  const createUseUnenrollData = () => hooks.useUnenrollData({ closeModal, dispatch, cardId });
+  const createUseUnenrollData = () => hooks.useUnenrollData({ closeModal, cardId });
 
   describe('state fields', () => {
     state.testGetter(state.keys.confirmed);
@@ -72,9 +74,9 @@ describe('UnenrollConfirmModal hooks', () => {
         expect(state.setState.confirmed).toHaveBeenCalledWith(false);
         expect(mockReason.handleClear).toHaveBeenCalled();
       });
-      it('dispatches refreshList thunkAction', () => {
+      it('calls initializeApp api method', () => {
         out.closeAndRefresh();
-        expect(dispatch).toHaveBeenCalledWith(thunkActions.app.refreshList());
+        expect(initializeApp).toHaveBeenCalled();
       });
     });
     describe('modalState', () => {

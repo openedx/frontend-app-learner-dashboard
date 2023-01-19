@@ -62,6 +62,11 @@ const messages = defineMessages({
     defaultMessage: 'Explore courses',
     description: 'Header link for switching to course page.',
   },
+  courseSearchAlt: {
+    id: 'leanerDashboard.courseSearchAlt',
+    defaultMessage: 'Course search',
+    description: 'Alt-text for course search icon button',
+  },
 });
 
 export default messages;

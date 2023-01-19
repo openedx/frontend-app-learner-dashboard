@@ -19,7 +19,7 @@ const requests = createSlice({
   reducers: {
     startRequest: (state, { payload }) => ({
       ...state,
-      [payload]: {
+      [payload.requestKey]: {
         status: RequestStates.pending,
       },
     }),

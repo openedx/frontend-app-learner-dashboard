@@ -1,32 +1,35 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { StrictDict } from 'utils';
 
 import track from 'tracking';
-import { hooks as appHooks, thunkActions } from 'data/redux';
-import * as module from './hooks';
+
+import { reduxHooks, apiHooks } from 'hooks';
+
 import { LEAVE_OPTION } from './constants';
 import messages from './messages';
+import * as module from './hooks';
 
 export const state = StrictDict({
   selectedSession: (val) => React.useState(val), // eslint-disable-line
 });
 
 export const useSelectSessionModalData = () => {
-  const dispatch = useDispatch();
   const { formatMessage } = useIntl();
 
-  const selectedCardId = appHooks.useSelectSessionModalData().cardId;
+  const selectedCardId = reduxHooks.useSelectSessionModalData().cardId;
   const {
     availableSessions,
     isFulfilled,
-  } = appHooks.useCardEntitlementData(selectedCardId);
-  const { title: courseTitle } = appHooks.useCardCourseData(selectedCardId);
-  const { courseId } = appHooks.useCardCourseRunData(selectedCardId) || {};
-  const { isEnrolled } = appHooks.useCardEnrollmentData(selectedCardId);
+  } = reduxHooks.useCardEntitlementData(selectedCardId);
+  const { title: courseTitle } = reduxHooks.useCardCourseData(selectedCardId);
+  const { courseId } = reduxHooks.useCardCourseRunData(selectedCardId) || {};
+  const { isEnrolled } = reduxHooks.useCardEnrollmentData(selectedCardId);
+  const leaveEntitlementSession = apiHooks.useLeaveEntitlementSession(selectedCardId);
+  const switchEntitlementEnrollment = apiHooks.useSwitchEntitlementEnrollment(selectedCardId);
+  const newEntitlementEnrollment = apiHooks.useNewEntitlementEnrollment(selectedCardId);
 
   const [selectedSession, setSelectedSession] = module.state.selectedSession(courseId || null);
 
@@ -39,8 +42,7 @@ export const useSelectSessionModalData = () => {
     header = formatMessage(messages.selectSessionHeader, { courseTitle });
     hint = formatMessage(messages.selectSessionHint);
   }
-  const updateCardIdCallback = appHooks.useUpdateSelectSessionModalCallback;
-  const closeSessionModal = updateCardIdCallback(null);
+  const closeSessionModal = reduxHooks.useUpdateSelectSessionModalCallback(null);
 
   const trackNewSession = track.entitlements.newSession(selectedSession);
   const trackSwitchSession = track.entitlements.switchSession(selectedCardId, selectedSession);
@@ -50,13 +52,13 @@ export const useSelectSessionModalData = () => {
   const handleSubmit = () => {
     if (selectedSession === LEAVE_OPTION) {
       trackLeaveSession();
-      dispatch(thunkActions.app.leaveEntitlementSession(selectedCardId));
+      leaveEntitlementSession();
     } else if (isEnrolled) {
       trackSwitchSession();
-      dispatch(thunkActions.app.switchEntitlementEnrollment(selectedCardId, selectedSession));
+      switchEntitlementEnrollment(selectedSession);
     } else {
       trackNewSession();
-      dispatch(thunkActions.app.newEntitlementEnrollment(selectedCardId, selectedSession));
+      newEntitlementEnrollment(selectedSession);
     }
     closeSessionModal();
   };

@@ -6,22 +6,23 @@ import { MailtoLink, Hyperlink } from '@edx/paragon';
 import { CheckCircle } from '@edx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { useFormatDate } from 'utils/hooks';
-import { hooks as appHooks } from 'data/redux';
+import { utilHooks, reduxHooks } from 'hooks';
 import Banner from 'components/Banner';
 
 import messages from './messages';
 
+const { useFormatDate } = utilHooks;
+
 export const CertificateBanner = ({ cardId }) => {
-  const certificate = appHooks.useCardCertificateData(cardId);
+  const certificate = reduxHooks.useCardCertificateData(cardId);
   const {
     isAudit,
     isVerified,
-  } = appHooks.useCardEnrollmentData(cardId);
-  const { isPassing } = appHooks.useCardGradeData(cardId);
-  const { isArchived } = appHooks.useCardCourseRunData(cardId);
-  const { minPassingGrade, progressUrl } = appHooks.useCardCourseRunData(cardId);
-  const { supportEmail, billingEmail } = appHooks.usePlatformSettingsData();
+  } = reduxHooks.useCardEnrollmentData(cardId);
+  const { isPassing } = reduxHooks.useCardGradeData(cardId);
+  const { isArchived } = reduxHooks.useCardCourseRunData(cardId);
+  const { minPassingGrade, progressUrl } = reduxHooks.useCardCourseRunData(cardId);
+  const { supportEmail, billingEmail } = reduxHooks.usePlatformSettingsData();
   const { formatMessage } = useIntl();
   const formatDate = useFormatDate();
 

@@ -1,12 +1,12 @@
 import { shallow } from 'enzyme';
 
 import { htmlProps } from 'data/constants/htmlKeys';
-import { hooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 import track from 'tracking';
 import ResumeButton from './ResumeButton';
 
-jest.mock('data/redux', () => ({
-  hooks: {
+jest.mock('hooks', () => ({
+  reduxHooks: {
     useCardCourseRunData: jest.fn(() => ({ resumeUrl: 'resumeUrl' })),
     useCardEnrollmentData: jest.fn(() => ({
       hasAccess: true,
@@ -26,7 +26,7 @@ jest.mock('tracking', () => ({
 }));
 jest.mock('./ActionButton', () => 'ActionButton');
 
-const { resumeUrl } = hooks.useCardCourseRunData();
+const { resumeUrl } = reduxHooks.useCardCourseRunData();
 
 describe('ResumeButton', () => {
   const props = {
@@ -48,20 +48,20 @@ describe('ResumeButton', () => {
   describe('behavior', () => {
     it('initializes course run data based on cardId', () => {
       shallow(<ResumeButton {...props} />);
-      expect(hooks.useCardCourseRunData).toHaveBeenCalledWith(props.cardId);
+      expect(reduxHooks.useCardCourseRunData).toHaveBeenCalledWith(props.cardId);
     });
     it('initializes course enrollment data based on cardId', () => {
       shallow(<ResumeButton {...props} />);
-      expect(hooks.useCardEnrollmentData).toHaveBeenCalledWith(props.cardId);
+      expect(reduxHooks.useCardEnrollmentData).toHaveBeenCalledWith(props.cardId);
     });
     describe('disabled states', () => {
       test('masquerading', () => {
-        hooks.useMasqueradeData.mockReturnValueOnce({ isMasquerading: true });
+        reduxHooks.useMasqueradeData.mockReturnValueOnce({ isMasquerading: true });
         const wrapper = shallow(<ResumeButton {...props} />);
         expect(wrapper.prop(htmlProps.disabled)).toEqual(true);
       });
       test('learner does not have access', () => {
-        hooks.useCardEnrollmentData.mockReturnValueOnce({
+        reduxHooks.useCardEnrollmentData.mockReturnValueOnce({
           hasAccess: false,
           isAudit: true,
           isAuditAccessExpired: false,
@@ -70,7 +70,7 @@ describe('ResumeButton', () => {
         expect(wrapper.prop(htmlProps.disabled)).toEqual(true);
       });
       test('audit access expired', () => {
-        hooks.useCardEnrollmentData.mockReturnValueOnce({
+        reduxHooks.useCardEnrollmentData.mockReturnValueOnce({
           hasAccess: true,
           isAudit: true,
           isAuditAccessExpired: true,

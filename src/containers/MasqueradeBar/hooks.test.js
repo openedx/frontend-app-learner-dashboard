@@ -1,22 +1,25 @@
 import { MockUseState } from 'testUtils';
-import { thunkActions, hooks as appHooks } from 'data/redux';
+import { apiHooks, reduxHooks } from 'hooks';
 
 import * as hooks from './hooks';
 import messages from './messages';
 
-jest.mock('data/redux', () => ({
-  thunkActions: {
-    app: {
-      masqueradeAs: jest.fn(),
-      clearMasquerade: jest.fn(),
-    },
+jest.mock('hooks', () => ({
+  apiHooks: {
+    useMasqueradeAs: jest.fn(),
+    useClearMasquerade: jest.fn(),
   },
-  hooks: {
+  reduxHooks: {
     useMasqueradeData: jest.fn(),
   },
 }));
 
+const masqueradeAs = jest.fn();
+const clearMasquerade = jest.fn();
+apiHooks.useMasqueradeAs.mockReturnValue(masqueradeAs);
+apiHooks.useClearMasquerade.mockReturnValue(clearMasquerade);
 const state = new MockUseState(hooks);
+const testValue = 'test-value';
 
 describe('MasqueradeBar hooks', () => {
   const authenticatedUser = {
@@ -29,7 +32,7 @@ describe('MasqueradeBar hooks', () => {
     masqueradeErrorStatus: null,
   };
   const createHook = (masqueradeData = {}, user) => {
-    appHooks.useMasqueradeData.mockReturnValueOnce({
+    reduxHooks.useMasqueradeData.mockReturnValueOnce({
       ...defaultMasqueradeData,
       ...masqueradeData,
     });
@@ -65,23 +68,23 @@ describe('MasqueradeBar hooks', () => {
     test('handleMasqueradeInputChange', () => {
       const out = createHook();
       expect(state.stateVals.masqueradeInput).toEqual('');
-      out.handleMasqueradeInputChange({ target: { value: 'test' } });
-      expect(state.setState.masqueradeInput).toHaveBeenCalledWith('test');
+      out.handleMasqueradeInputChange({ target: { value: testValue } });
+      expect(state.setState.masqueradeInput).toHaveBeenCalledWith(testValue);
     });
     test('handleMasqueradeSubmit', () => {
       const out = createHook();
       const preventDefault = jest.fn();
       // make sure submit doesn't refresh the page
-      out.handleMasqueradeSubmit('test')({
+      out.handleMasqueradeSubmit(testValue)({
         preventDefault,
       });
-      expect(thunkActions.app.masqueradeAs).toHaveBeenCalledWith('test');
+      expect(masqueradeAs).toHaveBeenCalledWith(testValue);
       expect(preventDefault).toHaveBeenCalled();
     });
     test('handleClearMasquerade', () => {
       const out = createHook();
       out.handleClearMasquerade();
-      expect(thunkActions.app.clearMasquerade).toHaveBeenCalled();
+      expect(clearMasquerade).toHaveBeenCalled();
     });
   });
 

@@ -1,15 +1,15 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { hooks as appHooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 import { formatMessage } from 'testUtils';
 import track from 'tracking';
 
 import messages from './messages';
 import EligibleContent from './EligibleContent';
 
-jest.mock('data/redux', () => ({
-  hooks: {
+jest.mock('hooks', () => ({
+  reduxHooks: {
     useCardCreditData: jest.fn(),
     useCardCourseRunData: jest.fn(),
   },
@@ -30,8 +30,8 @@ const credit = {
   creditPurchaseUrl: 'test-credit-purchase-url',
   providerName: 'test-credit-provider-name',
 };
-appHooks.useCardCreditData.mockReturnValue(credit);
-appHooks.useCardCourseRunData.mockReturnValue({ courseId });
+reduxHooks.useCardCreditData.mockReturnValue(credit);
+reduxHooks.useCardCourseRunData.mockReturnValue({ courseId });
 
 const render = () => {
   el = shallow(<EligibleContent cardId={cardId} />);
@@ -45,10 +45,10 @@ describe('EligibleContent component', () => {
   });
   describe('behavior', () => {
     it('initializes credit data with cardId', () => {
-      expect(appHooks.useCardCreditData).toHaveBeenCalledWith(cardId);
+      expect(reduxHooks.useCardCreditData).toHaveBeenCalledWith(cardId);
     });
     it('initializes course run data with cardId', () => {
-      expect(appHooks.useCardCourseRunData).toHaveBeenCalledWith(cardId);
+      expect(reduxHooks.useCardCourseRunData).toHaveBeenCalledWith(cardId);
     });
   });
   describe('render', () => {
@@ -65,7 +65,7 @@ describe('EligibleContent component', () => {
         expect(component.props().action.message).toEqual(formatMessage(messages.getCredit));
       });
       test('message is formatted eligible message if no provider', () => {
-        appHooks.useCardCreditData.mockReturnValueOnce({
+        reduxHooks.useCardCreditData.mockReturnValueOnce({
           creditPurchaseUrl: credit.creditPurchaseUrl,
         });
         render();

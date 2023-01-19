@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { hooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 import ActionButton from './ActionButton';
 import messages from './messages';
 
 export const SelectSessionButton = ({ cardId }) => {
-  const { hasAccess } = hooks.useCardEnrollmentData(cardId);
-  const { canChange, hasSessions } = hooks.useCardEntitlementData(cardId);
-  const { isMasquerading } = hooks.useMasqueradeData();
   const { formatMessage } = useIntl();
-  const openSessionModal = hooks.useUpdateSelectSessionModalCallback(cardId);
+  const { isMasquerading } = reduxHooks.useMasqueradeData();
+  const { hasAccess } = reduxHooks.useCardEnrollmentData(cardId);
+  const { canChange, hasSessions } = reduxHooks.useCardEntitlementData(cardId);
+  const openSessionModal = reduxHooks.useUpdateSelectSessionModalCallback(cardId);
   return (
     <ActionButton
       disabled={isMasquerading || !hasAccess || (!canChange || !hasSessions)}

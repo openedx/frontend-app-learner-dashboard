@@ -1,9 +1,7 @@
 import React from 'react';
 
 import { StrictDict } from 'utils';
-import { hooks as appHooks, thunkActions } from 'data/redux';
-
-import { useDispatch } from 'react-redux';
+import { apiHooks, reduxHooks } from 'hooks';
 
 import * as module from './hooks';
 
@@ -13,16 +11,16 @@ export const state = StrictDict({
 });
 
 export const useConfirmEmailBannerData = () => {
-  const dispatch = useDispatch();
-  const { isNeeded } = appHooks.useEmailConfirmationData();
+  const { isNeeded } = reduxHooks.useEmailConfirmationData();
   const [showPageBanner, setShowPageBanner] = module.state.showPageBanner(isNeeded);
   const [showConfirmModal, setShowConfirmModal] = module.state.showConfirmModal(false);
   const closePageBanner = () => setShowPageBanner(false);
   const closeConfirmModal = () => setShowConfirmModal(false);
   const openConfirmModal = () => setShowConfirmModal(true);
+  const sendConfirmEmail = apiHooks.useSendConfirmEmail();
 
   const openConfirmModalButtonClick = () => {
-    dispatch(thunkActions.app.sendConfirmEmail());
+    sendConfirmEmail();
     openConfirmModal();
     closePageBanner();
   };

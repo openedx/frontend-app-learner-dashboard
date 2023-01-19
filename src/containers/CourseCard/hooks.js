@@ -1,6 +1,6 @@
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { useWindowSize, breakpoints } from '@edx/paragon';
-import { hooks as appHooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 
 export const useIsCollapsed = () => {
   const { width } = useWindowSize();
@@ -9,8 +9,8 @@ export const useIsCollapsed = () => {
 
 export const useCardData = ({ cardId }) => {
   const { formatMessage } = useIntl();
-  const { title, bannerImgSrc } = appHooks.useCardCourseData(cardId);
-  const { isEnrolled } = appHooks.useCardEnrollmentData(cardId);
+  const { title, bannerImgSrc } = reduxHooks.useCardCourseData(cardId);
+  const { isEnrolled } = reduxHooks.useCardEnrollmentData(cardId);
 
   return {
     isEnrolled,

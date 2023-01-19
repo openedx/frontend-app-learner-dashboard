@@ -1,11 +1,14 @@
 import { shallow } from 'enzyme';
 
-import { hooks } from 'data/redux';
+import { reduxHooks } from 'hooks';
 import CertificateBanner from './CertificateBanner';
 import messages from './messages';
 
-jest.mock('data/redux', () => ({
-  hooks: {
+jest.mock('hooks', () => ({
+  utilHooks: {
+    useFormatDate: jest.fn(() => date => date),
+  },
+  reduxHooks: {
     useCardCertificateData: jest.fn(),
     useCardCourseRunData: jest.fn(),
     useCardEnrollmentData: jest.fn(),
@@ -18,16 +21,17 @@ jest.mock('Components/Banner', () => 'Banner');
 
 describe('CertificateBanner', () => {
   const props = { cardId: 'cardId' };
-  hooks.usePlatformSettingsData.mockReturnValue({
+  reduxHooks.usePlatformSettingsData.mockReturnValue({
     supportEmail: 'suport@email',
     billingEmail: 'billing@email',
   });
-  hooks.useCardCourseRunData.mockReturnValue({
+  reduxHooks.useCardCourseRunData.mockReturnValue({
     minPassingGrade: 0.8,
     progressUrl: 'progressUrl',
   });
 
   const defaultCertificate = {
+    availableDate: '10/20/3030',
     isRestricted: false,
     isDownloadable: false,
     isEarnedButUnavailable: false,
@@ -44,10 +48,10 @@ describe('CertificateBanner', () => {
     grade = {},
     courseRun = {},
   }) => {
-    hooks.useCardGradeData.mockReturnValueOnce({ ...defaultGrade, ...grade });
-    hooks.useCardCertificateData.mockReturnValueOnce({ ...defaultCertificate, ...certificate });
-    hooks.useCardEnrollmentData.mockReturnValueOnce({ ...defaultEnrollment, ...enrollment });
-    hooks.useCardCourseRunData.mockReturnValueOnce({ ...defaultCourseRun, ...courseRun });
+    reduxHooks.useCardGradeData.mockReturnValueOnce({ ...defaultGrade, ...grade });
+    reduxHooks.useCardCertificateData.mockReturnValueOnce({ ...defaultCertificate, ...certificate });
+    reduxHooks.useCardEnrollmentData.mockReturnValueOnce({ ...defaultEnrollment, ...enrollment });
+    reduxHooks.useCardCourseRunData.mockReturnValueOnce({ ...defaultCourseRun, ...courseRun });
     return shallow(<CertificateBanner {...props} />);
   };
   describe('snapshot', () => {

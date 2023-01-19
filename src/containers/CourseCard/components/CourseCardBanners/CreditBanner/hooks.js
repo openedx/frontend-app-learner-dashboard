@@ -1,5 +1,6 @@
 import { StrictDict } from 'utils';
-import { hooks as appHooks } from 'data/redux';
+
+import { reduxHooks } from 'hooks';
 
 import ApprovedContent from './views/ApprovedContent';
 import EligibleContent from './views/EligibleContent';
@@ -14,8 +15,8 @@ export const statusComponents = StrictDict({
 });
 
 export const useCreditBannerData = (cardId) => {
-  const credit = appHooks.useCardCreditData(cardId);
-  const { supportEmail } = appHooks.usePlatformSettingsData();
+  const credit = reduxHooks.useCardCreditData(cardId);
+  const { supportEmail } = reduxHooks.usePlatformSettingsData();
   if (!credit.isEligible) { return null; }
 
   const { error, purchased, requestStatus } = credit;
