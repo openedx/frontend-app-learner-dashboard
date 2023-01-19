@@ -25,7 +25,7 @@ export const recommendedCoursesData = {
       courseKey: 'cs-4',
     },
   ],
-  isPersonalizedRecommendation: true,
+  isControl: true,
 };
 
 export default recommendedCoursesData;

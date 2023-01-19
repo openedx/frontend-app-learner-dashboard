@@ -3,9 +3,9 @@ import { shallow } from 'enzyme';
 
 import EmptyCourse from '.';
 
-jest.mock('hooks', () => ({
-  reduxHooks: {
-    useRecommendedCoursesData: jest.fn(() => ({ courses: [], isPersonalizedRecommendation: false })),
+jest.mock('data/redux', () => ({
+  hooks: {
+    useRecommendedCoursesData: jest.fn(() => ({ courses: [], isControl: false })),
     useRequestIsPending: jest.fn(),
     usePlatformSettingsData: () => ({
       courseSearchUrl: 'course-search-url',

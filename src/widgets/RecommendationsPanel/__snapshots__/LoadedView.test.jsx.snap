@@ -19,7 +19,7 @@ exports[`RecommendationsPanel LoadedView snapshot with personalize recommendatio
           "title": "Recommended course 1",
         }
       }
-      isPersonalizedRecommendation={true}
+      isControl={false}
       key="cs-1"
     />
     <CourseCard
@@ -31,7 +31,7 @@ exports[`RecommendationsPanel LoadedView snapshot with personalize recommendatio
           "title": "Recommended course 2 with a really really really long name for some reason",
         }
       }
-      isPersonalizedRecommendation={true}
+      isControl={false}
       key="cs-2"
     />
     <CourseCard
@@ -43,7 +43,7 @@ exports[`RecommendationsPanel LoadedView snapshot with personalize recommendatio
           "title": "Recommended course 3",
         }
       }
-      isPersonalizedRecommendation={true}
+      isControl={false}
       key="cs-3"
     />
     <CourseCard
@@ -55,7 +55,7 @@ exports[`RecommendationsPanel LoadedView snapshot with personalize recommendatio
           "title": "Recommended course 4",
         }
       }
-      isPersonalizedRecommendation={true}
+      isControl={false}
       key="cs-4"
     />
   </div>
@@ -93,7 +93,7 @@ exports[`RecommendationsPanel LoadedView snapshot without personalize recommenda
           "title": "Recommended course 1",
         }
       }
-      isPersonalizedRecommendation={false}
+      isControl={null}
       key="cs-1"
     />
     <CourseCard
@@ -105,7 +105,7 @@ exports[`RecommendationsPanel LoadedView snapshot without personalize recommenda
           "title": "Recommended course 2 with a really really really long name for some reason",
         }
       }
-      isPersonalizedRecommendation={false}
+      isControl={null}
       key="cs-2"
     />
     <CourseCard
@@ -117,7 +117,7 @@ exports[`RecommendationsPanel LoadedView snapshot without personalize recommenda
           "title": "Recommended course 3",
         }
       }
-      isPersonalizedRecommendation={false}
+      isControl={null}
       key="cs-3"
     />
     <CourseCard
@@ -129,7 +129,7 @@ exports[`RecommendationsPanel LoadedView snapshot without personalize recommenda
           "title": "Recommended course 4",
         }
       }
-      isPersonalizedRecommendation={false}
+      isControl={null}
       key="cs-4"
     />
   </div>

@@ -8,18 +8,18 @@ import hooks from './hooks';
 export const RecommendationsPanel = () => {
   const {
     courses,
+    isControl,
     isFailed,
     isLoaded,
     isLoading,
-    isPersonalizedRecommendation,
   } = hooks.useRecommendationPanelData();
 
   if (isLoading) {
     return (<LoadingView />);
   }
-  if (isLoaded) {
+  if (isLoaded && courses.length > 0) {
     return (
-      <LoadedView courses={courses} isPersonalizedRecommendation={isPersonalizedRecommendation} />
+      <LoadedView courses={courses} isControl={isControl} />
     );
   }
   if (isFailed) {

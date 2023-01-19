@@ -14,10 +14,10 @@ export const findCoursesWidgetClicked = (href) => track.findCourses.findCoursesC
   linkName: linkNames.findCoursesWidget,
 });
 
-export const recommendedCourseClicked = (courseKey, isPersonalized, href) => createLinkTracker(
+export const recommendedCourseClicked = (courseKey, isControl, href) => createLinkTracker(
   createEventTracker(eventNames.recommendedCourseClicked, {
     course_key: courseKey,
-    is_personalized_recommendation: isPersonalized,
+    is_control: isControl,
   }),
   href,
 );
