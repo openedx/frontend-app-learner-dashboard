@@ -6,6 +6,15 @@
   row-gap: 3rem;
 }
 
+.loading-callouts-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.skeleton-title-width {
+  max-width: 34rem;
+}
+
 .item-badge {
   width: fit-content;
 }

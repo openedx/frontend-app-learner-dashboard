@@ -28,6 +28,7 @@ import track from 'tracking';
 import fakeData from 'data/services/lms/fakeData/courses';
 
 import messages from './messages';
+import getOptimizely from './optimizely';
 
 import './App.scss';
 
@@ -78,6 +79,7 @@ export const App = () => {
     <Router>
       <Helmet>
         <title>{formatMessage(messages.pageTitle)}</title>
+        <script {...getOptimizely()} />
       </Helmet>
       <div>
         <LearnerDashboardHeader />
