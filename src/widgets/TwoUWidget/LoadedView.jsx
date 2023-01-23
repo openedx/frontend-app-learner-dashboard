@@ -9,16 +9,23 @@ import { ArrowForward } from '@edx/paragon/icons';
 import { useIsMediumScreen } from './hooks';
 import { getMerchandisingItems, countryCodeUS } from './constants';
 import messages from './messages';
+import track from './track';
 
 export const LoadedView = ({ countryCode, show2ULobs }) => {
   const { formatMessage } = useIntl();
   const merchandisingItems = getMerchandisingItems(countryCode);
   const isMediumScreen = useIsMediumScreen();
   const markup = { markup: children => <span className="d-inline-flex mb-0 text-brand-500">{children}</span> };
+
+  const onClickHandler = (program, href) => {
+    track.twoUWidgetCardClicked(program, href);
+  };
+
   const items = merchandisingItems.map(item => (
     <Hyperlink
       destination={item.itemURL}
       key={item.key}
+      onClick={() => onClickHandler(item.key, item.itemURL)}
       target="_blank"
       showLaunchIcon={false}
       className={classNames('static-callouts-item', {

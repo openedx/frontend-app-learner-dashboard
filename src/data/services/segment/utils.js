@@ -9,8 +9,11 @@ export const createEventTracker = (name, options = {}) => () => sendTrackEvent(
   { ...options, app_name: appName },
 );
 
-export const createLinkTracker = (tracker, href) => (e) => {
+export const createLinkTracker = (tracker, href, openInNewTab = false) => (e) => {
   e.preventDefault();
   tracker();
+  if (openInNewTab) {
+    return setTimeout(() => { global.open(href, '_blank'); }, LINK_TIMEOUT);
+  }
   return setTimeout(() => { global.location.href = href; }, LINK_TIMEOUT);
 };
