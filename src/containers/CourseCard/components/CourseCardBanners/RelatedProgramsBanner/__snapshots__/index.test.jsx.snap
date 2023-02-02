@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RelatedProgramsBanner render with programs 1`] = `
+<Banner
+  className="bg-light mb-0"
+  icon={[MockFunction icons.Program]}
+  variant="info"
+>
+  <Collapsible.Advanced
+    defaultOpen={true}
+  >
+    <div
+      className="related-programs-banner d-flex text-nowrap"
+    >
+      <span
+        className="row flex-grow-1 mr-0"
+      >
+        <span
+          className="col col-auto"
+        >
+          Related Programs: 
+        </span>
+        <Collapsible.Visible
+          whenClosed={true}
+        >
+          <span
+            className="col text-ellipsis w-0"
+          >
+            <ProgramsList
+              isCollapse={true}
+              programs={
+                Array [
+                  Object {
+                    "title": "Program 1",
+                    "url": "http://example.com/program1",
+                  },
+                  Object {
+                    "title": "Program 2",
+                    "url": "http://example.com/program2",
+                  },
+                ]
+              }
+            />
+          </span>
+        </Collapsible.Visible>
+      </span>
+      <Collapsible.Trigger>
+        <Collapsible.Visible
+          whenClosed={true}
+        >
+          <Button
+            alt="Expand banner icon"
+            className="float-right"
+            onClick={[MockFunction utils.nullMethod]}
+            size="inline"
+            variant="link"
+          >
+            More
+          </Button>
+        </Collapsible.Visible>
+        <Collapsible.Visible
+          as="span"
+          whenOpen={true}
+        >
+          <Button
+            alt="Collapse banner icon"
+            className="float-right"
+            onClick={[MockFunction utils.nullMethod]}
+            size="inline"
+            variant="link"
+          >
+            Less
+          </Button>
+        </Collapsible.Visible>
+      </Collapsible.Trigger>
+    </div>
+    <Collapsible.Body>
+      <div
+        className="d-flex flex-column"
+      >
+        <ProgramsList
+          programs={
+            Array [
+              Object {
+                "title": "Program 1",
+                "url": "http://example.com/program1",
+              },
+              Object {
+                "title": "Program 2",
+                "url": "http://example.com/program2",
+              },
+            ]
+          }
+        />
+      </div>
+    </Collapsible.Body>
+  </Collapsible.Advanced>
+</Banner>
+`;

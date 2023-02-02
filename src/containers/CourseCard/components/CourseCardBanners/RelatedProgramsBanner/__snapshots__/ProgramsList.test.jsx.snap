@@ -1,0 +1,167 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProgramsList renders correctly 1`] = `
+Array [
+  <span
+    className="row"
+    key="http://example.com/XSeries"
+  >
+    <span
+      className="col text-ellipsis w-0 px-1"
+    >
+      <span
+        className="pgn__icon pgn__icon__inline d-inline-block mr-2 xseries-icon"
+      />
+      <a
+        href="http://example.com/XSeries"
+      >
+        program titleXSeries
+      </a>
+    </span>
+  </span>,
+  <span
+    className="row"
+    key="http://example.com/MicroMasters"
+  >
+    <span
+      className="col text-ellipsis w-0 px-1"
+    >
+      <span
+        className="pgn__icon pgn__icon__inline d-inline-block mr-2 micromasters-icon"
+      />
+      <a
+        href="http://example.com/MicroMasters"
+      >
+        program titleMicroMasters
+      </a>
+    </span>
+  </span>,
+  <span
+    className="row"
+    key="http://example.com/MicroBachelors"
+  >
+    <span
+      className="col text-ellipsis w-0 px-1"
+    >
+      <span
+        className="pgn__icon pgn__icon__inline d-inline-block mr-2 microbachelors-icon"
+      />
+      <a
+        href="http://example.com/MicroBachelors"
+      >
+        program titleMicroBachelors
+      </a>
+    </span>
+  </span>,
+  <span
+    className="row"
+    key="http://example.com/undefined-programType"
+  >
+    <span
+      className="col text-ellipsis w-0 px-1"
+    >
+      <span
+        className="pgn__icon pgn__icon__inline d-inline-block mr-2 "
+      />
+      <a
+        href="http://example.com/undefined-programType"
+      >
+        undefined programType
+      </a>
+    </span>
+  </span>,
+]
+`;
+
+exports[`ProgramsList renders correctly with collapse 1`] = `
+Array [
+  <span
+    className="d-inline"
+    key="http://example.com/XSeries"
+  >
+    <span
+      className="col text-ellipsis w-0 px-1"
+    >
+      <span
+        className="pgn__icon pgn__icon__inline d-inline-block mr-2 xseries-icon"
+      />
+      <a
+        href="http://example.com/XSeries"
+      >
+        program titleXSeries
+      </a>
+      <span
+        className="ml-2"
+      >
+        •
+      </span>
+    </span>
+  </span>,
+  <span
+    className="d-inline"
+    key="http://example.com/MicroMasters"
+  >
+    <span
+      className="col text-ellipsis w-0 px-1"
+    >
+      <span
+        className="pgn__icon pgn__icon__inline d-inline-block mr-2 micromasters-icon"
+      />
+      <a
+        href="http://example.com/MicroMasters"
+      >
+        program titleMicroMasters
+      </a>
+      <span
+        className="ml-2"
+      >
+        •
+      </span>
+    </span>
+  </span>,
+  <span
+    className="d-inline"
+    key="http://example.com/MicroBachelors"
+  >
+    <span
+      className="col text-ellipsis w-0 px-1"
+    >
+      <span
+        className="pgn__icon pgn__icon__inline d-inline-block mr-2 microbachelors-icon"
+      />
+      <a
+        href="http://example.com/MicroBachelors"
+      >
+        program titleMicroBachelors
+      </a>
+      <span
+        className="ml-2"
+      >
+        •
+      </span>
+    </span>
+  </span>,
+  <span
+    className="d-inline"
+    key="http://example.com/undefined-programType"
+  >
+    <span
+      className="col text-ellipsis w-0 px-1"
+    >
+      <span
+        className="pgn__icon pgn__icon__inline d-inline-block mr-2 "
+      />
+      <a
+        href="http://example.com/undefined-programType"
+      >
+        undefined programType
+      </a>
+      <span
+        className="ml-2"
+      >
+        •
+      </span>
+    </span>
+  </span>,
+]
+`;

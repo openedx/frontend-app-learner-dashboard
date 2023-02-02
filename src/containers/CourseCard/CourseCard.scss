@@ -51,10 +51,26 @@
 
   .course-card-banners {
     > .alert {
-      border-top-left-radius: 0;
-      border-top-right-radius: 0;
+      border-radius: 0;
       box-shadow: none;
       padding: map-get($spacers, 3) map-get($spacers, 4);
+
+      &:last-of-type {
+        border-bottom-left-radius: $alert-border-radius;
+        border-bottom-right-radius: $alert-border-radius;
+      }
+      
+      .related-programs-banner {
+        div {
+          // override alert's default flex-grow: 1
+          flex-grow: 0;
+        }
+      }
+
+      .w-0 {
+        // only need for this specific case. I don't want to expose this class outside of course-course-banners
+        width: 0;
+      }
     }
   }
 }
