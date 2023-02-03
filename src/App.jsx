@@ -17,13 +17,14 @@ import {
   actions,
 } from 'data/redux';
 import { reduxHooks } from 'hooks';
-import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
+// import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
 import Dashboard from 'containers/Dashboard';
 import ZendeskFab from 'components/ZendeskFab';
 
 import track from 'tracking';
 
 import fakeData from 'data/services/lms/fakeData/courses';
+import LearnerVariantDashboardHeader from './containers/LearnerVariantDashboardHeader';
 
 import messages from './messages';
 
@@ -77,7 +78,8 @@ export const App = () => {
         <title>{formatMessage(messages.pageTitle)}</title>
       </Helmet>
       <div>
-        <LearnerDashboardHeader />
+        {/* <LearnerDashboardHeader /> */}
+        <LearnerVariantDashboardHeader />
         <main>
           {hasNetworkFailure
             ? (
