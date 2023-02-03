@@ -21,15 +21,6 @@ describe('ProgramsList', () => {
     const wrapper = shallow(<ProgramsList programs={programs} />);
     expect(wrapper).toMatchSnapshot();
 
-    expect(wrapper.length).toEqual(programs.length);
-    wrapper.forEach((el) => expect(el.hasClass('row')).toEqual(true));
-  });
-
-  it('renders correctly with collapse', () => {
-    const wrapper = shallow(<ProgramsList programs={programs} isCollapse />);
-    expect(wrapper).toMatchSnapshot();
-
-    expect(wrapper.length).toEqual(programs.length);
-    wrapper.forEach((el) => expect(el.hasClass('d-inline')).toEqual(true));
+    expect(wrapper.find('li').length).toEqual(programs.length);
   });
 });

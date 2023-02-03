@@ -8,19 +8,23 @@ export const iconMap = {
   MicroBachelors: 'microbachelors-icon',
 };
 
-export const ProgramsList = ({ programs, isCollapse }) => programs.map((program) => (
-  <span key={program.programUrl} className={isCollapse ? 'd-inline' : 'row'}>
-    <span className="col text-ellipsis w-0 px-1">
-      <span
-        className={`pgn__icon pgn__icon__inline d-inline-block mr-2 ${
-          iconMap[program.programType] || ''
-        }`}
-      />
-      <a href={program.programUrl}>{program.title}</a>
-      {isCollapse && <span className="ml-2">•</span>}
-    </span>
-  </span>
-));
+export const ProgramsList = ({ programs }) => (
+  <ul className="related-programs-list-container">
+    {programs.map((program) => (
+      <li key={program.programUrl} className="d-flex">
+        <span className="pr-2 border-right">
+          <span
+            className={`pgn__icon pgn__icon__inline d-inline-block mr-2 ${
+              iconMap[program.programType] || ''
+            }`}
+          />
+          <a href={program.programUrl}>{program.title}</a>
+        </span>
+        <span className="flex-grow-1" />
+      </li>
+    ))}
+  </ul>
+);
 
 ProgramsList.propTypes = {
   programs: PropTypes.arrayOf(
@@ -32,9 +36,8 @@ ProgramsList.propTypes = {
       programUrl: PropTypes.string,
       // provider: PropTypes.string,
       title: PropTypes.string,
-    }).isRequired,
-  ),
-  isCollapse: PropTypes.bool,
+    }),
+  ).isRequired,
 };
 
 export default ProgramsList;
