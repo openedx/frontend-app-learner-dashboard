@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { useCheckboxSetValues, useWindowSize, breakpoints } from '@edx/paragon';
+import queryString from 'query-string';
 
 import { ListPageSize, SortKeys } from 'data/constants/app';
 import { reduxHooks } from 'hooks';
@@ -21,11 +22,14 @@ export const useCourseListData = () => {
   const [filters, setFilters] = useCheckboxSetValues([]);
   const [sortBy, setSortBy] = module.state.sortBy(SortKeys.enrolled);
   const pageNumber = reduxHooks.usePageNumber();
+  const querySearch = queryString.parse(window.location.search, { parseNumbers: true });
+
   const { numPages, visible } = reduxHooks.useCurrentCourseList({
     sortBy,
     filters,
-    pageSize: ListPageSize,
+    pageSize: querySearch?.disable_pagination === 1 ? 0 : ListPageSize,
   });
+
   const handleRemoveFilter = (filter) => () => setFilters.remove(filter);
   const setPageNumber = reduxHooks.useSetPageNumber();
 

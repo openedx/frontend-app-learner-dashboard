@@ -42,6 +42,13 @@ export const visibleList = (state, {
   const courses = Object.values(simpleSelectors.courseData(state));
   const list = module.currentList(courses, { sortBy, filters });
   const pageNumber = simpleSelectors.pageNumber(state);
+
+  if (pageSize === 0) {
+    return {
+      visible: list,
+      numPages: 1,
+    };
+  }
   return {
     visible: list.slice((pageNumber - 1) * pageSize, pageNumber * pageSize),
     numPages: Math.ceil(list.length / pageSize),
