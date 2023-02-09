@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CourseCardBanners render with isEnrolled false 1`] = `
+<div
+  className="course-card-banners"
+  data-testid="CourseCardBanners"
+>
+  <RelatedProgramsBanner
+    cardId="test-card-id"
+  />
+  <CourseBanner
+    cardId="test-card-id"
+  />
+  <EntitlementBanner
+    cardId="test-card-id"
+  />
+</div>
+`;
+
+exports[`CourseCardBanners renders default CourseCardBanners 1`] = `
+<div
+  className="course-card-banners"
+  data-testid="CourseCardBanners"
+>
+  <RelatedProgramsBanner
+    cardId="test-card-id"
+  />
+  <CourseBanner
+    cardId="test-card-id"
+  />
+  <EntitlementBanner
+    cardId="test-card-id"
+  />
+  <CertificateBanner
+    cardId="test-card-id"
+  />
+  <CreditBanner
+    cardId="test-card-id"
+  />
+</div>
+`;

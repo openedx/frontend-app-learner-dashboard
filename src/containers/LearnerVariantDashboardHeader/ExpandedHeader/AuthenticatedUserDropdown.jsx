@@ -50,9 +50,6 @@ export const AuthenticatedUserDropdown = () => {
               {formatMessage(messages.orderHistory)}
             </Dropdown.Item>
           )}
-          {/* <Dropdown.Item href={getConfig().SUPPORT_URL}>
-          {formatMessage(messages.help)}
-        </Dropdown.Item> */}
           <Dropdown.Divider />
           <Dropdown.Item href={getConfig().LOGOUT_URL}>
             {formatMessage(messages.signOut)}

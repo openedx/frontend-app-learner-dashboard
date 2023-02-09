@@ -10,7 +10,6 @@ import CourseCardMenu from './components/CourseCardMenu';
 import CourseCardActions from './components/CourseCardActions';
 import CourseCardDetails from './components/CourseCardDetails';
 import CourseCardTitle from './components/CourseCardTitle';
-// import RelatedProgramsBadge from './components/RelatedProgramsBadge';
 
 import './CourseCard.scss';
 
@@ -34,7 +33,6 @@ export const CourseCard = ({
                 <CourseCardDetails cardId={cardId} />
               </Card.Section>
               <Card.Footer orientation={orientation}>
-                {/* <RelatedProgramsBadge cardId={cardId} /> */}
                 <CourseCardActions cardId={cardId} />
               </Card.Footer>
             </Card.Body>

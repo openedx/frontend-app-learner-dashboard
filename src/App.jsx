@@ -17,7 +17,6 @@ import {
   actions,
 } from 'data/redux';
 import { reduxHooks } from 'hooks';
-// import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
 import Dashboard from 'containers/Dashboard';
 import ZendeskFab from 'components/ZendeskFab';
 
@@ -78,7 +77,6 @@ export const App = () => {
         <title>{formatMessage(messages.pageTitle)}</title>
       </Helmet>
       <div>
-        {/* <LearnerDashboardHeader /> */}
         <LearnerVariantDashboardHeader />
         <main>
           {hasNetworkFailure

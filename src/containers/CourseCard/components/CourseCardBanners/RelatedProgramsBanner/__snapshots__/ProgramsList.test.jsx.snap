@@ -5,6 +5,7 @@ exports[`ProgramsList renders correctly 1`] = `
   className="related-programs-list-container"
 >
   <li
+    className="my-2"
     key="http://example.com"
   >
     <a
@@ -14,6 +15,7 @@ exports[`ProgramsList renders correctly 1`] = `
     </a>
   </li>
   <li
+    className="my-2"
     key="http://example.com"
   >
     <a

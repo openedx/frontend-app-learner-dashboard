@@ -19,5 +19,9 @@ describe('Banner', () => {
 
       expect(wrapper.find(Alert).prop('variant')).toEqual('success');
     });
+    test('renders with custom class', () => {
+      const wrapper = shallow(<Banner {...props} className="custom-class" />);
+      expect(wrapper).toMatchSnapshot();
+    });
   });
 });
