@@ -5,84 +5,22 @@ exports[`ProgramsList renders correctly 1`] = `
   className="related-programs-list-container"
 >
   <li
-    className="d-flex"
-    key="http://example.com/XSeries"
+    key="http://example.com"
   >
-    <span
-      className="pr-2 border-right"
+    <a
+      href="http://example.com"
     >
-      <span
-        className="pgn__icon pgn__icon__inline d-inline-block mr-2 xseries-icon"
-      />
-      <a
-        href="http://example.com/XSeries"
-      >
-        program titleXSeries
-      </a>
-    </span>
-    <span
-      className="flex-grow-1"
-    />
+      Example Program 1
+    </a>
   </li>
   <li
-    className="d-flex"
-    key="http://example.com/MicroMasters"
+    key="http://example.com"
   >
-    <span
-      className="pr-2 border-right"
+    <a
+      href="http://example.com"
     >
-      <span
-        className="pgn__icon pgn__icon__inline d-inline-block mr-2 micromasters-icon"
-      />
-      <a
-        href="http://example.com/MicroMasters"
-      >
-        program titleMicroMasters
-      </a>
-    </span>
-    <span
-      className="flex-grow-1"
-    />
-  </li>
-  <li
-    className="d-flex"
-    key="http://example.com/MicroBachelors"
-  >
-    <span
-      className="pr-2 border-right"
-    >
-      <span
-        className="pgn__icon pgn__icon__inline d-inline-block mr-2 microbachelors-icon"
-      />
-      <a
-        href="http://example.com/MicroBachelors"
-      >
-        program titleMicroBachelors
-      </a>
-    </span>
-    <span
-      className="flex-grow-1"
-    />
-  </li>
-  <li
-    className="d-flex"
-    key="http://example.com/undefined-programType"
-  >
-    <span
-      className="pr-2 border-right"
-    >
-      <span
-        className="pgn__icon pgn__icon__inline d-inline-block mr-2 "
-      />
-      <a
-        href="http://example.com/undefined-programType"
-      >
-        undefined programType
-      </a>
-    </span>
-    <span
-      className="flex-grow-1"
-    />
+      Example Program 2
+    </a>
   </li>
 </ul>
 `;

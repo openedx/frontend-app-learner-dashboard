@@ -1,19 +1,16 @@
 import { shallow } from 'enzyme';
 
-import { ProgramsList, iconMap } from './ProgramsList';
+import { ProgramsList } from './ProgramsList';
 
 describe('ProgramsList', () => {
   const programs = [
-    ...Object.keys(iconMap).map((key) => ({
-      title: `program title${key}`,
-      programUrl: `http://example.com/${key}`,
-      programType: key,
-    })),
-    // undefined programType
     {
-      title: 'undefined programType',
-      programUrl: 'http://example.com/undefined-programType',
-      programType: undefined,
+      programUrl: 'http://example.com',
+      title: 'Example Program 1',
+    },
+    {
+      programUrl: 'http://example.com',
+      title: 'Example Program 2',
     },
   ];
 

@@ -66,8 +66,8 @@
         list-style: none;
         display: inline;
 
-        li:first-child {
-          display: inline !important;
+        > li {
+          line-height: 1rem;
         }
       }
     }
