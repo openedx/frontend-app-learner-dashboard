@@ -12,7 +12,7 @@ const {
   useIsCollapsed,
   findCoursesNavClicked,
   findCoursesNavDropdownClicked,
-  useLearnerVariantDashboardHeaderData,
+  useLearnerDashboardHeaderVariantData,
 } = hooks;
 
 jest.mock('tracking', () => ({
@@ -23,7 +23,7 @@ jest.mock('tracking', () => ({
 
 const url = 'http://example.com';
 
-describe('LearnerVariantDashboardHeader hooks', () => {
+describe('LearnerDashboardHeaderVariant hooks', () => {
   describe('state values', () => {
     state.testGetter(state.keys.isOpen);
   });
@@ -57,10 +57,10 @@ describe('LearnerVariantDashboardHeader hooks', () => {
     });
   });
 
-  describe('useLearnerVariantDashboardHeaderData', () => {
+  describe('useLearnerDashboardHeaderVariantData', () => {
     test('default state', () => {
       state.mock();
-      const out = useLearnerVariantDashboardHeaderData();
+      const out = useLearnerDashboardHeaderVariantData();
       state.expectInitializedWith(state.keys.isOpen, false);
       out.toggleIsOpen();
       expect(state.values.isOpen).toEqual(true);

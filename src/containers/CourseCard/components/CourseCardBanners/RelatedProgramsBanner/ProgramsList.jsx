@@ -14,12 +14,7 @@ export const ProgramsList = ({ programs }) => (
 ProgramsList.propTypes = {
   programs: PropTypes.arrayOf(
     PropTypes.shape({
-      // bannerImgSrc: PropTypes.string,
-      // logoImgSrc: PropTypes.string,
-      // numberOfCourses: PropTypes.number,
-      // programType: PropTypes.string,
       programUrl: PropTypes.string,
-      // provider: PropTypes.string,
       title: PropTypes.string,
     }),
   ).isRequired,

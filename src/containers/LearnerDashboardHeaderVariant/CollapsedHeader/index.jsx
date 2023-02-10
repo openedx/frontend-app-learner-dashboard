@@ -4,7 +4,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { Menu, Close } from '@edx/paragon/icons';
 import { IconButton, Icon } from '@edx/paragon';
 
-import { useLearnerVariantDashboardHeaderData, useIsCollapsed } from '../hooks';
+import { useLearnerDashboardHeaderVariantData, useIsCollapsed } from '../hooks';
 
 import CollapseMenuBody from './CollapseMenuBody';
 import BrandLogo from '../BrandLogo';
@@ -14,7 +14,7 @@ import messages from '../messages';
 export const CollapsedHeader = () => {
   const { formatMessage } = useIntl();
   const isCollapsed = useIsCollapsed();
-  const { isOpen, toggleIsOpen } = useLearnerVariantDashboardHeaderData();
+  const { isOpen, toggleIsOpen } = useLearnerDashboardHeaderVariantData();
 
   return (
     isCollapsed && (

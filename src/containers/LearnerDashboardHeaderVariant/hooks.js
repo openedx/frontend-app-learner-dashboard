@@ -24,7 +24,7 @@ export const findCoursesNavDropdownClicked = (href) => track.findCourses.findCou
   linkName: linkNames.learnerHomeNavDropdownExplore,
 });
 
-export const useLearnerVariantDashboardHeaderData = () => {
+export const useLearnerDashboardHeaderVariantData = () => {
   const [isOpen, setIsOpen] = module.state.isOpen(false);
   const toggleIsOpen = () => setIsOpen(!isOpen);
 
@@ -38,5 +38,5 @@ export default {
   useIsCollapsed,
   findCoursesNavClicked,
   findCoursesNavDropdownClicked,
-  useLearnerVariantDashboardHeaderData,
+  useLearnerDashboardHeaderVariantData,
 };

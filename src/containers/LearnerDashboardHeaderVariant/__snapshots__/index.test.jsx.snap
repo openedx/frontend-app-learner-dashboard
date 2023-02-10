@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LearnerVariantDashboardHeader render 1`] = `
+exports[`LearnerDashboardHeaderVariant render 1`] = `
 <Fragment>
   <ConfirmEmailBanner />
   <CollapsedHeader />

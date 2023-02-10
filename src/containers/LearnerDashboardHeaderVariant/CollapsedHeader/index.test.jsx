@@ -2,14 +2,14 @@ import { shallow } from 'enzyme';
 
 import CollapsedHeader from '.';
 
-import { useLearnerVariantDashboardHeaderData, useIsCollapsed } from '../hooks';
+import { useLearnerDashboardHeaderVariantData, useIsCollapsed } from '../hooks';
 
 jest.mock('../BrandLogo', () => jest.fn(() => 'BrandLogo'));
 jest.mock('./CollapseMenuBody', () => jest.fn(() => 'CollapseMenuBody'));
 
 jest.mock('../hooks', () => ({
   useIsCollapsed: jest.fn(() => true),
-  useLearnerVariantDashboardHeaderData: jest.fn(() => ({
+  useLearnerDashboardHeaderVariantData: jest.fn(() => ({
     isOpen: false,
     toggleIsOpen: jest.fn().mockName('toggleIsOpen'),
   })),
@@ -28,7 +28,7 @@ describe('CollapsedHeader', () => {
   });
 
   it('renders with isOpen true', () => {
-    useLearnerVariantDashboardHeaderData.mockReturnValueOnce({
+    useLearnerDashboardHeaderVariantData.mockReturnValueOnce({
       isOpen: true,
       toggleIsOpen: jest.fn().mockName('toggleIsOpen'),
     });

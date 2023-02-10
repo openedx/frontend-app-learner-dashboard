@@ -8,7 +8,7 @@ import ExpandedHeader from './ExpandedHeader';
 
 import './index.scss';
 
-export const LearnerVariantDashboardHeader = () => (
+export const LearnerDashboardHeaderVariant = () => (
   <>
     <ConfirmEmailBanner />
     <CollapsedHeader />
@@ -17,6 +17,6 @@ export const LearnerVariantDashboardHeader = () => (
   </>
 );
 
-LearnerVariantDashboardHeader.propTypes = {};
+LearnerDashboardHeaderVariant.propTypes = {};
 
-export default LearnerVariantDashboardHeader;
+export default LearnerDashboardHeaderVariant;

@@ -12,14 +12,14 @@ import { Alert } from '@edx/paragon';
 import { RequestKeys } from 'data/constants/requests';
 import { reduxHooks } from 'hooks';
 import Dashboard from 'containers/Dashboard';
-import LearnerVariantDashboardHeader from 'containers/LearnerVariantDashboardHeader';
+import LearnerDashboardHeaderVariant from 'containers/LearnerDashboardHeaderVariant';
 import { App } from './App';
 import messages from './messages';
 
 jest.mock('@edx/frontend-component-footer', () => 'Footer');
 
 jest.mock('containers/Dashboard', () => 'Dashboard');
-jest.mock('containers/LearnerVariantDashboardHeader', () => 'LearnerVariantDashboardHeader');
+jest.mock('containers/LearnerDashboardHeaderVariant', () => 'LearnerDashboardHeaderVariant');
 jest.mock('components/ZendeskFab', () => 'ZendeskFab');
 jest.mock('data/redux', () => ({
   selectors: 'redux.selectors',
@@ -54,7 +54,7 @@ describe('App router component', () => {
         expect(el.find(Helmet).find('title').text()).toEqual(useIntl().formatMessage(messages.pageTitle));
       });
       it('displays learner dashboard header', () => {
-        expect(el.find(LearnerVariantDashboardHeader).length).toEqual(1);
+        expect(el.find(LearnerDashboardHeaderVariant).length).toEqual(1);
       });
       it('wraps the page in a browser router', () => {
         expect(el.find(Router)).toMatchObject(el);
