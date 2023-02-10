@@ -120,7 +120,7 @@ describe('api hooks', () => {
       describe('useNewEntitlementEnrollment', () => {
         beforeEach(() => {
           hook = apiHooks.useNewEntitlementEnrollment(cardId);
-          out = hook(selection);
+          out = hook();
         });
         testInitialization();
         testArgs(RequestKeys.newEntitlementEnrollment);
@@ -136,7 +136,7 @@ describe('api hooks', () => {
       describe('useSwitchEntitlementEnrollment', () => {
         beforeEach(() => {
           hook = apiHooks.useSwitchEntitlementEnrollment(cardId);
-          out = hook(selection);
+          out = hook();
         });
         testInitialization();
         testArgs(RequestKeys.switchEntitlementSession);
@@ -152,7 +152,7 @@ describe('api hooks', () => {
       describe('useLeaveEntitlementSession', () => {
         beforeEach(() => {
           hook = apiHooks.useLeaveEntitlementSession(cardId);
-          out = hook(selection);
+          out = hook();
         });
         testInitialization();
         testArgs(RequestKeys.leaveEntitlementSession);
@@ -182,14 +182,14 @@ describe('api hooks', () => {
     describe('useMasqueradeAs', () => {
       beforeEach(() => {
         hook = apiHooks.useMasqueradeAs(cardId);
-        out = hook(user);
+        out = hook();
       });
       it('initializes load data hook', () => {
         expect(reduxHooks.useLoadData).toHaveBeenCalledWith();
       });
       testRequestKey(RequestKeys.masquerade);
       it('calls initializeList api method', () => {
-        out.action();
+        out.action(user);
         expect(api.initializeList).toHaveBeenCalledWith({ user });
       });
       it('loads data on success', () => {
@@ -220,12 +220,12 @@ describe('api hooks', () => {
       const enable = 'test-enable';
       beforeEach(() => {
         hook = apiHooks.useUpdateEmailSettings(cardId);
-        out = hook(enable);
+        out = hook();
       });
       testInitCardHook(reduxKeys.useCardCourseRunData);
       testRequestKey(RequestKeys.updateEmailSettings);
       it('calls updateEmailSettings api method on call', () => {
-        out.action();
+        out.action(enable);
         expect(api.updateEmailSettings).toHaveBeenCalledWith({ courseId, enable });
       });
     });

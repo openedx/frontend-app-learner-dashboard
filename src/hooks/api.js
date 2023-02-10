@@ -13,8 +13,8 @@ const { useMakeNetworkRequest } = reduxHooks;
 
 export const useNetworkRequest = (action, args) => {
   const makeNetworkRequest = useMakeNetworkRequest();
-  return () => makeNetworkRequest({
-    promise: action(),
+  return (...actionsArgs) => makeNetworkRequest({
+    promise: action(actionsArgs),
     ...args,
   });
 };
@@ -34,19 +34,19 @@ export const useInitializeApp = () => {
 export const useNewEntitlementEnrollment = (cardId) => {
   const { uuid } = reduxHooks.useCardEntitlementData(cardId);
   const onSuccess = module.useInitializeApp();
-  return (selection) => module.useNetworkRequest(
-    () => api.updateEntitlementEnrollment({ uuid, courseId: selection }),
+  return module.useNetworkRequest(
+    (selection) => api.updateEntitlementEnrollment({ uuid, courseId: selection }),
     { onSuccess, requestKey: RequestKeys.newEntitlementEnrollment },
-  )();
+  );
 };
 
 export const useSwitchEntitlementEnrollment = (cardId) => {
   const { uuid } = reduxHooks.useCardEntitlementData(cardId);
   const onSuccess = module.useInitializeApp();
-  return (selection) => module.useNetworkRequest(
-    () => api.updateEntitlementEnrollment({ uuid, courseId: selection }),
+  return module.useNetworkRequest(
+    (selection) => api.updateEntitlementEnrollment({ uuid, courseId: selection }),
     { onSuccess, requestKey: RequestKeys.switchEntitlementSession },
-  )();
+  );
 };
 
 export const useLeaveEntitlementSession = (cardId) => {
@@ -68,10 +68,10 @@ export const useUnenrollFromCourse = (cardId) => {
 
 export const useMasqueradeAs = () => {
   const loadData = reduxHooks.useLoadData();
-  return (user) => module.useNetworkRequest(
-    () => api.initializeList({ user }),
+  return module.useNetworkRequest(
+    (user) => api.initializeList({ user }),
     { onSuccess: ({ data }) => loadData(data), requestKey: RequestKeys.masquerade },
-  )();
+  );
 };
 
 export const useClearMasquerade = () => {
@@ -85,10 +85,10 @@ export const useClearMasquerade = () => {
 
 export const useUpdateEmailSettings = (cardId) => {
   const { courseId } = reduxHooks.useCardCourseRunData(cardId);
-  return (enable) => module.useNetworkRequest(
-    () => api.updateEmailSettings({ courseId, enable }),
+  return module.useNetworkRequest(
+    (enable) => api.updateEmailSettings({ courseId, enable }),
     { requestKey: RequestKeys.updateEmailSettings },
-  )();
+  );
 };
 
 export const useSendConfirmEmail = () => {
