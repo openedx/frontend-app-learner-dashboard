@@ -6,31 +6,26 @@ exports[`ActiveCourseFilters snapshot renders 1`] = `
 >
   <Chip
     key="inProgress"
-    variant="primary"
   >
     In-Progress
   </Chip>
   <Chip
     key="notStarted"
-    variant="primary"
   >
     Not Started
   </Chip>
   <Chip
     key="done"
-    variant="primary"
   >
     Done
   </Chip>
   <Chip
     key="notEnrolled"
-    variant="primary"
   >
     Not Enrolled
   </Chip>
   <Chip
     key="upgraded"
-    variant="primary"
   >
     Upgraded
   </Chip>

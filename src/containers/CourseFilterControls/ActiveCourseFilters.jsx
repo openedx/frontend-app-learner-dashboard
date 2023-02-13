@@ -18,7 +18,6 @@ export const ActiveCourseFilters = ({
     <div id="course-list-active-filters">
       {filters.map(filter => (
         <Chip
-          variant="primary"
           key={filter}
           iconAfter={CloseSmall}
           onClick={handleRemoveFilter(filter)}

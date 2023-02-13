@@ -5,6 +5,7 @@ import enterpriseDashboard from './trackers/enterpriseDashboard';
 import entitlements from './trackers/entitlements';
 import socialShare from './trackers/socialShare';
 import findCourses from './trackers/findCourses';
+import filter from './trackers/filter';
 
 export default {
   course,
@@ -14,4 +15,5 @@ export default {
   entitlements,
   socialShare,
   findCourses,
+  filter,
 };

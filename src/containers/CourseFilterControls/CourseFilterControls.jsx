@@ -40,6 +40,7 @@ export const CourseFilterControls = ({
     handleFilterChange,
     handleSortChange,
   } = useCourseFilterControlsData({
+    filters,
     setFilters,
     setSortBy,
   });
