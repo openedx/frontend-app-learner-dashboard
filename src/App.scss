@@ -11,6 +11,12 @@ $input-focus-box-shadow: $input-box-shadow; // hack to get upgrade to paragon 4.
 
 @import "~@edx/frontend-component-footer/dist/_footer";
 
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .alert.alert-info .alert-icon {
   color: black;
 }

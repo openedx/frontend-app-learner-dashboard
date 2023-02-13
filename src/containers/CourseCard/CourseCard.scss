@@ -51,10 +51,25 @@
 
   .course-card-banners {
     > .alert {
-      border-top-left-radius: 0;
-      border-top-right-radius: 0;
+      border-radius: 0;
       box-shadow: none;
       padding: map-get($spacers, 3) map-get($spacers, 4);
+
+      &:last-of-type {
+        border-bottom-left-radius: $alert-border-radius;
+        border-bottom-right-radius: $alert-border-radius;
+      }
+    }
+
+    .related-programs-banner {
+      .related-programs-list-container {
+        list-style: none;
+        display: inline;
+
+        > li {
+          line-height: 1rem;
+        }
+      }
     }
   }
 }

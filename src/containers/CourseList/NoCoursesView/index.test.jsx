@@ -3,18 +3,12 @@ import { shallow } from 'enzyme';
 
 import EmptyCourse from '.';
 
-jest.mock('data/redux', () => ({
-  hooks: {
-    useRecommendedCoursesData: jest.fn(() => ({ courses: [], isControl: false })),
-    useRequestIsPending: jest.fn(),
-    usePlatformSettingsData: () => ({
+jest.mock('hooks', () => ({
+  reduxHooks: {
+    usePlatformSettingsData: jest.fn(() => ({
       courseSearchUrl: 'course-search-url',
-    }),
+    })),
   },
-}));
-
-jest.mock('containers/Dashboard/hooks', () => ({
-  useIsDashboardCollapsed: jest.fn(() => true),
 }));
 
 describe('NoCoursesView', () => {

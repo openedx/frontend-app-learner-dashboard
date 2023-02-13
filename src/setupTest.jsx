@@ -194,6 +194,7 @@ jest.mock('@edx/paragon/icons', () => ({
   ArrowBack: jest.fn().mockName('icons.ArrowBack'),
   ArrowDropDown: jest.fn().mockName('icons.ArrowDropDown'),
   ArrowDropUp: jest.fn().mockName('icons.ArrowDropUp'),
+  Book: jest.fn().mockName('icons.Book'),
   Cancel: jest.fn().mockName('icons.Cancel'),
   Close: jest.fn().mockName('icons.Close'),
   CheckCircle: jest.fn().mockName('icons.CheckCircle'),
@@ -208,6 +209,7 @@ jest.mock('@edx/paragon/icons', () => ({
   Tune: jest.fn().mockName('icons.Tune'),
   PersonSearch: jest.fn().mockName('icons.PersonSearch'),
   Program: jest.fn().mockName('icons.Program'),
+  Search: jest.fn().mockName('icons.Search'),
 }));
 
 jest.mock('data/constants/app', () => ({

@@ -48,6 +48,10 @@ export const LoadedView = ({
   );
 };
 
+LoadedView.defaultProps = {
+  isControl: true,
+};
+
 LoadedView.propTypes = {
   courses: PropTypes.arrayOf(PropTypes.shape({
     courseKey: PropTypes.string,
@@ -55,7 +59,7 @@ LoadedView.propTypes = {
     logoImageUrl: PropTypes.string,
     marketingUrl: PropTypes.string,
   })).isRequired,
-  isControl: PropTypes.oneOf([true, false, null]).isRequired,
+  isControl: PropTypes.oneOf([true, false, null]),
 };
 
 export default LoadedView;

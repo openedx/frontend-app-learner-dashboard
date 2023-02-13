@@ -37,6 +37,7 @@ exports[`LearnerDashboardHeader snapshots with collapsed 1`] = `
             iconAs="Icon"
             invertColors={true}
             onClick={[MockFunction findCoursesNavClicked('test-course-search-url')]}
+            src={[MockFunction icons.Search]}
             variant="primary"
           />
           <UserMenu />
@@ -78,6 +79,7 @@ exports[`LearnerDashboardHeader snapshots without collapsed 1`] = `
         <Button
           as="a"
           href="test-course-search-url"
+          iconBefore={[MockFunction icons.Search]}
           onClick={[MockFunction findCoursesNavClicked('test-course-search-url')]}
           variant="inverse-tertiary"
         >

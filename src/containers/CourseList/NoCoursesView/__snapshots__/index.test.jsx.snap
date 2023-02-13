@@ -18,6 +18,7 @@ exports[`NoCoursesView snapshot 1`] = `
   <Button
     as="a"
     href="course-search-url"
+    iconBefore={[MockFunction icons.Search]}
     variant="brand"
   >
     Explore courses

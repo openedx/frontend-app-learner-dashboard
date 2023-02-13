@@ -40,9 +40,6 @@ exports[`CourseCard component snapshot: collapsed 1`] = `
           <Card.Footer
             orientation="vertical"
           >
-            <RelatedProgramsBadge
-              cardId="test-card-id"
-            />
             <CourseCardActions
               cardId="test-card-id"
             />
@@ -99,9 +96,6 @@ exports[`CourseCard component snapshot: not collapsed 1`] = `
           <Card.Footer
             orientation="horizontal"
           >
-            <RelatedProgramsBadge
-              cardId="test-card-id"
-            />
             <CourseCardActions
               cardId="test-card-id"
             />
