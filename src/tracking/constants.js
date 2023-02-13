@@ -6,6 +6,7 @@ export const categories = StrictDict({
   userEngagement: 'user-engagement',
   searchButton: 'search_button',
   credit: 'credit',
+  filter: 'filter',
 });
 
 export const events = StrictDict({
@@ -50,6 +51,8 @@ export const eventNames = StrictDict({
   enterpriseDashboardModalClosed: `${learnerPortal}.closed`,
   findCoursesClicked: 'edx.bi.dashboard.find_courses_button.clicked',
   purchaseCredit: 'edx.bi.credit.clicked_purchase_credit',
+  filterClicked: 'course-dashboard.filter.clicked',
+  filterOptionSelected: 'course-dashboard.filter_option.selected',
 });
 
 export const linkNames = StrictDict({
