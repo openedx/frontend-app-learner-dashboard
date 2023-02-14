@@ -17,7 +17,7 @@ jest.mock('hooks', () => ({
   },
 }));
 
-jest.mock('Components/Banner', () => 'Banner');
+jest.mock('components/Banner', () => 'Banner');
 
 describe('CertificateBanner', () => {
   const props = { cardId: 'cardId' };
