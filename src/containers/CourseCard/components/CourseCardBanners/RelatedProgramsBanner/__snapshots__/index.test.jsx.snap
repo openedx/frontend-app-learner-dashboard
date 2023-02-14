@@ -6,7 +6,11 @@ exports[`RelatedProgramsBanner render with programs 1`] = `
   icon={[MockFunction icons.Program]}
   variant="info"
 >
-  Related Programs: 
+  <span
+    className="font-weight-bolder"
+  >
+    Related Programs: 
+  </span>
   <ProgramsList
     programs={
       Array [

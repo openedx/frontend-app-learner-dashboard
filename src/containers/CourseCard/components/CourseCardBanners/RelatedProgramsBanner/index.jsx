@@ -21,7 +21,7 @@ export const RelatedProgramsBanner = ({ cardId }) => {
         icon={Program}
         className="bg-white border-top border-bottom mb-0 related-programs-banner"
       >
-        {formatMessage(messages.relatedPrograms)}
+        <span className="font-weight-bolder">{formatMessage(messages.relatedPrograms)}</span>
         <ProgramList programs={programData.list} />
       </Banner>
     )
