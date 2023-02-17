@@ -18,6 +18,7 @@ export const recommendedCourseClicked = (courseKey, isControl, href) => createLi
   createEventTracker(eventNames.recommendedCourseClicked, {
     course_key: courseKey,
     is_control: isControl,
+    page: 'dashboard',
   }),
   href,
 );
