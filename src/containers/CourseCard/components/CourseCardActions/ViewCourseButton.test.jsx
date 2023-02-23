@@ -29,12 +29,14 @@ const homeUrl = 'homeUrl';
 
 const createWrapper = ({
   hasAccess = false,
+  isAudit = false,
+  isAuditAccessExpired = false,
   isEntitlement = false,
   isExpired = false,
   propsOveride = {},
 }) => {
   reduxHooks.useCardCourseRunData.mockReturnValue({ homeUrl });
-  reduxHooks.useCardEnrollmentData.mockReturnValueOnce({ hasAccess });
+  reduxHooks.useCardEnrollmentData.mockReturnValueOnce({ hasAccess, isAudit, isAuditAccessExpired });
   reduxHooks.useCardEntitlementData.mockReturnValueOnce({ isEntitlement, isExpired });
   return shallow(<ViewCourseButton {...defaultProps} {...propsOveride} />);
 };
@@ -57,6 +59,10 @@ describe('ViewCourseButton', () => {
     test('link is enabled', () => {
       expect(wrapper.prop(htmlProps.disabled)).toEqual(false);
     });
+    test('link is disabled when audit access is expired', () => {
+      wrapper = createWrapper({ hasAccess: true, isAudit: true, isAuditAccessExpired: true });
+      expect(wrapper.prop(htmlProps.disabled)).toEqual(true);
+    });
   });
   describe('learner does not have access to course', () => {
     beforeEach(() => {
@@ -72,7 +78,7 @@ describe('ViewCourseButton', () => {
         homeUrl,
       ));
     });
-    test('link is enabled', () => {
+    test('link is disabled', () => {
       expect(wrapper.prop(htmlProps.disabled)).toEqual(true);
     });
   });
