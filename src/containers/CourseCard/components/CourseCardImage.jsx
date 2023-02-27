@@ -50,6 +50,7 @@ export const CourseCardImage = ({ cardId, orientation }) => {
         className={wrapperClassName}
         href={homeUrl}
         onClick={handleImageClicked}
+        tabIndex="-1"
       >
         {image}
       </a>
