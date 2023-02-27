@@ -7,7 +7,9 @@ exports[`CertificateBanner snapshot is passing and is downloadable 1`] = `
 >
   Congratulations.  Your certificate is ready.
     
-  <Hyperlink>
+  <Hyperlink
+    isInline={true}
+  >
     View Certificate.
   </Hyperlink>
 </Banner>
@@ -104,6 +106,7 @@ exports[`CertificateBanner snapshot not passing and has finished 1`] = `
     
   <Hyperlink
     destination="progressUrl"
+    isInline={true}
   >
     View grades.
   </Hyperlink>
