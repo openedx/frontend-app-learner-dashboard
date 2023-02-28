@@ -53,7 +53,7 @@ export const CertificateBanner = ({ cardId }) => {
         <Banner variant="warning">
           {formatMessage(messages.notEligibleForCert)}
           {'  '}
-          <Hyperlink destination={progressUrl}>{formatMessage(messages.viewGrades)}</Hyperlink>
+          <Hyperlink isInline destination={progressUrl}>{formatMessage(messages.viewGrades)}</Hyperlink>
         </Banner>
       );
     }
@@ -68,7 +68,7 @@ export const CertificateBanner = ({ cardId }) => {
       <Banner variant="success" icon={CheckCircle}>
         {formatMessage(messages.certReady)}
         {'  '}
-        <Hyperlink destination={certificate.certPreviewUrl}>
+        <Hyperlink isInline destination={certificate.certPreviewUrl}>
           {formatMessage(messages.viewCertificate)}
         </Hyperlink>
       </Banner>
