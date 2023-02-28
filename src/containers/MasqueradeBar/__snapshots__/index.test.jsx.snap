@@ -9,6 +9,7 @@ exports[`MasqueradeBar snapshot can masquerade 1`] = `
   >
     <FormLabel
       className="masquerade-form-label"
+      id="masquerade-form-label"
       inline={true}
     >
       <Icon
@@ -21,6 +22,7 @@ exports[`MasqueradeBar snapshot can masquerade 1`] = `
       isInvalid={false}
     >
       <FormControl
+        aria-labelledby="masquerade-form-label"
         floatingLabel="Username or email"
         onChange={[MockFunction handleMasqueradeInputChange]}
         value=""
@@ -51,6 +53,7 @@ exports[`MasqueradeBar snapshot can masquerade with input 1`] = `
   >
     <FormLabel
       className="masquerade-form-label"
+      id="masquerade-form-label"
       inline={true}
     >
       <Icon
@@ -63,6 +66,7 @@ exports[`MasqueradeBar snapshot can masquerade with input 1`] = `
       isInvalid={false}
     >
       <FormControl
+        aria-labelledby="masquerade-form-label"
         floatingLabel="Username or email"
         onChange={[MockFunction handleMasqueradeInputChange]}
         value="test"
@@ -95,6 +99,7 @@ exports[`MasqueradeBar snapshot is masquerading failed with error 1`] = `
   >
     <FormLabel
       className="masquerade-form-label"
+      id="masquerade-form-label"
       inline={true}
     >
       <Icon
@@ -107,6 +112,7 @@ exports[`MasqueradeBar snapshot is masquerading failed with error 1`] = `
       isInvalid={true}
     >
       <FormControl
+        aria-labelledby="masquerade-form-label"
         floatingLabel="Username or email"
         onChange={[MockFunction handleMasqueradeInputChange]}
         value=""
@@ -141,6 +147,7 @@ exports[`MasqueradeBar snapshot is masquerading pending 1`] = `
   >
     <FormLabel
       className="masquerade-form-label"
+      id="masquerade-form-label"
       inline={true}
     >
       <Icon
@@ -153,6 +160,7 @@ exports[`MasqueradeBar snapshot is masquerading pending 1`] = `
       isInvalid={false}
     >
       <FormControl
+        aria-labelledby="masquerade-form-label"
         floatingLabel="Username or email"
         onChange={[MockFunction handleMasqueradeInputChange]}
         value=""
