@@ -8,8 +8,6 @@
   },
   "scripts": {
     "build": "fedx-scripts webpack",
-    "coveralls": "cat ./coverage/lcov.info | coveralls",
-    "is-es5": "es-check es5 ./dist/*.js",
     "i18n_extract": "BABEL_ENV=i18n fedx-scripts babel src --quiet > /dev/null",
     "lint": "fedx-scripts eslint --ext .jsx,.js src/",
     "lint-fix": "fedx-scripts eslint --fix --ext .jsx,.js src/",
@@ -82,9 +80,7 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.1.0",
     "axios-mock-adapter": "^1.20.0",
-    "codecov": "^3.8.3",
     "enzyme-adapter-react-16": "^1.15.6",
-    "es-check": "^6.0.0",
     "fetch-mock": "^9.11.0",
     "husky": "^7.0.0",
     "identity-obj-proxy": "^3.0.0",
