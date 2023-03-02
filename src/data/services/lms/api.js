@@ -66,7 +66,6 @@ export const logShare = ({ courseId, site }) => module.logEvent({
   },
 });
 
-export const formDataHeaders = { 'Content-Type': 'multipart/form-data' };
 export const createCreditRequest = ({ providerId, courseId, username }) => post(
   urls.creditRequestUrl(providerId),
   { course_key: courseId, username },
@@ -78,6 +77,8 @@ export default {
   updateEmailSettings,
   updateEntitlementEnrollment,
   deleteEntitlementEnrollment,
+  logEvent,
   logUpgrade,
   logShare,
+  createCreditRequest,
 };

@@ -1,4 +1,5 @@
 import { createEventTracker, createLinkTracker } from 'data/services/segment/utils';
+import { creditPurchaseUrl } from 'data/services/lms/urls';
 import { categories, eventNames } from '../constants';
 
 /**
@@ -6,12 +7,12 @@ import { categories, eventNames } from '../constants';
  * @param {string} fromCourseRun - course run identifier for leaving course
  * @return {callback} - callback that triggers the event tracker
  */
-export const purchase = (courseKey, href) => createLinkTracker(
+export const purchase = (courseId) => createLinkTracker(
   createEventTracker(eventNames.purchaseCredit, {
-    label: courseKey,
+    label: courseId,
     category: categories.credit,
   }),
-  href,
+  creditPurchaseUrl(courseId),
 );
 
 export default {

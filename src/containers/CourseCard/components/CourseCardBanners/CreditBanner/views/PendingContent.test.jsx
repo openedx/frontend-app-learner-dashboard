@@ -5,11 +5,9 @@ import { formatMessage } from 'testUtils';
 import { reduxHooks } from 'hooks';
 
 import messages from './messages';
-import hooks from './hooks';
 import PendingContent from './PendingContent';
 
 jest.mock('hooks', () => ({ reduxHooks: { useCardCreditData: jest.fn() } }));
-jest.mock('./hooks', () => ({ useCreditRequestData: jest.fn() }));
 jest.mock('./components/CreditContent', () => 'CreditContent');
 jest.mock('./components/ProviderLink', () => 'ProviderLink');
 
@@ -17,11 +15,9 @@ let el;
 let component;
 
 const cardId = 'test-card-id';
-const requestData = { test: 'requestData' };
 const providerName = 'test-credit-provider-name';
-const createCreditRequest = jest.fn().mockName('createCreditRequest');
-reduxHooks.useCardCreditData.mockReturnValue({ providerName });
-hooks.useCreditRequestData.mockReturnValue({ requestData, createCreditRequest });
+const providerStatusUrl = 'test-credit-provider-status-url';
+reduxHooks.useCardCreditData.mockReturnValue({ providerName, providerStatusUrl });
 
 const render = () => {
   el = shallow(<PendingContent cardId={cardId} />);
@@ -34,17 +30,14 @@ describe('PendingContent component', () => {
     it('initializes card credit data with cardId', () => {
       expect(reduxHooks.useCardCreditData).toHaveBeenCalledWith(cardId);
     });
-    it('initializes credit request data with cardId', () => {
-      expect(hooks.useCreditRequestData).toHaveBeenCalledWith(cardId);
-    });
   });
   describe('render', () => {
     describe('rendered CreditContent component', () => {
       beforeEach(() => {
         component = el.find('CreditContent');
       });
-      test('action.onClick calls createCreditRequest from useCreditRequestData hook', () => {
-        expect(component.props().action.onClick).toEqual(createCreditRequest);
+      test('action.href will go to provider status site', () => {
+        expect(component.props().action.href).toEqual(providerStatusUrl);
       });
       test('action.message is formatted requestCredit message', () => {
         expect(component.props().action.message).toEqual(formatMessage(messages.viewDetails));
@@ -53,9 +46,6 @@ describe('PendingContent component', () => {
         expect(component.props().message).toEqual(
           formatMessage(messages.received, { providerName }),
         );
-      });
-      test('requestData drawn from useCreditRequestData hook', () => {
-        expect(component.props().requestData).toEqual(requestData);
       });
     });
   });
