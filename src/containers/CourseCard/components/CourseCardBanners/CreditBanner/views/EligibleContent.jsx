@@ -11,10 +11,10 @@ import messages from './messages';
 
 export const EligibleContent = ({ cardId }) => {
   const { formatMessage } = useIntl();
-  const { providerName, creditPurchaseUrl: href } = reduxHooks.useCardCreditData(cardId);
+  const { providerName } = reduxHooks.useCardCreditData(cardId);
   const { courseId } = reduxHooks.useCardCourseRunData(cardId);
 
-  const onClick = track.credit.purchase(courseId, href);
+  const onClick = track.credit.purchase(courseId);
   const getCredit = formatMessage(messages.getCredit);
   const message = providerName
     ? formatMessage(messages.eligibleFromProvider, { providerName })
