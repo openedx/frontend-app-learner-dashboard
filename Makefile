@@ -2,7 +2,6 @@ npm-install-%: ## install specified % npm package
 	npm install $* --save-dev
 	git add package.json
 export TRANSIFEX_RESOURCE = frontend-app-learner-dashboard
-transifex_resource = frontend-app-learner-dashboard
 transifex_langs = "ar,fr,es_419,zh_CN"
 
 transifex_utils = ./node_modules/.bin/transifex-utils.js
