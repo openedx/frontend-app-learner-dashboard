@@ -39,10 +39,10 @@ export const AuthenticatedUserDropdown = () => {
             </Dropdown.Item>
           )}
           <Dropdown.Divider />
-          <Dropdown.Item href={`${getConfig().LMS_BASE_URL}/u/${authenticatedUser.username}`}>
+          <Dropdown.Item href={`${getConfig().ACCOUNT_PROFILE_URL}/u/${authenticatedUser.username}`}>
             {formatMessage(messages.profile)}
           </Dropdown.Item>
-          <Dropdown.Item href={`${getConfig().LMS_BASE_URL}/account/settings`}>
+          <Dropdown.Item href={getConfig().ACCOUNT_SETTINGS_URL}>
             {formatMessage(messages.account)}
           </Dropdown.Item>
           {getConfig().ORDER_HISTORY_URL && (
