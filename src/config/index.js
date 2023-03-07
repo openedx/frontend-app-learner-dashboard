@@ -13,6 +13,9 @@ const configuration = {
   SESSION_COOKIE_DOMAIN: process.env.SESSION_COOKIE_DOMAIN || '',
   ZENDESK_KEY: process.env.ZENDESK_KEY,
   SUPPORT_URL: process.env.SUPPORT_URL || null,
+  // Microfrontends
+  ACCOUNT_MICROFRONTEND_URL: process.env.ACCOUNT_MICROFRONTEND_URL,
+  PROFILE_MICROFRONTEND_URL: process.env.PROFILE_MICROFRONTEND_URL,
 };
 
 const features = {};
