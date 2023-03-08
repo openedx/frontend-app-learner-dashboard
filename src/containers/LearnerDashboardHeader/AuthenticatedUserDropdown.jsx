@@ -45,7 +45,7 @@ export const AuthenticatedUserDropdown = ({ username }) => {
           </Dropdown.Item>
         )}
         <Dropdown.Divider />
-        <Dropdown.Item href={urls.profileUrl(username)}>
+        <Dropdown.Item href={`${getConfig().ACCOUNT_PROFILE_URL}/u/${username}`}>
           {formatMessage(messages.profile)}
         </Dropdown.Item>
         {isCollapsed && (
@@ -58,7 +58,7 @@ export const AuthenticatedUserDropdown = ({ username }) => {
             </Dropdown.Item>
           </>
         )}
-        <Dropdown.Item href={urls.accountUrl}>
+        <Dropdown.Item href={getConfig().ACCOUNT_SETTINGS_URL}>
           {formatMessage(messages.account)}
         </Dropdown.Item>
         {getConfig().ORDER_HISTORY_URL && (

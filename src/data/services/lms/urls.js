@@ -3,8 +3,6 @@ import { configuration } from 'config';
 
 const baseUrl = `${configuration.LMS_BASE_URL}`;
 export const ecommerceUrl = `${configuration.ECOMMERCE_PUBLIC_URL_ROOT}`;
-export const accountUrl = `${configuration.ACCOUNT_MICROFRONTEND_URL}`;
-export const profileUrl = (username) => `${configuration.PROFILE_MICROFRONTEND_URL}${username}`;
 
 export const api = `${baseUrl}/api`;
 
@@ -29,7 +27,6 @@ export const creditPurchaseUrl = (courseId) => `${ecommerceUrl}/credit/checkout/
 export const creditRequestUrl = (providerId) => `${api}/credit/v1/providers/${providerId}/request`;
 
 export default StrictDict({
-  accountUrl,
   api,
   baseAppUrl,
   courseUnenroll,
@@ -39,7 +36,6 @@ export default StrictDict({
   event,
   init,
   learningMfeUrl,
-  profileUrl,
   programsUrl,
   updateEmailSettings,
 });

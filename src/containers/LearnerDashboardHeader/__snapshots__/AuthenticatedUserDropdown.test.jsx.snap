@@ -41,7 +41,7 @@ exports[`AuthenticatedUserDropdown snapshots with enterprise dashboard 1`] = `
     </Dropdown.Item>
     <Dropdown.Divider />
     <Dropdown.Item
-      href="http://localhost:1995/u/username"
+      href="http://account-profile-url.test/u/username"
     >
       Profile
     </Dropdown.Item>
@@ -57,7 +57,7 @@ exports[`AuthenticatedUserDropdown snapshots with enterprise dashboard 1`] = `
       Explore courses
     </Dropdown.Item>
     <Dropdown.Item
-      href="http://localhost:1997/"
+      href="http://account-settings-url.test"
     >
       Account
     </Dropdown.Item>
@@ -108,12 +108,12 @@ exports[`AuthenticatedUserDropdown snapshots without enterprise dashboard and ex
     </Dropdown.Item>
     <Dropdown.Divider />
     <Dropdown.Item
-      href="http://localhost:1995/u/username"
+      href="http://account-profile-url.test/u/username"
     >
       Profile
     </Dropdown.Item>
     <Dropdown.Item
-      href="http://localhost:1997/"
+      href="http://account-settings-url.test"
     >
       Account
     </Dropdown.Item>

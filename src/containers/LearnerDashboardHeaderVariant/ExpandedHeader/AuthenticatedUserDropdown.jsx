@@ -5,7 +5,6 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
 import { AvatarButton, Dropdown } from '@edx/paragon';
 
-import urls from 'data/services/lms/urls';
 import { reduxHooks } from 'hooks';
 
 import messages from '../messages';
@@ -40,10 +39,10 @@ export const AuthenticatedUserDropdown = () => {
             </Dropdown.Item>
           )}
           <Dropdown.Divider />
-          <Dropdown.Item href={urls.profileUrl(authenticatedUser.username)}>
+          <Dropdown.Item href={`${getConfig().ACCOUNT_PROFILE_URL}/u/${authenticatedUser.username}`}>
             {formatMessage(messages.profile)}
           </Dropdown.Item>
-          <Dropdown.Item href={urls.accountUrl}>
+          <Dropdown.Item href={getConfig().ACCOUNT_SETTINGS_URL}>
             {formatMessage(messages.account)}
           </Dropdown.Item>
           {getConfig().ORDER_HISTORY_URL && (
