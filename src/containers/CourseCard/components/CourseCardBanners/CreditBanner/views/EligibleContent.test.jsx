@@ -27,7 +27,6 @@ let component;
 const cardId = 'test-card-id';
 const courseId = 'test-course-id';
 const credit = {
-  creditPurchaseUrl: 'test-credit-purchase-url',
   providerName: 'test-credit-provider-name',
 };
 reduxHooks.useCardCreditData.mockReturnValue(credit);
@@ -58,16 +57,14 @@ describe('EligibleContent component', () => {
       });
       test('action.onClick sends credit purchase track event', () => {
         expect(component.props().action.onClick).toEqual(
-          track.credit.purchase(courseId, credit.creditPurchaseUrl),
+          track.credit.purchase(courseId),
         );
       });
       test('action.message is formatted getCredit message', () => {
         expect(component.props().action.message).toEqual(formatMessage(messages.getCredit));
       });
       test('message is formatted eligible message if no provider', () => {
-        reduxHooks.useCardCreditData.mockReturnValueOnce({
-          creditPurchaseUrl: credit.creditPurchaseUrl,
-        });
+        reduxHooks.useCardCreditData.mockReturnValueOnce({});
         render();
         loadComponent();
         expect(component.props().message).toEqual(formatMessage(
