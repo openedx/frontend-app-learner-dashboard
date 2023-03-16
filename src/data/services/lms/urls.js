@@ -23,8 +23,8 @@ export const learningMfeUrl = (url) => updateUrl(configuration.LEARNING_BASE_URL
 // static view url
 const programsUrl = baseAppUrl('/dashboard/programs');
 
-export const creditPurchaseUrl = (courseId) => `${ecommerceUrl}/credit/checkout/${courseId}`;
-export const creditRequestUrl = (providerId) => `${api}/credit/v1/providers/${providerId}/request`;
+export const creditPurchaseUrl = (courseId) => `${ecommerceUrl}/credit/checkout/${courseId}/`;
+export const creditRequestUrl = (providerId) => `${api}/credit/v1/providers/${providerId}/request/`;
 
 export default StrictDict({
   api,
