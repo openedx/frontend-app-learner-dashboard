@@ -21,7 +21,6 @@ import {
 } from '@edx/frontend-platform';
 
 import { messages as footerMessages } from '@edx/frontend-component-footer';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { configuration } from './config';
 
 import messages from './i18n';
@@ -30,25 +29,21 @@ import App from './App';
 
 subscribe(APP_READY, () => {
   ReactDOM.render(
-    <IntlProvider locale="en">
-      <AppProvider store={store}>
-        <Switch>
-          <PageRoute path="/">
-            <App />
-          </PageRoute>
-          <Redirect to="/" />
-        </Switch>
-      </AppProvider>
-    </IntlProvider>,
+    <AppProvider store={store}>
+      <Switch>
+        <PageRoute path="/">
+          <App />
+        </PageRoute>
+        <Redirect to="/" />
+      </Switch>
+    </AppProvider>,
     document.getElementById('root'),
   );
 });
 
 subscribe(APP_INIT_ERROR, (error) => {
   ReactDOM.render(
-    <IntlProvider locale="en">
-      <ErrorPage message={error.message} />
-    </IntlProvider>,
+    <ErrorPage message={error.message} />,
     document.getElementById('root'),
   );
 });
