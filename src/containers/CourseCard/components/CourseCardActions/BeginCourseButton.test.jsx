@@ -14,7 +14,7 @@ jest.mock('tracking', () => ({
 jest.mock('hooks', () => ({
   reduxHooks: {
     useCardCourseRunData: jest.fn(() => ({ homeUrl: 'home-url' })),
-    useCardEnrollmentData: jest.fn(() => ({ hasAccess: true })),
+    useCardEnrollmentData: jest.fn(() => ({ hasAccess: true, isAudit: false, isAuditAccessExpired: false })),
     useMasqueradeData: jest.fn(() => ({ isMasquerading: false })),
     useTrackCourseEvent: jest.fn(
       (eventName, cardId, upgradeUrl) => ({ trackCourseEvent: { eventName, cardId, upgradeUrl } }),
@@ -63,6 +63,11 @@ describe('BeginCourseButton', () => {
       });
       test('masquerading', () => {
         reduxHooks.useMasqueradeData.mockReturnValueOnce({ isMasquerading: true });
+        wrapper = shallow(<BeginCourseButton {...props} />);
+        expect(wrapper.prop(htmlProps.disabled)).toEqual(true);
+      });
+      test('audit access expired', () => {
+        reduxHooks.useCardEnrollmentData.mockReturnValueOnce({ isAudit: true, isAuditAccessExpired: true });
         wrapper = shallow(<BeginCourseButton {...props} />);
         expect(wrapper.prop(htmlProps.disabled)).toEqual(true);
       });
