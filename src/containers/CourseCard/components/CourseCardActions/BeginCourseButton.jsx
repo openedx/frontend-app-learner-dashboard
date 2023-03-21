@@ -11,7 +11,7 @@ import messages from './messages';
 export const BeginCourseButton = ({ cardId }) => {
   const { formatMessage } = useIntl();
   const { homeUrl } = reduxHooks.useCardCourseRunData(cardId);
-  const { hasAccess } = reduxHooks.useCardEnrollmentData(cardId);
+  const { hasAccess, isAudit, isAuditAccessExpired } = reduxHooks.useCardEnrollmentData(cardId);
   const { isMasquerading } = reduxHooks.useMasqueradeData();
   const handleClick = reduxHooks.useTrackCourseEvent(
     track.course.enterCourseClicked,
@@ -20,7 +20,7 @@ export const BeginCourseButton = ({ cardId }) => {
   );
   return (
     <ActionButton
-      disabled={isMasquerading || !hasAccess}
+      disabled={isMasquerading || !hasAccess || (isAudit && isAuditAccessExpired)}
       as="a"
       href="#"
       onClick={handleClick}
