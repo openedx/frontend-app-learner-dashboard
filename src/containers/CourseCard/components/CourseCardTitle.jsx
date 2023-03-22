@@ -10,18 +10,27 @@ export const CourseCardTitle = ({ cardId }) => {
   const { courseName } = reduxHooks.useCardCourseData(cardId);
   const { isEntitlement, isFulfilled } = reduxHooks.useCardEntitlementData(cardId);
   const { homeUrl } = reduxHooks.useCardCourseRunData(cardId);
-  const handleTitleClicked = reduxHooks.useTrackCourseEvent(courseTitleClicked, cardId, homeUrl);
+  const handleTitleClicked = reduxHooks.useTrackCourseEvent(
+    courseTitleClicked,
+    cardId,
+    homeUrl,
+  );
+  // disable on home url is not defined or entitlements that are not fulfilled
+  const disable = !homeUrl || (isEntitlement && !isFulfilled);
   return (
     <h3>
-      <a
-        href={homeUrl}
-        className="course-card-title"
-        data-testid="CourseCardTitle"
-        onClick={handleTitleClicked}
-        disabled={isEntitlement && !isFulfilled}
-      >
-        {courseName}
-      </a>
+      {disable ? (
+        <span className="course-card-title" data-testid="CourseCardTitle">{courseName}</span>
+      ) : (
+        <a
+          href={homeUrl}
+          className="course-card-title"
+          data-testid="CourseCardTitle"
+          onClick={handleTitleClicked}
+        >
+          {courseName}
+        </a>
+      )}
     </h3>
   );
 };
