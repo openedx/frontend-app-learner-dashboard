@@ -62,13 +62,18 @@ exports[`AuthenticatedUserDropdown snapshots with enterprise dashboard 1`] = `
       Account
     </Dropdown.Item>
     <Dropdown.Item
+      href="http://order-history-url.test"
+    >
+      Order History
+    </Dropdown.Item>
+    <Dropdown.Item
       href="http://localhost:18000/support"
     >
       Help
     </Dropdown.Item>
     <Dropdown.Divider />
     <Dropdown.Item
-      href="http://localhost:18000/logout"
+      href="http://logout-url.test"
     >
       Sign Out
     </Dropdown.Item>
@@ -118,13 +123,18 @@ exports[`AuthenticatedUserDropdown snapshots without enterprise dashboard and ex
       Account
     </Dropdown.Item>
     <Dropdown.Item
+      href="http://order-history-url.test"
+    >
+      Order History
+    </Dropdown.Item>
+    <Dropdown.Item
       href="http://localhost:18000/support"
     >
       Help
     </Dropdown.Item>
     <Dropdown.Divider />
     <Dropdown.Item
-      href="http://localhost:18000/logout"
+      href="http://logout-url.test"
     >
       Sign Out
     </Dropdown.Item>
