@@ -1,9 +1,13 @@
 import { shallow } from 'enzyme';
+import { getConfig } from '@edx/frontend-platform';
 
 import { reduxHooks } from 'hooks';
 import { AuthenticatedUserDropdown } from './AuthenticatedUserDropdown';
 import { useIsCollapsed } from './hooks';
 
+jest.mock('@edx/frontend-platform', () => ({
+  getConfig: jest.fn(),
+}));
 jest.mock('@edx/frontend-platform/react', () => ({
   AppContext: {
     authenticatedUser: {
@@ -23,6 +27,15 @@ jest.mock('containers/LearnerDashboardHeader/hooks', () => ({
   useIsCollapsed: jest.fn(),
   findCoursesNavDropdownClicked: (href) => jest.fn().mockName(`findCoursesNavDropdownClicked('${href}')`),
 }));
+
+const config = {
+  ACCOUNT_PROFILE_URL: 'http://account-profile-url.test',
+  ACCOUNT_SETTINGS_URL: 'http://account-settings-url.test',
+  LOGOUT_URL: 'http://logout-url.test',
+  ORDER_HISTORY_URL: 'http://order-history-url.test',
+  SUPPORT_URL: 'http://localhost:18000/support',
+};
+getConfig.mockReturnValue(config);
 
 describe('AuthenticatedUserDropdown', () => {
   const props = {
