@@ -40,6 +40,21 @@ export const CertificateBanner = ({ cardId }) => {
       </Banner>
     );
   }
+  if (certificate.isDownloadable) {
+    return (
+      <Banner variant="success" icon={CheckCircle}>
+        {formatMessage(messages.certReady)}
+        {certificate.certPreviewUrl && (
+          <>
+            {'  '}
+            <Hyperlink isInline destination={certificate.certPreviewUrl}>
+              {formatMessage(messages.viewCertificate)}
+            </Hyperlink>
+          </>
+        )}
+      </Banner>
+    );
+  }
   if (!isPassing) {
     if (isAudit) {
       return (
@@ -60,17 +75,6 @@ export const CertificateBanner = ({ cardId }) => {
     return (
       <Banner variant="warning">
         {formatMessage(messages.certMinGrade, { minPassingGrade })}
-      </Banner>
-    );
-  }
-  if (certificate.isDownloadable) {
-    return (
-      <Banner variant="success" icon={CheckCircle}>
-        {formatMessage(messages.certReady)}
-        {'  '}
-        <Hyperlink isInline destination={certificate.certPreviewUrl}>
-          {formatMessage(messages.viewCertificate)}
-        </Hyperlink>
       </Banner>
     );
   }
