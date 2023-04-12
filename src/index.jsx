@@ -26,16 +26,19 @@ import { configuration } from './config';
 import messages from './i18n';
 
 import App from './App';
+import NoticesProvider from './generic/notices';
 
 subscribe(APP_READY, () => {
   ReactDOM.render(
     <AppProvider store={store}>
-      <Switch>
-        <PageRoute path="/">
-          <App />
-        </PageRoute>
-        <Redirect to="/" />
-      </Switch>
+      <NoticesProvider>
+        <Switch>
+          <PageRoute path="/">
+            <App />
+          </PageRoute>
+          <Redirect to="/" />
+        </Switch>
+      </NoticesProvider>
     </AppProvider>,
     document.getElementById('root'),
   );
