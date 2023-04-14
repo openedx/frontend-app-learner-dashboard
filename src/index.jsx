@@ -26,7 +26,7 @@ import { configuration } from './config';
 import messages from './i18n';
 
 import App from './App';
-import NoticesProvider from './generic/notices';
+import NoticesProvider from './components/NoticesProvider';
 
 subscribe(APP_READY, () => {
   ReactDOM.render(
