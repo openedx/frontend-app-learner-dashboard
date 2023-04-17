@@ -11,10 +11,11 @@ import messages from './messages';
 
 export const ApprovedContent = ({ cardId }) => {
   const { providerStatusUrl: href, providerName } = reduxHooks.useCardCreditData(cardId);
+  const { isMasquerading } = reduxHooks.useMasqueradeData();
   const { formatMessage } = useIntl();
   return (
     <CreditContent
-      action={{ href, message: formatMessage(messages.viewCredit) }}
+      action={{ href, message: formatMessage(messages.viewCredit), disabled: isMasquerading }}
       message={formatMessage(
         messages.approved,
         {

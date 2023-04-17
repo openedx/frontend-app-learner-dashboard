@@ -13,7 +13,9 @@ export const CreditContent = ({ action, message, requestData }) => (
       <ActionRow className="mt-4">
         <Button
           as="a"
-          href={action.href}
+          disabled={!!action.disabled}
+          // make sure href is not undefined. Paragon won't disable the button if href is undefined.
+          href={action.href || '#'}
           rel="noopener"
           target="_blank"
           variant="outline-primary"
@@ -36,6 +38,7 @@ CreditContent.propTypes = {
     href: PropTypes.string,
     onClick: PropTypes.func,
     message: PropTypes.string,
+    disabled: PropTypes.bool,
   }),
   message: PropTypes.node.isRequired,
   requestData: PropTypes.shape({
