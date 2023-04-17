@@ -13,6 +13,7 @@ exports[`CreditContent component render with action snapshot 1`] = `
     <Button
       as="a"
       className="border-gray-400"
+      disabled={false}
       href="test-action-href"
       onClick={[MockFunction test-action-onClick]}
       rel="noopener"
