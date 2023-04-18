@@ -20,7 +20,6 @@ import {
   mergeConfig,
 } from '@edx/frontend-platform';
 
-import { messages as footerMessages } from '@edx/frontend-component-footer';
 import { configuration } from './config';
 
 import messages from './i18n';
@@ -59,9 +58,6 @@ initialize({
       mergeConfig(configuration, appName);
     },
   },
-  messages: [
-    messages,
-    footerMessages,
-  ],
+  messages,
   requireAuthenticatedUser: true,
 });
