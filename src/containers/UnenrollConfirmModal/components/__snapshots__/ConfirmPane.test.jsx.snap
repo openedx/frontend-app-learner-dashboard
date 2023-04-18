@@ -5,9 +5,6 @@ exports[`UnenrollConfirmModal ConfirmPane snapshot 1`] = `
   <h4>
     Unenroll from course?
   </h4>
-  <p>
-    Progress that you've made so far will not be saved
-  </p>
   <ActionRow>
     <Button
       onClick={[MockFunction props.handleClose]}
