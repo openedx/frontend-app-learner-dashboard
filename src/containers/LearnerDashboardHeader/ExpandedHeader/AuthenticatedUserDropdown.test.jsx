@@ -30,6 +30,10 @@ jest.mock('../hooks', () => ({
   findCoursesNavDropdownClicked: (href) => jest.fn().mockName(`findCoursesNavDropdownClicked('${href}')`),
 }));
 
+jest.mock('data/services/lms/urls', () => ({
+  programsUrl: 'http://localhost:18000/dashboard/programs',
+}));
+
 const config = {
   ACCOUNT_PROFILE_URL: 'http://account-profile-url.test',
   ACCOUNT_SETTINGS_URL: 'http://account-settings-url.test',
