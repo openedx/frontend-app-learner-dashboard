@@ -44,7 +44,7 @@ jest.unmock('hooks');
 
 jest.mock('containers/WidgetContainers/LoadedSidebar', () => 'loaded-widget-sidebar');
 jest.mock('containers/WidgetContainers/NoCoursesSidebar', () => 'no-courses-widget-sidebar');
-jest.mock('components/NoticesProvider', () => 'notices-provider');
+jest.mock('components/NoticesWrapper', () => 'notices-wrapper');
 
 jest.mock('@edx/frontend-platform', () => ({
   ...jest.requireActual('@edx/frontend-platform'),

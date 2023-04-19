@@ -15,7 +15,7 @@ export const state = StrictDict({
   isRedirected: (val) => React.useState(val), // eslint-disable-line
 });
 
-export const useNoticesProviderData = () => {
+export const useNoticesWrapperData = () => {
   const [isRedirected, setIsRedirected] = module.state.isRedirected();
   React.useEffect(() => {
     if (getConfig().ENABLE_NOTICES) {
@@ -32,4 +32,4 @@ export const useNoticesProviderData = () => {
   return { isRedirected };
 };
 
-export default useNoticesProviderData;
+export default useNoticesWrapperData;

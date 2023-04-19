@@ -13,26 +13,26 @@ getConfig.mockReturnValue({ ENABLE_NOTICES: true });
 const state = new MockUseState(hooks);
 
 let hook;
-describe('NoticesProvider hooks', () => {
+describe('NoticesWrapper hooks', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
   describe('state hooks', () => {
     state.testGetter(state.keys.isRedirected);
   });
-  describe('useNoticesProviderData', () => {
+  describe('useNoticesWrapperData', () => {
     beforeEach(() => {
       state.mock();
     });
     describe('behavior', () => {
       it('initializes state hooks', () => {
-        hooks.useNoticesProviderData();
+        hooks.useNoticesWrapperData();
         expect(hooks.state.isRedirected).toHaveBeenCalledWith();
       });
       describe('effects', () => {
         it('does not call notices if not enabled', () => {
           getConfig.mockReturnValueOnce({ ENABLE_NOTICES: false });
-          hooks.useNoticesProviderData();
+          hooks.useNoticesWrapperData();
           const [cb, prereqs] = React.useEffect.mock.calls[0];
           expect(prereqs).toEqual([state.setState.isRedirected]);
           cb();
@@ -40,7 +40,7 @@ describe('NoticesProvider hooks', () => {
         });
         describe('getNotices call (if enabled) onLoad behavior', () => {
           it('does not redirect if there are no results', () => {
-            hooks.useNoticesProviderData();
+            hooks.useNoticesWrapperData();
             expect(React.useEffect).toHaveBeenCalled();
             const [cb, prereqs] = React.useEffect.mock.calls[0];
             expect(prereqs).toEqual([state.setState.isRedirected]);
@@ -57,7 +57,7 @@ describe('NoticesProvider hooks', () => {
           it('redirects and set isRedirected if results are returned', () => {
             delete window.location;
             window.location = { replace: jest.fn(), href: 'test-old-href' };
-            hooks.useNoticesProviderData();
+            hooks.useNoticesWrapperData();
             const [cb, prereqs] = React.useEffect.mock.calls[0];
             expect(prereqs).toEqual([state.setState.isRedirected]);
             cb();
@@ -75,7 +75,7 @@ describe('NoticesProvider hooks', () => {
     });
     describe('output', () => {
       it('forwards isRedirected from state call', () => {
-        hook = hooks.useNoticesProviderData();
+        hook = hooks.useNoticesWrapperData();
         expect(hook.isRedirected).toEqual(state.stateVals.isRedirected);
       });
     });

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import useNoticesProviderData from './hooks';
+import useNoticesWrapperData from './hooks';
 
 /**
  * This component uses the platform-plugin-notices plugin to function.
@@ -9,8 +9,8 @@ import useNoticesProviderData from './hooks';
  * course home and onto a full-screen notice page. If the plugin is not
  * installed, or there are no notices, we just passthrough this component.
  */
-const NoticesProvider = ({ children }) => {
-  const { isRedirected } = useNoticesProviderData();
+const NoticesWrapper = ({ children }) => {
+  const { isRedirected } = useNoticesWrapperData();
   return (
     <div>
       {isRedirected === true ? null : children}
@@ -18,8 +18,8 @@ const NoticesProvider = ({ children }) => {
   );
 };
 
-NoticesProvider.propTypes = {
+NoticesWrapper.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default NoticesProvider;
+export default NoticesWrapper;
