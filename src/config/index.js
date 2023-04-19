@@ -13,6 +13,7 @@ const configuration = {
   SESSION_COOKIE_DOMAIN: process.env.SESSION_COOKIE_DOMAIN || '',
   ZENDESK_KEY: process.env.ZENDESK_KEY,
   SUPPORT_URL: process.env.SUPPORT_URL || null,
+  ENABLE_NOTICES: process.env.ENABLE_NOTICES || null,
 };
 
 const features = {};
