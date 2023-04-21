@@ -21,9 +21,9 @@ export const useNoticesWrapperData = () => {
     if (getConfig().ENABLE_NOTICES) {
       getNotices({
         onLoad: (data) => {
-          if (data?.results?.length > 0) {
+          if (data?.data?.results?.length > 0) {
             setIsRedirected(true);
-            window.location.replace(`${data.results[0]}?next=${window.location.href}`);
+            window.location.replace(`${data.data.results[0]}?next=${window.location.href}`);
           }
         },
       });

@@ -64,7 +64,7 @@ describe('NoticesWrapper hooks', () => {
             expect(getNotices).toHaveBeenCalled();
             const { onLoad } = getNotices.mock.calls[0][0];
             const target = 'url-target';
-            onLoad({ results: [target] });
+            onLoad({ data: { results: [target] } });
             expect(state.setState.isRedirected).toHaveBeenCalledWith(true);
             expect(window.location.replace).toHaveBeenCalledWith(
               `${target}?next=${window.location.href}`,
