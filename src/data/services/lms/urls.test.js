@@ -43,7 +43,7 @@ describe('urls', () => {
     it('builds from api url and loads providerId', () => {
       const providerId = 'test-provider-id';
       const url = urls.creditRequestUrl(providerId);
-      expect(url.startsWith(urls.getApi())).toEqual(true);
+      expect(url.startsWith(urls.getApiUrl())).toEqual(true);
       expect(url).toEqual(expect.stringContaining(providerId));
     });
   });

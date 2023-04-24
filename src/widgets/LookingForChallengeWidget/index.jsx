@@ -6,6 +6,7 @@ import { ArrowForward } from '@edx/paragon/icons';
 
 import { reduxHooks } from 'hooks';
 import moreCoursesSVG from 'assets/more-courses-sidewidget.svg';
+import { baseAppUrl } from 'data/services/lms/urls';
 
 import track from '../RecommendationsPanel/track';
 import messages from './messages';
@@ -29,8 +30,8 @@ export const LookingForChallengeWidget = () => {
         <h5>
           <Hyperlink
             variant="brand"
-            destination={courseSearchUrl}
-            onClick={track.findCoursesWidgetClicked(courseSearchUrl)}
+            destination={baseAppUrl(courseSearchUrl)}
+            onClick={track.findCoursesWidgetClicked(baseAppUrl(courseSearchUrl))}
             className="d-flex align-items-center"
           >
             {formatMessage(messages.findCoursesButton, { arrow: arrowIcon })}

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { Button } from '@edx/paragon';
 import { Search } from '@edx/paragon/icons';
+import { baseAppUrl } from 'data/services/lms/urls';
 
 import { reduxHooks } from 'hooks';
 import track from './track';
@@ -38,8 +39,8 @@ export const LoadedView = ({
           variant="tertiary"
           iconBefore={Search}
           as="a"
-          href={courseSearchUrl}
-          onClick={track.findCoursesWidgetClicked(courseSearchUrl)}
+          href={baseAppUrl(courseSearchUrl)}
+          onClick={track.findCoursesWidgetClicked(baseAppUrl(courseSearchUrl))}
         >
           {formatMessage(messages.exploreCoursesButton)}
         </Button>

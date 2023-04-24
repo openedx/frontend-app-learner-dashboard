@@ -9,6 +9,7 @@ import { useIsCollapsed } from '../hooks';
 jest.mock('@edx/frontend-platform', () => ({
   getConfig: jest.fn(),
 }));
+
 jest.mock('@edx/frontend-platform/react', () => ({
   AppContext: {
     authenticatedUser: {
@@ -17,11 +18,13 @@ jest.mock('@edx/frontend-platform/react', () => ({
     },
   },
 }));
+const COURSE_SEARCH_URL = 'test-course-search-url';
+
 jest.mock('hooks', () => ({
   reduxHooks: {
     useEnterpriseDashboardData: jest.fn(),
     usePlatformSettingsData: jest.fn(() => ({
-      courseSearchUrl: 'test-course-search-url',
+      courseSearchUrl: COURSE_SEARCH_URL,
     })),
   },
 }));
@@ -31,6 +34,7 @@ jest.mock('../hooks', () => ({
 }));
 
 jest.mock('data/services/lms/urls', () => ({
+  baseAppUrl: (url) => (url),
   programsUrl: 'http://localhost:18000/dashboard/programs',
 }));
 
@@ -41,6 +45,7 @@ const config = {
   ORDER_HISTORY_URL: 'http://order-history-url.test',
   SUPPORT_URL: 'http://localhost:18000/support',
   CAREER_LINK_URL: 'http://localhost:18000/career',
+  LMS_BASE_URL: 'http:/localhost:18000',
 };
 getConfig.mockReturnValue(config);
 

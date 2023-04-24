@@ -6,12 +6,13 @@ import { useIsCollapsed } from '../hooks';
 
 jest.mock('data/services/lms/urls', () => ({
   programsUrl: 'programsUrl',
+  baseAppUrl: url => (`http://localhost:18000${url}`),
 }));
 
 jest.mock('hooks', () => ({
   reduxHooks: {
     usePlatformSettingsData: () => ({
-      courseSearchUrl: 'courseSearchUrl',
+      courseSearchUrl: '/courseSearchUrl',
     }),
   },
 }));
