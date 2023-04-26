@@ -9,7 +9,6 @@ import messages from './messages';
 export const BrandLogo = () => {
   const { formatMessage } = useIntl();
   const dashboard = reduxHooks.useEnterpriseDashboardData();
-  console.log('BrandLogo', dashboard);
 
   return (
     <a href={dashboard?.url || '/'} className="mx-auto">
