@@ -34,7 +34,7 @@ exports[`EnterpriseDashboard snapshot 1`] = `
         onClick={[MockFunction useEnterpriseDashboardHook.handleCTAClick]}
         type="a"
       >
-        Go To Dashboard
+        Go to dashboard
       </Button>
     </ActionRow>
   </div>
