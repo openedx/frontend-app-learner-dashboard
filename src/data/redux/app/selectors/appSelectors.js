@@ -12,7 +12,7 @@ export const numCourses = createSelector(
 export const hasCourses = createSelector([module.numCourses], (num) => num > 0);
 export const hasAvailableDashboards = createSelector(
   [simpleSelectors.enterpriseDashboard],
-  (data) => data !== null,
+  (data) => data !== null && data.isLearnerPortalEnabled === true,
 );
 export const showSelectSessionModal = createSelector(
   [simpleSelectors.selectSessionModal],
