@@ -20,6 +20,17 @@ exports[`ZendeskFab snapshot 1`] = `
         },
       },
       "chat": Object {
+        "departments": Object {
+          "enabled": Array [
+            "account settings",
+            "billing and payments",
+            "certificates",
+            "deadlines",
+            "errors and technical issues",
+            "other",
+            "proctoring",
+          ],
+        },
         "suppress": false,
       },
       "contactForm": Object {
