@@ -3,6 +3,7 @@ import { shallow } from 'enzyme';
 import track from 'tracking';
 import { reduxHooks } from 'hooks';
 import { htmlProps } from 'data/constants/htmlKeys';
+import useCardActionData from '../hooks';
 import UpgradeButton from './UpgradeButton';
 
 jest.mock('tracking', () => ({
@@ -13,15 +14,13 @@ jest.mock('tracking', () => ({
 
 jest.mock('hooks', () => ({
   reduxHooks: {
-    useMasqueradeData: jest.fn(() => ({ isMasquerading: false })),
     useCardCourseRunData: jest.fn(),
-    useCardEnrollmentData: jest.fn(() => ({ canUpgrade: true })),
     useTrackCourseEvent: jest.fn(
       (eventName, cardId, upgradeUrl) => ({ trackCourseEvent: { eventName, cardId, upgradeUrl } }),
     ),
   },
 }));
-
+jest.mock('../hooks', () => jest.fn(() => ({ disableUpgradeCourse: false })));
 jest.mock('./ActionButton', () => 'ActionButton');
 
 describe('UpgradeButton', () => {
@@ -42,13 +41,7 @@ describe('UpgradeButton', () => {
       ));
     });
     test('cannot upgrade', () => {
-      reduxHooks.useCardEnrollmentData.mockReturnValueOnce({ canUpgrade: false });
-      const wrapper = shallow(<UpgradeButton {...props} />);
-      expect(wrapper).toMatchSnapshot();
-      expect(wrapper.prop(htmlProps.disabled)).toEqual(true);
-    });
-    test('masquerading', () => {
-      reduxHooks.useMasqueradeData.mockReturnValueOnce({ isMasquerading: true });
+      useCardActionData.mockReturnValueOnce({ disableUpgradeCourse: true });
       const wrapper = shallow(<UpgradeButton {...props} />);
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.prop(htmlProps.disabled)).toEqual(true);

@@ -41,7 +41,7 @@ describe('CourseCardDetails hooks', () => {
     };
     const entitlementData = {
       isEntitlement: false,
-      canViewCourse: false,
+      disableViewCourse: false,
       isFulfilled: false,
       isExpired: false,
       canChange: false,
