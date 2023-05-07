@@ -7,7 +7,7 @@
   "leanerDashboard.enterpriseDialogHeader": "لديك حق الوصول إلى لوحة التحكم {label}",
   "leanerDashboard.enterpriseDialogBody": "للوصول إلى الدورات التدريبية المتاحة لك من خلال {label} ، قم بزيارة لوحة التحكم {label} الآن.",
   "leanerDashboard.enterpriseDialogDismissButton": "تجاهل",
-  "leanerDashboard.enterpriseDialogConfirmButton": "الذهاب إلى لوحة التحكم",
+  "leanerDashboard.enterpriseDialogConfirmButton": "Go to dashboard",
   "leanerDashboard.confirmEmailBanner": "أكد الآن",
   "leanerDashboard.confirmEmailTextReminderBanner": "Remember to confirm your email so that you can keep learning on edX! {confirmNowButton}.",
   "leanerDashboard.verifiedConfirmEmailButton": "لقد أكدت بريدي الإلكتروني",
