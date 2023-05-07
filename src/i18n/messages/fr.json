@@ -7,7 +7,7 @@
   "leanerDashboard.enterpriseDialogHeader": "Vous avez accès au tableau de bord {label}",
   "leanerDashboard.enterpriseDialogBody": "Pour accéder aux cours disponibles via {label}, visitez le tableau de bord {label} maintenant.",
   "leanerDashboard.enterpriseDialogDismissButton": "Ignorer",
-  "leanerDashboard.enterpriseDialogConfirmButton": "Aller au tableau de bord",
+  "leanerDashboard.enterpriseDialogConfirmButton": "Go to dashboard",
   "leanerDashboard.confirmEmailBanner": "Confirmer maintenant",
   "leanerDashboard.confirmEmailTextReminderBanner": "N'oubliez pas de confirmer votre courriel afin de pouvoir continuer à apprendre sur edX ! {confirmNowButton}.",
   "leanerDashboard.verifiedConfirmEmailButton": "J'ai confirmé mon courriel",
