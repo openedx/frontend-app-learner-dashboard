@@ -3,20 +3,21 @@ import { shallow } from 'enzyme';
 import { reduxHooks } from 'hooks';
 import track from 'tracking';
 import useActionDisabledState from './hooks';
-import CourseCardTitle from './CourseCardTitle';
+import CourseCardImage from './CourseCardImage';
 
 const homeUrl = 'home-url';
 
 jest.mock('tracking', () => ({
   course: {
-    courseTitleClicked: jest.fn().mockName('segment.courseTitleClicked'),
+    courseImageClicked: jest.fn().mockName('segment.courseImageClicked'),
   },
 }));
 
 jest.mock('hooks', () => ({
   reduxHooks: {
-    useCardCourseData: jest.fn(() => ({ courseName: 'course-name' })),
+    useCardCourseData: jest.fn(() => ({ bannerImgSrc: 'banner-img-src' })),
     useCardCourseRunData: jest.fn(() => ({ homeUrl })),
+    useCardEnrollmentData: jest.fn(() => ({ isVerified: true })),
     useTrackCourseEvent: jest.fn((eventName, cardId, upgradeUrl) => ({
       trackCourseEvent: { eventName, cardId, upgradeUrl },
     })),
@@ -24,22 +25,22 @@ jest.mock('hooks', () => ({
 }));
 jest.mock('./hooks', () => jest.fn(() => ({ disableCourseTitle: false })));
 
-describe('CourseCardTitle', () => {
+describe('CourseCardImage', () => {
   const props = {
     cardId: 'cardId',
+    orientation: 'orientation',
   };
   beforeEach(() => {
     jest.clearAllMocks();
   });
   describe('snapshot', () => {
-    test('renders clickable link course title', () => {
-      const wrapper = shallow(<CourseCardTitle {...props} />);
+    test('renders clickable link course Image', () => {
+      const wrapper = shallow(<CourseCardImage {...props} />);
       expect(wrapper).toMatchSnapshot();
-      const title = wrapper.find('.course-card-title');
-      expect(title.type()).toBe('a');
-      expect(title.prop('onClick')).toEqual(
+      expect(wrapper.type()).toBe('a');
+      expect(wrapper.prop('onClick')).toEqual(
         reduxHooks.useTrackCourseEvent(
-          track.course.courseTitleClicked,
+          track.course.courseImageClicked,
           props.cardId,
           homeUrl,
         ),
@@ -47,16 +48,14 @@ describe('CourseCardTitle', () => {
     });
     test('renders disabled link', () => {
       useActionDisabledState.mockReturnValueOnce({ disableCourseTitle: true });
-      const wrapper = shallow(<CourseCardTitle {...props} />);
+      const wrapper = shallow(<CourseCardImage {...props} />);
       expect(wrapper).toMatchSnapshot();
-      const title = wrapper.find('.course-card-title');
-      expect(title.type()).toBe('span');
-      expect(title.prop('onClick')).toBeUndefined();
+      expect(wrapper.type()).toBe('div');
     });
   });
   describe('behavior', () => {
     it('initializes', () => {
-      shallow(<CourseCardTitle {...props} />);
+      shallow(<CourseCardImage {...props} />);
       expect(reduxHooks.useCardCourseData).toHaveBeenCalledWith(props.cardId);
       expect(reduxHooks.useCardCourseRunData).toHaveBeenCalledWith(
         props.cardId,
