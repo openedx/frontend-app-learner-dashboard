@@ -67,6 +67,11 @@ const messages = defineMessages({
     defaultMessage: 'Course search',
     description: 'Alt-text for course search icon button',
   },
+  career: {
+    id: 'leanerDashboard.menu.career.label',
+    defaultMessage: 'Career',
+    description: 'The text for the user menu Career navigation link',
+  },
 });
 
 export default messages;

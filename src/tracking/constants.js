@@ -53,6 +53,7 @@ export const eventNames = StrictDict({
   purchaseCredit: 'edx.bi.credit.clicked_purchase_credit',
   filterClicked: 'course-dashboard.filter.clicked',
   filterOptionSelected: 'course-dashboard.filter_option.selected',
+  learnerHomeNavDropdownCareer: 'edx.bi.learner_home.menu.career.clicked',
 });
 
 export const linkNames = StrictDict({

@@ -9,7 +9,7 @@ import { AvatarButton, Dropdown } from '@edx/paragon';
 import urls from 'data/services/lms/urls';
 import { reduxHooks } from 'hooks';
 
-import { useIsCollapsed, findCoursesNavDropdownClicked } from './hooks';
+import { useIsCollapsed, findCoursesNavDropdownClicked, findCoursesNavDropdownCareerClicked } from './hooks';
 import messages from './messages';
 
 export const AuthenticatedUserDropdown = ({ username }) => {
@@ -45,6 +45,10 @@ export const AuthenticatedUserDropdown = ({ username }) => {
           </Dropdown.Item>
         )}
         <Dropdown.Divider />
+        <Dropdown.Item href="https://careers.edx.org/" onClick={findCoursesNavDropdownCareerClicked()}>
+          {formatMessage(messages.career)}
+          <NewBadge className="position-absolute px-2 mx-2" />
+        </Dropdown.Item>
         <Dropdown.Item href={`${getConfig().ACCOUNT_PROFILE_URL}/u/${username}`}>
           {formatMessage(messages.profile)}
         </Dropdown.Item>
