@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import track from 'tracking';
 import { reduxHooks } from 'hooks';
-import useCardActionData from './hooks';
+import useActionDisabledState from './hooks';
 
 const { courseTitleClicked } = track.course;
 
@@ -15,7 +15,7 @@ export const CourseCardTitle = ({ cardId }) => {
     cardId,
     homeUrl,
   );
-  const { disableCourseTitle } = useCardActionData(cardId);
+  const { disableCourseTitle } = useActionDisabledState(cardId);
   return (
     <h3>
       {disableCourseTitle ? (

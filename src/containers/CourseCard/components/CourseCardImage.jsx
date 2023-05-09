@@ -7,7 +7,7 @@ import { Badge } from '@edx/paragon';
 import track from 'tracking';
 import { reduxHooks } from 'hooks';
 import verifiedRibbon from 'assets/verified-ribbon.png';
-import useCardActionData from './hooks';
+import useActionDisabledState from './hooks';
 
 import messages from '../messages';
 
@@ -18,7 +18,7 @@ export const CourseCardImage = ({ cardId, orientation }) => {
   const { bannerImgSrc } = reduxHooks.useCardCourseData(cardId);
   const { homeUrl } = reduxHooks.useCardCourseRunData(cardId);
   const { isVerified } = reduxHooks.useCardEnrollmentData(cardId);
-  const { disableCourseTitle } = useCardActionData(cardId);
+  const { disableCourseTitle } = useActionDisabledState(cardId);
   const handleImageClicked = reduxHooks.useTrackCourseEvent(courseImageClicked, cardId, homeUrl);
   const wrapperClassName = `pgn__card-wrapper-image-cap overflow-visible ${orientation}`;
   const image = (

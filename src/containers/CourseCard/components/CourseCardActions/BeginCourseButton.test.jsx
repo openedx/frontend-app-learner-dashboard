@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { htmlProps } from 'data/constants/htmlKeys';
 import { reduxHooks } from 'hooks';
 import track from 'tracking';
-import useCardActionData from '../hooks';
+import useActionDisabledState from '../hooks';
 import BeginCourseButton from './BeginCourseButton';
 
 jest.mock('tracking', () => ({
@@ -51,7 +51,7 @@ describe('BeginCourseButton', () => {
       expect(reduxHooks.useCardCourseRunData).toHaveBeenCalledWith(props.cardId);
     });
     test('disabled states', () => {
-      useCardActionData.mockReturnValueOnce({ disableBeginCourse: true });
+      useActionDisabledState.mockReturnValueOnce({ disableBeginCourse: true });
       wrapper = shallow(<BeginCourseButton {...props} />);
       expect(wrapper.prop(htmlProps.disabled)).toEqual(true);
     });

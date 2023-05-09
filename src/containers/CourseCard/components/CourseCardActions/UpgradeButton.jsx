@@ -6,7 +6,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 
 import track from 'tracking';
 import { reduxHooks } from 'hooks';
-import useCardActionData from '../hooks';
+import useActionDisabledState from '../hooks';
 
 import ActionButton from './ActionButton';
 import messages from './messages';
@@ -15,7 +15,7 @@ export const UpgradeButton = ({ cardId }) => {
   const { formatMessage } = useIntl();
 
   const { upgradeUrl } = reduxHooks.useCardCourseRunData(cardId);
-  const { disableUpgradeCourse } = useCardActionData(cardId);
+  const { disableUpgradeCourse } = useActionDisabledState(cardId);
 
   const trackUpgradeClick = reduxHooks.useTrackCourseEvent(
     track.course.upgradeClicked,

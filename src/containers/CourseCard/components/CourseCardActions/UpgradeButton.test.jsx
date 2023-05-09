@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import track from 'tracking';
 import { reduxHooks } from 'hooks';
 import { htmlProps } from 'data/constants/htmlKeys';
-import useCardActionData from '../hooks';
+import useActionDisabledState from '../hooks';
 import UpgradeButton from './UpgradeButton';
 
 jest.mock('tracking', () => ({
@@ -41,7 +41,7 @@ describe('UpgradeButton', () => {
       ));
     });
     test('cannot upgrade', () => {
-      useCardActionData.mockReturnValueOnce({ disableUpgradeCourse: true });
+      useActionDisabledState.mockReturnValueOnce({ disableUpgradeCourse: true });
       const wrapper = shallow(<UpgradeButton {...props} />);
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.prop(htmlProps.disabled)).toEqual(true);

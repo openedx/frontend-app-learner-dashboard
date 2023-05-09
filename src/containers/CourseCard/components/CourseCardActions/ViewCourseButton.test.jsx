@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import track from 'tracking';
 import { htmlProps } from 'data/constants/htmlKeys';
 import { reduxHooks } from 'hooks';
-import useCardActionData from '../hooks';
+import useActionDisabledState from '../hooks';
 import ViewCourseButton from './ViewCourseButton';
 
 jest.mock('tracking', () => ({
@@ -38,7 +38,7 @@ describe('ViewCourseButton', () => {
     expect(wrapper.prop(htmlProps.disabled)).toEqual(false);
   });
   test('learner cannot view course', () => {
-    useCardActionData.mockReturnValueOnce({ disableViewCourse: true });
+    useActionDisabledState.mockReturnValueOnce({ disableViewCourse: true });
     const wrapper = shallow(<ViewCourseButton {...defaultProps} />);
     expect(wrapper).toMatchSnapshot();
     expect(wrapper.prop(htmlProps.disabled)).toEqual(true);

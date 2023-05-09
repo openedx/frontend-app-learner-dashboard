@@ -2,7 +2,7 @@ import { shallow } from 'enzyme';
 
 import { reduxHooks } from 'hooks';
 import { htmlProps } from 'data/constants/htmlKeys';
-import useCardActionData from '../hooks';
+import useActionDisabledState from '../hooks';
 
 import SelectSessionButton from './SelectSessionButton';
 
@@ -27,7 +27,7 @@ describe('SelectSessionButton', () => {
     );
   });
   test('disabled states', () => {
-    useCardActionData.mockReturnValueOnce({ disableSelectSession: true });
+    useActionDisabledState.mockReturnValueOnce({ disableSelectSession: true });
     expect(wrapper).toMatchSnapshot();
     wrapper = shallow(<SelectSessionButton {...props} />);
     expect(wrapper.prop(htmlProps.disabled)).toEqual(true);

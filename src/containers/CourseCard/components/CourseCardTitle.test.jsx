@@ -2,7 +2,7 @@ import { shallow } from 'enzyme';
 
 import { reduxHooks } from 'hooks';
 import track from 'tracking';
-import useCardActionData from './hooks';
+import useActionDisabledState from './hooks';
 import CourseCardTitle from './CourseCardTitle';
 
 const homeUrl = 'home-url';
@@ -46,7 +46,7 @@ describe('CourseCardTitle', () => {
       );
     });
     test('renders disabled link', () => {
-      useCardActionData.mockReturnValueOnce({ disableCourseTitle: true });
+      useActionDisabledState.mockReturnValueOnce({ disableCourseTitle: true });
       const wrapper = shallow(<CourseCardTitle {...props} />);
       expect(wrapper).toMatchSnapshot();
       const title = wrapper.find('.course-card-title');
@@ -61,7 +61,7 @@ describe('CourseCardTitle', () => {
       expect(reduxHooks.useCardCourseRunData).toHaveBeenCalledWith(
         props.cardId,
       );
-      expect(useCardActionData).toHaveBeenCalledWith(props.cardId);
+      expect(useActionDisabledState).toHaveBeenCalledWith(props.cardId);
     });
   });
 });

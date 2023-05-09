@@ -1,6 +1,6 @@
 import { reduxHooks } from 'hooks';
 
-export const useCardActionData = (cardId) => {
+export const useActionDisabledState = (cardId) => {
   const { isMasquerading } = reduxHooks.useMasqueradeData();
   const {
     canUpgrade, hasAccess, isAudit, isAuditAccessExpired,
@@ -29,4 +29,4 @@ export const useCardActionData = (cardId) => {
   };
 };
 
-export default useCardActionData;
+export default useActionDisabledState;
