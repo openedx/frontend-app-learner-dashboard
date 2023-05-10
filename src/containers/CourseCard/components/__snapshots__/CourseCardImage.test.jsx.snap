@@ -17,7 +17,7 @@ exports[`CourseCardImage snapshot renders clickable link course Image 1`] = `
 >
   <img
     alt="Course thumbnail"
-    className="pgn__card-image-cap"
+    className="pgn__card-image-cap show"
     src="banner-img-src"
   />
   <span
@@ -45,7 +45,7 @@ exports[`CourseCardImage snapshot renders disabled link 1`] = `
 >
   <img
     alt="Course thumbnail"
-    className="pgn__card-image-cap"
+    className="pgn__card-image-cap show"
     src="banner-img-src"
   />
   <span
