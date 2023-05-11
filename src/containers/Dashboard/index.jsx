@@ -13,6 +13,7 @@ import LoadingView from './LoadingView';
 import DashboardLayout from './DashboardLayout';
 import hooks from './hooks';
 import './index.scss';
+import ProductRecommendationsContainer from '../../widgets/ProductRecommendations/components/ProductRecommendationsContainer';
 
 export const Dashboard = () => {
   hooks.useInitializeDashboard();
@@ -39,6 +40,7 @@ export const Dashboard = () => {
             </DashboardLayout>
           )}
       </div>
+      <ProductRecommendationsContainer />
     </div>
   );
 };
