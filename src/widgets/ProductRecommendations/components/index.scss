@@ -1,8 +1,153 @@
+@import "@edx/paragon/scss/core/core";
+
+$horizontal-card-gap: 20px;
+$vertical-card-gap: 24px;
+$card-height: 332px;
+$header-height: 104px;
+$card-width: 270px;
 
 .recommendations-container {
-  border: solid
+  border: solid;
+}
+
+.base-card {
+  height: $card-height;
+  width: $card-width !important;
+
+  p {
+    margin-bottom: 0;
+  }
+
+  .pgn__card-image-cap {
+    height: $header-height;
+    object: {
+      fit: cover;
+      position: top center;
+    }
+  }
+
+  .pgn__card-logo-cap {
+    bottom: -1.5rem;
+    object: {
+      fit: scale-down;
+      position: center center;
+    }
+  }
+
+  .product-card-title {
+    font: {
+      size: 1.125rem;
+      weight: 700;
+    }
+
+    line-height: 24px ;
+  }
+
+  .product-card-subtitle {
+    font: {
+      size: 0.875rem; 
+      weight: 400;
+    }
+
+    line-height: 24px;
+  }
+
+  .product-badge {
+    position: absolute;
+    bottom: 2.75rem;
+  }
+
+  .footer-content {
+    position: absolute;
+    bottom: 1rem;
+  }
+
+  &.light {
+    background-color: $white;
+
+    .title {
+      color: $black;
+    }
+
+    .subtitle {
+      color: $gray-700;
+    }
+
+    .badge {
+      background-color: $light-500;
+      color: $black;
+    }
+
+    .footer-content {
+      color: $gray-700;
+    }
+  }
+
+  &.dark {
+    background-color: $primary-500;
+
+    .pgn__card-header-title-md {
+      color: $white;
+    }
+
+    .pgn__card-header-subtitle-md {
+      color: $light-200;
+    }
+
+    .title {
+      color: $white;
+    }
+
+    .subtitle {
+      color: $light-200;
+    }
+
+    .badge {
+      background-color: $dark-200;
+      color: $white;
+    }
+
+    .footer-content {
+      color: $light-200;
+    }
+  }
 }
 
 .base-card-link:hover {
   text-decoration: none;
+}
+
+.base-card:hover {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.15), 0 0.125rem 0.5rem rgba(0, 0, 0, 0.15);
+}
+
+.base-card-link .base-card {
+  display: flex;
+}
+
+.product-card-container {
+  gap: $vertical-card-gap $horizontal-card-gap;
+  margin: 0 (-$horizontal-card-gap);
+  padding: 0 $horizontal-card-gap;
+
+  .course-subcontainer {
+    display: flex;
+    gap: $vertical-card-gap $horizontal-card-gap;
+  }
+
+  // .base-card-wrapper {
+  //   flex: 0 1 calc(100% - #{$horizontal-card-gap});
+
+  //   @include media-breakpoint-up(sm) {
+  //     flex: 0 1 calc(50% - #{$horizontal-card-gap});
+  //   }
+
+  //   @include media-breakpoint-up(md) {
+  //     flex: 0 1 calc(33.333% - #{$horizontal-card-gap});
+  //   }
+
+  //   @include media-breakpoint-up(xl) {
+  //     flex: 0 1 calc(25% - #{$horizontal-card-gap});
+  //   }
+  // }
 }
