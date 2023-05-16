@@ -18,7 +18,7 @@ const messages = defineMessages({
   },
   enterpriseDialogConfirmButton: {
     id: 'leanerDashboard.enterpriseDialogConfirmButton',
-    defaultMessage: 'Go To Dashboard',
+    defaultMessage: 'Go to dashboard',
     description: 'Confirm button to go to the dashboard url',
   },
 });

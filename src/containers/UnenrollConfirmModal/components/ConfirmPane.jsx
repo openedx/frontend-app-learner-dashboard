@@ -17,7 +17,6 @@ export const ConfirmPane = ({
   return (
     <>
       <h4>{formatMessage(messages.confirmHeader)}</h4>
-      <p>{formatMessage(messages.confirmText)}</p>
       <ActionRow>
         <Button variant="tertiary" onClick={handleClose}>
           {formatMessage(messages.confirmCancel)}

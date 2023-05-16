@@ -61,7 +61,6 @@ jest.mock('@edx/frontend-platform/i18n', () => {
       formatMessage,
       formatDate,
     }),
-    IntlProvider: () => 'IntlProvider',
     defineMessages: m => m,
     FormattedMessage: () => 'FormattedMessage',
   };

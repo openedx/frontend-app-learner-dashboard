@@ -10,6 +10,7 @@ import ApprovedContent from './ApprovedContent';
 jest.mock('hooks', () => ({
   reduxHooks: {
     useCardCreditData: jest.fn(),
+    useMasqueradeData: jest.fn(),
   },
 }));
 jest.mock('./components/CreditContent', () => 'CreditContent');
@@ -22,6 +23,7 @@ const credit = {
   providerName: 'test-credit-provider-name',
 };
 reduxHooks.useCardCreditData.mockReturnValue(credit);
+reduxHooks.useMasqueradeData.mockReturnValue({ isMasquerading: false });
 
 describe('ApprovedContent component', () => {
   beforeEach(() => {
@@ -43,6 +45,9 @@ describe('ApprovedContent component', () => {
       });
       test('action.message is formatted viewCredit message', () => {
         expect(component.props().action.message).toEqual(formatMessage(messages.viewCredit));
+      });
+      test('action.disabled is false', () => {
+        expect(component.props().action.disabled).toEqual(false);
       });
       test('message is formatted approved message', () => {
         expect(component.props().message).toEqual(formatMessage(

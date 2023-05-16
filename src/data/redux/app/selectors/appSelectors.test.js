@@ -18,10 +18,11 @@ describe('basic app selectors', () => {
     });
   });
   describe('hasAvailableDashboards', () => {
-    it('returns true iff the enterpriseDashboard field is populated', () => {
+    it('returns true iff the enterpriseDashboard field is populated and learner portal is enabled', () => {
       const { preSelectors, cb } = appSelectors.hasAvailableDashboards;
       expect(preSelectors).toEqual([simpleSelectors.enterpriseDashboard]);
-      expect(cb({ data: 'test' })).toEqual(true);
+      expect(cb({ isLearnerPortalEnabled: true })).toEqual(true);
+      expect(cb({ isLearnerPortalEnabled: false })).toEqual(false);
       expect(cb(null)).toEqual(false);
     });
   });

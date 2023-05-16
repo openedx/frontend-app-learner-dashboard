@@ -22,33 +22,30 @@ import {
   mergeConfig,
 } from '@edx/frontend-platform';
 
-import { messages as footerMessages } from '@edx/frontend-component-footer';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { configuration } from './config';
 
 import messages from './i18n';
 
 import App from './App';
+import NoticesWrapper from './components/NoticesWrapper';
 
 subscribe(APP_READY, () => {
   ReactDOM.render(
-    <IntlProvider locale="en">
-      <AppProvider store={store}>
+    <AppProvider store={store}>
+      <NoticesWrapper>
         <Routes>
           <Route path="/" element={<PageWrap><App /></PageWrap>} />
           <Navigate to="/" replace />
         </Routes>
-      </AppProvider>
-    </IntlProvider>,
+      </NoticesWrapper>
+    </AppProvider>,
     document.getElementById('root'),
   );
 });
 
 subscribe(APP_INIT_ERROR, (error) => {
   ReactDOM.render(
-    <IntlProvider locale="en">
-      <ErrorPage message={error.message} />
-    </IntlProvider>,
+    <ErrorPage message={error.message} />,
     document.getElementById('root'),
   );
 });
@@ -61,9 +58,6 @@ initialize({
       mergeConfig(configuration, appName);
     },
   },
-  messages: [
-    messages,
-    footerMessages,
-  ],
+  messages,
   requireAuthenticatedUser: true,
 });

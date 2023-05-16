@@ -1,26 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SelectSessionButton snapshot renders default button 1`] = `
+exports[`SelectSessionButton default render 1`] = `undefined`;
+
+exports[`SelectSessionButton disabled states 1`] = `
 <ActionButton
   disabled={false}
-  onClick={[MockFunction mockOpenSessionModal]}
->
-  Select Session
-</ActionButton>
-`;
-
-exports[`SelectSessionButton snapshot renders disabled button if masquerading 1`] = `
-<ActionButton
-  disabled={true}
-  onClick={[MockFunction mockOpenSessionModal]}
->
-  Select Session
-</ActionButton>
-`;
-
-exports[`SelectSessionButton snapshot renders disabled button when user does not have access to the course 1`] = `
-<ActionButton
-  disabled={true}
   onClick={[MockFunction mockOpenSessionModal]}
 >
   Select Session

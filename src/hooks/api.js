@@ -14,7 +14,7 @@ const { useMakeNetworkRequest } = reduxHooks;
 export const useNetworkRequest = (action, args) => {
   const makeNetworkRequest = useMakeNetworkRequest();
   return (...actionsArgs) => makeNetworkRequest({
-    promise: action(actionsArgs),
+    promise: action(...actionsArgs),
     ...args,
   });
 };
@@ -43,8 +43,9 @@ export const useNewEntitlementEnrollment = (cardId) => {
 export const useSwitchEntitlementEnrollment = (cardId) => {
   const { uuid } = reduxHooks.useCardEntitlementData(cardId);
   const onSuccess = module.useInitializeApp();
+  const action = (selection) => api.updateEntitlementEnrollment({ uuid, courseId: selection });
   return module.useNetworkRequest(
-    (selection) => api.updateEntitlementEnrollment({ uuid, courseId: selection }),
+    action,
     { onSuccess, requestKey: RequestKeys.switchEntitlementSession },
   );
 };

@@ -54,6 +54,7 @@ describe('CertificateBanner', () => {
     reduxHooks.useCardCourseRunData.mockReturnValueOnce({ ...defaultCourseRun, ...courseRun });
     return shallow(<CertificateBanner {...props} />);
   };
+  /** TODO: Update tests to validate snapshots **/
   describe('snapshot', () => {
     test('is restricted', () => {
       const wrapper = createWrapper({
@@ -74,6 +75,20 @@ describe('CertificateBanner', () => {
       });
       expect(wrapper).toMatchSnapshot();
     });
+    test('is passing and is downloadable', () => {
+      const wrapper = createWrapper({
+        grade: { isPassing: true },
+        certificate: { isDownloadable: true },
+      });
+      expect(wrapper).toMatchSnapshot();
+    });
+    test('not passing and is downloadable', () => {
+      const wrapper = createWrapper({
+        grade: { isPassing: false },
+        certificate: { isDownloadable: true },
+      });
+      expect(wrapper).toMatchSnapshot();
+    });
     test('not passing and audit', () => {
       const wrapper = createWrapper({
         enrollment: {
@@ -90,17 +105,6 @@ describe('CertificateBanner', () => {
     });
     test('not passing and not audit and not finished', () => {
       const wrapper = createWrapper({});
-      expect(wrapper).toMatchSnapshot();
-    });
-    test('is passing and is downloadable', () => {
-      const wrapper = createWrapper({
-        grade: {
-          isPassing: true,
-        },
-        certificate: {
-          isDownloadable: true,
-        },
-      });
       expect(wrapper).toMatchSnapshot();
     });
     test('is passing and is earned but unavailable', () => {

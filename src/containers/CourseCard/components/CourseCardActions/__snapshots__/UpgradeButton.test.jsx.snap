@@ -30,13 +30,3 @@ exports[`UpgradeButton snapshot cannot upgrade 1`] = `
   Upgrade
 </ActionButton>
 `;
-
-exports[`UpgradeButton snapshot masquerading 1`] = `
-<ActionButton
-  disabled={true}
-  iconBefore={[MockFunction icons.Locked]}
-  variant="outline-primary"
->
-  Upgrade
-</ActionButton>
-`;

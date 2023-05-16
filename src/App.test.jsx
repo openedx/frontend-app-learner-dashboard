@@ -3,8 +3,6 @@ import { shallow } from 'enzyme';
 import { Helmet } from 'react-helmet';
 import { ErrorPage } from '@edx/frontend-platform/react';
 
-import { BrowserRouter as Router } from 'react-router-dom';
-
 import Footer from '@edx/frontend-component-footer';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { Alert } from '@edx/paragon';
@@ -55,9 +53,6 @@ describe('App router component', () => {
       });
       it('displays learner dashboard header', () => {
         expect(el.find(LearnerDashboardHeaderVariant).length).toEqual(1);
-      });
-      it('wraps the page in a browser router', () => {
-        expect(el.find(Router)).toMatchObject(el);
       });
       test('Footer logo drawn from env variable', () => {
         expect(el.find(Footer).props().logo).toEqual(logo);

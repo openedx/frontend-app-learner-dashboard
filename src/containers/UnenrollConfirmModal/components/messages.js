@@ -7,11 +7,6 @@ export const messages = StrictDict({
     description: 'Header for confirm unenroll modal',
     defaultMessage: 'Unenroll from course?',
   },
-  confirmText: {
-    id: 'learner-dash.unenrollConfirm.confirm.text',
-    description: 'Content for confirm unenroll modal',
-    defaultMessage: `Progress that you've made so far will not be saved`,
-  },
   confirmCancel: {
     id: 'learner-dash.unenrollConfirm.confirm.cancel',
     description: 'Cancel action for confirm unenroll modal',

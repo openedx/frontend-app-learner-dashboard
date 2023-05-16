@@ -6,6 +6,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 
 import track from 'tracking';
 import { reduxHooks } from 'hooks';
+import useActionDisabledState from '../hooks';
 
 import ActionButton from './ActionButton';
 import messages from './messages';
@@ -14,15 +15,14 @@ export const UpgradeButton = ({ cardId }) => {
   const { formatMessage } = useIntl();
 
   const { upgradeUrl } = reduxHooks.useCardCourseRunData(cardId);
-  const { canUpgrade } = reduxHooks.useCardEnrollmentData(cardId);
-  const { isMasquerading } = reduxHooks.useMasqueradeData();
+  const { disableUpgradeCourse } = useActionDisabledState(cardId);
+
   const trackUpgradeClick = reduxHooks.useTrackCourseEvent(
     track.course.upgradeClicked,
     cardId,
     upgradeUrl,
   );
 
-  const isEnabled = (!isMasquerading && canUpgrade);
   const enabledProps = {
     as: 'a',
     href: upgradeUrl,
@@ -32,8 +32,8 @@ export const UpgradeButton = ({ cardId }) => {
     <ActionButton
       iconBefore={Locked}
       variant="outline-primary"
-      disabled={!isEnabled}
-      {...isEnabled && enabledProps}
+      disabled={disableUpgradeCourse}
+      {...!disableUpgradeCourse && enabledProps}
     >
       {formatMessage(messages.upgrade)}
     </ActionButton>
