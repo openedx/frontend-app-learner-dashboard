@@ -28,10 +28,13 @@ const useFetchCrossProductCourses = () => {
       api
         .fetchCrossProductCourses('course-v1:IBM+IBMBCC001+1T2022')
         .then((response) => {
+          console.log("Here is the response", response)
           if (response.status === 200) {
             setIsProductRecommendationsLoading(false);
             setProductRecommendations(response.data.courses);
           }
+        }).catch(err => {
+          console.log("here is the error", err)
         });
     }
     return () => { isMounted = false; };
