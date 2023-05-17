@@ -42,8 +42,10 @@ CreditContent.propTypes = {
   }),
   message: PropTypes.node.isRequired,
   requestData: PropTypes.shape({
-    url: PropTypes.string,
-    parameters: PropTypes.objectOf(PropTypes.string),
+    data: PropTypes.shape({
+      url: PropTypes.string,
+      parameters: PropTypes.objectOf(PropTypes.string),
+    }),
   }),
 };
 

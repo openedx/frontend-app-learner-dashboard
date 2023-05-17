@@ -12,7 +12,7 @@ const action = {
 };
 
 const message = 'test-message';
-const requestData = { url: 'test-request-data-url', parameters: { key1: 'val1' } };
+const requestData = { data: { url: 'test-request-data-url', parameters: { key1: 'val1' } } };
 const props = { action, message, requestData };
 
 describe('CreditContent component', () => {

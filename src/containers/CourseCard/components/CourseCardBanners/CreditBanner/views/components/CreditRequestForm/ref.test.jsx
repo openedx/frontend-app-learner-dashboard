@@ -14,11 +14,13 @@ jest.mock('./hooks', () => ({
 
 const ref = { current: { click: jest.fn() }, useRef: jest.fn() };
 const requestData = {
-  url: 'test-request-data-url',
-  parameters: {
-    key1: 'val1',
-    key2: 'val2',
-    key3: 'val3',
+  data: {
+    url: 'test-request-data-url',
+    parameters: {
+      key1: 'val1',
+      key2: 'val2',
+      key3: 'val3',
+    },
   },
 };
 
