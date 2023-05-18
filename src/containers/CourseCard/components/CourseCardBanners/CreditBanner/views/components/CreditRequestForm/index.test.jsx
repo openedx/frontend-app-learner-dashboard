@@ -13,17 +13,15 @@ jest.mock('./hooks', () => ({
 
 const ref = 'test-ref';
 const requestData = {
-  data: {
-    url: 'test-request-data-url',
-    parameters: {
-      key1: 'val1',
-      key2: 'val2',
-      key3: 'val3',
-    },
+  url: 'test-request-data-url',
+  parameters: {
+    key1: 'val1',
+    key2: 'val2',
+    key3: 'val3',
   },
 };
 
-const paramKeys = keyStore(requestData.data.parameters);
+const paramKeys = keyStore(requestData.parameters);
 
 useCreditRequestFormData.mockReturnValue({ ref });
 
@@ -51,16 +49,16 @@ describe('CreditRequestForm component', () => {
         expect(el).toMatchSnapshot();
       });
       it('loads Form with requestData url', () => {
-        expect(el.find('Form').props().action).toEqual(requestData.data.url);
+        expect(el.find('Form').props().action).toEqual(requestData.url);
       });
       it('loads a textarea form control for each requestData parameter', () => {
         const controls = el.find('FormControl');
         expect(controls.at(0).props().name).toEqual(paramKeys.key1);
-        expect(controls.at(0).props().value).toEqual(requestData.data.parameters.key1);
+        expect(controls.at(0).props().value).toEqual(requestData.parameters.key1);
         expect(controls.at(1).props().name).toEqual(paramKeys.key2);
-        expect(controls.at(1).props().value).toEqual(requestData.data.parameters.key2);
+        expect(controls.at(1).props().value).toEqual(requestData.parameters.key2);
         expect(controls.at(2).props().name).toEqual(paramKeys.key3);
-        expect(controls.at(2).props().value).toEqual(requestData.data.parameters.key3);
+        expect(controls.at(2).props().value).toEqual(requestData.parameters.key3);
       });
     });
   });

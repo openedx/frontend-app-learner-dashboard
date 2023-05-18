@@ -10,7 +10,7 @@ export const CreditRequestForm = ({ requestData }) => {
   if (requestData === null) {
     return null;
   }
-  const { parameters, url } = requestData.data;
+  const { parameters, url } = requestData;
   return (
     <Form
       accept-method="UTF-8"
@@ -35,10 +35,8 @@ CreditRequestForm.defaultProps = {
 };
 CreditRequestForm.propTypes = {
   requestData: PropTypes.shape({
-    data: PropTypes.shape({
-      parameters: PropTypes.objectOf(PropTypes.string),
-      url: PropTypes.string,
-    }),
+    parameters: PropTypes.objectOf(PropTypes.string),
+    url: PropTypes.string,
   }),
 };
 
