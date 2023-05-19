@@ -11,7 +11,7 @@ jest.mock('hooks', () => ({
 const state = new MockUseState(hooks);
 
 const cardId = 'test-card-id';
-const requestData = { test: 'request data' };
+const requestData = { data: 'request data' };
 const creditRequest = jest.fn().mockReturnValue(Promise.resolve(requestData));
 apiHooks.useCreateCreditRequest.mockReturnValue(creditRequest);
 const event = { preventDefault: jest.fn() };
@@ -48,7 +48,7 @@ describe('Credit Banner view hooks', () => {
         it('calls api.createCreditRequest and sets requestData with the response', async () => {
           await out.createCreditRequest(event);
           expect(creditRequest).toHaveBeenCalledWith();
-          expect(state.setState.creditRequestData).toHaveBeenCalledWith(requestData);
+          expect(state.setState.creditRequestData).toHaveBeenCalledWith(requestData.data);
         });
       });
     });

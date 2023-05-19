@@ -14,7 +14,10 @@ export const useCreditRequestData = (cardId) => {
   const createCreditApiRequest = apiHooks.useCreateCreditRequest(cardId);
   const createCreditRequest = (e) => {
     e.preventDefault();
-    createCreditApiRequest().then(setRequestData);
+    createCreditApiRequest()
+      .then((request) => {
+        setRequestData(request.data);
+      });
   };
   return { requestData, createCreditRequest };
 };
