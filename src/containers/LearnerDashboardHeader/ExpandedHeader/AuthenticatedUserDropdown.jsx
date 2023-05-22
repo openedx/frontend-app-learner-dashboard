@@ -3,7 +3,7 @@ import React from 'react';
 import { getConfig } from '@edx/frontend-platform';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
-import { AvatarButton, Dropdown } from '@edx/paragon';
+import { AvatarButton, Dropdown, Badge } from '@edx/paragon';
 
 import { reduxHooks } from 'hooks';
 
@@ -39,6 +39,14 @@ export const AuthenticatedUserDropdown = () => {
             </Dropdown.Item>
           )}
           <Dropdown.Divider />
+          {!dashboard && getConfig().CAREER_LINK_URL && (
+            <Dropdown.Item href={`${getConfig().CAREER_LINK_URL}`}>
+              {formatMessage(messages.career)}
+              <Badge className="px-2 mx-2" variant="warning">
+                {formatMessage(messages.newAlert)}
+              </Badge>
+            </Dropdown.Item>
+          )}
           <Dropdown.Item href={`${getConfig().ACCOUNT_PROFILE_URL}/u/${authenticatedUser.username}`}>
             {formatMessage(messages.profile)}
           </Dropdown.Item>

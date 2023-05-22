@@ -1,97 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LearnerDashboardHeader UserMenu snapshots with authenticated user 1`] = `
-<AuthenticatedUserDropdown
-  username="test-username"
-/>
-`;
-
-exports[`LearnerDashboardHeader UserMenu snapshots without authenticated user 1`] = `""`;
-
-exports[`LearnerDashboardHeader snapshots with collapsed 1`] = `
+exports[`LearnerDashboardHeader render 1`] = `
 <Fragment>
   <ConfirmEmailBanner />
-  <div
-    className="flex-column bg-primary"
-  >
-    <header
-      className="learner-dashboard-header"
-    >
-      <div
-        className="d-flex"
-      >
-        <div
-          className="flex-grow-1"
-        >
-          <GreetingBanner
-            size="small"
-          />
-        </div>
-        <div
-          className="my-auto ml-1 d-flex"
-        >
-          <IconButton
-            alt="Course search"
-            as="a"
-            href="test-course-search-url"
-            iconAs="Icon"
-            invertColors={true}
-            onClick={[MockFunction findCoursesNavClicked('test-course-search-url')]}
-            src={[MockFunction icons.Search]}
-            variant="primary"
-          />
-          <UserMenu />
-        </div>
-      </div>
-    </header>
-  </div>
-  <MasqueradeBar />
-</Fragment>
-`;
-
-exports[`LearnerDashboardHeader snapshots without collapsed 1`] = `
-<Fragment>
-  <ConfirmEmailBanner />
-  <div
-    className="flex-column bg-primary"
-  >
-    <Image
-      className="d-block w-100 mb-4"
-      src="icon/mock/path"
-    />
-    <header
-      className="learner-dashboard-header"
-    >
-      <div
-        className="d-flex"
-      >
-        <Button
-          as="a"
-          href="http://localhost:18000/dashboard/programs"
-          iconBefore={[MockFunction icons.Program]}
-          variant="inverse-tertiary"
-        >
-          Switch to Programs
-        </Button>
-        <div
-          className="flex-grow-1"
-        />
-        <Button
-          as="a"
-          href="test-course-search-url"
-          iconBefore={[MockFunction icons.Search]}
-          onClick={[MockFunction findCoursesNavClicked('test-course-search-url')]}
-          variant="inverse-tertiary"
-        >
-          Explore courses
-        </Button>
-        <UserMenu />
-      </div>
-    </header>
-    <GreetingBanner
-      size="large"
-    />
-  </div>
+  <CollapsedHeader />
+  <ExpandedHeader />
   <MasqueradeBar />
 </Fragment>
 `;

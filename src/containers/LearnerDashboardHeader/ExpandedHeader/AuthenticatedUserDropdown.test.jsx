@@ -36,6 +36,7 @@ const config = {
   LOGOUT_URL: 'http://logout-url.test',
   ORDER_HISTORY_URL: 'http://order-history-url.test',
   SUPPORT_URL: 'http://localhost:18000/support',
+  CAREER_LINK_URL: 'http://localhost:18000/career',
 };
 getConfig.mockReturnValue(config);
 

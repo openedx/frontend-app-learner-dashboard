@@ -31,7 +31,7 @@ describe('MasqueradeBar hooks', () => {
     isMasqueradingPending: false,
     masqueradeErrorStatus: null,
   };
-  const createHook = (masqueradeData = {}, user) => {
+  const createHook = (masqueradeData = {}, user = undefined) => {
     reduxHooks.useMasqueradeData.mockReturnValueOnce({
       ...defaultMasqueradeData,
       ...masqueradeData,

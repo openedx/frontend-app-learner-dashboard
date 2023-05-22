@@ -5,7 +5,7 @@ import { getConfig } from '@edx/frontend-platform';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
 
-import { Button } from '@edx/paragon';
+import { Button, Badge } from '@edx/paragon';
 
 import urls from 'data/services/lms/urls';
 import { reduxHooks } from 'hooks';
@@ -45,9 +45,17 @@ export const CollapseMenuBody = ({ isOpen }) => {
         </Button>
         {authenticatedUser && (
           <>
-            {dashboard && (
+            {!!dashboard && (
               <Button as="a" href={dashboard.url} variant="inverse-primary">
                 {formatMessage(messages.dashboard)}
+              </Button>
+            )}
+            {!dashboard && getConfig().CAREER_LINK_URL && (
+              <Button href={`${getConfig().CAREER_LINK_URL}`}>
+                {formatMessage(messages.career)}
+                <Badge className="px-2 mx-2" variant="warning">
+                  {formatMessage(messages.newAlert)}
+                </Badge>
               </Button>
             )}
             <Button

@@ -99,6 +99,17 @@ exports[`AuthenticatedUserDropdown snapshots without enterprise dashboard and ex
     </Dropdown.Item>
     <Dropdown.Divider />
     <Dropdown.Item
+      href="http://localhost:18000/career"
+    >
+      Career
+      <Badge
+        className="px-2 mx-2"
+        variant="warning"
+      >
+        New
+      </Badge>
+    </Dropdown.Item>
+    <Dropdown.Item
       href="http://account-profile-url.test/u/username"
     >
       Profile
