@@ -2,7 +2,7 @@ import { StrictDict } from 'utils';
 import { configuration } from 'config';
 
 const baseUrl = `${configuration.LMS_BASE_URL}`;
-export const ecommerceUrl = `${configuration.ECOMMERCE_PUBLIC_URL_ROOT}`;
+export const ecommerceUrl = `${configuration.ECOMMERCE_BASE_URL}`;
 
 export const api = `${baseUrl}/api`;
 
