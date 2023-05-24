@@ -56,8 +56,10 @@ describe('course trackers', () => {
     describe('upgradeButtonClickedUpsell', () => {
       it('creates an event tracker for upgradeButtonClickedUpsell eventwith upsellOptions', () => {
         expect(trackers.upgradeButtonClickedUpsell(courseId)).toEqual(
-          createEventTracker(eventNames.upgradeButtonClickedUpsell,
-            { ...trackers.upsellOptions, courseId }),
+          createEventTracker(
+            eventNames.upgradeButtonClickedUpsell,
+            { ...trackers.upsellOptions, courseId },
+          ),
         );
       });
     });

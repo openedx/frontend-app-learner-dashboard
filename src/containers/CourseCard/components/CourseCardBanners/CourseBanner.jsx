@@ -36,11 +36,9 @@ export const CourseBanner = ({ cardId }) => {
           <Banner>
             {formatMessage(messages.auditAccessExpired)}
             {'  '}
-            {
-              <Hyperlink isInline destination="">
-                {formatMessage(messages.findAnotherCourse)}
-              </Hyperlink>
-            }
+            <Hyperlink isInline destination="">
+              {formatMessage(messages.findAnotherCourse)}
+            </Hyperlink>
           </Banner>
         ))}
 
