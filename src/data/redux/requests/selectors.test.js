@@ -28,9 +28,7 @@ const genRequests = (request) => ({
   requests: { [requestKey]: request },
 });
 const select = (selector, request) => (
-  mockUseSelector(
-    selector(requestKey), genRequests(request),
-  )
+  mockUseSelector(selector(requestKey), genRequests(request))
 );
 describe('requests selectors unit tests', () => {
   test('requestStatus returns data associated with given key', () => {
@@ -38,8 +36,10 @@ describe('requests selectors unit tests', () => {
   });
   const testStatusSelector = (selector, matchingRequest) => {
     expect(mockUseSelector(selector(requestKey), testState)).toEqual(false);
-    expect(mockUseSelector(selector(requestKey),
-      { requests: { [requestKey]: matchingRequest } })).toEqual(true);
+    expect(mockUseSelector(
+      selector(requestKey),
+      { requests: { [requestKey]: matchingRequest } },
+    )).toEqual(true);
   };
   test('isInactive returns true iff the given request is inactive', () => {
     testStatusSelector(selectors.isInactive, inactiveRequest);
