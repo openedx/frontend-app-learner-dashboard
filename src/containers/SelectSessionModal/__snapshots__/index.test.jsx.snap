@@ -71,25 +71,25 @@ exports[`SelectSessionModal snapshot modal with leave option  1`] = `
         key="test-course-id-1"
         value="test-course-id-1"
       >
-        02/01/2000
+        1/2/2000
          - 
-        02/01/2020
+        1/2/2020
       </Form.Radio>
       <Form.Radio
         key="test-course-id-2"
         value="test-course-id-2"
       >
-        03/02/2000
+        2/3/2000
          - 
-        03/02/2020
+        2/3/2020
       </Form.Radio>
       <Form.Radio
         key="test-course-id-3"
         value="test-course-id-3"
       >
-        04/03/2000
+        3/4/2000
          - 
-        04/03/2020
+        3/4/2020
       </Form.Radio>
       <Form.Radio
         value="leave"
@@ -139,25 +139,25 @@ exports[`SelectSessionModal snapshot modal without leave option  1`] = `
         key="test-course-id-1"
         value="test-course-id-1"
       >
-        02/01/2000
+        1/2/2000
          - 
-        02/01/2020
+        1/2/2020
       </Form.Radio>
       <Form.Radio
         key="test-course-id-2"
         value="test-course-id-2"
       >
-        03/02/2000
+        2/3/2000
          - 
-        03/02/2020
+        2/3/2020
       </Form.Radio>
       <Form.Radio
         key="test-course-id-3"
         value="test-course-id-3"
       >
-        04/03/2000
+        3/4/2000
          - 
-        04/03/2020
+        3/4/2020
       </Form.Radio>
     </Form.RadioSet>
   </Form.Group>
