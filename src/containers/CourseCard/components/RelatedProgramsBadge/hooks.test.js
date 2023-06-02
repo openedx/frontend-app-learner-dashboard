@@ -17,9 +17,8 @@ const cardId = 'test-card-id';
 const state = new MockUseState(hooks);
 const numPrograms = 27;
 
-const { formatMessage } = useIntl();
-
 describe('RelatedProgramsBadge hooks', () => {
+  const { formatMessage } = useIntl();
   let out;
   describe('state values', () => {
     state.testGetter(state.keys.isOpen);

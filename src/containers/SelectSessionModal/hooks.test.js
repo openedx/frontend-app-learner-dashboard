@@ -61,8 +61,6 @@ const entitlementData = {
   uuid,
 };
 
-const { formatMessage } = useIntl();
-
 const testValue = 'test-value';
 
 const courseId = 'test-course-id';
@@ -125,6 +123,7 @@ describe('SelectSessionModal hooks', () => {
     });
 
     describe('output', () => {
+      const { formatMessage } = useIntl();
       describe('selectedSession', () => {
         it('defaults to current courseId if enrolled', () => {
           expect(out.selectedSession).toEqual(courseId);
