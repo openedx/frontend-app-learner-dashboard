@@ -4,7 +4,6 @@ import LookingForChallengeWidget from 'widgets/LookingForChallengeWidget';
 import LoadingView from './LoadingView';
 import LoadedView from './LoadedView';
 import hooks from './hooks';
-import recommendedCoursesData from "../RecommendationsPanel/mockData";
 
 export const RecommendationsPanel = () => {
   const {
@@ -18,17 +17,14 @@ export const RecommendationsPanel = () => {
   if (isLoading) {
     return (<LoadingView />);
   }
-
-  const newCourses = recommendedCoursesData.courses;
-
-  // if (newCourses.length > 0) {
-  //   return (
-  //     <LoadedView courses={newCourses} isControl={false} />
-  //   );
-  // }
-  // if (isFailed) {
-  //   return (<LookingForChallengeWidget />);
-  // }
+  if (isLoaded && courses.length > 0) {
+    return (
+      <LoadedView courses={courses} isControl={isControl} />
+    );
+  }
+  if (isFailed) {
+    return (<LookingForChallengeWidget />);
+  }
   // default fallback
   return (<LookingForChallengeWidget />);
 };

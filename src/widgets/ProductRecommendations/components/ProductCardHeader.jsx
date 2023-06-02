@@ -12,14 +12,13 @@ function ProductCardHeader({ courseType }) {
 
   const getProductTypeDetail = (type) => {
     switch (type) {
-      case 'executive-education':
-      case 'executive-education-2u':
+      case 'Executive Education':
         return {
           heading: messages.executiveEducationHeading,
           description: messages.executiveEducationDescription,
           url: '/executive-education',
         };
-      case 'bootcamp-2u':
+      case 'Boot Camp':
         return {
           heading: messages.bootcampHeading,
           description: messages.bootcampDescription,

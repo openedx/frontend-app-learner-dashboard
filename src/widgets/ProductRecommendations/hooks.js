@@ -1,61 +1,65 @@
-import { useState, useEffect } from "react";
-import { StrictDict } from 'utils';
+import { useState, useEffect } from 'react';
 
 import { RequestStates } from 'data/constants/requests';
+import { StrictDict } from 'utils';
+import { reduxHooks } from 'hooks';
+import { SortKeys } from 'data/constants/app';
 import api from './api';
 import * as module from './hooks';
 
 export const state = StrictDict({
   requestState: (val) => useState(val), // eslint-disable-line
-  courses: (val) => useState(val), // eslint-disable-line
+  data: (val) => useState(val), // eslint-disable-line
 });
 
-const useFetchMostRecentCourse = () => {
-  // Gets the most recent course a user is enrolled in
-  // Goes through the courses enrollment property and checks the lastEnrolled property?
-  // Can we assume that the order the courses are listed on the Dashbaord is the order that the course was enrolled in?
+export const useMostRecentCourseRunKey = () => {
+  const mostRecentCourse = reduxHooks.useCurrentCourseList({
+    sortBy: SortKeys.enrolled,
+    filters: [],
+    pageSize: 0,
+  }).visible[0].courseRun.courseId;
+
+  return mostRecentCourse;
 };
 
-const useFetchCrossProductCourses = (setRequestState, setCourses) => {
+export const useFetchProductRecommendations = (setRequestState, setData) => {
+  const courseRunKey = module.useMostRecentCourseRunKey();
 
   useEffect(() => {
     let isMounted = true;
-    if (isMounted) {
-      setTimeout(() => {
-        console.log("timing")
-        api
-        .fetchCrossProductCourses('course-v1:IBM+IBMBCC001+1T2022')
-        .then((response) => {
-          console.log("Here is the response", response)
-          if (response.status === 200) {
-            setRequestState(RequestStates.completed);
-            setCourses(response.data.courses);
-          }
-        }).catch(err => {
-          console.log("here is the error", err);
-        });
-      }, 5000);
-      
-    }
-    return () => { isMounted = false; };
-  /* eslint-disable */
-  }, []); // most recent course ID will be the dependancy;
+    api
+      .fetchProductRecommendations(courseRunKey)
+      .then((response) => {
+        if (isMounted) {
+          setData(response.data);
+          setRequestState(RequestStates.completed);
+        }
+      })
+      .catch(() => {
+        if (isMounted) {
+          setRequestState(RequestStates.failed);
+        }
+      });
+    return () => {
+      isMounted = false;
+    };
+    /* eslint-disable */
+  }, []);
 };
 
-const useFetchAlgoliaRecommendations = () => {
-  // This hook will fetch algolia reccs and return the reccs
-}
-
-const useCrossProductRecommendationsData = () => {
-  const [requestState, setRequestState] = state.requestState(RequestStates.pending);
-  const [courses, setCourses] = state.courses([]);
-  useFetchCrossProductCourses(setRequestState, setCourses);
+export const useProductRecommendationsData = () => {
+  const [requestState, setRequestState] = module.state.requestState(
+    RequestStates.pending
+  );
+  const [data, setData] = module.state.data({});
+  module.useFetchProductRecommendations(setRequestState, setData);
 
   return {
-    courses,
-    isLoading: requestState === RequestStates.pending
-  }
+    productRecommendations: data,
+    isLoading: requestState === RequestStates.pending,
+    isLoaded: requestState === RequestStates.completed,
+    hasFailed: requestState === RequestStates.failed 
+  };
+};
 
-}
-
-export default useCrossProductRecommendationsData;
+export default { useProductRecommendationsData };

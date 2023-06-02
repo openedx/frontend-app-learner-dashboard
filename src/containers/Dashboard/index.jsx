@@ -13,7 +13,7 @@ import LoadingView from './LoadingView';
 import DashboardLayout from './DashboardLayout';
 import hooks from './hooks';
 import './index.scss';
-import ProductRecommendationsContainer from '../../widgets/ProductRecommendations/components/ProductRecommendationsContainer';
+import ProductRecommendations from '../../widgets/ProductRecommendations';
 
 export const Dashboard = () => {
   hooks.useInitializeDashboard();
@@ -22,6 +22,8 @@ export const Dashboard = () => {
   const hasAvailableDashboards = reduxHooks.useHasAvailableDashboards();
   const initIsPending = reduxHooks.useRequestIsPending(RequestKeys.initialize);
   const showSelectSessionModal = reduxHooks.useShowSelectSessionModal();
+  const shouldShowProductRecommendations = !initIsPending && !hasAvailableDashboards && hasCourses && false;
+
   return (
     <div id="dashboard-container" className="d-flex flex-column p-2 pt-0">
       <h1 className="sr-only">{pageTitle}</h1>
@@ -40,7 +42,7 @@ export const Dashboard = () => {
             </DashboardLayout>
           )}
       </div>
-      <ProductRecommendationsContainer />
+      {shouldShowProductRecommendations && <ProductRecommendations />}
     </div>
   );
 };

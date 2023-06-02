@@ -2,24 +2,21 @@
 
 $horizontal-card-gap: 20px;
 $vertical-card-gap: 24px;
-$card-height: 332px;
-$header-height: 104px;
-$card-width: 270px;
 
-.recommendations-container {
-  border: solid;
-}
+// .recommendations-container {
+//   border: solid;
+// }
 
 .base-card {
-  height: $card-height;
-  width: $card-width !important;
+  height: 332px;
+  width: 270px !important;
 
   p {
     margin-bottom: 0;
   }
 
   .pgn__card-image-cap {
-    height: $header-height;
+    height: 104px;
     object: {
       fit: cover;
       position: top center;
@@ -83,42 +80,13 @@ $card-width: 270px;
     }
   }
 
-  &.dark {
-    background-color: $primary-500;
-
-    .pgn__card-header-title-md {
-      color: $white;
-    }
-
-    .pgn__card-header-subtitle-md {
-      color: $light-200;
-    }
-
-    .title {
-      color: $white;
-    }
-
-    .subtitle {
-      color: $light-200;
-    }
-
-    .badge {
-      background-color: $dark-200;
-      color: $white;
-    }
-
-    .footer-content {
-      color: $light-200;
-    }
+  &:hover {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.15), 0 0.125rem 0.5rem rgba(0, 0, 0, 0.15);
   }
 }
 
 .base-card-link:hover {
   text-decoration: none;
-}
-
-.base-card:hover {
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.15), 0 0.125rem 0.5rem rgba(0, 0, 0, 0.15);
 }
 
 .base-card-link .base-card {
@@ -128,26 +96,14 @@ $card-width: 270px;
 .product-card-container {
   gap: $vertical-card-gap $horizontal-card-gap;
   margin: 0 (-$horizontal-card-gap);
-  padding: 0 $horizontal-card-gap;
+  padding: 1rem $horizontal-card-gap;
 
   .course-subcontainer {
     display: flex;
     gap: $vertical-card-gap $horizontal-card-gap;
   }
 
-  // .base-card-wrapper {
-  //   flex: 0 1 calc(100% - #{$horizontal-card-gap});
-
-  //   @include media-breakpoint-up(sm) {
-  //     flex: 0 1 calc(50% - #{$horizontal-card-gap});
-  //   }
-
-  //   @include media-breakpoint-up(md) {
-  //     flex: 0 1 calc(33.333% - #{$horizontal-card-gap});
-  //   }
-
-  //   @include media-breakpoint-up(xl) {
-  //     flex: 0 1 calc(25% - #{$horizontal-card-gap});
-  //   }
-  // }
+  @include media-breakpoint-down(lg) {
+    overflow-x: scroll;
+  }
 }
