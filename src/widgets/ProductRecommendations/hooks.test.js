@@ -80,7 +80,7 @@ describe('ProductRecommendations hooks', () => {
           expect(api.fetchProductRecommendations).toHaveBeenCalledWith(mostRecentCourseRunKey);
         });
         describe('successful fetch on mounted component', () => {
-          it('sets request state to completed and loads api response', async () => {
+          it('sets request state to completed and loads response', async () => {
             let resolveFn;
             api.fetchProductRecommendations.mockReturnValueOnce(new Promise(resolve => {
               resolveFn = resolve;
@@ -95,7 +95,7 @@ describe('ProductRecommendations hooks', () => {
           });
         });
         describe('successful fetch on unmounted component', () => {
-          it('it does not set the state', async () => {
+          it('does not set the state', async () => {
             let resolveFn;
             api.fetchProductRecommendations.mockReturnValueOnce(new Promise(resolve => {
               resolveFn = resolve;
@@ -127,7 +127,7 @@ describe('ProductRecommendations hooks', () => {
       state.expectInitializedWith(state.keys.requestState, RequestStates.pending);
     });
     describe('return values', () => {
-      describe('request is completed, with returned response object', () => {
+      describe('when the request is completed, with returned response object', () => {
         const mockResponse = { crossProductCourses: {}, amplitudeCourses: {} };
         beforeEach(() => {
           state.mockVal(state.keys.requestState, RequestStates.completed);
@@ -147,7 +147,7 @@ describe('ProductRecommendations hooks', () => {
           expect(output.productRecommendations).toEqual(mockResponse);
         });
       });
-      describe('request is pending', () => {
+      describe('when the request is pending', () => {
         beforeEach(() => {
           state.mockVal(state.keys.requestState, RequestStates.pending);
           state.mockVal(state.keys.data, {});
@@ -166,7 +166,7 @@ describe('ProductRecommendations hooks', () => {
           expect(output.productRecommendations).toEqual({});
         });
       });
-      describe('request has failed', () => {
+      describe('when the request has failed', () => {
         beforeEach(() => {
           state.mockVal(state.keys.requestState, RequestStates.failed);
           state.mockVal(state.keys.data, {});

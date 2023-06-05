@@ -48,9 +48,7 @@ export const useFetchProductRecommendations = (setRequestState, setData) => {
 };
 
 export const useProductRecommendationsData = () => {
-  const [requestState, setRequestState] = module.state.requestState(
-    RequestStates.pending
-  );
+  const [requestState, setRequestState] = module.state.requestState(RequestStates.pending);
   const [data, setData] = module.state.data({});
   module.useFetchProductRecommendations(setRequestState, setData);
 

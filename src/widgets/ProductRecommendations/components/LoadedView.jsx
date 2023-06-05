@@ -28,7 +28,7 @@ const LoadedView = ({ crossProductCourses, openCourses }) => {
     <div className="bg-light-200">
       <Container
         size="lg"
-        className="recommendations-container pt-sm-5 pt-4.5 pb-2 pb-sm-4.5 bg-light-200"
+        className="recommendations-container pt-sm-5 pt-4.5 pb-2 pb-sm-4.5"
       >
         <h2>
           {formatMessage(messages.recommendationsHeading)}

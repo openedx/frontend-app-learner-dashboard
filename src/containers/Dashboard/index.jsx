@@ -22,7 +22,9 @@ export const Dashboard = () => {
   const hasAvailableDashboards = reduxHooks.useHasAvailableDashboards();
   const initIsPending = reduxHooks.useRequestIsPending(RequestKeys.initialize);
   const showSelectSessionModal = reduxHooks.useShowSelectSessionModal();
-  const shouldShowProductRecommendations = !initIsPending && !hasAvailableDashboards && hasCourses && false;
+
+  // Hard coded to not show until experiment set-up logic is implemented
+  const showProductRecommendations = !initIsPending && !hasAvailableDashboards && hasCourses && true;
 
   return (
     <div id="dashboard-container" className="d-flex flex-column p-2 pt-0">
@@ -42,7 +44,7 @@ export const Dashboard = () => {
             </DashboardLayout>
           )}
       </div>
-      {shouldShowProductRecommendations && <ProductRecommendations />}
+      {showProductRecommendations && <ProductRecommendations />}
     </div>
   );
 };

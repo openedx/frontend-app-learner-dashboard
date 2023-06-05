@@ -5,7 +5,7 @@ exports[`ProductRecommendations LoadedView matches snapshot 1`] = `
   className="bg-light-200"
 >
   <Container
-    className="recommendations-container pt-sm-5 pt-4.5 pb-2 pb-sm-4.5 bg-light-200"
+    className="recommendations-container pt-sm-5 pt-4.5 pb-2 pb-sm-4.5"
     size="lg"
   >
     <h2>
