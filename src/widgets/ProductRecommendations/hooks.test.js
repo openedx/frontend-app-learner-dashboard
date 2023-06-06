@@ -88,7 +88,7 @@ describe('ProductRecommendations hooks', () => {
             cb();
             expect(api.fetchProductRecommendations).toHaveBeenCalledWith(mostRecentCourseRunKey);
             expect(setRequestState).not.toHaveBeenCalled();
-            expect(setData).not.toHaveBeenCalledWith(response.data);
+            expect(setData).not.toHaveBeenCalled();
             await resolveFn(response);
             expect(setRequestState).toHaveBeenCalledWith(RequestStates.completed);
             expect(setData).toHaveBeenCalledWith(response.data);
@@ -103,7 +103,7 @@ describe('ProductRecommendations hooks', () => {
             const unMount = cb();
             expect(api.fetchProductRecommendations).toHaveBeenCalledWith(mostRecentCourseRunKey);
             expect(setRequestState).not.toHaveBeenCalled();
-            expect(setData).not.toHaveBeenCalledWith(response.data);
+            expect(setData).not.toHaveBeenCalled();
             unMount();
             await resolveFn(response);
             expect(setRequestState).not.toHaveBeenCalled();

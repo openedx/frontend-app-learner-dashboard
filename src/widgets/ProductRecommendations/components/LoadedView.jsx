@@ -7,19 +7,16 @@ import messages from '../messages';
 import { courseShape, courseTypeToProductTypeMap } from '../utils';
 import ProductCardContainer from './ProductCardContainer';
 
-const MAX_OPEN_COURSE_RECOMMENDATIONS = 4;
-const MIN_OPEN_COURSE_RECOMMENDATIONS = 2;
-
 const LoadedView = ({ crossProductCourses, openCourses }) => {
   const { formatMessage } = useIntl();
   const includesCrossProductTypes = crossProductCourses.length === 2;
 
   const finalProductList = useMemo(() => {
     if (includesCrossProductTypes) {
-      const openCourseList = openCourses ? openCourses.slice(0, MIN_OPEN_COURSE_RECOMMENDATIONS) : [];
+      const openCourseList = openCourses ? openCourses.slice(0, 2) : [];
       return crossProductCourses.concat(openCourseList);
     }
-    return openCourses.slice(0, MAX_OPEN_COURSE_RECOMMENDATIONS);
+    return openCourses;
   }, [crossProductCourses, openCourses, includesCrossProductTypes]);
 
   const courseTypes = [...new Set(finalProductList.map((item) => courseTypeToProductTypeMap[item.courseType]))];

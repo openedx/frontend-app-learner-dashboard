@@ -11,16 +11,19 @@ describe('ProductRecommendations ProductCardHeader', () => {
   it('matches snapshot', () => {
     expect(shallow(<ProductCardHeader courseType={executiveEducationType} />)).toMatchSnapshot();
   });
+  describe('with bootcamp courseType prop', () => {
+    it('renders a bootcamp header', () => {
+      const wrapper = shallow(<ProductCardHeader courseType={bootCampType} />);
 
-  it('renders a bootcamp header if the bootcamp course type is passed as a prop', () => {
-    const wrapper = shallow(<ProductCardHeader courseType={bootCampType} />);
-
-    expect(wrapper.find('h3').text()).toEqual(bootCampType);
+      expect(wrapper.find('h3').text()).toEqual(bootCampType);
+    });
   });
 
-  it('renders a courses header if the courses course type is passed as a prop', () => {
-    const wrapper = shallow(<ProductCardHeader courseType={courseType} />);
+  describe('with course courseType prop', () => {
+    it('renders a courses header', () => {
+      const wrapper = shallow(<ProductCardHeader courseType={courseType} />);
 
-    expect(wrapper.find('h3').text()).toEqual(courseType);
+      expect(wrapper.find('h3').text()).toEqual(courseType);
+    });
   });
 });
