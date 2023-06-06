@@ -1,14 +1,26 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { mockCrossProductCourses } from '../testData';
 import ProductCardHeader from './ProductCardHeader';
-import { courseTypeToProductTypeMap } from '../utils';
 
 describe('ProductRecommendations ProductCardHeader', () => {
-  const course = mockCrossProductCourses[0];
+  const bootCampType = 'Boot Camp';
+  const executiveEducationType = 'Executive Education';
+  const courseType = 'Courses';
 
   it('matches snapshot', () => {
-    expect(shallow(<ProductCardHeader courseType={courseTypeToProductTypeMap[course.courseType]} />)).toMatchSnapshot();
+    expect(shallow(<ProductCardHeader courseType={executiveEducationType} />)).toMatchSnapshot();
+  });
+
+  it('renders a bootcamp header if the bootcamp course type is passed as a prop', () => {
+    const wrapper = shallow(<ProductCardHeader courseType={bootCampType} />);
+
+    expect(wrapper.find('h3').text()).toEqual(bootCampType);
+  });
+
+  it('renders a courses header if the courses course type is passed as a prop', () => {
+    const wrapper = shallow(<ProductCardHeader courseType={courseType} />);
+
+    expect(wrapper.find('h3').text()).toEqual(courseType);
   });
 });

@@ -1,4 +1,4 @@
-const getCoursesWithType = (courseTypes) => {
+export const getCoursesWithType = (courseTypes) => {
   const courses = [];
 
   courseTypes.forEach((type) => {
