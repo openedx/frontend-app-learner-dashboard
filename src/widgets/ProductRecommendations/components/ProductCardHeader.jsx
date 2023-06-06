@@ -7,7 +7,7 @@ import { Icon, Hyperlink } from '@edx/paragon';
 import { ChevronRight } from '@edx/paragon/icons';
 import messages from '../messages';
 
-function ProductCardHeader({ courseType }) {
+const ProductCardHeader = ({ courseType }) => {
   const { formatMessage } = useIntl();
 
   const getProductTypeDetail = (type) => {
@@ -54,7 +54,7 @@ function ProductCardHeader({ courseType }) {
       </p>
     </div>
   );
-}
+};
 
 ProductCardHeader.propTypes = {
   courseType: PropTypes.string.isRequired,
