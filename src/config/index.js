@@ -15,6 +15,7 @@ const configuration = {
   ZENDESK_KEY: process.env.ZENDESK_KEY,
   SUPPORT_URL: process.env.SUPPORT_URL || null,
   ENABLE_NOTICES: process.env.ENABLE_NOTICES || null,
+  CAREER_LINK_URL: process.env.CAREER_LINK_URL || null,
 };
 
 const features = {};
