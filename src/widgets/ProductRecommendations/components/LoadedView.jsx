@@ -13,7 +13,7 @@ const LoadedView = ({ crossProductCourses, openCourses }) => {
 
   const finalProductList = useMemo(() => {
     if (includesCrossProductTypes) {
-      const openCourseList = openCourses ? openCourses.slice(0, 2) : [];
+      const openCourseList = openCourses.slice(0, 2);
       return crossProductCourses.concat(openCourseList);
     }
     return openCourses;

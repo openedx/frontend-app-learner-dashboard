@@ -1,8 +1,10 @@
 import React from 'react';
+import { waitFor } from '@testing-library/react';
 
 import { MockUseState } from 'testUtils';
 import { RequestStates } from 'data/constants/requests';
 import { reduxHooks } from 'hooks';
+import { wait } from './utils';
 
 import api from './api';
 import * as hooks from './hooks';
@@ -80,7 +82,7 @@ describe('ProductRecommendations hooks', () => {
           expect(api.fetchProductRecommendations).toHaveBeenCalledWith(mostRecentCourseRunKey);
         });
         describe('successful fetch on mounted component', () => {
-          it('sets request state to completed and loads response', async () => {
+          it('sets the request state to completed and loads response', async () => {
             let resolveFn;
             api.fetchProductRecommendations.mockReturnValueOnce(new Promise(resolve => {
               resolveFn = resolve;
@@ -89,9 +91,11 @@ describe('ProductRecommendations hooks', () => {
             expect(api.fetchProductRecommendations).toHaveBeenCalledWith(mostRecentCourseRunKey);
             expect(setRequestState).not.toHaveBeenCalled();
             expect(setData).not.toHaveBeenCalled();
-            await resolveFn(response);
-            expect(setRequestState).toHaveBeenCalledWith(RequestStates.completed);
-            expect(setData).toHaveBeenCalledWith(response.data);
+            resolveFn(response);
+            await waitFor(() => {
+              expect(setRequestState).toHaveBeenCalledWith(RequestStates.completed);
+              expect(setData).toHaveBeenCalledWith(response.data);
+            });
           });
         });
         describe('successful fetch on unmounted component', () => {
@@ -105,7 +109,42 @@ describe('ProductRecommendations hooks', () => {
             expect(setRequestState).not.toHaveBeenCalled();
             expect(setData).not.toHaveBeenCalled();
             unMount();
-            await resolveFn(response);
+            resolveFn(response);
+            await wait(10);
+            expect(setRequestState).not.toHaveBeenCalled();
+            expect(setData).not.toHaveBeenCalled();
+          });
+        });
+        describe('unsuccessful fetch on mounted component', () => {
+          it('sets the request state to failed and does not set the data state', async () => {
+            let rejectFn;
+            api.fetchProductRecommendations.mockReturnValueOnce(new Promise((resolve, reject) => {
+              rejectFn = reject;
+            }));
+            cb();
+            expect(api.fetchProductRecommendations).toHaveBeenCalledWith(mostRecentCourseRunKey);
+            expect(setRequestState).not.toHaveBeenCalled();
+            expect(setData).not.toHaveBeenCalled();
+            rejectFn();
+            await waitFor(() => {
+              expect(setRequestState).toHaveBeenCalledWith(RequestStates.failed);
+              expect(setData).not.toHaveBeenCalled();
+            });
+          });
+        });
+        describe('unsuccessful fetch on unmounted component', () => {
+          it('does not set the state', async () => {
+            let rejectFn;
+            api.fetchProductRecommendations.mockReturnValueOnce(new Promise((resolve, reject) => {
+              rejectFn = reject;
+            }));
+            const unMount = cb();
+            expect(api.fetchProductRecommendations).toHaveBeenCalledWith(mostRecentCourseRunKey);
+            expect(setRequestState).not.toHaveBeenCalled();
+            expect(setData).not.toHaveBeenCalled();
+            unMount();
+            rejectFn();
+            await wait(10);
             expect(setRequestState).not.toHaveBeenCalled();
             expect(setData).not.toHaveBeenCalled();
           });

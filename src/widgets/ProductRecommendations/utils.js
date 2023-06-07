@@ -36,7 +36,6 @@ export const courseTypeToProductTypeMap = {
   'masters-verified-audit': "Master's",
 };
 
-export default {
-  courseShape,
-  courseTypeToProductTypeMap,
-};
+export const wait = (time) => new Promise((resolve) => {
+  setTimeout(resolve, time);
+});
