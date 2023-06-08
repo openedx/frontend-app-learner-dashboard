@@ -9,11 +9,11 @@ import CourseList from 'containers/CourseList';
 import LoadedSidebar from 'containers/WidgetContainers/LoadedSidebar';
 import NoCoursesSidebar from 'containers/WidgetContainers/NoCoursesSidebar';
 
+import ProductRecommendations from 'widgets/ProductRecommendations';
 import LoadingView from './LoadingView';
 import DashboardLayout from './DashboardLayout';
 import hooks from './hooks';
 import './index.scss';
-import ProductRecommendations from '../../widgets/ProductRecommendations';
 
 export const Dashboard = () => {
   hooks.useInitializeDashboard();
