@@ -7,10 +7,6 @@ $vertical-card-gap: 24px;
   height: 332px;
   width: 270px !important;
 
-  p {
-    margin-bottom: 0;
-  }
-
   .pgn__card-image-cap {
     height: 104px;
     object: {
@@ -30,7 +26,6 @@ $vertical-card-gap: 24px;
   .product-card-title {
     font: {
       size: 1.125rem;
-      weight: 700;
     }
 
     line-height: 24px ;
@@ -39,54 +34,14 @@ $vertical-card-gap: 24px;
   .product-card-subtitle {
     font: {
       size: 0.875rem; 
-      weight: 400;
     }
 
     line-height: 24px;
   }
 
   .product-badge {
-    position: absolute;
     bottom: 2.75rem;
   }
-
-  .footer-content {
-    position: absolute;
-    bottom: 1rem;
-  }
-
-  &.light {
-    background-color: $white;
-
-    .title {
-      color: $black;
-    }
-
-    .subtitle {
-      color: $gray-700;
-    }
-
-    .badge {
-      background-color: $light-500;
-      color: $black;
-    }
-
-    .footer-content {
-      color: $gray-700;
-    }
-  }
-
-  &:hover {
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.15), 0 0.125rem 0.5rem rgba(0, 0, 0, 0.15);
-  }
-}
-
-.base-card-link:hover {
-  text-decoration: none;
-}
-
-.base-card-link .base-card {
-  display: flex;
 }
 
 .product-card-container {
@@ -95,7 +50,6 @@ $vertical-card-gap: 24px;
   padding: 1rem $horizontal-card-gap;
 
   .course-subcontainer {
-    display: flex;
     gap: $vertical-card-gap $horizontal-card-gap;
   }
 

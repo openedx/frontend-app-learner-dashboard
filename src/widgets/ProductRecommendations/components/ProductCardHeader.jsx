@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { Icon, Hyperlink } from '@edx/paragon';
@@ -16,19 +15,19 @@ const ProductCardHeader = ({ courseType }) => {
         return {
           heading: messages.executiveEducationHeading,
           description: messages.executiveEducationDescription,
-          url: '/executive-education',
+          url: '/executive-education?linked_from=recommender',
         };
       case 'Boot Camp':
         return {
           heading: messages.bootcampHeading,
           description: messages.bootcampDescription,
-          url: '/boot-camps',
+          url: '/boot-camps?linked_from=recommender',
         };
       default: {
         return {
           heading: messages.courseHeading,
           description: messages.courseDescription,
-          url: '/search?tab=course',
+          url: '/search?tab=course?linked_from=recommender',
         };
       }
     }
@@ -40,10 +39,10 @@ const ProductCardHeader = ({ courseType }) => {
     <div>
       <Hyperlink
         destination={`https://www.edx.org${productTypeDetail.url}`}
-        className="base-card-link"
+        className="base-card-link text-decoration-none"
       >
         <div className="d-flex align-items-center border-bottom">
-          <h3 className={classNames('h3 mb-2 text-left')}>
+          <h3 className="h3 mb-2 text-left">
             {formatMessage(productTypeDetail.heading)}
           </h3>
           <Icon src={ChevronRight} className="text-primary-500 ml-2.5" />

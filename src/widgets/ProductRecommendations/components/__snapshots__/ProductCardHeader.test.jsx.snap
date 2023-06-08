@@ -3,8 +3,8 @@
 exports[`ProductRecommendations ProductCardHeader matches snapshot 1`] = `
 <div>
   <Hyperlink
-    className="base-card-link"
-    destination="https://www.edx.org/executive-education"
+    className="base-card-link text-decoration-none"
+    destination="https://www.edx.org/executive-education?linked_from=recommender"
   >
     <div
       className="d-flex align-items-center border-bottom"

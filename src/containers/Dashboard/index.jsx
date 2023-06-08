@@ -24,7 +24,7 @@ export const Dashboard = () => {
   const showSelectSessionModal = reduxHooks.useShowSelectSessionModal();
 
   // Hard coded to not show until experiment set-up logic is implemented
-  const showProductRecommendations = false && !initIsPending && !hasAvailableDashboards && hasCourses;
+  const showProductRecommendations = true && !initIsPending && !hasAvailableDashboards && hasCourses;
 
   return (
     <div id="dashboard-container" className="d-flex flex-column p-2 pt-0">

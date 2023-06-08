@@ -6,21 +6,15 @@ import LoadingView from './components/LoadingView';
 import LoadedView from './components/LoadedView';
 
 const ProductRecommendations = () => {
-  const {
-    productRecommendations,
-    isLoading,
-    isLoaded,
-    hasFailed,
-  } = useProductRecommendationsData();
-
+  const { productRecommendations, isLoading, isLoaded } = useProductRecommendationsData();
   const { width } = useWindowSize();
   const isMobile = width < breakpoints.small.minWidth;
 
-  if (isLoading && !isMobile && !hasFailed) {
+  if (isLoading && !isMobile) {
     return <LoadingView />;
   }
 
-  if (isLoaded && !isMobile && !hasFailed) {
+  if (isLoaded && !isMobile) {
     return (
       <LoadedView
         openCourses={productRecommendations.amplitudeCourses}

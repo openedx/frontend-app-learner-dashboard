@@ -13,7 +13,7 @@ const ProductCardContainer = ({ finalProductList, courseTypes }) => (
         <div key={type}>
           <ProductCardHeader courseType={type} />
           <div
-            className={classNames({
+            className={classNames('d-flex', {
               'course-subcontainer': type === 'Course',
             })}
           >

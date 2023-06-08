@@ -15,36 +15,37 @@ const ProductCard = ({
   courseType,
   url,
 }) => (
-  <div className="base-card-wrapper">
-    <Hyperlink destination={url}>
-      <Card className="base-card light" variant="light">
-        <Card.ImageCap
-          src={headerImage}
-          srcAlt={`header image for ${title}`}
-          logoSrc={schoolLogo}
-          logoAlt={`logo for ${subtitle}`}
-        />
-        <Card.Header
-          className="mt-2"
-          title={(
-            <Truncate lines={3} ellipsis="…" className="product-card-title">
-              {title}
-            </Truncate>
-          )}
-          subtitle={(
-            <Truncate lines={1} className="product-card-subtitle">
-              {subtitle}
-            </Truncate>
-          )}
-        />
-        <Card.Section>
-          <div className="product-badge">
-            <Badge>{courseType}</Badge>
-          </div>
-        </Card.Section>
-      </Card>
-    </Hyperlink>
-  </div>
+  <Card
+    className="base-card d-flex text-decoration-none"
+    as={Hyperlink}
+    destination={url}
+    isClickable
+  >
+    <Card.ImageCap
+      src={headerImage}
+      srcAlt={`header image for ${title}`}
+      logoSrc={schoolLogo}
+      logoAlt={`logo for ${subtitle}`}
+    />
+    <Card.Header
+      className="mt-2"
+      title={(
+        <Truncate lines={3} ellipsis="…" className="product-card-title font-weight-bold">
+          {title}
+        </Truncate>
+      )}
+      subtitle={(
+        <Truncate lines={1} className="product-card-subtitle font-weight-normal">
+          {subtitle}
+        </Truncate>
+      )}
+    />
+    <Card.Section>
+      <div className="product-badge position-absolute">
+        <Badge className="bg-light-500 text-dark-500">{courseType}</Badge>
+      </div>
+    </Card.Section>
+  </Card>
 );
 
 ProductCard.propTypes = {
