@@ -25,6 +25,7 @@ export const CourseCardMenu = ({ cardId }) => {
   const { isEnrolled, isEmailEnabled } = reduxHooks.useCardEnrollmentData(cardId);
   const { twitter, facebook } = reduxHooks.useCardSocialSettingsData(cardId);
   const { isMasquerading } = reduxHooks.useMasqueradeData();
+  const { isEarned } = reduxHooks.useCardCertificateData(cardId);
   const handleTwitterShare = reduxHooks.useTrackCourseEvent(
     track.socialShare,
     cardId,
@@ -40,6 +41,13 @@ export const CourseCardMenu = ({ cardId }) => {
   const unenrollModal = useUnenrollData();
   const handleToggleDropdown = useHandleToggleDropdown(cardId);
 
+  const showUnenrollItem = isEnrolled && !isEarned;
+  const showDropdown = showUnenrollItem || isEmailEnabled || facebook.isEnabled || twitter.isEnabled;
+
+  if (!showDropdown) {
+    return null;
+  }
+
   return (
     <>
       <Dropdown onToggle={handleToggleDropdown}>
@@ -52,7 +60,7 @@ export const CourseCardMenu = ({ cardId }) => {
           alt={formatMessage(messages.dropdownAlt)}
         />
         <Dropdown.Menu>
-          {isEnrolled && (
+          {showUnenrollItem && (
             <Dropdown.Item
               disabled={isMasquerading}
               onClick={unenrollModal.show}

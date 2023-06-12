@@ -23,7 +23,7 @@ import ZendeskFab from 'components/ZendeskFab';
 import track from 'tracking';
 
 import fakeData from 'data/services/lms/fakeData/courses';
-import LearnerDashboardHeaderVariant from './containers/LearnerDashboardHeaderVariant';
+import LearnerDashboardHeader from './containers/LearnerDashboardHeader';
 
 import messages from './messages';
 
@@ -77,7 +77,7 @@ export const App = () => {
         <title>{formatMessage(messages.pageTitle)}</title>
       </Helmet>
       <div>
-        <LearnerDashboardHeaderVariant />
+        <LearnerDashboardHeader />
         <main>
           {hasNetworkFailure
             ? (
