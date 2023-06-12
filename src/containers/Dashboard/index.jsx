@@ -9,7 +9,6 @@ import CourseList from 'containers/CourseList';
 import LoadedSidebar from 'containers/WidgetContainers/LoadedSidebar';
 import NoCoursesSidebar from 'containers/WidgetContainers/NoCoursesSidebar';
 
-import ProductRecommendations from 'widgets/ProductRecommendations';
 import LoadingView from './LoadingView';
 import DashboardLayout from './DashboardLayout';
 import hooks from './hooks';
@@ -22,9 +21,6 @@ export const Dashboard = () => {
   const hasAvailableDashboards = reduxHooks.useHasAvailableDashboards();
   const initIsPending = reduxHooks.useRequestIsPending(RequestKeys.initialize);
   const showSelectSessionModal = reduxHooks.useShowSelectSessionModal();
-
-  // Hard coded to not show until experiment set-up logic is implemented
-  const showProductRecommendations = false && !initIsPending && !hasAvailableDashboards && hasCourses;
 
   return (
     <div id="dashboard-container" className="d-flex flex-column p-2 pt-0">
@@ -44,7 +40,6 @@ export const Dashboard = () => {
             </DashboardLayout>
           )}
       </div>
-      {showProductRecommendations && <ProductRecommendations />}
     </div>
   );
 };

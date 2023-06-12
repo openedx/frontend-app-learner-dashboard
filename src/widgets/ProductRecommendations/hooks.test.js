@@ -16,6 +16,9 @@ jest.mock('./api', () => ({
 jest.mock('hooks', () => ({
   reduxHooks: {
     useCurrentCourseList: jest.fn(),
+    useHasCourses: jest.fn(),
+    useHasAvailableDashboards: jest.fn(),
+    useRequestIsPending: jest.fn(),
   },
 }));
 
@@ -56,6 +59,17 @@ describe('ProductRecommendations hooks', () => {
       reduxHooks.useCurrentCourseList.mockReturnValueOnce(courseListData);
 
       expect(hooks.useMostRecentCourseRunKey()).toBe(mostRecentCourseRunKey);
+    });
+  });
+
+  describe('useShowRecommendationsFooter', () => {
+    // TODO: Update when hardcoded value is removed
+    it('returns whether the footer widget should show', () => {
+      reduxHooks.useHasCourses.mockReturnValueOnce(true);
+      reduxHooks.useHasAvailableDashboards.mockReturnValueOnce(false);
+      reduxHooks.useRequestIsPending.mockReturnValueOnce(false);
+
+      expect(hooks.useShowRecommendationsFooter()).toBeFalsy();
     });
   });
 

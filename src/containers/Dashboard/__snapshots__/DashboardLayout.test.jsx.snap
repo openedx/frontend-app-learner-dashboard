@@ -41,6 +41,11 @@ exports[`DashboardLayout collapsed snapshot 1`] = `
       test-sidebar-content
     </Col>
   </Row>
+  <Row>
+    <Col>
+      <WidgetFooter />
+    </Col>
+  </Row>
 </Container>
 `;
 
@@ -88,6 +93,11 @@ exports[`DashboardLayout not collapsed snapshot 1`] = `
          
       </h2>
       test-sidebar-content
+    </Col>
+  </Row>
+  <Row>
+    <Col>
+      <WidgetFooter />
     </Col>
   </Row>
 </Container>

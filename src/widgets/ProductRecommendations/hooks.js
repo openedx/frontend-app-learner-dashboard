@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import { RequestStates } from 'data/constants/requests';
+import { RequestStates, RequestKeys } from 'data/constants/requests';
 import { StrictDict } from 'utils';
 import { reduxHooks } from 'hooks';
 import { SortKeys } from 'data/constants/app';
@@ -11,6 +11,15 @@ export const state = StrictDict({
   requestState: (val) => useState(val), // eslint-disable-line
   data: (val) => useState(val), // eslint-disable-line
 });
+
+export const useShowRecommendationsFooter = () => {
+  const hasCourses = reduxHooks.useHasCourses();
+  const hasAvailableDashboards = reduxHooks.useHasAvailableDashboards();
+  const initIsPending = reduxHooks.useRequestIsPending(RequestKeys.initialize);
+
+  // Hardcoded to not show until experiment related code is implemented
+  return !initIsPending && hasCourses && !hasAvailableDashboards && false;
+};
 
 export const useMostRecentCourseRunKey = () => {
   const mostRecentCourse = reduxHooks.useCurrentCourseList({
@@ -60,4 +69,4 @@ export const useProductRecommendationsData = () => {
   };
 };
 
-export default { useProductRecommendationsData };
+export default { useProductRecommendationsData, useShowRecommendationsFooter };

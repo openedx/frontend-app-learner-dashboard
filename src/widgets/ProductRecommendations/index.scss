@@ -57,3 +57,17 @@ $vertical-card-gap: 24px;
     overflow-x: scroll;
   }
 }
+
+// Workaround for giving the sub-container a greyish background that stretches to the full width of the browser window
+// while being placed within the boundaries of the parent container's dimensions
+.recommendations-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: 100%;
+  background-color: $light-200;
+  z-index: -1;
+}

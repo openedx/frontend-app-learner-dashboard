@@ -22,17 +22,15 @@ const LoadedView = ({ crossProductCourses, openCourses }) => {
   const courseTypes = [...new Set(finalProductList.map((item) => courseTypeToProductTypeMap[item.courseType]))];
 
   return (
-    <div className="bg-light-200">
-      <Container
-        size="lg"
-        className="recommendations-container pt-sm-5 pt-4.5 pb-2 pb-sm-4.5"
-      >
-        <h2>
-          {formatMessage(messages.recommendationsHeading)}
-        </h2>
-        <ProductCardContainer finalProductList={finalProductList} courseTypes={courseTypes} />
-      </Container>
-    </div>
+    <Container
+      size="lg"
+      className="recommendations-container pt-sm-5 pt-4.5 pb-2 pb-sm-4.5"
+    >
+      <h2>
+        {formatMessage(messages.recommendationsHeading)}
+      </h2>
+      <ProductCardContainer finalProductList={finalProductList} courseTypes={courseTypes} />
+    </Container>
   );
 };
 
