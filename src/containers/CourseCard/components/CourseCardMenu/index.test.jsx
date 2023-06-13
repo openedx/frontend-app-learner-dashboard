@@ -177,13 +177,21 @@ describe('CourseCardMenu', () => {
     });
     it('snapshot when no dropdown items exist', () => {
       wrapper = mockCourseCardMenu({
-        isEnrolled: true,
-        isEmailEnabled: true,
+        isEnrolled: false,
+        isEmailEnabled: false,
         isMasquerading: false,
         isEarned: false,
+        twitter: {
+          ...defaultSocialShare.twitter,
+          isEnabled: false,
+        },
+        facebook: {
+          ...defaultSocialShare.facebook,
+          isEnabled: false,
+        },
       });
       expect(wrapper).toMatchSnapshot();
-      expect(wrapper).toEqual({});
+      expect(wrapper.isEmptyRender()).toEqual(true);
     });
   });
   describe('masquerading', () => {
