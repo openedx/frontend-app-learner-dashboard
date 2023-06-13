@@ -79,6 +79,9 @@ describe('courseCard selectors module', () => {
       it('returns a card selector based on certificate cardSimpleSelector', () => {
         expect(simpleSelector).toEqual(cardSimpleSelectors.certificate);
       });
+      it('returns {} object if null certificate received', () => {
+        expect(selector(null)).toEqual({});
+      });
       it('passes availableDate, converted to a date', () => {
         expect(selected.availableDate).toMatchObject(new Date(testData.availableDate));
       });
@@ -161,6 +164,9 @@ describe('courseCard selectors module', () => {
       });
       it('returns a card selector based on courseRun cardSimpleSelector', () => {
         expect(simpleSelector).toEqual(cardSimpleSelectors.courseRun);
+      });
+      it('returns {} object if null courseRun received', () => {
+        expect(selector(null)).toEqual({});
       });
       it('passes [endDate, startDate], converted to dates', () => {
         expect(selected.endDate).toEqual(new Date(testData.endDate));
