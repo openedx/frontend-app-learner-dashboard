@@ -5,17 +5,20 @@ import LoadedView from './LoadedView';
 import mockData from './mockData';
 import messages from './messages';
 
-jest.mock('./components/CourseCard', () => 'CourseCard');
 jest.mock('hooks', () => ({
   reduxHooks: {
     usePlatformSettingsData: () => ({
-      courseSearchUrl: 'course-search-url',
+      courseSearchUrl: '/course-search-url',
     }),
   },
+}));
+jest.mock('data/services/lms/urls', () => ({
+  baseAppUrl: (url) => (`http://localhost:18000${url}`),
 }));
 jest.mock('./track', () => ({
   findCoursesWidgetClicked: (href) => jest.fn().mockName(`track.findCoursesWidgetClicked('${href}')`),
 }));
+jest.mock('./components/CourseCard', () => 'CourseCard');
 
 describe('RecommendationsPanel LoadedView', () => {
   const props = {

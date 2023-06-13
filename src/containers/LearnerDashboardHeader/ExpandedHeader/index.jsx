@@ -18,7 +18,7 @@ export const ExpandedHeader = () => {
   const { courseSearchUrl } = reduxHooks.usePlatformSettingsData();
   const isCollapsed = useIsCollapsed();
 
-  const exploreCoursesClick = findCoursesNavClicked(courseSearchUrl);
+  const exploreCoursesClick = findCoursesNavClicked(urls.baseAppUrl(courseSearchUrl));
 
   return (
     !isCollapsed && (
@@ -44,7 +44,7 @@ export const ExpandedHeader = () => {
         </Button>
         <Button
           as="a"
-          href={courseSearchUrl}
+          href={urls.baseAppUrl(courseSearchUrl)}
           variant="inverse-primary"
           className="p-4"
           onClick={exploreCoursesClick}

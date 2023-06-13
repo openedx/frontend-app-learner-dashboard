@@ -18,8 +18,8 @@ exports[`LookingForChallengeWidget snapshots default 1`] = `
     <h5>
       <Hyperlink
         className="d-flex align-items-center"
-        destination="course-search-url"
-        onClick={[MockFunction track.findCoursesWidgetClicked('course-search-url')]}
+        destination="http://localhost:18000/course-search-url"
+        onClick={[MockFunction track.findCoursesWidgetClicked('http://localhost:18000/course-search-url')]}
         variant="brand"
       >
         <format-message-function

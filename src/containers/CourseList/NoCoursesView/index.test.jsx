@@ -6,7 +6,7 @@ import EmptyCourse from '.';
 jest.mock('hooks', () => ({
   reduxHooks: {
     usePlatformSettingsData: jest.fn(() => ({
-      courseSearchUrl: 'course-search-url',
+      courseSearchUrl: '/course-search-url',
     })),
   },
 }));
