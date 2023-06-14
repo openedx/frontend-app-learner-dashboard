@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Container, Col, Row } from '@edx/paragon';
 
-import RecommendationsFooter from 'containers/WidgetContainers/RecommendationsFooter';
+import WidgetFooter from 'containers/WidgetContainers/WidgetFooter';
 import hooks from './hooks';
 
 export const columnConfig = {
@@ -33,7 +33,7 @@ export const DashboardLayout = ({ children, sidebar }) => {
       </Row>
       <Row>
         <Col>
-          <RecommendationsFooter />
+          <WidgetFooter />
         </Col>
       </Row>
     </Container>

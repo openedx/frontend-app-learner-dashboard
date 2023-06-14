@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 import { Col, Row } from '@edx/paragon';
 
-import WidgetFooter from 'containers/WidgetContainers/RecommendationsFooter';
+import WidgetFooter from 'containers/WidgetContainers/WidgetFooter';
 import hooks from './hooks';
 import DashboardLayout, { columnConfig } from './DashboardLayout';
 
