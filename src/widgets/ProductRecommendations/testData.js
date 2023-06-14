@@ -25,7 +25,11 @@ export const getCoursesWithType = (courseTypes) => {
 export const mockCrossProductCourses = getCoursesWithType(['executive-education-2u', 'bootcamp-2u']);
 export const mockOpenCourses = getCoursesWithType(['verified-audit', 'audit', 'verified', 'course']);
 
-export const mockResponse = {
+export const mockCrossProductResponse = {
   crossProductCourses: mockCrossProductCourses,
+  amplitudeCourses: mockOpenCourses,
+};
+
+export const mockAmplitudeResponse = {
   amplitudeCourses: mockOpenCourses,
 };

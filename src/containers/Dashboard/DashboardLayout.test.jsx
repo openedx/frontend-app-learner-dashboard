@@ -2,11 +2,16 @@ import { shallow } from 'enzyme';
 import { Col, Row } from '@edx/paragon';
 
 import WidgetFooter from 'containers/WidgetContainers/RecommendationsFooter';
+import { useShowRecommendationsFooter } from 'widgets/ProductRecommendations/hooks';
 import hooks from './hooks';
 import DashboardLayout, { columnConfig } from './DashboardLayout';
 
 jest.mock('./hooks', () => ({
   useIsDashboardCollapsed: jest.fn(() => true),
+}));
+
+jest.mock('widgets/ProductRecommendations/hooks', () => ({
+  useShowRecommendationsFooter: jest.fn(),
 }));
 
 describe('DashboardLayout', () => {
@@ -16,11 +21,25 @@ describe('DashboardLayout', () => {
   };
   const render = () => shallow(<DashboardLayout sidebar={props.sidebar}>{children}</DashboardLayout>);
   const testColumns = () => {
-    it('loads courseList and sidebar column layout', () => {
-      const columns = render().find(Row).find(Col);
-      Object.keys(columnConfig.courseList).forEach(size => {
-        expect(columns.at(0).props()[size]).toEqual(columnConfig.courseList[size]);
+    describe('courseList column layout', () => {
+      it('loads stretched courseList column layout when footer is shown', () => {
+        useShowRecommendationsFooter.mockReturnValueOnce(true);
+        const columns = render().find(Row).find(Col);
+        Object.keys(columnConfig.courseList).forEach(size => {
+          expect(columns.at(0).props()[size]).toEqual(columnConfig.courseList(true));
+        });
       });
+
+      it('loads default courseList column layout when footer is hidden', () => {
+        useShowRecommendationsFooter.mockReturnValueOnce(false);
+        const columns = render().find(Row).find(Col);
+        Object.keys(columnConfig.courseList).forEach(size => {
+          expect(columns.at(0).props()[size]).toEqual(columnConfig.courseList(false));
+        });
+      });
+    });
+    it('loads sidebar column layout', () => {
+      const columns = render().find(Row).find(Col);
       Object.keys(columnConfig.sidebar).forEach(size => {
         expect(columns.at(1).props()[size]).toEqual(columnConfig.sidebar[size]);
       });

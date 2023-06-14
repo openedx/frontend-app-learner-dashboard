@@ -13,22 +13,21 @@ export const state = StrictDict({
 });
 
 export const useShowRecommendationsFooter = () => {
-  const hasCourses = reduxHooks.useHasCourses();
   const hasAvailableDashboards = reduxHooks.useHasAvailableDashboards();
   const initIsPending = reduxHooks.useRequestIsPending(RequestKeys.initialize);
 
   // Hardcoded to not show until experiment related code is implemented
-  return !initIsPending && hasCourses && !hasAvailableDashboards && true;
+  return !initIsPending && !hasAvailableDashboards && false;
 };
 
 export const useMostRecentCourseRunKey = () => {
-  const mostRecentCourse = reduxHooks.useCurrentCourseList({
+  const mostRecentCourseRunKey = reduxHooks.useCurrentCourseList({
     sortBy: SortKeys.enrolled,
     filters: [],
     pageSize: 0,
-  }).visible[0].courseRun.courseId;
+  }).visible[0]?.courseRun?.courseId;
 
-  return mostRecentCourse;
+  return mostRecentCourseRunKey;
 };
 
 export const useFetchRecommendations = (setRequestState, setData) => {
@@ -36,19 +35,31 @@ export const useFetchRecommendations = (setRequestState, setData) => {
 
   useEffect(() => {
     let isMounted = true;
-    api
-      .fetchAllRecommendations(courseRunKey)
-      .then((response) => {
-        if (isMounted) {
-          setData(response.data);
-          setRequestState(RequestStates.completed);
-        }
-      })
-      .catch(() => {
-        if (isMounted) {
-          setRequestState(RequestStates.failed);
-        }
-      });
+
+    const handleSuccess = (response) => {
+      if (isMounted) {
+        setData(response.data);
+        setRequestState(RequestStates.completed);
+      }
+    };
+
+    const handleError = () => {
+      if (isMounted) {
+        setRequestState(RequestStates.failed);
+      }
+    };
+
+    if (courseRunKey) {
+      api
+        .fetchCrossProductRecommendations(courseRunKey)
+        .then(handleSuccess)
+        .catch(handleError);
+    } else {
+      api
+        .fetchAmplitudeRecommendations()
+        .then(handleSuccess)
+        .catch(handleError);
+    }
     return () => {
       isMounted = false;
     };

@@ -29,7 +29,6 @@ export const columnConfig = {
 export const DashboardLayout = ({ children, sidebar }) => {
   const isCollapsed = hooks.useIsDashboardCollapsed();
   const showRecommendationsFooter = useShowRecommendationsFooter();
-  // console.log(`This is the config: ${JSON.stringify({ ...columnConfig.courseList(showRecommendationsFooter) })}`);
 
   return (
     <Container fluid size="xl">

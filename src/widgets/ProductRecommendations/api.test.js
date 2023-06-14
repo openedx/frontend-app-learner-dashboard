@@ -7,9 +7,9 @@ jest.mock('data/services/lms/utils', () => ({
 }));
 
 describe('productRecommendationCourses api', () => {
-  describe('fetchAllRecommendations', () => {
+  describe('fetchCrossProductRecommendations', () => {
     it('calls get with the correct recommendation courses URL', () => {
-      expect(api.fetchAllRecommendations('CourseRunKey')).toEqual(
+      expect(api.fetchCrossProductRecommendations('CourseRunKey')).toEqual(
         get(stringifyUrl(crossProductAndAmplitudeRecommendationsUrl('CourseRunKey'))),
       );
     });

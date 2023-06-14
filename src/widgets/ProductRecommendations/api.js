@@ -4,10 +4,12 @@ import urls from 'data/services/lms/urls';
 export const crossProductAndAmplitudeRecommendationsUrl = (courseId) => `${urls.api}/learner_recommendations/product_recommendations/${courseId}/`;
 export const amplitudeRecommendationsUrl = () => `${urls.api}/learner_recommendations/product_recommendations/`;
 
-const fetchAllRecommendations = (courseId) => get(stringifyUrl(crossProductAndAmplitudeRecommendationsUrl(courseId)));
+const fetchCrossProductRecommendations = (courseId) => (
+  get(stringifyUrl(crossProductAndAmplitudeRecommendationsUrl(courseId)))
+);
 const fetchAmplitudeRecommendations = () => get(stringifyUrl(amplitudeRecommendationsUrl()));
 
 export default {
-  fetchAllRecommendations,
+  fetchCrossProductRecommendations,
   fetchAmplitudeRecommendations,
 };

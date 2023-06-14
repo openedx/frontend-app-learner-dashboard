@@ -6,7 +6,7 @@ import hooks from './hooks';
 import ProductRecommendations from './index';
 import LoadingView from './components/LoadingView';
 import LoadedView from './components/LoadedView';
-import { mockResponse } from './testData';
+import { mockCrossProductResponse, mockAmplitudeResponse } from './testData';
 
 jest.mock('./hooks', () => ({
   useProductRecommendationsData: jest.fn(),
@@ -25,7 +25,7 @@ describe('ProductRecommendations', () => {
   const successfullLoadValues = {
     ...defaultValues,
     isLoaded: true,
-    productRecommendations: mockResponse,
+    productRecommendations: mockCrossProductResponse,
   };
 
   const desktopWindowSize = {
@@ -41,7 +41,7 @@ describe('ProductRecommendations', () => {
 
     expect(shallow(<ProductRecommendations />)).toMatchSnapshot();
   });
-  it('renders the LoadedView with course data if the request completed', () => {
+  it('renders the LoadedView with cross product data if the request completed', () => {
     useWindowSize.mockReturnValueOnce(desktopWindowSize);
     hooks.useProductRecommendationsData.mockReturnValueOnce({
       ...successfullLoadValues,
@@ -50,8 +50,24 @@ describe('ProductRecommendations', () => {
     expect(shallow(<ProductRecommendations />)).toMatchObject(
       shallow(
         <LoadedView
-          openCourses={mockResponse.amplitudeCourses}
-          crossProductCourses={mockResponse.crossProductCourses}
+          openCourses={mockCrossProductResponse.amplitudeCourses}
+          crossProductCourses={mockCrossProductResponse.crossProductCourses}
+        />,
+      ),
+    );
+  });
+  it('renders the LoadedView with Amplitude course data if the request completed', () => {
+    useWindowSize.mockReturnValueOnce(desktopWindowSize);
+    hooks.useProductRecommendationsData.mockReturnValueOnce({
+      ...successfullLoadValues,
+      productRecommendations: mockAmplitudeResponse,
+    });
+
+    expect(shallow(<ProductRecommendations />)).toMatchObject(
+      shallow(
+        <LoadedView
+          openCourses={mockCrossProductResponse.amplitudeCourses}
+          crossProductCourses={[]}
         />,
       ),
     );
