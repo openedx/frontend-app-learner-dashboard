@@ -1,10 +1,13 @@
 import { get, stringifyUrl } from 'data/services/lms/utils';
 import urls from 'data/services/lms/urls';
 
-export const productRecommendationsUrl = (courseId) => `${urls.api}/learner_recommendations/product_recommendations/${courseId}/`;
+export const crossProductAndAmplitudeRecommendationsUrl = (courseId) => `${urls.api}/learner_recommendations/product_recommendations/${courseId}/`;
+export const amplitudeRecommendationsUrl = () => `${urls.api}/learner_recommendations/product_recommendations/`;
 
-const fetchProductRecommendations = (courseId) => get(stringifyUrl(productRecommendationsUrl(courseId)));
+const fetchAllRecommendations = (courseId) => get(stringifyUrl(crossProductAndAmplitudeRecommendationsUrl(courseId)));
+const fetchAmplitudeRecommendations = () => get(stringifyUrl(amplitudeRecommendationsUrl()));
 
 export default {
-  fetchProductRecommendations,
+  fetchAllRecommendations,
+  fetchAmplitudeRecommendations,
 };

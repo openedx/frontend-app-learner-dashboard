@@ -18,7 +18,7 @@ export const useShowRecommendationsFooter = () => {
   const initIsPending = reduxHooks.useRequestIsPending(RequestKeys.initialize);
 
   // Hardcoded to not show until experiment related code is implemented
-  return !initIsPending && hasCourses && !hasAvailableDashboards && false;
+  return !initIsPending && hasCourses && !hasAvailableDashboards && true;
 };
 
 export const useMostRecentCourseRunKey = () => {
@@ -31,13 +31,13 @@ export const useMostRecentCourseRunKey = () => {
   return mostRecentCourse;
 };
 
-export const useFetchProductRecommendations = (setRequestState, setData) => {
+export const useFetchRecommendations = (setRequestState, setData) => {
   const courseRunKey = module.useMostRecentCourseRunKey();
 
   useEffect(() => {
     let isMounted = true;
     api
-      .fetchProductRecommendations(courseRunKey)
+      .fetchAllRecommendations(courseRunKey)
       .then((response) => {
         if (isMounted) {
           setData(response.data);
@@ -59,7 +59,7 @@ export const useFetchProductRecommendations = (setRequestState, setData) => {
 export const useProductRecommendationsData = () => {
   const [requestState, setRequestState] = module.state.requestState(RequestStates.pending);
   const [data, setData] = module.state.data({});
-  module.useFetchProductRecommendations(setRequestState, setData);
+  module.useFetchRecommendations(setRequestState, setData);
 
   return {
     productRecommendations: data,
