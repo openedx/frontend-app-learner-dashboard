@@ -24,7 +24,6 @@ export const courseCard = StrictDict({
         isDownloadable: certificate.isDownloadable,
         isEarnedButUnavailable: certificate.isEarned && !isAvailable,
         isRestricted: certificate.isRestricted,
-        isEarned: certificate.isEarned,
       };
     },
   ),

@@ -64,9 +64,9 @@ exports[`RecommendationsPanel LoadedView snapshot with personalize recommendatio
   >
     <Button
       as="a"
-      href="course-search-url"
+      href="http://localhost:18000/course-search-url"
       iconBefore={[MockFunction icons.Search]}
-      onClick={[MockFunction track.findCoursesWidgetClicked('course-search-url')]}
+      onClick={[MockFunction track.findCoursesWidgetClicked('http://localhost:18000/course-search-url')]}
       variant="tertiary"
     >
       Explore courses
@@ -139,9 +139,9 @@ exports[`RecommendationsPanel LoadedView snapshot without personalize recommenda
   >
     <Button
       as="a"
-      href="course-search-url"
+      href="http://localhost:18000/course-search-url"
       iconBefore={[MockFunction icons.Search]}
-      onClick={[MockFunction track.findCoursesWidgetClicked('course-search-url')]}
+      onClick={[MockFunction track.findCoursesWidgetClicked('http://localhost:18000/course-search-url')]}
       variant="tertiary"
     >
       Explore courses

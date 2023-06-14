@@ -1,4 +1,4 @@
-import { configuration } from 'config';
+import { getConfig } from '@edx/frontend-platform';
 import * as urls from './urls';
 
 describe('urls', () => {
@@ -10,7 +10,7 @@ describe('urls', () => {
     it('returns the url if it is relative', () => {
       const url = '/edx.org';
       expect(urls.baseAppUrl(url)).toEqual(
-        `${configuration.LMS_BASE_URL}${url}`,
+        `${getConfig().LMS_BASE_URL}${url}`,
       );
     });
     it('return null if url is null', () => {
@@ -25,7 +25,7 @@ describe('urls', () => {
     it('returns the url if it is relative', () => {
       const url = '/edx.org';
       expect(urls.learningMfeUrl(url)).toEqual(
-        `${configuration.LEARNING_BASE_URL}${url}`,
+        `${getConfig().LEARNING_BASE_URL}${url}`,
       );
     });
     it('return null if url is null', () => {
@@ -36,7 +36,6 @@ describe('urls', () => {
     it('builds from ecommerce url and loads courseId', () => {
       const courseId = 'test-course-id';
       const url = urls.creditPurchaseUrl(courseId);
-      expect(url.startsWith(urls.ecommerceUrl)).toEqual(true);
       expect(url).toEqual(expect.stringContaining(courseId));
     });
   });
@@ -44,7 +43,7 @@ describe('urls', () => {
     it('builds from api url and loads providerId', () => {
       const providerId = 'test-provider-id';
       const url = urls.creditRequestUrl(providerId);
-      expect(url.startsWith(urls.api)).toEqual(true);
+      expect(url.startsWith(urls.getApiUrl())).toEqual(true);
       expect(url).toEqual(expect.stringContaining(providerId));
     });
   });

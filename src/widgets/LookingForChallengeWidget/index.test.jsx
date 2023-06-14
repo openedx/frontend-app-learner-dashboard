@@ -5,7 +5,7 @@ import LookingForChallengeWidget from '.';
 jest.mock('hooks', () => ({
   reduxHooks: {
     usePlatformSettingsData: () => ({
-      courseSearchUrl: 'course-search-url',
+      courseSearchUrl: 'http://localhost:18000/course-search-url',
     }),
   },
 }));

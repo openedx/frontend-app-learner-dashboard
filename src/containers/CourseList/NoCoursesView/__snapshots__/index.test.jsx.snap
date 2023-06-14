@@ -17,7 +17,7 @@ exports[`NoCoursesView snapshot 1`] = `
   </p>
   <Button
     as="a"
-    href="course-search-url"
+    href="http://localhost:18000/course-search-url"
     iconBefore={[MockFunction icons.Search]}
     variant="brand"
   >

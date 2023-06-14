@@ -27,8 +27,8 @@ exports[`ExpandedHeader render 1`] = `
     <Button
       as="a"
       className="p-4"
-      href="courseSearchUrl"
-      onClick={[MockFunction findCoursesNavClicked("courseSearchUrl")]}
+      href="http://localhost:18000/courseSearchUrl"
+      onClick={[MockFunction findCoursesNavClicked("http://localhost:18000/courseSearchUrl")]}
       variant="inverse-primary"
     >
       Discover New
