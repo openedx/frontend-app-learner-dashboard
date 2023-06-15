@@ -21,21 +21,18 @@ describe('DashboardLayout', () => {
   };
   const render = () => shallow(<DashboardLayout sidebar={props.sidebar}>{children}</DashboardLayout>);
   const testColumns = () => {
-    describe('courseList column layout', () => {
-      it('loads stretched courseList column layout when footer is shown', () => {
-        useShowRecommendationsFooter.mockReturnValueOnce(true);
-        const columns = render().find(Row).find(Col);
-        Object.keys(columnConfig.courseList).forEach(size => {
-          expect(columns.at(0).props()[size]).toEqual(columnConfig.courseList(true));
-        });
+    it('loads stretched courseList column layout when footer is shown', () => {
+      useShowRecommendationsFooter.mockReturnValueOnce(true);
+      const columns = render().find(Row).find(Col);
+      Object.keys(columnConfig.courseList).forEach(size => {
+        expect(columns.at(0).props()[size]).toEqual(columnConfig.courseList(true));
       });
-
-      it('loads default courseList column layout when footer is hidden', () => {
-        useShowRecommendationsFooter.mockReturnValueOnce(false);
-        const columns = render().find(Row).find(Col);
-        Object.keys(columnConfig.courseList).forEach(size => {
-          expect(columns.at(0).props()[size]).toEqual(columnConfig.courseList(false));
-        });
+    });
+    it('loads default courseList column layout when footer is hidden', () => {
+      useShowRecommendationsFooter.mockReturnValueOnce(false);
+      const columns = render().find(Row).find(Col);
+      Object.keys(columnConfig.courseList).forEach(size => {
+        expect(columns.at(0).props()[size]).toEqual(columnConfig.courseList(false));
       });
     });
     it('loads sidebar column layout', () => {
