@@ -14,10 +14,10 @@ export const state = StrictDict({
 
 export const useShowRecommendationsFooter = () => {
   const hasAvailableDashboards = reduxHooks.useHasAvailableDashboards();
-  const initIsPending = reduxHooks.useRequestIsPending(RequestKeys.initialize);
+  const hasRequestCompleted = reduxHooks.useRequestIsCompleted(RequestKeys.initialize);
 
   // Hardcoded to not show until experiment related code is implemented
-  return !initIsPending && !hasAvailableDashboards && false;
+  return hasRequestCompleted && !hasAvailableDashboards && false;
 };
 
 export const useMostRecentCourseRunKey = () => {

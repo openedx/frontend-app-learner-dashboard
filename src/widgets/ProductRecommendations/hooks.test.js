@@ -18,7 +18,7 @@ jest.mock('hooks', () => ({
   reduxHooks: {
     useCurrentCourseList: jest.fn(),
     useHasAvailableDashboards: jest.fn(),
-    useRequestIsPending: jest.fn(),
+    useRequestIsCompleted: jest.fn(),
   },
 }));
 
@@ -71,7 +71,7 @@ describe('ProductRecommendations hooks', () => {
     // TODO: Update when hardcoded value is removed
     it('returns whether the footer widget should show', () => {
       reduxHooks.useHasAvailableDashboards.mockReturnValueOnce(false);
-      reduxHooks.useRequestIsPending.mockReturnValueOnce(false);
+      reduxHooks.useRequestIsCompleted.mockReturnValueOnce(true);
 
       expect(hooks.useShowRecommendationsFooter()).toBeFalsy();
     });
