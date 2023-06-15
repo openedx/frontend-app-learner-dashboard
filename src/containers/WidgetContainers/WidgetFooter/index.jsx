@@ -7,7 +7,6 @@ export const WidgetFooter = () => {
   const showRecommendationsFooter = hooks.useShowRecommendationsFooter();
 
   if (showRecommendationsFooter) {
-    console.log('We are in this footer')
     return (
       <div className="widget-footer">
         <ProductRecommendations />
