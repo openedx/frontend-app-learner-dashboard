@@ -1,6 +1,7 @@
 import { shallow } from 'enzyme';
 import { Col, Row } from '@edx/paragon';
 
+import WidgetFooter from 'containers/WidgetContainers/WidgetFooter';
 import hooks from './hooks';
 import DashboardLayout, { columnConfig } from './DashboardLayout';
 
@@ -31,6 +32,10 @@ describe('DashboardLayout', () => {
     it('displays sidebar prop in second column', () => {
       const columns = render().find(Row).find(Col);
       expect(columns.at(1).contains(props.sidebar)).toEqual(true);
+    });
+    it('displays a footer in the second row', () => {
+      const columns = render().find(Row).at(1).find(Col);
+      expect(columns.at(0).containsMatchingElement(<WidgetFooter />)).toBeTruthy();
     });
   };
   const testSnapshot = () => {

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Container, Col, Row } from '@edx/paragon';
 
+import WidgetFooter from 'containers/WidgetContainers/WidgetFooter';
 import hooks from './hooks';
 
 export const columnConfig = {
@@ -28,6 +29,11 @@ export const DashboardLayout = ({ children, sidebar }) => {
         <Col {...columnConfig.sidebar} className="sidebar-column">
           {!isCollapsed && (<h2 className="course-list-title">&nbsp;</h2>)}
           {sidebar}
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <WidgetFooter />
         </Col>
       </Row>
     </Container>
