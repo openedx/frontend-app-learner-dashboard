@@ -1,7 +1,6 @@
 import { shallow } from 'enzyme';
 import { Col, Row } from '@edx/paragon';
 
-import WidgetFooter from 'containers/WidgetContainers/RecommendationsFooter';
 import { useShowRecommendationsFooter } from 'widgets/ProductRecommendations/hooks';
 import hooks from './hooks';
 import DashboardLayout, { columnConfig } from './DashboardLayout';
@@ -24,15 +23,15 @@ describe('DashboardLayout', () => {
     it('loads stretched courseList column layout when footer is shown', () => {
       useShowRecommendationsFooter.mockReturnValueOnce(true);
       const columns = render().find(Row).find(Col);
-      Object.keys(columnConfig.courseList).forEach(size => {
-        expect(columns.at(0).props()[size]).toEqual(columnConfig.courseList(true));
+      Object.keys(columnConfig.courseList(true)).forEach(size => {
+        expect(columns.at(0).props()[size]).toEqual(columnConfig.courseList(true)[size]);
       });
     });
     it('loads default courseList column layout when footer is hidden', () => {
       useShowRecommendationsFooter.mockReturnValueOnce(false);
       const columns = render().find(Row).find(Col);
-      Object.keys(columnConfig.courseList).forEach(size => {
-        expect(columns.at(0).props()[size]).toEqual(columnConfig.courseList(false));
+      Object.keys(columnConfig.courseList(false)).forEach(size => {
+        expect(columns.at(0).props()[size]).toEqual(columnConfig.courseList(false)[size]);
       });
     });
     it('loads sidebar column layout', () => {
@@ -51,7 +50,7 @@ describe('DashboardLayout', () => {
     });
     it('displays a footer in the second row', () => {
       const columns = render().find(Row).at(1).find(Col);
-      expect(columns.at(0).containsMatchingElement(<WidgetFooter />)).toBeTruthy();
+      expect(columns.at(0).find('WidgetFooter').exists()).toBeTruthy();
     });
   };
   const testSnapshot = () => {
