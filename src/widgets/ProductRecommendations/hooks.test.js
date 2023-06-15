@@ -10,13 +10,13 @@ import api from './api';
 import * as hooks from './hooks';
 
 jest.mock('./api', () => ({
-  fetchProductRecommendations: jest.fn(),
+  fetchCrossProductRecommendations: jest.fn(),
+  fetchAmplitudeRecommendations: jest.fn(),
 }));
 
 jest.mock('hooks', () => ({
   reduxHooks: {
     useCurrentCourseList: jest.fn(),
-    useHasCourses: jest.fn(),
     useHasAvailableDashboards: jest.fn(),
     useRequestIsPending: jest.fn(),
   },
@@ -38,8 +38,13 @@ const courses = [
   },
 ];
 
-const courseListData = {
+const populatedCourseListData = {
   visible: courses,
+  numPages: 0,
+};
+
+const emptyCourseListData = {
+  visible: [],
   numPages: 0,
 };
 
@@ -56,7 +61,7 @@ describe('ProductRecommendations hooks', () => {
 
   describe('useMostRecentCourseRunKey', () => {
     it('returns the courseId of the first course in the sorted visible array', () => {
-      reduxHooks.useCurrentCourseList.mockReturnValueOnce(courseListData);
+      reduxHooks.useCurrentCourseList.mockReturnValueOnce(populatedCourseListData);
 
       expect(hooks.useMostRecentCourseRunKey()).toBe(mostRecentCourseRunKey);
     });
@@ -65,7 +70,6 @@ describe('ProductRecommendations hooks', () => {
   describe('useShowRecommendationsFooter', () => {
     // TODO: Update when hardcoded value is removed
     it('returns whether the footer widget should show', () => {
-      reduxHooks.useHasCourses.mockReturnValueOnce(true);
       reduxHooks.useHasAvailableDashboards.mockReturnValueOnce(false);
       reduxHooks.useRequestIsPending.mockReturnValueOnce(false);
 
@@ -73,7 +77,7 @@ describe('ProductRecommendations hooks', () => {
     });
   });
 
-  describe('useFetchProductRecommendations', () => {
+  describe('useFetchRecommendations', () => {
     describe('behavior', () => {
       describe('useEffect call', () => {
         let calls;
@@ -81,86 +85,176 @@ describe('ProductRecommendations hooks', () => {
         const response = { data: 'response data' };
         const setRequestState = jest.fn();
         const setData = jest.fn();
-        beforeEach(() => {
-          reduxHooks.useCurrentCourseList.mockReturnValue(courseListData);
-          hooks.useFetchProductRecommendations(setRequestState, setData);
+
+        const setUp = (mockCourseListData) => {
+          reduxHooks.useCurrentCourseList.mockReturnValue(mockCourseListData);
+          hooks.useFetchRecommendations(setRequestState, setData);
           ({ calls } = React.useEffect.mock);
           ([[cb]] = calls);
-        });
+        };
+
         it('calls useEffect once', () => {
+          setUp(populatedCourseListData);
           expect(calls.length).toEqual(1);
         });
-        it('calls fetchProductRecommendations with the most recently enrolled courseId', () => {
-          api.fetchProductRecommendations.mockReturnValueOnce(Promise.resolve(response));
-          cb();
-          expect(api.fetchProductRecommendations).toHaveBeenCalledWith(mostRecentCourseRunKey);
-        });
-        describe('successful fetch on mounted component', () => {
-          it('sets the request state to completed and loads response', async () => {
-            let resolveFn;
-            api.fetchProductRecommendations.mockReturnValueOnce(new Promise(resolve => {
-              resolveFn = resolve;
-            }));
+        describe('without no courseId due to no enrolled courses', () => {
+          it('calls fetchAmplitudeRecommendations', () => {
+            setUp(emptyCourseListData);
+            api.fetchAmplitudeRecommendations.mockReturnValueOnce(Promise.resolve(response));
             cb();
-            expect(api.fetchProductRecommendations).toHaveBeenCalledWith(mostRecentCourseRunKey);
-            expect(setRequestState).not.toHaveBeenCalled();
-            expect(setData).not.toHaveBeenCalled();
-            resolveFn(response);
-            await waitFor(() => {
-              expect(setRequestState).toHaveBeenCalledWith(RequestStates.completed);
-              expect(setData).toHaveBeenCalledWith(response.data);
+            expect(api.fetchAmplitudeRecommendations).toHaveBeenCalled();
+          });
+        });
+        describe('with most recently enrolled courseId', () => {
+          it('calls fetchCrossProductRecommendations with the most recently enrolled courseId', () => {
+            setUp(populatedCourseListData);
+            api.fetchCrossProductRecommendations.mockReturnValueOnce(Promise.resolve(response));
+            cb();
+            expect(api.fetchCrossProductRecommendations).toHaveBeenCalledWith(mostRecentCourseRunKey);
+          });
+        });
+        describe('fetching cross product recommendations', () => {
+          beforeEach(() => setUp(populatedCourseListData));
+
+          describe('successful fetch on mounted component', () => {
+            it('sets the request state to completed and loads response', async () => {
+              let resolveFn;
+              api.fetchCrossProductRecommendations.mockReturnValueOnce(new Promise(resolve => {
+                resolveFn = resolve;
+              }));
+              cb();
+              expect(api.fetchCrossProductRecommendations).toHaveBeenCalledWith(mostRecentCourseRunKey);
+              expect(setRequestState).not.toHaveBeenCalled();
+              expect(setData).not.toHaveBeenCalled();
+              resolveFn(response);
+              await waitFor(() => {
+                expect(setRequestState).toHaveBeenCalledWith(RequestStates.completed);
+                expect(setData).toHaveBeenCalledWith(response.data);
+              });
             });
           });
-        });
-        describe('successful fetch on unmounted component', () => {
-          it('does not set the state', async () => {
-            let resolveFn;
-            api.fetchProductRecommendations.mockReturnValueOnce(new Promise(resolve => {
-              resolveFn = resolve;
-            }));
-            const unMount = cb();
-            expect(api.fetchProductRecommendations).toHaveBeenCalledWith(mostRecentCourseRunKey);
-            expect(setRequestState).not.toHaveBeenCalled();
-            expect(setData).not.toHaveBeenCalled();
-            unMount();
-            resolveFn(response);
-            await wait(10);
-            expect(setRequestState).not.toHaveBeenCalled();
-            expect(setData).not.toHaveBeenCalled();
+          describe('successful fetch on unmounted component', () => {
+            it('does not set the state', async () => {
+              let resolveFn;
+              api.fetchCrossProductRecommendations.mockReturnValueOnce(new Promise(resolve => {
+                resolveFn = resolve;
+              }));
+              const unMount = cb();
+              expect(api.fetchCrossProductRecommendations).toHaveBeenCalledWith(mostRecentCourseRunKey);
+              expect(setRequestState).not.toHaveBeenCalled();
+              expect(setData).not.toHaveBeenCalled();
+              unMount();
+              resolveFn(response);
+              await wait(10);
+              expect(setRequestState).not.toHaveBeenCalled();
+              expect(setData).not.toHaveBeenCalled();
+            });
           });
-        });
-        describe('unsuccessful fetch on mounted component', () => {
-          it('sets the request state to failed and does not set the data state', async () => {
-            let rejectFn;
-            api.fetchProductRecommendations.mockReturnValueOnce(new Promise((resolve, reject) => {
-              rejectFn = reject;
-            }));
-            cb();
-            expect(api.fetchProductRecommendations).toHaveBeenCalledWith(mostRecentCourseRunKey);
-            expect(setRequestState).not.toHaveBeenCalled();
-            expect(setData).not.toHaveBeenCalled();
-            rejectFn();
-            await waitFor(() => {
-              expect(setRequestState).toHaveBeenCalledWith(RequestStates.failed);
+          describe('unsuccessful fetch on mounted component', () => {
+            it('sets the request state to failed and does not set the data state', async () => {
+              let rejectFn;
+              api.fetchCrossProductRecommendations.mockReturnValueOnce(new Promise((resolve, reject) => {
+                rejectFn = reject;
+              }));
+              cb();
+              expect(api.fetchCrossProductRecommendations).toHaveBeenCalledWith(mostRecentCourseRunKey);
+              expect(setRequestState).not.toHaveBeenCalled();
+              expect(setData).not.toHaveBeenCalled();
+              rejectFn();
+              await waitFor(() => {
+                expect(setRequestState).toHaveBeenCalledWith(RequestStates.failed);
+                expect(setData).not.toHaveBeenCalled();
+              });
+            });
+          });
+          describe('unsuccessful fetch on unmounted component', () => {
+            it('does not set the state', async () => {
+              let rejectFn;
+              api.fetchCrossProductRecommendations.mockReturnValueOnce(new Promise((resolve, reject) => {
+                rejectFn = reject;
+              }));
+              const unMount = cb();
+              expect(api.fetchCrossProductRecommendations).toHaveBeenCalledWith(mostRecentCourseRunKey);
+              expect(setRequestState).not.toHaveBeenCalled();
+              expect(setData).not.toHaveBeenCalled();
+              unMount();
+              rejectFn();
+              await wait(10);
+              expect(setRequestState).not.toHaveBeenCalled();
               expect(setData).not.toHaveBeenCalled();
             });
           });
         });
-        describe('unsuccessful fetch on unmounted component', () => {
-          it('does not set the state', async () => {
-            let rejectFn;
-            api.fetchProductRecommendations.mockReturnValueOnce(new Promise((resolve, reject) => {
-              rejectFn = reject;
-            }));
-            const unMount = cb();
-            expect(api.fetchProductRecommendations).toHaveBeenCalledWith(mostRecentCourseRunKey);
-            expect(setRequestState).not.toHaveBeenCalled();
-            expect(setData).not.toHaveBeenCalled();
-            unMount();
-            rejectFn();
-            await wait(10);
-            expect(setRequestState).not.toHaveBeenCalled();
-            expect(setData).not.toHaveBeenCalled();
+        describe('fetching Amplitude recommendations', () => {
+          beforeEach(() => setUp(emptyCourseListData));
+
+          describe('successful fetch on mounted component', () => {
+            it('sets the request state to completed and loads response', async () => {
+              let resolveFn;
+              api.fetchAmplitudeRecommendations.mockReturnValueOnce(new Promise(resolve => {
+                resolveFn = resolve;
+              }));
+              cb();
+              expect(api.fetchAmplitudeRecommendations).toHaveBeenCalled();
+              expect(setRequestState).not.toHaveBeenCalled();
+              expect(setData).not.toHaveBeenCalled();
+              resolveFn(response);
+              await waitFor(() => {
+                expect(setRequestState).toHaveBeenCalledWith(RequestStates.completed);
+                expect(setData).toHaveBeenCalledWith(response.data);
+              });
+            });
+          });
+          describe('successful fetch on unmounted component', () => {
+            it('does not set the state', async () => {
+              let resolveFn;
+              api.fetchAmplitudeRecommendations.mockReturnValueOnce(new Promise(resolve => {
+                resolveFn = resolve;
+              }));
+              const unMount = cb();
+              expect(api.fetchAmplitudeRecommendations).toHaveBeenCalled();
+              expect(setRequestState).not.toHaveBeenCalled();
+              expect(setData).not.toHaveBeenCalled();
+              unMount();
+              resolveFn(response);
+              await wait(10);
+              expect(setRequestState).not.toHaveBeenCalled();
+              expect(setData).not.toHaveBeenCalled();
+            });
+          });
+          describe('unsuccessful fetch on mounted component', () => {
+            it('sets the request state to failed and does not set the data state', async () => {
+              let rejectFn;
+              api.fetchAmplitudeRecommendations.mockReturnValueOnce(new Promise((resolve, reject) => {
+                rejectFn = reject;
+              }));
+              cb();
+              expect(api.fetchAmplitudeRecommendations).toHaveBeenCalled();
+              expect(setRequestState).not.toHaveBeenCalled();
+              expect(setData).not.toHaveBeenCalled();
+              rejectFn();
+              await waitFor(() => {
+                expect(setRequestState).toHaveBeenCalledWith(RequestStates.failed);
+                expect(setData).not.toHaveBeenCalled();
+              });
+            });
+          });
+          describe('unsuccessful fetch on unmounted component', () => {
+            it('does not set the state', async () => {
+              let rejectFn;
+              api.fetchAmplitudeRecommendations.mockReturnValueOnce(new Promise((resolve, reject) => {
+                rejectFn = reject;
+              }));
+              const unMount = cb();
+              expect(api.fetchAmplitudeRecommendations).toHaveBeenCalled();
+              expect(setRequestState).not.toHaveBeenCalled();
+              expect(setData).not.toHaveBeenCalled();
+              unMount();
+              rejectFn();
+              await wait(10);
+              expect(setRequestState).not.toHaveBeenCalled();
+              expect(setData).not.toHaveBeenCalled();
+            });
           });
         });
       });
@@ -170,10 +264,10 @@ describe('ProductRecommendations hooks', () => {
     let fetchSpy;
     beforeEach(() => {
       state.mock();
-      fetchSpy = jest.spyOn(hooks, 'useFetchProductRecommendations').mockImplementationOnce(() => {});
+      fetchSpy = jest.spyOn(hooks, 'useFetchRecommendations').mockImplementationOnce(() => {});
       output = hooks.useProductRecommendationsData();
     });
-    it('calls useFetchProductRecommendations with setRequestState and setData', () => {
+    it('calls useFetchRecommendations with setRequestState and setData', () => {
       expect(fetchSpy).toHaveBeenCalledWith(state.setState.requestState, state.setState.data);
     });
     it('initializes requestState as RequestStates.pending', () => {

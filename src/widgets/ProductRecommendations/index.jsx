@@ -18,7 +18,7 @@ const ProductRecommendations = () => {
     return (
       <LoadedView
         openCourses={productRecommendations.amplitudeCourses}
-        crossProductCourses={productRecommendations.crossProductCourses}
+        crossProductCourses={productRecommendations.crossProductCourses || []}
       />
     );
   }
