@@ -36,3 +36,36 @@ export const useHandleToggleDropdown = (cardId) => {
     if (isOpen) { trackCourseEvent(); }
   };
 };
+
+export const useCourseCardMenu = (cardId) => {
+  const { courseName } = reduxHooks.useCardCourseData(cardId);
+  const { isEnrolled, isEmailEnabled } = reduxHooks.useCardEnrollmentData(cardId);
+  const { twitter, facebook } = reduxHooks.useCardSocialSettingsData(cardId);
+  const { isMasquerading } = reduxHooks.useMasqueradeData();
+  const { isEarned } = reduxHooks.useCardCertificateData(cardId);
+  const handleTwitterShare = reduxHooks.useTrackCourseEvent(
+    track.socialShare,
+    cardId,
+    'twitter',
+  );
+  const handleFacebookShare = reduxHooks.useTrackCourseEvent(
+    track.socialShare,
+    cardId,
+    'facebook',
+  );
+
+  const showUnenrollItem = isEnrolled && !isEarned;
+  const showDropdown = showUnenrollItem || isEmailEnabled || facebook.isEnabled || twitter.isEnabled;
+
+  return {
+    courseName,
+    isMasquerading,
+    isEmailEnabled,
+    showUnenrollItem,
+    showDropdown,
+    facebook,
+    twitter,
+    handleTwitterShare,
+    handleFacebookShare,
+  };
+};
