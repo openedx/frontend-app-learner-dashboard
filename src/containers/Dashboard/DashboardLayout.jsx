@@ -28,12 +28,15 @@ export const columnConfig = {
 
 export const DashboardLayout = ({ children, sidebar }) => {
   const isCollapsed = hooks.useIsDashboardCollapsed();
-  const showRecommendationsFooter = useShowRecommendationsFooter();
+  const { shouldShowFooter, shouldLoadFooter } = useShowRecommendationsFooter();
 
   return (
     <Container fluid size="xl">
       <Row>
-        <Col {...columnConfig.courseList(showRecommendationsFooter)} className="course-list-column">
+        <Col
+          {...columnConfig.courseList(shouldShowFooter && shouldLoadFooter)}
+          className="course-list-column"
+        >
           {children}
         </Col>
         <Col {...columnConfig.sidebar} className="sidebar-column">

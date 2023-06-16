@@ -22,6 +22,13 @@ export const getCoursesWithType = (courseTypes) => {
   return courses;
 };
 
+export const mockHookObject = {
+  showAndLoad: { shouldShowFooter: true, shouldLoadFooter: true },
+  showDontLoad: { shouldShowFooter: true, shouldLoadFooter: false },
+  loadDontShow: { shouldShowFooter: false, shouldLoadFooter: true },
+  dontShowOrLoad: { shouldShowFooter: false, shouldLoadFooter: false },
+};
+
 export const mockCrossProductCourses = getCoursesWithType(['executive-education-2u', 'bootcamp-2u']);
 export const mockOpenCourses = getCoursesWithType(['verified-audit', 'audit', 'verified', 'course']);
 

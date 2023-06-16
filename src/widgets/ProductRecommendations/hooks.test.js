@@ -69,11 +69,13 @@ describe('ProductRecommendations hooks', () => {
 
   describe('useShowRecommendationsFooter', () => {
     // TODO: Update when hardcoded value is removed
-    it('returns whether the footer widget should show', () => {
+    it('returns whether the footer widget should show and should load', () => {
       reduxHooks.useHasAvailableDashboards.mockReturnValueOnce(false);
       reduxHooks.useRequestIsCompleted.mockReturnValueOnce(true);
+      const { shouldShowFooter, shouldLoadFooter } = hooks.useShowRecommendationsFooter();
 
-      expect(hooks.useShowRecommendationsFooter()).toBeFalsy();
+      expect(shouldShowFooter).toBeFalsy();
+      expect(shouldLoadFooter).toBeTruthy();
     });
   });
 

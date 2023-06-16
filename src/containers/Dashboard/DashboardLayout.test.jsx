@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 import { Col, Row } from '@edx/paragon';
-
 import { useShowRecommendationsFooter } from 'widgets/ProductRecommendations/hooks';
+import { mockHookObject } from 'widgets/ProductRecommendations/testData';
 import hooks from './hooks';
 import DashboardLayout, { columnConfig } from './DashboardLayout';
 
@@ -15,21 +15,24 @@ jest.mock('widgets/ProductRecommendations/hooks', () => ({
 
 describe('DashboardLayout', () => {
   const children = 'test-children';
+  const showFooter = mockHookObject.showAndLoad;
+  const hideFooter = mockHookObject.dontShowOrLoad;
   const props = {
     sidebar: 'test-sidebar-content',
   };
-  const render = () => shallow(<DashboardLayout sidebar={props.sidebar}>{children}</DashboardLayout>);
+  const render = (hookReturnValue) => {
+    useShowRecommendationsFooter.mockReturnValueOnce(hookReturnValue || hideFooter);
+    return shallow(<DashboardLayout sidebar={props.sidebar}>{children}</DashboardLayout>);
+  };
   const testColumns = () => {
     it('loads stretched courseList column layout when footer is shown', () => {
-      useShowRecommendationsFooter.mockReturnValueOnce(true);
-      const columns = render().find(Row).find(Col);
+      const columns = render(showFooter).find(Row).find(Col);
       Object.keys(columnConfig.courseList(true)).forEach(size => {
         expect(columns.at(0).props()[size]).toEqual(columnConfig.courseList(true)[size]);
       });
     });
     it('loads default courseList column layout when footer is hidden', () => {
-      useShowRecommendationsFooter.mockReturnValueOnce(false);
-      const columns = render().find(Row).find(Col);
+      const columns = render(hideFooter).find(Row).find(Col);
       Object.keys(columnConfig.courseList(false)).forEach(size => {
         expect(columns.at(0).props()[size]).toEqual(columnConfig.courseList(false)[size]);
       });

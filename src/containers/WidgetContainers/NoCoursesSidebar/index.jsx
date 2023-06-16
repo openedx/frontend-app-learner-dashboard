@@ -4,9 +4,9 @@ import RecommendationsPanel from 'widgets/RecommendationsPanel';
 import hooks from 'widgets/ProductRecommendations/hooks';
 
 export const WidgetSidebar = () => {
-  const showRecommendationsFooter = hooks.useShowRecommendationsFooter();
+  const { shouldShowFooter } = hooks.useShowRecommendationsFooter();
 
-  if (!showRecommendationsFooter) {
+  if (!shouldShowFooter) {
     return (
       <div className="widget-sidebar px-2">
         <div className="d-flex">

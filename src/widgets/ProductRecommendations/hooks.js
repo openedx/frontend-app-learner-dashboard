@@ -17,7 +17,10 @@ export const useShowRecommendationsFooter = () => {
   const hasRequestCompleted = reduxHooks.useRequestIsCompleted(RequestKeys.initialize);
 
   // Hardcoded to not show until experiment related code is implemented
-  return hasRequestCompleted && !hasAvailableDashboards && false;
+  return {
+    shouldShowFooter: false,
+    shouldLoadFooter: hasRequestCompleted && !hasAvailableDashboards,
+  };
 };
 
 export const useMostRecentCourseRunKey = () => {
