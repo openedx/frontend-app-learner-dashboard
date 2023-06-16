@@ -8,6 +8,6 @@ export const isEnterpriseUser = () => {
   return userRoleNames.includes('enterprise_learner');
 };
 
-export const showOrdersAndSubscriptionsMenuItem = () => (getConfig().ENABLE_B2C_SUBSCRIPTIONS?.toLowerCase() === 'true' && !isEnterpriseUser());
+export const showOrdersAndSubscriptionsMenuItem = () => (getConfig().SUBSCRIPTIONS_ORDERS_MENU_ITEM_ENABLED?.toLowerCase() === 'true' && !isEnterpriseUser());
 
 export default isEnterpriseUser;

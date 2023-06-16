@@ -56,6 +56,13 @@ exports[`CollapseMenuBody render 1`] = `
   </Button>
   <Button
     as="a"
+    href="http://localhost:1996/orders"
+    variant="inverse-primary"
+  >
+    Order History
+  </Button>
+  <Button
+    as="a"
     href="http://localhost:18000/logout"
     variant="inverse-primary"
   >

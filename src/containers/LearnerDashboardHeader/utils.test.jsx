@@ -44,17 +44,17 @@ describe('showOrdersAndSubscriptionsMenuItem', () => {
     getAuthenticatedUser.mockReset();
   });
 
-  test('should return true when ENABLE_B2C_SUBSCRIPTIONS is true and isEnterpriseUser returns false', () => {
+  test('should return true when SUBSCRIPTIONS_ORDERS_MENU_ITEM_ENABLED is true and isEnterpriseUser returns false', () => {
     getConfig.mockReturnValueOnce({
-      ENABLE_B2C_SUBSCRIPTIONS: 'true',
+      SUBSCRIPTIONS_ORDERS_MENU_ITEM_ENABLED: 'true',
     });
     getAuthenticatedUser.mockReturnValueOnce({ roles: [] });
     expect(showOrdersAndSubscriptionsMenuItem()).toBe(true);
   });
 
-  test('should return false when ENABLE_B2C_SUBSCRIPTIONS is false and isEnterpriseUser returns false', () => {
+  test('should return false when SUBSCRIPTIONS_ORDERS_MENU_ITEM_ENABLED is false and isEnterpriseUser returns false', () => {
     getConfig.mockReturnValueOnce({
-      ENABLE_B2C_SUBSCRIPTIONS: 'false',
+      SUBSCRIPTIONS_ORDERS_MENU_ITEM_ENABLED: 'false',
     });
     getAuthenticatedUser.mockReturnValueOnce({ roles: ['role1', 'role2', 'role3'] });
     expect(showOrdersAndSubscriptionsMenuItem()).toBe(false);
