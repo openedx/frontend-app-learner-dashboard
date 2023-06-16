@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 import { Col, Row } from '@edx/paragon';
 import { useShowRecommendationsFooter } from 'widgets/ProductRecommendations/hooks';
-import { mockHookObject } from 'widgets/ProductRecommendations/testData';
+import { mockFooterRecommendationsHook } from 'widgets/ProductRecommendations/testData';
 import hooks from './hooks';
 import DashboardLayout, { columnConfig } from './DashboardLayout';
 
@@ -15,8 +15,8 @@ jest.mock('widgets/ProductRecommendations/hooks', () => ({
 
 describe('DashboardLayout', () => {
   const children = 'test-children';
-  const showFooter = mockHookObject.showAndLoad;
-  const hideFooter = mockHookObject.dontShowOrLoad;
+  const showFooter = mockFooterRecommendationsHook.showAndLoad;
+  const hideFooter = mockFooterRecommendationsHook.dontShowOrLoad;
   const props = {
     sidebar: 'test-sidebar-content',
   };

@@ -22,7 +22,7 @@ export const getCoursesWithType = (courseTypes) => {
   return courses;
 };
 
-export const mockHookObject = {
+export const mockFooterRecommendationsHook = {
   showAndLoad: { shouldShowFooter: true, shouldLoadFooter: true },
   showDontLoad: { shouldShowFooter: true, shouldLoadFooter: false },
   loadDontShow: { shouldShowFooter: false, shouldLoadFooter: true },
