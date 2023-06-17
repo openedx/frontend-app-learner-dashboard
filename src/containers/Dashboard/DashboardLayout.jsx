@@ -1,24 +1,15 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { Container, Col, Row } from '@edx/paragon';
 
 import WidgetFooter from 'containers/WidgetContainers/WidgetFooter';
-import { useShowRecommendationsFooter } from 'widgets/ProductRecommendations/hooks';
 import hooks from './hooks';
 
 export const columnConfig = {
-  courseList: (showFooter) => {
-    if (showFooter) {
-      return {
-        lg: { span: 12, offset: 0 },
-        xl: { span: 12, offset: 0 },
-      };
-    }
-    return {
-      lg: { span: 12, offset: 0 },
-      xl: { span: 8, offset: 0 },
-    };
+  courseList: {
+    lg: { span: 12, offset: 0 },
+    xl: { span: 8, offset: 0 },
   },
   sidebar: {
     lg: { span: 12, offset: 0 },
@@ -28,13 +19,14 @@ export const columnConfig = {
 
 export const DashboardLayout = ({ children, sidebar }) => {
   const isCollapsed = hooks.useIsDashboardCollapsed();
-  const { shouldShowFooter, shouldLoadFooter } = useShowRecommendationsFooter();
+  const courseListColumn = useRef(null);
 
   return (
     <Container fluid size="xl">
       <Row>
         <Col
-          {...columnConfig.courseList(shouldShowFooter && shouldLoadFooter)}
+          ref={courseListColumn}
+          {...columnConfig.courseList}
           className="course-list-column"
         >
           {children}
@@ -46,7 +38,7 @@ export const DashboardLayout = ({ children, sidebar }) => {
       </Row>
       <Row>
         <Col>
-          <WidgetFooter />
+          <WidgetFooter courseListColumn={courseListColumn} />
         </Col>
       </Row>
     </Container>

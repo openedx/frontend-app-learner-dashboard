@@ -10,21 +10,39 @@ jest.mock('widgets/ProductRecommendations/hooks', () => ({
 }));
 
 describe('WidgetFooter', () => {
+  const props = {
+    courseListColumn: {
+      current: {
+        classList: {
+          replace: jest.fn(),
+        },
+      },
+    },
+  };
+
   describe('snapshots', () => {
     test('default', () => {
       hooks.useShowRecommendationsFooter.mockReturnValueOnce(
         mockFooterRecommendationsHook.showAndLoad,
       );
-      const wrapper = shallow(<WidgetFooter />);
+      const wrapper = shallow(<WidgetFooter {...props} />);
       expect(wrapper).toMatchSnapshot();
     });
+  });
+
+  test('replaces the utility class to the ref passed to it (stretching courses listed)', () => {
+    hooks.useShowRecommendationsFooter.mockReturnValueOnce(
+      mockFooterRecommendationsHook.showAndLoad,
+    );
+    shallow(<WidgetFooter {...props} />);
+    expect(props.courseListColumn.current.classList.replace).toHaveBeenCalledWith('col-xl-8', 'col-xl-12');
   });
 
   test('is hidden when shouldShowFooter is false but shouldLoadFooter is true', () => {
     hooks.useShowRecommendationsFooter.mockReturnValueOnce(
       mockFooterRecommendationsHook.loadDontShow,
     );
-    const wrapper = shallow(<WidgetFooter />);
+    const wrapper = shallow(<WidgetFooter {...props} />);
     expect(wrapper.type()).toBeNull();
   });
 
@@ -32,7 +50,7 @@ describe('WidgetFooter', () => {
     hooks.useShowRecommendationsFooter.mockReturnValueOnce(
       mockFooterRecommendationsHook.showDontLoad,
     );
-    const wrapper = shallow(<WidgetFooter />);
+    const wrapper = shallow(<WidgetFooter {...props} />);
     expect(wrapper.type()).toBeNull();
   });
 });

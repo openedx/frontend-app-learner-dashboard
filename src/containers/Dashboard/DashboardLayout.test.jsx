@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 import { Col, Row } from '@edx/paragon';
-import { useShowRecommendationsFooter } from 'widgets/ProductRecommendations/hooks';
-import { mockFooterRecommendationsHook } from 'widgets/ProductRecommendations/testData';
+
+import WidgetFooter from 'containers/WidgetContainers/WidgetFooter';
 import hooks from './hooks';
 import DashboardLayout, { columnConfig } from './DashboardLayout';
 
@@ -9,35 +9,14 @@ jest.mock('./hooks', () => ({
   useIsDashboardCollapsed: jest.fn(() => true),
 }));
 
-jest.mock('widgets/ProductRecommendations/hooks', () => ({
-  useShowRecommendationsFooter: jest.fn(),
-}));
-
 describe('DashboardLayout', () => {
   const children = 'test-children';
-  const showFooter = mockFooterRecommendationsHook.showAndLoad;
-  const hideFooter = mockFooterRecommendationsHook.dontShowOrLoad;
   const props = {
     sidebar: 'test-sidebar-content',
   };
-  const render = (hookReturnValue) => {
-    useShowRecommendationsFooter.mockReturnValueOnce(hookReturnValue || hideFooter);
-    return shallow(<DashboardLayout sidebar={props.sidebar}>{children}</DashboardLayout>);
-  };
+  const render = () => shallow(<DashboardLayout sidebar={props.sidebar}>{children}</DashboardLayout>);
   const testColumns = () => {
-    it('loads stretched courseList column layout when footer is shown', () => {
-      const columns = render(showFooter).find(Row).find(Col);
-      Object.keys(columnConfig.courseList(true)).forEach(size => {
-        expect(columns.at(0).props()[size]).toEqual(columnConfig.courseList(true)[size]);
-      });
-    });
-    it('loads default courseList column layout when footer is hidden', () => {
-      const columns = render(hideFooter).find(Row).find(Col);
-      Object.keys(columnConfig.courseList(false)).forEach(size => {
-        expect(columns.at(0).props()[size]).toEqual(columnConfig.courseList(false)[size]);
-      });
-    });
-    it('loads sidebar column layout', () => {
+    it('loads courseList and sidebar column layout', () => {
       const columns = render().find(Row).find(Col);
       Object.keys(columnConfig.sidebar).forEach(size => {
         expect(columns.at(1).props()[size]).toEqual(columnConfig.sidebar[size]);
@@ -53,7 +32,11 @@ describe('DashboardLayout', () => {
     });
     it('displays a footer in the second row', () => {
       const columns = render().find(Row).at(1).find(Col);
-      expect(columns.at(0).find('WidgetFooter').exists()).toBeTruthy();
+      expect(
+        columns.at(0).containsMatchingElement(
+          <WidgetFooter courseListColumn={{ current: null, useRef: true }} />,
+        ),
+      ).toBeTruthy();
     });
   };
   const testSnapshot = () => {

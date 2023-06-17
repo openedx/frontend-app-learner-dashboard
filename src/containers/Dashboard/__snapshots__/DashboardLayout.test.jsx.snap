@@ -43,7 +43,14 @@ exports[`DashboardLayout collapsed snapshot 1`] = `
   </Row>
   <Row>
     <Col>
-      <WidgetFooter />
+      <WidgetFooter
+        courseListColumn={
+          Object {
+            "current": null,
+            "useRef": true,
+          }
+        }
+      />
     </Col>
   </Row>
 </Container>
@@ -97,7 +104,14 @@ exports[`DashboardLayout not collapsed snapshot 1`] = `
   </Row>
   <Row>
     <Col>
-      <WidgetFooter />
+      <WidgetFooter
+        courseListColumn={
+          Object {
+            "current": null,
+            "useRef": true,
+          }
+        }
+      />
     </Col>
   </Row>
 </Container>
