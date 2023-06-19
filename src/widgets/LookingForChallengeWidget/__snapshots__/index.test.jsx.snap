@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LookingForChallengeWidget snapshots default 1`] = `
+<Card
+  id="looking-for-challenge-widget"
+  orientation="horizontal"
+>
+  <Card.ImageCap
+    src="icon/mock/path"
+    srcAlt="course side widget"
+  />
+  <Card.Body
+    className="m-auto pr-2"
+  >
+    <h4>
+      Looking for a new challenge?
+    </h4>
+    <h5>
+      <Hyperlink
+        className="d-flex align-items-center"
+        destination="http://localhost:18000/course-search-url"
+        onClick={[MockFunction track.findCoursesWidgetClicked('http://localhost:18000/course-search-url')]}
+        variant="brand"
+      >
+        <format-message-function
+          message={
+            Object {
+              "defaultMessage": "Find a course {arrow}",
+              "description": "Button to explore more courses",
+              "id": "WidgetSidebar.findCoursesButton",
+            }
+          }
+          values={
+            Object {
+              "arrow": <Icon
+                className="mx-1"
+              />,
+            }
+          }
+        />
+      </Hyperlink>
+    </h5>
+  </Card.Body>
+</Card>
+`;

@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RelatedProgramsBanner render with programs 1`] = `
+<Banner
+  className="bg-white border-top border-bottom mb-0 related-programs-banner"
+  icon={[MockFunction icons.Program]}
+  variant="info"
+>
+  <span
+    className="font-weight-bolder"
+  >
+    Related Programs: 
+  </span>
+  <ProgramsList
+    programs={
+      Array [
+        Object {
+          "title": "Program 1",
+          "url": "http://example.com/program1",
+        },
+        Object {
+          "title": "Program 2",
+          "url": "http://example.com/program2",
+        },
+      ]
+    }
+  />
+</Banner>
+`;

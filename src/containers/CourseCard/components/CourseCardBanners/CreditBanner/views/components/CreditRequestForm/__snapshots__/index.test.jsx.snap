@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreditRequestForm component render output valid requestData snapshot 1`] = `
+<Form
+  accept-method="UTF-8"
+  action="test-request-data-url"
+  className="hidden"
+  method="POST"
+>
+  <FormControl
+    as="textarea"
+    key="key1"
+    name="key1"
+    value="val1"
+  />
+  <FormControl
+    as="textarea"
+    key="key2"
+    name="key2"
+    value="val2"
+  />
+  <FormControl
+    as="textarea"
+    key="key3"
+    name="key3"
+    value="val3"
+  />
+  <Button
+    type="submit"
+  />
+</Form>
+`;

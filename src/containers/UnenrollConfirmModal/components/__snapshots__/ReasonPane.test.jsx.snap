@@ -1,0 +1,183 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UnenrollConfirmModal ReasonPane snapshot 1`] = `
+<Fragment>
+  <h4>
+    What's your main reason for unenrolling?
+  </h4>
+  <Form.RadioSet
+    name="unenrollReason"
+    onChange={[MockFunction props.reason.selectOption]}
+    value="props.reason.selected"
+  >
+    <Form.Radio
+      key="prereqs"
+      value="prereqs"
+    >
+      I don't have the academic or language prerequisites
+    </Form.Radio>
+    <Form.Radio
+      key="difficulty"
+      value="difficulty"
+    >
+      The course material was too hard
+    </Form.Radio>
+    <Form.Radio
+      key="goals"
+      value="goals"
+    >
+      This won't help me reach my goals
+    </Form.Radio>
+    <Form.Radio
+      key="broken"
+      value="broken"
+    >
+      Something was broken
+    </Form.Radio>
+    <Form.Radio
+      key="time"
+      value="time"
+    >
+      I don't have the time
+    </Form.Radio>
+    <Form.Radio
+      key="browse"
+      value="browse"
+    >
+      I just wanted to browse the material
+    </Form.Radio>
+    <Form.Radio
+      key="support"
+      value="support"
+    >
+      I don't have enough support
+    </Form.Radio>
+    <Form.Radio
+      key="quality"
+      value="quality"
+    >
+      I am not happy with the quality of the content
+    </Form.Radio>
+    <Form.Radio
+      key="easy"
+      value="easy"
+    >
+      The course material was too easy
+    </Form.Radio>
+    <Form.Radio
+      value="custom"
+    >
+      <Form.Control
+        onChange={[MockFunction props.reason.customOption.onChange]}
+        placeholder="Other"
+        value="props.reason.customOption.value"
+      />
+    </Form.Radio>
+  </Form.RadioSet>
+  <ActionRow>
+    <Button
+      onClick={[MockFunction props.reason.handleSkip]}
+      variant="tertiary"
+    >
+      Skip survey
+    </Button>
+    <Button
+      disabled={false}
+      onClick={[MockFunction props.reason.handleSubmit]}
+    >
+      Submit reason
+    </Button>
+  </ActionRow>
+</Fragment>
+`;
+
+exports[`UnenrollConfirmModal ReasonPane snapshot: no reason provided 1`] = `
+<Fragment>
+  <h4>
+    What's your main reason for unenrolling?
+  </h4>
+  <Form.RadioSet
+    name="unenrollReason"
+    onChange={[MockFunction props.reason.selectOption]}
+    value="props.reason.selected"
+  >
+    <Form.Radio
+      key="prereqs"
+      value="prereqs"
+    >
+      I don't have the academic or language prerequisites
+    </Form.Radio>
+    <Form.Radio
+      key="difficulty"
+      value="difficulty"
+    >
+      The course material was too hard
+    </Form.Radio>
+    <Form.Radio
+      key="goals"
+      value="goals"
+    >
+      This won't help me reach my goals
+    </Form.Radio>
+    <Form.Radio
+      key="broken"
+      value="broken"
+    >
+      Something was broken
+    </Form.Radio>
+    <Form.Radio
+      key="time"
+      value="time"
+    >
+      I don't have the time
+    </Form.Radio>
+    <Form.Radio
+      key="browse"
+      value="browse"
+    >
+      I just wanted to browse the material
+    </Form.Radio>
+    <Form.Radio
+      key="support"
+      value="support"
+    >
+      I don't have enough support
+    </Form.Radio>
+    <Form.Radio
+      key="quality"
+      value="quality"
+    >
+      I am not happy with the quality of the content
+    </Form.Radio>
+    <Form.Radio
+      key="easy"
+      value="easy"
+    >
+      The course material was too easy
+    </Form.Radio>
+    <Form.Radio
+      value="custom"
+    >
+      <Form.Control
+        onChange={[MockFunction props.reason.customOption.onChange]}
+        placeholder="Other"
+        value="props.reason.customOption.value"
+      />
+    </Form.Radio>
+  </Form.RadioSet>
+  <ActionRow>
+    <Button
+      onClick={[MockFunction props.reason.handleSkip]}
+      variant="tertiary"
+    >
+      Skip survey
+    </Button>
+    <Button
+      disabled={false}
+      onClick={[MockFunction props.reason.handleSubmit]}
+    >
+      Submit reason
+    </Button>
+  </ActionRow>
+</Fragment>
+`;

@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProgramsList renders correctly 1`] = `
+<ul
+  className="related-programs-list-container"
+>
+  <li
+    className="my-2"
+    key="http://example.com"
+  >
+    <a
+      href="http://example.com"
+    >
+      Example Program 1
+    </a>
+  </li>
+  <li
+    className="my-2"
+    key="http://example.com"
+  >
+    <a
+      href="http://example.com"
+    >
+      Example Program 2
+    </a>
+  </li>
+</ul>
+`;

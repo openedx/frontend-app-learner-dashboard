@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EntitlementBanner snapshot: expiration warning 1`] = `
+<Banner>
+  <format-message-function
+    message={
+      Object {
+        "defaultMessage": "You must {selectSessionButton} by {changeDeadline} to access the course.",
+        "description": "Entitlement course message when the entitlement is expiring soon.",
+        "id": "learner-dash.courseCard.banners.entitlementExpiringSoon",
+      }
+    }
+    values={
+      Object {
+        "changeDeadline": "11/11/2022",
+        "selectSessionButton": <Button
+          className="m-0 p-0"
+          onClick={[MockFunction updateSelectSessionModalCallback(my-test-course-number)]}
+          size="inline"
+          variant="link"
+        >
+          select a session
+        </Button>,
+      }
+    }
+  />
+</Banner>
+`;
+
+exports[`EntitlementBanner snapshot: no sessions available 1`] = `
+<Banner
+  variant="warning"
+>
+  <format-message-function
+    message={
+      Object {
+        "defaultMessage": "There are no sessions available at the moment.  The course team will create new sessions soon.  If no sessions appear, please contact {emailLink} for information.",
+        "description": "Entitlement course message when no sessions are available",
+        "id": "learner-dash.courseCard.banners.entitlementUnavailable",
+      }
+    }
+    values={
+      Object {
+        "emailLink": <MailtoLink
+          to="test-support-email"
+        >
+          test-support-email
+        </MailtoLink>,
+      }
+    }
+  />
+</Banner>
+`;

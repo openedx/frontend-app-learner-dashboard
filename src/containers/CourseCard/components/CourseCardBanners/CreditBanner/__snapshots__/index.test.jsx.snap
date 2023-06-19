@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreditBanner component render with error state snapshot 1`] = `
+<Banner
+  variant="danger"
+>
+  <p
+    className="credit-error-msg"
+  >
+    <format-message-function
+      message={
+        Object {
+          "defaultMessage": "An error occurred with this transaction.  For help, contact {supportEmailLink}.",
+          "description": "",
+          "id": "learner-dash.courseCard.banners.credit.error",
+        }
+      }
+      values={
+        Object {
+          "supportEmailLink": <EmailLink
+            address="test-support-email"
+          />,
+        }
+      }
+    />
+  </p>
+  <ContentComponent
+    cardId="test-card-id"
+  />
+</Banner>
+`;
+
+exports[`CreditBanner component render with no error state snapshot 1`] = `
+<Banner>
+  <ContentComponent
+    cardId="test-card-id"
+  />
+</Banner>
+`;

@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CourseBanner audit access expired, can upgrade snapshot: (auditAccessExpired, upgradeToAccess) 1`] = `
+<Fragment>
+  <Banner>
+    Your audit access to this course has expired.
+      
+    Upgrade now to access your course again.
+  </Banner>
+</Fragment>
+`;
+
+exports[`CourseBanner audit access expired, cannot upgrade snapshot: (auditAccessExpired, findAnotherCourse hyperlink) 1`] = `
+<Fragment>
+  <Banner>
+    Your audit access to this course has expired.
+      
+    <Hyperlink
+      destination=""
+      isInline={true}
+    >
+      Find another course
+    </Hyperlink>
+  </Banner>
+</Fragment>
+`;
+
+exports[`CourseBanner course run active and cannot upgrade snapshot: (upgradseDeadlinePassed, exploreCourseDetails hyperlink) 1`] = `
+<Fragment>
+  <Banner>
+    Your upgrade deadline for this course has passed.  To upgrade, enroll in a session that is farther in the future.
+      
+    <Hyperlink
+      destination="marketing-url"
+      isInline={true}
+    >
+      Explore course details.
+    </Hyperlink>
+  </Banner>
+</Fragment>
+`;
+
+exports[`CourseBanner snapshot: stacking banners 1`] = `<Fragment />`;
+
+exports[`CourseBanner staff snapshot: isStaff 1`] = `<Fragment />`;
+
+exports[`CourseBanner too early has start date snapshot 1`] = `
+<Fragment>
+  <Banner>
+    You can't access this course just yet because the course hasn't started yet. The course will start on 11/11/3030.
+  </Banner>
+</Fragment>
+`;
+
+exports[`CourseBanner too early no start date snapshot 1`] = `<Fragment />`;
+
+exports[`CourseBanner unmet prerequisites snapshot: unmetPrerequisites 1`] = `
+<Fragment>
+  <Banner>
+    You can't access this course just yet because you have not met the pre-requisites.
+  </Banner>
+</Fragment>
+`;

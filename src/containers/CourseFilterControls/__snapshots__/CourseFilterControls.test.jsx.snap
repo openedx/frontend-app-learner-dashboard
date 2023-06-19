@@ -1,0 +1,169 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CourseFilterControls is not mobile snapshot 1`] = `
+<div
+  id="course-filter-controls"
+>
+  <Button
+    disabled={false}
+    iconBefore={[MockFunction icons.Tune]}
+    onClick={[MockFunction open]}
+    variant="outline-primary"
+  >
+    Refine
+  </Button>
+  <Form>
+    <ModalPopup
+      isOpen={false}
+      onClose={[MockFunction close]}
+      placement="bottom-end"
+      positionRef="test-target"
+    >
+      <div
+        className="bg-white p-3 rounded shadow d-flex flex-row"
+        id="course-filter-controls-card"
+      >
+        <div
+          className="filter-form-col"
+        >
+          <FilterForm
+            filters={
+              Array [
+                "test-filter",
+              ]
+            }
+            handleFilterChange={[MockFunction handleFilterChange]}
+          />
+        </div>
+        <hr
+          className="h-100 bg-primary-200 mx-3 my-0"
+        />
+        <div
+          className="filter-form-col text-left m-1"
+        >
+          <SortForm
+            handleSortChange={[MockFunction handleSortChange]}
+            sortBy="test-sort-by"
+          />
+        </div>
+      </div>
+    </ModalPopup>
+  </Form>
+</div>
+`;
+
+exports[`CourseFilterControls mobile snapshot 1`] = `
+<div
+  id="course-filter-controls"
+>
+  <Button
+    disabled={false}
+    iconBefore={[MockFunction icons.Tune]}
+    onClick={[MockFunction open]}
+    variant="outline-primary"
+  >
+    Refine
+  </Button>
+  <Form>
+    <Sheet
+      className="w-75"
+      onClose={[MockFunction close]}
+      position="left"
+      show={false}
+    >
+      <div
+        className="p-1 mr-3"
+      >
+        <b>
+          Refine
+        </b>
+      </div>
+      <hr />
+      <div
+        className="filter-form-row"
+      >
+        <FilterForm
+          filters={
+            Array [
+              "test-filter",
+            ]
+          }
+          handleFilterChange={[MockFunction handleFilterChange]}
+        />
+      </div>
+      <div
+        className="filter-form-row text-left m-1"
+      >
+        <SortForm
+          handleSortChange={[MockFunction handleSortChange]}
+          sortBy="test-sort-by"
+        />
+      </div>
+      <div
+        className="pgn__modal-close-container"
+      >
+        <ModalCloseButton
+          onClick={[MockFunction close]}
+          variant="tertiary"
+        >
+          <Icon
+            src={[MockFunction icons.Close]}
+          />
+        </ModalCloseButton>
+      </div>
+    </Sheet>
+  </Form>
+</div>
+`;
+
+exports[`CourseFilterControls no courses snapshot 1`] = `
+<div
+  id="course-filter-controls"
+>
+  <Button
+    disabled={true}
+    iconBefore={[MockFunction icons.Tune]}
+    onClick={[MockFunction open]}
+    variant="outline-primary"
+  >
+    Refine
+  </Button>
+  <Form>
+    <ModalPopup
+      isOpen={false}
+      onClose={[MockFunction close]}
+      placement="bottom-end"
+      positionRef="test-target"
+    >
+      <div
+        className="bg-white p-3 rounded shadow d-flex flex-row"
+        id="course-filter-controls-card"
+      >
+        <div
+          className="filter-form-col"
+        >
+          <FilterForm
+            filters={
+              Array [
+                "test-filter",
+              ]
+            }
+            handleFilterChange={[MockFunction handleFilterChange]}
+          />
+        </div>
+        <hr
+          className="h-100 bg-primary-200 mx-3 my-0"
+        />
+        <div
+          className="filter-form-col text-left m-1"
+        >
+          <SortForm
+            handleSortChange={[MockFunction handleSortChange]}
+            sortBy="test-sort-by"
+          />
+        </div>
+      </div>
+    </ModalPopup>
+  </Form>
+</div>
+`;

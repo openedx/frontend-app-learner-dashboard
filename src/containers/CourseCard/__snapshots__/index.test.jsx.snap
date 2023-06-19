@@ -1,0 +1,111 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CourseCard component snapshot: collapsed 1`] = `
+<div
+  className="mb-4.5 course-card"
+  data-testid="CourseCard"
+  id="test-card-id"
+>
+  <Card
+    orientation="vertical"
+  >
+    <div
+      className="d-flex flex-column w-100"
+    >
+      <div>
+        <CourseCardImage
+          cardId="test-card-id"
+          orientation="horizontal"
+        />
+        <Card.Body>
+          <Card.Header
+            actions={
+              <CourseCardMenu
+                cardId="test-card-id"
+              />
+            }
+            title={
+              <CourseCardTitle
+                cardId="test-card-id"
+              />
+            }
+          />
+          <Card.Section
+            className="pt-0"
+          >
+            <CourseCardDetails
+              cardId="test-card-id"
+            />
+          </Card.Section>
+          <Card.Footer
+            orientation="vertical"
+          >
+            <CourseCardActions
+              cardId="test-card-id"
+            />
+          </Card.Footer>
+        </Card.Body>
+      </div>
+      <CourseCardBanners
+        cardId="test-card-id"
+      />
+    </div>
+  </Card>
+</div>
+`;
+
+exports[`CourseCard component snapshot: not collapsed 1`] = `
+<div
+  className="mb-4.5 course-card"
+  data-testid="CourseCard"
+  id="test-card-id"
+>
+  <Card
+    orientation="horizontal"
+  >
+    <div
+      className="d-flex flex-column w-100"
+    >
+      <div
+        className="d-flex"
+      >
+        <CourseCardImage
+          cardId="test-card-id"
+          orientation="horizontal"
+        />
+        <Card.Body>
+          <Card.Header
+            actions={
+              <CourseCardMenu
+                cardId="test-card-id"
+              />
+            }
+            title={
+              <CourseCardTitle
+                cardId="test-card-id"
+              />
+            }
+          />
+          <Card.Section
+            className="pt-0"
+          >
+            <CourseCardDetails
+              cardId="test-card-id"
+            />
+          </Card.Section>
+          <Card.Footer
+            orientation="horizontal"
+          >
+            <CourseCardActions
+              cardId="test-card-id"
+            />
+          </Card.Footer>
+        </Card.Body>
+      </div>
+      <CourseCardBanners
+        cardId="test-card-id"
+      />
+    </div>
+  </Card>
+</div>
+`;

@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ZendeskFab snapshot 1`] = `
+<Zendesk
+  cookies={true}
+  defer={true}
+  webWidget={
+    Object {
+      "answerBot": Object {
+        "avatar": Object {
+          "name": Object {
+            "*": "edX Support",
+          },
+          "url": "https://edx-cdn.org/v3/prod/favicon.ico",
+        },
+        "contactOnlyAfterQuery": true,
+        "suppress": false,
+        "title": Object {
+          "*": "edX Support",
+        },
+      },
+      "chat": Object {
+        "departments": Object {
+          "enabled": Array [
+            "account settings",
+            "billing and payments",
+            "certificates",
+            "deadlines",
+            "errors and technical issues",
+            "other",
+            "proctoring",
+          ],
+        },
+        "suppress": false,
+      },
+      "contactForm": Object {
+        "attachments": true,
+        "selectTicketForm": Object {
+          "*": "Please choose your request type:",
+        },
+        "ticketForms": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "id": "description",
+                "prefill": Object {
+                  "*": "",
+                },
+              },
+            ],
+            "id": 360003368814,
+            "subject": false,
+          },
+        ],
+      },
+      "contactOptions": Object {
+        "enabled": false,
+      },
+      "helpCenter": Object {
+        "originalArticleButton": true,
+      },
+    }
+  }
+/>
+`;

@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ViewCourseButton learner can view course 1`] = `
+<ActionButton
+  as="a"
+  disabled={false}
+  href="#"
+  onClick={
+    Object {
+      "trackCourseEvent": Object {
+        "cardId": "cardId",
+        "eventName": [MockFunction segment.enterCourseClicked],
+        "upgradeUrl": "homeUrl",
+      },
+    }
+  }
+>
+  View Course
+</ActionButton>
+`;
+
+exports[`ViewCourseButton learner cannot view course 1`] = `
+<ActionButton
+  as="a"
+  disabled={true}
+  href="#"
+  onClick={
+    Object {
+      "trackCourseEvent": Object {
+        "cardId": "cardId",
+        "eventName": [MockFunction segment.enterCourseClicked],
+        "upgradeUrl": "homeUrl",
+      },
+    }
+  }
+>
+  View Course
+</ActionButton>
+`;

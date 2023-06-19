@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LearnerDashboardHeader render 1`] = `
+<Fragment>
+  <ConfirmEmailBanner />
+  <CollapsedHeader />
+  <ExpandedHeader />
+  <MasqueradeBar />
+</Fragment>
+`;

@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dashboard snapshots courses loaded, show select session modal, no available dashboards snapshot 1`] = `
+<div
+  className="d-flex flex-column p-2 pt-0"
+  id="dashboard-container"
+>
+  <h1
+    className="sr-only"
+  >
+    test-page-title
+  </h1>
+  <SelectSessionModal />
+  <div
+    id="dashboard-content"
+  >
+    <DashboardLayout
+      sidebar={<LoadedWidgetSidebar />}
+    >
+      <CourseList />
+    </DashboardLayout>
+  </div>
+</div>
+`;
+
+exports[`Dashboard snapshots courses still loading snapshot 1`] = `
+<div
+  className="d-flex flex-column p-2 pt-0"
+  id="dashboard-container"
+>
+  <h1
+    className="sr-only"
+  >
+    test-page-title
+  </h1>
+  <div
+    id="dashboard-content"
+  >
+    <LoadingView />
+  </div>
+</div>
+`;
+
+exports[`Dashboard snapshots there are no courses, there ARE available dashboards snapshot 1`] = `
+<div
+  className="d-flex flex-column p-2 pt-0"
+  id="dashboard-container"
+>
+  <h1
+    className="sr-only"
+  >
+    test-page-title
+  </h1>
+  <EnterpriseDashboardModal />
+  <div
+    id="dashboard-content"
+  >
+    <DashboardLayout
+      sidebar={<NoCoursesWidgetSidebar />}
+    >
+      <CourseList />
+    </DashboardLayout>
+  </div>
+</div>
+`;

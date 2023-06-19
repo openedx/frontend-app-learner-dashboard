@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RelatedProgramsModal ProgramCard snapshot 1`] = `
+<Card
+  as="a"
+  className="program-card mx-auto bg-primary-500 text-white mb-3.5 pb-3.5"
+  href="props.data.programUrl"
+  isClickable={true}
+  style={
+    Object {
+      "color": "white",
+      "width": "18rem",
+    }
+  }
+>
+  <Card.ImageCap
+    className="program-card-banner"
+    logoAlt="props.data.provider logo"
+    logoSrc="props.data.logoImgSrc"
+    src="props.data.bannerImgSrc"
+    srcAlt=""
+  />
+  <Card.Header
+    subtitle={
+      <span
+        className="text-white"
+      >
+        props.data.provider
+      </span>
+    }
+    title={
+      <span
+        className="text-white"
+      >
+        props.data.title
+      </span>
+    }
+  />
+  <div
+    className="ml-4"
+  >
+    <Badge
+      className="program-type-badge"
+      variant="light"
+    >
+      <Icon
+        className="d-inline-block"
+        src={[MockFunction icons.Program]}
+      />
+       
+      props.data.programType
+    </Badge>
+    <div
+      className="program-summary mt-2"
+    >
+      2 Courses
+    </div>
+  </div>
+</Card>
+`;

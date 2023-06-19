@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CourseCardImage snapshot renders clickable link course Image 1`] = `
+<a
+  className="pgn__card-wrapper-image-cap overflow-visible orientation"
+  href="home-url"
+  onClick={
+    Object {
+      "trackCourseEvent": Object {
+        "cardId": "cardId",
+        "eventName": [MockFunction segment.courseImageClicked],
+        "upgradeUrl": "home-url",
+      },
+    }
+  }
+  tabIndex="-1"
+>
+  <img
+    alt="Course thumbnail"
+    className="pgn__card-image-cap show"
+    src="banner-img-src"
+  />
+  <span
+    className="course-card-verify-ribbon-container"
+    title="You're enrolled as a verified student"
+  >
+    <Badge
+      as="div"
+      className="w-100"
+      variant="success"
+    >
+      Verified
+    </Badge>
+    <img
+      alt="ID Verified Ribbon/Badge"
+      src="test-file-stub"
+    />
+  </span>
+</a>
+`;
+
+exports[`CourseCardImage snapshot renders disabled link 1`] = `
+<div
+  className="pgn__card-wrapper-image-cap overflow-visible orientation"
+>
+  <img
+    alt="Course thumbnail"
+    className="pgn__card-image-cap show"
+    src="banner-img-src"
+  />
+  <span
+    className="course-card-verify-ribbon-container"
+    title="You're enrolled as a verified student"
+  >
+    <Badge
+      as="div"
+      className="w-100"
+      variant="success"
+    >
+      Verified
+    </Badge>
+    <img
+      alt="ID Verified Ribbon/Badge"
+      src="test-file-stub"
+    />
+  </span>
+</div>
+`;

@@ -1,0 +1,38 @@
+@import "@edx/paragon/scss/core/core";
+
+.masquerade-bar {
+  display: flex;
+  align-items: flex-start;
+  padding: map-get($spacers, 3);
+  margin-bottom: map-get($spacers, 2);
+
+  .masquerade-form-label {
+    padding: map-get($spacers, 2) map-get($spacers, 3);
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+    white-space: nowrap;
+
+    &>.pgn__icon {
+      margin-right: map-get($spacers, 3);
+    }
+  }
+
+  .masquerade-form-input {
+    margin-bottom: 0;
+    flex-grow: 1;
+    max-width: map-get($grid-breakpoints, 'md');
+  }
+
+  .masquerade-chip {
+    padding: map-get($spacers, 2) map-get($spacers, 3);
+    font-size: $font-size-base;
+  }
+}
+
+@include media-breakpoint-down(md) {
+  .masquerade-bar {
+    margin: auto;
+    padding: map-get($spacers, 3) map-get($spacers, 4);
+  }
+}

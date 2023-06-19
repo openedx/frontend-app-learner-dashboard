@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ActionButton snapshot is collapsed 1`] = `
+<Button
+  arbitary="props"
+  size="sm"
+/>
+`;
+
+exports[`ActionButton snapshot is not collapsed 1`] = `
+<Button
+  arbitary="props"
+/>
+`;

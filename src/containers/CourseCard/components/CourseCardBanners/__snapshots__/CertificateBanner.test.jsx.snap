@@ -1,0 +1,125 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CertificateBanner snapshot is passing and is downloadable 1`] = `
+<Banner
+  icon={[MockFunction icons.CheckCircle]}
+  variant="success"
+>
+  Congratulations.  Your certificate is ready.
+</Banner>
+`;
+
+exports[`CertificateBanner snapshot is passing and is earned but unavailable 1`] = `
+<Banner>
+  Your grade and certificate will be ready after 10/20/3030.
+</Banner>
+`;
+
+exports[`CertificateBanner snapshot is passing and not downloadable render empty 1`] = `""`;
+
+exports[`CertificateBanner snapshot is restricted 1`] = `
+<Banner
+  variant="danger"
+>
+  <format-message-function
+    message={
+      Object {
+        "defaultMessage": "Your Certificate of Achievement is being held pending confirmation that the issuance of your Certificate is in compliance with strict U.S. embargoes on Iran, Cuba, Syria, and Sudan.  If you think our system has mistakenly identified you as being connected with one of those countries, please let us know by contacting {supportEmail}.",
+        "description": "Restricted certificate warning message",
+        "id": "learner-dash.courseCard.banners.certificateRestricted",
+      }
+    }
+    values={
+      Object {
+        "supportEmail": <MailtoLink
+          to="suport@email"
+        >
+          suport@email
+        </MailtoLink>,
+      }
+    }
+  />
+</Banner>
+`;
+
+exports[`CertificateBanner snapshot is restricted and verified 1`] = `
+<Banner
+  variant="danger"
+>
+  <format-message-function
+    message={
+      Object {
+        "defaultMessage": "Your Certificate of Achievement is being held pending confirmation that the issuance of your Certificate is in compliance with strict U.S. embargoes on Iran, Cuba, Syria, and Sudan.  If you think our system has mistakenly identified you as being connected with one of those countries, please let us know by contacting {supportEmail}.",
+        "description": "Restricted certificate warning message",
+        "id": "learner-dash.courseCard.banners.certificateRestricted",
+      }
+    }
+    values={
+      Object {
+        "supportEmail": <MailtoLink
+          to="suport@email"
+        >
+          suport@email
+        </MailtoLink>,
+      }
+    }
+  />
+    
+  <format-message-function
+    message={
+      Object {
+        "defaultMessage": "If you would like a refund on your Certificate of Achievement, please contact our billing address {billingEmail}",
+        "description": "Message to learners to contact billing for certificate refunds",
+        "id": "learner-dash.courseCard.banners.certificateRefundContactBilling",
+      }
+    }
+    values={
+      Object {
+        "billingEmail": <MailtoLink
+          to="billing@email"
+        >
+          billing@email
+        </MailtoLink>,
+      }
+    }
+  />
+</Banner>
+`;
+
+exports[`CertificateBanner snapshot not passing and audit 1`] = `
+<Banner>
+  Grade required to pass the course: 0.8‏%
+</Banner>
+`;
+
+exports[`CertificateBanner snapshot not passing and has finished 1`] = `
+<Banner
+  variant="warning"
+>
+  You are not eligible for a certificate.
+    
+  <Hyperlink
+    destination="progressUrl"
+    isInline={true}
+  >
+    View grades.
+  </Hyperlink>
+</Banner>
+`;
+
+exports[`CertificateBanner snapshot not passing and is downloadable 1`] = `
+<Banner
+  icon={[MockFunction icons.CheckCircle]}
+  variant="success"
+>
+  Congratulations.  Your certificate is ready.
+</Banner>
+`;
+
+exports[`CertificateBanner snapshot not passing and not audit and not finished 1`] = `
+<Banner
+  variant="warning"
+>
+  Grade required for a certificate: 0.8‏%
+</Banner>
+`;

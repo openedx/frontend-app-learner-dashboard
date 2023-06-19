@@ -1,0 +1,176 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SelectSessionModal snapshot empty modal with leave option  1`] = `
+<ModalDialog
+  className="p-4 px-4.5"
+  hasCloseButton={false}
+  isFullscreenOnMobile={true}
+  isOpen={true}
+  onClose={[MockFunction utils.nullMethod]}
+  size="md"
+  title="test-header"
+>
+  <h3>
+    test-header
+  </h3>
+  <Form.Group
+    className="pt-3"
+  >
+    <Form.Label>
+      test-hint
+    </Form.Label>
+    <Form.RadioSet
+      className="pt-3 pb-4"
+      name="sessions"
+    >
+      <Form.Radio
+        value="leave"
+      >
+        Leave session
+      </Form.Radio>
+    </Form.RadioSet>
+  </Form.Group>
+  <ActionRow>
+    <Button
+      onClick={[MockFunction useSelectSessionModalData.closeSessionModal]}
+      variant="tertiary"
+    >
+      Never mind
+    </Button>
+    <Button>
+      Confirm Session
+    </Button>
+  </ActionRow>
+</ModalDialog>
+`;
+
+exports[`SelectSessionModal snapshot modal with leave option  1`] = `
+<ModalDialog
+  className="p-4 px-4.5"
+  hasCloseButton={false}
+  isFullscreenOnMobile={true}
+  isOpen={true}
+  onClose={[MockFunction utils.nullMethod]}
+  size="md"
+  title="test-header"
+>
+  <h3>
+    test-header
+  </h3>
+  <Form.Group
+    className="pt-3"
+  >
+    <Form.Label>
+      test-hint
+    </Form.Label>
+    <Form.RadioSet
+      className="pt-3 pb-4"
+      name="sessions"
+    >
+      <Form.Radio
+        key="test-course-id-1"
+        value="test-course-id-1"
+      >
+        1/2/2000
+         - 
+        1/2/2020
+      </Form.Radio>
+      <Form.Radio
+        key="test-course-id-2"
+        value="test-course-id-2"
+      >
+        2/3/2000
+         - 
+        2/3/2020
+      </Form.Radio>
+      <Form.Radio
+        key="test-course-id-3"
+        value="test-course-id-3"
+      >
+        3/4/2000
+         - 
+        3/4/2020
+      </Form.Radio>
+      <Form.Radio
+        value="leave"
+      >
+        Leave session
+      </Form.Radio>
+    </Form.RadioSet>
+  </Form.Group>
+  <ActionRow>
+    <Button
+      onClick={[MockFunction useSelectSessionModalData.closeSessionModal]}
+      variant="tertiary"
+    >
+      Never mind
+    </Button>
+    <Button>
+      Confirm Session
+    </Button>
+  </ActionRow>
+</ModalDialog>
+`;
+
+exports[`SelectSessionModal snapshot modal without leave option  1`] = `
+<ModalDialog
+  className="p-4 px-4.5"
+  hasCloseButton={false}
+  isFullscreenOnMobile={true}
+  isOpen={true}
+  onClose={[MockFunction utils.nullMethod]}
+  size="md"
+  title="test-header"
+>
+  <h3>
+    test-header
+  </h3>
+  <Form.Group
+    className="pt-3"
+  >
+    <Form.Label>
+      test-hint
+    </Form.Label>
+    <Form.RadioSet
+      className="pt-3 pb-4"
+      name="sessions"
+    >
+      <Form.Radio
+        key="test-course-id-1"
+        value="test-course-id-1"
+      >
+        1/2/2000
+         - 
+        1/2/2020
+      </Form.Radio>
+      <Form.Radio
+        key="test-course-id-2"
+        value="test-course-id-2"
+      >
+        2/3/2000
+         - 
+        2/3/2020
+      </Form.Radio>
+      <Form.Radio
+        key="test-course-id-3"
+        value="test-course-id-3"
+      >
+        3/4/2000
+         - 
+        3/4/2020
+      </Form.Radio>
+    </Form.RadioSet>
+  </Form.Group>
+  <ActionRow>
+    <Button
+      onClick={[MockFunction useSelectSessionModalData.closeSessionModal]}
+      variant="tertiary"
+    >
+      Never mind
+    </Button>
+    <Button>
+      Confirm Session
+    </Button>
+  </ActionRow>
+</ModalDialog>
+`;

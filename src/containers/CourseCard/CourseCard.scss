@@ -1,0 +1,75 @@
+@import "@edx/paragon/scss/core/core";
+
+.course-card {
+  .card {
+    .pgn__card-wrapper-image-cap.vertical {
+      display: flex;
+      min-height: $card-image-vertical-max-height;
+    }
+    .pgn__card-image-cap {
+      border-bottom-left-radius: 0 !important;
+    }
+    .overflow-visible {
+      overflow: visible;
+    }
+    .pgn__card-header-content {
+      margin-top: 1.5rem;
+    }
+    .pgn__card-footer {
+      flex-wrap: nowrap;
+
+      &.vertical {
+        flex-direction: column;
+      }
+
+      .pgn__action-row {
+        align-self: flex-end;
+        white-space: nowrap;
+      }
+    }
+
+    .course-card-verify-ribbon-container {
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      text-align: center;
+
+      .badge {
+        border-radius: 0;
+      }
+
+      > img {
+        width: 40px;
+        z-index: 1000;
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+    }
+  }
+
+  .course-card-banners {
+    > .alert {
+      border-radius: 0;
+      box-shadow: none;
+      padding: map-get($spacers, 3) map-get($spacers, 4);
+
+      &:last-of-type {
+        border-bottom-left-radius: $alert-border-radius;
+        border-bottom-right-radius: $alert-border-radius;
+      }
+    }
+
+    .related-programs-banner {
+      .related-programs-list-container {
+        list-style: none;
+        display: inline;
+
+        > li {
+          line-height: 1rem;
+        }
+      }
+    }
+  }
+}

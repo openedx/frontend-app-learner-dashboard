@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NoCoursesView snapshot 1`] = `
+<div
+  className="d-flex align-items-center justify-content-center mb-4.5"
+  id="no-courses-content-view"
+>
+  <Image
+    alt="No Courses view banner"
+    src="icon/mock/path"
+  />
+  <h1>
+    Looking for a new challenge?
+  </h1>
+  <p>
+    Explore our courses to add them to your dashboard.
+  </p>
+  <Button
+    as="a"
+    href="http://localhost:18000/course-search-url"
+    iconBefore={[MockFunction icons.Search]}
+    variant="brand"
+  >
+    Explore courses
+  </Button>
+</div>
+`;

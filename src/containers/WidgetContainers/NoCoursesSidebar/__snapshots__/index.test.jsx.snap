@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WidgetSidebar snapshots default 1`] = `
+<div
+  className="widget-sidebar px-2"
+>
+  <div
+    className="d-flex"
+  >
+    <RecommendationsPanel />
+  </div>
+</div>
+`;

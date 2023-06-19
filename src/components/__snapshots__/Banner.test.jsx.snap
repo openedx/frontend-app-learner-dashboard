@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Banner snapshot renders default banner 1`] = `
+<Alert
+  className="mb-0"
+  icon={[MockFunction icons.Info]}
+  variant="info"
+>
+  Hello, world!
+</Alert>
+`;
+
+exports[`Banner snapshot renders with custom class 1`] = `
+<Alert
+  className="custom-class"
+  icon={[MockFunction icons.Info]}
+  variant="info"
+>
+  Hello, world!
+</Alert>
+`;
+
+exports[`Banner snapshot renders with variants 1`] = `
+<Alert
+  className="mb-0"
+  icon={[MockFunction icons.Info]}
+  variant="success"
+>
+  Hello, world!
+</Alert>
+`;

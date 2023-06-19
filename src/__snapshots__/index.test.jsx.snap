@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`app registry subscribe: APP_INIT_ERROR.  snapshot: displays an ErrorPage to root element 1`] = `
+<ErrorPage
+  message="test-error-message"
+/>
+`;
+
+exports[`app registry subscribe: APP_READY.  links App to root element 1`] = `
+<AppProvider
+  store={
+    Object {
+      "redux": "store",
+    }
+  }
+>
+  <NoticesWrapper>
+    <Switch>
+      <PageRoute
+        path="/"
+      >
+        <App />
+      </PageRoute>
+      <Redirect
+        to="/"
+      />
+    </Switch>
+  </NoticesWrapper>
+</AppProvider>
+`;

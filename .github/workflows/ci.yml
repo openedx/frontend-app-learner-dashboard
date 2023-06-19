@@ -1,0 +1,57 @@
+name: Node CI
+
+on:
+  push:
+    branches:
+    - master
+  pull_request:
+    branches:
+    - '**'
+
+jobs:
+  tests:
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Setup Nodejs Env
+      run: echo "NODE_VER=`cat .nvmrc`" >> $GITHUB_ENV
+
+    - name: Setup Nodejs
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ env.NODE_VER }}
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Verify No Uncommitted Changes
+      run: make validate-no-uncommitted-package-lock-changes
+
+    - name: Lint
+      run: npm run lint
+
+    - name: Test
+      run: npm run test
+
+    - name: Build
+      run: npm run build
+
+    - name: Run Coverage
+      uses: codecov/codecov-action@v3
+
+    - name: Send failure notification
+      if: ${{ failure() }}
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: email-smtp.us-east-1.amazonaws.com
+        server_port: 465
+        username: ${{ secrets.EDX_SMTP_USERNAME }}
+        password: ${{ secrets.EDX_SMTP_PASSWORD }}
+        subject: Upgrade python requirements workflow failed in ${{github.repository}}
+        to: masters-grades@edx.org
+        from: github-actions <github-actions@edx.org>
+        body: Upgrade python requirements workflow in ${{github.repository}} failed!
+          For details see "github.com/${{ github.repository }}/actions/runs/${{ github.run_id
+          }}"

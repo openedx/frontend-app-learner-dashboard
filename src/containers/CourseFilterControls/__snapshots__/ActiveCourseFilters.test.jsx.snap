@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ActiveCourseFilters snapshot renders 1`] = `
+<div
+  id="course-list-active-filters"
+>
+  <Chip
+    key="inProgress"
+  >
+    In-Progress
+  </Chip>
+  <Chip
+    key="notStarted"
+  >
+    Not Started
+  </Chip>
+  <Chip
+    key="done"
+  >
+    Done
+  </Chip>
+  <Chip
+    key="notEnrolled"
+  >
+    Not Enrolled
+  </Chip>
+  <Chip
+    key="upgraded"
+  >
+    Upgraded
+  </Chip>
+  <Button
+    onClick={[MockFunction setFilters.clear]}
+    variant="link"
+  >
+    Clear all
+  </Button>
+</div>
+`;

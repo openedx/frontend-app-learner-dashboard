@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UnenrollConfirmModal component snapshot: modalStates.confirm 1`] = `
+<ModalDialog
+  hasCloseButton={false}
+  isFullscreenOnMobile={false}
+  isOpen={true}
+  onClose={[MockFunction utils.nullMethod]}
+  title=""
+>
+  <div
+    className="bg-white p-3 rounded shadow"
+    style={
+      Object {
+        "textAlign": "start",
+      }
+    }
+  >
+    <ConfirmPane
+      handleClose={[MockFunction hooks.close]}
+      handleConfirm={[MockFunction hooks.confirm]}
+    />
+  </div>
+</ModalDialog>
+`;
+
+exports[`UnenrollConfirmModal component snapshot: modalStates.finished, reason given 1`] = `
+<ModalDialog
+  hasCloseButton={false}
+  isFullscreenOnMobile={false}
+  isOpen={true}
+  onClose={[MockFunction utils.nullMethod]}
+  title=""
+>
+  <div
+    className="bg-white p-3 rounded shadow"
+    style={
+      Object {
+        "textAlign": "start",
+      }
+    }
+  >
+    <FinishedPane
+      gaveReason={true}
+      handleClose={[MockFunction hooks.closeAndRefresh]}
+    />
+  </div>
+</ModalDialog>
+`;
+
+exports[`UnenrollConfirmModal component snapshot: modalStates.finished, reason skipped 1`] = `
+<ModalDialog
+  hasCloseButton={false}
+  isFullscreenOnMobile={false}
+  isOpen={true}
+  onClose={[MockFunction utils.nullMethod]}
+  title=""
+>
+  <div
+    className="bg-white p-3 rounded shadow"
+    style={
+      Object {
+        "textAlign": "start",
+      }
+    }
+  >
+    <FinishedPane
+      gaveReason={true}
+      handleClose={[MockFunction hooks.closeAndRefresh]}
+    />
+  </div>
+</ModalDialog>
+`;
+
+exports[`UnenrollConfirmModal component snapshot: modalStates.reason, should be fullscreen with no shadow 1`] = `
+<ModalDialog
+  hasCloseButton={false}
+  isFullscreenOnMobile={true}
+  isOpen={true}
+  onClose={[MockFunction utils.nullMethod]}
+  title=""
+>
+  <div
+    className="bg-white p-3 rounded"
+    style={
+      Object {
+        "textAlign": "start",
+      }
+    }
+  >
+    <ReasonPane
+      reason={
+        Object {
+          "isSkipped": false,
+          "reasonProps": "other",
+        }
+      }
+    />
+  </div>
+</ModalDialog>
+`;

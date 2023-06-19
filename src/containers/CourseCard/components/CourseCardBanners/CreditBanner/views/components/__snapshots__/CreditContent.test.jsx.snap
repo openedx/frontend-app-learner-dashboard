@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreditContent component render with action snapshot 1`] = `
+<Fragment>
+  <div
+    className="message-copy credit-msg"
+  >
+    test-message
+  </div>
+  <ActionRow
+    className="mt-4"
+  >
+    <Button
+      as="a"
+      className="border-gray-400"
+      disabled={false}
+      href="test-action-href"
+      onClick={[MockFunction test-action-onClick]}
+      rel="noopener"
+      target="_blank"
+      variant="outline-primary"
+    >
+      test-action-message
+    </Button>
+  </ActionRow>
+  <CreditRequestForm
+    requestData={
+      Object {
+        "parameters": Object {
+          "key1": "val1",
+        },
+        "url": "test-request-data-url",
+      }
+    }
+  />
+</Fragment>
+`;
+
+exports[`CreditContent component render without action snapshot 1`] = `
+<Fragment>
+  <div
+    className="message-copy credit-msg"
+  >
+    test-message
+  </div>
+  <CreditRequestForm
+    requestData={
+      Object {
+        "parameters": Object {
+          "key1": "val1",
+        },
+        "url": "test-request-data-url",
+      }
+    }
+  />
+</Fragment>
+`;

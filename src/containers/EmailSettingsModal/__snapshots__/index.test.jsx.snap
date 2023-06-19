@@ -1,0 +1,133 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EmailSettingsModal render snapshot: emails disabled, show: false 1`] = `
+<ModalDialog
+  hasCloseButton={false}
+  isOpen={false}
+  onClose={[MockFunction utils.nullMethod]}
+  title=""
+>
+  <div
+    className="bg-white p-3 rounded shadow"
+    style={
+      Object {
+        "textAlign": "start",
+      }
+    }
+  >
+    <h4>
+      Receive course emails?
+    </h4>
+    <Form.Switch
+      checked={false}
+      onChange={[MockFunction hooks.onToggle]}
+    >
+      Course emails are off
+    </Form.Switch>
+    <p>
+      Course emails include important information about your course from instructors.
+    </p>
+    <ActionRow>
+      <Button
+        onClick={[MockFunction closeModal]}
+        variant="tertiary"
+      >
+        Never mind
+      </Button>
+      <Button
+        onClick={[MockFunction hooks.save]}
+      >
+        Save settings
+      </Button>
+    </ActionRow>
+  </div>
+</ModalDialog>
+`;
+
+exports[`EmailSettingsModal render snapshot: emails disabled, show: true 1`] = `
+<ModalDialog
+  hasCloseButton={false}
+  isOpen={true}
+  onClose={[MockFunction utils.nullMethod]}
+  title=""
+>
+  <div
+    className="bg-white p-3 rounded shadow"
+    style={
+      Object {
+        "textAlign": "start",
+      }
+    }
+  >
+    <h4>
+      Receive course emails?
+    </h4>
+    <Form.Switch
+      checked={false}
+      onChange={[MockFunction hooks.onToggle]}
+    >
+      Course emails are off
+    </Form.Switch>
+    <p>
+      Course emails include important information about your course from instructors.
+    </p>
+    <ActionRow>
+      <Button
+        onClick={[MockFunction closeModal]}
+        variant="tertiary"
+      >
+        Never mind
+      </Button>
+      <Button
+        onClick={[MockFunction hooks.save]}
+      >
+        Save settings
+      </Button>
+    </ActionRow>
+  </div>
+</ModalDialog>
+`;
+
+exports[`EmailSettingsModal render snapshot: emails enabled, show: true 1`] = `
+<ModalDialog
+  hasCloseButton={false}
+  isOpen={true}
+  onClose={[MockFunction utils.nullMethod]}
+  title=""
+>
+  <div
+    className="bg-white p-3 rounded shadow"
+    style={
+      Object {
+        "textAlign": "start",
+      }
+    }
+  >
+    <h4>
+      Receive course emails?
+    </h4>
+    <Form.Switch
+      checked={true}
+      onChange={[MockFunction hooks.onToggle]}
+    >
+      Course emails are on
+    </Form.Switch>
+    <p>
+      Course emails include important information about your course from instructors.
+    </p>
+    <ActionRow>
+      <Button
+        onClick={[MockFunction closeModal]}
+        variant="tertiary"
+      >
+        Never mind
+      </Button>
+      <Button
+        onClick={[MockFunction hooks.save]}
+      >
+        Save settings
+      </Button>
+    </ActionRow>
+  </div>
+</ModalDialog>
+`;

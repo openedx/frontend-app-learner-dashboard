@@ -1,0 +1,169 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RelatedProgramsModal snapshot: closed 1`] = `
+<ModalDialog
+  className="related-programs-modal p-4"
+  data-testid="RelatedProgramsModal"
+  hasCloseButton={true}
+  isFullscreenOnMobile={true}
+  isOpen={false}
+  onClose={[MockFunction props.closeModal]}
+  size="lg"
+  title="Related Programs"
+>
+  <ModalDialog.Header
+    aria-level={2}
+    as="h3"
+    className="programs-title m-0 p-0"
+  >
+    Related Programs
+  </ModalDialog.Header>
+  <ModalDialog.Header
+    as="h4"
+    className="programs-header p-0"
+  />
+  <ModalDialog.Body
+    className="pl-0 overflow-scroll"
+  >
+    <p>
+      Are you looking to expand your knowledge?  Enrolling in a Program lets you take a series of courses in the subject that you're interested in
+    </p>
+    <Container>
+      <Row>
+        <Col
+          key="program-1-url"
+          lg={6}
+          sm={12}
+        >
+          <ProgramCard
+            data={
+              Object {
+                "programData": Object {
+                  "dataFor": "program1",
+                },
+                "programUrl": "program-1-url",
+              }
+            }
+          />
+        </Col>
+        <Col
+          key="program-2-url"
+          lg={6}
+          sm={12}
+        >
+          <ProgramCard
+            data={
+              Object {
+                "programData": Object {
+                  "dataFor": "program2",
+                },
+                "programUrl": "program-2-url",
+              }
+            }
+          />
+        </Col>
+        <Col
+          key="program-3-url"
+          lg={6}
+          sm={12}
+        >
+          <ProgramCard
+            data={
+              Object {
+                "programData": Object {
+                  "dataFor": "program3",
+                },
+                "programUrl": "program-3-url",
+              }
+            }
+          />
+        </Col>
+      </Row>
+    </Container>
+  </ModalDialog.Body>
+</ModalDialog>
+`;
+
+exports[`RelatedProgramsModal snapshot: open 1`] = `
+<ModalDialog
+  className="related-programs-modal p-4"
+  data-testid="RelatedProgramsModal"
+  hasCloseButton={true}
+  isFullscreenOnMobile={true}
+  isOpen={true}
+  onClose={[MockFunction props.closeModal]}
+  size="lg"
+  title="Related Programs"
+>
+  <ModalDialog.Header
+    aria-level={2}
+    as="h3"
+    className="programs-title m-0 p-0"
+  >
+    Related Programs
+  </ModalDialog.Header>
+  <ModalDialog.Header
+    as="h4"
+    className="programs-header p-0"
+  />
+  <ModalDialog.Body
+    className="pl-0 overflow-scroll"
+  >
+    <p>
+      Are you looking to expand your knowledge?  Enrolling in a Program lets you take a series of courses in the subject that you're interested in
+    </p>
+    <Container>
+      <Row>
+        <Col
+          key="program-1-url"
+          lg={6}
+          sm={12}
+        >
+          <ProgramCard
+            data={
+              Object {
+                "programData": Object {
+                  "dataFor": "program1",
+                },
+                "programUrl": "program-1-url",
+              }
+            }
+          />
+        </Col>
+        <Col
+          key="program-2-url"
+          lg={6}
+          sm={12}
+        >
+          <ProgramCard
+            data={
+              Object {
+                "programData": Object {
+                  "dataFor": "program2",
+                },
+                "programUrl": "program-2-url",
+              }
+            }
+          />
+        </Col>
+        <Col
+          key="program-3-url"
+          lg={6}
+          sm={12}
+        >
+          <ProgramCard
+            data={
+              Object {
+                "programData": Object {
+                  "dataFor": "program3",
+                },
+                "programUrl": "program-3-url",
+              }
+            }
+          />
+        </Col>
+      </Row>
+    </Container>
+  </ModalDialog.Body>
+</ModalDialog>
+`;

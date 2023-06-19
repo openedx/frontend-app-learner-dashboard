@@ -1,0 +1,29 @@
+.pgn__sheet-component {
+  max-width: 75% !important;
+  width: 75% !important;
+
+  .filter-form-heading {
+    font-weight: bold;
+    font-size: 18px;
+  }
+}
+#course-filter-controls-card {
+  width: 512px;
+  height: 288px;
+  &.no-enrollments {
+    height: 172px;
+  }
+  .filter-form-heading {
+    font-weight: bold;
+    font-size: 18px;
+  }
+  hr {
+    width: 1px;
+  };
+  .filter-form-col {
+    width: 256px;
+    display: inline-block;
+    text-align: left;
+  }
+}
+

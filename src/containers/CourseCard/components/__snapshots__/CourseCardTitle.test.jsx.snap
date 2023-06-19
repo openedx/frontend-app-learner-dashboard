@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CourseCardTitle snapshot renders clickable link course title 1`] = `
+<h3>
+  <a
+    className="course-card-title"
+    data-testid="CourseCardTitle"
+    href="home-url"
+    onClick={
+      Object {
+        "trackCourseEvent": Object {
+          "cardId": "cardId",
+          "eventName": [MockFunction segment.courseTitleClicked],
+          "upgradeUrl": "home-url",
+        },
+      }
+    }
+  >
+    course-name
+  </a>
+</h3>
+`;
+
+exports[`CourseCardTitle snapshot renders disabled link 1`] = `
+<h3>
+  <span
+    className="course-card-title"
+    data-testid="CourseCardTitle"
+  >
+    course-name
+  </span>
+</h3>
+`;
