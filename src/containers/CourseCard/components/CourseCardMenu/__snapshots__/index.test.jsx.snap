@@ -2,7 +2,9 @@
 
 exports[`CourseCardMenu default snapshot 1`] = `
 <Fragment>
-  <Dropdown>
+  <Dropdown
+    onToggle={[MockFunction mockHandleToggleDropdown]}
+  >
     <Dropdown.Toggle
       alt="Course actions dropdown"
       as="IconButton"
@@ -61,7 +63,9 @@ exports[`CourseCardMenu default snapshot 1`] = `
 
 exports[`CourseCardMenu masquerading snapshot 1`] = `
 <Fragment>
-  <Dropdown>
+  <Dropdown
+    onToggle={[MockFunction mockHandleToggleDropdown]}
+  >
     <Dropdown.Toggle
       alt="Course actions dropdown"
       as="IconButton"

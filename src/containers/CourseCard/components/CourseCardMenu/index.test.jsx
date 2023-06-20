@@ -13,6 +13,7 @@ jest.mock('./hooks', () => ({
   useEmailSettings: jest.fn(),
   useUnenrollData: jest.fn(),
   useCourseCardMenu: jest.fn(),
+  useHandleToggleDropdown: () => jest.fn().mockName('mockHandleToggleDropdown'),
 }));
 
 const props = {
