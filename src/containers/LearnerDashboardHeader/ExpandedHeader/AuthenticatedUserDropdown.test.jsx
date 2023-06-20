@@ -46,7 +46,6 @@ const config = {
   SUPPORT_URL: 'http://localhost:18000/support',
   CAREER_LINK_URL: 'http://localhost:18000/career',
   LMS_BASE_URL: 'http:/localhost:18000',
-  SUBSCRIPTIONS_ORDERS_MENU_ITEM_ENABLED: 'false',
 };
 getConfig.mockReturnValue(config);
 
