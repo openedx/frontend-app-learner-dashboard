@@ -8,7 +8,6 @@ import { AvatarButton, Dropdown, Badge } from '@edx/paragon';
 import { reduxHooks } from 'hooks';
 
 import messages from '../messages';
-import { showOrdersAndSubscriptionsMenuItem } from '../utils';
 
 export const AuthenticatedUserDropdown = () => {
   const { formatMessage } = useIntl();
@@ -56,9 +55,7 @@ export const AuthenticatedUserDropdown = () => {
           </Dropdown.Item>
           {getConfig().ORDER_HISTORY_URL && (
             <Dropdown.Item href={getConfig().ORDER_HISTORY_URL}>
-              { showOrdersAndSubscriptionsMenuItem()
-                ? formatMessage(messages.ordersAndSubscriptions)
-                : formatMessage(messages.orderHistory)}
+              { formatMessage(messages.ordersAndSubscriptions) }
             </Dropdown.Item>
           )}
           <Dropdown.Divider />

@@ -11,7 +11,6 @@ import urls from 'data/services/lms/urls';
 import { reduxHooks } from 'hooks';
 
 import { findCoursesNavDropdownClicked } from '../hooks';
-import { showOrdersAndSubscriptionsMenuItem } from '../utils';
 
 import messages from '../messages';
 
@@ -81,9 +80,7 @@ export const CollapseMenuBody = ({ isOpen }) => {
                 variant="inverse-primary"
                 href={getConfig().ORDER_HISTORY_URL}
               >
-                { showOrdersAndSubscriptionsMenuItem()
-                  ? formatMessage(messages.ordersAndSubscriptions)
-                  : formatMessage(messages.orderHistory)}
+                { formatMessage(messages.ordersAndSubscriptions) }
               </Button>
             )}
             <Button
