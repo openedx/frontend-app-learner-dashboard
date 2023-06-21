@@ -36,6 +36,7 @@
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/react-fontawesome": "^0.1.15",
+    "@optimizely/react-sdk": "^2.9.2",
     "@redux-beacon/segment": "^1.1.0",
     "@reduxjs/toolkit": "^1.6.1",
     "@testing-library/user-event": "^13.5.0",
