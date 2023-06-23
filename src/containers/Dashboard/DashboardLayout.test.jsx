@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { shallow } from 'enzyme';
 import { Col, Row } from '@edx/paragon';
 
@@ -12,10 +13,27 @@ jest.mock('./hooks', () => ({
 describe('DashboardLayout', () => {
   const children = 'test-children';
   const props = {
-    sidebar: 'test-sidebar-content',
+    sidebar: jest.fn(() => 'test-sidebar-content'),
   };
-  const render = () => shallow(<DashboardLayout sidebar={props.sidebar}>{children}</DashboardLayout>);
+  const render = (stateVal = true) => {
+    useState.mockReturnValueOnce([stateVal, jest.fn()]);
+    return shallow(<DashboardLayout sidebar={props.sidebar}>{children}</DashboardLayout>);
+  };
   const testColumns = () => {
+    describe('courseList column', () => {
+      it('loads config when the sidebar is showing', () => {
+        const columns = render(true).find(Row).find(Col);
+        Object.keys(columnConfig.courseList.withSidebar).forEach(size => {
+          expect(columns.at(0).props()[size]).toEqual(columnConfig.courseList.withSidebar[size]);
+        });
+      });
+      it('loads config when the sidebar is not showing', () => {
+        const columns = render(false).find(Row).find(Col);
+        Object.keys(columnConfig.courseList.noSidebar).forEach(size => {
+          expect(columns.at(0).props()[size]).toEqual(columnConfig.courseList.noSidebar[size]);
+        });
+      });
+    });
     it('loads courseList and sidebar column layout', () => {
       const columns = render().find(Row).find(Col);
       Object.keys(columnConfig.sidebar).forEach(size => {
@@ -28,15 +46,11 @@ describe('DashboardLayout', () => {
     });
     it('displays sidebar prop in second column', () => {
       const columns = render().find(Row).find(Col);
-      expect(columns.at(1).contains(props.sidebar)).toEqual(true);
+      expect(columns.at(1).find(props.sidebar)).toHaveLength(1);
     });
     it('displays a footer in the second row', () => {
       const columns = render().find(Row).at(1).find(Col);
-      expect(
-        columns.at(0).containsMatchingElement(
-          <WidgetFooter courseListColumn={{ current: null, useRef: true }} />,
-        ),
-      ).toBeTruthy();
+      expect(columns.at(0).containsMatchingElement(<WidgetFooter />)).toBeTruthy();
     });
   };
   const testSnapshot = () => {

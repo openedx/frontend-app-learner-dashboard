@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { Container, Col, Row } from '@edx/paragon';
@@ -8,8 +8,14 @@ import hooks from './hooks';
 
 export const columnConfig = {
   courseList: {
-    lg: { span: 12, offset: 0 },
-    xl: { span: 8, offset: 0 },
+    withSidebar: {
+      lg: { span: 12, offset: 0 },
+      xl: { span: 8, offset: 0 },
+    },
+    noSidebar: {
+      lg: { span: 12, offset: 0 },
+      xl: { span: 12, offset: 0 },
+    },
   },
   sidebar: {
     lg: { span: 12, offset: 0 },
@@ -17,28 +23,28 @@ export const columnConfig = {
   },
 };
 
-export const DashboardLayout = ({ children, sidebar }) => {
+export const DashboardLayout = ({ children, sidebar: Sidebar }) => {
   const isCollapsed = hooks.useIsDashboardCollapsed();
-  const courseListColumn = useRef(null);
+  const [sidebarShowing, setSidebarShowing] = useState(false);
+
+  const courseListColumnProps = sidebarShowing
+    ? columnConfig.courseList.withSidebar
+    : columnConfig.courseList.noSidebar;
 
   return (
     <Container fluid size="xl">
       <Row>
-        <Col
-          ref={courseListColumn}
-          {...columnConfig.courseList}
-          className="course-list-column"
-        >
+        <Col {...courseListColumnProps} className="course-list-column">
           {children}
         </Col>
         <Col {...columnConfig.sidebar} className="sidebar-column">
-          {!isCollapsed && (<h2 className="course-list-title">&nbsp;</h2>)}
-          {sidebar}
+          {!isCollapsed && <h2 className="course-list-title">&nbsp;</h2>}
+          <Sidebar setSidebarShowing={setSidebarShowing} />
         </Col>
       </Row>
       <Row>
         <Col>
-          <WidgetFooter courseListColumn={courseListColumn} />
+          <WidgetFooter />
         </Col>
       </Row>
     </Container>
@@ -46,7 +52,7 @@ export const DashboardLayout = ({ children, sidebar }) => {
 };
 DashboardLayout.propTypes = {
   children: PropTypes.node.isRequired,
-  sidebar: PropTypes.node.isRequired,
+  sidebar: PropTypes.func.isRequired,
 };
 
 export default DashboardLayout;

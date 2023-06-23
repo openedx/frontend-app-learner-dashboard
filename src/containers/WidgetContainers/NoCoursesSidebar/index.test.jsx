@@ -10,12 +10,18 @@ jest.mock('widgets/ProductRecommendations/hooks', () => ({
 }));
 
 describe('WidgetSidebar', () => {
+  beforeEach(() => jest.resetAllMocks());
+  const props = {
+    setSidebarShowing: jest.fn(),
+  };
+
   describe('snapshots', () => {
     test('default', () => {
       hooks.useShowRecommendationsFooter.mockReturnValueOnce(
         mockFooterRecommendationsHook.dontShowOrLoad,
       );
-      const wrapper = shallow(<WidgetSidebar />);
+      const wrapper = shallow(<WidgetSidebar {...props} />);
+      expect(props.setSidebarShowing).toHaveBeenCalledWith(true);
       expect(wrapper).toMatchSnapshot();
     });
   });
@@ -24,7 +30,8 @@ describe('WidgetSidebar', () => {
     hooks.useShowRecommendationsFooter.mockReturnValueOnce(
       mockFooterRecommendationsHook.showDontLoad,
     );
-    const wrapper = shallow(<WidgetSidebar />);
+    const wrapper = shallow(<WidgetSidebar {...props} />);
+    expect(props.setSidebarShowing).not.toHaveBeenCalled();
     expect(wrapper.type()).toBeNull();
   });
 });
