@@ -38,7 +38,7 @@ export const DashboardLayout = ({ children, sidebar: Sidebar }) => {
           {children}
         </Col>
         <Col {...columnConfig.sidebar} className="sidebar-column">
-          {!isCollapsed && <h2 className="course-list-title">&nbsp;</h2>}
+          {!isCollapsed && (<h2 className="course-list-title">&nbsp;</h2>)}
           <Sidebar setSidebarShowing={setSidebarShowing} />
         </Col>
       </Row>
