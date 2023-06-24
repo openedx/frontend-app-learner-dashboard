@@ -35,7 +35,7 @@ export const Dashboard = () => {
         {initIsPending
           ? (<LoadingView />)
           : (
-            <DashboardLayout sidebar={hasCourses ? <LoadedSidebar /> : <NoCoursesSidebar />}>
+            <DashboardLayout sidebar={hasCourses ? LoadedSidebar : NoCoursesSidebar}>
               <CourseList />
             </DashboardLayout>
           )}

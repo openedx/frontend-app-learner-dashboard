@@ -116,7 +116,7 @@ describe('Dashboard', () => {
           showSelectSessionModal: true,
         },
         content: ['LoadedView', (
-          <DashboardLayout sidebar={<LoadedWidgetSidebar />}><CourseList /></DashboardLayout>
+          <DashboardLayout sidebar={LoadedWidgetSidebar}><CourseList /></DashboardLayout>
         )],
         showEnterpriseModal: false,
         showSelectSessionModal: true,
@@ -132,7 +132,7 @@ describe('Dashboard', () => {
           showSelectSessionModal: false,
         },
         content: ['Dashboard layout with no courses sidebar and content', (
-          <DashboardLayout sidebar={<NoCoursesWidgetSidebar />}><CourseList /></DashboardLayout>
+          <DashboardLayout sidebar={NoCoursesWidgetSidebar}><CourseList /></DashboardLayout>
         )],
         showEnterpriseModal: true,
         showSelectSessionModal: false,
