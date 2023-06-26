@@ -1,47 +1,37 @@
 import { StrictDict } from 'utils';
 import optimizelyClient from './optimizely';
 
-const PRODUCT_RECOMMENDATIONS_EXP_KEY = 'learner_dashboard_product_recommendations_exp';
-const PRODUCT_RECOMMENDATIONS_EXP_VARIATION = 'learner_dashboard_product_recommendations_enabled';
+export const PRODUCT_RECOMMENDATIONS_EXP_KEY = 'learner_dashboard_product_recommendations_exp';
+export const PRODUCT_RECOMMENDATIONS_EXP_VARIATION = 'learner_dashboard_product_recommendations_enabled';
 
-const eventNames = StrictDict({
+export const eventNames = StrictDict({
   productRecommendationsViewed: 'product_recommendations_viewed',
-  productRecommendationsHeaderClicked: 'product_recommendations_header_click',
-  productCardClicked: 'product_card_click',
-  courseCardClicked: 'course_card_click',
+  productHeaderClicked: 'product_header_clicked',
+  productCardClicked: 'product_card_clicked',
+  courseCardClicked: 'course_card_clicked',
 });
 
-const activateProductRecommendationsExperiment = (userId) => {
-  const variation = optimizelyClient.activate(
+export const activateProductRecommendationsExperiment = (userId) => {
+  const variation = optimizelyClient?.activate(
     PRODUCT_RECOMMENDATIONS_EXP_KEY,
     userId,
   );
 
-  console.log(`variation: ${variation}`);
-
   return variation === PRODUCT_RECOMMENDATIONS_EXP_VARIATION;
 };
 
-const trackProductRecommendationsViewed = (userId, userAttributes = {}) => {
+export const trackProductRecommendationsViewed = (userId, userAttributes = {}) => {
   optimizelyClient.track(eventNames.productRecommendationsViewed, userId, userAttributes);
 };
 
-const trackProductRecommendationsHeaderClick = (userId, userAttributes = {}) => {
-  optimizelyClient.track(eventNames.productRecommendationsHeaderClicked, userId, userAttributes);
+export const trackProductHeaderClicked = (userId, userAttributes = {}) => {
+  optimizelyClient.track(eventNames.productHeaderClicked, userId, userAttributes);
 };
 
-const trackProductCardClick = (userId, userAttributes = {}) => {
+export const trackProductCardClicked = (userId, userAttributes = {}) => {
   optimizelyClient.track(eventNames.productCardClicked, userId, userAttributes);
 };
 
-const trackCourseCardClick = (userId, userAttributes = {}) => {
+export const trackCourseCardClicked = (userId, userAttributes = {}) => {
   optimizelyClient.track(eventNames.courseCardClicked, userId, userAttributes);
-};
-
-export {
-  activateProductRecommendationsExperiment,
-  trackProductRecommendationsViewed,
-  trackProductRecommendationsHeaderClick,
-  trackProductCardClick,
-  trackCourseCardClick,
 };

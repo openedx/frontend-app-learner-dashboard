@@ -18,7 +18,7 @@ export const useShowRecommendationsFooter = () => {
 
   // Hardcoded to not show until experiment related code is implemented
   return {
-    shouldShowFooter: true,
+    shouldShowFooter: false,
     shouldLoadFooter: hasRequestCompleted && !hasAvailableDashboards,
   };
 };
