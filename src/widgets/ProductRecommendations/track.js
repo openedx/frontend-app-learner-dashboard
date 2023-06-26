@@ -11,12 +11,13 @@ export const eventNames = StrictDict({
 export const productCardClicked = (courseRunKey, courseTitle, courseType, href) => {
   createLinkTracker(
     createEventTracker(eventNames.productCardClicked, {
-      category: 'recommender',
-      courserun_key: courseRunKey,
-      label: courseTitle,
-      page: 'dashboard',
-      'product-line': courseType,
-      product_category: '2u',
+      linkProps: {
+        courserun_key: courseRunKey,
+        label: courseTitle,
+        page: 'dashboard',
+        'product-line': courseType,
+        product_category: '2u',
+      },
     }),
     href,
   );
@@ -25,11 +26,12 @@ export const productCardClicked = (courseRunKey, courseTitle, courseType, href) 
 export const discoveryCardClicked = (courseRunKey, courseTitle, href) => {
   createLinkTracker(
     createEventTracker(eventNames.discoveryCardClicked, {
-      category: 'recommender',
-      courserun_key: courseRunKey,
-      label: courseTitle,
-      page: 'dashboard',
-      product_category: 'course',
+      linkProps: {
+        courserun_key: courseRunKey,
+        label: courseTitle,
+        page: 'dashboard',
+        product_category: 'course',
+      },
     }),
     href,
   );
@@ -39,17 +41,19 @@ export const recommendationsHeaderClicked = (courseType, href) => {
   createLinkTracker(
     createEventTracker(eventNames.recommendationsHeaderClicked, {
       category: 'recommender',
-      page: 'dashboard',
       'product-line': courseType,
+      linkProps: {
+        page: 'dashboard',
+      },
     }),
     href,
   );
 };
 
-export const recommendationsViewed = (isControl, courseRunKey) => {
+export const recommendationsViewed = (isControl, courseKey) => {
   createEventTracker(eventNames.recommendationsViewed, {
     is_control: isControl,
     page: 'dashboard',
-    courserun_key: courseRunKey,
+    course_key: courseKey,
   });
 };
