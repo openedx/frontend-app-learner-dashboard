@@ -8,8 +8,14 @@ import hooks from './hooks';
 
 export const columnConfig = {
   courseList: {
-    lg: { span: 12, offset: 0 },
-    xl: { span: 8, offset: 0 },
+    withSidebar: {
+      lg: { span: 12, offset: 0 },
+      xl: { span: 8, offset: 0 },
+    },
+    noSidebar: {
+      lg: { span: 12, offset: 0 },
+      xl: { span: 12, offset: 0 },
+    },
   },
   sidebar: {
     lg: { span: 12, offset: 0 },
@@ -17,18 +23,26 @@ export const columnConfig = {
   },
 };
 
-export const DashboardLayout = ({ children, sidebar }) => {
-  const isCollapsed = hooks.useIsDashboardCollapsed();
+export const DashboardLayout = ({ children, sidebar: Sidebar }) => {
+  const {
+    isCollapsed,
+    sidebarShowing,
+    setSidebarShowing,
+  } = hooks.useDashboardLayoutData();
+
+  const courseListColumnProps = sidebarShowing
+    ? columnConfig.courseList.withSidebar
+    : columnConfig.courseList.noSidebar;
 
   return (
     <Container fluid size="xl">
       <Row>
-        <Col {...columnConfig.courseList} className="course-list-column">
+        <Col {...courseListColumnProps} className="course-list-column">
           {children}
         </Col>
         <Col {...columnConfig.sidebar} className="sidebar-column">
           {!isCollapsed && (<h2 className="course-list-title">&nbsp;</h2>)}
-          {sidebar}
+          <Sidebar setSidebarShowing={setSidebarShowing} />
         </Col>
       </Row>
       <Row>
@@ -41,7 +55,7 @@ export const DashboardLayout = ({ children, sidebar }) => {
 };
 DashboardLayout.propTypes = {
   children: PropTypes.node.isRequired,
-  sidebar: PropTypes.node.isRequired,
+  sidebar: PropTypes.func.isRequired,
 };
 
 export default DashboardLayout;

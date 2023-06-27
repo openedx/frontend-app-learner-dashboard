@@ -4,9 +4,9 @@ import ProductRecommendations from 'widgets/ProductRecommendations';
 import hooks from 'widgets/ProductRecommendations/hooks';
 
 export const WidgetFooter = () => {
-  const showRecommendationsFooter = hooks.useShowRecommendationsFooter();
+  const { shouldShowFooter, shouldLoadFooter } = hooks.useShowRecommendationsFooter();
 
-  if (showRecommendationsFooter) {
+  if (shouldShowFooter && shouldLoadFooter) {
     return (
       <div className="widget-footer">
         <ProductRecommendations />

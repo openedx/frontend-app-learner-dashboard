@@ -15,7 +15,7 @@ exports[`Dashboard snapshots courses loaded, show select session modal, no avail
     id="dashboard-content"
   >
     <DashboardLayout
-      sidebar={<LoadedWidgetSidebar />}
+      sidebar="LoadedWidgetSidebar"
     >
       <CourseList />
     </DashboardLayout>
@@ -56,7 +56,7 @@ exports[`Dashboard snapshots there are no courses, there ARE available dashboard
     id="dashboard-content"
   >
     <DashboardLayout
-      sidebar={<NoCoursesWidgetSidebar />}
+      sidebar="NoCoursesWidgetSidebar"
     >
       <CourseList />
     </DashboardLayout>

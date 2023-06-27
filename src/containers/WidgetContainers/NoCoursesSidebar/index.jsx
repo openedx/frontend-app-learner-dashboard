@@ -1,12 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import RecommendationsPanel from 'widgets/RecommendationsPanel';
 import hooks from 'widgets/ProductRecommendations/hooks';
 
-export const WidgetSidebar = () => {
-  const showRecommendationsFooter = hooks.useShowRecommendationsFooter();
+export const WidgetSidebar = ({ setSidebarShowing }) => {
+  const { shouldShowFooter } = hooks.useShowRecommendationsFooter();
 
-  if (!showRecommendationsFooter) {
+  if (!shouldShowFooter) {
+    setSidebarShowing(true);
+
     return (
       <div className="widget-sidebar px-2">
         <div className="d-flex">
@@ -17,6 +20,10 @@ export const WidgetSidebar = () => {
   }
 
   return null;
+};
+
+WidgetSidebar.propTypes = {
+  setSidebarShowing: PropTypes.func.isRequired,
 };
 
 export default WidgetSidebar;
