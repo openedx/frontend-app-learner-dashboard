@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Container, Col, Row } from '@edx/paragon';
@@ -24,8 +24,11 @@ export const columnConfig = {
 };
 
 export const DashboardLayout = ({ children, sidebar: Sidebar }) => {
-  const isCollapsed = hooks.useIsDashboardCollapsed();
-  const [sidebarShowing, setSidebarShowing] = useState(false);
+  const {
+    isCollapsed,
+    sidebarShowing,
+    setSidebarShowing,
+  } = hooks.useDashboardLayoutData();
 
   const courseListColumnProps = sidebarShowing
     ? columnConfig.courseList.withSidebar
