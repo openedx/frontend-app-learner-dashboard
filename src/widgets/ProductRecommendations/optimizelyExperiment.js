@@ -11,10 +11,11 @@ export const eventNames = StrictDict({
   courseCardClicked: 'course_card_clicked',
 });
 
-export const activateProductRecommendationsExperiment = (userId) => {
+export const activateProductRecommendationsExperiment = (userId, userAttributes) => {
   const variation = optimizelyClient?.activate(
     PRODUCT_RECOMMENDATIONS_EXP_KEY,
     userId,
+    userAttributes,
   );
 
   return variation === PRODUCT_RECOMMENDATIONS_EXP_VARIATION;
