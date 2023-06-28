@@ -1,18 +1,21 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-
 import { useWindowSize } from '@edx/paragon';
 import hooks from './hooks';
 import ProductRecommendations from './index';
 import LoadingView from './components/LoadingView';
 import LoadedView from './components/LoadedView';
-import { mockResponse } from './testData';
+import NoCoursesView from '../../containers/CourseList/NoCoursesView';
+import { mockCrossProductResponse, mockAmplitudeResponse } from './testData';
 
 jest.mock('./hooks', () => ({
   useProductRecommendationsData: jest.fn(),
+  useHasCourses: jest.fn(),
 }));
+
 jest.mock('./components/LoadingView', () => 'LoadingView');
 jest.mock('./components/LoadedView', () => 'LoadedView');
+jest.mock('containers/CourseList/NoCoursesView', () => 'NoCoursesView');
 
 describe('ProductRecommendations', () => {
   const defaultValues = {
@@ -25,7 +28,7 @@ describe('ProductRecommendations', () => {
   const successfullLoadValues = {
     ...defaultValues,
     isLoaded: true,
-    productRecommendations: mockResponse,
+    productRecommendations: mockCrossProductResponse,
   };
 
   const desktopWindowSize = {
@@ -41,21 +44,7 @@ describe('ProductRecommendations', () => {
 
     expect(shallow(<ProductRecommendations />)).toMatchSnapshot();
   });
-  it('renders the LoadedView with course data if the request completed', () => {
-    useWindowSize.mockReturnValueOnce(desktopWindowSize);
-    hooks.useProductRecommendationsData.mockReturnValueOnce({
-      ...successfullLoadValues,
-    });
 
-    expect(shallow(<ProductRecommendations />)).toMatchObject(
-      shallow(
-        <LoadedView
-          openCourses={mockResponse.amplitudeCourses}
-          crossProductCourses={mockResponse.crossProductCourses}
-        />,
-      ),
-    );
-  });
   it('renders the LoadingView if the request is pending', () => {
     useWindowSize.mockReturnValueOnce(desktopWindowSize);
     hooks.useProductRecommendationsData.mockReturnValueOnce({
@@ -87,5 +76,58 @@ describe('ProductRecommendations', () => {
     const wrapper = shallow(<ProductRecommendations />);
 
     expect(wrapper.type()).toBeNull();
+  });
+
+  it('renders NoCoursesView if the request is loaded, user has courses, and the response is empty', () => {
+    useWindowSize.mockReturnValueOnce(desktopWindowSize);
+    hooks.useProductRecommendationsData.mockReturnValueOnce({
+      ...successfullLoadValues,
+      productRecommendations: {
+        amplitudeCourses: [],
+        crossProductCourses: [],
+      },
+    });
+    hooks.useHasCourses.mockReturnValueOnce(true);
+
+    expect(shallow(<ProductRecommendations />)).toMatchObject(
+      shallow(<NoCoursesView />),
+    );
+  });
+
+  describe('LoadedView', () => {
+    it('renders with cross product data if the request completed and the user has courses', () => {
+      useWindowSize.mockReturnValueOnce(desktopWindowSize);
+      hooks.useProductRecommendationsData.mockReturnValueOnce({
+        ...successfullLoadValues,
+      });
+      hooks.useHasCourses.mockReturnValueOnce(true);
+
+      expect(shallow(<ProductRecommendations />)).toMatchObject(
+        shallow(
+          <LoadedView
+            openCourses={mockCrossProductResponse.amplitudeCourses}
+            crossProductCourses={mockCrossProductResponse.crossProductCourses}
+          />,
+        ),
+      );
+    });
+
+    it('renders the LoadedView with Amplitude course data if the request completed', () => {
+      useWindowSize.mockReturnValueOnce(desktopWindowSize);
+      hooks.useProductRecommendationsData.mockReturnValueOnce({
+        ...successfullLoadValues,
+        productRecommendations: mockAmplitudeResponse,
+      });
+      hooks.useHasCourses.mockReturnValueOnce(true);
+
+      expect(shallow(<ProductRecommendations />)).toMatchObject(
+        shallow(
+          <LoadedView
+            openCourses={mockCrossProductResponse.amplitudeCourses}
+            crossProductCourses={[]}
+          />,
+        ),
+      );
+    });
   });
 });
