@@ -2,10 +2,10 @@ import React from 'react';
 import { reduxHooks } from 'hooks';
 import './index.scss';
 import { useWindowSize, breakpoints } from '@edx/paragon';
-import { useProductRecommendationsData } from './hooks';
+import NoCoursesView from 'containers/CourseList/NoCoursesView';
 import LoadingView from './components/LoadingView';
 import LoadedView from './components/LoadedView';
-import NoCoursesView from '../../containers/CourseList/NoCoursesView';
+import { useProductRecommendationsData } from './hooks';
 
 const ProductRecommendations = () => {
   const checkEmptyResponse = (obj) => {
