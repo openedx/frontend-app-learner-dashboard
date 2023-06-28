@@ -15,7 +15,7 @@ jest.mock('data/services/segment/utils', () => ({
 const courseKey = 'MITx+5.0.01';
 const courseRunKey = `course-v1:${courseKey}+2022T2`;
 const label = 'Web Design';
-const coursesLink = 'https://www.edx.org/search?tab=course?linked_from=recommender';
+const headerLink = 'https://www.edx.org/search?tab=course?linked_from=recommender';
 const courseUrl = 'https://www.edx.org/course/some-course';
 const catagory = 'recommender';
 
@@ -37,27 +37,24 @@ describe('product recommendations trackers', () => {
     it('creates a link tracker for when a recommendations header is clicked', () => {
       const attributes = {
         category: catagory,
-        'product-line': 'course',
-        linkProps: {
-          page: 'dashboard',
-        },
+        product_line: 'course',
+        page: 'dashboard',
       };
       const args = [eventNames.recommendationsHeaderClicked, attributes];
 
-      recommendationsHeaderClicked('course', coursesLink);
+      recommendationsHeaderClicked('course', headerLink);
       expect(createEventTracker).toHaveBeenCalledWith(...args);
-      expect(createLinkTracker).toHaveBeenCalledWith(createEventTracker(...args), coursesLink);
+      expect(createLinkTracker).toHaveBeenCalledWith(createEventTracker(...args), headerLink);
     });
   });
   describe('discoveryCardClicked', () => {
     it('creates a link tracker for when a open course card is clicked', () => {
       const attributes = {
-        linkProps: {
-          label,
-          courserun_key: courseRunKey,
-          page: 'dashboard',
-          product_category: 'course',
-        },
+        catagory: 'recommender',
+        label,
+        courserun_key: courseRunKey,
+        page: 'dashboard',
+        product_line: 'open-course',
       };
       const args = [eventNames.discoveryCardClicked, attributes];
 
@@ -69,13 +66,11 @@ describe('product recommendations trackers', () => {
   describe('productCardClicked', () => {
     it('creates a link tracker for when a cross product course card is clicked', () => {
       const attributes = {
-        linkProps: {
-          label,
-          courserun_key: courseRunKey,
-          page: 'dashboard',
-          'product-line': 'bootcamp-2u',
-          product_category: '2u',
-        },
+        catagory: 'recommender',
+        label,
+        courserun_key: courseRunKey,
+        page: 'dashboard',
+        product_line: 'bootcamp-2u',
       };
       const args = [eventNames.productCardClicked, attributes];
 

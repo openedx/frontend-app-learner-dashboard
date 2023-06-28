@@ -20,7 +20,7 @@ exports[`ProductRecommendations ProductCardContainer matches snapshot 1`] = `
         schoolLogo="http://www.image.com/ef72daf3-c9a1-4c00-ba37-b3514392bdcf-8839c516815a.png"
         subtitle="Harvard University"
         title="Introduction to Computer Science"
-        url="https://www.edx.org/course/introduction-to-computer-sceince"
+        url="https://www.edx.org/course/some-course?utm_source=source&linked_from=recommender"
       />
     </div>
   </div>
@@ -40,7 +40,7 @@ exports[`ProductRecommendations ProductCardContainer matches snapshot 1`] = `
         schoolLogo="http://www.image.com/ef72daf3-c9a1-4c00-ba37-b3514392bdcf-8839c516815a.png"
         subtitle="Harvard University"
         title="Introduction to Computer Science"
-        url="https://www.edx.org/course/introduction-to-computer-sceince"
+        url="https://www.edx.org/course/some-course?utm_source=source&linked_from=recommender"
       />
     </div>
   </div>
@@ -60,7 +60,7 @@ exports[`ProductRecommendations ProductCardContainer matches snapshot 1`] = `
         schoolLogo="http://www.image.com/ef72daf3-c9a1-4c00-ba37-b3514392bdcf-8839c516815a.png"
         subtitle="Harvard University"
         title="Introduction to Computer Science"
-        url="https://www.edx.org/course/introduction-to-computer-sceince"
+        url="https://www.edx.org/course/some-course?utm_source=source&linked_from=recommender"
       />
       <ProductCard
         courseType="Course"
@@ -69,7 +69,7 @@ exports[`ProductRecommendations ProductCardContainer matches snapshot 1`] = `
         schoolLogo="http://www.image.com/ef72daf3-c9a1-4c00-ba37-b3514392bdcf-8839c516815a.png"
         subtitle="Harvard University"
         title="Introduction to Computer Science"
-        url="https://www.edx.org/course/introduction-to-computer-sceince"
+        url="https://www.edx.org/course/some-course?utm_source=source&linked_from=recommender"
       />
       <ProductCard
         courseType="Course"
@@ -78,7 +78,7 @@ exports[`ProductRecommendations ProductCardContainer matches snapshot 1`] = `
         schoolLogo="http://www.image.com/ef72daf3-c9a1-4c00-ba37-b3514392bdcf-8839c516815a.png"
         subtitle="Harvard University"
         title="Introduction to Computer Science"
-        url="https://www.edx.org/course/introduction-to-computer-sceince"
+        url="https://www.edx.org/course/some-course?utm_source=source&linked_from=recommender"
       />
       <ProductCard
         courseType="Course"
@@ -87,7 +87,7 @@ exports[`ProductRecommendations ProductCardContainer matches snapshot 1`] = `
         schoolLogo="http://www.image.com/ef72daf3-c9a1-4c00-ba37-b3514392bdcf-8839c516815a.png"
         subtitle="Harvard University"
         title="Introduction to Computer Science"
-        url="https://www.edx.org/course/introduction-to-computer-sceince"
+        url="https://www.edx.org/course/some-course?utm_source=source&linked_from=recommender"
       />
     </div>
   </div>

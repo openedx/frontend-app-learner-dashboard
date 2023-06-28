@@ -4,7 +4,7 @@ exports[`ProductRecommendations ProductCard matches snapshot 1`] = `
 <Card
   as="Hyperlink"
   className="base-card d-flex text-decoration-none"
-  destination="https://www.edx.org/course/introduction-to-computer-sceince"
+  destination="https://www.edx.org/course/some-course?utm_source=source&linked_from=recommender"
   isClickable={true}
 >
   <Card.ImageCap

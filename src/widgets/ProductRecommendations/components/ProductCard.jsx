@@ -20,10 +20,6 @@ const ProductCard = ({
     className="base-card d-flex text-decoration-none"
     as={Hyperlink}
     destination={url}
-    onClick={(e) => {
-      // e.preventDefault();
-      discoveryCardClicked('course-v1:MITx+6.0.0.1+2022T2', title, url);
-    }}
     isClickable
   >
     <Card.ImageCap

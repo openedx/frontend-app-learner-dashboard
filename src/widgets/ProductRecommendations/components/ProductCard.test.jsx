@@ -20,7 +20,8 @@ describe('ProductRecommendations ProductCard', () => {
     headerImage,
     schoolLogo,
     courseType: courseTypeToProductTypeMap[course.courseType],
-    url: `https://www.edx.org/${course.prospectusPath}`,
+    url: `${course.marketingUrl}&linked_from=recommender`,
+    courseRunKey: course.courseRunKey,
   };
 
   it('matches snapshot', () => {

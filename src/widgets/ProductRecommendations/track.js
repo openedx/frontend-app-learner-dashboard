@@ -11,13 +11,11 @@ export const eventNames = StrictDict({
 export const productCardClicked = (courseRunKey, courseTitle, courseType, href) => {
   createLinkTracker(
     createEventTracker(eventNames.productCardClicked, {
-      linkProps: {
-        courserun_key: courseRunKey,
-        label: courseTitle,
-        page: 'dashboard',
-        'product-line': courseType,
-        product_category: '2u',
-      },
+      catagory: 'recommender',
+      courserun_key: courseRunKey,
+      label: courseTitle,
+      page: 'dashboard',
+      product_line: courseType,
     }),
     href,
   );
@@ -26,12 +24,11 @@ export const productCardClicked = (courseRunKey, courseTitle, courseType, href) 
 export const discoveryCardClicked = (courseRunKey, courseTitle, href) => {
   createLinkTracker(
     createEventTracker(eventNames.discoveryCardClicked, {
-      linkProps: {
-        courserun_key: courseRunKey,
-        label: courseTitle,
-        page: 'dashboard',
-        product_category: 'course',
-      },
+      catagory: 'recommender',
+      courserun_key: courseRunKey,
+      label: courseTitle,
+      page: 'dashboard',
+      product_line: 'open-course',
     }),
     href,
   );
@@ -41,10 +38,8 @@ export const recommendationsHeaderClicked = (courseType, href) => {
   createLinkTracker(
     createEventTracker(eventNames.recommendationsHeaderClicked, {
       category: 'recommender',
-      'product-line': courseType,
-      linkProps: {
-        page: 'dashboard',
-      },
+      product_line: courseType,
+      page: 'dashboard',
     }),
     href,
   );

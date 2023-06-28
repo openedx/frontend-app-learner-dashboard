@@ -4,10 +4,12 @@ export const getCoursesWithType = (courseTypes) => {
   courseTypes.forEach((type) => {
     courses.push({
       title: 'Introduction to Computer Science',
+      courseRunKey: 'course-v1:Test+Course+2022T2',
+      marketingUrl: 'https://www.edx.org/course/some-course?utm_source=source',
+      courseType: type,
       image: {
         src: 'https://www.image-2.com/ed79a49b-64c1-48d2-afdc-054bf921e38d-6a76ceb47dea.small.jpg',
       },
-      prospectusPath: 'course/introduction-to-computer-sceince',
       owners: [
         {
           key: 'HarvardX',
@@ -15,7 +17,6 @@ export const getCoursesWithType = (courseTypes) => {
           logoImageUrl: 'http://www.image.com/ef72daf3-c9a1-4c00-ba37-b3514392bdcf-8839c516815a.png',
         },
       ],
-      courseType: type,
     });
   });
 
