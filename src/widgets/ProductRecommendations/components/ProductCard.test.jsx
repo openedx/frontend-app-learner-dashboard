@@ -21,7 +21,6 @@ describe('ProductRecommendations ProductCard', () => {
     schoolLogo,
     courseType: courseTypeToProductTypeMap[course.courseType],
     url: `${course.marketingUrl}&linked_from=recommender`,
-    courseRunKey: course.courseRunKey,
   };
 
   it('matches snapshot', () => {
