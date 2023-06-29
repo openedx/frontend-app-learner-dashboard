@@ -20,7 +20,6 @@ const userAttributes = {
   is_enterprise_user: false,
   location: 'us',
   is_mobile_user: false,
-  lang_preference: 'en-GB en-US en',
 };
 
 describe('Optimizely events', () => {
