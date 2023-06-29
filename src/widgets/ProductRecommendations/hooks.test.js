@@ -4,6 +4,7 @@ import { waitFor } from '@testing-library/react';
 import { MockUseState } from 'testUtils';
 import { RequestStates } from 'data/constants/requests';
 import { reduxHooks } from 'hooks';
+import { useWindowSize } from '@edx/paragon';
 import { wait } from './utils';
 
 import api from './api';
@@ -64,6 +65,23 @@ describe('ProductRecommendations hooks', () => {
       reduxHooks.useCurrentCourseList.mockReturnValueOnce(populatedCourseListData);
 
       expect(hooks.useMostRecentCourseRunKey()).toBe(mostRecentCourseRunKey);
+    });
+  });
+
+  describe('useIsMobile', () => {
+    it('returns false if the width of the window is greater than or equal to 576px', () => {
+      useWindowSize
+        .mockReturnValueOnce({ width: 576, height: 943 })
+        .mockReturnValueOnce({ width: 1400, height: 943 });
+
+      expect(hooks.useIsMobile()).toBeFalsy();
+      expect(hooks.useIsMobile()).toBeFalsy();
+    });
+
+    it('returns true if the width of the window is less than 576px', () => {
+      useWindowSize.mockReturnValueOnce({ width: 575, height: 943 });
+
+      expect(hooks.useIsMobile()).toBeTruthy();
     });
   });
 

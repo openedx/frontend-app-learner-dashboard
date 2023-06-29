@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { useWindowSize } from '@edx/paragon';
+import { reduxHooks } from 'hooks';
 import hooks from './hooks';
 import ProductRecommendations from './index';
 import LoadingView from './components/LoadingView';
@@ -10,7 +10,13 @@ import { mockCrossProductResponse, mockAmplitudeResponse } from './testData';
 
 jest.mock('./hooks', () => ({
   useProductRecommendationsData: jest.fn(),
-  useHasCourses: jest.fn(),
+  useIsMobile: jest.fn(),
+}));
+
+jest.mock('hooks', () => ({
+  reduxHooks: {
+    useHasCourses: jest.fn(),
+  },
 }));
 
 jest.mock('./components/LoadingView', () => 'LoadingView');
@@ -31,13 +37,10 @@ describe('ProductRecommendations', () => {
     productRecommendations: mockCrossProductResponse,
   };
 
-  const desktopWindowSize = {
-    width: 1400,
-    height: 943,
-  };
+  beforeEach(() => reduxHooks.useHasCourses.mockReturnValueOnce(true));
 
   it('matches snapshot', () => {
-    useWindowSize.mockReturnValueOnce(desktopWindowSize);
+    hooks.useIsMobile.mockReturnValueOnce(false);
     hooks.useProductRecommendationsData.mockReturnValueOnce({
       ...successfullLoadValues,
     });
@@ -46,7 +49,7 @@ describe('ProductRecommendations', () => {
   });
 
   it('renders the LoadingView if the request is pending', () => {
-    useWindowSize.mockReturnValueOnce(desktopWindowSize);
+    hooks.useIsMobile.mockReturnValueOnce(false);
     hooks.useProductRecommendationsData.mockReturnValueOnce({
       ...defaultValues,
       isLoading: true,
@@ -57,7 +60,7 @@ describe('ProductRecommendations', () => {
     );
   });
   it('renders nothing if the request has failed', () => {
-    useWindowSize.mockReturnValueOnce(desktopWindowSize);
+    hooks.useIsMobile.mockReturnValueOnce(false);
     hooks.useProductRecommendationsData.mockReturnValueOnce({
       ...defaultValues,
       hasFailed: true,
@@ -67,8 +70,8 @@ describe('ProductRecommendations', () => {
 
     expect(wrapper.type()).toBeNull();
   });
-  it('renders nothing if the width of the screen size is less than 576px (mobile view)', () => {
-    useWindowSize.mockReturnValueOnce({ width: 575, height: 976 });
+  it('renders nothing if the user is on the mobile view', () => {
+    hooks.useIsMobile.mockReturnValueOnce(true);
     hooks.useProductRecommendationsData.mockReturnValueOnce({
       ...successfullLoadValues,
     });
@@ -79,7 +82,7 @@ describe('ProductRecommendations', () => {
   });
 
   it('renders NoCoursesView if the request is loaded, user has courses, and the response is empty', () => {
-    useWindowSize.mockReturnValueOnce(desktopWindowSize);
+    hooks.useIsMobile.mockReturnValueOnce(false);
     hooks.useProductRecommendationsData.mockReturnValueOnce({
       ...successfullLoadValues,
       productRecommendations: {
@@ -87,7 +90,6 @@ describe('ProductRecommendations', () => {
         crossProductCourses: [],
       },
     });
-    hooks.useHasCourses.mockReturnValueOnce(true);
 
     expect(shallow(<ProductRecommendations />)).toMatchObject(
       shallow(<NoCoursesView />),
@@ -96,11 +98,10 @@ describe('ProductRecommendations', () => {
 
   describe('LoadedView', () => {
     it('renders with cross product data if the request completed and the user has courses', () => {
-      useWindowSize.mockReturnValueOnce(desktopWindowSize);
+      hooks.useIsMobile.mockReturnValueOnce(false);
       hooks.useProductRecommendationsData.mockReturnValueOnce({
         ...successfullLoadValues,
       });
-      hooks.useHasCourses.mockReturnValueOnce(true);
 
       expect(shallow(<ProductRecommendations />)).toMatchObject(
         shallow(
@@ -113,12 +114,11 @@ describe('ProductRecommendations', () => {
     });
 
     it('renders the LoadedView with Amplitude course data if the request completed', () => {
-      useWindowSize.mockReturnValueOnce(desktopWindowSize);
+      hooks.useIsMobile.mockReturnValueOnce(false);
       hooks.useProductRecommendationsData.mockReturnValueOnce({
         ...successfullLoadValues,
         productRecommendations: mockAmplitudeResponse,
       });
-      hooks.useHasCourses.mockReturnValueOnce(true);
 
       expect(shallow(<ProductRecommendations />)).toMatchObject(
         shallow(

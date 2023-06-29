@@ -26,6 +26,7 @@ const ProductCardContainer = ({ finalProductList, courseTypes }) => (
                   title={item.title}
                   subtitle={item.owners[0].name}
                   headerImage={item.image.src}
+                  courseRunKey={item.courseRunKey}
                   schoolLogo={item.owners[0].logoImageUrl}
                   courseType={type}
                 />

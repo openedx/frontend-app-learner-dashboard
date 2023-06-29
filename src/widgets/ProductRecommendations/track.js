@@ -1,5 +1,6 @@
 import { StrictDict } from 'utils';
 import { createLinkTracker, createEventTracker } from 'data/services/segment/utils';
+import { courseTypeToProductLineMap, convertCourseRunKeyToCourseKey } from './utils';
 
 export const eventNames = StrictDict({
   productCardClicked: 'edx.bi.2u-product-card.clicked',
@@ -11,11 +12,11 @@ export const eventNames = StrictDict({
 export const productCardClicked = (courseRunKey, courseTitle, courseType, href) => {
   createLinkTracker(
     createEventTracker(eventNames.productCardClicked, {
-      catagory: 'recommender',
-      courserun_key: courseRunKey,
+      category: 'recommender',
       label: courseTitle,
+      courserun_key: courseRunKey,
       page: 'dashboard',
-      product_line: courseType,
+      product_line: courseTypeToProductLineMap[courseType],
     }),
     href,
   );
@@ -24,9 +25,9 @@ export const productCardClicked = (courseRunKey, courseTitle, courseType, href) 
 export const discoveryCardClicked = (courseRunKey, courseTitle, href) => {
   createLinkTracker(
     createEventTracker(eventNames.discoveryCardClicked, {
-      catagory: 'recommender',
-      courserun_key: courseRunKey,
+      category: 'recommender',
       label: courseTitle,
+      courserun_key: courseRunKey,
       page: 'dashboard',
       product_line: 'open-course',
     }),
@@ -38,17 +39,17 @@ export const recommendationsHeaderClicked = (courseType, href) => {
   createLinkTracker(
     createEventTracker(eventNames.recommendationsHeaderClicked, {
       category: 'recommender',
-      product_line: courseType,
       page: 'dashboard',
+      product_line: courseTypeToProductLineMap[courseType],
     }),
     href,
   );
 };
 
-export const recommendationsViewed = (isControl, courseKey) => {
+export const recommendationsViewed = (isControl, courseRunKey) => {
   createEventTracker(eventNames.recommendationsViewed, {
     is_control: isControl,
     page: 'dashboard',
-    course_key: courseKey,
+    course_key: convertCourseRunKeyToCourseKey(courseRunKey),
   });
 };

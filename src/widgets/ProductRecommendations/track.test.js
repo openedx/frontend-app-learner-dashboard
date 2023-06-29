@@ -13,36 +13,52 @@ jest.mock('data/services/segment/utils', () => ({
 }));
 
 const courseKey = 'MITx+5.0.01';
-const courseRunKey = `course-v1:${courseKey}+2022T2`;
+const courseRunKeyNew = `course-v1:${courseKey}+2022T2`;
+const courseRunKeyOld = 'MITx/5.0.01/2022T2/';
 const label = 'Web Design';
 const headerLink = 'https://www.edx.org/search?tab=course?linked_from=recommender';
 const courseUrl = 'https://www.edx.org/course/some-course';
-const catagory = 'recommender';
+const category = 'recommender';
 
 describe('product recommendations trackers', () => {
   describe('recommendationsViewed', () => {
-    it('creates an event tracker for when cross product recommendations are present', () => {
-      recommendationsViewed(false, courseKey);
-      expect(createEventTracker).toHaveBeenCalledWith(
-        eventNames.recommendationsViewed,
-        {
-          is_control: false,
-          page: 'dashboard',
-          course_key: courseKey,
-        },
-      );
+    describe('with old course run key format', () => {
+      it('creates an event tracker for when cross product recommendations are present', () => {
+        recommendationsViewed(false, courseRunKeyOld);
+        expect(createEventTracker).toHaveBeenCalledWith(
+          eventNames.recommendationsViewed,
+          {
+            is_control: false,
+            page: 'dashboard',
+            course_key: courseKey,
+          },
+        );
+      });
+    });
+    describe('with new course run key format', () => {
+      it('creates an event tracker for when cross product recommendations are present', () => {
+        recommendationsViewed(false, courseRunKeyNew);
+        expect(createEventTracker).toHaveBeenCalledWith(
+          eventNames.recommendationsViewed,
+          {
+            is_control: false,
+            page: 'dashboard',
+            course_key: courseKey,
+          },
+        );
+      });
     });
   });
   describe('recommendationsHeaderClicked', () => {
     it('creates a link tracker for when a recommendations header is clicked', () => {
       const attributes = {
-        category: catagory,
-        product_line: 'course',
+        category,
+        product_line: 'open-courses',
         page: 'dashboard',
       };
       const args = [eventNames.recommendationsHeaderClicked, attributes];
 
-      recommendationsHeaderClicked('course', headerLink);
+      recommendationsHeaderClicked('Course', headerLink);
       expect(createEventTracker).toHaveBeenCalledWith(...args);
       expect(createLinkTracker).toHaveBeenCalledWith(createEventTracker(...args), headerLink);
     });
@@ -50,15 +66,15 @@ describe('product recommendations trackers', () => {
   describe('discoveryCardClicked', () => {
     it('creates a link tracker for when a open course card is clicked', () => {
       const attributes = {
-        catagory: 'recommender',
+        category,
         label,
-        courserun_key: courseRunKey,
+        courserun_key: courseRunKeyNew,
         page: 'dashboard',
         product_line: 'open-course',
       };
       const args = [eventNames.discoveryCardClicked, attributes];
 
-      discoveryCardClicked(courseRunKey, label, courseUrl);
+      discoveryCardClicked(courseRunKeyNew, label, courseUrl);
       expect(createEventTracker).toHaveBeenCalledWith(...args);
       expect(createLinkTracker).toHaveBeenCalledWith(createEventTracker(...args), courseUrl);
     });
@@ -66,15 +82,15 @@ describe('product recommendations trackers', () => {
   describe('productCardClicked', () => {
     it('creates a link tracker for when a cross product course card is clicked', () => {
       const attributes = {
-        catagory: 'recommender',
+        category,
         label,
-        courserun_key: courseRunKey,
+        courserun_key: courseRunKeyNew,
         page: 'dashboard',
-        product_line: 'bootcamp-2u',
+        product_line: 'boot-camps',
       };
       const args = [eventNames.productCardClicked, attributes];
 
-      productCardClicked(courseRunKey, label, 'bootcamp-2u', courseUrl);
+      productCardClicked(courseRunKeyNew, label, 'Boot Camp', courseUrl);
       expect(createEventTracker).toHaveBeenCalledWith(...args);
       expect(createLinkTracker).toHaveBeenCalledWith(createEventTracker(...args), courseUrl);
     });
