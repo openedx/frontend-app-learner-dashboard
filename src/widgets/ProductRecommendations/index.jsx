@@ -1,34 +1,30 @@
 import React from 'react';
+import { reduxHooks } from 'hooks';
 import './index.scss';
-import { getAuthenticatedUser } from '@edx/frontend-platform/auth';
 import { useWindowSize, breakpoints } from '@edx/paragon';
-import { activateProductRecommendationsExperiment } from './optimizelyExperiment';
-import { useProductRecommendationsData } from './hooks';
+import NoCoursesView from 'containers/CourseList/NoCoursesView';
 import LoadingView from './components/LoadingView';
 import LoadedView from './components/LoadedView';
+import { useProductRecommendationsData } from './hooks';
 
 const ProductRecommendations = () => {
+  const checkEmptyResponse = (obj) => {
+    const values = Object.values(obj);
+    const result = values.filter((item) => item.length === 0);
+    return result.length === values.length;
+  };
+
   const { productRecommendations, isLoading, isLoaded } = useProductRecommendationsData();
   const { width } = useWindowSize();
   const isMobile = width < breakpoints.small.minWidth;
-  const userID = getAuthenticatedUser().userId.toString();
-  const userAttributes = {
-    is_mobile_user: isMobile,
-    lang_preference: global.navigator.languages.join(' '),
-    is_enterprise_user: false,
-    location: 'US'.toLowerCase(),
-  };
-  
-  console.log('user id: ', userID);
-  console.log('user Attributes: ', userAttributes);
-  console.log('result of activating ecperiment', activateProductRecommendationsExperiment(userID, userAttributes))
-
+  const hasCourses = reduxHooks.useHasCourses();
+  const shouldShowPlaceholder = checkEmptyResponse(productRecommendations);
 
   if (isLoading && !isMobile) {
     return <LoadingView />;
   }
 
-  if (isLoaded && !isMobile) {
+  if (isLoaded && !isMobile && !shouldShowPlaceholder) {
     return (
       <LoadedView
         openCourses={productRecommendations.amplitudeCourses}
@@ -37,6 +33,9 @@ const ProductRecommendations = () => {
     );
   }
 
+  if (isLoaded && hasCourses && !isMobile && shouldShowPlaceholder) {
+    return <NoCoursesView />;
+  }
   return null;
 };
 

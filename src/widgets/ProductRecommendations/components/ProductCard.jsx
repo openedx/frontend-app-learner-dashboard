@@ -6,7 +6,6 @@ import {
   Truncate,
   Hyperlink,
 } from '@edx/paragon';
-import { discoveryCardClicked } from '../track';
 
 const ProductCard = ({
   title,
