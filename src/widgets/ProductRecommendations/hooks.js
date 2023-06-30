@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-
 import { RequestStates, RequestKeys } from 'data/constants/requests';
 import { StrictDict } from 'utils';
 import { reduxHooks } from 'hooks';
 import { SortKeys } from 'data/constants/app';
+import { useWindowSize, breakpoints } from '@edx/paragon';
 import api from './api';
 import * as module from './hooks';
 
@@ -12,11 +12,15 @@ export const state = StrictDict({
   data: (val) => useState(val), // eslint-disable-line
 });
 
+export const useIsMobile = () => {
+  const { width } = useWindowSize();
+  return width < breakpoints.small.minWidth;
+};
+
 export const useShowRecommendationsFooter = () => {
   const hasAvailableDashboards = reduxHooks.useHasAvailableDashboards();
   const hasRequestCompleted = reduxHooks.useRequestIsCompleted(RequestKeys.initialize);
 
-  // Hardcoded to not show until experiment related code is implemented
   return {
     shouldShowFooter: false,
     shouldLoadFooter: hasRequestCompleted && !hasAvailableDashboards,
@@ -83,4 +87,4 @@ export const useProductRecommendationsData = () => {
   };
 };
 
-export default { useProductRecommendationsData, useShowRecommendationsFooter };
+export default { useProductRecommendationsData, useShowRecommendationsFooter, useIsMobile };

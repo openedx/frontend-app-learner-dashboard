@@ -1,11 +1,10 @@
 import React from 'react';
-import { reduxHooks } from 'hooks';
 import './index.scss';
-import { useWindowSize, breakpoints } from '@edx/paragon';
+import { reduxHooks } from 'hooks';
 import NoCoursesView from 'containers/CourseList/NoCoursesView';
 import LoadingView from './components/LoadingView';
 import LoadedView from './components/LoadedView';
-import { useProductRecommendationsData } from './hooks';
+import hooks from './hooks';
 
 const ProductRecommendations = () => {
   const checkEmptyResponse = (obj) => {
@@ -14,9 +13,8 @@ const ProductRecommendations = () => {
     return result.length === values.length;
   };
 
-  const { productRecommendations, isLoading, isLoaded } = useProductRecommendationsData();
-  const { width } = useWindowSize();
-  const isMobile = width < breakpoints.small.minWidth;
+  const { productRecommendations, isLoading, isLoaded } = hooks.useProductRecommendationsData();
+  const isMobile = hooks.useIsMobile();
   const hasCourses = reduxHooks.useHasCourses();
   const shouldShowPlaceholder = checkEmptyResponse(productRecommendations);
 

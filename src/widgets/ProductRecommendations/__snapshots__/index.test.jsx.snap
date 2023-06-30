@@ -5,10 +5,12 @@ exports[`ProductRecommendations matches snapshot 1`] = `
   crossProductCourses={
     Array [
       Object {
+        "courseRunKey": "course-v1:Test+Course+2022T2",
         "courseType": "executive-education-2u",
         "image": Object {
           "src": "https://www.image-2.com/ed79a49b-64c1-48d2-afdc-054bf921e38d-6a76ceb47dea.small.jpg",
         },
+        "marketingUrl": "https://www.edx.org/course/some-course?utm_source=source",
         "owners": Array [
           Object {
             "key": "HarvardX",
@@ -16,14 +18,15 @@ exports[`ProductRecommendations matches snapshot 1`] = `
             "name": "Harvard University",
           },
         ],
-        "prospectusPath": "course/introduction-to-computer-sceince",
         "title": "Introduction to Computer Science",
       },
       Object {
+        "courseRunKey": "course-v1:Test+Course+2022T2",
         "courseType": "bootcamp-2u",
         "image": Object {
           "src": "https://www.image-2.com/ed79a49b-64c1-48d2-afdc-054bf921e38d-6a76ceb47dea.small.jpg",
         },
+        "marketingUrl": "https://www.edx.org/course/some-course?utm_source=source",
         "owners": Array [
           Object {
             "key": "HarvardX",
@@ -31,7 +34,6 @@ exports[`ProductRecommendations matches snapshot 1`] = `
             "name": "Harvard University",
           },
         ],
-        "prospectusPath": "course/introduction-to-computer-sceince",
         "title": "Introduction to Computer Science",
       },
     ]
@@ -39,10 +41,12 @@ exports[`ProductRecommendations matches snapshot 1`] = `
   openCourses={
     Array [
       Object {
+        "courseRunKey": "course-v1:Test+Course+2022T2",
         "courseType": "verified-audit",
         "image": Object {
           "src": "https://www.image-2.com/ed79a49b-64c1-48d2-afdc-054bf921e38d-6a76ceb47dea.small.jpg",
         },
+        "marketingUrl": "https://www.edx.org/course/some-course?utm_source=source",
         "owners": Array [
           Object {
             "key": "HarvardX",
@@ -50,14 +54,15 @@ exports[`ProductRecommendations matches snapshot 1`] = `
             "name": "Harvard University",
           },
         ],
-        "prospectusPath": "course/introduction-to-computer-sceince",
         "title": "Introduction to Computer Science",
       },
       Object {
+        "courseRunKey": "course-v1:Test+Course+2022T2",
         "courseType": "audit",
         "image": Object {
           "src": "https://www.image-2.com/ed79a49b-64c1-48d2-afdc-054bf921e38d-6a76ceb47dea.small.jpg",
         },
+        "marketingUrl": "https://www.edx.org/course/some-course?utm_source=source",
         "owners": Array [
           Object {
             "key": "HarvardX",
@@ -65,14 +70,15 @@ exports[`ProductRecommendations matches snapshot 1`] = `
             "name": "Harvard University",
           },
         ],
-        "prospectusPath": "course/introduction-to-computer-sceince",
         "title": "Introduction to Computer Science",
       },
       Object {
+        "courseRunKey": "course-v1:Test+Course+2022T2",
         "courseType": "verified",
         "image": Object {
           "src": "https://www.image-2.com/ed79a49b-64c1-48d2-afdc-054bf921e38d-6a76ceb47dea.small.jpg",
         },
+        "marketingUrl": "https://www.edx.org/course/some-course?utm_source=source",
         "owners": Array [
           Object {
             "key": "HarvardX",
@@ -80,14 +86,15 @@ exports[`ProductRecommendations matches snapshot 1`] = `
             "name": "Harvard University",
           },
         ],
-        "prospectusPath": "course/introduction-to-computer-sceince",
         "title": "Introduction to Computer Science",
       },
       Object {
+        "courseRunKey": "course-v1:Test+Course+2022T2",
         "courseType": "course",
         "image": Object {
           "src": "https://www.image-2.com/ed79a49b-64c1-48d2-afdc-054bf921e38d-6a76ceb47dea.small.jpg",
         },
+        "marketingUrl": "https://www.edx.org/course/some-course?utm_source=source",
         "owners": Array [
           Object {
             "key": "HarvardX",
@@ -95,7 +102,6 @@ exports[`ProductRecommendations matches snapshot 1`] = `
             "name": "Harvard University",
           },
         ],
-        "prospectusPath": "course/introduction-to-computer-sceince",
         "title": "Introduction to Computer Science",
       },
     ]
