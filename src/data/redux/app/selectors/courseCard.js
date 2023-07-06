@@ -15,17 +15,14 @@ export const loadDateVal = (date) => (date ? new Date(date) : null);
 export const courseCard = StrictDict({
   certificate: mkCardSelector(
     cardSimpleSelectors.certificate,
-    (certificate) => {
-      const availableDate = new Date(certificate.availableDate);
-      const isAvailable = availableDate <= new Date();
-      return {
-        availableDate,
-        certPreviewUrl: baseAppUrl(certificate.certPreviewUrl),
-        isDownloadable: certificate.isDownloadable,
-        isEarnedButUnavailable: certificate.isEarned && !isAvailable,
-        isRestricted: certificate.isRestricted,
-      };
-    },
+    (certificate) => (certificate === null ? {} : ({
+      availableDate: new Date(certificate.availableDate),
+      certPreviewUrl: baseAppUrl(certificate.certPreviewUrl),
+      isDownloadable: certificate.isDownloadable,
+      isEarnedButUnavailable: certificate.isEarned && new Date(certificate.availableDate) > new Date(),
+      isRestricted: certificate.isRestricted,
+      isEarned: certificate.isEarned,
+    })),
   ),
   course: mkCardSelector(
     cardSimpleSelectors.course,

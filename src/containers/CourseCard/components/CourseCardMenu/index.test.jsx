@@ -1,26 +1,19 @@
 import { shallow } from 'enzyme';
 
-import { reduxHooks } from 'hooks';
-import { useEmailSettings, useUnenrollData } from './hooks';
+import {
+  useEmailSettings, useUnenrollData, useCourseCardMenu,
+} from './hooks';
 import CourseCardMenu from '.';
 
 jest.mock('react-share', () => ({
   FacebookShareButton: () => 'FacebookShareButton',
   TwitterShareButton: () => 'TwitterShareButton',
 }));
-jest.mock('hooks', () => ({
-  reduxHooks: {
-    useCardCourseData: jest.fn(),
-    useCardEnrollmentData: jest.fn(),
-    useCardSocialSettingsData: jest.fn(),
-    useMasqueradeData: jest.fn(),
-    useTrackCourseEvent: (_, __, site) => jest.fn().mockName(`${site}ShareClick`),
-  },
-}));
 jest.mock('./hooks', () => ({
   useEmailSettings: jest.fn(),
   useUnenrollData: jest.fn(),
-  useHandleToggleDropdown: jest.fn(),
+  useCourseCardMenu: jest.fn(),
+  useHandleToggleDropdown: () => jest.fn().mockName('mockHandleToggleDropdown'),
 }));
 
 const props = {
@@ -48,77 +41,105 @@ const defaultSocialShare = {
     socialBrand: 'twitter-social-brand',
   },
 };
-const courseName = 'test-course-name';
+const defaultUseCourseCardMenu = {
+  courseName: 'test-course-name',
+  isMasquerading: false,
+  isEmailEnabled: true,
+  showUnenrollItem: true,
+  showDropdown: true,
+  handleTwitterShare: jest.fn().mockName('handleTwitterShare'),
+  handleFacebookShare: jest.fn().mockName('handleFacebookShare'),
+};
 let wrapper;
 let el;
 
 describe('CourseCardMenu', () => {
-  beforeEach(() => {
-    useEmailSettings.mockReturnValue(defaultEmailSettingsModal);
-    useUnenrollData.mockReturnValue(defaultUnenrollModal);
-    reduxHooks.useCardSocialSettingsData.mockReturnValue(defaultSocialShare);
-    reduxHooks.useCardCourseData.mockReturnValue({ courseName });
-    reduxHooks.useCardEnrollmentData.mockReturnValue({ isEnrolled: true, isEmailEnabled: true });
-    reduxHooks.useMasqueradeData.mockReturnValue({ isMasquerading: false });
+  useEmailSettings.mockReturnValue(defaultEmailSettingsModal);
+  useUnenrollData.mockReturnValue(defaultUnenrollModal);
+
+  const mockUseCourseCardMenu = ({
+    isMasquerading,
+    isEmailEnabled,
+    showUnenrollItem,
+    showDropdown,
+    facebook,
+    twitter,
+  }) => {
+    useCourseCardMenu.mockReturnValueOnce({
+      ...defaultUseCourseCardMenu,
+      isMasquerading,
+      isEmailEnabled,
+      showUnenrollItem,
+      showDropdown,
+      facebook,
+      twitter,
+    });
+    return shallow(<CourseCardMenu {...props} />);
+  };
+  test('default snapshot', () => {
+    wrapper = mockUseCourseCardMenu({
+      isMasquerading: false,
+      isEmailEnabled: true,
+      showUnenrollItem: true,
+      showDropdown: true,
+      ...defaultSocialShare,
+    });
+    expect(wrapper).toMatchSnapshot();
   });
-  describe('enrolled, share enabled, email setting enable', () => {
-    beforeEach(() => {
-      wrapper = shallow(<CourseCardMenu {...props} />);
+  test('renders null if showDropdown is false', () => {
+    wrapper = mockUseCourseCardMenu({
+      isMasquerading: true,
+      isEmailEnabled: true,
+      showUnenrollItem: true,
+      showDropdown: false,
+      ...defaultSocialShare,
     });
-    test('snapshot', () => {
-      expect(wrapper).toMatchSnapshot();
-    });
-    it('renders share buttons', () => {
-      el = wrapper.find('FacebookShareButton');
-      expect(el.length).toEqual(1);
-      expect(el.prop('url')).toEqual('facebook-share-url');
-      el = wrapper.find('TwitterShareButton');
-      expect(el.length).toEqual(1);
-      expect(el.prop('url')).toEqual('twitter-share-url');
-    });
-    it('renders enabled unenroll modal toggle', () => {
-      el = wrapper.find({ 'data-testid': 'unenrollModalToggle' });
-      expect(el.props().disabled).toEqual(false);
-    });
-    it('renders enabled email settings modal toggle', () => {
-      el = wrapper.find({ 'data-testid': 'emailSettingsModalToggle' });
-      expect(el.props().disabled).toEqual(false);
-    });
-    it('renders enabled email settings modal toggle', () => {
-      el = wrapper.find({ 'data-testid': 'emailSettingsModalToggle' });
-      expect(el.props().disabled).toEqual(false);
-    });
+    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.isEmptyRender()).toEqual(true);
   });
-  describe('not enrolled, share disabled, email setting disabled', () => {
-    beforeEach(() => {
-      reduxHooks.useCardSocialSettingsData.mockReturnValueOnce({
-        ...defaultSocialShare,
-        twitter: { ...defaultSocialShare.twitter, isEnabled: false },
-        facebook: { ...defaultSocialShare.facebook, isEnabled: false },
+
+  describe('disable state options', () => {
+    beforeAll(() => {
+      wrapper = mockUseCourseCardMenu({
+        isMasquerading: false,
+        isEmailEnabled: false,
+        showUnenrollItem: false,
+        showDropdown: true, // set to true for testing
+        facebook: {
+          isEnabled: false,
+        },
+        twitter: {
+          isEnabled: false,
+        },
       });
-      reduxHooks.useCardEnrollmentData.mockReturnValueOnce({ isEnrolled: false, isEmailEnabled: false });
-      wrapper = shallow(<CourseCardMenu {...props} />);
     });
-    test('snapshot', () => {
-      expect(wrapper).toMatchSnapshot();
+    // to make sure it try to render the dropdown
+    it('render dropdown base on showDropdown', () => {
+      expect(wrapper.isEmptyRender()).toEqual(false);
+      expect(wrapper.find('Dropdown').length).toEqual(1);
     });
-    it('does not renders share buttons', () => {
+    it('not renders email settings modal toggle', () => {
+      el = wrapper.find({ 'data-testid': 'emailSettingsModalToggle' });
+      expect(el.length).toEqual(0);
+    });
+    it('not renders unenroll modal toggle', () => {
+      el = wrapper.find({ 'data-testid': 'unenrollModalToggle' });
+      expect(el.length).toEqual(0);
+    });
+    it('not renders share buttons', () => {
       expect(wrapper.find('FacebookShareButton').length).toEqual(0);
       expect(wrapper.find('TwitterShareButton').length).toEqual(0);
-    });
-    it('does not render unenroll modal toggle', () => {
-      el = wrapper.find({ 'data-testid': 'unenrollModalToggle' });
-      expect(el.length).toEqual(0);
-    });
-    it('does not render email settings modal toggle', () => {
-      el = wrapper.find({ 'data-testid': 'emailSettingsModalToggle' });
-      expect(el.length).toEqual(0);
     });
   });
   describe('masquerading', () => {
     beforeEach(() => {
-      reduxHooks.useMasqueradeData.mockReturnValue({ isMasquerading: true });
-      wrapper = shallow(<CourseCardMenu {...props} />);
+      wrapper = mockUseCourseCardMenu({
+        isMasquerading: true,
+        isEmailEnabled: true,
+        showUnenrollItem: true,
+        showDropdown: true,
+        ...defaultSocialShare,
+      });
     });
     test('snapshot', () => {
       expect(wrapper).toMatchSnapshot();

@@ -6,14 +6,13 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { Dropdown, Icon, IconButton } from '@edx/paragon';
 import { MoreVert } from '@edx/paragon/icons';
 
-import track from 'tracking';
-import { reduxHooks } from 'hooks';
 import EmailSettingsModal from 'containers/EmailSettingsModal';
 import UnenrollConfirmModal from 'containers/UnenrollConfirmModal';
 import {
   useEmailSettings,
   useUnenrollData,
   useHandleToggleDropdown,
+  useCourseCardMenu,
 } from './hooks';
 
 import messages from './messages';
@@ -21,24 +20,25 @@ import messages from './messages';
 export const CourseCardMenu = ({ cardId }) => {
   const { formatMessage } = useIntl();
 
-  const { courseName } = reduxHooks.useCardCourseData(cardId);
-  const { isEnrolled, isEmailEnabled } = reduxHooks.useCardEnrollmentData(cardId);
-  const { twitter, facebook } = reduxHooks.useCardSocialSettingsData(cardId);
-  const { isMasquerading } = reduxHooks.useMasqueradeData();
-  const handleTwitterShare = reduxHooks.useTrackCourseEvent(
-    track.socialShare,
-    cardId,
-    'twitter',
-  );
-  const handleFacebookShare = reduxHooks.useTrackCourseEvent(
-    track.socialShare,
-    cardId,
-    'facebook',
-  );
-
   const emailSettingsModal = useEmailSettings();
   const unenrollModal = useUnenrollData();
   const handleToggleDropdown = useHandleToggleDropdown(cardId);
+
+  const {
+    courseName,
+    isMasquerading,
+    isEmailEnabled,
+    showUnenrollItem,
+    showDropdown,
+    facebook,
+    twitter,
+    handleTwitterShare,
+    handleFacebookShare,
+  } = useCourseCardMenu(cardId);
+
+  if (!showDropdown) {
+    return null;
+  }
 
   return (
     <>
@@ -52,7 +52,7 @@ export const CourseCardMenu = ({ cardId }) => {
           alt={formatMessage(messages.dropdownAlt)}
         />
         <Dropdown.Menu>
-          {isEnrolled && (
+          {showUnenrollItem && (
             <Dropdown.Item
               disabled={isMasquerading}
               onClick={unenrollModal.show}
