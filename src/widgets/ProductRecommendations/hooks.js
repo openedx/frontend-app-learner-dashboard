@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getAuthenticatedUser } from '@edx/frontend-platform/auth';
+
 import { RequestStates, RequestKeys } from 'data/constants/requests';
 import { StrictDict } from 'utils';
 import { reduxHooks } from 'hooks';
@@ -9,6 +10,7 @@ import { useExperimentContext } from '../../experimentContext';
 import { control, treatment, noExperiment } from './constants';
 import { activateProductRecommendationsExperiment, trackProductRecommendationsViewed } from './optimizelyExperiment';
 import { recommendationsViewed } from './track';
+
 import api from './api';
 import * as module from './hooks';
 

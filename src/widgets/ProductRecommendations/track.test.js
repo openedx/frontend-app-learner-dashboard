@@ -39,6 +39,7 @@ describe('product recommendations trackers', () => {
     describe('with new course run key format', () => {
       it('creates an event tracker for when a user is bucketed into the conrol group', () => {
         recommendationsViewed(false, control, courseRunKeyNew);
+
         expect(createEventTracker).toHaveBeenCalledWith(
           eventNames.recommendationsViewed,
           {
