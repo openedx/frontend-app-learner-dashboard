@@ -23,6 +23,10 @@ jest.mock('hooks', () => ({
   },
 }));
 
+jest.mock('experimentContext', () => ({
+  useCountryCode: jest.fn(),
+}));
+
 jest.mock('containers/EnterpriseDashboardModal', () => 'EnterpriseDashboardModal');
 jest.mock('containers/CourseList', () => 'CourseList');
 jest.mock('containers/WidgetContainers/LoadedSidebar', () => 'LoadedWidgetSidebar');

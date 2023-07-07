@@ -9,13 +9,16 @@ import CourseList from 'containers/CourseList';
 import LoadedSidebar from 'containers/WidgetContainers/LoadedSidebar';
 import NoCoursesSidebar from 'containers/WidgetContainers/NoCoursesSidebar';
 
+import experiment from 'experimentContext';
 import LoadingView from './LoadingView';
 import DashboardLayout from './DashboardLayout';
 import hooks from './hooks';
 import './index.scss';
 
 export const Dashboard = () => {
+  experiment.useCountryCode();
   hooks.useInitializeDashboard();
+
   const { pageTitle } = hooks.useDashboardMessages();
   const hasCourses = reduxHooks.useHasCourses();
   const hasAvailableDashboards = reduxHooks.useHasAvailableDashboards();

@@ -18,7 +18,10 @@ export const activateProductRecommendationsExperiment = (userId, userAttributes)
     userAttributes,
   );
 
-  return variation === PRODUCT_RECOMMENDATIONS_EXP_VARIATION;
+  return {
+    experimentActivated: variation !== null,
+    inExperimentVariant: variation === PRODUCT_RECOMMENDATIONS_EXP_VARIATION,
+  };
 };
 
 export const trackProductRecommendationsViewed = (userId, userAttributes = {}) => {

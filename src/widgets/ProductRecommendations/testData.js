@@ -24,10 +24,9 @@ export const getCoursesWithType = (courseTypes) => {
 };
 
 export const mockFooterRecommendationsHook = {
-  showAndLoad: { shouldShowFooter: true, shouldLoadFooter: true },
-  showDontLoad: { shouldShowFooter: true, shouldLoadFooter: false },
-  loadDontShow: { shouldShowFooter: false, shouldLoadFooter: true },
-  dontShowOrLoad: { shouldShowFooter: false, shouldLoadFooter: false },
+  default: { isExperimentActive: false, inRecommendationsVariant: true },
+  activeControl: { isExperimentActive: true, inRecommendationsVariant: false },
+  activeTreatment: { isExperimentActive: true, inRecommendationsVariant: true },
 };
 
 export const mockCrossProductCourses = getCoursesWithType(['executive-education-2u', 'bootcamp-2u']);

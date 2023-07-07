@@ -6,6 +6,7 @@ import WidgetFooter from '.';
 
 jest.mock('widgets/LookingForChallengeWidget', () => 'LookingForChallengeWidget');
 jest.mock('widgets/ProductRecommendations/hooks', () => ({
+  useActivateRecommendationsExperiment: jest.fn(),
   useShowRecommendationsFooter: jest.fn(),
 }));
 
@@ -13,26 +14,32 @@ describe('WidgetFooter', () => {
   describe('snapshots', () => {
     test('default', () => {
       hooks.useShowRecommendationsFooter.mockReturnValueOnce(
-        mockFooterRecommendationsHook.showAndLoad,
+        mockFooterRecommendationsHook.activeTreatment,
       );
       const wrapper = shallow(<WidgetFooter />);
+
+      expect(hooks.useActivateRecommendationsExperiment).toHaveBeenCalled();
       expect(wrapper).toMatchSnapshot();
     });
   });
 
-  test('is hidden when shouldShowFooter is false but shouldLoadFooter is true', () => {
+  test('is hidden when the experiment has the default values', () => {
     hooks.useShowRecommendationsFooter.mockReturnValueOnce(
-      mockFooterRecommendationsHook.loadDontShow,
+      mockFooterRecommendationsHook.default,
     );
     const wrapper = shallow(<WidgetFooter />);
+
+    expect(hooks.useActivateRecommendationsExperiment).toHaveBeenCalled();
     expect(wrapper.type()).toBeNull();
   });
 
-  test('is hidden when shouldLoadFooter is false but shouldShowFooter is true', () => {
+  test('is hidden when the experiment has the control values', () => {
     hooks.useShowRecommendationsFooter.mockReturnValueOnce(
-      mockFooterRecommendationsHook.showDontLoad,
+      mockFooterRecommendationsHook.activeControl,
     );
     const wrapper = shallow(<WidgetFooter />);
+
+    expect(hooks.useActivateRecommendationsExperiment).toHaveBeenCalled();
     expect(wrapper.type()).toBeNull();
   });
 });
