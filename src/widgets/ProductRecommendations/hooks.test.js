@@ -33,7 +33,7 @@ jest.mock('experimentContext', () => ({
 jest.mock('hooks', () => ({
   reduxHooks: {
     useCurrentCourseList: jest.fn(),
-    useHasAvailableDashboards: jest.fn(),
+    useEnterpriseDashboardData: jest.fn(),
     useRequestIsCompleted: jest.fn(),
   },
 }));
@@ -159,7 +159,7 @@ describe('ProductRecommendations hooks', () => {
           optimizelyExperiment = optimizelyExperimentMock({}),
         ) => {
           reduxHooks.useCurrentCourseList.mockReturnValueOnce(populatedCourseListData);
-          reduxHooks.useHasAvailableDashboards.mockReturnValueOnce(null);
+          reduxHooks.useEnterpriseDashboardData.mockReturnValueOnce(null);
           reduxHooks.useRequestIsCompleted.mockReturnValueOnce(isCompleted);
           useExperimentContext.mockReturnValueOnce(experimentContext);
           activateProductRecommendationsExperiment.mockReturnValueOnce(optimizelyExperiment);

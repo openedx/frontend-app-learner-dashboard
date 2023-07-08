@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { mockCrossProductCourses, mockOpenCourses } from '../testData';
+import { mockCrossProductCourses, mockOpenCourses, mockFallbackOpenCourse } from '../testData';
 import { trackProductCardClicked, trackCourseCardClicked } from '../optimizelyExperiment';
 import { productCardClicked, discoveryCardClicked } from '../track';
 import ProductCard from './ProductCard';
@@ -37,15 +37,23 @@ describe('ProductRecommendations ProductCard', () => {
       schoolLogo,
       courseType: courseTypeToProductTypeMap[course.courseType],
       courseRunKey: course.courseRunKey,
-      url: `${course.marketingUrl}&linked_from=recommender`,
+      url: course.marketingUrl,
     };
   };
 
   const crossProductProps = getProps(mockCrossProductCourses[0]);
   const openCourseProps = getProps(mockOpenCourses[0]);
+  const fallbackOpenCourseProps = getProps(mockFallbackOpenCourse[0]);
 
   it('matches snapshot', () => {
     expect(shallow(<ProductCard {...crossProductProps} />)).toMatchSnapshot();
+  });
+
+  it('has the query string parameter attached to a fallback recommendations url', () => {
+    const wrapper = shallow(<ProductCard {...fallbackOpenCourseProps} />);
+    const cardUrl = wrapper.find('Card').props().destination;
+
+    expect(cardUrl).toEqual('https://www.edx.org/course/some-course?linked_from=recommender');
   });
 
   it('send outs experiment events related to open courses when clicked', () => {
@@ -55,7 +63,7 @@ describe('ProductRecommendations ProductCard', () => {
     wrapper.simulate('click');
 
     expect(trackCourseCardClicked).toHaveBeenCalledWith('1');
-    expect(discoveryCardClicked).toHaveBeenCalledWith(courseRunKey, title, url);
+    expect(discoveryCardClicked).toHaveBeenCalledWith(courseRunKey, title, `${url}&linked_from=recommender`);
   });
 
   it('send outs experiment events related to cross product courses when clicked', () => {
@@ -70,6 +78,6 @@ describe('ProductRecommendations ProductCard', () => {
     wrapper.simulate('click');
 
     expect(trackProductCardClicked).toHaveBeenCalledWith('1');
-    expect(productCardClicked).toHaveBeenCalledWith(courseRunKey, title, courseType, url);
+    expect(productCardClicked).toHaveBeenCalledWith(courseRunKey, title, courseType, `${url}&linked_from=recommender`);
   });
 });

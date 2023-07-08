@@ -40,7 +40,7 @@ export const courseTypeToProductTypeMap = {
 export const courseTypeToProductLineMap = {
   [executiveEducation]: 'executive-education',
   [bootCamp]: 'boot-camps',
-  Course: 'open-courses',
+  [course]: 'open-courses',
 };
 
 export const convertCourseRunKeyToCourseKey = (courseRunKey) => {

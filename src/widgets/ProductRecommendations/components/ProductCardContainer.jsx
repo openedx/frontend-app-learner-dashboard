@@ -23,7 +23,7 @@ const ProductCardContainer = ({ finalProductList, courseTypes }) => (
               .map((item) => (
                 <ProductCard
                   key={item.title}
-                  url={`${item.marketingUrl}&linked_from=recommender`}
+                  url={item.marketingUrl}
                   title={item.title}
                   subtitle={item.owners[0].name}
                   headerImage={item.image.src}

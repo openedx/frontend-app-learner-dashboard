@@ -35,7 +35,7 @@ export const useMostRecentCourseRunKey = () => {
 };
 
 export const useActivateRecommendationsExperiment = () => {
-  const hasAvailableDashboards = reduxHooks.useHasAvailableDashboards();
+  const enterpriseDashboardData = reduxHooks.useEnterpriseDashboardData();
   const hasRequestCompleted = reduxHooks.useRequestIsCompleted(RequestKeys.initialize);
   const mostRecentCourseRunKey = module.useMostRecentCourseRunKey();
   const userId = getAuthenticatedUser().userId.toString();
@@ -52,7 +52,7 @@ export const useActivateRecommendationsExperiment = () => {
       const activateExperiment = () => {
         const userAttributes = {
           is_mobile_user: isMobile,
-          is_enterprise_user: !!hasAvailableDashboards,
+          is_enterprise_user: !!enterpriseDashboardData,
           location: countryCode ? countryCode.toLowerCase() : '',
         };
         const experiment = activateProductRecommendationsExperiment(userId, userAttributes);
