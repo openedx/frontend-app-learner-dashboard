@@ -80,7 +80,7 @@ export const useActivateRecommendationsExperiment = () => {
       }
     }
   /* eslint-disable */
-  }, [])
+  }, [isExperimentActive, countryCode])
 };
 
 export const useShowRecommendationsFooter = () => {

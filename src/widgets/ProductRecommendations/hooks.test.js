@@ -128,6 +128,7 @@ describe('ProductRecommendations hooks', () => {
       describe('useEffect call', () => {
         let cb;
         let calls;
+        let prereqs
         const setExperiment = jest.fn();
         const setCountryCode = jest.fn();
         const userAttributes = { is_enterprise_user: false, is_mobile_user: false, location: 'za' };
@@ -167,11 +168,12 @@ describe('ProductRecommendations hooks', () => {
           hooks.useActivateRecommendationsExperiment();
 
           ({ calls } = React.useEffect.mock);
-          ([[cb]] = calls);
+          ([[cb, prereqs]] = calls);
         };
 
-        it('calls effect once', () => {
+        it('runs when isExperimentActive or countryCode changes (prereqs)', () => {
           setUp(true);
+          expect(prereqs).toEqual([false, 'ZA']);
           expect(calls.length).toEqual(1);
         });
         describe('when the request state is not completed', () => {

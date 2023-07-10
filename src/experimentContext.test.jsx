@@ -4,7 +4,6 @@ import { waitFor } from '@testing-library/react';
 import { useWindowSize } from '@edx/paragon';
 
 import api from 'widgets/ProductRecommendations/api';
-import { wait } from 'widgets/ProductRecommendations/utils';
 import { MockUseState } from 'testUtils';
 
 import * as experiment from 'experimentContext';
@@ -41,7 +40,7 @@ describe('experiments context', () => {
         it('calls useEffect once', () => {
           expect(calls.length).toEqual(1);
         });
-        describe('successfull fetch while mounted', () => {
+        describe('successfull fetch', () => {
           it('sets the country code', async () => {
             let resolveFn;
             api.fetchRecommendationsContext.mockReturnValueOnce(
@@ -59,24 +58,7 @@ describe('experiments context', () => {
             });
           });
         });
-        describe('successfull fetch while unmounted', () => {
-          it('does not set the country code', async () => {
-            let resolveFn;
-            api.fetchRecommendationsContext.mockReturnValueOnce(
-              new Promise((resolve) => {
-                resolveFn = resolve;
-              }),
-            );
-            const unmount = cb();
-            expect(api.fetchRecommendationsContext).toHaveBeenCalled();
-            expect(setCountryCode).not.toHaveBeenCalled();
-            unmount();
-            resolveFn(successfulFetch);
-            await wait(10);
-            expect(setCountryCode).not.toHaveBeenCalled();
-          });
-        });
-        describe('unsuccessfull fetch while mounted', () => {
+        describe('unsuccessfull fetch', () => {
           it('sets the country code to an empty string', async () => {
             let rejectFn;
             api.fetchRecommendationsContext.mockReturnValueOnce(
@@ -91,23 +73,6 @@ describe('experiments context', () => {
             await waitFor(() => {
               expect(setCountryCode).toHaveBeenCalledWith('');
             });
-          });
-        });
-        describe('unsuccessfull fetch while unmounted', () => {
-          it('does not set the country code', async () => {
-            let rejectFn;
-            api.fetchRecommendationsContext.mockReturnValueOnce(
-              new Promise((resolve, reject) => {
-                rejectFn = reject;
-              }),
-            );
-            const unmount = cb();
-            expect(api.fetchRecommendationsContext).toHaveBeenCalled();
-            expect(setCountryCode).not.toHaveBeenCalled();
-            unmount();
-            rejectFn();
-            await wait(10);
-            expect(setCountryCode).not.toHaveBeenCalled();
           });
         });
       });

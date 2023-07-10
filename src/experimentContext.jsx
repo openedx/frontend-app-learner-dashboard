@@ -12,24 +12,14 @@ export const state = StrictDict({
 
 export const useCountryCode = (setCountryCode) => {
   React.useEffect(() => {
-    let isMounted = true;
-
     api
       .fetchRecommendationsContext()
       .then((response) => {
-        if (isMounted) {
-          setCountryCode(response.data.countryCode);
-        }
+        setCountryCode(response.data.countryCode);
       })
       .catch(() => {
-        if (isMounted) {
-          setCountryCode('');
-        }
+        setCountryCode('');
       });
-
-    return () => {
-      isMounted = false;
-    };
     /* eslint-disable */
 }, []);
 };
