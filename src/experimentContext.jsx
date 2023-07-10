@@ -21,7 +21,7 @@ export const useCountryCode = (setCountryCode) => {
         setCountryCode('');
       });
     /* eslint-disable */
-}, []);
+  }, []);
 };
 
 export const ExperimentContext = React.createContext();
