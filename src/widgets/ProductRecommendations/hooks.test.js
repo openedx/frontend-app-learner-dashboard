@@ -128,7 +128,7 @@ describe('ProductRecommendations hooks', () => {
       describe('useEffect call', () => {
         let cb;
         let calls;
-        let prereqs
+        let prereqs;
         const setExperiment = jest.fn();
         const setCountryCode = jest.fn();
         const userAttributes = { is_enterprise_user: false, is_mobile_user: false, location: 'za' };
