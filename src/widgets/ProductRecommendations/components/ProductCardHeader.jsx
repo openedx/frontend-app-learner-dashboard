@@ -29,7 +29,7 @@ const ProductCardHeader = ({ courseType }) => {
         return {
           heading: messages.courseHeading,
           description: messages.courseDescription,
-          url: '/search?tab=course?linked_from=recommender',
+          url: '/search?tab=course',
         };
       }
     }
