@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useWindowSize, breakpoints } from '@edx/paragon';
 import { StrictDict } from 'utils';
 import api from 'widgets/ProductRecommendations/api';
-import * as module from './experimentContext';
+import * as module from './ExperimentContext';
 
 export const state = StrictDict({
   experiment: (val) => React.useState(val), // eslint-disable-line

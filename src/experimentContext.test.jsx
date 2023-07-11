@@ -6,7 +6,7 @@ import { useWindowSize } from '@edx/paragon';
 import api from 'widgets/ProductRecommendations/api';
 import { MockUseState } from 'testUtils';
 
-import * as experiment from 'experimentContext';
+import * as experiment from 'ExperimentContext';
 
 const state = new MockUseState(experiment);
 

@@ -61,7 +61,7 @@ jest.mock('@edx/frontend-platform/auth', () => ({
   getLoginRedirectUrl: jest.fn(),
 }));
 
-jest.mock('experimentContext', () => ({
+jest.mock('ExperimentContext', () => ({
   ExperimentProvider: 'div'
 }));
 

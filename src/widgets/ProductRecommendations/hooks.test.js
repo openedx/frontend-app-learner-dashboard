@@ -6,7 +6,7 @@ import { RequestStates } from 'data/constants/requests';
 import { reduxHooks } from 'hooks';
 import { useWindowSize } from '@edx/paragon';
 import { getAuthenticatedUser } from '@edx/frontend-platform/auth';
-import { useExperimentContext } from 'experimentContext';
+import { useExperimentContext } from 'ExperimentContext';
 import { recommendationsViewed } from './track';
 import { activateProductRecommendationsExperiment, trackProductRecommendationsViewed } from './optimizelyExperiment';
 import { control, treatment, noExperiment } from './constants';
@@ -26,7 +26,7 @@ jest.mock('@edx/frontend-platform/auth', () => ({
   getAuthenticatedUser: jest.fn(),
 }));
 
-jest.mock('experimentContext', () => ({
+jest.mock('ExperimentContext', () => ({
   useExperimentContext: jest.fn(),
 }));
 

@@ -13,7 +13,7 @@ import { RequestKeys } from 'data/constants/requests';
 import { reduxHooks } from 'hooks';
 import Dashboard from 'containers/Dashboard';
 import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
-import { ExperimentProvider } from 'experimentContext';
+import { ExperimentProvider } from 'ExperimentContext';
 import { App } from './App';
 import messages from './messages';
 
@@ -22,7 +22,7 @@ jest.mock('@edx/frontend-component-footer', () => 'Footer');
 jest.mock('containers/Dashboard', () => 'Dashboard');
 jest.mock('containers/LearnerDashboardHeader', () => 'LearnerDashboardHeader');
 jest.mock('components/ZendeskFab', () => 'ZendeskFab');
-jest.mock('experimentContext', () => ({
+jest.mock('ExperimentContext', () => ({
   ExperimentProvider: 'ExperimentProvider',
 }));
 jest.mock('data/redux', () => ({

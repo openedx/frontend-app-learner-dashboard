@@ -19,7 +19,7 @@ import {
 import { reduxHooks } from 'hooks';
 import Dashboard from 'containers/Dashboard';
 import ZendeskFab from 'components/ZendeskFab';
-import { ExperimentProvider } from 'experimentContext';
+import { ExperimentProvider } from 'ExperimentContext';
 
 import track from 'tracking';
 
