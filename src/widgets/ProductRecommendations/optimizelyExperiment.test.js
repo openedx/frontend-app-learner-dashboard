@@ -24,11 +24,25 @@ const userAttributes = {
 
 describe('Optimizely events', () => {
   describe('activateProductRecommendationsExperiment', () => {
-    it('activates the experiment and returns in recommendations experiment variant', () => {
+    it('activates the experiment and returns in experiment variant', () => {
       optimizelyClient.activate.mockReturnValueOnce(PRODUCT_RECOMMENDATIONS_EXP_VARIATION);
-      const inRecommendationsVariant = activateProductRecommendationsExperiment(userId, userAttributes);
+      const experiment = activateProductRecommendationsExperiment(userId, userAttributes);
 
-      expect(inRecommendationsVariant).toBeTruthy();
+      expect(experiment.experimentActivated).toBeTruthy();
+      expect(experiment.inExperimentVariant).toBeTruthy();
+      expect(optimizelyClient.activate).toHaveBeenCalledWith(
+        PRODUCT_RECOMMENDATIONS_EXP_KEY,
+        userId,
+        userAttributes,
+      );
+    });
+
+    it('does not activate the experiment and returns not in experiment variant', () => {
+      optimizelyClient.activate.mockReturnValueOnce(null);
+      const experiment = activateProductRecommendationsExperiment(userId, userAttributes);
+
+      expect(experiment.experimentActivated).toBeFalsy();
+      expect(experiment.inExperimentVariant).toBeFalsy();
       expect(optimizelyClient.activate).toHaveBeenCalledWith(
         PRODUCT_RECOMMENDATIONS_EXP_KEY,
         userId,

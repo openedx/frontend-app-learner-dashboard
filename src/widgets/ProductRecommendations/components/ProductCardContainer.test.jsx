@@ -3,11 +3,12 @@ import { shallow } from 'enzyme';
 
 import { mockCrossProductCourses, mockOpenCourses } from '../testData';
 import ProductCardContainer from './ProductCardContainer';
+import { executiveEducation, bootCamp, course } from '../constants';
 
 describe('ProductRecommendations ProductCardContainer', () => {
   const props = {
     finalProductList: [...mockCrossProductCourses, ...mockOpenCourses],
-    courseTypes: ['Executive Education', 'Boot Camp', 'Course'],
+    courseTypes: [executiveEducation, bootCamp, course],
   };
 
   it('matches snapshot', () => {

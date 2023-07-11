@@ -6,6 +6,7 @@ exports[`ProductRecommendations ProductCard matches snapshot 1`] = `
   className="base-card d-flex text-decoration-none"
   destination="https://www.edx.org/course/some-course?utm_source=source&linked_from=recommender"
   isClickable={true}
+  onClick={[Function]}
 >
   <Card.ImageCap
     logoAlt="logo for Harvard University"

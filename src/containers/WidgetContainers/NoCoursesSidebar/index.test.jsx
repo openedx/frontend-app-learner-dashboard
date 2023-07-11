@@ -18,19 +18,31 @@ describe('WidgetSidebar', () => {
   describe('snapshots', () => {
     test('default', () => {
       hooks.useShowRecommendationsFooter.mockReturnValueOnce(
-        mockFooterRecommendationsHook.dontShowOrLoad,
+        mockFooterRecommendationsHook.activeControl,
       );
       const wrapper = shallow(<WidgetSidebar {...props} />);
+
       expect(props.setSidebarShowing).toHaveBeenCalledWith(true);
       expect(wrapper).toMatchSnapshot();
     });
   });
 
-  test('is hidden if footer is shown', () => {
+  test('is hidden when the has the default values', () => {
     hooks.useShowRecommendationsFooter.mockReturnValueOnce(
-      mockFooterRecommendationsHook.showDontLoad,
+      mockFooterRecommendationsHook.default,
     );
     const wrapper = shallow(<WidgetSidebar {...props} />);
+
+    expect(props.setSidebarShowing).not.toHaveBeenCalled();
+    expect(wrapper.type()).toBeNull();
+  });
+
+  test('is hidden when the has the treatment values', () => {
+    hooks.useShowRecommendationsFooter.mockReturnValueOnce(
+      mockFooterRecommendationsHook.activeTreatment,
+    );
+    const wrapper = shallow(<WidgetSidebar {...props} />);
+
     expect(props.setSidebarShowing).not.toHaveBeenCalled();
     expect(wrapper.type()).toBeNull();
   });

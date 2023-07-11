@@ -42,7 +42,9 @@ exports[`App router component component no network failure snapshot 1`] = `
   <div>
     <LearnerDashboardHeader />
     <main>
-      <Dashboard />
+      <ExperimentProvider>
+        <Dashboard />
+      </ExperimentProvider>
     </main>
     <Footer
       logo="fakeLogo.png"

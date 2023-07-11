@@ -5,7 +5,13 @@ import { MockUseState } from 'testUtils';
 import { RequestStates } from 'data/constants/requests';
 import { reduxHooks } from 'hooks';
 import { useWindowSize } from '@edx/paragon';
+import { getAuthenticatedUser } from '@edx/frontend-platform/auth';
+import { useExperimentContext } from 'ExperimentContext';
+import { recommendationsViewed } from './track';
+import { activateProductRecommendationsExperiment, trackProductRecommendationsViewed } from './optimizelyExperiment';
+import { control, treatment, noExperiment } from './constants';
 import { wait } from './utils';
+import { mockCrossProductResponse, mockAmplitudeResponse } from './testData';
 
 import api from './api';
 import * as hooks from './hooks';
@@ -13,14 +19,32 @@ import * as hooks from './hooks';
 jest.mock('./api', () => ({
   fetchCrossProductRecommendations: jest.fn(),
   fetchAmplitudeRecommendations: jest.fn(),
+  fetchRecommendationsContext: jest.fn(),
+}));
+
+jest.mock('@edx/frontend-platform/auth', () => ({
+  getAuthenticatedUser: jest.fn(),
+}));
+
+jest.mock('ExperimentContext', () => ({
+  useExperimentContext: jest.fn(),
 }));
 
 jest.mock('hooks', () => ({
   reduxHooks: {
     useCurrentCourseList: jest.fn(),
-    useHasAvailableDashboards: jest.fn(),
+    useEnterpriseDashboardData: jest.fn(),
     useRequestIsCompleted: jest.fn(),
   },
+}));
+
+jest.mock('./track', () => ({
+  recommendationsViewed: jest.fn(),
+}));
+
+jest.mock('./optimizelyExperiment', () => ({
+  trackProductRecommendationsViewed: jest.fn(),
+  activateProductRecommendationsExperiment: jest.fn(),
 }));
 
 const state = new MockUseState(hooks);
@@ -53,6 +77,7 @@ let output;
 describe('ProductRecommendations hooks', () => {
   beforeEach(() => {
     jest.resetAllMocks();
+    getAuthenticatedUser.mockImplementation(() => ({ userId: '1' }));
   });
 
   describe('state fields', () => {
@@ -86,14 +111,175 @@ describe('ProductRecommendations hooks', () => {
   });
 
   describe('useShowRecommendationsFooter', () => {
-    // TODO: Update when hardcoded value is removed
-    it('returns whether the footer widget should show and should load', () => {
-      reduxHooks.useHasAvailableDashboards.mockReturnValueOnce(false);
-      reduxHooks.useRequestIsCompleted.mockReturnValueOnce(true);
-      const { shouldShowFooter, shouldLoadFooter } = hooks.useShowRecommendationsFooter();
+    it('returns the experiment object, stating if the experiment has activated and the variant', () => {
+      useExperimentContext
+        .mockImplementationOnce(() => ({ experiment: { inRecommendationsVariant: true, isExperimentActive: false } }));
 
-      expect(shouldShowFooter).toBeFalsy();
-      expect(shouldLoadFooter).toBeTruthy();
+      const { inRecommendationsVariant, isExperimentActive } = hooks.useShowRecommendationsFooter();
+
+      expect(useExperimentContext).toHaveBeenCalled();
+      expect(inRecommendationsVariant).toBeTruthy();
+      expect(isExperimentActive).toBeFalsy();
+    });
+  });
+
+  describe('useActivateRecommendationsExperiment', () => {
+    describe('behavior', () => {
+      describe('useEffect call', () => {
+        let cb;
+        let calls;
+        let prereqs;
+        const setExperiment = jest.fn();
+        const setCountryCode = jest.fn();
+        const userAttributes = { is_enterprise_user: false, is_mobile_user: false, location: 'za' };
+
+        const optimizelyExperimentMock = ({
+          experimentActivated = false,
+          inExperimentVariant = false,
+        }) => ({
+          experimentActivated,
+          inExperimentVariant,
+        });
+
+        const experimentContextMock = ({
+          isExperimentActive = false,
+          inRecommendationsVariant = true,
+          countryCode = 'ZA',
+          isMobile = false,
+        }) => ({
+          experiment: { isExperimentActive, inRecommendationsVariant },
+          countryCode,
+          isMobile,
+          setExperiment,
+          setCountryCode,
+        });
+
+        const setUp = (
+          isCompleted,
+          experimentContext = experimentContextMock({}),
+          optimizelyExperiment = optimizelyExperimentMock({}),
+        ) => {
+          reduxHooks.useCurrentCourseList.mockReturnValueOnce(populatedCourseListData);
+          reduxHooks.useEnterpriseDashboardData.mockReturnValueOnce(null);
+          reduxHooks.useRequestIsCompleted.mockReturnValueOnce(isCompleted);
+          useExperimentContext.mockReturnValueOnce(experimentContext);
+          activateProductRecommendationsExperiment.mockReturnValueOnce(optimizelyExperiment);
+
+          hooks.useActivateRecommendationsExperiment();
+
+          ({ calls } = React.useEffect.mock);
+          ([[cb, prereqs]] = calls);
+        };
+
+        it('runs when isExperimentActive or countryCode changes (prereqs)', () => {
+          setUp(true);
+          expect(prereqs).toEqual([false, 'ZA']);
+          expect(calls.length).toEqual(1);
+        });
+        describe('when the request state is not completed', () => {
+          it('does not activate or send any events', () => {
+            setUp(false);
+            cb();
+            expect(activateProductRecommendationsExperiment).not.toHaveBeenCalled();
+            expect(trackProductRecommendationsViewed).not.toHaveBeenCalled();
+            expect(recommendationsViewed).not.toHaveBeenCalled();
+          });
+        });
+        describe('when the experiment is active', () => {
+          it('does not activate or send any events', () => {
+            setUp(true, experimentContextMock({ isExperimentActive: true }));
+            cb();
+            expect(activateProductRecommendationsExperiment).not.toHaveBeenCalled();
+            expect(trackProductRecommendationsViewed).not.toHaveBeenCalled();
+            expect(recommendationsViewed).not.toHaveBeenCalled();
+          });
+        });
+        describe('when the experiment is inactive but user country code has not been fetched', () => {
+          it('does not activate or send any events', () => {
+            setUp(true, experimentContextMock({ countryCode: null }));
+            cb();
+            expect(activateProductRecommendationsExperiment).not.toHaveBeenCalled();
+            expect(trackProductRecommendationsViewed).not.toHaveBeenCalled();
+            expect(recommendationsViewed).not.toHaveBeenCalled();
+          });
+        });
+        describe('when the experiment is inactive and user country code has been fetched', () => {
+          it('activates the experiment and sends viewed event for control group', () => {
+            setUp(
+              true,
+              experimentContextMock({}),
+              optimizelyExperimentMock({ experimentActivated: true, inExperimentVariant: false }),
+            );
+            cb();
+            expect(activateProductRecommendationsExperiment).toHaveBeenCalledWith('1', userAttributes);
+            expect(setExperiment).toHaveBeenCalled();
+            expect(trackProductRecommendationsViewed).toHaveBeenCalledWith('1');
+            expect(recommendationsViewed).toHaveBeenCalledWith(true, control, mostRecentCourseRunKey);
+          });
+          it('activates the experiment and does not sends viewed event for treatment group', () => {
+            setUp(
+              true,
+              experimentContextMock({ countryCode: '' }),
+              optimizelyExperimentMock({ experimentActivated: true, inExperimentVariant: true }),
+            );
+            cb();
+            expect(activateProductRecommendationsExperiment).toHaveBeenCalledWith('1', { ...userAttributes, location: '' });
+            expect(setExperiment).toHaveBeenCalled();
+            expect(trackProductRecommendationsViewed).not.toHaveBeenCalled();
+            expect(recommendationsViewed).not.toHaveBeenCalled();
+          });
+        });
+      });
+    });
+  });
+
+  describe('useSendViewedEvents', () => {
+    describe('behavior', () => {
+      describe('useEffect call', () => {
+        let cb;
+        let calls;
+        let prereqs;
+        const { completed, pending } = RequestStates;
+
+        const setUp = (requestState, response) => {
+          reduxHooks.useCurrentCourseList.mockReturnValueOnce(populatedCourseListData);
+          hooks.useSendViewedEvents(requestState, response);
+          ({ calls } = React.useEffect.mock);
+          ([[cb, prereqs]] = calls);
+        };
+
+        it('runs when data or requestState changes (prereqs)', () => {
+          setUp(completed, mockCrossProductResponse);
+          expect(prereqs).toEqual([mockCrossProductResponse, completed]);
+          expect(calls.length).toEqual(1);
+        });
+        describe('when the request state is not completed', () => {
+          it('does not send any events', () => {
+            setUp(pending, mockCrossProductResponse);
+            cb();
+            expect(trackProductRecommendationsViewed).not.toHaveBeenCalled();
+            expect(recommendationsViewed).not.toHaveBeenCalled();
+          });
+        });
+        describe('when the request state is completed', () => {
+          describe('with crossProduct data that has 2 cross product courses', () => {
+            it('sends out recommendations viewed event for "treatment" group', () => {
+              setUp(completed, mockCrossProductResponse);
+              cb();
+              expect(trackProductRecommendationsViewed).toHaveBeenCalledWith('1');
+              expect(recommendationsViewed).toHaveBeenCalledWith(false, treatment, mostRecentCourseRunKey);
+            });
+          });
+          describe('with amplitude data and no cross product data', () => {
+            it('sends out recommendations viewed event for "no experiment" group', () => {
+              setUp(completed, mockAmplitudeResponse);
+              cb();
+              expect(trackProductRecommendationsViewed).toHaveBeenCalledWith('1');
+              expect(recommendationsViewed).toHaveBeenCalledWith(true, noExperiment, mostRecentCourseRunKey);
+            });
+          });
+        });
+      });
     });
   });
 
@@ -281,14 +467,19 @@ describe('ProductRecommendations hooks', () => {
     });
   });
   describe('useProductRecommendationsData', () => {
-    let fetchSpy;
+    let fetchRecommendationsSpy;
+    let sendViewedEventsSpy;
     beforeEach(() => {
       state.mock();
-      fetchSpy = jest.spyOn(hooks, 'useFetchRecommendations').mockImplementationOnce(() => {});
+      fetchRecommendationsSpy = jest.spyOn(hooks, 'useFetchRecommendations').mockImplementationOnce(() => {});
+      sendViewedEventsSpy = jest.spyOn(hooks, 'useSendViewedEvents').mockImplementationOnce(() => {});
       output = hooks.useProductRecommendationsData();
     });
     it('calls useFetchRecommendations with setRequestState and setData', () => {
-      expect(fetchSpy).toHaveBeenCalledWith(state.setState.requestState, state.setState.data);
+      expect(fetchRecommendationsSpy).toHaveBeenCalledWith(state.setState.requestState, state.setState.data);
+    });
+    it('calls useFetchViewedEvents with requestState and data', () => {
+      expect(sendViewedEventsSpy).toHaveBeenCalledWith(state.stateVals.requestState, state.stateVals.data);
     });
     it('initializes requestState as RequestStates.pending', () => {
       state.expectInitializedWith(state.keys.requestState, RequestStates.pending);

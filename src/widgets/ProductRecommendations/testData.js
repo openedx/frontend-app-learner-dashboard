@@ -1,11 +1,14 @@
-export const getCoursesWithType = (courseTypes) => {
+export const getCoursesWithType = (courseTypes, parameters = true) => {
   const courses = [];
+  const marketingUrl = parameters
+    ? 'https://www.edx.org/course/some-course?utm_source=source'
+    : 'https://www.edx.org/course/some-course';
 
   courseTypes.forEach((type) => {
     courses.push({
       title: 'Introduction to Computer Science',
       courseRunKey: 'course-v1:Test+Course+2022T2',
-      marketingUrl: 'https://www.edx.org/course/some-course?utm_source=source',
+      marketingUrl,
       courseType: type,
       image: {
         src: 'https://www.image-2.com/ed79a49b-64c1-48d2-afdc-054bf921e38d-6a76ceb47dea.small.jpg',
@@ -24,14 +27,14 @@ export const getCoursesWithType = (courseTypes) => {
 };
 
 export const mockFooterRecommendationsHook = {
-  showAndLoad: { shouldShowFooter: true, shouldLoadFooter: true },
-  showDontLoad: { shouldShowFooter: true, shouldLoadFooter: false },
-  loadDontShow: { shouldShowFooter: false, shouldLoadFooter: true },
-  dontShowOrLoad: { shouldShowFooter: false, shouldLoadFooter: false },
+  default: { isExperimentActive: false, inRecommendationsVariant: true },
+  activeControl: { isExperimentActive: true, inRecommendationsVariant: false },
+  activeTreatment: { isExperimentActive: true, inRecommendationsVariant: true },
 };
 
 export const mockCrossProductCourses = getCoursesWithType(['executive-education-2u', 'bootcamp-2u']);
 export const mockOpenCourses = getCoursesWithType(['verified-audit', 'audit', 'verified', 'course']);
+export const mockFallbackOpenCourse = getCoursesWithType(['course'], false);
 
 export const mockCrossProductResponse = {
   crossProductCourses: mockCrossProductCourses,

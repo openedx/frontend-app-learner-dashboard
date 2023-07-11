@@ -19,6 +19,7 @@ import {
 import { reduxHooks } from 'hooks';
 import Dashboard from 'containers/Dashboard';
 import ZendeskFab from 'components/ZendeskFab';
+import { ExperimentProvider } from 'ExperimentContext';
 
 import track from 'tracking';
 
@@ -84,7 +85,11 @@ export const App = () => {
               <Alert variant="danger">
                 <ErrorPage message={formatMessage(messages.errorMessage, { supportEmail })} />
               </Alert>
-            ) : (<Dashboard />)}
+            ) : (
+              <ExperimentProvider>
+                <Dashboard />
+              </ExperimentProvider>
+            )}
         </main>
         <Footer logo={process.env.LOGO_POWERED_BY_OPEN_EDX_URL_SVG} />
         <ZendeskFab />
