@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { executiveEducation, course, bootCamp } from './constants';
 
 export const courseShape = {
   uuid: PropTypes.string,
@@ -22,24 +23,24 @@ export const courseShape = {
 };
 
 export const courseTypeToProductTypeMap = {
-  course: 'Course',
-  'verified-audit': 'Course',
-  verified: 'Course',
-  audit: 'Course',
-  'credit-verified-audit': 'Course',
-  'spoc-verified-audit': 'Course',
+  course,
+  'verified-audit': course,
+  verified: course,
+  audit: course,
+  'credit-verified-audit': course,
+  'spoc-verified-audit': course,
   professional: 'Professional Certificate',
-  'bootcamp-2u': 'Boot Camp',
-  'executive-education-2u': 'Executive Education',
-  'executive-education': 'Executive Education',
+  'bootcamp-2u': bootCamp,
+  'executive-education-2u': executiveEducation,
+  'executive-education': executiveEducation,
   masters: "Master's",
   'masters-verified-audit': "Master's",
 };
 
 export const courseTypeToProductLineMap = {
-  'Executive Education': 'executive-education',
-  'Boot Camp': 'boot-camps',
-  Course: 'open-courses',
+  [executiveEducation]: 'executive-education',
+  [bootCamp]: 'boot-camps',
+  [course]: 'open-courses',
 };
 
 export const convertCourseRunKeyToCourseKey = (courseRunKey) => {

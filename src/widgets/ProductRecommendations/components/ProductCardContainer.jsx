@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { courseShape, courseTypeToProductTypeMap } from '../utils';
+import { course } from '../constants';
 import ProductCard from './ProductCard';
 import ProductCardHeader from './ProductCardHeader';
 
@@ -14,18 +15,19 @@ const ProductCardContainer = ({ finalProductList, courseTypes }) => (
           <ProductCardHeader courseType={type} />
           <div
             className={classNames('d-flex', {
-              'course-subcontainer': type === 'Course',
+              'course-subcontainer': type === course,
             })}
           >
             {finalProductList
-              .filter((course) => courseTypeToProductTypeMap[course.courseType] === type)
+              .filter((courseObj) => courseTypeToProductTypeMap[courseObj.courseType] === type)
               .map((item) => (
                 <ProductCard
                   key={item.title}
-                  url={`${item.marketingUrl}&linked_from=recommender`}
+                  url={item.marketingUrl}
                   title={item.title}
                   subtitle={item.owners[0].name}
                   headerImage={item.image.src}
+                  courseRunKey={item.courseRunKey}
                   schoolLogo={item.owners[0].logoImageUrl}
                   courseType={type}
                 />

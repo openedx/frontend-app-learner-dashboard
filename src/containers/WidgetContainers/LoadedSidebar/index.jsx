@@ -5,9 +5,9 @@ import RecommendationsPanel from 'widgets/RecommendationsPanel';
 import hooks from 'widgets/ProductRecommendations/hooks';
 
 export const WidgetSidebar = ({ setSidebarShowing }) => {
-  const { shouldShowFooter } = hooks.useShowRecommendationsFooter();
+  const { inRecommendationsVariant, isExperimentActive } = hooks.useShowRecommendationsFooter();
 
-  if (!shouldShowFooter) {
+  if (!inRecommendationsVariant && isExperimentActive) {
     setSidebarShowing(true);
 
     return (
