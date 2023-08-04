@@ -16,6 +16,7 @@ import {
 } from './hooks';
 
 import messages from './messages';
+import useActionDisabledState from '../hooks';
 
 export const CourseCardMenu = ({ cardId }) => {
   const { formatMessage } = useIntl();
@@ -23,6 +24,7 @@ export const CourseCardMenu = ({ cardId }) => {
   const emailSettingsModal = useEmailSettings();
   const unenrollModal = useUnenrollData();
   const handleToggleDropdown = useHandleToggleDropdown(cardId);
+  const { isExecutiveEd2uCourse } = useActionDisabledState(cardId);
 
   const {
     courseName,
@@ -50,6 +52,7 @@ export const CourseCardMenu = ({ cardId }) => {
           iconAs={Icon}
           variant="primary"
           alt={formatMessage(messages.dropdownAlt)}
+          disabled={isExecutiveEd2uCourse}
         />
         <Dropdown.Menu>
           {showUnenrollItem && (
