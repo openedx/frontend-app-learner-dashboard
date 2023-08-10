@@ -1,9 +1,10 @@
 import { reduxHooks } from 'hooks';
+import { EXECUTIVE_EDUCATION_COURSE_MODES } from '../../../data/constants/course';
 
 export const useActionDisabledState = (cardId) => {
   const { isMasquerading } = reduxHooks.useMasqueradeData();
   const {
-    canUpgrade, hasAccess, isAudit, isAuditAccessExpired,
+    canUpgrade, hasAccess, isAudit, isAuditAccessExpired, mode,
   } = reduxHooks.useCardEnrollmentData(cardId);
   const {
     isEntitlement, isFulfilled, canChange, hasSessions,
@@ -19,6 +20,8 @@ export const useActionDisabledState = (cardId) => {
 
   const disableCourseTitle = (isEntitlement && !isFulfilled) || disableViewCourse;
 
+  const isExecutiveEd2uCourse = (EXECUTIVE_EDUCATION_COURSE_MODES.includes(mode));
+
   return {
     disableBeginCourse,
     disableResumeCourse,
@@ -26,6 +29,7 @@ export const useActionDisabledState = (cardId) => {
     disableUpgradeCourse,
     disableSelectSession,
     disableCourseTitle,
+    isExecutiveEd2uCourse,
   };
 };
 

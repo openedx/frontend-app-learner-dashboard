@@ -9,8 +9,11 @@ jest.mock('hooks', () => ({
     useCardCourseRunData: jest.fn(),
     useCardEnrollmentData: jest.fn(),
     useCardEntitlementData: jest.fn(),
+    useMasqueradeData: jest.fn(),
   },
 }));
+
+jest.mock('../hooks', () => jest.fn(() => ({ isExecutiveEd2uCourse: false })));
 
 jest.mock('./UpgradeButton', () => 'UpgradeButton');
 jest.mock('./SelectSessionButton', () => 'SelectSessionButton');
@@ -23,11 +26,12 @@ describe('CourseCardActions', () => {
     cardId: 'cardId',
   };
   const createWrapper = ({
-    isEntitlement, isFulfilled, isArchived, isVerified, hasStarted,
+    isEntitlement, isFulfilled, isArchived, isVerified, hasStarted, isMasquerading,
   }) => {
     reduxHooks.useCardEntitlementData.mockReturnValueOnce({ isEntitlement, isFulfilled });
     reduxHooks.useCardCourseRunData.mockReturnValueOnce({ isArchived });
     reduxHooks.useCardEnrollmentData.mockReturnValueOnce({ isVerified, hasStarted });
+    reduxHooks.useMasqueradeData.mockReturnValueOnce({ isMasquerading });
     return shallow(<CourseCardActions {...props} />);
   };
   describe('snapshot', () => {
