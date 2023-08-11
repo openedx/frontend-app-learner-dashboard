@@ -15,13 +15,13 @@ export const ResumeButton = ({ cardId }) => {
   const { resumeUrl } = reduxHooks.useCardCourseRunData(cardId);
   const { disableResumeCourse } = useActionDisabledState(cardId);
 
-  const { authOrgId } = useEnterpriseDashboardData();
+  const enterpriseDashboardData = useEnterpriseDashboardData();
+  const execEdURLParam = enterpriseDashboardData ? `?org_id=${enterpriseDashboardData.authOrgId}` : '';
   const { isExecutiveEd2uCourse } = useActionDisabledState(cardId);
-  const execEdURLParam = `?org_id=${authOrgId}`;
   const handleClick = reduxHooks.useTrackCourseEvent(
     track.course.enterCourseClicked,
     cardId,
-    resumeUrl + ((isExecutiveEd2uCourse && authOrgId) ? execEdURLParam : ''),
+    resumeUrl + (isExecutiveEd2uCourse ? execEdURLParam : ''),
   );
   return (
     <ActionButton
