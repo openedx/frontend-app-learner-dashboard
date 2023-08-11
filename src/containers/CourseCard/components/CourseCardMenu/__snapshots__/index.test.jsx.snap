@@ -8,7 +8,6 @@ exports[`CourseCardMenu default snapshot 1`] = `
     <Dropdown.Toggle
       alt="Course actions dropdown"
       as="IconButton"
-      disabled={false}
       iconAs="Icon"
       id="course-actions-dropdown-test-card-id"
       src={[MockFunction icons.MoreVert]}
@@ -70,7 +69,6 @@ exports[`CourseCardMenu masquerading snapshot 1`] = `
     <Dropdown.Toggle
       alt="Course actions dropdown"
       as="IconButton"
-      disabled={false}
       iconAs="Icon"
       id="course-actions-dropdown-test-card-id"
       src={[MockFunction icons.MoreVert]}
