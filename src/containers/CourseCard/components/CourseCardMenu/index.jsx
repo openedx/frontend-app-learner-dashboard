@@ -52,7 +52,6 @@ export const CourseCardMenu = ({ cardId }) => {
           iconAs={Icon}
           variant="primary"
           alt={formatMessage(messages.dropdownAlt)}
-          disabled={isExecutiveEd2uCourse}
         />
         <Dropdown.Menu>
           {showUnenrollItem && (
@@ -64,7 +63,7 @@ export const CourseCardMenu = ({ cardId }) => {
               {formatMessage(messages.unenroll)}
             </Dropdown.Item>
           )}
-          {isEmailEnabled && (
+          {(isEmailEnabled && !isExecutiveEd2uCourse) && (
             <Dropdown.Item
               disabled={isMasquerading}
               onClick={emailSettingsModal.show}
@@ -73,7 +72,7 @@ export const CourseCardMenu = ({ cardId }) => {
               {formatMessage(messages.emailSettings)}
             </Dropdown.Item>
           )}
-          {facebook.isEnabled && (
+          {(facebook.isEnabled && !isExecutiveEd2uCourse) && (
             <ReactShare.FacebookShareButton
               url={facebook.shareUrl}
               onClick={handleFacebookShare}
@@ -87,7 +86,7 @@ export const CourseCardMenu = ({ cardId }) => {
               {formatMessage(messages.shareToFacebook)}
             </ReactShare.FacebookShareButton>
           )}
-          {twitter.isEnabled && (
+          {(twitter.isEnabled && !isExecutiveEd2uCourse) && (
             <ReactShare.TwitterShareButton
               url={twitter.shareUrl}
               onClick={handleTwitterShare}
