@@ -119,8 +119,8 @@ describe('SocialShareMenu', () => {
     });
   });
   describe('render', () => {
-    it('renders null if not an exec ed course', () => {
-      mockHooks();
+    it('renders null if exec ed course', () => {
+      mockHooks({ isExecEd2UCourse: true });
       render();
       expect(el.isEmptyRender()).toEqual(true);
     });
@@ -173,7 +173,6 @@ describe('SocialShareMenu', () => {
     describe('all enabled', () => {
       beforeEach(() => {
         mockHooks({
-          isExecEd2UCourse: true,
           facebook: { isEnabled: true },
           twitter: { isEnabled: true },
           isEmailEnabled: true,
@@ -198,7 +197,7 @@ describe('SocialShareMenu', () => {
     });
     describe('only email enabled', () => {
       beforeEach(() => {
-        mockHooks({ isExecEd2UCourse: true, isEmailEnabled: true });
+        mockHooks({ isEmailEnabled: true });
         render();
       });
       testEmailSettingsDropdown();
@@ -208,7 +207,7 @@ describe('SocialShareMenu', () => {
       });
       describe('masquerading', () => {
         beforeEach(() => {
-          mockHooks({ isExecEd2UCourse: true, isEmailEnabled: true, isMasquerading: true });
+          mockHooks({ isEmailEnabled: true, isMasquerading: true });
           render();
         });
         testEmailSettingsDropdown(true);
@@ -216,7 +215,7 @@ describe('SocialShareMenu', () => {
     });
     describe('only facebook enabled', () => {
       beforeEach(() => {
-        mockHooks({ isExecEd2UCourse: true, facebook: { isEnabled: true } });
+        mockHooks({ facebook: { isEnabled: true } });
         render();
       });
       testFacebookShareButton();
@@ -227,7 +226,7 @@ describe('SocialShareMenu', () => {
     });
     describe('only twitter enabled', () => {
       beforeEach(() => {
-        mockHooks({ isExecEd2UCourse: true, twitter: { isEnabled: true } });
+        mockHooks({ twitter: { isEnabled: true } });
         render();
       });
       testTwitterShareButton();

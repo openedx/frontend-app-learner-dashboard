@@ -29,7 +29,7 @@ export const SocialShareMenu = ({ cardId }) => {
   const handleTwitterShare = reduxHooks.useTrackCourseEvent(track.socialShare, cardId, 'twitter');
   const handleFacebookShare = reduxHooks.useTrackCourseEvent(track.socialShare, cardId, 'facebook');
 
-  if (!isExecEd2UCourse) {
+  if (isExecEd2UCourse) {
     return null;
   }
 
