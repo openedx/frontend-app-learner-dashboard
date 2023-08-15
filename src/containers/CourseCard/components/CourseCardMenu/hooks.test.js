@@ -1,4 +1,5 @@
-import { MockUseState } from 'testUtils';
+import { mockUseKeyedState } from '@edx/react-unit-test-utils';
+
 import { reduxHooks } from 'hooks';
 import track from 'tracking';
 
@@ -6,88 +7,77 @@ import * as hooks from './hooks';
 
 jest.mock('hooks', () => ({
   reduxHooks: {
-    useTrackCourseEvent: jest.fn(),
-    useCardCourseData: jest.fn(),
+    useCardCertificateData: jest.fn(),
     useCardEnrollmentData: jest.fn(),
     useCardSocialSettingsData: jest.fn(),
-    useMasqueradeData: jest.fn(),
-    useCardCertificateData: jest.fn(),
+    useTrackCourseEvent: jest.fn(),
   },
 }));
 
 const trackCourseEvent = jest.fn();
 reduxHooks.useTrackCourseEvent.mockReturnValue(trackCourseEvent);
-const state = new MockUseState(hooks);
-
-const defaultSocialShare = {
-  facebook: {
-    isEnabled: true,
-    shareUrl: 'facebook-share-url',
-    socialBrand: 'facebook-social-brand',
-  },
-  twitter: {
-    isEnabled: true,
-    shareUrl: 'twitter-share-url',
-    socialBrand: 'twitter-social-brand',
-  },
-};
 const cardId = 'test-card-id';
 let out;
 
-describe('CourseCardMenu hooks', () => {
-  describe('state values', () => {
-    state.testGetter(state.keys.isUnenrollConfirmVisible);
-    state.testGetter(state.keys.isEmailSettingsVisible);
-  });
+const state = mockUseKeyedState(hooks.stateKeys);
 
+describe('CourseCardMenu hooks', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    state.mock();
+  });
   describe('useUnenrollData', () => {
     beforeEach(() => {
-      state.mock();
+      state.mockVals({ isUnenrollConfirmVisible: true });
       out = hooks.useUnenrollData();
     });
-    afterEach(state.restore);
-
-    test('default state', () => {
-      expect(out.isVisible).toEqual(state.stateVals.isUnenrollConfirmVisible);
+    describe('behavior', () => {
+      it('initializes isUnenrollConfirmVisible state to false', () => {
+        state.expectInitializedWith(state.keys.isUnenrollConfirmVisible, false);
+      });
     });
-
-    test('show', () => {
-      out.show();
-      state.expectSetStateCalledWith(state.keys.isUnenrollConfirmVisible, true);
-    });
-
-    test('hide', () => {
-      out.hide();
-      state.expectSetStateCalledWith(state.keys.isUnenrollConfirmVisible, false);
+    describe('output', () => {
+      test('state is loaded from current state value', () => {
+        expect(out.isVisible).toEqual(true);
+      });
+      test('show sets state value to true', () => {
+        out.show();
+        expect(state.setState.isUnenrollConfirmVisible).toHaveBeenCalledWith(true);
+      });
+      test('hide sets state value to false', () => {
+        out.hide();
+        expect(state.setState.isUnenrollConfirmVisible).toHaveBeenCalledWith(false);
+      });
     });
   });
 
   describe('useEmailSettings', () => {
     beforeEach(() => {
-      state.mock();
+      state.mockVals({ isEmailSettingsVisible: true });
       out = hooks.useEmailSettings();
     });
-    afterEach(state.restore);
-
-    test('default state', () => {
-      expect(out.isVisible).toEqual(state.stateVals.isEmailSettingsVisible);
+    describe('behavior', () => {
+      it('initializes isEmailSettingsVisible state to false', () => {
+        state.expectInitializedWith(state.keys.isEmailSettingsVisible, false);
+      });
     });
-
-    test('show', () => {
-      out.show();
-      state.expectSetStateCalledWith(state.keys.isEmailSettingsVisible, true);
-    });
-
-    test('hide', () => {
-      out.hide();
-      state.expectSetStateCalledWith(state.keys.isEmailSettingsVisible, false);
+    describe('output', () => {
+      test('state is loaded from current state value', () => {
+        expect(out.isVisible).toEqual(state.values.isEmailSettingsVisible);
+      });
+      test('show sets state value to true', () => {
+        out.show();
+        expect(state.setState.isEmailSettingsVisible).toHaveBeenCalledWith(true);
+      });
+      test('hide sets state value to false', () => {
+        out.hide();
+        expect(state.setState.isEmailSettingsVisible).toHaveBeenCalledWith(false);
+      });
     });
   });
 
   describe('useHandleToggleDropdown', () => {
-    beforeEach(() => {
-      out = hooks.useHandleToggleDropdown(cardId);
-    });
+    beforeEach(() => { out = hooks.useHandleToggleDropdown(cardId); });
     describe('behavior', () => {
       it('initializes course event tracker with event name and card ID', () => {
         expect(reduxHooks.useTrackCourseEvent).toHaveBeenCalledWith(
@@ -106,115 +96,58 @@ describe('CourseCardMenu hooks', () => {
     });
   });
 
-  describe('useCourseCardMenu', () => {
-    const mockUseCourseCardMenu = ({
-      courseName,
-      isEnrolled,
-      isEmailEnabled,
-      isMasquerading,
-      facebook,
-      twitter,
-      isEarned,
-    } = {}) => {
-      reduxHooks.useCardCourseData.mockReturnValueOnce({ courseName });
+  describe('useOptionVisibility', () => {
+    const mockReduxHooks = (returnVals = {}) => {
       reduxHooks.useCardSocialSettingsData.mockReturnValueOnce({
-        facebook: {
-          ...defaultSocialShare.facebook,
-          ...facebook,
-        },
-        twitter: {
-          ...defaultSocialShare.twitter,
-          ...twitter,
-        },
+        facebook: { isEnabled: !!returnVals.facebook?.isEnabled },
+        twitter: { isEnabled: !!returnVals.twitter?.isEnabled },
       });
       reduxHooks.useCardEnrollmentData.mockReturnValueOnce({
-        isEnrolled,
-        isEmailEnabled,
+        isEnrolled: !!returnVals.isEnrolled,
+        isEmailEnabled: !!returnVals.isEmailEnabled,
       });
-      reduxHooks.useMasqueradeData.mockReturnValueOnce({ isMasquerading });
-      reduxHooks.useCardCertificateData.mockReturnValueOnce({ isEarned });
+      reduxHooks.useCardCertificateData.mockReturnValueOnce({
+        isEarned: !!returnVals.isEarned,
+      });
     };
-    afterEach(() => jest.resetAllMocks());
-    describe('showUnenrollItem', () => {
-      test('return true', () => {
-        mockUseCourseCardMenu({ isEnrolled: true, isEarned: false });
-        out = hooks.useCourseCardMenu(cardId);
-        expect(out.showUnenrollItem).toBeTruthy();
+    describe('shouldShowUnenrollItem', () => {
+      it('returns true if enrolled and not earned', () => {
+        mockReduxHooks({ isEnrolled: true });
+        expect(hooks.useOptionVisibility(cardId).shouldShowUnenrollItem).toEqual(true);
       });
-
-      test('return false', () => {
-        mockUseCourseCardMenu({ isEnrolled: true, isEarned: true });
-        out = hooks.useCourseCardMenu(cardId);
-        expect(out.showUnenrollItem).toBeFalsy();
-
-        mockUseCourseCardMenu({ isEnrolled: false, isEarned: false });
-        out = hooks.useCourseCardMenu(cardId);
-        expect(out.showUnenrollItem).toBeFalsy();
-
-        mockUseCourseCardMenu({ isEnrolled: false, isEarned: true });
-        out = hooks.useCourseCardMenu(cardId);
-        expect(out.showUnenrollItem).toBeFalsy();
+      it('returns false if not enrolled', () => {
+        mockReduxHooks();
+        expect(hooks.useOptionVisibility(cardId).shouldShowUnenrollItem).toEqual(false);
+      });
+      it('returns false if enrolled but also earned', () => {
+        mockReduxHooks({ isEarned: true });
+        expect(hooks.useOptionVisibility(cardId).shouldShowUnenrollItem).toEqual(false);
       });
     });
 
-    describe('showDropdown', () => {
-      test('return false iif everything is false', () => {
-        mockUseCourseCardMenu({
-          isEnrolled: false,
-          isEarned: false,
-          isEmailEnabled: false,
-          facebook: { isEnabled: false },
-          twitter: { isEnabled: false },
-        });
-        out = hooks.useCourseCardMenu(cardId);
-        expect(out.showDropdown).toBeFalsy();
+    describe('shouldShowDropdown', () => {
+      it('returns false if not enrolled and both email and socials are disabled', () => {
+        mockReduxHooks();
+        expect(hooks.useOptionVisibility(cardId).shouldShowDropdown).toEqual(false);
       });
-
-      test('return true iif at least one is true', () => {
-        mockUseCourseCardMenu({
-          isEnrolled: true,
-          isEarned: false,
-          isEmailEnabled: false,
-          facebook: { isEnabled: false },
-          twitter: { isEnabled: false },
-        });
-        out = hooks.useCourseCardMenu(cardId);
-        expect(out.showDropdown).toBeTruthy();
+      it('returns false if enrolled but already earned, and both email and socials are disabled', () => {
+        mockReduxHooks({ isEnrolled: true, isEarned: true });
+        expect(hooks.useOptionVisibility(cardId).shouldShowDropdown).toEqual(false);
       });
-    });
-
-    test('return correct values', () => {
-      const expected = {
-        courseName: 'abitrary-course-name',
-        isMasquerading: 'abitrary-masquerading-value',
-        isEmailEnabled: 'abitrary-email-enabled-value',
-        facebook: { isEnabled: 'abitrary-facebook-value' },
-        twitter: { isEnabled: 'abitrary-twitter-value' },
-      };
-      mockUseCourseCardMenu(expected);
-      out = hooks.useCourseCardMenu(cardId);
-      expect(out.courseName).toEqual(expected.courseName);
-      expect(out.isMasquerading).toEqual(expected.isMasquerading);
-      expect(out.isEmailEnabled).toEqual(expected.isEmailEnabled);
-      expect(out.facebook.isEnabled).toEqual(expected.facebook.isEnabled);
-      expect(out.twitter.isEnabled).toEqual(expected.twitter.isEnabled);
-    });
-
-    test('handleSocialShareClick', () => {
-      mockUseCourseCardMenu();
-
-      out = hooks.useCourseCardMenu(cardId);
-      expect(reduxHooks.useTrackCourseEvent).toHaveBeenCalledTimes(2);
-      expect(reduxHooks.useTrackCourseEvent).toHaveBeenCalledWith(
-        track.socialShare,
-        cardId,
-        'facebook',
-      );
-      expect(reduxHooks.useTrackCourseEvent).toHaveBeenCalledWith(
-        track.socialShare,
-        cardId,
-        'twitter',
-      );
+      it('returns true if either social is enabled', () => {
+        mockReduxHooks({ facebook: { isEnabled: true } });
+        expect(hooks.useOptionVisibility(cardId).shouldShowDropdown).toEqual(true);
+        mockReduxHooks({ twitter: { isEnabled: true } });
+        expect(hooks.useOptionVisibility(cardId).shouldShowDropdown).toEqual(true);
+      });
+      it('returns true if email is enabled', () => {
+        mockReduxHooks({ isEmailEnabled: true });
+        expect(hooks.useOptionVisibility(cardId).shouldShowDropdown).toEqual(true);
+      });
+      it('returns true if enrolled and not earned', () => {
+        mockReduxHooks({ isEnrolled: true });
+        expect(hooks.useOptionVisibility(cardId).shouldShowDropdown).toEqual(true);
+      });
     });
   });
 });
