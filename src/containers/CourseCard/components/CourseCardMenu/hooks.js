@@ -1,18 +1,15 @@
-import React from 'react';
-import { StrictDict } from 'utils';
+import { useKeyedState, StrictDict } from '@edx/react-unit-test-utils';
 
 import track from 'tracking';
 import { reduxHooks } from 'hooks';
 
-import * as module from './hooks';
-
-export const state = StrictDict({
-  isUnenrollConfirmVisible: (val) => React.useState(val), // eslint-disable-line
-  isEmailSettingsVisible: (val) => React.useState(val), // eslint-disable-line
+export const stateKeys = StrictDict({
+  isUnenrollConfirmVisible: 'isUnenrollConfirmVisible',
+  isEmailSettingsVisible: 'isEmailSettingsVisible',
 });
 
 export const useUnenrollData = () => {
-  const [isVisible, setIsVisible] = module.state.isUnenrollConfirmVisible(false);
+  const [isVisible, setIsVisible] = useKeyedState(stateKeys.isUnenrollConfirmVisible, false);
   return {
     show: () => setIsVisible(true),
     hide: () => setIsVisible(false),
@@ -21,7 +18,7 @@ export const useUnenrollData = () => {
 };
 
 export const useEmailSettings = () => {
-  const [isVisible, setIsVisible] = module.state.isEmailSettingsVisible(false);
+  const [isVisible, setIsVisible] = useKeyedState(stateKeys.isEmailSettingsVisible, false);
   return {
     show: () => setIsVisible(true),
     hide: () => setIsVisible(false),
@@ -30,42 +27,30 @@ export const useEmailSettings = () => {
 };
 
 export const useHandleToggleDropdown = (cardId) => {
-  const eventName = track.course.courseOptionsDropdownClicked;
-  const trackCourseEvent = reduxHooks.useTrackCourseEvent(eventName, cardId);
+  const trackCourseEvent = reduxHooks.useTrackCourseEvent(
+    track.course.courseOptionsDropdownClicked,
+    cardId,
+  );
   return (isOpen) => {
     if (isOpen) { trackCourseEvent(); }
   };
 };
 
-export const useCourseCardMenu = (cardId) => {
-  const { courseName } = reduxHooks.useCardCourseData(cardId);
+export const useOptionVisibility = (cardId) => {
   const { isEnrolled, isEmailEnabled } = reduxHooks.useCardEnrollmentData(cardId);
   const { twitter, facebook } = reduxHooks.useCardSocialSettingsData(cardId);
-  const { isMasquerading } = reduxHooks.useMasqueradeData();
   const { isEarned } = reduxHooks.useCardCertificateData(cardId);
-  const handleTwitterShare = reduxHooks.useTrackCourseEvent(
-    track.socialShare,
-    cardId,
-    'twitter',
-  );
-  const handleFacebookShare = reduxHooks.useTrackCourseEvent(
-    track.socialShare,
-    cardId,
-    'facebook',
-  );
 
-  const showUnenrollItem = isEnrolled && !isEarned;
-  const showDropdown = showUnenrollItem || isEmailEnabled || facebook.isEnabled || twitter.isEnabled;
+  const shouldShowUnenrollItem = isEnrolled && !isEarned;
+  const shouldShowDropdown = (
+    shouldShowUnenrollItem
+    || isEmailEnabled
+    || facebook.isEnabled
+    || twitter.isEnabled
+  );
 
   return {
-    courseName,
-    isMasquerading,
-    isEmailEnabled,
-    showUnenrollItem,
-    showDropdown,
-    facebook,
-    twitter,
-    handleTwitterShare,
-    handleFacebookShare,
+    shouldShowUnenrollItem,
+    shouldShowDropdown,
   };
 };
