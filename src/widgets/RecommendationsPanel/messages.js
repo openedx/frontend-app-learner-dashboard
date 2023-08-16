@@ -16,6 +16,11 @@ const messages = defineMessages({
     defaultMessage: 'Explore courses',
     description: 'Button to explore more courses on recommendations panel',
   },
+  seeAllRecommendationsButton: {
+    id: 'RecommendationsPanel.seeAllRecommendationsButton',
+    defaultMessage: 'See All Recommendations',
+    description: 'Button to see all recommendations',
+  },
 });
 
 export default messages;

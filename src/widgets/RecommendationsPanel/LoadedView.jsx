@@ -1,15 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { useIntl } from '@edx/frontend-platform/i18n';
 import { Button } from '@edx/paragon';
-import { Search } from '@edx/paragon/icons';
-import { baseAppUrl } from 'data/services/lms/urls';
+import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { reduxHooks } from 'hooks';
-import track from './track';
 import CourseCard from './components/CourseCard';
 import messages from './messages';
+import ModalView from '../../components/ModalView';
 
 import './index.scss';
 
@@ -18,34 +15,34 @@ export const LoadedView = ({
   isControl,
 }) => {
   const { formatMessage } = useIntl();
-  const { courseSearchUrl } = reduxHooks.usePlatformSettingsData();
+  const [isOpen, setOpen] = useState(false);
 
   return (
-    <div className="p-4 w-100 panel-background">
-      <h3 className="pb-2">{isControl === false
-        ? formatMessage(messages.recommendationsHeading) : formatMessage(messages.popularCoursesHeading)}
-      </h3>
-      <div>
-        {courses.map((course) => (
-          <CourseCard
-            key={course.courseKey}
-            course={course}
-            isControl={isControl}
-          />
-        ))}
+    <>
+      <div className="p-4 w-100 panel-background">
+        <h3 className="pb-2">{isControl === false
+          ? formatMessage(messages.recommendationsHeading) : formatMessage(messages.popularCoursesHeading)}
+        </h3>
+        <div>
+          {courses.map((course) => (
+            <CourseCard
+              key={course.courseKey}
+              course={course}
+              isControl={isControl}
+            />
+          ))}
+        </div>
+        <div className="text-center explore-courses-btn">
+          <Button
+            variant="brand"
+            onClick={() => setOpen(true)}
+          >
+            {formatMessage(messages.seeAllRecommendationsButton)}
+          </Button>
+        </div>
       </div>
-      <div className="text-center explore-courses-btn">
-        <Button
-          variant="tertiary"
-          iconBefore={Search}
-          as="a"
-          href={baseAppUrl(courseSearchUrl)}
-          onClick={track.findCoursesWidgetClicked(baseAppUrl(courseSearchUrl))}
-        >
-          {formatMessage(messages.exploreCoursesButton)}
-        </Button>
-      </div>
-    </div>
+      <ModalView isOpen={isOpen} onClose={setOpen} />
+    </>
   );
 };
 

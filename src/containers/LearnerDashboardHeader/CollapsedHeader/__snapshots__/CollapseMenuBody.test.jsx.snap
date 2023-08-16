@@ -27,6 +27,12 @@ exports[`CollapseMenuBody render 1`] = `
     Discover New
   </Button>
   <Button
+    onClick={[Function]}
+    variant="inverse-primary"
+  >
+    Recommended for you
+  </Button>
+  <Button
     as="a"
     href="http://localhost:18000/support"
     variant="inverse-primary"
@@ -61,6 +67,10 @@ exports[`CollapseMenuBody render 1`] = `
   >
     Sign Out
   </Button>
+  <ModalView
+    isOpen={false}
+    onClose={[Function]}
+  />
 </div>
 `;
 
@@ -93,11 +103,21 @@ exports[`CollapseMenuBody render unauthenticated 1`] = `
     Discover New
   </Button>
   <Button
+    onClick={[Function]}
+    variant="inverse-primary"
+  >
+    Recommended for you
+  </Button>
+  <Button
     as="a"
     href="http://localhost:18000/support"
     variant="inverse-primary"
   >
     Help
   </Button>
+  <ModalView
+    isOpen={false}
+    onClose={[Function]}
+  />
 </div>
 `;

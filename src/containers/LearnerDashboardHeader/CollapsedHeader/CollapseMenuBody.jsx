@@ -12,9 +12,10 @@ import { reduxHooks } from 'hooks';
 
 import { findCoursesNavDropdownClicked } from '../hooks';
 
+import ModalView from '../../../components/ModalView';
 import messages from '../messages';
 
-export const CollapseMenuBody = ({ isOpen }) => {
+export const CollapseMenuBody = ({ isOpen, isRecommendationModalOpen, setRecommendationModal }) => {
   const { formatMessage } = useIntl();
   const { authenticatedUser } = React.useContext(AppContext);
 
@@ -39,6 +40,12 @@ export const CollapseMenuBody = ({ isOpen }) => {
           onClick={exploreCoursesClick}
         >
           {formatMessage(messages.discoverNew)}
+        </Button>
+        <Button
+          variant="inverse-primary"
+          onClick={() => setRecommendationModal(true)}
+        >
+          {formatMessage(messages.recommendedForYou)}
         </Button>
         <Button as="a" href={getConfig().SUPPORT_URL} variant="inverse-primary">
           {formatMessage(messages.help)}
@@ -92,6 +99,7 @@ export const CollapseMenuBody = ({ isOpen }) => {
             </Button>
           </>
         )}
+        <ModalView isOpen={isRecommendationModalOpen} onClose={setRecommendationModal} />
       </div>
     )
   );
@@ -99,6 +107,13 @@ export const CollapseMenuBody = ({ isOpen }) => {
 
 CollapseMenuBody.propTypes = {
   isOpen: PropTypes.bool.isRequired,
+  isRecommendationModalOpen: PropTypes.bool,
+  setRecommendationModal: PropTypes.func,
+};
+
+CollapseMenuBody.defaultProps = {
+  isRecommendationModalOpen: false,
+  setRecommendationModal: () => {},
 };
 
 export default CollapseMenuBody;
