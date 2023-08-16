@@ -1,11 +1,38 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ResumeButton snapshot renders default button when learner has access to the course 1`] = `
+exports[`ResumeButton snapshot disabled snapshot 1`] = `
+<ActionButton
+  as="a"
+  disabled={true}
+  href="#"
+  onClick={
+    Object {
+      "trackCourseEvent": Object {
+        "cardId": "cardId",
+        "eventName": [MockFunction segment.enterCourseClicked],
+        "upgradeUrl": "resume-urlexec-ed-tracking-path=cardId",
+      },
+    }
+  }
+>
+  Resume
+</ActionButton>
+`;
+
+exports[`ResumeButton snapshot enabled snapshot 1`] = `
 <ActionButton
   as="a"
   disabled={false}
   href="#"
-  onClick={[MockFunction useTrackCourseEvent('enterCourseClicked', 'cardId', 'resumeUrl')]}
+  onClick={
+    Object {
+      "trackCourseEvent": Object {
+        "cardId": "cardId",
+        "eventName": [MockFunction segment.enterCourseClicked],
+        "upgradeUrl": "resume-urlexec-ed-tracking-path=cardId",
+      },
+    }
+  }
 >
   Resume
 </ActionButton>

@@ -11,15 +11,12 @@ export const ModalView = ({
 }) => {
   const { formatMessage } = useIntl();
 
-  const handleClose = () => {
-    onClose(false);
-  };
   return (
     <div className="containers">
       <ModalDialog
         title=""
         isOpen={isOpen}
-        onClose={handleClose}
+        onClose={onClose}
         hasCloseButton={false}
         isFullscreenScroll
       >
@@ -29,9 +26,9 @@ export const ModalView = ({
           </ModalDialog.Title>
         </ModalDialog.Header>
         <ModalDialog.Body>
-          <div className="modal-continer">
+          <div>
             <p className="mt-2">{formatMessage(messages.recommendationsFeatureText)}</p>
-            <p>{formatMessage(messages.recommendationsAlertedText)}</p>
+            <p>{formatMessage(messages.recommendationsAlertText)}</p>
           </div>
         </ModalDialog.Body>
         <ModalDialog.Footer>
@@ -49,11 +46,10 @@ export const ModalView = ({
 
 ModalView.defaultProps = {
   isOpen: false,
-  onClose: () => {},
 };
 
 ModalView.propTypes = {
-  onClose: PropTypes.func,
+  onClose: PropTypes.func.isRequired,
   isOpen: PropTypes.bool,
 };
 

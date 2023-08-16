@@ -33,6 +33,13 @@ exports[`ExpandedHeader render 1`] = `
     >
       Discover New
     </Button>
+    <Button
+      className="p-4"
+      onClick={[MockFunction]}
+      variant="inverse-primary"
+    >
+      Recommended for you
+    </Button>
     <span
       className="flex-grow-1"
     />
@@ -46,6 +53,10 @@ exports[`ExpandedHeader render 1`] = `
     </Button>
   </div>
   <AuthenticatedUserDropdown />
+  <ModalView
+    isOpen={false}
+    onClose={[MockFunction]}
+  />
 </header>
 `;
 

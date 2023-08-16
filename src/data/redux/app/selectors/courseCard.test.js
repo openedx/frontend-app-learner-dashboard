@@ -1,5 +1,6 @@
 import { keyStore } from 'utils';
 import { baseAppUrl } from 'data/services/lms/urls';
+import { EXECUTIVE_EDUCATION_COURSE_MODES } from 'data/constants/course';
 
 import simpleSelectors from './simpleSelectors';
 import * as module from './courseCard';
@@ -228,23 +229,25 @@ describe('courseCard selectors module', () => {
       });
     });
     describe('enrollment selector', () => {
+      const defaultData = {
+        coursewareAccess: {
+          isStaff: false,
+          hasUnmetPrereqs: false,
+          isTooEarly: false,
+        },
+        isEnrolled: 'test-is-enrolled',
+        lastEnrolled: 'test-last-enrolled',
+        hasStarted: 'test-has-started',
+        accessExpirationDate: '3000-10-20',
+        canUpgrade: 'test-can-upgrade',
+        isAudit: 'test-is-audit',
+        isAuditAccessExpired: 'test-is-audit-access-expired',
+        isVerified: 'test-is-verified',
+        isEmailEnabled: 'test-is-email-enabled',
+        mode: 'default',
+      };
       beforeEach(() => {
-        loadSelector(courseCard.enrollment, {
-          coursewareAccess: {
-            isStaff: false,
-            hasUnmetPrereqs: false,
-            isTooEarly: false,
-          },
-          isEnrolled: 'test-is-enrolled',
-          lastEnrolled: 'test-last-enrolled',
-          hasStarted: 'test-has-started',
-          accessExpirationDate: '3000-10-20',
-          canUpgrade: 'test-can-upgrade',
-          isAudit: 'test-is-audit',
-          isAuditAccessExpired: 'test-is-audit-access-expired',
-          isVerified: 'test-is-verified',
-          isEmailEnabled: 'test-is-email-enabled',
-        });
+        loadSelector(courseCard.enrollment, defaultData);
       });
       it('returns a card selector based on enrollment cardSimpleSelector', () => {
         expect(simpleSelector).toEqual(cardSimpleSelectors.enrollment);
@@ -279,6 +282,13 @@ describe('courseCard selectors module', () => {
       });
       it('passes isEmailEnabled', () => {
         expect(selected.isEmailEnabled).toEqual(testData.isEmailEnabled);
+      });
+      it('returns isExecEd2UCourse: false if mode is not in EXECUTIVE_EDUCATION_COURSE_MODES', () => {
+        expect(selected.isExecEd2UCourse).toEqual(false);
+      });
+      it('returns isExecEd2UCourse: true if mode is in EXECUTIVE_EDUCATION_COURSE_MODES', () => {
+        loadSelector(courseCard.enrollment, { ...defaultData, mode: EXECUTIVE_EDUCATION_COURSE_MODES[0] });
+        expect(selected.isExecEd2UCourse).toEqual(true);
       });
     });
     describe('entitlement selector', () => {

@@ -24,6 +24,8 @@ describe('RecommendationsPanel LoadedView', () => {
   const props = {
     courses: mockData.courses,
     isControl: null,
+    setIsRecommendationsModalOpen: () => {},
+    isRecommendationsModalOpen: false,
   };
   describe('snapshot', () => {
     test('without personalize recommendation', () => {

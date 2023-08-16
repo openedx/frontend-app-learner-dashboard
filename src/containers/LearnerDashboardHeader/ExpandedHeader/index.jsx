@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { getConfig } from '@edx/frontend-platform';
 import { useIntl } from '@edx/frontend-platform/i18n';
@@ -10,6 +10,7 @@ import { reduxHooks } from 'hooks';
 import AuthenticatedUserDropdown from './AuthenticatedUserDropdown';
 
 import { useIsCollapsed, findCoursesNavClicked } from '../hooks';
+import { useRecommendationsModal } from '../../../components/ModalView/hooks';
 import messages from '../messages';
 import ModalView from '../../../components/ModalView';
 import BrandLogo from '../BrandLogo';
@@ -18,7 +19,7 @@ export const ExpandedHeader = () => {
   const { formatMessage } = useIntl();
   const { courseSearchUrl } = reduxHooks.usePlatformSettingsData();
   const isCollapsed = useIsCollapsed();
-  const [isRecommendationModalOpen, setRecommendationModal] = useState(false);
+  const { isRecommendationsModalOpen, toggleRecommendationsModal } = useRecommendationsModal();
 
   const exploreCoursesClick = findCoursesNavClicked(urls.baseAppUrl(courseSearchUrl));
 
@@ -56,7 +57,7 @@ export const ExpandedHeader = () => {
         <Button
           variant="inverse-primary"
           className="p-4"
-          onClick={() => setRecommendationModal(true)}
+          onClick={toggleRecommendationsModal}
         >
           {formatMessage(messages.recommendedForYou)}
         </Button>
@@ -72,7 +73,7 @@ export const ExpandedHeader = () => {
       </div>
 
       <AuthenticatedUserDropdown />
-      <ModalView isOpen={isRecommendationModalOpen} onClose={setRecommendationModal} />
+      <ModalView isOpen={isRecommendationsModalOpen} onClose={toggleRecommendationsModal} />
     </header>
     )
   );

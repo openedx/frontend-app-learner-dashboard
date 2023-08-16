@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Button } from '@edx/paragon';
@@ -13,9 +13,10 @@ import './index.scss';
 export const LoadedView = ({
   courses,
   isControl,
+  setIsRecommendationsModalOpen,
+  isRecommendationsModalOpen,
 }) => {
   const { formatMessage } = useIntl();
-  const [isOpen, setOpen] = useState(false);
 
   return (
     <>
@@ -35,13 +36,13 @@ export const LoadedView = ({
         <div className="text-center explore-courses-btn">
           <Button
             variant="brand"
-            onClick={() => setOpen(true)}
+            onClick={setIsRecommendationsModalOpen}
           >
             {formatMessage(messages.seeAllRecommendationsButton)}
           </Button>
         </div>
       </div>
-      <ModalView isOpen={isOpen} onClose={setOpen} />
+      <ModalView isOpen={isRecommendationsModalOpen} onClose={setIsRecommendationsModalOpen} />
     </>
   );
 };
@@ -58,6 +59,8 @@ LoadedView.propTypes = {
     marketingUrl: PropTypes.string,
   })).isRequired,
   isControl: PropTypes.oneOf([true, false, null]),
+  setIsRecommendationsModalOpen: PropTypes.func.isRequired,
+  isRecommendationsModalOpen: PropTypes.bool.isRequired,
 };
 
 export default LoadedView;

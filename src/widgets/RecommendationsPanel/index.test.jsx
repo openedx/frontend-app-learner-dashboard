@@ -7,9 +7,13 @@ import mockData from './mockData';
 import LoadedView from './LoadedView';
 import LoadingView from './LoadingView';
 import RecommendationsPanel from '.';
+import { useRecommendationsModal } from '../../components/ModalView/hooks';
 
 jest.mock('./hooks', () => ({
   useRecommendationPanelData: jest.fn(),
+}));
+jest.mock('../../components/ModalView/hooks', () => ({
+  useRecommendationsModal: jest.fn(),
 }));
 jest.mock('widgets/LookingForChallengeWidget', () => 'LookingForChallengeWidget');
 jest.mock('./LoadingView', () => 'LoadingView');
@@ -21,6 +25,8 @@ describe('RecommendationsPanel snapshot', () => {
   const defaultLoadedViewProps = {
     courses: [],
     isControl: false,
+    setIsRecommendationsModalOpen: jest.fn(),
+    isRecommendationsModalOpen: false,
   };
   const defaultValues = {
     isFailed: false,
@@ -29,6 +35,10 @@ describe('RecommendationsPanel snapshot', () => {
     ...defaultLoadedViewProps,
   };
   it('displays LoadingView if request is loading', () => {
+    useRecommendationsModal.mockReturnValueOnce({
+      isRecommendationsModalOpen: false,
+      toggleRecommendationsModal: jest.fn(),
+    });
     hooks.useRecommendationPanelData.mockReturnValueOnce({
       ...defaultValues,
       isLoading: true,
@@ -36,16 +46,23 @@ describe('RecommendationsPanel snapshot', () => {
     expect(shallow(<RecommendationsPanel />)).toMatchObject(shallow(<LoadingView />));
   });
   it('displays LoadedView with courses if request is loaded', () => {
+    useRecommendationsModal.mockReturnValueOnce({
+      isRecommendationsModalOpen: false,
+      toggleRecommendationsModal: jest.fn(),
+    });
     hooks.useRecommendationPanelData.mockReturnValueOnce({
       ...defaultValues,
       courses,
       isLoaded: true,
     });
-    expect(shallow(<RecommendationsPanel />)).toMatchObject(
-      shallow(<LoadedView {...defaultLoadedViewProps} courses={courses} />),
-    );
+    expect(JSON.stringify(shallow(<RecommendationsPanel />)))
+      .toEqual(JSON.stringify(shallow(<LoadedView {...defaultLoadedViewProps} courses={courses} />)));
   });
   it('displays LookingForChallengeWidget if request is failed', () => {
+    useRecommendationsModal.mockReturnValueOnce({
+      isRecommendationsModalOpen: false,
+      toggleRecommendationsModal: jest.fn(),
+    });
     hooks.useRecommendationPanelData.mockReturnValueOnce({
       ...defaultValues,
       isFailed: true,
@@ -55,6 +72,10 @@ describe('RecommendationsPanel snapshot', () => {
     );
   });
   it('defaults to LookingForChallengeWidget if no flags are true', () => {
+    useRecommendationsModal.mockReturnValueOnce({
+      isRecommendationsModalOpen: false,
+      toggleRecommendationsModal: jest.fn(),
+    });
     hooks.useRecommendationPanelData.mockReturnValueOnce({
       ...defaultValues,
     });

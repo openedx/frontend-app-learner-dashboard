@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { Menu, Close } from '@edx/paragon/icons';
 import { IconButton, Icon } from '@edx/paragon';
 
 import { useLearnerDashboardHeaderData, useIsCollapsed } from '../hooks';
+import { useRecommendationsModal } from '../../../components/ModalView/hooks';
 
 import CollapseMenuBody from './CollapseMenuBody';
 import BrandLogo from '../BrandLogo';
@@ -15,7 +16,7 @@ export const CollapsedHeader = () => {
   const { formatMessage } = useIntl();
   const isCollapsed = useIsCollapsed();
   const { isOpen, toggleIsOpen } = useLearnerDashboardHeaderData();
-  const [isRecommendationModalOpen, setRecommendationModal] = useState(false);
+  const { isRecommendationsModalOpen, toggleRecommendationsModal } = useRecommendationsModal();
 
   return (
     isCollapsed && (
@@ -39,8 +40,8 @@ export const CollapsedHeader = () => {
         </header>
         <CollapseMenuBody
           isOpen={isOpen}
-          setRecommendationModal={setRecommendationModal}
-          isRecommendationModalOpen={isRecommendationModalOpen}
+          setIsRecommendationsModalOpen={toggleRecommendationsModal}
+          isRecommendationsModalOpen={isRecommendationsModalOpen}
         />
       </>
     )

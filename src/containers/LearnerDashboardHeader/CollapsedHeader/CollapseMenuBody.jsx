@@ -15,7 +15,7 @@ import { findCoursesNavDropdownClicked } from '../hooks';
 import ModalView from '../../../components/ModalView';
 import messages from '../messages';
 
-export const CollapseMenuBody = ({ isOpen, isRecommendationModalOpen, setRecommendationModal }) => {
+export const CollapseMenuBody = ({ isOpen, isRecommendationsModalOpen, setIsRecommendationsModalOpen }) => {
   const { formatMessage } = useIntl();
   const { authenticatedUser } = React.useContext(AppContext);
 
@@ -43,7 +43,7 @@ export const CollapseMenuBody = ({ isOpen, isRecommendationModalOpen, setRecomme
         </Button>
         <Button
           variant="inverse-primary"
-          onClick={() => setRecommendationModal(true)}
+          onClick={setIsRecommendationsModalOpen}
         >
           {formatMessage(messages.recommendedForYou)}
         </Button>
@@ -99,7 +99,7 @@ export const CollapseMenuBody = ({ isOpen, isRecommendationModalOpen, setRecomme
             </Button>
           </>
         )}
-        <ModalView isOpen={isRecommendationModalOpen} onClose={setRecommendationModal} />
+        <ModalView isOpen={isRecommendationsModalOpen} onClose={setIsRecommendationsModalOpen} />
       </div>
     )
   );
@@ -107,13 +107,13 @@ export const CollapseMenuBody = ({ isOpen, isRecommendationModalOpen, setRecomme
 
 CollapseMenuBody.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  isRecommendationModalOpen: PropTypes.bool,
-  setRecommendationModal: PropTypes.func,
+  isRecommendationsModalOpen: PropTypes.bool,
+  setIsRecommendationsModalOpen: PropTypes.func,
 };
 
 CollapseMenuBody.defaultProps = {
-  isRecommendationModalOpen: false,
-  setRecommendationModal: () => {},
+  isRecommendationsModalOpen: false,
+  setIsRecommendationsModalOpen: () => {},
 };
 
 export default CollapseMenuBody;

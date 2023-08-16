@@ -3,6 +3,13 @@ import { AppContext } from '@edx/frontend-platform/react';
 
 import CollapseMenuBody from './CollapseMenuBody';
 
+jest.mock('@edx/frontend-platform', () => ({
+  getConfig: jest.fn(() => ({
+    ORDER_HISTORY_URL: 'http://account-profile-url.test',
+    CAREER_LINK_URL: 'http://account-profile-url.test',
+  })),
+}));
+
 jest.mock('@edx/frontend-platform/react', () => ({
   AppContext: {
     authenticatedUser: {
@@ -15,6 +22,7 @@ jest.mock('hooks', () => ({
   reduxHooks: {
     useEnterpriseDashboardData: () => ({
       url: 'url',
+      dashboard: false,
     }),
     usePlatformSettingsData: () => ({
       courseSearchUrl: '/courseSearchUrl',

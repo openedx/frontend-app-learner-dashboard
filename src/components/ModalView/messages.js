@@ -6,8 +6,8 @@ const messages = defineMessages({
     defaultMessage: 'Personalized recommendations feature is not yet available. We are working hard on bringing it to your learner home in the near future.',
     description: 'recommendations feature text',
   },
-  recommendationsAlertedText: {
-    id: 'RecommendationsPanel.recommendationsAlertedText',
+  recommendationsAlertText: {
+    id: 'RecommendationsPanel.recommendationsAlertText',
     defaultMessage: 'Would you like to be alerted when it becomes available?',
     description: 'recommendations alerted text',
   },

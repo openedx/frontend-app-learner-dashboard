@@ -63,143 +63,124 @@ describe('useActionDisabledState', () => {
     });
   };
 
+  const runHook = () => hooks.useActionDisabledState(cardId);
   describe('disableBeginCourse', () => {
+    const testDisabled = (data, expected) => {
+      mockHooksData(data);
+      expect(runHook().disableBeginCourse).toBe(expected);
+    };
     it('disable when homeUrl is invalid', () => {
-      mockHooksData({ homeUrl: null });
-      const { disableBeginCourse } = hooks.useActionDisabledState(cardId);
-      expect(disableBeginCourse).toBe(true);
+      testDisabled({ homeUrl: null }, true);
     });
     it('disable when isMasquerading is true', () => {
-      mockHooksData({ isMasquerading: true });
-      const { disableBeginCourse } = hooks.useActionDisabledState(cardId);
-      expect(disableBeginCourse).toBe(true);
+      testDisabled({ isMasquerading: true }, true);
     });
     it('disable when hasAccess is false', () => {
-      mockHooksData({ hasAccess: false });
-      const { disableBeginCourse } = hooks.useActionDisabledState(cardId);
-      expect(disableBeginCourse).toBe(true);
+      testDisabled({ hasAccess: false }, true);
     });
     it('disable when isAudit is true and isAuditAccessExpired is true', () => {
-      mockHooksData({ isAudit: true, isAuditAccessExpired: true });
-      const { disableBeginCourse } = hooks.useActionDisabledState(cardId);
-      expect(disableBeginCourse).toBe(true);
+      testDisabled({ isAudit: true, isAuditAccessExpired: true }, true);
     });
     it('enable when all conditions are met', () => {
-      mockHooksData({ hasAccess: true });
-      const { disableBeginCourse } = hooks.useActionDisabledState(cardId);
-      expect(disableBeginCourse).toBe(false);
+      testDisabled({ hasAccess: true }, false);
     });
   });
   describe('disableResumeCourse', () => {
+    const testDisabled = (data, expected) => {
+      mockHooksData(data);
+      expect(runHook().disableResumeCourse).toBe(expected);
+    };
     it('disable when resumeUrl is invalid', () => {
-      mockHooksData({ resumeUrl: null });
-      const { disableResumeCourse } = hooks.useActionDisabledState(cardId);
-      expect(disableResumeCourse).toBe(true);
+      testDisabled({ resumeUrl: null }, true);
     });
     it('disable when isMasquerading is true', () => {
-      mockHooksData({ isMasquerading: true });
-      const { disableResumeCourse } = hooks.useActionDisabledState(cardId);
-      expect(disableResumeCourse).toBe(true);
+      testDisabled({ isMasquerading: true }, true);
     });
     it('disable when hasAccess is false', () => {
-      mockHooksData({ hasAccess: false });
-      const { disableResumeCourse } = hooks.useActionDisabledState(cardId);
-      expect(disableResumeCourse).toBe(true);
+      testDisabled({ hasAccess: false }, true);
     });
     it('disable when isAudit is true and isAuditAccessExpired is true', () => {
-      mockHooksData({ isAudit: true, isAuditAccessExpired: true });
-      const { disableResumeCourse } = hooks.useActionDisabledState(cardId);
-      expect(disableResumeCourse).toBe(true);
+      testDisabled({ isAudit: true, isAuditAccessExpired: true }, true);
     });
     it('enable when all conditions are met', () => {
-      mockHooksData({ hasAccess: true });
-      const { disableResumeCourse } = hooks.useActionDisabledState(cardId);
-      expect(disableResumeCourse).toBe(false);
+      testDisabled({ hasAccess: true }, false);
     });
   });
   describe('disableViewCourse', () => {
+    const testDisabled = (data, expected) => {
+      mockHooksData(data);
+      expect(runHook().disableViewCourse).toBe(expected);
+    };
     it('disable when hasAccess is false', () => {
-      mockHooksData({ hasAccess: false });
-      const { disableViewCourse } = hooks.useActionDisabledState(cardId);
-      expect(disableViewCourse).toBe(true);
+      testDisabled({ hasAccess: false }, true);
     });
     it('disable when isAudit is true and isAuditAccessExpired is true', () => {
-      mockHooksData({ isAudit: true, isAuditAccessExpired: true });
-      const { disableViewCourse } = hooks.useActionDisabledState(cardId);
-      expect(disableViewCourse).toBe(true);
+      testDisabled({ isAudit: true, isAuditAccessExpired: true }, true);
     });
     it('enable when all conditions are met', () => {
-      mockHooksData({ hasAccess: true });
-      const { disableViewCourse } = hooks.useActionDisabledState(cardId);
-      expect(disableViewCourse).toBe(false);
+      testDisabled({ hasAccess: true }, false);
     });
   });
   describe('disableUpgradeCourse', () => {
+    const testDisabled = (data, expected) => {
+      mockHooksData(data);
+      expect(runHook().disableUpgradeCourse).toBe(expected);
+    };
     it('disable when upgradeUrl is invalid', () => {
-      mockHooksData({ upgradeUrl: null });
-      const { disableUpgradeCourse } = hooks.useActionDisabledState(cardId);
-      expect(disableUpgradeCourse).toBe(true);
+      testDisabled({ upgradeUrl: null }, true);
     });
     it('disable when isMasquerading is true and canUpgrade is false', () => {
-      mockHooksData({ isMasquerading: true, canUpgrade: false });
-      const { disableUpgradeCourse } = hooks.useActionDisabledState(cardId);
-      expect(disableUpgradeCourse).toBe(true);
+      testDisabled({ isMasquerading: true, canUpgrade: false }, true);
     });
     it('enable when all conditions are met', () => {
-      mockHooksData({ canUpgrade: true });
-      const { disableUpgradeCourse } = hooks.useActionDisabledState(cardId);
-      expect(disableUpgradeCourse).toBe(false);
+      testDisabled({ canUpgrade: true }, false);
     });
   });
   describe('disableSelectSession', () => {
+    const testDisabled = (data, expected) => {
+      mockHooksData(data);
+      expect(runHook().disableSelectSession).toBe(expected);
+    };
     it('disable when isEntitlement is false', () => {
-      mockHooksData({ isEntitlement: false });
-      const { disableSelectSession } = hooks.useActionDisabledState(cardId);
-      expect(disableSelectSession).toBe(true);
+      testDisabled({ isEntitlement: false }, true);
     });
     it('disable when isMasquerading is true', () => {
-      mockHooksData({ isMasquerading: true });
-      const { disableSelectSession } = hooks.useActionDisabledState(cardId);
-      expect(disableSelectSession).toBe(true);
+      testDisabled({ isMasquerading: true }, true);
     });
     it('disable when hasAccess is false', () => {
-      mockHooksData({ hasAccess: false });
-      const { disableSelectSession } = hooks.useActionDisabledState(cardId);
-      expect(disableSelectSession).toBe(true);
+      testDisabled({ hasAccess: false }, true);
     });
     it('disable when canChange is false', () => {
-      mockHooksData({ canChange: false });
-      const { disableSelectSession } = hooks.useActionDisabledState(cardId);
-      expect(disableSelectSession).toBe(true);
+      testDisabled({ canChange: false }, true);
     });
     it('disable when hasSessions is false', () => {
-      mockHooksData({ hasSessions: false });
-      const { disableSelectSession } = hooks.useActionDisabledState(cardId);
-      expect(disableSelectSession).toBe(true);
+      testDisabled({ hasSessions: false }, true);
     });
     it('enable when all conditions are met', () => {
-      mockHooksData({
-        isEntitlement: true, hasAccess: true, canChange: true, hasSessions: true,
-      });
-      const { disableSelectSession } = hooks.useActionDisabledState(cardId);
-      expect(disableSelectSession).toBe(false);
+      testDisabled(
+        {
+          isEntitlement: true,
+          hasAccess: true,
+          canChange: true,
+          hasSessions: true,
+        },
+        false,
+      );
     });
   });
   describe('disableCourseTitle', () => {
+    const testDisabled = (data, expected) => {
+      mockHooksData(data);
+      expect(runHook().disableCourseTitle).toBe(expected);
+    };
     it('disable when isEntitlement is true and isFulfilled is false', () => {
-      mockHooksData({ isEntitlement: true, isFulfilled: false });
-      const { disableCourseTitle } = hooks.useActionDisabledState(cardId);
-      expect(disableCourseTitle).toBe(true);
+      testDisabled({ isEntitlement: true, isFulfilled: false }, true);
     });
     it('disable when disableViewCourse is true', () => {
-      mockHooksData({ hasAccess: false });
-      const { disableCourseTitle } = hooks.useActionDisabledState(cardId);
-      expect(disableCourseTitle).toBe(true);
+      testDisabled({ hasAccess: false }, true);
     });
     it('enable when all conditions are met', () => {
-      mockHooksData({ isEntitlement: true, isFulfilled: true, hasAccess: true });
-      const { disableCourseTitle } = hooks.useActionDisabledState(cardId);
-      expect(disableCourseTitle).toBe(false);
+      testDisabled({ isEntitlement: true, isFulfilled: true, hasAccess: true }, false);
     });
   });
 });
