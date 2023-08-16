@@ -51,6 +51,11 @@ const messages = defineMessages({
     defaultMessage: 'Discover New',
     description: 'Header link for switching to discover page.',
   },
+  recommendedForYou: {
+    id: 'learnerVariantDashboard.recommendedForYou',
+    defaultMessage: 'Recommended for you',
+    description: 'Header link for recommended page.',
+  },
   logoAltText: {
     id: 'learnerVariantDashboard.logoAltText',
     defaultMessage: 'edX, Inc. Dashboard',

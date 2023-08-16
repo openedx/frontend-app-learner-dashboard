@@ -10,13 +10,16 @@ import { reduxHooks } from 'hooks';
 import AuthenticatedUserDropdown from './AuthenticatedUserDropdown';
 
 import { useIsCollapsed, findCoursesNavClicked } from '../hooks';
+import { useRecommendationsModal } from '../../../components/ModalView/hooks';
 import messages from '../messages';
+import ModalView from '../../../components/ModalView';
 import BrandLogo from '../BrandLogo';
 
 export const ExpandedHeader = () => {
   const { formatMessage } = useIntl();
   const { courseSearchUrl } = reduxHooks.usePlatformSettingsData();
   const isCollapsed = useIsCollapsed();
+  const { isRecommendationsModalOpen, toggleRecommendationsModal } = useRecommendationsModal();
 
   const exploreCoursesClick = findCoursesNavClicked(urls.baseAppUrl(courseSearchUrl));
 
@@ -51,6 +54,13 @@ export const ExpandedHeader = () => {
         >
           {formatMessage(messages.discoverNew)}
         </Button>
+        <Button
+          variant="inverse-primary"
+          className="p-4"
+          onClick={toggleRecommendationsModal}
+        >
+          {formatMessage(messages.recommendedForYou)}
+        </Button>
         <span className="flex-grow-1" />
         <Button
           as="a"
@@ -63,6 +73,7 @@ export const ExpandedHeader = () => {
       </div>
 
       <AuthenticatedUserDropdown />
+      <ModalView isOpen={isRecommendationsModalOpen} onClose={toggleRecommendationsModal} />
     </header>
     )
   );

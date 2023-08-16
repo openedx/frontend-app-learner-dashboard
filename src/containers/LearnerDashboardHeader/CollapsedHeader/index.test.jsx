@@ -3,6 +3,7 @@ import { shallow } from 'enzyme';
 import CollapsedHeader from '.';
 
 import { useLearnerDashboardHeaderData, useIsCollapsed } from '../hooks';
+import { useRecommendationsModal } from '../../../components/ModalView/hooks';
 
 jest.mock('../BrandLogo', () => jest.fn(() => 'BrandLogo'));
 jest.mock('./CollapseMenuBody', () => jest.fn(() => 'CollapseMenuBody'));
@@ -15,14 +16,26 @@ jest.mock('../hooks', () => ({
   })),
 }));
 
+jest.mock('../../../components/ModalView/hooks', () => ({
+  useRecommendationsModal: jest.fn(),
+}));
+
 describe('CollapsedHeader', () => {
   it('renders', () => {
+    useRecommendationsModal.mockReturnValueOnce({
+      isRecommendationsModalOpen: false,
+      toggleRecommendationsModal: jest.fn(),
+    });
     const wrapper = shallow(<CollapsedHeader />);
     expect(wrapper).toMatchSnapshot();
   });
 
   it('render nothing if not collapsed', () => {
     useIsCollapsed.mockReturnValueOnce(false);
+    useRecommendationsModal.mockReturnValueOnce({
+      isRecommendationsModalOpen: false,
+      toggleRecommendationsModal: jest.fn(),
+    });
     const wrapper = shallow(<CollapsedHeader />);
     expect(wrapper).toMatchSnapshot();
   });
@@ -31,6 +44,10 @@ describe('CollapsedHeader', () => {
     useLearnerDashboardHeaderData.mockReturnValueOnce({
       isOpen: true,
       toggleIsOpen: jest.fn().mockName('toggleIsOpen'),
+    });
+    useRecommendationsModal.mockReturnValueOnce({
+      isRecommendationsModalOpen: false,
+      toggleRecommendationsModal: jest.fn(),
     });
     const wrapper = shallow(<CollapsedHeader />);
     expect(wrapper).toMatchSnapshot();

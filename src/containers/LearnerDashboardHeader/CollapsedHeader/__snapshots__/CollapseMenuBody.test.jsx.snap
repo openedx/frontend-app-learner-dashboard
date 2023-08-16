@@ -13,22 +13,27 @@ exports[`CollapseMenuBody render 1`] = `
   </Button>
   <Button
     as="a"
-    href="http://localhost:18000/dashboard/programs"
+    href="undefined/dashboard/programs"
     variant="inverse-primary"
   >
     Programs
   </Button>
   <Button
     as="a"
-    href="http://localhost:18000/courseSearchUrl"
-    onClick={[MockFunction findCoursesNavDropdownClicked("http://localhost:18000/courseSearchUrl")]}
+    href="undefined/courseSearchUrl"
+    onClick={[MockFunction findCoursesNavDropdownClicked("undefined/courseSearchUrl")]}
     variant="inverse-primary"
   >
     Discover New
   </Button>
   <Button
+    onClick={[Function]}
+    variant="inverse-primary"
+  >
+    Recommended for you
+  </Button>
+  <Button
     as="a"
-    href="http://localhost:18000/support"
     variant="inverse-primary"
   >
     Help
@@ -42,25 +47,35 @@ exports[`CollapseMenuBody render 1`] = `
   </Button>
   <Button
     as="a"
-    href="http://localhost:18000/u/username"
+    href="undefined/u/username"
     variant="inverse-primary"
   >
     Profile
   </Button>
   <Button
     as="a"
-    href="http://localhost:18000/account/settings"
+    href="undefined/account/settings"
     variant="inverse-primary"
   >
     Account
   </Button>
   <Button
     as="a"
-    href="http://localhost:18000/logout"
+    href="http://account-profile-url.test"
+    variant="inverse-primary"
+  >
+    Orders & Subscriptions
+  </Button>
+  <Button
+    as="a"
     variant="inverse-primary"
   >
     Sign Out
   </Button>
+  <ModalView
+    isOpen={false}
+    onClose={[Function]}
+  />
 </div>
 `;
 
@@ -79,25 +94,34 @@ exports[`CollapseMenuBody render unauthenticated 1`] = `
   </Button>
   <Button
     as="a"
-    href="http://localhost:18000/dashboard/programs"
+    href="undefined/dashboard/programs"
     variant="inverse-primary"
   >
     Programs
   </Button>
   <Button
     as="a"
-    href="http://localhost:18000/courseSearchUrl"
-    onClick={[MockFunction findCoursesNavDropdownClicked("http://localhost:18000/courseSearchUrl")]}
+    href="undefined/courseSearchUrl"
+    onClick={[MockFunction findCoursesNavDropdownClicked("undefined/courseSearchUrl")]}
     variant="inverse-primary"
   >
     Discover New
   </Button>
   <Button
+    onClick={[Function]}
+    variant="inverse-primary"
+  >
+    Recommended for you
+  </Button>
+  <Button
     as="a"
-    href="http://localhost:18000/support"
     variant="inverse-primary"
   >
     Help
   </Button>
+  <ModalView
+    isOpen={false}
+    onClose={[Function]}
+  />
 </div>
 `;

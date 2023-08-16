@@ -20,6 +20,8 @@ exports[`CollapsedHeader renders 1`] = `
   </header>
   <mockConstructor
     isOpen={false}
+    isRecommendationsModalOpen={false}
+    setIsRecommendationsModalOpen={[MockFunction]}
   />
 </Fragment>
 `;
@@ -43,6 +45,8 @@ exports[`CollapsedHeader renders with isOpen true 1`] = `
   </header>
   <mockConstructor
     isOpen={true}
+    isRecommendationsModalOpen={false}
+    setIsRecommendationsModalOpen={[MockFunction]}
   />
 </Fragment>
 `;
