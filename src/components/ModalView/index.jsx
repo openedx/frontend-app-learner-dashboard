@@ -5,6 +5,8 @@ import { ModalDialog, ActionRow, Button } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import messages from './messages';
 
+import './index.scss';
+
 export const ModalView = ({
   isOpen,
   onClose,
