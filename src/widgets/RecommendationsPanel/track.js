@@ -4,6 +4,7 @@ import track from 'tracking';
 
 export const eventNames = StrictDict({
   recommendedCourseClicked: 'edx.bi.user.recommended.course.click',
+  recommendationsUnavailable: 'edx.bi.user.recommendations.unavailable',
 });
 
 export const linkNames = StrictDict({
@@ -23,7 +24,15 @@ export const recommendedCourseClicked = (courseKey, isControl, href) => createLi
   href,
 );
 
+export const trackRecommendationUnavailable = () => {
+  createEventTracker(eventNames.recommendationsUnavailable, {
+    type: 'personalized',
+    page: 'dashboard',
+  });
+};
+
 export default {
   findCoursesWidgetClicked,
   recommendedCourseClicked,
+  trackRecommendationUnavailable,
 };

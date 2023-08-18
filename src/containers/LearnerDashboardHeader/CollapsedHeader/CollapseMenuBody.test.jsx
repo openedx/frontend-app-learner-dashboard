@@ -30,6 +30,13 @@ jest.mock('hooks', () => ({
   },
 }));
 
+jest.mock('../../../components/ModalView/hooks', () => ({
+  useRecommendationsModal: jest.fn(() => ({
+    isRecommendationsModalOpen: false,
+    toggleRecommendationsModal: jest.fn(),
+  })),
+}));
+
 jest.mock('../hooks', () => ({
   findCoursesNavDropdownClicked: (url) => jest.fn().mockName(`findCoursesNavDropdownClicked("${url}")`),
 }));

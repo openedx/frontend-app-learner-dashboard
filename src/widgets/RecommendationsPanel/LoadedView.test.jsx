@@ -19,6 +19,12 @@ jest.mock('./track', () => ({
   findCoursesWidgetClicked: (href) => jest.fn().mockName(`track.findCoursesWidgetClicked('${href}')`),
 }));
 jest.mock('./components/CourseCard', () => 'CourseCard');
+jest.mock('../../components/ModalView/hooks', () => ({
+  useRecommendationsModal: jest.fn(() => ({
+    isRecommendationsModalOpen: false,
+    toggleRecommendationsModal: jest.fn(),
+  })),
+}));
 
 describe('RecommendationsPanel LoadedView', () => {
   const props = {

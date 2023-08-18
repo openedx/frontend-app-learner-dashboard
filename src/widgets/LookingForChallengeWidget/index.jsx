@@ -8,7 +8,7 @@ import { reduxHooks } from 'hooks';
 import moreCoursesSVG from 'assets/more-courses-sidewidget.svg';
 import { baseAppUrl } from 'data/services/lms/urls';
 
-import track from '../RecommendationsPanel/track';
+import track, { trackRecommendationUnavailable } from '../RecommendationsPanel/track';
 import messages from './messages';
 import './index.scss';
 
@@ -17,6 +17,11 @@ export const arrowIcon = (<Icon className="mx-1" src={ArrowForward} />);
 export const LookingForChallengeWidget = () => {
   const { formatMessage } = useIntl();
   const { courseSearchUrl } = reduxHooks.usePlatformSettingsData();
+
+  React.useEffect(() => {
+    trackRecommendationUnavailable();
+  }, []);
+
   return (
     <Card orientation="horizontal" id="looking-for-challenge-widget">
       <Card.ImageCap

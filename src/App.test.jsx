@@ -25,6 +25,9 @@ jest.mock('components/ZendeskFab', () => 'ZendeskFab');
 jest.mock('ExperimentContext', () => ({
   ExperimentProvider: 'ExperimentProvider',
 }));
+jest.mock('RecsPaintedDoorExpContext', () => ({
+  PaintedDoorExperimentProvider: 'PaintedDoorExperimentProvider',
+}));
 jest.mock('data/redux', () => ({
   selectors: 'redux.selectors',
   actions: 'redux.actions',

@@ -14,6 +14,10 @@ import { useRecommendationsModal } from '../../../components/ModalView/hooks';
 import messages from '../messages';
 import ModalView from '../../../components/ModalView';
 import BrandLogo from '../BrandLogo';
+import usePaintedDoorExperimentContext from '../../../RecsPaintedDoorExpContext';
+import {
+  trackPaintedDoorRecommendationHomeBtnClicked,
+} from '../../../widgets/RecommendationsPanel/recsPaintedDoorExpTrack';
 
 export const ExpandedHeader = () => {
   const { formatMessage } = useIntl();
@@ -22,6 +26,21 @@ export const ExpandedHeader = () => {
   const { isRecommendationsModalOpen, toggleRecommendationsModal } = useRecommendationsModal();
 
   const exploreCoursesClick = findCoursesNavClicked(urls.baseAppUrl(courseSearchUrl));
+  const {
+    experimentVariation,
+    isPaintedDoorNavbarBtnVariation,
+    experimentLoading,
+  } = usePaintedDoorExperimentContext();
+
+  console.log('test ', {
+    experimentVariation,
+    isPaintedDoorNavbarBtnVariation,
+    experimentLoading,
+  });
+  const handleSeeAllRecommendationsClick = () => {
+    toggleRecommendationsModal();
+    trackPaintedDoorRecommendationHomeBtnClicked(experimentVariation);
+  };
 
   return (
     !isCollapsed && (
@@ -54,13 +73,15 @@ export const ExpandedHeader = () => {
         >
           {formatMessage(messages.discoverNew)}
         </Button>
+        {(!experimentLoading && isPaintedDoorNavbarBtnVariation) && (
         <Button
           variant="inverse-primary"
           className="p-4"
-          onClick={toggleRecommendationsModal}
+          onClick={handleSeeAllRecommendationsClick}
         >
           {formatMessage(messages.recommendedForYou)}
         </Button>
+        )}
         <span className="flex-grow-1" />
         <Button
           as="a"
@@ -73,7 +94,11 @@ export const ExpandedHeader = () => {
       </div>
 
       <AuthenticatedUserDropdown />
-      <ModalView isOpen={isRecommendationsModalOpen} onClose={toggleRecommendationsModal} />
+      <ModalView
+        isOpen={isRecommendationsModalOpen}
+        onClose={toggleRecommendationsModal}
+        variation={experimentVariation}
+      />
     </header>
     )
   );
