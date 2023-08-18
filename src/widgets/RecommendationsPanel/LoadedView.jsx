@@ -1,22 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
+import { Button } from '@edx/paragon';
+import { Search } from '@edx/paragon/icons';
+import { baseAppUrl } from 'data/services/lms/urls';
 
+import { reduxHooks } from 'hooks';
+import track from './track';
 import CourseCard from './components/CourseCard';
 import messages from './messages';
 import ModalView from '../../components/ModalView';
 
 import './index.scss';
+import usePaintedDoorExperimentContext from '../../RecsPaintedDoorExpContext';
+import { useRecommendationsModal } from '../../components/ModalView/hooks';
+import { trackPaintedDoorRecommendationHomeBtnClicked } from './recsPaintedDoorExpTrack';
 
 export const LoadedView = ({
   courses,
   isControl,
-  setIsRecommendationsModalOpen,
-  isRecommendationsModalOpen,
 }) => {
   const { formatMessage } = useIntl();
+  const { courseSearchUrl } = reduxHooks.usePlatformSettingsData();
+  const { isRecommendationsModalOpen, toggleRecommendationsModal } = useRecommendationsModal();
+
+  const {
+    experimentVariation,
+    isPaintedDoorWidgetBtnVariation,
+    experimentLoading,
+  } = usePaintedDoorExperimentContext();
+
+  const handleSeeAllRecommendationsClick = () => {
+    toggleRecommendationsModal();
+    trackPaintedDoorRecommendationHomeBtnClicked(experimentVariation);
+  };
 
   return (
     <>
@@ -34,15 +52,31 @@ export const LoadedView = ({
           ))}
         </div>
         <div className="text-center explore-courses-btn">
-          <Button
-            variant="brand"
-            onClick={setIsRecommendationsModalOpen}
-          >
-            {formatMessage(messages.seeAllRecommendationsButton)}
-          </Button>
+          {!experimentLoading && isPaintedDoorWidgetBtnVariation ? (
+            <Button
+              variant="brand"
+              onClick={handleSeeAllRecommendationsClick}
+            >
+              {formatMessage(messages.seeAllRecommendationsButton)}
+            </Button>
+          ) : (
+            <Button
+              variant="tertiary"
+              iconBefore={Search}
+              as="a"
+              href={baseAppUrl(courseSearchUrl)}
+              onClick={track.findCoursesWidgetClicked(baseAppUrl(courseSearchUrl))}
+            >
+              {formatMessage(messages.exploreCoursesButton)}
+            </Button>
+          )}
         </div>
       </div>
-      <ModalView isOpen={isRecommendationsModalOpen} onClose={setIsRecommendationsModalOpen} />
+      <ModalView
+        isOpen={isRecommendationsModalOpen}
+        onClose={toggleRecommendationsModal}
+        variation={experimentVariation}
+      />
     </>
   );
 };
@@ -59,8 +93,6 @@ LoadedView.propTypes = {
     marketingUrl: PropTypes.string,
   })).isRequired,
   isControl: PropTypes.oneOf([true, false, null]),
-  setIsRecommendationsModalOpen: PropTypes.func.isRequired,
-  isRecommendationsModalOpen: PropTypes.bool.isRequired,
 };
 
 export default LoadedView;

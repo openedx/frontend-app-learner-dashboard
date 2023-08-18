@@ -1,6 +1,8 @@
 import { shallow } from 'enzyme';
 
+import React from 'react';
 import LookingForChallengeWidget from '.';
+import { trackRecommendationUnavailable } from '../RecommendationsPanel/track';
 
 jest.mock('hooks', () => ({
   reduxHooks: {
@@ -12,6 +14,7 @@ jest.mock('hooks', () => ({
 
 jest.mock('../RecommendationsPanel/track', () => ({
   findCoursesWidgetClicked: (href) => jest.fn().mockName(`track.findCoursesWidgetClicked('${href}')`),
+  trackRecommendationUnavailable: jest.fn(),
 }));
 
 describe('LookingForChallengeWidget', () => {
@@ -20,5 +23,11 @@ describe('LookingForChallengeWidget', () => {
       const wrapper = shallow(<LookingForChallengeWidget />);
       expect(wrapper).toMatchSnapshot();
     });
+  });
+  test('test recommendations unavailable event is fired', () => {
+    shallow(<LookingForChallengeWidget />);
+    const [cb] = React.useEffect.mock.calls[0];
+    cb();
+    expect(trackRecommendationUnavailable).toBeCalled();
   });
 });

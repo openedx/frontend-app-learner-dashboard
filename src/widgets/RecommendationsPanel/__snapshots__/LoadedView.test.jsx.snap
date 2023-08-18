@@ -64,16 +64,19 @@ exports[`RecommendationsPanel LoadedView snapshot with personalize recommendatio
       className="text-center explore-courses-btn"
     >
       <Button
-        onClick={[Function]}
-        variant="brand"
+        as="a"
+        href="http://localhost:18000/course-search-url"
+        iconBefore={[MockFunction icons.Search]}
+        onClick={[MockFunction track.findCoursesWidgetClicked('http://localhost:18000/course-search-url')]}
+        variant="tertiary"
       >
-        See All Recommendations
+        Explore courses
       </Button>
     </div>
   </div>
   <ModalView
     isOpen={false}
-    onClose={[Function]}
+    onClose={[MockFunction]}
   />
 </Fragment>
 `;
@@ -142,16 +145,19 @@ exports[`RecommendationsPanel LoadedView snapshot without personalize recommenda
       className="text-center explore-courses-btn"
     >
       <Button
-        onClick={[Function]}
-        variant="brand"
+        as="a"
+        href="http://localhost:18000/course-search-url"
+        iconBefore={[MockFunction icons.Search]}
+        onClick={[MockFunction track.findCoursesWidgetClicked('http://localhost:18000/course-search-url')]}
+        variant="tertiary"
       >
-        See All Recommendations
+        Explore courses
       </Button>
     </div>
   </div>
   <ModalView
     isOpen={false}
-    onClose={[Function]}
+    onClose={[MockFunction]}
   />
 </Fragment>
 `;

@@ -4,7 +4,6 @@ import LookingForChallengeWidget from 'widgets/LookingForChallengeWidget';
 import LoadingView from './LoadingView';
 import LoadedView from './LoadedView';
 import hooks from './hooks';
-import { useRecommendationsModal } from '../../components/ModalView/hooks';
 
 export const RecommendationsPanel = () => {
   const {
@@ -15,8 +14,6 @@ export const RecommendationsPanel = () => {
     isLoading,
   } = hooks.useRecommendationPanelData();
 
-  const { isRecommendationsModalOpen, toggleRecommendationsModal } = useRecommendationsModal();
-
   if (isLoading) {
     return (<LoadingView />);
   }
@@ -25,8 +22,6 @@ export const RecommendationsPanel = () => {
       <LoadedView
         courses={courses}
         isControl={isControl}
-        setIsRecommendationsModalOpen={toggleRecommendationsModal}
-        isRecommendationsModalOpen={isRecommendationsModalOpen}
       />
     );
   }

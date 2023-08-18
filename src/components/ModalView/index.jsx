@@ -1,17 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { ModalDialog, ActionRow, Button } from '@edx/paragon';
+import { ModalDialog, ActionRow } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import messages from './messages';
 
 import './index.scss';
+import {
+  trackPaintedDoorRecommendationHomeInterestBtnClicked,
+  trackPaintedDoorRecommendationHomeSkipBtnClicked,
+} from '../../widgets/RecommendationsPanel/recsPaintedDoorExpTrack';
 
 export const ModalView = ({
   isOpen,
   onClose,
+  variation,
 }) => {
   const { formatMessage } = useIntl();
+
+  const handleSkipBtnClick = () => trackPaintedDoorRecommendationHomeSkipBtnClicked(variation);
+  const handleInterestBtnClick = () => trackPaintedDoorRecommendationHomeInterestBtnClicked(variation);
 
   return (
     <div className="containers">
@@ -35,10 +43,12 @@ export const ModalView = ({
         </ModalDialog.Body>
         <ModalDialog.Footer>
           <ActionRow>
-            <ModalDialog.CloseButton variant="tertiary">
+            <ModalDialog.CloseButton variant="tertiary" onClick={handleSkipBtnClick}>
               {formatMessage(messages.modalSkipButton)}
             </ModalDialog.CloseButton>
-            <Button variant="primary">{formatMessage(messages.modalCountMeButton)}</Button>
+            <ModalDialog.CloseButton variant="primary" onClick={handleInterestBtnClick}>
+              {formatMessage(messages.modalCountMeButton)}
+            </ModalDialog.CloseButton>
           </ActionRow>
         </ModalDialog.Footer>
       </ModalDialog>
@@ -53,6 +63,7 @@ ModalView.defaultProps = {
 ModalView.propTypes = {
   onClose: PropTypes.func.isRequired,
   isOpen: PropTypes.bool,
+  variation: PropTypes.string.isRequired,
 };
 
 export default ModalView;

@@ -11,20 +11,22 @@ exports[`App router component component initialize failure snapshot 1`] = `
     </title>
   </HelmetWrapper>
   <div>
-    <LearnerDashboardHeader />
-    <main>
-      <Alert
-        variant="danger"
-      >
-        <ErrorPage
-          message="If you experience repeated failures, please email support at test-support-url"
-        />
-      </Alert>
-    </main>
-    <Footer
-      logo="fakeLogo.png"
-    />
-    <ZendeskFab />
+    <PaintedDoorExperimentProvider>
+      <LearnerDashboardHeader />
+      <main>
+        <Alert
+          variant="danger"
+        >
+          <ErrorPage
+            message="If you experience repeated failures, please email support at test-support-url"
+          />
+        </Alert>
+      </main>
+      <Footer
+        logo="fakeLogo.png"
+      />
+      <ZendeskFab />
+    </PaintedDoorExperimentProvider>
   </div>
 </BrowserRouter>
 `;
@@ -40,16 +42,18 @@ exports[`App router component component no network failure snapshot 1`] = `
     </title>
   </HelmetWrapper>
   <div>
-    <LearnerDashboardHeader />
-    <main>
-      <ExperimentProvider>
-        <Dashboard />
-      </ExperimentProvider>
-    </main>
-    <Footer
-      logo="fakeLogo.png"
-    />
-    <ZendeskFab />
+    <PaintedDoorExperimentProvider>
+      <LearnerDashboardHeader />
+      <main>
+        <ExperimentProvider>
+          <Dashboard />
+        </ExperimentProvider>
+      </main>
+      <Footer
+        logo="fakeLogo.png"
+      />
+      <ZendeskFab />
+    </PaintedDoorExperimentProvider>
   </div>
 </BrowserRouter>
 `;
@@ -65,20 +69,22 @@ exports[`App router component component refresh failure snapshot 1`] = `
     </title>
   </HelmetWrapper>
   <div>
-    <LearnerDashboardHeader />
-    <main>
-      <Alert
-        variant="danger"
-      >
-        <ErrorPage
-          message="If you experience repeated failures, please email support at test-support-url"
-        />
-      </Alert>
-    </main>
-    <Footer
-      logo="fakeLogo.png"
-    />
-    <ZendeskFab />
+    <PaintedDoorExperimentProvider>
+      <LearnerDashboardHeader />
+      <main>
+        <Alert
+          variant="danger"
+        >
+          <ErrorPage
+            message="If you experience repeated failures, please email support at test-support-url"
+          />
+        </Alert>
+      </main>
+      <Footer
+        logo="fakeLogo.png"
+      />
+      <ZendeskFab />
+    </PaintedDoorExperimentProvider>
   </div>
 </BrowserRouter>
 `;

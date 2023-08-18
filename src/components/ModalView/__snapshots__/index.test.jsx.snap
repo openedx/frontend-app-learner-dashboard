@@ -35,15 +35,17 @@ exports[`ModalView snapshot should renders default ModalView 1`] = `
     <Component>
       <ActionRow>
         <Component
+          onClick={[Function]}
           variant="tertiary"
         >
           Skip for now
         </Component>
-        <Button
+        <Component
+          onClick={[Function]}
           variant="primary"
         >
           Count me in!
-        </Button>
+        </Component>
       </ActionRow>
     </Component>
   </ModalDialog>

@@ -14,15 +14,31 @@ import { findCoursesNavDropdownClicked } from '../hooks';
 
 import ModalView from '../../../components/ModalView';
 import messages from '../messages';
+import { useRecommendationsModal } from '../../../components/ModalView/hooks';
+import usePaintedDoorExperimentContext from '../../../RecsPaintedDoorExpContext';
+import {
+  trackPaintedDoorRecommendationHomeBtnClicked,
+} from '../../../widgets/RecommendationsPanel/recsPaintedDoorExpTrack';
 
-export const CollapseMenuBody = ({ isOpen, isRecommendationsModalOpen, setIsRecommendationsModalOpen }) => {
+export const CollapseMenuBody = ({ isOpen }) => {
   const { formatMessage } = useIntl();
   const { authenticatedUser } = React.useContext(AppContext);
 
   const dashboard = reduxHooks.useEnterpriseDashboardData();
   const { courseSearchUrl } = reduxHooks.usePlatformSettingsData();
+  const { isRecommendationsModalOpen, toggleRecommendationsModal } = useRecommendationsModal();
 
   const exploreCoursesClick = findCoursesNavDropdownClicked(urls.baseAppUrl(courseSearchUrl));
+  const {
+    experimentVariation,
+    isPaintedDoorNavbarBtnVariation,
+    experimentLoading,
+  } = usePaintedDoorExperimentContext();
+
+  const handleSeeAllRecommendationsClick = () => {
+    toggleRecommendationsModal();
+    trackPaintedDoorRecommendationHomeBtnClicked(experimentVariation);
+  };
 
   return (
     isOpen && (
@@ -41,12 +57,14 @@ export const CollapseMenuBody = ({ isOpen, isRecommendationsModalOpen, setIsReco
         >
           {formatMessage(messages.discoverNew)}
         </Button>
+        {(!experimentLoading && isPaintedDoorNavbarBtnVariation) && (
         <Button
           variant="inverse-primary"
-          onClick={setIsRecommendationsModalOpen}
+          onClick={handleSeeAllRecommendationsClick}
         >
           {formatMessage(messages.recommendedForYou)}
         </Button>
+        )}
         <Button as="a" href={getConfig().SUPPORT_URL} variant="inverse-primary">
           {formatMessage(messages.help)}
         </Button>
@@ -99,7 +117,11 @@ export const CollapseMenuBody = ({ isOpen, isRecommendationsModalOpen, setIsReco
             </Button>
           </>
         )}
-        <ModalView isOpen={isRecommendationsModalOpen} onClose={setIsRecommendationsModalOpen} />
+        <ModalView
+          isOpen={isRecommendationsModalOpen}
+          onClose={toggleRecommendationsModal}
+          variation={experimentVariation}
+        />
       </div>
     )
   );
@@ -107,13 +129,6 @@ export const CollapseMenuBody = ({ isOpen, isRecommendationsModalOpen, setIsReco
 
 CollapseMenuBody.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  isRecommendationsModalOpen: PropTypes.bool,
-  setIsRecommendationsModalOpen: PropTypes.func,
-};
-
-CollapseMenuBody.defaultProps = {
-  isRecommendationsModalOpen: false,
-  setIsRecommendationsModalOpen: () => {},
 };
 
 export default CollapseMenuBody;
