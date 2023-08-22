@@ -1,13 +1,9 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import { ErrorPage } from '@edx/frontend-platform/react';
 import { shallow } from '@edx/react-unit-test-utils';
-
-import { BrowserRouter as Router } from 'react-router-dom';
 
 import Footer from '@edx/frontend-component-footer';
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { Alert } from '@edx/paragon';
 
 import { RequestKeys } from 'data/constants/requests';
 import { reduxHooks } from 'hooks';
