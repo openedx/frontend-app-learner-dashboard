@@ -11,7 +11,7 @@ exports[`App router component component initialize failure snapshot 1`] = `
     </title>
   </HelmetWrapper>
   <div>
-    <[object Object]>
+    <AppWrapper>
       <LearnerDashboardHeader />
       <main>
         <Alert
@@ -22,7 +22,7 @@ exports[`App router component component initialize failure snapshot 1`] = `
           />
         </Alert>
       </main>
-    </[object Object]>
+    </AppWrapper>
     <Footer
       logo="fakeLogo.png"
     />
@@ -42,14 +42,14 @@ exports[`App router component component no network failure snapshot 1`] = `
     </title>
   </HelmetWrapper>
   <div>
-    <[object Object]>
+    <AppWrapper>
       <LearnerDashboardHeader />
       <main>
         <ExperimentProvider>
           <Dashboard />
         </ExperimentProvider>
       </main>
-    </[object Object]>
+    </AppWrapper>
     <Footer
       logo="fakeLogo.png"
     />
@@ -69,7 +69,7 @@ exports[`App router component component refresh failure snapshot 1`] = `
     </title>
   </HelmetWrapper>
   <div>
-    <[object Object]>
+    <AppWrapper>
       <LearnerDashboardHeader />
       <main>
         <Alert
@@ -80,7 +80,7 @@ exports[`App router component component refresh failure snapshot 1`] = `
           />
         </Alert>
       </main>
-    </[object Object]>
+    </AppWrapper>
     <Footer
       logo="fakeLogo.png"
     />

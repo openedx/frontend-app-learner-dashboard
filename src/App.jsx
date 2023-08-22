@@ -24,12 +24,12 @@ import { ExperimentProvider } from 'ExperimentContext';
 import track from 'tracking';
 
 import fakeData from 'data/services/lms/fakeData/courses';
-import LearnerDashboardHeader from './containers/LearnerDashboardHeader';
+
+import AppWrapper from 'containers/WidgetContainers/AppWrapper';
+import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
 
 import messages from './messages';
-
 import './App.scss';
-import PaintedDoorExperimentProvider from './widgets/RecommendationsPaintedDoorBtn/PaintedDoorExperimentContext';
 
 export const App = () => {
   const { authenticatedUser } = React.useContext(AppContext);
@@ -79,7 +79,7 @@ export const App = () => {
         <title>{formatMessage(messages.pageTitle)}</title>
       </Helmet>
       <div>
-        <PaintedDoorExperimentProvider>
+        <AppWrapper>
           <LearnerDashboardHeader />
           <main>
             {hasNetworkFailure
@@ -93,7 +93,7 @@ export const App = () => {
                 </ExperimentProvider>
               )}
           </main>
-        </PaintedDoorExperimentProvider>
+        </AppWrapper>
         <Footer logo={process.env.LOGO_POWERED_BY_OPEN_EDX_URL_SVG} />
         <ZendeskFab />
       </div>

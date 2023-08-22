@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppWrapper WidgetContainer component output no experiments are active snapshot 1`] = `
+<div>
+  This is some 
+  <b>
+    test
+  </b>
+   
+  <i>
+    content
+  </i>
+</div>
+`;
+
+exports[`AppWrapper WidgetContainer component output painted door experiment is active (08/23) snapshot 1`] = `
+<PaintedDoorExperimentProvider>
+  <div>
+    This is some 
+    <b>
+      test
+    </b>
+     
+    <i>
+      content
+    </i>
+  </div>
+</PaintedDoorExperimentProvider>
+`;
