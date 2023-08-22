@@ -13,6 +13,8 @@ import { reduxHooks } from 'hooks';
 import { findCoursesNavDropdownClicked } from '../hooks';
 
 import messages from '../messages';
+import WidgetNavbar from '../../WidgetContainers/WidgetNavbar';
+import { COLLAPSED_NAVBAR } from '../../../widgets/RecommendationsPaintedDoorBtn/constants';
 
 export const CollapseMenuBody = ({ isOpen }) => {
   const { formatMessage } = useIntl();
@@ -40,6 +42,7 @@ export const CollapseMenuBody = ({ isOpen }) => {
         >
           {formatMessage(messages.discoverNew)}
         </Button>
+        <WidgetNavbar placement={COLLAPSED_NAVBAR} />
         <Button as="a" href={getConfig().SUPPORT_URL} variant="inverse-primary">
           {formatMessage(messages.help)}
         </Button>

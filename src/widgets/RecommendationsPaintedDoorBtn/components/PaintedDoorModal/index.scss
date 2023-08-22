@@ -1,0 +1,15 @@
+@import "@edx/paragon/scss/core/core";
+
+.modal-container {
+    display: none;
+}
+
+@media (max-width: 464px) {
+    .pgn__action-row{
+        flex-direction: column;
+        gap: 5px;
+        button {
+            width: 100%;
+        }
+    }
+}

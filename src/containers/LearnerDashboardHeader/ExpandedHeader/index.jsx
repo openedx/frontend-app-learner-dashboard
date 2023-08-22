@@ -12,6 +12,8 @@ import AuthenticatedUserDropdown from './AuthenticatedUserDropdown';
 import { useIsCollapsed, findCoursesNavClicked } from '../hooks';
 import messages from '../messages';
 import BrandLogo from '../BrandLogo';
+import WidgetNavbar from '../../WidgetContainers/WidgetNavbar';
+import { EXPANDED_NAVBAR } from '../../../widgets/RecommendationsPaintedDoorBtn/constants';
 
 export const ExpandedHeader = () => {
   const { formatMessage } = useIntl();
@@ -51,6 +53,7 @@ export const ExpandedHeader = () => {
         >
           {formatMessage(messages.discoverNew)}
         </Button>
+        <WidgetNavbar placement={EXPANDED_NAVBAR} />
         <span className="flex-grow-1" />
         <Button
           as="a"

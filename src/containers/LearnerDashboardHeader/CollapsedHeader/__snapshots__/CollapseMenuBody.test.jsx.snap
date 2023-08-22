@@ -26,6 +26,9 @@ exports[`CollapseMenuBody render 1`] = `
   >
     Discover New
   </Button>
+  <WidgetNavbar
+    placement="collapsedNavbar"
+  />
   <Button
     as="a"
     href="http://localhost:18000/support"
@@ -92,6 +95,9 @@ exports[`CollapseMenuBody render unauthenticated 1`] = `
   >
     Discover New
   </Button>
+  <WidgetNavbar
+    placement="collapsedNavbar"
+  />
   <Button
     as="a"
     href="http://localhost:18000/support"
