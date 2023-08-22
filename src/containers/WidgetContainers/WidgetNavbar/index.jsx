@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import RecommendationsPaintedDoorBtn from '../../../widgets/RecommendationsPaintedDoorBtn';
-import { COLLAPSED_NAVBAR, EXPANDED_NAVBAR } from '../../../widgets/RecommendationsPaintedDoorBtn/constants';
+import RecommendationsPaintedDoorBtn from 'widgets/RecommendationsPaintedDoorBtn';
+import { COLLAPSED_NAVBAR, EXPANDED_NAVBAR } from 'widgets/RecommendationsPaintedDoorBtn/constants';
 import {
   usePaintedDoorExperimentContext,
-} from '../../../widgets/RecommendationsPaintedDoorBtn/PaintedDoorExperimentContext';
+} from 'widgets/RecommendationsPaintedDoorBtn/PaintedDoorExperimentContext';
 
 export const WidgetNavbar = ({ placement }) => {
   const {

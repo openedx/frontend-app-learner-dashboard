@@ -4,17 +4,15 @@ import PropTypes from 'prop-types';
 import { getConfig } from '@edx/frontend-platform';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
-
 import { Button, Badge } from '@edx/paragon';
 
+import WidgetNavbar from 'containers/WidgetContainers/WidgetNavbar';
 import urls from 'data/services/lms/urls';
 import { reduxHooks } from 'hooks';
+import { COLLAPSED_NAVBAR } from 'widgets/RecommendationsPaintedDoorBtn/constants';
 
 import { findCoursesNavDropdownClicked } from '../hooks';
-
 import messages from '../messages';
-import WidgetNavbar from '../../WidgetContainers/WidgetNavbar';
-import { COLLAPSED_NAVBAR } from '../../../widgets/RecommendationsPaintedDoorBtn/constants';
 
 export const CollapseMenuBody = ({ isOpen }) => {
   const { formatMessage } = useIntl();
