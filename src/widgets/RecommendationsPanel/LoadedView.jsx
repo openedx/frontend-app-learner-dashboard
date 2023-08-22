@@ -12,6 +12,9 @@ import CourseCard from './components/CourseCard';
 import messages from './messages';
 
 import './index.scss';
+import { usePaintedDoorExperimentContext } from '../RecommendationsPaintedDoorBtn/PaintedDoorExperimentContext';
+import { RECOMMENDATIONS_PANEL } from '../RecommendationsPaintedDoorBtn/constants';
+import RecommendationsPaintedDoorBtn from '../RecommendationsPaintedDoorBtn';
 
 export const LoadedView = ({
   courses,
@@ -19,6 +22,11 @@ export const LoadedView = ({
 }) => {
   const { formatMessage } = useIntl();
   const { courseSearchUrl } = reduxHooks.usePlatformSettingsData();
+  const {
+    experimentVariation,
+    isPaintedDoorWidgetBtnVariation,
+    experimentLoading,
+  } = usePaintedDoorExperimentContext();
 
   return (
     <div className="p-4 w-100 panel-background">
@@ -35,15 +43,19 @@ export const LoadedView = ({
         ))}
       </div>
       <div className="text-center explore-courses-btn">
-        <Button
-          variant="tertiary"
-          iconBefore={Search}
-          as="a"
-          href={baseAppUrl(courseSearchUrl)}
-          onClick={track.findCoursesWidgetClicked(baseAppUrl(courseSearchUrl))}
-        >
-          {formatMessage(messages.exploreCoursesButton)}
-        </Button>
+        {!experimentLoading && isPaintedDoorWidgetBtnVariation ? (
+          <RecommendationsPaintedDoorBtn placement={RECOMMENDATIONS_PANEL} experimentVariation={experimentVariation} />
+        ) : (
+          <Button
+            variant="tertiary"
+            iconBefore={Search}
+            as="a"
+            href={baseAppUrl(courseSearchUrl)}
+            onClick={track.findCoursesWidgetClicked(baseAppUrl(courseSearchUrl))}
+          >
+            {formatMessage(messages.exploreCoursesButton)}
+          </Button>
+        )}
       </div>
     </div>
   );

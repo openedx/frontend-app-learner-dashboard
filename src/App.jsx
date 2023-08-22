@@ -29,6 +29,7 @@ import LearnerDashboardHeader from './containers/LearnerDashboardHeader';
 import messages from './messages';
 
 import './App.scss';
+import PaintedDoorExperimentProvider from './widgets/RecommendationsPaintedDoorBtn/PaintedDoorExperimentContext';
 
 export const App = () => {
   const { authenticatedUser } = React.useContext(AppContext);
@@ -78,19 +79,21 @@ export const App = () => {
         <title>{formatMessage(messages.pageTitle)}</title>
       </Helmet>
       <div>
-        <LearnerDashboardHeader />
-        <main>
-          {hasNetworkFailure
-            ? (
-              <Alert variant="danger">
-                <ErrorPage message={formatMessage(messages.errorMessage, { supportEmail })} />
-              </Alert>
-            ) : (
-              <ExperimentProvider>
-                <Dashboard />
-              </ExperimentProvider>
-            )}
-        </main>
+        <PaintedDoorExperimentProvider>
+          <LearnerDashboardHeader />
+          <main>
+            {hasNetworkFailure
+              ? (
+                <Alert variant="danger">
+                  <ErrorPage message={formatMessage(messages.errorMessage, { supportEmail })} />
+                </Alert>
+              ) : (
+                <ExperimentProvider>
+                  <Dashboard />
+                </ExperimentProvider>
+              )}
+          </main>
+        </PaintedDoorExperimentProvider>
         <Footer logo={process.env.LOGO_POWERED_BY_OPEN_EDX_URL_SVG} />
         <ZendeskFab />
       </div>
