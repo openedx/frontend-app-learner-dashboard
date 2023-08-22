@@ -29,6 +29,7 @@ export const ModalView = ({
         onClose={onClose}
         hasCloseButton={false}
         isFullscreenScroll
+        isBlocking
       >
         <ModalDialog.Header>
           <ModalDialog.Title>

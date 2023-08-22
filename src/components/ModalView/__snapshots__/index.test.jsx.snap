@@ -6,6 +6,7 @@ exports[`ModalView snapshot should renders default ModalView 1`] = `
 >
   <ModalDialog
     hasCloseButton={false}
+    isBlocking={true}
     isFullscreenScroll={true}
     isOpen={true}
     onClose={[MockFunction]}

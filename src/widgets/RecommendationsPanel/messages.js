@@ -18,7 +18,7 @@ const messages = defineMessages({
   },
   seeAllRecommendationsButton: {
     id: 'RecommendationsPanel.seeAllRecommendationsButton',
-    defaultMessage: 'See All Recommendations',
+    defaultMessage: 'See all recommendations',
     description: 'Button to see all recommendations',
   },
 });
