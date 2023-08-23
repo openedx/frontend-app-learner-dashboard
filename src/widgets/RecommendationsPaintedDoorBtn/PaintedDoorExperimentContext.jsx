@@ -39,7 +39,7 @@ export function activatePaintedDoorRecommendationsExperiment() {
   });
 }
 
-const useIsEnterpriseUser = () => {
+export const useIsEnterpriseUser = () => {
   const [enterpriseUser, setEnterpriseUser] = module.state.enterpriseUser({
     isEnterpriseUser: false,
     isLoading: true,
@@ -75,6 +75,7 @@ export const PaintedDoorExperimentProvider = ({ children }) => {
     experimentVariation: '',
     isPaintedDoorNavbarBtnVariation: false,
     isPaintedDoorWidgetBtnVariation: false,
+    isPaintedDoorControlVariation: false,
     experimentLoading: true,
   });
   const enterpriseUser = useIsEnterpriseUser();
