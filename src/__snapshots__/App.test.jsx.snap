@@ -11,16 +11,18 @@ exports[`App router component component initialize failure snapshot 1`] = `
     </title>
   </HelmetWrapper>
   <div>
-    <LearnerDashboardHeader />
-    <main>
-      <Alert
-        variant="danger"
-      >
-        <ErrorPage
-          message="If you experience repeated failures, please email support at test-support-url"
-        />
-      </Alert>
-    </main>
+    <AppWrapper>
+      <LearnerDashboardHeader />
+      <main>
+        <Alert
+          variant="danger"
+        >
+          <ErrorPage
+            message="If you experience repeated failures, please email support at test-support-url"
+          />
+        </Alert>
+      </main>
+    </AppWrapper>
     <Footer
       logo="fakeLogo.png"
     />
@@ -40,12 +42,14 @@ exports[`App router component component no network failure snapshot 1`] = `
     </title>
   </HelmetWrapper>
   <div>
-    <LearnerDashboardHeader />
-    <main>
-      <ExperimentProvider>
-        <Dashboard />
-      </ExperimentProvider>
-    </main>
+    <AppWrapper>
+      <LearnerDashboardHeader />
+      <main>
+        <ExperimentProvider>
+          <Dashboard />
+        </ExperimentProvider>
+      </main>
+    </AppWrapper>
     <Footer
       logo="fakeLogo.png"
     />
@@ -65,16 +69,18 @@ exports[`App router component component refresh failure snapshot 1`] = `
     </title>
   </HelmetWrapper>
   <div>
-    <LearnerDashboardHeader />
-    <main>
-      <Alert
-        variant="danger"
-      >
-        <ErrorPage
-          message="If you experience repeated failures, please email support at test-support-url"
-        />
-      </Alert>
-    </main>
+    <AppWrapper>
+      <LearnerDashboardHeader />
+      <main>
+        <Alert
+          variant="danger"
+        >
+          <ErrorPage
+            message="If you experience repeated failures, please email support at test-support-url"
+          />
+        </Alert>
+      </main>
+    </AppWrapper>
     <Footer
       logo="fakeLogo.png"
     />

@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ModalView snapshot should renders default ModalView 1`] = `
+<div
+  className="containers modal-container"
+>
+  <ModalDialog
+    hasCloseButton={false}
+    isBlocking={true}
+    isFullscreenScroll={true}
+    isOpen={true}
+    onClose={[MockFunction]}
+    title=""
+  >
+    <ModalDialog.Header>
+      <Component
+        className="mt-2"
+      >
+        Thank you for your interest!
+      </Component>
+    </ModalDialog.Header>
+    <ModalDialog.Body>
+      <div>
+        <p
+          className="mt-2"
+        >
+          Personalized recommendations feature is not yet available. We are working hard on bringing it to your learner home in the near future.
+        </p>
+        <p>
+          Would you like to be alerted when it becomes available?
+        </p>
+      </div>
+    </ModalDialog.Body>
+    <Component>
+      <ActionRow>
+        <Component
+          onClick={[Function]}
+          variant="tertiary"
+        >
+          Skip for now
+        </Component>
+        <Component
+          onClick={[Function]}
+          variant="primary"
+        >
+          Count me in!
+        </Component>
+      </ActionRow>
+    </Component>
+  </ModalDialog>
+</div>
+`;

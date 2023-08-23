@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WidgetNavbar snapshots default 1`] = `
+<RecommendationsPaintedDoorBtn
+  experimentVariation=""
+  placement="expendedNavbar"
+/>
+`;
