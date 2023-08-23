@@ -43,7 +43,7 @@ describe('lms api methods', () => {
         [apiKeys.user]: testUser,
       };
       expect(api.initializeList(userArg)).toEqual(
-        utils.get(utils.stringifyUrl(urls.init, userArg)),
+        utils.get(utils.stringifyUrl(urls.getInitApiUrl(), userArg)),
       );
     });
   });

@@ -20,8 +20,8 @@ exports[`CollapseMenuBody render 1`] = `
   </Button>
   <Button
     as="a"
-    href="courseSearchUrl"
-    onClick={[MockFunction findCoursesNavDropdownClicked("courseSearchUrl")]}
+    href="http://localhost:18000/courseSearchUrl"
+    onClick={[MockFunction findCoursesNavDropdownClicked("http://localhost:18000/courseSearchUrl")]}
     variant="inverse-primary"
   >
     Discover New
@@ -86,8 +86,8 @@ exports[`CollapseMenuBody render unauthenticated 1`] = `
   </Button>
   <Button
     as="a"
-    href="courseSearchUrl"
-    onClick={[MockFunction findCoursesNavDropdownClicked("courseSearchUrl")]}
+    href="http://localhost:18000/courseSearchUrl"
+    onClick={[MockFunction findCoursesNavDropdownClicked("http://localhost:18000/courseSearchUrl")]}
     variant="inverse-primary"
   >
     Discover New

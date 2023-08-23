@@ -13,21 +13,27 @@ import ViewCourseButton from './ViewCourseButton';
 
 export const CourseCardActions = ({ cardId }) => {
   const { isEntitlement, isFulfilled } = reduxHooks.useCardEntitlementData(cardId);
-  const { isVerified, hasStarted } = reduxHooks.useCardEnrollmentData(cardId);
+  const {
+    isVerified,
+    hasStarted,
+    isExecEd2UCourse,
+  } = reduxHooks.useCardEnrollmentData(cardId);
   const { isArchived } = reduxHooks.useCardCourseRunData(cardId);
-  let PrimaryButton;
-  if (isEntitlement) {
-    PrimaryButton = isFulfilled ? ViewCourseButton : SelectSessionButton;
-  } else if (isArchived) {
-    PrimaryButton = ViewCourseButton;
-  } else {
-    PrimaryButton = hasStarted ? ResumeButton : BeginCourseButton;
-  }
 
   return (
     <ActionRow data-test-id="CourseCardActions">
-      {!(isEntitlement || isVerified) && <UpgradeButton cardId={cardId} />}
-      <PrimaryButton cardId={cardId} />
+      {!(isEntitlement || isVerified || isExecEd2UCourse) && <UpgradeButton cardId={cardId} />}
+      {isEntitlement && (isFulfilled
+        ? <ViewCourseButton cardId={cardId} />
+        : <SelectSessionButton cardId={cardId} />
+      )}
+      {(isArchived && !isEntitlement) && (
+        <ViewCourseButton cardId={cardId} />
+      )}
+      {!(isArchived || isEntitlement) && (hasStarted
+        ? <ResumeButton cardId={cardId} />
+        : <BeginCourseButton cardId={cardId} />
+      )}
     </ActionRow>
   );
 };

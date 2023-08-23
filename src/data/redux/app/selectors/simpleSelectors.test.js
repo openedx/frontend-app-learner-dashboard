@@ -35,6 +35,12 @@ describe('app simple selectors', () => {
       expect(preSelectors).toEqual([appSelector]);
       expect(cb(testState.app)).toEqual(testString);
     });
+    test('enterpriseDashboard returns empty object if data returns null', () => {
+      testState = { app: { enterpriseDashboard: null } };
+      const { preSelectors, cb } = simpleSelectors.enterpriseDashboard;
+      expect(preSelectors).toEqual([appSelector]);
+      expect(cb(testState.app)).toEqual({});
+    });
     describe('cardSimpleSelectors', () => {
       keys = keyStore(cardSimpleSelectors);
       test.each([

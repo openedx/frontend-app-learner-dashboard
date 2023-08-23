@@ -1,8 +1,44 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CourseCardMenu enrolled, share enabled, email setting enable snapshot 1`] = `
+exports[`CourseCardMenu render show dropdown hide unenroll item and disable email snapshot 1`] = `
 <Fragment>
-  <Dropdown>
+  <Dropdown
+    onToggle={[MockFunction hooks.handleToggleDropdown]}
+  >
+    <Dropdown.Toggle
+      alt="Course actions dropdown"
+      as="IconButton"
+      iconAs="Icon"
+      id="course-actions-dropdown-test-card-id"
+      src={[MockFunction icons.MoreVert]}
+      variant="primary"
+    />
+    <Dropdown.Menu>
+      <SocialShareMenu
+        cardId="test-card-id"
+        emailSettings={
+          Object {
+            "hide": [MockFunction emailSettingHide],
+            "isVisible": false,
+            "show": [MockFunction emailSettingShow],
+          }
+        }
+      />
+    </Dropdown.Menu>
+  </Dropdown>
+  <UnenrollConfirmModal
+    cardId="test-card-id"
+    closeModal={[MockFunction unenrollHide]}
+    show={false}
+  />
+</Fragment>
+`;
+
+exports[`CourseCardMenu render show dropdown show unenroll and enable email snapshot 1`] = `
+<Fragment>
+  <Dropdown
+    onToggle={[MockFunction hooks.handleToggleDropdown]}
+  >
     <Dropdown.Toggle
       alt="Course actions dropdown"
       as="IconButton"
@@ -19,31 +55,16 @@ exports[`CourseCardMenu enrolled, share enabled, email setting enable snapshot 1
       >
         Unenroll
       </Dropdown.Item>
-      <Dropdown.Item
-        data-testid="emailSettingsModalToggle"
-        disabled={false}
-        onClick={[MockFunction emailSettingShow]}
-      >
-        Email settings
-      </Dropdown.Item>
-      <FacebookShareButton
-        className="pgn__dropdown-item dropdown-item"
-        onClick={[MockFunction facebookShareClick]}
-        resetButtonStyle={false}
-        title="I'm taking test-course-name online with facebook-social-brand.  Check it out!"
-        url="facebook-share-url"
-      >
-        Share to Facebook
-      </FacebookShareButton>
-      <TwitterShareButton
-        className="pgn__dropdown-item dropdown-item"
-        onClick={[MockFunction twitterShareClick]}
-        resetButtonStyle={false}
-        title="I'm taking test-course-name online with twitter-social-brand.  Check it out!"
-        url="twitter-share-url"
-      >
-        Share to Twitter
-      </TwitterShareButton>
+      <SocialShareMenu
+        cardId="test-card-id"
+        emailSettings={
+          Object {
+            "hide": [MockFunction emailSettingHide],
+            "isVisible": false,
+            "show": [MockFunction emailSettingShow],
+          }
+        }
+      />
     </Dropdown.Menu>
   </Dropdown>
   <UnenrollConfirmModal
@@ -54,86 +75,6 @@ exports[`CourseCardMenu enrolled, share enabled, email setting enable snapshot 1
   <EmailSettingsModal
     cardId="test-card-id"
     closeModal={[MockFunction emailSettingHide]}
-    show={false}
-  />
-</Fragment>
-`;
-
-exports[`CourseCardMenu masquerading snapshot 1`] = `
-<Fragment>
-  <Dropdown>
-    <Dropdown.Toggle
-      alt="Course actions dropdown"
-      as="IconButton"
-      iconAs="Icon"
-      id="course-actions-dropdown-test-card-id"
-      src={[MockFunction icons.MoreVert]}
-      variant="primary"
-    />
-    <Dropdown.Menu>
-      <Dropdown.Item
-        data-testid="unenrollModalToggle"
-        disabled={true}
-        onClick={[MockFunction unenrollShow]}
-      >
-        Unenroll
-      </Dropdown.Item>
-      <Dropdown.Item
-        data-testid="emailSettingsModalToggle"
-        disabled={true}
-        onClick={[MockFunction emailSettingShow]}
-      >
-        Email settings
-      </Dropdown.Item>
-      <FacebookShareButton
-        className="pgn__dropdown-item dropdown-item"
-        onClick={[MockFunction facebookShareClick]}
-        resetButtonStyle={false}
-        title="I'm taking test-course-name online with facebook-social-brand.  Check it out!"
-        url="facebook-share-url"
-      >
-        Share to Facebook
-      </FacebookShareButton>
-      <TwitterShareButton
-        className="pgn__dropdown-item dropdown-item"
-        onClick={[MockFunction twitterShareClick]}
-        resetButtonStyle={false}
-        title="I'm taking test-course-name online with twitter-social-brand.  Check it out!"
-        url="twitter-share-url"
-      >
-        Share to Twitter
-      </TwitterShareButton>
-    </Dropdown.Menu>
-  </Dropdown>
-  <UnenrollConfirmModal
-    cardId="test-card-id"
-    closeModal={[MockFunction unenrollHide]}
-    show={false}
-  />
-  <EmailSettingsModal
-    cardId="test-card-id"
-    closeModal={[MockFunction emailSettingHide]}
-    show={false}
-  />
-</Fragment>
-`;
-
-exports[`CourseCardMenu not enrolled, share disabled, email setting disabled snapshot 1`] = `
-<Fragment>
-  <Dropdown>
-    <Dropdown.Toggle
-      alt="Course actions dropdown"
-      as="IconButton"
-      iconAs="Icon"
-      id="course-actions-dropdown-test-card-id"
-      src={[MockFunction icons.MoreVert]}
-      variant="primary"
-    />
-    <Dropdown.Menu />
-  </Dropdown>
-  <UnenrollConfirmModal
-    cardId="test-card-id"
-    closeModal={[MockFunction unenrollHide]}
     show={false}
   />
 </Fragment>

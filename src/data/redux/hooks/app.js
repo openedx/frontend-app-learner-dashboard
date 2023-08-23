@@ -55,6 +55,12 @@ export const useCardSocialSettingsData = (cardId) => {
   return { facebook: loadSettings(facebook), twitter: loadSettings(twitter) };
 };
 
+export const useCardExecEdTrackingParam = (cardId) => {
+  const { isExecEd2UCourse } = module.useCardEnrollmentData(cardId);
+  const { authOrgId } = module.useEnterpriseDashboardData(cardId);
+  return isExecEd2UCourse ? `?org_id=${authOrgId}` : '';
+};
+
 /** Events **/
 export const useUpdateSelectSessionModalCallback = (cardId) => {
   const dispatch = useDispatch();

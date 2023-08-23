@@ -1,6 +1,12 @@
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { reduxHooks } from 'hooks';
+
+import UpgradeButton from './UpgradeButton';
+import SelectSessionButton from './SelectSessionButton';
+import BeginCourseButton from './BeginCourseButton';
+import ResumeButton from './ResumeButton';
+import ViewCourseButton from './ViewCourseButton';
 
 import CourseCardActions from '.';
 
@@ -9,6 +15,7 @@ jest.mock('hooks', () => ({
     useCardCourseRunData: jest.fn(),
     useCardEnrollmentData: jest.fn(),
     useCardEntitlementData: jest.fn(),
+    useMasqueradeData: jest.fn(),
   },
 }));
 
@@ -18,87 +25,92 @@ jest.mock('./ViewCourseButton', () => 'ViewCourseButton');
 jest.mock('./BeginCourseButton', () => 'BeginCourseButton');
 jest.mock('./ResumeButton', () => 'ResumeButton');
 
+const cardId = 'test-card-id';
+const props = { cardId };
+
+let el;
 describe('CourseCardActions', () => {
-  const props = {
-    cardId: 'cardId',
-  };
-  const createWrapper = ({
-    isEntitlement, isFulfilled, isArchived, isVerified, hasStarted,
-  }) => {
+  const mockHooks = ({
+    isEntitlement = false,
+    isExecEd2UCourse = false,
+    isFulfilled = false,
+    isArchived = false,
+    isVerified = false,
+    hasStarted = false,
+    isMasquerading = false,
+  } = {}) => {
     reduxHooks.useCardEntitlementData.mockReturnValueOnce({ isEntitlement, isFulfilled });
     reduxHooks.useCardCourseRunData.mockReturnValueOnce({ isArchived });
-    reduxHooks.useCardEnrollmentData.mockReturnValueOnce({ isVerified, hasStarted });
-    return shallow(<CourseCardActions {...props} />);
+    reduxHooks.useCardEnrollmentData.mockReturnValueOnce({ isExecEd2UCourse, isVerified, hasStarted });
+    reduxHooks.useMasqueradeData.mockReturnValueOnce({ isMasquerading });
   };
-  describe('snapshot', () => {
-    test('show upgrade button when not verified and not entitlement', () => {
-      const wrapper = createWrapper({
-        isEntitlement: false, isFulfilled: false, isArchived: false, isVerified: false, hasStarted: false,
-      });
-      expect(wrapper).toMatchSnapshot();
-    });
-    test('show select session button when not verified and entitlement', () => {
-      const wrapper = createWrapper({
-        isEntitlement: true, isFulfilled: false, isArchived: false, isVerified: false, hasStarted: false,
-      });
-      expect(wrapper).toMatchSnapshot();
-    });
-    test('show begin course button when verified and not entitlement and has started', () => {
-      const wrapper = createWrapper({
-        isEntitlement: false, isFulfilled: false, isArchived: false, isVerified: true, hasStarted: false,
-      });
-      expect(wrapper).toMatchSnapshot();
-    });
-    test('show resume button when verified and not entitlement and has started', () => {
-      const wrapper = createWrapper({
-        isEntitlement: false, isFulfilled: false, isArchived: false, isVerified: true, hasStarted: true,
-      });
-      expect(wrapper).toMatchSnapshot();
-    });
-    test('show view course button when not verified and entitlement and fulfilled', () => {
-      const wrapper = createWrapper({
-        isEntitlement: true, isFulfilled: true, isArchived: false, isVerified: false, hasStarted: false,
-      });
-      expect(wrapper).toMatchSnapshot();
+  const render = () => {
+    el = shallow(<CourseCardActions {...props} />);
+  };
+  describe('behavior', () => {
+    it('initializes redux hooks', () => {
+      mockHooks();
+      render();
+      expect(reduxHooks.useCardEntitlementData).toHaveBeenCalledWith(cardId);
+      expect(reduxHooks.useCardEnrollmentData).toHaveBeenCalledWith(cardId);
+      expect(reduxHooks.useCardCourseRunData).toHaveBeenCalledWith(cardId);
     });
   });
-
-  describe('behavior', () => {
-    it('show upgrade button when not verified and not entitlement', () => {
-      const wrapper = createWrapper({
-        isEntitlement: false, isFulfilled: false, isArchived: false, isVerified: false, hasStarted: false,
+  describe('output', () => {
+    describe('Exec Ed course', () => {
+      it('does not render upgrade button', () => {
+        mockHooks({ isExecEd2UCourse: true });
+        render();
+        expect(el.instance.findByType(UpgradeButton).length).toEqual(0);
       });
-      expect(wrapper.find('UpgradeButton')).toHaveLength(1);
     });
-    it('show select session button when not verified and entitlement', () => {
-      const wrapper = createWrapper({
-        isEntitlement: true, isFulfilled: false, isArchived: false, isVerified: false, hasStarted: false,
+    describe('entitlement course', () => {
+      it('does not render upgrade button', () => {
+        mockHooks({ isEntitlement: true });
+        render();
+        expect(el.instance.findByType(UpgradeButton).length).toEqual(0);
       });
-      expect(wrapper.find('SelectSessionButton')).toHaveLength(1);
+      it('renders ViewCourseButton if fulfilled', () => {
+        mockHooks({ isEntitlement: true, isFulfilled: true });
+        render();
+        expect(el.instance.findByType(ViewCourseButton)[0].props.cardId).toEqual(cardId);
+      });
+      it('renders SelectSessionButton if not fulfilled', () => {
+        mockHooks({ isEntitlement: true });
+        render();
+        expect(el.instance.findByType(SelectSessionButton)[0].props.cardId).toEqual(cardId);
+      });
     });
-    it('show begin course button when verified and not entitlement and has started', () => {
-      const wrapper = createWrapper({
-        isEntitlement: false, isFulfilled: false, isArchived: false, isVerified: true, hasStarted: false,
+    describe('verified course', () => {
+      it('does not render upgrade button', () => {
+        mockHooks({ isVerified: true });
+        render();
+        expect(el.instance.findByType(UpgradeButton).length).toEqual(0);
       });
-      expect(wrapper.find('BeginCourseButton')).toHaveLength(1);
     });
-    it('show resume button when verified and not entitlement and has started', () => {
-      const wrapper = createWrapper({
-        isEntitlement: false, isFulfilled: false, isArchived: false, isVerified: true, hasStarted: true,
+    describe('not entielement, verified, or exec ed', () => {
+      it('renders UpgradeButton and ViewCourseButton for archived courses', () => {
+        mockHooks({ isArchived: true });
+        render();
+        expect(el.instance.findByType(UpgradeButton)[0].props.cardId).toEqual(cardId);
+        expect(el.instance.findByType(ViewCourseButton)[0].props.cardId).toEqual(cardId);
       });
-      expect(wrapper.find('ResumeButton')).toHaveLength(1);
-    });
-    it('show view course button when not verified and entitlement and fulfilled', () => {
-      const wrapper = createWrapper({
-        isEntitlement: true, isFulfilled: true, isArchived: false, isVerified: false, hasStarted: false,
+      describe('unstarted courses', () => {
+        it('renders UpgradeButton and BeginCourseButton', () => {
+          mockHooks();
+          render();
+          expect(el.instance.findByType(UpgradeButton)[0].props.cardId).toEqual(cardId);
+          expect(el.instance.findByType(BeginCourseButton)[0].props.cardId).toEqual(cardId);
+        });
       });
-      expect(wrapper.find('ViewCourseButton')).toHaveLength(1);
-    });
-    it('show view course button when not verified and entitlement and fulfilled and archived', () => {
-      const wrapper = createWrapper({
-        isEntitlement: true, isFulfilled: true, isArchived: true, isVerified: false, hasStarted: false,
+      describe('active courses (started, and not archived)', () => {
+        it('renders UpgradeButton and ResumeButton', () => {
+          mockHooks({ hasStarted: true });
+          render();
+          expect(el.instance.findByType(UpgradeButton)[0].props.cardId).toEqual(cardId);
+          expect(el.instance.findByType(ResumeButton)[0].props.cardId).toEqual(cardId);
+        });
       });
-      expect(wrapper.find('ViewCourseButton')).toHaveLength(1);
     });
   });
 });

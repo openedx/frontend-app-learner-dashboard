@@ -14,6 +14,7 @@ jest.mock('react', () => ({
   useEffect: jest.fn((cb, prereqs) => ({ useEffect: { cb, prereqs } })),
   useMemo: jest.fn((cb, prereqs) => cb(prereqs)),
   useContext: jest.fn(context => context),
+  useState: jest.fn(),
 }));
 
 jest.mock('reselect', () => ({
@@ -144,6 +145,8 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
   Sheet: 'Sheet',
   StatefulButton: 'StatefulButton',
   TextFilter: 'TextFilter',
+  Truncate: 'Truncate',
+  Skeleton: 'Skeleton',
   Spinner: 'Spinner',
   PageBanner: 'PageBanner',
   Pagination: 'Pagination',

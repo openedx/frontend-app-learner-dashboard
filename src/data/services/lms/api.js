@@ -17,7 +17,7 @@ import * as module from './api';
  * GET Actions
  *********************************************************************************/
 export const initializeList = ({ user } = {}) => get(
-  stringifyUrl(urls.init, { [apiKeys.user]: user }),
+  stringifyUrl(urls.getInitApiUrl(), { [apiKeys.user]: user }),
 );
 
 export const updateEntitlementEnrollment = ({ uuid, courseId }) => post(

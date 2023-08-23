@@ -55,7 +55,7 @@ exports[`AuthenticatedUserDropdown snapshots with enterprise dashboard 1`] = `
     <Dropdown.Item
       href="http://order-history-url.test"
     >
-      Order History
+      Orders & Subscriptions
     </Dropdown.Item>
     <Dropdown.Divider />
     <Dropdown.Item
@@ -122,7 +122,7 @@ exports[`AuthenticatedUserDropdown snapshots without enterprise dashboard and ex
     <Dropdown.Item
       href="http://order-history-url.test"
     >
-      Order History
+      Orders & Subscriptions
     </Dropdown.Item>
     <Dropdown.Divider />
     <Dropdown.Item

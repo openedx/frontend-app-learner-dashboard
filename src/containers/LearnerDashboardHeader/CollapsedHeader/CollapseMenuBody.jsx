@@ -21,7 +21,7 @@ export const CollapseMenuBody = ({ isOpen }) => {
   const dashboard = reduxHooks.useEnterpriseDashboardData();
   const { courseSearchUrl } = reduxHooks.usePlatformSettingsData();
 
-  const exploreCoursesClick = findCoursesNavDropdownClicked(courseSearchUrl);
+  const exploreCoursesClick = findCoursesNavDropdownClicked(urls.baseAppUrl(courseSearchUrl));
 
   return (
     isOpen && (
@@ -34,7 +34,7 @@ export const CollapseMenuBody = ({ isOpen }) => {
         </Button>
         <Button
           as="a"
-          href={courseSearchUrl}
+          href={urls.baseAppUrl(courseSearchUrl)}
           variant="inverse-primary"
           onClick={exploreCoursesClick}
         >
@@ -80,7 +80,7 @@ export const CollapseMenuBody = ({ isOpen }) => {
                 variant="inverse-primary"
                 href={getConfig().ORDER_HISTORY_URL}
               >
-                {formatMessage(messages.orderHistory)}
+                {formatMessage(messages.ordersAndSubscriptions)}
               </Button>
             )}
             <Button

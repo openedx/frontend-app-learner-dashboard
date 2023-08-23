@@ -1,6 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BeginCourseButton snapshot renders default button when learner has access to the course 1`] = `
+exports[`BeginCourseButton snapshot disabled snapshot 1`] = `
+<ActionButton
+  as="a"
+  disabled={true}
+  href="#"
+  onClick={
+    Object {
+      "trackCourseEvent": Object {
+        "cardId": "cardId",
+        "eventName": [MockFunction segment.enterCourseClicked],
+        "upgradeUrl": "home-urlexec-ed-tracking-path=cardId",
+      },
+    }
+  }
+>
+  Begin Course
+</ActionButton>
+`;
+
+exports[`BeginCourseButton snapshot enabled snapshot 1`] = `
 <ActionButton
   as="a"
   disabled={false}
@@ -10,7 +29,7 @@ exports[`BeginCourseButton snapshot renders default button when learner has acce
       "trackCourseEvent": Object {
         "cardId": "cardId",
         "eventName": [MockFunction segment.enterCourseClicked],
-        "upgradeUrl": "home-url",
+        "upgradeUrl": "home-urlexec-ed-tracking-path=cardId",
       },
     }
   }

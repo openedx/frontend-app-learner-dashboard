@@ -42,8 +42,9 @@ jest.unmock('react-redux');
 jest.unmock('reselect');
 jest.unmock('hooks');
 
-jest.mock('containers/WidgetContainers/LoadedSidebar', () => 'loaded-widget-sidebar');
-jest.mock('containers/WidgetContainers/NoCoursesSidebar', () => 'no-courses-widget-sidebar');
+jest.mock('containers/WidgetContainers/LoadedSidebar', () => jest.fn(() => 'loaded-widget-sidebar'));
+jest.mock('containers/WidgetContainers/NoCoursesSidebar', () => jest.fn(() => 'no-courses-widget-sidebar'));
+jest.mock('containers/WidgetContainers/WidgetFooter', () => 'product-recommendations-footer');
 jest.mock('components/NoticesWrapper', () => 'notices-wrapper');
 
 jest.mock('@edx/frontend-platform', () => ({
@@ -58,6 +59,10 @@ jest.mock('@edx/frontend-platform/analytics', () => ({
 jest.mock('@edx/frontend-platform/auth', () => ({
   getAuthenticatedHttpClient: jest.fn(),
   getLoginRedirectUrl: jest.fn(),
+}));
+
+jest.mock('ExperimentContext', () => ({
+  ExperimentProvider: 'div'
 }));
 
 jest.mock('@edx/frontend-enterprise-hotjar', () => ({

@@ -17,7 +17,7 @@ jest.mock('hooks', () => ({
       url: 'url',
     }),
     usePlatformSettingsData: () => ({
-      courseSearchUrl: 'courseSearchUrl',
+      courseSearchUrl: '/courseSearchUrl',
     }),
   },
 }));

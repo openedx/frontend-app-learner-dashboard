@@ -1,5 +1,5 @@
 import { get, stringifyUrl } from 'data/services/lms/utils';
-import api, { fetchUrl } from './api';
+import api, { getFetchUrl } from './api';
 
 jest.mock('data/services/lms/utils', () => ({
   stringifyUrl: (...args) => ({ stringifyUrl: args }),
@@ -10,7 +10,7 @@ describe('recommendedCourses api', () => {
   describe('fetchRecommendedCourses', () => {
     it('calls get with the correct recommendation courses URL and user', () => {
       expect(api.fetchRecommendedCourses()).toEqual(
-        get(stringifyUrl(fetchUrl)),
+        get(stringifyUrl(getFetchUrl())),
       );
     });
   });

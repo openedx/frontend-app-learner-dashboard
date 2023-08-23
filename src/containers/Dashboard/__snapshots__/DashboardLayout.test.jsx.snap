@@ -1,6 +1,57 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DashboardLayout collapsed snapshot 1`] = `
+exports[`DashboardLayout collapsed sidebar not showing snapshot 1`] = `
+<Container
+  fluid={true}
+  size="xl"
+>
+  <Row>
+    <Col
+      className="course-list-column"
+      lg={
+        Object {
+          "offset": 0,
+          "span": 12,
+        }
+      }
+      xl={
+        Object {
+          "offset": 0,
+          "span": 12,
+        }
+      }
+    >
+      test-children
+    </Col>
+    <Col
+      className="sidebar-column"
+      lg={
+        Object {
+          "offset": 0,
+          "span": 12,
+        }
+      }
+      xl={
+        Object {
+          "offset": 0,
+          "span": 4,
+        }
+      }
+    >
+      <mockConstructor
+        setSidebarShowing={[MockFunction hooks.setSidebarShowing]}
+      />
+    </Col>
+  </Row>
+  <Row>
+    <Col>
+      <WidgetFooter />
+    </Col>
+  </Row>
+</Container>
+`;
+
+exports[`DashboardLayout collapsed sidebar showing snapshot 1`] = `
 <Container
   fluid={true}
   size="xl"
@@ -38,13 +89,76 @@ exports[`DashboardLayout collapsed snapshot 1`] = `
         }
       }
     >
-      test-sidebar-content
+      <mockConstructor
+        setSidebarShowing={[MockFunction hooks.setSidebarShowing]}
+      />
+    </Col>
+  </Row>
+  <Row>
+    <Col>
+      <WidgetFooter />
     </Col>
   </Row>
 </Container>
 `;
 
-exports[`DashboardLayout not collapsed snapshot 1`] = `
+exports[`DashboardLayout not collapsed sidebar not showing snapshot 1`] = `
+<Container
+  fluid={true}
+  size="xl"
+>
+  <Row>
+    <Col
+      className="course-list-column"
+      lg={
+        Object {
+          "offset": 0,
+          "span": 12,
+        }
+      }
+      xl={
+        Object {
+          "offset": 0,
+          "span": 12,
+        }
+      }
+    >
+      test-children
+    </Col>
+    <Col
+      className="sidebar-column"
+      lg={
+        Object {
+          "offset": 0,
+          "span": 12,
+        }
+      }
+      xl={
+        Object {
+          "offset": 0,
+          "span": 4,
+        }
+      }
+    >
+      <h2
+        className="course-list-title"
+      >
+         
+      </h2>
+      <mockConstructor
+        setSidebarShowing={[MockFunction hooks.setSidebarShowing]}
+      />
+    </Col>
+  </Row>
+  <Row>
+    <Col>
+      <WidgetFooter />
+    </Col>
+  </Row>
+</Container>
+`;
+
+exports[`DashboardLayout not collapsed sidebar showing snapshot 1`] = `
 <Container
   fluid={true}
   size="xl"
@@ -87,7 +201,14 @@ exports[`DashboardLayout not collapsed snapshot 1`] = `
       >
          
       </h2>
-      test-sidebar-content
+      <mockConstructor
+        setSidebarShowing={[MockFunction hooks.setSidebarShowing]}
+      />
+    </Col>
+  </Row>
+  <Row>
+    <Col>
+      <WidgetFooter />
     </Col>
   </Row>
 </Container>
