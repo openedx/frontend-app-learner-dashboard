@@ -7,6 +7,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import EmailSettingsModal from 'containers/EmailSettingsModal';
 import UnenrollConfirmModal from 'containers/UnenrollConfirmModal';
 import { reduxHooks } from 'hooks';
+import SocialShareMenu from './SocialShareMenu';
 import * as hooks from './hooks';
 import CourseCardMenu, { testIds } from '.';
 
@@ -18,6 +19,7 @@ jest.mock('@edx/frontend-platform/i18n', () => ({
 jest.mock('hooks', () => ({
   reduxHooks: { useMasqueradeData: jest.fn(), useCardEnrollmentData: jest.fn() },
 }));
+jest.mock('./SocialShareMenu', () => 'SocialShareMenu');
 jest.mock('./hooks', () => ({
   useEmailSettings: jest.fn(),
   useUnenrollData: jest.fn(),
@@ -122,6 +124,13 @@ describe('CourseCardMenu', () => {
         expect(modal.props.cardId).toEqual(props.cardId);
       });
     };
+    const testSocialShareMenu = () => {
+      it('displays SocialShareMenu with cardID and emailSettings', () => {
+        const menu = el.instance.findByType(SocialShareMenu)[0];
+        expect(menu.props.cardId).toEqual(props.cardId);
+        expect(menu.props.emailSettings).toEqual(emailSettings);
+      });
+    };
     describe('show dropdown', () => {
       describe('hide unenroll item and disable email', () => {
         beforeEach(() => {
@@ -132,6 +141,7 @@ describe('CourseCardMenu', () => {
           expect(el.snapshot).toMatchSnapshot();
         });
         testHandleToggle();
+        testSocialShareMenu();
         it('does not render unenroll modal toggle', () => {
           expect(el.instance.findByTestId(testIds.unenrollModalToggle).length).toEqual(0);
         });
@@ -154,6 +164,7 @@ describe('CourseCardMenu', () => {
           expect(el.snapshot).toMatchSnapshot();
         });
         testHandleToggle();
+        testSocialShareMenu();
         describe('unenroll modal toggle', () => {
           let toggle;
           describe('not masquerading', () => {

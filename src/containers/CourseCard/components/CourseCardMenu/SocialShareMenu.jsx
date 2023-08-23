@@ -8,7 +8,6 @@ import { Dropdown } from '@edx/paragon';
 
 import track from 'tracking';
 import { reduxHooks } from 'hooks';
-import { useEmailSettings } from './hooks';
 
 import messages from './messages';
 
@@ -16,10 +15,8 @@ export const testIds = StrictDict({
   emailSettingsModalToggle: 'emailSettingsModalToggle',
 });
 
-export const SocialShareMenu = ({ cardId }) => {
+export const SocialShareMenu = ({ cardId, emailSettings }) => {
   const { formatMessage } = useIntl();
-
-  const emailSettingsModal = useEmailSettings();
 
   const { courseName } = reduxHooks.useCardCourseData(cardId);
   const { isEmailEnabled, isExecEd2UCourse } = reduxHooks.useCardEnrollmentData(cardId);
@@ -38,7 +35,7 @@ export const SocialShareMenu = ({ cardId }) => {
       {isEmailEnabled && (
         <Dropdown.Item
           disabled={isMasquerading}
-          onClick={emailSettingsModal.show}
+          onClick={emailSettings.show}
           data-testid={testIds.emailSettingsModalToggle}
         >
           {formatMessage(messages.emailSettings)}
@@ -77,6 +74,9 @@ export const SocialShareMenu = ({ cardId }) => {
 };
 SocialShareMenu.propTypes = {
   cardId: PropTypes.string.isRequired,
+  emailSettings: PropTypes.shape({
+    show: PropTypes.func,
+  }).isRequired,
 };
 
 export default SocialShareMenu;

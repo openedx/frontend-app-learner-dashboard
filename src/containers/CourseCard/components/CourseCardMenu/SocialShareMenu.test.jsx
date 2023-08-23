@@ -39,13 +39,10 @@ jest.mock('./hooks', () => ({
   useEmailSettings: jest.fn(),
 }));
 
-const emailSettings = {
-  isVisible: false,
-  show: jest.fn().mockName('emailSettingShow'),
-  hide: jest.fn().mockName('emailSettingHide'),
+const props = {
+  cardId: 'test-card-id',
+  emailSettings: { show: jest.fn() },
 };
-
-const props = { cardId: 'test-card-id' };
 
 const mockHook = (fn, returnValue, options = {}) => {
   if (options.isCardHook) {
@@ -71,7 +68,6 @@ const socialShare = {
 };
 
 const mockHooks = (returnVals = {}) => {
-  mockHook(useEmailSettings, emailSettings);
   mockHook(
     reduxHooks.useCardEnrollmentData,
     {
@@ -140,7 +136,7 @@ describe('SocialShareMenu', () => {
           });
         }
         test('show email settings modal on click', () => {
-          expect(loadToggle().props.onClick).toEqual(emailSettings.show);
+          expect(loadToggle().props.onClick).toEqual(props.emailSettings.show);
         });
       });
     };
@@ -188,7 +184,7 @@ describe('SocialShareMenu', () => {
           expect(loadToggle().props.disabled).toEqual(false);
         });
         test('show email settings modal on click', () => {
-          expect(loadToggle().props.onClick).toEqual(emailSettings.show);
+          expect(loadToggle().props.onClick).toEqual(props.emailSettings.show);
         });
       });
       testEmailSettingsDropdown();

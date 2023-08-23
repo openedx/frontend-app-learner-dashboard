@@ -26,7 +26,7 @@ export const testIds = StrictDict({
 export const CourseCardMenu = ({ cardId }) => {
   const { formatMessage } = useIntl();
 
-  const emailSettingsModal = useEmailSettings();
+  const emailSettings = useEmailSettings();
   const unenrollModal = useUnenrollData();
   const handleToggleDropdown = useHandleToggleDropdown(cardId);
   const { shouldShowUnenrollItem, shouldShowDropdown } = useOptionVisibility(cardId);
@@ -58,7 +58,7 @@ export const CourseCardMenu = ({ cardId }) => {
               {formatMessage(messages.unenroll)}
             </Dropdown.Item>
           )}
-          <SocialShareMenu cardId={cardId} />
+          <SocialShareMenu cardId={cardId} emailSettings={emailSettings} />
         </Dropdown.Menu>
       </Dropdown>
       <UnenrollConfirmModal
@@ -68,8 +68,8 @@ export const CourseCardMenu = ({ cardId }) => {
       />
       {isEmailEnabled && (
         <EmailSettingsModal
-          show={emailSettingsModal.isVisible}
-          closeModal={emailSettingsModal.hide}
+          show={emailSettings.isVisible}
+          closeModal={emailSettings.hide}
           cardId={cardId}
         />
       )}
