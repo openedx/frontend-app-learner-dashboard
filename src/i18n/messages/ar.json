@@ -44,6 +44,13 @@
   "ProductRecommendations.bootcampDescription": "Intensive, hands-on, project based training",
   "ProductRecommendations.courseHeading": "Courses",
   "ProductRecommendations.courseDescription": "Find new interests and advance your career",
+  "RecommendationsPanel.recommendationsFeatureText": "Personalized recommendations feature is not yet available. We are working hard on bringing it to your learner home in the near future.",
+  "RecommendationsPanel.recommendationsAlertText": "Would you like to be alerted when it becomes available?",
+  "RecommendationsPanel.recommendationsModalHeading": "Thank you for your interest!",
+  "RecommendationsPanel.modalSkipButton": "Skip for now",
+  "RecommendationsPanel.modalCountMeButton": "Count me in!",
+  "learnerVariantDashboard.recommendedForYou": "Recommended For You",
+  "RecommendationsPanel.seeAllRecommendationsButton": "See All Recommendations",
   "RecommendationsPanel.recommendationsHeading": "توصيات خاصة لك",
   "RecommendationsPanel.popularCoursesHeading": "المساقات الشائعة",
   "RecommendationsPanel.exploreCoursesButton": "استكشف المساقات"
