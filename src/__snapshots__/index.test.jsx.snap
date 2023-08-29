@@ -25,9 +25,14 @@ exports[`app registry subscribe: APP_READY.  links App to root element 1`] = `
         }
         path="/"
       />
-      <Navigate
-        replace={true}
-        to="/"
+      <Route
+        element={
+          <Navigate
+            replace={true}
+            to="/"
+          />
+        }
+        path="*"
       />
     </Routes>
   </NoticesWrapper>

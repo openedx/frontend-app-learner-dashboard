@@ -35,7 +35,7 @@ subscribe(APP_READY, () => {
       <NoticesWrapper>
         <Routes>
           <Route path="/" element={<PageWrap><App /></PageWrap>} />
-          <Navigate to="/" replace />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </NoticesWrapper>
     </AppProvider>,
