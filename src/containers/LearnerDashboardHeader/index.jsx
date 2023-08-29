@@ -1,92 +1,22 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
-import { useIntl } from '@edx/frontend-platform/i18n';
-import { AppContext } from '@edx/frontend-platform/react';
-import { Program, Search } from '@edx/paragon/icons';
-import {
-  Button, Image, IconButton, Icon,
-} from '@edx/paragon';
-
-import topBanner from 'assets/top_stripe.svg';
 import MasqueradeBar from 'containers/MasqueradeBar';
-import urls from 'data/services/lms/urls';
-import { reduxHooks } from 'hooks';
-
-import AuthenticatedUserDropdown from './AuthenticatedUserDropdown';
-import GreetingBanner from './GreetingBanner';
 import ConfirmEmailBanner from './ConfirmEmailBanner';
 
-import { useIsCollapsed, findCoursesNavClicked } from './hooks';
-import messages from './messages';
+import CollapsedHeader from './CollapsedHeader';
+import ExpandedHeader from './ExpandedHeader';
+
 import './index.scss';
 
-export const UserMenu = () => {
-  const { authenticatedUser } = useContext(AppContext);
-  return authenticatedUser ? (<AuthenticatedUserDropdown username={authenticatedUser.username} />) : null;
-};
+export const LearnerDashboardHeader = () => (
+  <>
+    <ConfirmEmailBanner />
+    <CollapsedHeader />
+    <ExpandedHeader />
+    <MasqueradeBar />
+  </>
+);
 
-export const LearnerDashboardHeader = () => {
-  const { formatMessage } = useIntl();
-  const isCollapsed = useIsCollapsed();
-  const { courseSearchUrl } = reduxHooks.usePlatformSettingsData();
-
-  const exploreCoursesClick = findCoursesNavClicked(courseSearchUrl);
-
-  return (
-    <>
-      <ConfirmEmailBanner />
-      <div className="flex-column bg-primary">
-        {!(isCollapsed) && (
-          <Image className="d-block w-100 mb-4" src={topBanner} />
-        )}
-        <header className="learner-dashboard-header">
-          <div className="d-flex">
-            {(!isCollapsed) && (
-              <Button as="a" href={urls.programsUrl} variant="inverse-tertiary" iconBefore={Program}>
-                {formatMessage(messages.switchToProgram)}
-              </Button>
-            )}
-            <div className="flex-grow-1">
-              {isCollapsed && <GreetingBanner size="small" />}
-            </div>
-            {isCollapsed ? (
-              <div className="my-auto ml-1 d-flex">
-                <IconButton
-                  alt={formatMessage(messages.courseSearchAlt)}
-                  as="a"
-                  href={courseSearchUrl}
-                  variant="primary"
-                  invertColors
-                  src={Search}
-                  iconAs={Icon}
-                  onClick={exploreCoursesClick}
-                />
-                <UserMenu />
-              </div>
-            ) : (
-              <>
-                <Button
-                  as="a"
-                  href={courseSearchUrl}
-                  variant="inverse-tertiary"
-                  iconBefore={Search}
-                  onClick={exploreCoursesClick}
-                >
-                  {formatMessage(messages.exploreCourses)}
-                </Button>
-                <UserMenu />
-              </>
-            )}
-          </div>
-        </header>
-        {!isCollapsed && <GreetingBanner size="large" />}
-      </div>
-      <MasqueradeBar />
-    </>
-  );
-};
-
-LearnerDashboardHeader.propTypes = {
-};
+LearnerDashboardHeader.propTypes = {};
 
 export default LearnerDashboardHeader;

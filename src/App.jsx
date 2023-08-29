@@ -18,14 +18,16 @@ import {
 import { reduxHooks } from 'hooks';
 import Dashboard from 'containers/Dashboard';
 import ZendeskFab from 'components/ZendeskFab';
+import { ExperimentProvider } from 'ExperimentContext';
 
 import track from 'tracking';
 
 import fakeData from 'data/services/lms/fakeData/courses';
-import LearnerDashboardHeaderVariant from './containers/LearnerDashboardHeaderVariant';
+
+import AppWrapper from 'containers/WidgetContainers/AppWrapper';
+import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
 
 import messages from './messages';
-
 import './App.scss';
 
 export const App = () => {
@@ -76,15 +78,21 @@ export const App = () => {
         <title>{formatMessage(messages.pageTitle)}</title>
       </Helmet>
       <div>
-        <LearnerDashboardHeaderVariant />
-        <main>
-          {hasNetworkFailure
-            ? (
-              <Alert variant="danger">
-                <ErrorPage message={formatMessage(messages.errorMessage, { supportEmail })} />
-              </Alert>
-            ) : (<Dashboard />)}
-        </main>
+        <AppWrapper>
+          <LearnerDashboardHeader />
+          <main>
+            {hasNetworkFailure
+              ? (
+                <Alert variant="danger">
+                  <ErrorPage message={formatMessage(messages.errorMessage, { supportEmail })} />
+                </Alert>
+              ) : (
+                <ExperimentProvider>
+                  <Dashboard />
+                </ExperimentProvider>
+              )}
+          </main>
+        </AppWrapper>
         <Footer logo={process.env.LOGO_POWERED_BY_OPEN_EDX_URL_SVG} />
         <ZendeskFab />
       </div>

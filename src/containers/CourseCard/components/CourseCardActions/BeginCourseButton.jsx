@@ -12,11 +12,13 @@ import messages from './messages';
 export const BeginCourseButton = ({ cardId }) => {
   const { formatMessage } = useIntl();
   const { homeUrl } = reduxHooks.useCardCourseRunData(cardId);
+  const execEdTrackingParam = reduxHooks.useCardExecEdTrackingParam(cardId);
   const { disableBeginCourse } = useActionDisabledState(cardId);
+
   const handleClick = reduxHooks.useTrackCourseEvent(
     track.course.enterCourseClicked,
     cardId,
-    homeUrl,
+    homeUrl + execEdTrackingParam,
   );
   return (
     <ActionButton

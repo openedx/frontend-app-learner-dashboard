@@ -43,7 +43,7 @@ describe('lms api methods', () => {
         [apiKeys.user]: testUser,
       };
       expect(api.initializeList(userArg)).toEqual(
-        utils.get(utils.stringifyUrl(urls.init, userArg)),
+        utils.get(utils.stringifyUrl(urls.getInitApiUrl(), userArg)),
       );
     });
   });
@@ -86,8 +86,10 @@ describe('lms api methods', () => {
         expect(
           api.updateEmailSettings({ courseId, enable: true }),
         ).toEqual(
-          utils.post(urls.updateEmailSettings,
-            { [apiKeys.courseId]: courseId, ...enableEmailsAction }),
+          utils.post(
+            urls.updateEmailSettings,
+            { [apiKeys.courseId]: courseId, ...enableEmailsAction },
+          ),
         );
       });
     });
@@ -97,8 +99,10 @@ describe('lms api methods', () => {
       expect(
         api.unenrollFromCourse({ courseId }),
       ).toEqual(
-        utils.post(urls.courseUnenroll,
-          { [apiKeys.courseId]: courseId, ...unenrollmentAction }),
+        utils.post(
+          urls.courseUnenroll,
+          { [apiKeys.courseId]: courseId, ...unenrollmentAction },
+        ),
       );
     });
   });

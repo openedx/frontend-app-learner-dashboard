@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useSelector, useDispatch } from 'react-redux';
 
 import * as redux from 'data/redux';
@@ -52,6 +53,12 @@ export const useCardSocialSettingsData = (cardId) => {
     shareUrl: `${socialShareUrl}?${target.utmParams}`,
   });
   return { facebook: loadSettings(facebook), twitter: loadSettings(twitter) };
+};
+
+export const useCardExecEdTrackingParam = (cardId) => {
+  const { isExecEd2UCourse } = module.useCardEnrollmentData(cardId);
+  const { authOrgId } = module.useEnterpriseDashboardData(cardId);
+  return isExecEd2UCourse ? `?org_id=${authOrgId}` : '';
 };
 
 /** Events **/

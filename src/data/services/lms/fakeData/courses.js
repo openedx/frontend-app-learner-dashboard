@@ -761,10 +761,13 @@ export const compileCourseRunData = ({ courseName, ...data }, index) => {
     credit: {},
     ...data,
     certificate: genCertificateData(data.certificate),
-    enrollment: genEnrollmentData({ lastEnrolled, ...data.enrollment }),
+    enrollment: genEnrollmentData({
+      lastEnrolled,
+      ...getOption(emailOptions, index),
+      ...data.enrollment,
+    }),
     courseRun: genCourseRunData({
       ...data.courseRun,
-      ...getOption(emailOptions, index),
       courseId,
     }),
     course: {

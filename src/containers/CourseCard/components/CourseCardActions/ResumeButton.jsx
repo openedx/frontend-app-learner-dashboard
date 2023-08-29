@@ -12,11 +12,13 @@ import messages from './messages';
 export const ResumeButton = ({ cardId }) => {
   const { formatMessage } = useIntl();
   const { resumeUrl } = reduxHooks.useCardCourseRunData(cardId);
+  const execEdTrackingParam = reduxHooks.useCardExecEdTrackingParam(cardId);
   const { disableResumeCourse } = useActionDisabledState(cardId);
+
   const handleClick = reduxHooks.useTrackCourseEvent(
     track.course.enterCourseClicked,
     cardId,
-    resumeUrl,
+    resumeUrl + execEdTrackingParam,
   );
   return (
     <ActionButton

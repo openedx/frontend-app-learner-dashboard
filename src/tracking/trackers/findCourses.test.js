@@ -22,7 +22,8 @@ describe('find courses trackers', () => {
     findCoursesClicked(url);
     expect(createEventTracker).toHaveBeenCalledWith(eventNames.findCoursesClicked, defaultProps);
     expect(createLinkTracker).toHaveBeenCalledWith(
-      createEventTracker(eventNames.findCoursesClicked, defaultProps), url,
+      createEventTracker(eventNames.findCoursesClicked, defaultProps),
+      url,
     );
   });
 
