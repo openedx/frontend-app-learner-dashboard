@@ -44,6 +44,13 @@
   "ProductRecommendations.bootcampDescription": "Capacitación intensiva, práctica y basada en proyectos",
   "ProductRecommendations.courseHeading": "Cursos",
   "ProductRecommendations.courseDescription": "Encontrar nuevos intereses y avanzar en la carrera",
+  "RecommendationsPanel.recommendationsFeatureText": "La función de recomendaciones personalizadas aún no está disponible. Estamos trabajando arduamente para llevarlo a casa de su alumno en un futuro próximo.",
+  "RecommendationsPanel.recommendationsAlertText": "¿Le gustaría recibir una alerta cuando esté disponible?",
+  "RecommendationsPanel.recommendationsModalHeading": "¡Gracias por su interés!",
+  "RecommendationsPanel.modalSkipButton": "Saltar por ahora ",
+  "RecommendationsPanel.modalCountMeButton": "¡Cuente conmigo!",
+  "learnerVariantDashboard.recommendedForYou": "Recomendado para usted",
+  "RecommendationsPanel.seeAllRecommendationsButton": "Ver todas las recomendaciones",
   "RecommendationsPanel.recommendationsHeading": "Recomendaciones para ti",
   "RecommendationsPanel.popularCoursesHeading": "Cursos populares",
   "RecommendationsPanel.exploreCoursesButton": "Explorar cursos"
