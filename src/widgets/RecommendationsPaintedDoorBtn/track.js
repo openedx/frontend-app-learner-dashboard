@@ -12,24 +12,24 @@ export const trackPaintedDoorVariationGroup = (variation) => {
   createEventTracker(eventNames.variationGroup, {
     variation,
     page: 'dashboard',
-  });
+  })();
 };
 
 export const trackPaintedDoorRecommendationHomeBtnClicked = (variation) => {
   createEventTracker(eventNames.recommendationHomeBtnClicked, {
     variation,
     page: 'dashboard',
-  });
+  })();
 };
 
 export const trackPaintedDoorRecommendationHomeInterestBtnClicked = (variation) => {
   createEventTracker(eventNames.recommendationHomeModalInterestBtnClicked, {
     variation,
-  });
+  })();
 };
 
 export const trackPaintedDoorRecommendationHomeSkipBtnClicked = (variation) => {
   createEventTracker(eventNames.recommendationHomeModalSkipBtnClicked, {
     variation,
-  });
+  })();
 };
