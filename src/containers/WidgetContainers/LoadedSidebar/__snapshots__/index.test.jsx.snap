@@ -5,7 +5,7 @@ exports[`WidgetSidebar snapshots default 1`] = `
   className="widget-sidebar"
 >
   <div
-    className="d-flex"
+    className="d-flex flex-column"
   >
     <RecommendationsPanel />
   </div>

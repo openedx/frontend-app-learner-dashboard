@@ -8,7 +8,7 @@ import {
 } from './track';
 
 jest.mock('data/services/segment/utils', () => ({
-  createEventTracker: jest.fn((args) => ({ createEventTracker: args })),
+  createEventTracker: jest.fn(() => () => {}),
 }));
 
 const TEST_VARIATION = 'testVariation';
