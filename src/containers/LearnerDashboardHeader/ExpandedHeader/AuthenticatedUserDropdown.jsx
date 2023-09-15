@@ -55,7 +55,7 @@ export const AuthenticatedUserDropdown = () => {
           </Dropdown.Item>
           {getConfig().ORDER_HISTORY_URL && (
             <Dropdown.Item href={getConfig().ORDER_HISTORY_URL}>
-              {formatMessage(messages.ordersAndSubscriptions)}
+              {formatMessage(messages.orderHistory)}
             </Dropdown.Item>
           )}
           <Dropdown.Divider />
