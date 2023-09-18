@@ -26,10 +26,10 @@ const messages = defineMessages({
     defaultMessage: 'Account',
     description: 'The text for the user menu Account navigation link.',
   },
-  orderHistory: {
-    id: 'learnerVariantDashboard.menu.orderHistory.label',
-    defaultMessage: 'Order History',
-    description: 'The text for the user menu Order History navigation link.',
+  ordersAndSubscriptions: {
+    id: 'learnerVariantDashboard.menu.ordersAndSubscriptions.label',
+    defaultMessage: 'Orders & Subscriptions',
+    description: 'The text for the user menu Orders & Subscriptions navigation link.',
   },
   signOut: {
     id: 'learnerVariantDashboard.menu.signOut.label',
