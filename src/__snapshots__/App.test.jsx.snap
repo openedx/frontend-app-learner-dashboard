@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`App router component component initialize failure snapshot 1`] = `
-<BrowserRouter>
+<Fragment>
   <HelmetWrapper
     defer={true}
     encodeSpecialCharacters={true}
@@ -28,11 +28,11 @@ exports[`App router component component initialize failure snapshot 1`] = `
     />
     <ZendeskFab />
   </div>
-</BrowserRouter>
+</Fragment>
 `;
 
 exports[`App router component component no network failure snapshot 1`] = `
-<BrowserRouter>
+<Fragment>
   <HelmetWrapper
     defer={true}
     encodeSpecialCharacters={true}
@@ -55,11 +55,11 @@ exports[`App router component component no network failure snapshot 1`] = `
     />
     <ZendeskFab />
   </div>
-</BrowserRouter>
+</Fragment>
 `;
 
 exports[`App router component component refresh failure snapshot 1`] = `
-<BrowserRouter>
+<Fragment>
   <HelmetWrapper
     defer={true}
     encodeSpecialCharacters={true}
@@ -86,5 +86,5 @@ exports[`App router component component refresh failure snapshot 1`] = `
     />
     <ZendeskFab />
   </div>
-</BrowserRouter>
+</Fragment>
 `;

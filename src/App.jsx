@@ -1,5 +1,4 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
@@ -74,7 +73,7 @@ export const App = () => {
     }
   }, [authenticatedUser, loadData]);
   return (
-    <Router>
+    <>
       <Helmet>
         <title>{formatMessage(messages.pageTitle)}</title>
       </Helmet>
@@ -97,7 +96,7 @@ export const App = () => {
         <Footer logo={process.env.LOGO_POWERED_BY_OPEN_EDX_URL_SVG} />
         <ZendeskFab />
       </div>
-    </Router>
+    </>
   );
 };
 
