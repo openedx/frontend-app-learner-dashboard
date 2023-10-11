@@ -61,9 +61,6 @@ describe('App router component', () => {
       it('displays learner dashboard header', () => {
         expect(el.instance.findByType(LearnerDashboardHeader).length).toEqual(1);
       });
-      it('wraps the page in a browser router', () => {
-        expect(el.instance.el.type).toEqual('BrowserRouter');
-      });
       test('Footer logo drawn from env variable', () => {
         expect(el.instance.findByType(Footer)[0].props.logo).toEqual(logo);
       });

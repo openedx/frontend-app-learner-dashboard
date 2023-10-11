@@ -4,12 +4,14 @@ import 'regenerator-runtime/runtime';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Switch, Redirect } from 'react-router-dom';
+import {
+  Route, Navigate, Routes,
+} from 'react-router-dom';
 
 import {
   AppProvider,
   ErrorPage,
-  PageRoute,
+  PageWrap,
 } from '@edx/frontend-platform/react';
 import store from 'data/store';
 import {
@@ -31,12 +33,10 @@ subscribe(APP_READY, () => {
   ReactDOM.render(
     <AppProvider store={store}>
       <NoticesWrapper>
-        <Switch>
-          <PageRoute path="/">
-            <App />
-          </PageRoute>
-          <Redirect to="/" />
-        </Switch>
+        <Routes>
+          <Route path="/" element={<PageWrap><App /></PageWrap>} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </NoticesWrapper>
     </AppProvider>,
     document.getElementById('root'),
