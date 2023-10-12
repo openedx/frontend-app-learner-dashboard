@@ -6,10 +6,10 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
 import { Button, Badge } from '@edx/paragon';
 
-import WidgetNavbar from 'containers/WidgetContainers/WidgetNavbar';
+// import WidgetNavbar from 'containers/WidgetContainers/WidgetNavbar';
 import urls from 'data/services/lms/urls';
 import { reduxHooks } from 'hooks';
-import { COLLAPSED_NAVBAR } from 'widgets/RecommendationsPaintedDoorBtn/constants';
+// import { COLLAPSED_NAVBAR } from 'widgets/RecommendationsPaintedDoorBtn/constants';
 
 import { findCoursesNavDropdownClicked } from '../hooks';
 import messages from '../messages';

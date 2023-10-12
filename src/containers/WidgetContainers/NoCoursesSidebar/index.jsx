@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import RecommendationsPanel from 'widgets/RecommendationsPanel';
+// import RecommendationsPanel from 'widgets/RecommendationsPanel';
 import hooks from 'widgets/ProductRecommendations/hooks';
 import PluginSlot from '../../../../plugins/PluginSlot';
 

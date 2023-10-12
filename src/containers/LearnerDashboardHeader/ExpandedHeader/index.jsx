@@ -4,10 +4,10 @@ import { getConfig } from '@edx/frontend-platform';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { Button } from '@edx/paragon';
 
-import WidgetNavbar from 'containers/WidgetContainers/WidgetNavbar';
+// import WidgetNavbar from 'containers/WidgetContainers/WidgetNavbar';
 import urls from 'data/services/lms/urls';
 import { reduxHooks } from 'hooks';
-import { EXPANDED_NAVBAR } from 'widgets/RecommendationsPaintedDoorBtn/constants';
+// import { EXPANDED_NAVBAR } from 'widgets/RecommendationsPaintedDoorBtn/constants';
 
 import AuthenticatedUserDropdown from './AuthenticatedUserDropdown';
 import { useIsCollapsed, findCoursesNavClicked } from '../hooks';
