@@ -8,7 +8,7 @@ exports[`BrandLogo dashboard defined 1`] = `
   <img
     alt="edX, Inc. Dashboard"
     className="logo py-3"
-    src="https://edx-cdn.org/v3/prod/logo.svg"
+    src="https://edx-cdn.org/v3/default/logo.svg"
   />
 </a>
 `;
@@ -21,7 +21,7 @@ exports[`BrandLogo dashboard undefined 1`] = `
   <img
     alt="edX, Inc. Dashboard"
     className="logo py-3"
-    src="https://edx-cdn.org/v3/prod/logo.svg"
+    src="https://edx-cdn.org/v3/default/logo.svg"
   />
 </a>
 `;
