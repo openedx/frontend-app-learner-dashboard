@@ -40,7 +40,7 @@ export const CollapseMenuBody = ({ isOpen }) => {
         >
           {formatMessage(messages.discoverNew)}
         </Button>
-        <WidgetNavbar placement={COLLAPSED_NAVBAR} />
+        {/* <WidgetNavbar placement={COLLAPSED_NAVBAR} /> */}
         <Button as="a" href={getConfig().SUPPORT_URL} variant="inverse-primary">
           {formatMessage(messages.help)}
         </Button>

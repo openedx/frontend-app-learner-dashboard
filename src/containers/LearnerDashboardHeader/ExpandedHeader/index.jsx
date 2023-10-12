@@ -52,7 +52,7 @@ export const ExpandedHeader = () => {
         >
           {formatMessage(messages.discoverNew)}
         </Button>
-        <WidgetNavbar placement={EXPANDED_NAVBAR} />
+        {/* <WidgetNavbar placement={EXPANDED_NAVBAR} /> */}
         <span className="flex-grow-1" />
         <Button
           as="a"
