@@ -29,9 +29,9 @@ export const AuthenticatedUserDropdown = () => {
           </span>
         </Dropdown.Toggle>
         <Dropdown.Menu className="dropdown-menu-right">
-          <Dropdown.Header>SWITCH DASHBOARD</Dropdown.Header>
+          <Dropdown.Header>{formatMessage(messages.dashboardSwitch)}</Dropdown.Header>
           <Dropdown.Item as="a" href="/edx-dashboard" className="active">
-            Personal
+            {formatMessage(messages.dashboardPersonal)}
           </Dropdown.Item>
           {!!dashboard && (
             <Dropdown.Item as="a" href={dashboard.url} key={dashboard.label}>
