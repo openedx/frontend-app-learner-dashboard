@@ -7,7 +7,27 @@ exports[`WidgetSidebar snapshots default 1`] = `
   <div
     className="d-flex flex-column"
   >
-    <RecommendationsPanel />
+    <injectIntl(ShimmedIntlComponent)
+      className="d-flex flex-column"
+      id="example"
+      pluginProps={
+        Object {
+          "className": "flex-grow-1",
+          "title": "example plugins",
+        }
+      }
+      style={
+        Object {
+          "height": 400,
+        }
+      }
+    >
+      <div
+        key="default"
+      >
+        This is default plugin content.
+      </div>
+    </injectIntl(ShimmedIntlComponent)>
   </div>
 </div>
 `;
