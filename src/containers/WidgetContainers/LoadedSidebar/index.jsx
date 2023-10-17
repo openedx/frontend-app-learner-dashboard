@@ -23,11 +23,9 @@ export const WidgetSidebar = ({ setSidebarShowing }) => {
               title: 'example plugins',
             }}
             style={{
-              height: 400,
+              height: 700,
             }}
-          >
-            <div key="default">This is default plugin content.</div>
-          </PluginSlot>
+          />
         </div>
       </div>
     );
