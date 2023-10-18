@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { Spinner } from '@edx/paragon';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import { AppContext } from '@edx/frontend-platform/react';
 
 // import { usePluginSlot } from './data/hooks';
 import {
@@ -18,6 +19,7 @@ const PluginSlot = forwardRef(({
   /* the plugins below are obtained by the id passed into PluginSlot by the Host MFE. See example/src/PluginsPage.jsx
   for an example of how PluginSlot is populated, and example/src/index.jsx for a dummy JS config that holds all plugins
   */
+  const { authenticatedUser } = React.useContext(AppContext);
 
   const dummyConfig = {
     plugins: {
@@ -25,7 +27,7 @@ const PluginSlot = forwardRef(({
         keepDefault: true,
         plugins: [
           {
-            url: 'http://localhost:1995/u/edx/plugin',
+            url: `https://profile-aperturepluginpoc.sandbox.edx.org/u/${authenticatedUser.username}/plugin`,
             type: IFRAME_PLUGIN,
           },
           {
