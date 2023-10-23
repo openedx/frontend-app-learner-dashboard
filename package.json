@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build": "fedx-scripts webpack",
-    "i18n_extract": "BABEL_ENV=i18n fedx-scripts babel src --quiet > /dev/null",
+    "i18n_extract": "fedx-scripts formatjs extract",
     "lint": "fedx-scripts eslint --ext .jsx,.js src/",
     "lint-fix": "fedx-scripts eslint --fix --ext .jsx,.js src/",
     "semantic-release": "semantic-release",
@@ -80,7 +80,7 @@
     "whatwg-fetch": "^3.6.2"
   },
   "devDependencies": {
-    "@edx/frontend-build": "12.8.27",
+    "@edx/frontend-build": "13.0.1",
     "@edx/reactifex": "^2.1.1",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.1.0",
