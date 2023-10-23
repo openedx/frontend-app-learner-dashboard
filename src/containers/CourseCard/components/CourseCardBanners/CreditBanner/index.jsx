@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import Banner from 'components/Banner';
-import EmailLink from 'components/EmailLink';
 
+import { MailtoLink } from '@edx/paragon';
 import hooks from './hooks';
 import messages from './messages';
 
@@ -15,13 +15,14 @@ export const CreditBanner = ({ cardId }) => {
   if (hookData === null) {
     return null;
   }
+
   const { ContentComponent, error, supportEmail } = hookData;
-  const supportEmailLink = (<EmailLink address={supportEmail} />);
+  const supportEmailLink = (<MailtoLink to={supportEmail}>{supportEmail}</MailtoLink>);
   return (
     <Banner {...(error && { variant: 'danger' })}>
       {error && (
         <p className="credit-error-msg">
-          {formatMessage(messages.error, { supportEmailLink })}
+          {supportEmail ? formatMessage(messages.error, { supportEmailLink }) : formatMessage(messages.errorNoEmail)}
         </p>
       )}
       <ContentComponent cardId={cardId} />

@@ -21,20 +21,40 @@ exports[`CertificateBanner snapshot is restricted 1`] = `
 <Banner
   variant="danger"
 >
+  Your Certificate of Achievement is being held pending confirmation that the issuance of your Certificate is in compliance with strict U.S. embargoes on Iran, Cuba, Syria, and Sudan.  If you think our system has mistakenly identified you as being connected with one of those countries, please let us know.
+</Banner>
+`;
+
+exports[`CertificateBanner snapshot is restricted and verified 1`] = `
+<Banner
+  variant="danger"
+>
+  Your Certificate of Achievement is being held pending confirmation that the issuance of your Certificate is in compliance with strict U.S. embargoes on Iran, Cuba, Syria, and Sudan.  If you think our system has mistakenly identified you as being connected with one of those countries, please let us know.
+    
+  If you would like a refund on your Certificate of Achievement, please contact us.
+</Banner>
+`;
+
+exports[`CertificateBanner snapshot is restricted and verified with billing email 1`] = `
+<Banner
+  variant="danger"
+>
+  Your Certificate of Achievement is being held pending confirmation that the issuance of your Certificate is in compliance with strict U.S. embargoes on Iran, Cuba, Syria, and Sudan.  If you think our system has mistakenly identified you as being connected with one of those countries, please let us know.
+    
   <format-message-function
     message={
       Object {
-        "defaultMessage": "Your Certificate of Achievement is being held pending confirmation that the issuance of your Certificate is in compliance with strict U.S. embargoes on Iran, Cuba, Syria, and Sudan.  If you think our system has mistakenly identified you as being connected with one of those countries, please let us know by contacting {supportEmail}.",
-        "description": "Restricted certificate warning message",
-        "id": "learner-dash.courseCard.banners.certificateRestricted",
+        "defaultMessage": "If you would like a refund on your Certificate of Achievement, please contact our billing address {billingEmail}",
+        "description": "Message to learners to contact billing for certificate refunds",
+        "id": "learner-dash.courseCard.banners.certificateRefundContactBilling",
       }
     }
     values={
       Object {
-        "supportEmail": <MailtoLink
-          to="suport@email"
+        "billingEmail": <MailtoLink
+          to="billing@email"
         >
-          suport@email
+          billing@email
         </MailtoLink>,
       }
     }
@@ -42,7 +62,7 @@ exports[`CertificateBanner snapshot is restricted 1`] = `
 </Banner>
 `;
 
-exports[`CertificateBanner snapshot is restricted and verified 1`] = `
+exports[`CertificateBanner snapshot is restricted and verified with support and billing email 1`] = `
 <Banner
   variant="danger"
 >
@@ -79,6 +99,66 @@ exports[`CertificateBanner snapshot is restricted and verified 1`] = `
           to="billing@email"
         >
           billing@email
+        </MailtoLink>,
+      }
+    }
+  />
+</Banner>
+`;
+
+exports[`CertificateBanner snapshot is restricted and verified with support email 1`] = `
+<Banner
+  variant="danger"
+>
+  <format-message-function
+    message={
+      Object {
+        "defaultMessage": "Your Certificate of Achievement is being held pending confirmation that the issuance of your Certificate is in compliance with strict U.S. embargoes on Iran, Cuba, Syria, and Sudan.  If you think our system has mistakenly identified you as being connected with one of those countries, please let us know by contacting {supportEmail}.",
+        "description": "Restricted certificate warning message",
+        "id": "learner-dash.courseCard.banners.certificateRestricted",
+      }
+    }
+    values={
+      Object {
+        "supportEmail": <MailtoLink
+          to="suport@email"
+        >
+          suport@email
+        </MailtoLink>,
+      }
+    }
+  />
+    
+  If you would like a refund on your Certificate of Achievement, please contact us.
+</Banner>
+`;
+
+exports[`CertificateBanner snapshot is restricted with billing email 1`] = `
+<Banner
+  variant="danger"
+>
+  Your Certificate of Achievement is being held pending confirmation that the issuance of your Certificate is in compliance with strict U.S. embargoes on Iran, Cuba, Syria, and Sudan.  If you think our system has mistakenly identified you as being connected with one of those countries, please let us know.
+</Banner>
+`;
+
+exports[`CertificateBanner snapshot is restricted with support email 1`] = `
+<Banner
+  variant="danger"
+>
+  <format-message-function
+    message={
+      Object {
+        "defaultMessage": "Your Certificate of Achievement is being held pending confirmation that the issuance of your Certificate is in compliance with strict U.S. embargoes on Iran, Cuba, Syria, and Sudan.  If you think our system has mistakenly identified you as being connected with one of those countries, please let us know by contacting {supportEmail}.",
+        "description": "Restricted certificate warning message",
+        "id": "learner-dash.courseCard.banners.certificateRestricted",
+      }
+    }
+    values={
+      Object {
+        "supportEmail": <MailtoLink
+          to="suport@email"
+        >
+          suport@email
         </MailtoLink>,
       }
     }
