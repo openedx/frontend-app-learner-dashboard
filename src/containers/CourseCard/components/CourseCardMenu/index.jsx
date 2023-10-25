@@ -7,6 +7,7 @@ import { MoreVert } from '@edx/paragon/icons';
 import { StrictDict } from '@edx/react-unit-test-utils';
 
 import EmailSettingsModal from 'containers/EmailSettingsModal';
+import CertificatePreviewModal from 'containers/CertificatePreviewModal';
 import UnenrollConfirmModal from 'containers/UnenrollConfirmModal';
 import { reduxHooks } from 'hooks';
 import SocialShareMenu from './SocialShareMenu';
@@ -32,6 +33,7 @@ export const CourseCardMenu = ({ cardId }) => {
   const { shouldShowUnenrollItem, shouldShowDropdown } = useOptionVisibility(cardId);
   const { isMasquerading } = reduxHooks.useMasqueradeData();
   const { isEmailEnabled } = reduxHooks.useCardEnrollmentData(cardId);
+  const showCertificatePreviewModal = reduxHooks.useShowCertificatePreviewModal(cardId);
 
   if (!shouldShowDropdown) {
     return null;
@@ -70,6 +72,11 @@ export const CourseCardMenu = ({ cardId }) => {
         <EmailSettingsModal
           show={emailSettings.isVisible}
           closeModal={emailSettings.hide}
+          cardId={cardId}
+        />
+      )}
+      {showCertificatePreviewModal && (
+        <CertificatePreviewModal
           cardId={cardId}
         />
       )}

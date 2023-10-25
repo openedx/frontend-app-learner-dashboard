@@ -19,9 +19,15 @@ export const showSelectSessionModal = createSelector(
   (data) => data.cardId != null,
 );
 
+export const showCertificatePreviewModal = createSelector(
+  [simpleSelectors.certificatePreviewModal],
+  (data) => data.cardId != null,
+);
+
 export default StrictDict({
   numCourses,
   hasCourses,
   hasAvailableDashboards,
   showSelectSessionModal,
+  showCertificatePreviewModal,
 });

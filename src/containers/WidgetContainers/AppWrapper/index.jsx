@@ -6,14 +6,12 @@ import PaintedDoorExperimentProvider from 'widgets/RecommendationsPaintedDoorBtn
 export const AppWrapper = ({
   children,
 }) => {
-  if (process.env.EXPERIMENT_08_23_VAN_PAINTED_DOOR) {
-    return (
-      <PaintedDoorExperimentProvider>
-        {children}
-      </PaintedDoorExperimentProvider>
-    );
-  }
-  return children;
+  console.log(`process.env.EXPERIMENT_08_23_VAN_PAINTED_DOOR = ${Boolean(process.env.EXPERIMENT_08_23_VAN_PAINTED_DOOR)}`);
+  return (
+    <PaintedDoorExperimentProvider>
+      {children}
+    </PaintedDoorExperimentProvider>
+  );
 };
 AppWrapper.propTypes = {
   children: PropTypes.oneOfType([

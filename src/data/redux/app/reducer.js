@@ -12,6 +12,7 @@ const initialState = {
   suggestedCourses: [],
   filterState: {},
   selectSessionModal: {},
+  certificatePreviewModal: {},
 };
 
 export const cardId = (val) => `card-${val}`;
@@ -47,6 +48,10 @@ const app = createSlice({
     updateSelectSessionModal: (state, { payload }) => ({
       ...state,
       selectSessionModal: { cardId: payload },
+    }),
+    updateCertificatePreviewModal: (state, { payload }) => ({
+      ...state,
+      certificatePreviewModal: { cardId: payload },
     }),
     setPageNumber: (state, { payload }) => ({ ...state, pageNumber: payload }),
   },

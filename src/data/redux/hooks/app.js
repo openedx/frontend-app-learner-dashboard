@@ -13,6 +13,8 @@ export const useEmailConfirmationData = () => useSelector(selectors.emailConfirm
 export const useEnterpriseDashboardData = () => useSelector(selectors.enterpriseDashboard);
 export const usePlatformSettingsData = () => useSelector(selectors.platformSettings);
 export const useSelectSessionModalData = () => useSelector(selectors.selectSessionModal);
+export const useCertificatePreviewData = () => useSelector(selectors.certificatePreviewModal);
+
 export const useSocialShareSettings = () => useSelector(selectors.socialShareSettings);
 
 /** global-level meta-selectors **/
@@ -22,6 +24,7 @@ export const useCurrentCourseList = (opts) => useSelector(
   state => selectors.currentList(state, opts),
 );
 export const useShowSelectSessionModal = () => useSelector(selectors.showSelectSessionModal);
+export const useShowCertificatePreviewModal = () => useSelector(selectors.showCertificatePreviewModal);
 
 // eslint-disable-next-line
 export const useCourseCardData = (selector) => (cardId) => useSelector(
@@ -65,6 +68,11 @@ export const useCardExecEdTrackingParam = (cardId) => {
 export const useUpdateSelectSessionModalCallback = (cardId) => {
   const dispatch = useDispatch();
   return () => dispatch(actions.updateSelectSessionModal(cardId));
+};
+
+export const useUpdateCertificatePreviewModalCallback = (cardId) => {
+  const dispatch = useDispatch();
+  return () => dispatch(actions.updateCertificatePreviewModal(cardId));
 };
 
 export const useTrackCourseEvent = (tracker, cardId, ...args) => {

@@ -47,6 +47,7 @@ export const useCardDetailsData = ({ cardId }) => {
   } = reduxHooks.useCardEntitlementData(cardId);
 
   const openSessionModal = reduxHooks.useUpdateSelectSessionModalCallback(cardId);
+  const openCertificatePreview = reduxHooks.useUpdateCertificatePreviewModalCallback(cardId);
 
   return {
     providerName: providerName || formatMessage(messages.unknownProviderName),
@@ -57,6 +58,7 @@ export const useCardDetailsData = ({ cardId }) => {
     openSessionModal,
     courseNumber,
     changeOrLeaveSessionMessage: formatMessage(messages.changeOrLeaveSessionButton),
+    openCertificatePreview,
   };
 };
 

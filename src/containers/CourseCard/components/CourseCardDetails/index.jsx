@@ -16,23 +16,35 @@ export const CourseCardDetails = ({ cardId }) => {
     openSessionModal,
     courseNumber,
     changeOrLeaveSessionMessage,
+    openCertificatePreview,
   } = useCardDetailsData({ cardId });
 
   return (
-    <span className="small" data-testid="CourseCardDetails">
-      {providerName} • {courseNumber}
-      {!(isEntitlement && !isFulfilled) && accessMessage && (
-        ` • ${accessMessage}`
-      )}
-      {isEntitlement && isFulfilled && canChange ? (
-        <>
-          {' • '}
-          <Button variant="link" size="inline" className="m-0 p-0" onClick={openSessionModal}>
-            {changeOrLeaveSessionMessage}
-          </Button>
-        </>
-      ) : null}
-    </span>
+    <div>
+      <span className="small" data-testid="CourseCardDetails">
+        {providerName} • {courseNumber}
+        {!(isEntitlement && !isFulfilled) && accessMessage && (
+          ` • ${accessMessage}`
+        )}
+        {isEntitlement && isFulfilled && canChange ? (
+          <>
+            {' • '}
+            <Button variant="link" size="inline" className="m-0 p-0" onClick={openSessionModal}>
+              {changeOrLeaveSessionMessage}
+            </Button>
+          </>
+        ) : null}
+      </span>
+      <Button
+        variant="link"
+        size="inline"
+        className="float-right"
+        data-testid="certificate-preview"
+        onClick={openCertificatePreview}
+      >
+        Preview Your Certificate
+      </Button>
+    </div>
   );
 };
 
