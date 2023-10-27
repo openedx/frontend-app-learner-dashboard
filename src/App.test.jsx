@@ -37,17 +37,21 @@ jest.mock('hooks', () => ({
 }));
 jest.mock('data/store', () => 'data/store');
 
+const logo = 'fakeLogo.png';
+
+jest.mock('@edx/frontend-platform', () => ({
+  getConfig: jest.fn(() => ({ LOGO_POWERED_BY_OPEN_EDX_URL_SVG: logo })),
+}));
+
 const loadData = jest.fn();
 reduxHooks.useLoadData.mockReturnValue(loadData);
 
-const logo = 'fakeLogo.png';
 let el;
 
 const supportEmail = 'test-support-url';
 reduxHooks.usePlatformSettingsData.mockReturnValue({ supportEmail });
 
 describe('App router component', () => {
-  process.env.LOGO_POWERED_BY_OPEN_EDX_URL_SVG = logo;
   const { formatMessage } = useIntl();
   describe('component', () => {
     const runBasicTests = () => {
