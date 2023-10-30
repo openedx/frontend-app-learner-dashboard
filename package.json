@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build": "fedx-scripts webpack",
-    "i18n_extract": "BABEL_ENV=i18n fedx-scripts babel src --quiet > /dev/null",
+    "i18n_extract": "fedx-scripts formatjs extract",
     "lint": "fedx-scripts eslint --ext .jsx,.js src/",
     "lint-fix": "fedx-scripts eslint --fix --ext .jsx,.js src/",
     "semantic-release": "semantic-release",
@@ -26,11 +26,11 @@
     "access": "public"
   },
   "dependencies": {
-    "@edx/brand": "npm:@edx/brand-edx.org@^2.0.3",
+    "@edx/brand": "npm:@openedx/brand-openedx@^1.2.2",
     "@edx/browserslist-config": "^1.1.0",
     "@edx/frontend-component-footer": "^12.2.1",
     "@edx/frontend-enterprise-hotjar": "^2.0.0",
-    "@edx/frontend-platform": "^5.1.0",
+    "@edx/frontend-platform": "^5.5.4",
     "@edx/paragon": "^20.44.0",
     "@edx/react-unit-test-utils": "^1.7.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
@@ -80,7 +80,7 @@
     "whatwg-fetch": "^3.6.2"
   },
   "devDependencies": {
-    "@edx/frontend-build": "12.8.27",
+    "@edx/frontend-build": "13.0.1",
     "@edx/reactifex": "^2.1.1",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.1.0",
