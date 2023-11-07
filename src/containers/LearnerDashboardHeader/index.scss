@@ -1,12 +1,14 @@
+// Seems to not be used anywhere, can this be removed?
 .dropdown-menu-collapse {
   width: 100vw;
   position: absolute;
   left: 0;
 }
 
+// Hard coded border bottom to indicate which tab we are on. The transparent border bottom is to align all the navigation links in the headers. Seems like a similar affect could be accomplishged using margin.
 .learner-variant-header {
   a {
-    // needed to make the link not resize the header
+    // Hard coded, not sure of the best way to address this
     border-bottom: 2px solid transparent;
   }
   .course-link {
@@ -18,21 +20,32 @@
   }
 }
 
+// Hard coded many items in the nav collapsed menu, would be hard to style
 .nav-small-menu {
   > * {
-    justify-content: flex-start !important;
+    justify-content: flex-start !important; 
 
-    border-radius: 0 !important;
-    border-top: 1px solid #ddd !important;
+    border-radius: 0 !important; // Could potentially be replaced by paragon's styles?
+    border-top: 1px solid #ddd !important; // Could potentially be replaced by paragon's styles?
 
     &::after {
       content: '\00BB';
-      padding-left: 10px;
+      padding-left: 10px; // Could potentially be replaced by paragon's styles?
     }
   }
 }
 
 .logo {
-  // copy from legacy dashboard
-  height: 40px;
+  // Removed hard coded px height. Suggested change comes from frontend component header in order to have some consistencies. It seems to work just fine when using the same exact style that we have for logo in frontend component header
+  display: block;
+    box-sizing: content-box;
+    position: relative;
+    top: -.05em;
+    height: 1.75rem;
+    padding: 1rem 0;
+    margin-right: 1rem;
+    img {
+      display: block;
+      height: 100%;
+    }
 }

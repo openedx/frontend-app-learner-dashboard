@@ -1,5 +1,6 @@
 @import "@edx/paragon/scss/core/core";
 
+// Hard coded, should we be using paragon equivalent?
 .explore-courses-btn {
   padding-top: 16px;
 }
@@ -8,6 +9,7 @@
   background: $light-200;
 }
 
+// Height value is hard coded. Would we we want poeple to be able to change the height?
 .recommendations-loading {
   display: flex;
   justify-content: center;

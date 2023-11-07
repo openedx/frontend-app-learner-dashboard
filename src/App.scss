@@ -17,8 +17,9 @@ $input-focus-box-shadow: $input-box-shadow; // hack to get upgrade to paragon 4.
   white-space: nowrap;
 }
 
+// Hard coded color here, there's a paragon equivalent
 .alert.alert-info .alert-icon {
-  color: black;
+  color: black; 
 }
 
 #root {
@@ -34,6 +35,7 @@ $input-focus-box-shadow: $input-box-shadow; // hack to get upgrade to paragon 4.
     flex-grow: 1;
   }
 
+  // Brand logo header has no way of being overwritten by the imported brand package therefore not customizable. Is this intentional?
   header {
     flex: 0 0 auto;
 
@@ -57,11 +59,7 @@ $input-focus-box-shadow: $input-box-shadow; // hack to get upgrade to paragon 4.
 }
 
 #paragon-portal-root {
-  .pgn__modal-layer {
-    .pgn__modal-close-container {
-      right: 1rem !important;
-    }
-  }
+  // Removed because there was no visible difference within the element with or without it
   .confirm-modal .pgn__modal-body {
     overflow: hidden;
   }
