@@ -1,9 +1,9 @@
 import React from 'react';
 
+import { getConfig } from '@edx/frontend-platform';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { reduxHooks } from 'hooks';
-import { configuration } from '../../config';
 
 import messages from './messages';
 
@@ -15,7 +15,7 @@ export const BrandLogo = () => {
     <a href={dashboard?.url || '/'} className="mx-auto">
       <img
         className="logo py-3"
-        src={configuration.LOGO_URL}
+        src={getConfig().LOGO_URL}
         alt={formatMessage(messages.logoAltText)}
       />
     </a>
