@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 
 // import RecommendationsPanel from 'widgets/RecommendationsPanel';
 import hooks from 'widgets/ProductRecommendations/hooks';
-import PluginSlot from '../../../../plugins/PluginSlot';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { PluginSlot } from '@edx/frontend-plugin-framework/src/plugins';
 
 export const WidgetSidebar = ({ setSidebarShowing }) => {
   const { inRecommendationsVariant, isExperimentActive } = hooks.useShowRecommendationsFooter();
