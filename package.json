@@ -31,6 +31,7 @@
     "@edx/frontend-component-footer": "^12.2.1",
     "@edx/frontend-enterprise-hotjar": "^2.0.0",
     "@edx/frontend-platform": "^5.5.4",
+    "@edx/frontend-plugin-framework": "openedx/frontend-plugin-framework",
     "@edx/paragon": "^20.44.0",
     "@edx/react-unit-test-utils": "^1.7.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
