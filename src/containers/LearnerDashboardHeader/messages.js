@@ -6,6 +6,16 @@ const messages = defineMessages({
     defaultMessage: 'Dashboard',
     description: 'The text for the user menu Dashboard navigation link.',
   },
+  dashboardPersonal: {
+    id: 'learnerVariantDashboard.menu.dashboardPersonal.label',
+    defaultMessage: 'Personal',
+    description: 'Link to personal dashboard in user menu',
+  },
+  dashboardSwitch: {
+    id: 'learnerVariantDashboard.menu.dashboardSwitch.label',
+    defaultMessage: 'SWITCH DASHBOARD',
+    description: 'Switch Dashboard header in the user menu',
+  },
   help: {
     id: 'learnerVariantDashboard.help.label',
     defaultMessage: 'Help',

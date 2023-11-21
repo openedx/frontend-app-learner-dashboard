@@ -68,7 +68,7 @@ export const CourseFilterControls = ({
               onClose={close}
             >
               <div className="p-1 mr-3">
-                <b>Refine</b>
+                <b>{formatMessage(messages.refine)}</b>
               </div>
               <hr />
               <div className="filter-form-row">

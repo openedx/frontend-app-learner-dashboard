@@ -21,6 +21,45 @@ Some guidelines for writing widgets:
 * You can load data from the redux store, but should not add or modify fields in that structure.
 * Network events should be managed in component hooks, though can use our `data/constants/requests:requestStates` for ease of tracking the request states.
 
+ ## License
+
+The code in this repository is licensed under the AGPLv3 unless otherwise
+noted.
+
+Please see `LICENSE <LICENSE>`_ for details.
+
+## Getting Help
+
+If you're having trouble, we have discussion forums at
+https://discuss.openedx.org where you can connect with others in the community.
+
+Our real-time conversations are on Slack. You can request a `Slack
+invitation`_, then join our `community Slack workspace`_.  Because this is a
+frontend repository, the best place to discuss it would be in the `#wg-frontend
+channel`_.
+
+For anything non-trivial, the best path is to open an issue in this repository
+with as many details about the issue you are facing as you can provide.
+
+https://github.com/openedx/frontend-app-learner-dashboard/issues
+
+For more information about these options, see the `Getting Help`_ page.
+
+.. _Slack invitation: https://openedx.org/slack
+.. _community Slack workspace: https://openedx.slack.com/
+.. _#wg-frontend channel: https://openedx.slack.com/archives/C04BM6YC7A6
+.. _Getting Help: https://openedx.org/community/connect
+
 ## Resources
 
 * [Learner Home project info at the Open edX Wiki](https://openedx.atlassian.net/wiki/spaces/OEPM/pages/3575906333/Learner+Home)
+
+## The Open edX Code of Conduct
+
+All community members are expected to follow the `Open edX Code of Conduct`_.
+
+.. _Open edX Code of Conduct: https://openedx.org/code-of-conduct/
+
+## Reporting Security Issues
+
+Please do not report security issues in public. Please email security@openedx.org.
