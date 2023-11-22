@@ -27,7 +27,7 @@ const PluginSlot = forwardRef(({
         keepDefault: true,
         plugins: [
           {
-            url: 'https://profile-velvetslice.sandbox.edx.org/u/verified/plugin',
+            url: `https://profile-velvetslice.sandbox.edx.org/u/${authenticatedUser.username}/plugin`,
             type: IFRAME_PLUGIN,
           },
           {
