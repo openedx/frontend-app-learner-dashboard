@@ -18,7 +18,8 @@ exports[`WidgetSidebar snapshots default 1`] = `
       }
       style={
         Object {
-          "height": 400,
+          "height": 800,
+          "width": "100%",
         }
       }
     >
