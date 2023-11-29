@@ -1,6 +1,6 @@
-import { StrictDict } from 'utils';
+import { defineMessages } from '@edx/frontend-platform/i18n';
 
-export const messages = StrictDict({
+const messages = defineMessages({
   inProgress: {
     id: 'learner-dash.courseListFilters.inProgress',
     description: 'in-progress filter checkbox label for course list filters',
@@ -52,4 +52,5 @@ export const messages = StrictDict({
     defaultMessage: 'Refine',
   },
 });
+
 export default messages;

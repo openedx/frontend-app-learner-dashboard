@@ -21,10 +21,6 @@ jest.mock('components/Banner', () => 'Banner');
 
 describe('CertificateBanner', () => {
   const props = { cardId: 'cardId' };
-  reduxHooks.usePlatformSettingsData.mockReturnValue({
-    supportEmail: 'suport@email',
-    billingEmail: 'billing@email',
-  });
   reduxHooks.useCardCourseRunData.mockReturnValue({
     minPassingGrade: 0.8,
     progressUrl: 'progressUrl',
@@ -42,16 +38,19 @@ describe('CertificateBanner', () => {
   };
   const defaultCourseRun = { isArchived: false };
   const defaultGrade = { isPassing: false };
+  const defaultPlatformSettings = {};
   const createWrapper = ({
     certificate = {},
     enrollment = {},
     grade = {},
     courseRun = {},
+    platformSettings = {},
   }) => {
     reduxHooks.useCardGradeData.mockReturnValueOnce({ ...defaultGrade, ...grade });
     reduxHooks.useCardCertificateData.mockReturnValueOnce({ ...defaultCertificate, ...certificate });
     reduxHooks.useCardEnrollmentData.mockReturnValueOnce({ ...defaultEnrollment, ...enrollment });
     reduxHooks.useCardCourseRunData.mockReturnValueOnce({ ...defaultCourseRun, ...courseRun });
+    reduxHooks.usePlatformSettingsData.mockReturnValueOnce({ ...defaultPlatformSettings, ...platformSettings });
     return shallow(<CertificateBanner {...props} />);
   };
   /** TODO: Update tests to validate snapshots **/
@@ -64,6 +63,28 @@ describe('CertificateBanner', () => {
       });
       expect(wrapper).toMatchSnapshot();
     });
+    test('is restricted with support email', () => {
+      const wrapper = createWrapper({
+        certificate: {
+          isRestricted: true,
+        },
+        platformSettings: {
+          supportEmail: 'suport@email',
+        },
+      });
+      expect(wrapper).toMatchSnapshot();
+    });
+    test('is restricted with billing email', () => {
+      const wrapper = createWrapper({
+        certificate: {
+          isRestricted: true,
+        },
+        platformSettings: {
+          billingEmail: 'billing@email',
+        },
+      });
+      expect(wrapper).toMatchSnapshot();
+    });
     test('is restricted and verified', () => {
       const wrapper = createWrapper({
         certificate: {
@@ -71,6 +92,49 @@ describe('CertificateBanner', () => {
         },
         enrollment: {
           isVerified: true,
+        },
+      });
+      expect(wrapper).toMatchSnapshot();
+    });
+    test('is restricted and verified with support email', () => {
+      const wrapper = createWrapper({
+        certificate: {
+          isRestricted: true,
+        },
+        enrollment: {
+          isVerified: true,
+        },
+        platformSettings: {
+          supportEmail: 'suport@email',
+        },
+      });
+      expect(wrapper).toMatchSnapshot();
+    });
+    test('is restricted and verified with billing email', () => {
+      const wrapper = createWrapper({
+        certificate: {
+          isRestricted: true,
+        },
+        enrollment: {
+          isVerified: true,
+        },
+        platformSettings: {
+          billingEmail: 'billing@email',
+        },
+      });
+      expect(wrapper).toMatchSnapshot();
+    });
+    test('is restricted and verified with support and billing email', () => {
+      const wrapper = createWrapper({
+        certificate: {
+          isRestricted: true,
+        },
+        enrollment: {
+          isVerified: true,
+        },
+        platformSettings: {
+          supportEmail: 'suport@email',
+          billingEmail: 'billing@email',
         },
       });
       expect(wrapper).toMatchSnapshot();
@@ -133,6 +197,10 @@ describe('CertificateBanner', () => {
         certificate: {
           isRestricted: true,
         },
+        platformSettings: {
+          supportEmail: 'suport@email',
+          billingEmail: 'billing@email',
+        },
       });
       const bannerMessage = wrapper.find('format-message-function').map(el => el.prop('message').defaultMessage).join('\n');
       expect(bannerMessage).toEqual(messages.certRestricted.defaultMessage);
@@ -145,6 +213,10 @@ describe('CertificateBanner', () => {
         },
         enrollment: {
           isVerified: true,
+        },
+        platformSettings: {
+          supportEmail: 'suport@email',
+          billingEmail: 'billing@email',
         },
       });
       const bannerMessage = wrapper.find('format-message-function').map(el => el.prop('message').defaultMessage).join('\n');

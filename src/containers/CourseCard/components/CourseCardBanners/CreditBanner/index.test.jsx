@@ -2,15 +2,13 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { formatMessage } from 'testUtils';
-
-import EmailLink from 'components/EmailLink';
+import { MailtoLink } from '@edx/paragon';
 
 import hooks from './hooks';
 import messages from './messages';
 import CreditBanner from '.';
 
 jest.mock('components/Banner', () => 'Banner');
-jest.mock('components/EmailLink', () => 'EmailLink');
 
 jest.mock('./hooks', () => ({
   useCreditBannerData: jest.fn(),
@@ -54,7 +52,7 @@ describe('CreditBanner component', () => {
       it('includes credit-error-msg with support email link', () => {
         expect(el.find('.credit-error-msg').containsMatchingElement(
           formatMessage(messages.error, {
-            supportEmailLink: (<EmailLink address={supportEmail} />),
+            supportEmailLink: (<MailtoLink to={supportEmail}>{supportEmail}</MailtoLink>),
           }),
         )).toEqual(true);
       });
@@ -62,6 +60,25 @@ describe('CreditBanner component', () => {
         expect(el.find('ContentComponent').props().cardId).toEqual(cardId);
       });
     });
+
+    describe('with error state with no email', () => {
+      beforeEach(() => {
+        hooks.useCreditBannerData.mockReturnValue({
+          error: true,
+          ContentComponent,
+        });
+        el = shallow(<CreditBanner cardId={cardId} />);
+      });
+      test('snapshot', () => {
+        expect(el).toMatchSnapshot();
+      });
+      it('includes credit-error-msg without support email link', () => {
+        expect(el.find('.credit-error-msg').containsMatchingElement(
+          formatMessage(messages.errorNoEmail),
+        )).toEqual(true);
+      });
+    });
+
     describe('with no error state', () => {
       beforeEach(() => {
         hooks.useCreditBannerData.mockReturnValue({
