@@ -4,6 +4,7 @@ import { shallow } from '@edx/react-unit-test-utils';
 
 import Footer from '@edx/frontend-component-footer';
 import { useIntl } from '@edx/frontend-platform/i18n';
+import { getConfig } from '@edx/frontend-platform';
 
 import { RequestKeys } from 'data/constants/requests';
 import { reduxHooks } from 'hooks';
@@ -40,7 +41,7 @@ jest.mock('data/store', () => 'data/store');
 const logo = 'fakeLogo.png';
 
 jest.mock('@edx/frontend-platform', () => ({
-  getConfig: jest.fn(() => ({ LOGO_POWERED_BY_OPEN_EDX_URL_SVG: logo })),
+  getConfig: jest.fn(() => ({})),
 }));
 
 const loadData = jest.fn();
@@ -77,6 +78,43 @@ describe('App router component', () => {
     describe('no network failure', () => {
       beforeAll(() => {
         reduxHooks.useRequestIsFailed.mockReturnValue(false);
+        getConfig.mockReturnValue({ LOGO_POWERED_BY_OPEN_EDX_URL_SVG: logo });
+        el = shallow(<App />);
+      });
+      runBasicTests();
+      it('loads dashboard', () => {
+        const main = el.instance.findByType('main')[0];
+        expect(main.children.length).toEqual(1);
+        const expProvider = main.children[0];
+        expect(expProvider.type).toEqual('ExperimentProvider');
+        expect(expProvider.children.length).toEqual(1);
+        expect(
+          expProvider.matches(shallow(<ExperimentProvider><Dashboard /></ExperimentProvider>)),
+        ).toEqual(true);
+      });
+    });
+    describe('no network failure with optimizely url', () => {
+      beforeAll(() => {
+        reduxHooks.useRequestIsFailed.mockReturnValue(false);
+        getConfig.mockReturnValue({ LOGO_POWERED_BY_OPEN_EDX_URL_SVG: logo, OPTIMIZELY_URL: 'fake.url' });
+        el = shallow(<App />);
+      });
+      runBasicTests();
+      it('loads dashboard', () => {
+        const main = el.instance.findByType('main')[0];
+        expect(main.children.length).toEqual(1);
+        const expProvider = main.children[0];
+        expect(expProvider.type).toEqual('ExperimentProvider');
+        expect(expProvider.children.length).toEqual(1);
+        expect(
+          expProvider.matches(shallow(<ExperimentProvider><Dashboard /></ExperimentProvider>)),
+        ).toEqual(true);
+      });
+    });
+    describe('no network failure with optimizely project id', () => {
+      beforeAll(() => {
+        reduxHooks.useRequestIsFailed.mockReturnValue(false);
+        getConfig.mockReturnValue({ LOGO_POWERED_BY_OPEN_EDX_URL_SVG: logo, OPTIMIZELY_PROJECT_ID: 'fakeId' });
         el = shallow(<App />);
       });
       runBasicTests();
@@ -94,6 +132,7 @@ describe('App router component', () => {
     describe('initialize failure', () => {
       beforeAll(() => {
         reduxHooks.useRequestIsFailed.mockImplementation((key) => key === RequestKeys.initialize);
+        getConfig.mockReturnValue({ LOGO_POWERED_BY_OPEN_EDX_URL_SVG: logo });
         el = shallow(<App />);
       });
       runBasicTests();
@@ -111,6 +150,7 @@ describe('App router component', () => {
     describe('refresh failure', () => {
       beforeAll(() => {
         reduxHooks.useRequestIsFailed.mockImplementation((key) => key === RequestKeys.refreshList);
+        getConfig.mockReturnValue({ LOGO_POWERED_BY_OPEN_EDX_URL_SVG: logo });
         el = shallow(<App />);
       });
       runBasicTests();

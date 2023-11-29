@@ -48,7 +48,7 @@ export const App = () => {
     } if (getConfig().OPTIMIZELY_PROJECT_ID) {
       return (
         <script
-          src={`${getConfig().MARKETING_SITE_BASE_URL}/optimizelyjs/${getConfig().env.OPTIMIZELY_PROJECT_ID}.js`}
+          src={`${getConfig().MARKETING_SITE_BASE_URL}/optimizelyjs/${getConfig().OPTIMIZELY_PROJECT_ID}.js`}
         />
       );
     }
