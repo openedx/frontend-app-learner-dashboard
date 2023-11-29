@@ -46,6 +46,7 @@ const config = {
   SUPPORT_URL: 'http://localhost:18000/support',
   CAREER_LINK_URL: 'http://localhost:18000/career',
   LMS_BASE_URL: 'http:/localhost:18000',
+  ENABLE_EDX_PERSONAL_DASHBOARD: true,
 };
 getConfig.mockReturnValue(config);
 

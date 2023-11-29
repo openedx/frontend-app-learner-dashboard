@@ -31,10 +31,10 @@ export const AuthenticatedUserDropdown = () => {
         <Dropdown.Menu className="dropdown-menu-right">
           { getConfig().ENABLE_EDX_PERSONAL_DASHBOARD && (
             <>
-              <>
-                <Dropdown.Header>SWITCH DASHBOARD</Dropdown.Header>
-                <Dropdown.Item as="a" href="/edx-dashboard" />
-              </>
+              <Dropdown.Header>SWITCH DASHBOARD</Dropdown.Header>
+              <Dropdown.Item as="a" href="/edx-dashboard" className="active">
+                Personal
+              </Dropdown.Item>
               {!!dashboard && (
                 <Dropdown.Item as="a" href={dashboard.url} key={dashboard.label}>
                   {dashboard.label} {formatMessage(messages.dashboard)}
