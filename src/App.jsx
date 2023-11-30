@@ -1,5 +1,4 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
@@ -28,6 +27,7 @@ import fakeData from 'data/services/lms/fakeData/courses';
 import AppWrapper from 'containers/WidgetContainers/AppWrapper';
 import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
 
+import { getConfig } from '@edx/frontend-platform';
 import messages from './messages';
 import './App.scss';
 
@@ -42,8 +42,21 @@ export const App = () => {
   const { supportEmail } = reduxHooks.usePlatformSettingsData();
   const loadData = reduxHooks.useLoadData();
 
+  const optimizelyScript = () => {
+    if (getConfig().OPTIMIZELY_URL) {
+      return <script src={getConfig().OPTIMIZELY_URL} />;
+    } if (getConfig().OPTIMIZELY_PROJECT_ID) {
+      return (
+        <script
+          src={`${getConfig().MARKETING_SITE_BASE_URL}/optimizelyjs/${getConfig().OPTIMIZELY_PROJECT_ID}.js`}
+        />
+      );
+    }
+    return null;
+  };
+
   React.useEffect(() => {
-    if (authenticatedUser?.administrator || process.env.NODE_ENV === 'development') {
+    if (authenticatedUser?.administrator || getConfig().NODE_ENV === 'development') {
       window.loadEmptyData = () => {
         loadData({ ...fakeData.globalData, courses: [] });
       };
@@ -61,12 +74,12 @@ export const App = () => {
       window.actions = actions;
       window.track = track;
     }
-    if (process.env.HOTJAR_APP_ID) {
+    if (getConfig().HOTJAR_APP_ID) {
       try {
         initializeHotjar({
-          hotjarId: process.env.HOTJAR_APP_ID,
-          hotjarVersion: process.env.HOTJAR_VERSION,
-          hotjarDebug: !!process.env.HOTJAR_DEBUG,
+          hotjarId: getConfig().HOTJAR_APP_ID,
+          hotjarVersion: getConfig().HOTJAR_VERSION,
+          hotjarDebug: !!getConfig().HOTJAR_DEBUG,
         });
       } catch (error) {
         logError(error);
@@ -74,9 +87,11 @@ export const App = () => {
     }
   }, [authenticatedUser, loadData]);
   return (
-    <Router>
+    <>
       <Helmet>
         <title>{formatMessage(messages.pageTitle)}</title>
+        <link rel="shortcut icon" href={getConfig().FAVICON_URL} type="image/x-icon" />
+        {optimizelyScript()}
       </Helmet>
       <div>
         <AppWrapper>
@@ -94,10 +109,10 @@ export const App = () => {
               )}
           </main>
         </AppWrapper>
-        <Footer logo={process.env.LOGO_POWERED_BY_OPEN_EDX_URL_SVG} />
+        <Footer logo={getConfig().LOGO_POWERED_BY_OPEN_EDX_URL_SVG} />
         <ZendeskFab />
       </div>
-    </Router>
+    </>
   );
 };
 

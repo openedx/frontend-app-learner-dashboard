@@ -5,6 +5,7 @@ import { getAuthenticatedUser } from '@edx/frontend-platform/auth';
 
 import { Icon, Hyperlink } from '@edx/paragon';
 import { ChevronRight } from '@edx/paragon/icons';
+import { getConfig } from '@edx/frontend-platform';
 import { trackProductHeaderClicked } from '../optimizelyExperiment';
 import { recommendationsHeaderClicked } from '../track';
 import { executiveEducation, bootCamp } from '../constants';
@@ -44,7 +45,7 @@ const ProductCardHeader = ({ courseType }) => {
 
   const { formatMessage } = useIntl();
   const productTypeDetail = getProductTypeDetail(courseType);
-  const headerUrl = `${process.env.MARKETING_SITE_BASE_URL}${productTypeDetail.url}`;
+  const headerUrl = `${getConfig().MARKETING_SITE_BASE_URL}${productTypeDetail.url}`;
 
   return (
     <div>

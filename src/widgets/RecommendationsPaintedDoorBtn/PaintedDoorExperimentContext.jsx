@@ -68,7 +68,13 @@ export const useIsEnterpriseUser = () => {
   return enterpriseUser;
 };
 
-export const PaintedDoorExperimentContext = React.createContext();
+export const PaintedDoorExperimentContext = React.createContext({
+  experimentVariation: null,
+  isPaintedDoorNavbarBtnVariation: null,
+  isPaintedDoorWidgetBtnVariation: null,
+  isPaintedDoorControlVariation: null,
+  experimentLoading: null,
+});
 
 export const PaintedDoorExperimentProvider = ({ children }) => {
   const [experimentData, setExperimentData] = module.state.experimentData({

@@ -81,7 +81,7 @@ export const CollapseMenuBody = ({ isOpen }) => {
                 variant="inverse-primary"
                 href={getConfig().ORDER_HISTORY_URL}
               >
-                {formatMessage(messages.ordersAndSubscriptions)}
+                {formatMessage(messages.orderHistory)}
               </Button>
             )}
             <Button

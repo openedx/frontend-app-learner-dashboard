@@ -6,6 +6,16 @@ const messages = defineMessages({
     defaultMessage: 'Dashboard',
     description: 'The text for the user menu Dashboard navigation link.',
   },
+  dashboardPersonal: {
+    id: 'learnerVariantDashboard.menu.dashboardPersonal.label',
+    defaultMessage: 'Personal',
+    description: 'Link to personal dashboard in user menu',
+  },
+  dashboardSwitch: {
+    id: 'learnerVariantDashboard.menu.dashboardSwitch.label',
+    defaultMessage: 'SWITCH DASHBOARD',
+    description: 'Switch Dashboard header in the user menu',
+  },
   help: {
     id: 'learnerVariantDashboard.help.label',
     defaultMessage: 'Help',
@@ -26,10 +36,10 @@ const messages = defineMessages({
     defaultMessage: 'Account',
     description: 'The text for the user menu Account navigation link.',
   },
-  ordersAndSubscriptions: {
-    id: 'learnerVariantDashboard.menu.ordersAndSubscriptions.label',
-    defaultMessage: 'Orders & Subscriptions',
-    description: 'The text for the user menu Orders & Subscriptions navigation link.',
+  orderHistory: {
+    id: 'learnerVariantDashboard.menu.orderHistory.label',
+    defaultMessage: 'Order History',
+    description: 'The text for the user menu Order History navigation link.',
   },
   signOut: {
     id: 'learnerVariantDashboard.menu.signOut.label',
