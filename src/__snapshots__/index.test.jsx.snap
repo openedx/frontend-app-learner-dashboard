@@ -13,28 +13,27 @@ exports[`app registry subscribe: APP_READY.  links App to root element 1`] = `
       "redux": "store",
     }
   }
-  wrapWithRouter={true}
 >
   <NoticesWrapper>
-    <Routes>
+    <UNDEFINED>
       <Route
         element={
-          <PageWrap>
+          <UNDEFINED>
             <App />
-          </PageWrap>
+          </UNDEFINED>
         }
         path="/"
       />
       <Route
         element={
-          <Navigate
+          <UNDEFINED
             replace={true}
             to="/"
           />
         }
         path="*"
       />
-    </Routes>
+    </UNDEFINED>
   </NoticesWrapper>
 </AppProvider>
 `;
