@@ -1,16 +1,20 @@
 /*
 Learner Dashboard is now able to handle JS-based configuration!
 
-Until a later release, the .env.* files will still be included in this repo.
+For the time being, the `.env.*` files are still made available when cloning down this repo or pulling from
+the master branch. To switch to using `env.config.js`, make a copy of `example.env.config.js` and configure as needed.
 
-Note: having both .env and env.config.js files will follow a predictable order
-frontend-platform's getConfig loads configuration:
+For testing with Jest Snapshot, there is a mock in `/src/setupTest.jsx` for `getConfig` that will need to be
+uncommented.
+
+Note: having both .env and env.config.js files will follow a predictable order, in which non-empty values in the
+JS-based config will overwrite the .env environment variables.
+
+frontend-platform's getConfig loads configuration in the following sequence:
 - .env file config
 - optional handlers (commonly used to merge MFE-specific config in via additional process.env variables)
 - env.config.js file config
 - runtime config
-
-Any env vars needed for Jest Snapshot to pass can be mocked in ./src/setupTest.jsx
 */
 
 module.exports = {
