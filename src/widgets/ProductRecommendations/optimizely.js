@@ -1,6 +1,8 @@
 import { createInstance, setLogLevel } from '@optimizely/react-sdk';
 
-const OPTIMIZELY_SDK_KEY = process.env.OPTIMIZELY_FULL_STACK_SDK_KEY;
+import { getConfig } from '@edx/frontend-platform';
+
+const OPTIMIZELY_SDK_KEY = getConfig().OPTIMIZELY_FULL_STACK_SDK_KEY;
 
 const configureClient = () => {
   setLogLevel('error');
