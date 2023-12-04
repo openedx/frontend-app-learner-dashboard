@@ -70,7 +70,7 @@ jest.mock('@edx/frontend-platform/i18n', () => {
 /*
 When .env.test is removed, uncomment the env vars below and add any environment variables for testing with Jest
 
-Context: Snapshot is not currently not set up to be able to parse the environment variables in env.config.js
+Context: Snapshot is not currently set up to be able to parse the environment variables in env.config.js
 */
 
 // jest.mock('@edx/frontend-platform', () => ({
