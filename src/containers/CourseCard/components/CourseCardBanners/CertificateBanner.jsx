@@ -26,17 +26,14 @@ export const CertificateBanner = ({ cardId }) => {
   const { formatMessage } = useIntl();
   const formatDate = useFormatDate();
 
-  const emailLink = address => address && <MailtoLink to={address}>{address}</MailtoLink>;
+  const emailLink = address => <MailtoLink to={address}>{address}</MailtoLink>;
 
   if (certificate.isRestricted) {
     return (
       <Banner variant="danger">
-        {formatMessage(messages.certRestricted, { supportEmail: emailLink(supportEmail) })}
+        { supportEmail ? formatMessage(messages.certRestricted, { supportEmail: emailLink(supportEmail) }) : formatMessage(messages.certRestrictedNoEmail)}
         {isVerified && '  '}
-        {isVerified && formatMessage(
-          messages.certRefundContactBilling,
-          { billingEmail: emailLink(billingEmail) },
-        )}
+        {isVerified && (billingEmail ? formatMessage(messages.certRefundContactBilling, { billingEmail: emailLink(billingEmail) }) : formatMessage(messages.certRefundContactBillingNoEmail))}
       </Banner>
     );
   }

@@ -16,6 +16,7 @@ const configuration = {
   SUPPORT_URL: process.env.SUPPORT_URL || null,
   ENABLE_NOTICES: process.env.ENABLE_NOTICES || null,
   CAREER_LINK_URL: process.env.CAREER_LINK_URL || null,
+  LOGO_URL: process.env.LOGO_URL,
 };
 
 const features = {};

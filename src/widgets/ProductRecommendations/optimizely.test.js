@@ -6,6 +6,10 @@ jest.mock('@optimizely/react-sdk', () => ({
   setLogLevel: jest.fn(),
 }));
 
+jest.mock('@edx/frontend-platform', () => ({
+  getConfig: jest.fn(() => ({ OPTIMIZELY_FULL_STACK_SDK_KEY: 'SDK Key' })),
+}));
+
 describe('optimizelyClient', () => {
   it('should configure an Optimizely client instance with the correct SDK key', () => {
     expect(optimizelyClient).toBeDefined();

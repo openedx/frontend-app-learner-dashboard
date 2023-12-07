@@ -17,12 +17,29 @@ exports[`CreditBanner component render with error state snapshot 1`] = `
       }
       values={
         Object {
-          "supportEmailLink": <EmailLink
-            address="test-support-email"
-          />,
+          "supportEmailLink": <MailtoLink
+            to="test-support-email"
+          >
+            test-support-email
+          </MailtoLink>,
         }
       }
     />
+  </p>
+  <ContentComponent
+    cardId="test-card-id"
+  />
+</Banner>
+`;
+
+exports[`CreditBanner component render with error state with no email snapshot 1`] = `
+<Banner
+  variant="danger"
+>
+  <p
+    className="credit-error-msg"
+  >
+    An error occurred with this transaction.
   </p>
   <ContentComponent
     cardId="test-card-id"
