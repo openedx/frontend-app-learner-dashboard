@@ -1,6 +1,6 @@
 @import "@edx/paragon/scss/core/core";
 
-.course-card {
+.course-card { // Can this be replaced with paragon's card component?
   .card {
     .pgn__card-wrapper-image-cap.vertical {
       display: flex;

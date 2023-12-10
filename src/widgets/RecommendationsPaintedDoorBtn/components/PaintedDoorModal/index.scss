@@ -7,7 +7,7 @@
 @media (max-width: 464px) {
     .pgn__action-row{
         flex-direction: column;
-        gap: 5px;
+        gap: 5px; // Can this be replaced?
         button {
             width: 100%;
         }

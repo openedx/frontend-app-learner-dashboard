@@ -1,11 +1,11 @@
 @import "@edx/paragon/scss/core/core";
 
 #no-courses-content-view {
-  border: 2px solid $light-400;
+  border: 2px solid $light-400; // Can this be replaced by paragon?
   flex-direction: column;
   padding-bottom: map-get($spacers, 5);
   padding-top: map-get($spacers, 5);
-  height: 100%;
+  height: 100%; // Can this be replaced by paragon?
 
   & > * {
     margin-top: map-get($spacers, 3);
