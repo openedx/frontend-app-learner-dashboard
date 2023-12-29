@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { Button } from '@edx/paragon';
+import { Button } from '@openedx/paragon';
 import LoadedView from './LoadedView';
 import mockData from './mockData';
 import messages from './messages';

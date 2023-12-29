@@ -1,4 +1,4 @@
-import { useToggle } from '@edx/paragon';
+import { useToggle } from '@openedx/paragon';
 
 import { MockUseState } from 'testUtils';
 import track from 'tracking';

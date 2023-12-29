@@ -1,5 +1,5 @@
 import React from 'react';
-import { useWindowSize, breakpoints } from '@edx/paragon';
+import { useWindowSize, breakpoints } from '@openedx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { apiHooks } from 'hooks';
 import { StrictDict } from 'utils';

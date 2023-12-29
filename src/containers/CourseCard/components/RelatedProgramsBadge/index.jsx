@@ -2,8 +2,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button, Icon } from '@edx/paragon';
-import { Program } from '@edx/paragon/icons';
+import { Button, Icon } from '@openedx/paragon';
+import { Program } from '@openedx/paragon/icons';
 
 import RelatedProgramsBadgeModal from 'containers/RelatedProgramsModal';
 import useRelatedProgramsBadgeData from './hooks';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { waitFor } from '@testing-library/react';
-import { useWindowSize } from '@edx/paragon';
+import { useWindowSize } from '@openedx/paragon';
 
 import api from 'widgets/ProductRecommendations/api';
 import { MockUseState } from 'testUtils';

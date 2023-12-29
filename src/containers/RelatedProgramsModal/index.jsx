@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import {
   Container, Row, Col, ModalDialog,
-} from '@edx/paragon';
+} from '@openedx/paragon';
 
 import { reduxHooks } from 'hooks';
 import ProgramCard from './components/ProgramCard';

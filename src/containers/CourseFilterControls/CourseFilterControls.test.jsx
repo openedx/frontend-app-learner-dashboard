@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
 
-import { breakpoints, useWindowSize } from '@edx/paragon';
+import { breakpoints, useWindowSize } from '@openedx/paragon';
 
 import { reduxHooks } from 'hooks';
 

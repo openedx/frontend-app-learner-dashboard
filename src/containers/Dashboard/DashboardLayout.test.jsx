@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Col, Row } from '@edx/paragon';
+import { Col, Row } from '@openedx/paragon';
 
 import WidgetFooter from 'containers/WidgetContainers/WidgetFooter';
 import hooks from './hooks';

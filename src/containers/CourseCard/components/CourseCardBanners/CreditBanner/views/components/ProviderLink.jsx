@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { reduxHooks } from 'hooks';
-import { Hyperlink } from '@edx/paragon';
+import { Hyperlink } from '@openedx/paragon';
 
 export const ProviderLink = ({ cardId }) => {
   const credit = reduxHooks.useCardCreditData(cardId);

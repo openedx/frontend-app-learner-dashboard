@@ -5,7 +5,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 
 import Banner from 'components/Banner';
 
-import { MailtoLink } from '@edx/paragon';
+import { MailtoLink } from '@openedx/paragon';
 import hooks from './hooks';
 import messages from './messages';
 

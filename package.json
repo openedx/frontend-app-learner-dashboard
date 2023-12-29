@@ -31,7 +31,7 @@
     "@edx/frontend-component-footer": "^12.2.1",
     "@edx/frontend-enterprise-hotjar": "^2.0.0",
     "@edx/frontend-platform": "^5.5.4",
-    "@edx/paragon": "^20.44.0",
+    "@openedx/paragon": "^21.11.3",
     "@edx/react-unit-test-utils": "^1.7.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
@@ -80,7 +80,7 @@
     "whatwg-fetch": "^3.6.2"
   },
   "devDependencies": {
-    "@edx/frontend-build": "13.0.1",
+    "@openedx/frontend-build": "13.0.19",
     "@edx/reactifex": "^2.1.1",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.1.0",

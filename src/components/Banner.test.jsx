@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
 
-import { Alert } from '@edx/paragon';
+import { Alert } from '@openedx/paragon';
 
 import Banner from './Banner';
 

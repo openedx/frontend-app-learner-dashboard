@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@edx/paragon';
+import { Button } from '@openedx/paragon';
 
 import useIsCollapsed from './hooks';
 

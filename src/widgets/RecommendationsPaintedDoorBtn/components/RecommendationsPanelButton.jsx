@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@edx/paragon';
+import { Button } from '@openedx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import PropTypes from 'prop-types';
 import messages from '../messages';

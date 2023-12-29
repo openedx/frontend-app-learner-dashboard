@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { ActionRow, Button } from '@edx/paragon';
+import { ActionRow, Button } from '@openedx/paragon';
 import CreditRequestForm from './CreditRequestForm';
 
 export const CreditContent = ({ action, message, requestData }) => (

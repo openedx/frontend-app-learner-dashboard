@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { Button, Chip } from '@edx/paragon';
-import { CloseSmall } from '@edx/paragon/icons';
+import { Button, Chip } from '@openedx/paragon';
+import { CloseSmall } from '@openedx/paragon/icons';
 
 import messages from './messages';
 import './index.scss';

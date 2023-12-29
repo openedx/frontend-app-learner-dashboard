@@ -11,8 +11,8 @@ import {
   breakpoints,
   useWindowSize,
   ModalCloseButton,
-} from '@edx/paragon';
-import { Close, Tune } from '@edx/paragon/icons';
+} from '@openedx/paragon';
+import { Close, Tune } from '@openedx/paragon/icons';
 
 import { reduxHooks } from 'hooks';
 

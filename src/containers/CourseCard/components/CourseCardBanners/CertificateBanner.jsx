@@ -2,8 +2,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { MailtoLink, Hyperlink } from '@edx/paragon';
-import { CheckCircle } from '@edx/paragon/icons';
+import { MailtoLink, Hyperlink } from '@openedx/paragon';
+import { CheckCircle } from '@openedx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { utilHooks, reduxHooks } from 'hooks';

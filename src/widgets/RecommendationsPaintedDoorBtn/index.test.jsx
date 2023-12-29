@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import { Button, ModalDialog } from '@edx/paragon';
+import { Button, ModalDialog } from '@openedx/paragon';
 import RecommendationsPaintedDoorBtn from './index';
 import { EXPANDED_NAVBAR, RECOMMENDATIONS_PANEL } from './constants';
 import NavbarButton from './components/NavbarButton';
