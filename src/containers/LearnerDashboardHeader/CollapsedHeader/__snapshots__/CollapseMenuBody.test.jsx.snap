@@ -52,7 +52,7 @@ exports[`CollapseMenuBody render 1`] = `
   </Button>
   <Button
     as="a"
-    href="http://localhost:18000/account/settings"
+    href="http://account-settings-url.test"
     variant="inverse-primary"
   >
     Account

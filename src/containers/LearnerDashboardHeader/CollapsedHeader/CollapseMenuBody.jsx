@@ -70,7 +70,7 @@ export const CollapseMenuBody = ({ isOpen }) => {
             </Button>
             <Button
               as="a"
-              href={`${getConfig().LMS_BASE_URL}/account/settings`}
+              href={getConfig().ACCOUNT_SETTINGS_URL}
               variant="inverse-primary"
             >
               {formatMessage(messages.account)}
