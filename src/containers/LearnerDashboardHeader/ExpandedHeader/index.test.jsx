@@ -5,7 +5,7 @@ import ExpandedHeader from '.';
 import { useIsCollapsed } from '../hooks';
 
 jest.mock('data/services/lms/urls', () => ({
-  programsUrl: 'programsUrl',
+  programsUrl: () => 'programsUrl',
   baseAppUrl: url => (`http://localhost:18000${url}`),
 }));
 
