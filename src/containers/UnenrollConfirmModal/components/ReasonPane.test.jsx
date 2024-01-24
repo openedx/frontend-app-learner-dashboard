@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { ReasonPane } from './ReasonPane';
 
@@ -18,9 +18,9 @@ describe('UnenrollConfirmModal ReasonPane', () => {
     },
   };
   test('snapshot', () => {
-    expect(shallow(<ReasonPane {...props} />)).toMatchSnapshot();
+    expect(shallow(<ReasonPane {...props} />).snapshot).toMatchSnapshot();
   });
   test('snapshot: no reason provided', () => {
-    expect(shallow(<ReasonPane {...props} hasReason={false} />)).toMatchSnapshot();
+    expect(shallow(<ReasonPane {...props} hasReason={false} />).snapshot).toMatchSnapshot();
   });
 });

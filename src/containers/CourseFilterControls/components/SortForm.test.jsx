@@ -1,4 +1,4 @@
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { SortKeys } from 'data/constants/app';
 import SortForm from './SortForm';
@@ -13,7 +13,7 @@ describe('SortForm', () => {
   describe('snapshot', () => {
     test('renders', () => {
       const wrapper = shallow(<SortForm {...props} />);
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
   });
 });

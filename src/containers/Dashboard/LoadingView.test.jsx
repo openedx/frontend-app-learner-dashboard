@@ -1,4 +1,4 @@
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 import { Spinner } from '@edx/paragon';
 
 import hooks from './hooks';
@@ -14,10 +14,10 @@ describe('LoadingView', () => {
     hooks.useDashboardMessages.mockReturnValueOnce({ spinnerScreenReaderText });
   });
   test('snapshot', () => {
-    expect(shallow(<LoadingView />)).toMatchSnapshot();
+    expect(shallow(<LoadingView />).snapshot).toMatchSnapshot();
   });
   it('renders spinner component with associated screen reader text', () => {
     const wrapper = shallow(<LoadingView />);
-    expect(wrapper.find(Spinner).props().screenReaderText).toEqual(spinnerScreenReaderText);
+    expect(wrapper.instance.findByType(Spinner)[0].props.screenReaderText).toEqual(spinnerScreenReaderText);
   });
 });

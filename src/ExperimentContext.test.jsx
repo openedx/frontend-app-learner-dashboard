@@ -1,6 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import { waitFor } from '@testing-library/react';
+import { waitFor, render } from '@testing-library/react';
 import { useWindowSize } from '@edx/paragon';
 
 import api from 'widgets/ProductRecommendations/api';
@@ -109,7 +108,7 @@ describe('experiments context', () => {
 
       state.mock();
 
-      mount(
+      render(
         <ExperimentProvider>
           <TestComponent />
         </ExperimentProvider>,

@@ -1,6 +1,5 @@
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
-import { htmlProps } from 'data/constants/htmlKeys';
 import { reduxHooks } from 'hooks';
 import track from 'tracking';
 import useActionDisabledState from '../hooks';
@@ -57,10 +56,10 @@ describe('ResumeButton', () => {
         wrapper = shallow(<ResumeButton {...props} />);
       });
       test('snapshot', () => {
-        expect(wrapper).toMatchSnapshot();
+        expect(wrapper.snapshot).toMatchSnapshot();
       });
       it('should be disabled', () => {
-        expect(wrapper.prop(htmlProps.disabled)).toEqual(true);
+        expect(wrapper.instance.props.disabled).toEqual(true);
       });
     });
     describe('enabled', () => {
@@ -68,13 +67,13 @@ describe('ResumeButton', () => {
         wrapper = shallow(<ResumeButton {...props} />);
       });
       test('snapshot', () => {
-        expect(wrapper).toMatchSnapshot();
+        expect(wrapper.snapshot).toMatchSnapshot();
       });
       it('should be enabled', () => {
-        expect(wrapper.prop(htmlProps.disabled)).toEqual(false);
+        expect(wrapper.instance.props.disabled).toEqual(false);
       });
       it('should track enter course clicked event on click, with exec ed param', () => {
-        expect(wrapper.prop(htmlProps.onClick)).toEqual(reduxHooks.useTrackCourseEvent(
+        expect(wrapper.instance.props.onClick).toEqual(reduxHooks.useTrackCourseEvent(
           track.course.enterCourseClicked,
           props.cardId,
           resumeUrl + execEdPath(props.cardId),

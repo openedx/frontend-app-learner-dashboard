@@ -1,4 +1,4 @@
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 import EnterpriseDashboard from '.';
 
 import useEnterpriseDashboardHook from './hooks';
@@ -19,11 +19,11 @@ describe('EnterpriseDashboard', () => {
     };
     useEnterpriseDashboardHook.mockReturnValueOnce({ ...hookData });
     const el = shallow(<EnterpriseDashboard />);
-    expect(el).toMatchSnapshot();
+    expect(el.snapshot).toMatchSnapshot();
   });
   test('empty snapshot', () => {
     useEnterpriseDashboardHook.mockReturnValueOnce({});
     const el = shallow(<EnterpriseDashboard />);
-    expect(el).toMatchSnapshot();
+    expect(el.snapshot).toMatchSnapshot();
   });
 });

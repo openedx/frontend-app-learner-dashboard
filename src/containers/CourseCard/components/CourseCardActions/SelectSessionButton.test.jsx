@@ -1,7 +1,6 @@
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { reduxHooks } from 'hooks';
-import { htmlProps } from 'data/constants/htmlKeys';
 import useActionDisabledState from '../hooks';
 
 import SelectSessionButton from './SelectSessionButton';
@@ -19,17 +18,17 @@ let wrapper;
 describe('SelectSessionButton', () => {
   const props = { cardId: 'cardId' };
   it('default render', () => {
-    expect(wrapper).toMatchSnapshot();
     wrapper = shallow(<SelectSessionButton {...props} />);
-    expect(wrapper.prop(htmlProps.disabled)).toEqual(false);
-    expect(wrapper.prop(htmlProps.onClick).getMockName()).toEqual(
+    expect(wrapper.snapshot).toMatchSnapshot();
+    expect(wrapper.instance.props.disabled).toEqual(false);
+    expect(wrapper.instance.props.onClick.getMockName()).toEqual(
       reduxHooks.useUpdateSelectSessionModalCallback().getMockName(),
     );
   });
   test('disabled states', () => {
     useActionDisabledState.mockReturnValueOnce({ disableSelectSession: true });
-    expect(wrapper).toMatchSnapshot();
     wrapper = shallow(<SelectSessionButton {...props} />);
-    expect(wrapper.prop(htmlProps.disabled)).toEqual(true);
+    expect(wrapper.snapshot).toMatchSnapshot();
+    expect(wrapper.instance.props.disabled).toEqual(true);
   });
 });

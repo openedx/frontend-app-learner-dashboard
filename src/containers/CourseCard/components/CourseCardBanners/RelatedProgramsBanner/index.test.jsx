@@ -1,4 +1,4 @@
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { reduxHooks } from 'hooks';
 import RelatedProgramsBanner from '.';
@@ -37,6 +37,6 @@ describe('RelatedProgramsBanner', () => {
       length: 2,
     });
     const el = shallow(<RelatedProgramsBanner cardId={cardId} />);
-    expect(el).toMatchSnapshot();
+    expect(el.snapshot).toMatchSnapshot();
   });
 });

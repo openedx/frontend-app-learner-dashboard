@@ -1,4 +1,4 @@
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 import { AppContext } from '@edx/frontend-platform/react';
 
 import CollapseMenuBody from './CollapseMenuBody';
@@ -29,12 +29,12 @@ jest.mock('../hooks', () => ({
 describe('CollapseMenuBody', () => {
   test('render', () => {
     const wrapper = shallow(<CollapseMenuBody isOpen />);
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.snapshot).toMatchSnapshot();
   });
 
   test('render empty if not open', () => {
     const wrapper = shallow(<CollapseMenuBody isOpen={false} />);
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.snapshot).toMatchSnapshot();
     expect(wrapper.isEmptyRender()).toBe(true);
   });
 
@@ -42,7 +42,7 @@ describe('CollapseMenuBody', () => {
     const { authenticatedUser } = AppContext;
     AppContext.authenticatedUser = null;
     const wrapper = shallow(<CollapseMenuBody isOpen />);
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.snapshot).toMatchSnapshot();
     AppContext.authenticatedUser = authenticatedUser;
   });
 });

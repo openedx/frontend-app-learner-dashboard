@@ -6,6 +6,7 @@ exports[`CreditBanner component render with error state snapshot 1`] = `
 >
   <p
     className="credit-error-msg"
+    data-testid="credit-error-msg"
   >
     <format-message-function
       message={
@@ -38,6 +39,7 @@ exports[`CreditBanner component render with error state with no email snapshot 1
 >
   <p
     className="credit-error-msg"
+    data-testid="credit-error-msg"
   >
     An error occurred with this transaction.
   </p>

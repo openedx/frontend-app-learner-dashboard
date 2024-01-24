@@ -1,10 +1,21 @@
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import ModalView from '.';
 
 jest.mock('../../track', () => ({
   trackPaintedDoorRecommendationHomeSkipBtnClicked: jest.fn(),
   trackPaintedDoorRecommendationHomeInterestBtnClicked: jest.fn(),
+}));
+jest.mock('@edx/paragon', () => ({
+  ...jest.requireActual('@edx/paragon'),
+  ModalDialog: {
+    Body: 'ModalDialog.Body',
+    Header: 'ModalDialog.Header',
+    Title: 'ModalDialog.Title',
+    Footer: 'ModalDialog.Footer',
+    CloseButton: 'ModalDialog.CloseButton',
+  },
+  ActionRow: 'ActionRow',
 }));
 
 describe('ModalView', () => {
@@ -16,7 +27,7 @@ describe('ModalView', () => {
   describe('snapshot', () => {
     test('should renders default ModalView', () => {
       const wrapper = shallow(<ModalView {...props} />);
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
   });
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import EmptyCourse from '.';
 
@@ -13,6 +13,6 @@ jest.mock('hooks', () => ({
 
 describe('NoCoursesView', () => {
   test('snapshot', () => {
-    expect(shallow(<EmptyCourse />)).toMatchSnapshot();
+    expect(shallow(<EmptyCourse />).snapshot).toMatchSnapshot();
   });
 });

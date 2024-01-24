@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import LookingForChallengeWidget from 'widgets/LookingForChallengeWidget';
 import hooks from './hooks';
@@ -46,7 +46,8 @@ describe('RecommendationsPanel snapshot', () => {
         ...defaultValues,
         isLoading: true,
       });
-      expect(shallow(<RecommendationsPanel />)).toMatchObject(shallow(<LoadingView />));
+      expect({ ...shallow(<RecommendationsPanel />).shallowWrapper, children: expect.any(Array) })
+        .toMatchObject(shallow(<LoadingView />));
     });
     it('displays LoadedView with courses if request is loaded', () => {
       hooks.useRecommendationPanelData.mockReturnValueOnce({
@@ -54,7 +55,7 @@ describe('RecommendationsPanel snapshot', () => {
         courses,
         isLoaded: true,
       });
-      expect(shallow(<RecommendationsPanel />)).toMatchObject(
+      expect({ ...shallow(<RecommendationsPanel />).shallowWrapper, children: expect.any(Array) }).toMatchObject(
         shallow(<LoadedView {...defaultLoadedViewProps} courses={courses} />),
       );
     });
@@ -63,7 +64,7 @@ describe('RecommendationsPanel snapshot', () => {
         ...defaultValues,
         isFailed: true,
       });
-      expect(shallow(<RecommendationsPanel />)).toMatchObject(
+      expect({ ...shallow(<RecommendationsPanel />).shallowWrapper, children: expect.any(Array) }).toMatchObject(
         shallow(<LookingForChallengeWidget />),
       );
     });
@@ -71,7 +72,7 @@ describe('RecommendationsPanel snapshot', () => {
       hooks.useRecommendationPanelData.mockReturnValueOnce({
         ...defaultValues,
       });
-      expect(shallow(<RecommendationsPanel />)).toMatchObject(
+      expect({ ...shallow(<RecommendationsPanel />).shallowWrapper, children: expect.any(Array) }).toMatchObject(
         shallow(<LookingForChallengeWidget />),
       );
     });
@@ -90,7 +91,7 @@ describe('RecommendationsPanel snapshot', () => {
       });
 
       const wrapper = shallow(<RecommendationsPanel />);
-      expect(wrapper.find(RecommendationsPaintedDoorBtn).exists()).toBe(true);
+      expect(wrapper.instance.findByType(RecommendationsPaintedDoorBtn)).not.toHaveLength(0);
     });
     it('displays painted door btn if user is in variation and no flags are set (defaults)', () => {
       hooks.useRecommendationPanelData.mockReturnValueOnce({
@@ -104,7 +105,7 @@ describe('RecommendationsPanel snapshot', () => {
       });
 
       const wrapper = shallow(<RecommendationsPanel />);
-      expect(wrapper.find(RecommendationsPaintedDoorBtn).exists()).toBe(true);
+      expect(wrapper.instance.findByType(RecommendationsPaintedDoorBtn)).not.toHaveLength(0);
     });
     it('renders only LookingForChallengeWidget if user is not in variation', () => {
       hooks.useRecommendationPanelData.mockReturnValueOnce({
@@ -117,7 +118,7 @@ describe('RecommendationsPanel snapshot', () => {
         experimentLoading: false,
       });
 
-      expect(shallow(<RecommendationsPanel />)).toMatchObject(
+      expect({ ...shallow(<RecommendationsPanel />).shallowWrapper, children: expect.any(Array) }).toMatchObject(
         shallow(<LookingForChallengeWidget />),
       );
     });
@@ -132,7 +133,7 @@ describe('RecommendationsPanel snapshot', () => {
         experimentLoading: true,
       });
 
-      expect(shallow(<RecommendationsPanel />)).toMatchObject(
+      expect({ ...shallow(<RecommendationsPanel />).shallowWrapper, children: expect.any(Array) }).toMatchObject(
         shallow(<LookingForChallengeWidget />),
       );
     });

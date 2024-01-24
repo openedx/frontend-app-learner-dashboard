@@ -42,14 +42,106 @@ exports[`CourseBanner course run active and cannot upgrade snapshot: (upgradseDe
 
 exports[`CourseBanner snapshot: stacking banners 1`] = `<Fragment />`;
 
-exports[`CourseBanner staff snapshot: isStaff 1`] = `<Fragment />`;
+exports[`CourseBanner staff snapshot: isStaff 1`] = `
+ReactShallowRenderer {
+  "shallowRenderer": ReactShallowRenderer {
+    "_context": Object {},
+    "_didScheduleRenderPhaseUpdate": false,
+    "_dispatcher": Object {
+      "readContext": [Function],
+      "useCallback": [Function],
+      "useContext": [Function],
+      "useDebugValue": [Function],
+      "useDeferredValue": [Function],
+      "useEffect": [Function],
+      "useId": [Function],
+      "useImperativeHandle": [Function],
+      "useInsertionEffect": [Function],
+      "useLayoutEffect": [Function],
+      "useMemo": [Function],
+      "useReducer": [Function],
+      "useRef": [Function],
+      "useResponder": [Function],
+      "useState": [Function],
+      "useSyncExternalStore": [Function],
+      "useTransition": [Function],
+    },
+    "_element": <CourseBanner
+      cardId="my-test-course-number"
+    />,
+    "_firstWorkInProgressHook": null,
+    "_forcedUpdate": false,
+    "_idCounter": 0,
+    "_instance": null,
+    "_isReRender": false,
+    "_newState": null,
+    "_numberOfReRenders": 0,
+    "_renderPhaseUpdates": null,
+    "_rendered": <React.Fragment />,
+    "_rendering": false,
+    "_updater": Updater {
+      "_callbacks": Array [],
+      "_renderer": [Circular],
+    },
+    "_workInProgressHook": null,
+  },
+  "shallowWrapper": <React.Fragment />,
+}
+`;
 
 exports[`CourseBanner too early has start date snapshot 1`] = `
-<Fragment>
-  <Banner>
-    You can't access this course just yet because the course hasn't started yet. The course will start on 11/11/3030.
-  </Banner>
-</Fragment>
+ReactShallowRenderer {
+  "shallowRenderer": ReactShallowRenderer {
+    "_context": Object {},
+    "_didScheduleRenderPhaseUpdate": false,
+    "_dispatcher": Object {
+      "readContext": [Function],
+      "useCallback": [Function],
+      "useContext": [Function],
+      "useDebugValue": [Function],
+      "useDeferredValue": [Function],
+      "useEffect": [Function],
+      "useId": [Function],
+      "useImperativeHandle": [Function],
+      "useInsertionEffect": [Function],
+      "useLayoutEffect": [Function],
+      "useMemo": [Function],
+      "useReducer": [Function],
+      "useRef": [Function],
+      "useResponder": [Function],
+      "useState": [Function],
+      "useSyncExternalStore": [Function],
+      "useTransition": [Function],
+    },
+    "_element": <CourseBanner
+      cardId="my-test-course-number"
+    />,
+    "_firstWorkInProgressHook": null,
+    "_forcedUpdate": false,
+    "_idCounter": 0,
+    "_instance": null,
+    "_isReRender": false,
+    "_newState": null,
+    "_numberOfReRenders": 0,
+    "_renderPhaseUpdates": null,
+    "_rendered": <React.Fragment>
+      <Banner>
+        You can't access this course just yet because the course hasn't started yet. The course will start on 11/11/3030.
+      </Banner>
+    </React.Fragment>,
+    "_rendering": false,
+    "_updater": Updater {
+      "_callbacks": Array [],
+      "_renderer": [Circular],
+    },
+    "_workInProgressHook": null,
+  },
+  "shallowWrapper": <React.Fragment>
+    <Banner>
+      You can't access this course just yet because the course hasn't started yet. The course will start on 11/11/3030.
+    </Banner>
+  </React.Fragment>,
+}
 `;
 
 exports[`CourseBanner too early no start date snapshot 1`] = `<Fragment />`;

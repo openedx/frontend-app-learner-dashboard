@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { reduxHooks } from 'hooks';
 import RelatedProgramsModal from '.';
@@ -50,11 +50,11 @@ describe('RelatedProgramsModal', () => {
     expect(reduxHooks.useCardRelatedProgramsData).toHaveBeenCalledWith(cardId);
   });
   test('snapshot: open', () => {
-    expect(shallow(<RelatedProgramsModal {...props} />)).toMatchSnapshot();
+    expect(shallow(<RelatedProgramsModal {...props} />).snapshot).toMatchSnapshot();
   });
   test('snapshot: closed', () => {
     expect(
-      shallow(<RelatedProgramsModal {...props} isOpen={false} />),
+      shallow(<RelatedProgramsModal {...props} isOpen={false} />).snapshot,
     ).toMatchSnapshot();
   });
 });
