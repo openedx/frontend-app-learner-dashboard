@@ -133,7 +133,7 @@ describe('CourseBanner', () => {
       beforeEach(() => {
         render({ enrollment: { coursewareAccess: { isTooEarly: true } } });
       });
-      test('snapshot', () => expect(el).toMatchSnapshot());
+      test('snapshot', () => expect(el.snapshot).toMatchSnapshot());
 
       test('messages: courseHasNotStarted', () => {
         expect(el.instance.children[0].children[0].el).toContain(
@@ -147,7 +147,7 @@ describe('CourseBanner', () => {
       render({ enrollment: { coursewareAccess: { isStaff: true } } });
     });
     test('snapshot: isStaff', () => {
-      expect(el).toMatchSnapshot();
+      expect(el.snapshot).toMatchSnapshot();
     });
   });
   test('snapshot: stacking banners', () => {
