@@ -28,10 +28,10 @@
   "dependencies": {
     "@edx/brand": "npm:@openedx/brand-openedx@^1.2.2",
     "@edx/browserslist-config": "^1.1.0",
-    "@edx/frontend-component-footer": "^12.2.1",
+    "@edx/frontend-component-footer": "12.7.0",
     "@edx/frontend-enterprise-hotjar": "^2.0.0",
-    "@edx/frontend-platform": "^5.5.4",
-    "@edx/paragon": "^20.44.0",
+    "@edx/frontend-platform": "6.2.0",
+    "@edx/paragon": "21.5.6",
     "@edx/react-unit-test-utils": "^1.7.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
@@ -62,7 +62,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-helmet": "^6.1.0",
-    "react-intl": "^5.20.9",
+    "react-intl": "6.4.7",
     "react-pdf": "^5.5.0",
     "react-redux": "^7.2.4",
     "react-router-dom": "6.15.0",
@@ -80,7 +80,7 @@
     "whatwg-fetch": "^3.6.2"
   },
   "devDependencies": {
-    "@edx/frontend-build": "13.0.1",
+    "@edx/frontend-build": "13.0.14",
     "@edx/reactifex": "^2.1.1",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.1.0",
