@@ -1,4 +1,4 @@
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import CollapsedHeader from '.';
 
@@ -18,13 +18,13 @@ jest.mock('../hooks', () => ({
 describe('CollapsedHeader', () => {
   it('renders', () => {
     const wrapper = shallow(<CollapsedHeader />);
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.snapshot).toMatchSnapshot();
   });
 
   it('render nothing if not collapsed', () => {
     useIsCollapsed.mockReturnValueOnce(false);
     const wrapper = shallow(<CollapsedHeader />);
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.snapshot).toMatchSnapshot();
   });
 
   it('renders with isOpen true', () => {
@@ -33,6 +33,6 @@ describe('CollapsedHeader', () => {
       toggleIsOpen: jest.fn().mockName('toggleIsOpen'),
     });
     const wrapper = shallow(<CollapsedHeader />);
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.snapshot).toMatchSnapshot();
   });
 });

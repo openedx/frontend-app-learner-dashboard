@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { mockCrossProductCourses, mockOpenCourses } from '../testData';
 import LoadedView from './LoadedView';
@@ -12,7 +12,7 @@ describe('ProductRecommendations LoadedView', () => {
           crossProductCourses={mockCrossProductCourses}
           openCourses={mockOpenCourses}
         />,
-      ),
+      ).snapshot,
     ).toMatchSnapshot();
   });
   describe('with less than 2 cross product courses', () => {
@@ -24,7 +24,7 @@ describe('ProductRecommendations LoadedView', () => {
         />,
       );
 
-      const productCardContainerProps = wrapper.find('ProductCardContainer').props();
+      const productCardContainerProps = wrapper.instance.findByType('ProductCardContainer')[0].props;
 
       expect(productCardContainerProps.courseTypes.length).toEqual(1);
       expect(productCardContainerProps.courseTypes[0]).toEqual('Course');

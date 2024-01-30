@@ -1,4 +1,4 @@
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { ProgramsList } from './ProgramsList';
 
@@ -16,8 +16,8 @@ describe('ProgramsList', () => {
 
   it('renders correctly', () => {
     const wrapper = shallow(<ProgramsList programs={programs} />);
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.snapshot).toMatchSnapshot();
 
-    expect(wrapper.find('li').length).toEqual(programs.length);
+    expect(wrapper.instance.findByType('li').length).toEqual(programs.length);
   });
 });

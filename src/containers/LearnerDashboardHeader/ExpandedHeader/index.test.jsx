@@ -1,4 +1,4 @@
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import ExpandedHeader from '.';
 
@@ -29,13 +29,13 @@ describe('ExpandedHeader', () => {
   test('render', () => {
     useIsCollapsed.mockReturnValueOnce(false);
     const wrapper = shallow(<ExpandedHeader />);
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.snapshot).toMatchSnapshot();
   });
 
   test('render empty if collapsed', () => {
     useIsCollapsed.mockReturnValueOnce(true);
     const wrapper = shallow(<ExpandedHeader />);
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.snapshot).toMatchSnapshot();
     expect(wrapper.isEmptyRender()).toBe(true);
   });
 });

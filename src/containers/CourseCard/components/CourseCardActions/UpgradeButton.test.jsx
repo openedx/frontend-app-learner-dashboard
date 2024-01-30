@@ -1,8 +1,7 @@
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import track from 'tracking';
 import { reduxHooks } from 'hooks';
-import { htmlProps } from 'data/constants/htmlKeys';
 import useActionDisabledState from '../hooks';
 import UpgradeButton from './UpgradeButton';
 
@@ -32,9 +31,9 @@ describe('UpgradeButton', () => {
   describe('snapshot', () => {
     test('can upgrade', () => {
       const wrapper = shallow(<UpgradeButton {...props} />);
-      expect(wrapper).toMatchSnapshot();
-      expect(wrapper.prop(htmlProps.disabled)).toEqual(false);
-      expect(wrapper.prop(htmlProps.onClick)).toEqual(reduxHooks.useTrackCourseEvent(
+      expect(wrapper.snapshot).toMatchSnapshot();
+      expect(wrapper.instance.props.disabled).toEqual(false);
+      expect(wrapper.instance.props.onClick).toEqual(reduxHooks.useTrackCourseEvent(
         track.course.upgradeClicked,
         props.cardId,
         upgradeUrl,
@@ -43,8 +42,8 @@ describe('UpgradeButton', () => {
     test('cannot upgrade', () => {
       useActionDisabledState.mockReturnValueOnce({ disableUpgradeCourse: true });
       const wrapper = shallow(<UpgradeButton {...props} />);
-      expect(wrapper).toMatchSnapshot();
-      expect(wrapper.prop(htmlProps.disabled)).toEqual(true);
+      expect(wrapper.snapshot).toMatchSnapshot();
+      expect(wrapper.instance.props.disabled).toEqual(true);
     });
   });
 });

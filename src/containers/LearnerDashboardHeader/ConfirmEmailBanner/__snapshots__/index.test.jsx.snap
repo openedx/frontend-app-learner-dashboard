@@ -69,4 +69,4 @@ exports[`ConfirmEmailBanner snapshot Show on unverified 1`] = `
 </Fragment>
 `;
 
-exports[`ConfirmEmailBanner snapshot do not show on already verified 1`] = `""`;
+exports[`ConfirmEmailBanner snapshot do not show on already verified 1`] = `null`;

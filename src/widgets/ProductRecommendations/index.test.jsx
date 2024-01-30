@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 import { reduxHooks } from 'hooks';
 import hooks from './hooks';
 import ProductRecommendations from './index';
@@ -45,7 +45,7 @@ describe('ProductRecommendations', () => {
       ...successfullLoadValues,
     });
 
-    expect(shallow(<ProductRecommendations />)).toMatchSnapshot();
+    expect(shallow(<ProductRecommendations />).snapshot).toMatchSnapshot();
   });
 
   it('renders the LoadingView if the request is pending', () => {
@@ -55,7 +55,7 @@ describe('ProductRecommendations', () => {
       isLoading: true,
     });
 
-    expect(shallow(<ProductRecommendations />)).toMatchObject(
+    expect({ ...shallow(<ProductRecommendations />).shallowWrapper, children: expect.any(Array) }).toMatchObject(
       shallow(<LoadingView />),
     );
   });
@@ -68,7 +68,7 @@ describe('ProductRecommendations', () => {
 
     const wrapper = shallow(<ProductRecommendations />);
 
-    expect(wrapper.type()).toBeNull();
+    expect(wrapper.shallowWrapper).toBeNull();
   });
   it('renders nothing if the user is on the mobile view', () => {
     hooks.useIsMobile.mockReturnValueOnce(true);
@@ -78,7 +78,7 @@ describe('ProductRecommendations', () => {
 
     const wrapper = shallow(<ProductRecommendations />);
 
-    expect(wrapper.type()).toBeNull();
+    expect(wrapper.shallowWrapper).toBeNull();
   });
 
   it('renders NoCoursesView if the request is loaded, user has courses, and the response is empty', () => {
@@ -91,7 +91,7 @@ describe('ProductRecommendations', () => {
       },
     });
 
-    expect(shallow(<ProductRecommendations />)).toMatchObject(
+    expect({ ...shallow(<ProductRecommendations />).shallowWrapper, children: expect.any(Array) }).toMatchObject(
       shallow(<NoCoursesView />),
     );
   });
@@ -103,7 +103,7 @@ describe('ProductRecommendations', () => {
         ...successfullLoadValues,
       });
 
-      expect(shallow(<ProductRecommendations />)).toMatchObject(
+      expect({ ...shallow(<ProductRecommendations />).shallowWrapper, children: expect.any(Array) }).toMatchObject(
         shallow(
           <LoadedView
             openCourses={mockCrossProductResponse.amplitudeCourses}
@@ -120,7 +120,7 @@ describe('ProductRecommendations', () => {
         productRecommendations: mockAmplitudeResponse,
       });
 
-      expect(shallow(<ProductRecommendations />)).toMatchObject(
+      expect({ ...shallow(<ProductRecommendations />).shallowWrapper, children: expect.any(Array) }).toMatchObject(
         shallow(
           <LoadedView
             openCourses={mockCrossProductResponse.amplitudeCourses}

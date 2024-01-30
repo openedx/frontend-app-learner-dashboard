@@ -1,6 +1,6 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
-import { Button, ModalDialog } from '@edx/paragon';
+import { shallow } from '@edx/react-unit-test-utils';
+import { ModalDialog } from '@edx/paragon';
 import RecommendationsPaintedDoorBtn from './index';
 import { EXPANDED_NAVBAR, RECOMMENDATIONS_PANEL } from './constants';
 import NavbarButton from './components/NavbarButton';
@@ -25,13 +25,13 @@ describe('RecommendationsPaintedDoorBtn', () => {
   };
 
   it('matches snapshot', () => {
-    expect(shallow(<RecommendationsPaintedDoorBtn {...props} />)).toMatchSnapshot();
+    expect(shallow(<RecommendationsPaintedDoorBtn {...props} />).snapshot).toMatchSnapshot();
   });
 
   it('renders painted door modal', () => {
     const wrapper = shallow(<RecommendationsPaintedDoorBtn {...props} />);
 
-    expect(wrapper.find(ModalDialog)).toBeTruthy();
+    expect(wrapper.instance.findByType(ModalDialog)).toBeTruthy();
   });
 
   it('renders painted door navbar button', () => {
@@ -41,8 +41,8 @@ describe('RecommendationsPaintedDoorBtn', () => {
     };
     const wrapper = shallow(<RecommendationsPaintedDoorBtn {...props} />);
 
-    expect(wrapper.find(NavbarButton).exists()).toBe(true);
-    expect(wrapper.find(RecommendationsPanelButton).exists()).toBe(false);
+    expect(wrapper.instance.findByType(NavbarButton)).not.toHaveLength(0);
+    expect(wrapper.instance.findByType(RecommendationsPanelButton)).toHaveLength(0);
   });
 
   it('renders painted door recommendations panel button', () => {
@@ -52,8 +52,8 @@ describe('RecommendationsPaintedDoorBtn', () => {
     };
     const wrapper = shallow(<RecommendationsPaintedDoorBtn {...props} />);
 
-    expect(wrapper.find(NavbarButton).exists()).toBe(false);
-    expect(wrapper.find(RecommendationsPanelButton).exists()).toBe(true);
+    expect(wrapper.instance.findByType(NavbarButton)).toHaveLength(0);
+    expect(wrapper.instance.findByType(RecommendationsPanelButton)).not.toHaveLength(0);
   });
 
   it('test no button (null) rendered for invalid placement', () => {
@@ -63,8 +63,8 @@ describe('RecommendationsPaintedDoorBtn', () => {
     };
     const wrapper = shallow(<RecommendationsPaintedDoorBtn {...props} />);
 
-    expect(wrapper.find(NavbarButton).exists()).toBe(false);
-    expect(wrapper.find(RecommendationsPanelButton).exists()).toBe(false);
+    expect(wrapper.instance.findByType(NavbarButton)).toHaveLength(0);
+    expect(wrapper.instance.findByType(RecommendationsPanelButton)).toHaveLength(0);
   });
 
   it('test track event is fired on navbar button click', () => {
@@ -72,10 +72,10 @@ describe('RecommendationsPaintedDoorBtn', () => {
       ...props,
       placement: EXPANDED_NAVBAR,
     };
-    const wrapper = mount(<RecommendationsPaintedDoorBtn {...props} />);
-    const navbarButton = wrapper.find(NavbarButton);
+    const wrapper = shallow(<RecommendationsPaintedDoorBtn {...props} />);
+    const navbarButton = wrapper.instance.findByType(NavbarButton)[0];
 
-    navbarButton.find(Button).simulate('click');
+    navbarButton.props.handleClick();
 
     expect(trackPaintedDoorRecommendationHomeBtnClicked).toHaveBeenCalled();
   });
@@ -85,10 +85,10 @@ describe('RecommendationsPaintedDoorBtn', () => {
       ...props,
       placement: RECOMMENDATIONS_PANEL,
     };
-    const wrapper = mount(<RecommendationsPaintedDoorBtn {...props} />);
-    const navbarButton = wrapper.find(RecommendationsPanelButton);
+    const wrapper = shallow(<RecommendationsPaintedDoorBtn {...props} />);
+    const recommendationsPanelButton = wrapper.instance.findByType(RecommendationsPanelButton)[0];
 
-    navbarButton.find(Button).simulate('click');
+    recommendationsPanelButton.props.handleClick();
 
     expect(trackPaintedDoorRecommendationHomeBtnClicked).toHaveBeenCalled();
   });

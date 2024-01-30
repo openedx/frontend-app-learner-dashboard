@@ -15,7 +15,7 @@ exports[`CertificateBanner snapshot is passing and is earned but unavailable 1`]
 </Banner>
 `;
 
-exports[`CertificateBanner snapshot is passing and not downloadable render empty 1`] = `""`;
+exports[`CertificateBanner snapshot is passing and not downloadable render empty 1`] = `null`;
 
 exports[`CertificateBanner snapshot is restricted 1`] = `
 <Banner

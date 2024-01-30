@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CollapsedHeader render nothing if not collapsed 1`] = `""`;
+exports[`CollapsedHeader render nothing if not collapsed 1`] = `false`;
 
 exports[`CollapsedHeader renders 1`] = `
 <Fragment>

@@ -31,7 +31,7 @@ export const Dashboard = () => {
           {(hasCourses && showSelectSessionModal) && <SelectSessionModal />}
         </>
       )}
-      <div id="dashboard-content">
+      <div id="dashboard-content" data-testid="dashboard-content">
         {initIsPending
           ? (<LoadingView />)
           : (

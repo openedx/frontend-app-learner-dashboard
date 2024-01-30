@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { reduxHooks } from 'hooks';
 
@@ -30,13 +30,13 @@ describe('ProviderLink component', () => {
   });
   describe('render', () => {
     test('snapshot', () => {
-      expect(el).toMatchSnapshot();
+      expect(el.snapshot).toMatchSnapshot();
     });
     it('passes credit.providerStatusUrl to the hyperlink href', () => {
-      expect(el.find('Hyperlink').props().href).toEqual(credit.providerStatusUrl);
+      expect(el.instance.findByType('Hyperlink')[0].props.href).toEqual(credit.providerStatusUrl);
     });
     it('passes providerName for the link message', () => {
-      expect(el.find('Hyperlink').text()).toEqual(credit.providerName);
+      expect(el.instance.findByType('Hyperlink')[0].children[0].el).toEqual(credit.providerName);
     });
   });
 });
