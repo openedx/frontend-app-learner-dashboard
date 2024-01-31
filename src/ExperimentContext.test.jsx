@@ -39,7 +39,7 @@ describe('experiments context', () => {
         it('calls useEffect once', () => {
           expect(calls.length).toEqual(1);
         });
-        describe('successfull fetch', () => {
+        describe('successful fetch', () => {
           it('sets the country code', async () => {
             let resolveFn;
             api.fetchRecommendationsContext.mockReturnValueOnce(
@@ -57,7 +57,7 @@ describe('experiments context', () => {
             });
           });
         });
-        describe('unsuccessfull fetch', () => {
+        describe('unsuccessful fetch', () => {
           it('sets the country code to an empty string', async () => {
             let rejectFn;
             api.fetchRecommendationsContext.mockReturnValueOnce(

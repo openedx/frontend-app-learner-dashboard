@@ -12,7 +12,7 @@
   "leanerDashboard.confirmEmailTextReminderBanner": "Remember to confirm your email so that you can keep learning on edX! {confirmNowButton}.",
   "leanerDashboard.verifiedConfirmEmailButton": "I've confirmed my email",
   "leanerDashboard.confirmEmailModalHeader": "Confirm your email",
-  "leanerDashboard.confirmEmailModalBody": "We've sent you an email to verify your acccount. Please check your inbox and click on the big red button to confirm and keep learning.",
+  "leanerDashboard.confirmEmailModalBody": "We've sent you an email to verify your account. Please check your inbox and click on the big red button to confirm and keep learning.",
   "leanerDashboard.confirmEmailImageAlt": "confirm email background",
   "learnerVariantDashboard.menu.dashboard.label": "Dashboard",
   "learnerVariantDashboard.help.label": "Help",
