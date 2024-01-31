@@ -69,7 +69,7 @@ exports[`CollapseMenuBody render 1`] = `
 </div>
 `;
 
-exports[`CollapseMenuBody render empty if not open 1`] = `false`;
+exports[`CollapseMenuBody render empty if not open 1`] = `null`;
 
 exports[`CollapseMenuBody render unauthenticated 1`] = `
 <div

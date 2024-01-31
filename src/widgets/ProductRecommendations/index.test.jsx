@@ -31,7 +31,7 @@ describe('ProductRecommendations', () => {
     hasFailed: false,
   };
 
-  const successfullLoadValues = {
+  const successfulLoadValues = {
     ...defaultValues,
     isLoaded: true,
     productRecommendations: mockCrossProductResponse,
@@ -42,7 +42,7 @@ describe('ProductRecommendations', () => {
   it('matches snapshot', () => {
     hooks.useIsMobile.mockReturnValueOnce(false);
     hooks.useProductRecommendationsData.mockReturnValueOnce({
-      ...successfullLoadValues,
+      ...successfulLoadValues,
     });
 
     expect(shallow(<ProductRecommendations />).snapshot).toMatchSnapshot();
@@ -73,7 +73,7 @@ describe('ProductRecommendations', () => {
   it('renders nothing if the user is on the mobile view', () => {
     hooks.useIsMobile.mockReturnValueOnce(true);
     hooks.useProductRecommendationsData.mockReturnValueOnce({
-      ...successfullLoadValues,
+      ...successfulLoadValues,
     });
 
     const wrapper = shallow(<ProductRecommendations />);
@@ -84,7 +84,7 @@ describe('ProductRecommendations', () => {
   it('renders NoCoursesView if the request is loaded, user has courses, and the response is empty', () => {
     hooks.useIsMobile.mockReturnValueOnce(false);
     hooks.useProductRecommendationsData.mockReturnValueOnce({
-      ...successfullLoadValues,
+      ...successfulLoadValues,
       productRecommendations: {
         amplitudeCourses: [],
         crossProductCourses: [],
@@ -100,7 +100,7 @@ describe('ProductRecommendations', () => {
     it('renders with cross product data if the request completed and the user has courses', () => {
       hooks.useIsMobile.mockReturnValueOnce(false);
       hooks.useProductRecommendationsData.mockReturnValueOnce({
-        ...successfullLoadValues,
+        ...successfulLoadValues,
       });
 
       expect({ ...shallow(<ProductRecommendations />).shallowWrapper, children: expect.any(Array) }).toMatchObject(
@@ -116,7 +116,7 @@ describe('ProductRecommendations', () => {
     it('renders the LoadedView with Amplitude course data if the request completed', () => {
       hooks.useIsMobile.mockReturnValueOnce(false);
       hooks.useProductRecommendationsData.mockReturnValueOnce({
-        ...successfullLoadValues,
+        ...successfulLoadValues,
         productRecommendations: mockAmplitudeResponse,
       });
 
