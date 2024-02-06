@@ -1,8 +1,8 @@
 # Root app is developed and owned by Aurora
-*   @edx/content-aurora
+*   @openedx/2U-aperture
 
 # WIDGETS and experiments are developed and owned by separate teams below
 
 # Recommendations panel
-/src/widgets/RecommendationsPanel       @edx/vanguards
-/src/widgets/LookingForChallengeWidget  @edx/vanguards
+/src/widgets/RecommendationsPanel       @openedx/2U-vanguards
+/src/widgets/LookingForChallengeWidget  @openedx/2U-vanguards
