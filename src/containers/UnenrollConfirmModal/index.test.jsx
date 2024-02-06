@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { UnenrollConfirmModal } from '.';
 
@@ -40,11 +40,11 @@ describe('UnenrollConfirmModal component', () => {
   });
   test('snapshot: modalStates.confirm', () => {
     hooks.useUnenrollData.mockReturnValueOnce(hookProps);
-    expect(shallow(<UnenrollConfirmModal {...props} />)).toMatchSnapshot();
+    expect(shallow(<UnenrollConfirmModal {...props} />).snapshot).toMatchSnapshot();
   });
   test('snapshot: modalStates.finished, reason given', () => {
     hooks.useUnenrollData.mockReturnValueOnce({ ...hookProps, modalState: hooks.modalStates.finished });
-    expect(shallow(<UnenrollConfirmModal {...props} />)).toMatchSnapshot();
+    expect(shallow(<UnenrollConfirmModal {...props} />).snapshot).toMatchSnapshot();
   });
   test('snapshot: modalStates.finished, reason skipped', () => {
     hooks.useUnenrollData.mockReturnValueOnce({
@@ -52,10 +52,10 @@ describe('UnenrollConfirmModal component', () => {
       modalState: hooks.modalStates.finished,
       isSkipped: true,
     });
-    expect(shallow(<UnenrollConfirmModal {...props} />)).toMatchSnapshot();
+    expect(shallow(<UnenrollConfirmModal {...props} />).snapshot).toMatchSnapshot();
   });
   test('snapshot: modalStates.reason, should be fullscreen with no shadow', () => {
     hooks.useUnenrollData.mockReturnValueOnce({ ...hookProps, modalState: hooks.modalStates.reason });
-    expect(shallow(<UnenrollConfirmModal {...props} />)).toMatchSnapshot();
+    expect(shallow(<UnenrollConfirmModal {...props} />).snapshot).toMatchSnapshot();
   });
 });

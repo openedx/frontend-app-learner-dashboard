@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 
 import CourseCardDetails from '.';
 
@@ -28,27 +28,44 @@ describe('CourseCard Details component', () => {
       ...defaultHooks,
       ...hookOverrides,
     });
-    return shallow(<CourseCardDetails cardId={cardId} />);
+    return render(<CourseCardDetails cardId={cardId} />);
+  };
+
+  const fetchSeparators = (wrapper) => {
+    const elements = wrapper.container.querySelectorAll('*');
+    let separatorsCount = 0;
+
+    elements.forEach((element) => {
+      // Use a regular expression to find all occurrences of '•' in the text content
+      const separatorMatches = element.textContent.match(/•/g);
+
+      // If matches are found, add the count to the total
+      if (separatorMatches) {
+        separatorsCount += separatorMatches.length;
+      }
+    });
+
+    return separatorsCount;
   };
 
   test('has change session button on entitlement course', () => {
     const wrapper = createWrapper();
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.container).toMatchSnapshot();
     // it has 3 separator, 4 column
-    expect(wrapper.text().match(/•/g)).toHaveLength(3);
+    expect(fetchSeparators(wrapper)).toBe(3);
   });
 
   test('has change session button on entitlement course but no access message', () => {
     const wrapper = createWrapper({ accessMessage: null });
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.container).toMatchSnapshot();
     // it has 2 separator, 3 column
-    expect(wrapper.text().match(/•/g)).toHaveLength(2);
+    expect(fetchSeparators(wrapper)).toBe(2);
   });
 
   test('does not have change session button on regular course', () => {
     const wrapper = createWrapper({ isEntitlement: false });
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.container).toMatchSnapshot();
     // it has 2 separator, 3 column
-    expect(wrapper.text().match(/•/g)).toHaveLength(2);
+    expect(fetchSeparators(wrapper)).toBe(2);
   });
 });

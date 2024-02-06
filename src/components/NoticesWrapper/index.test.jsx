@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import useNoticesWrapperData from './hooks';
 import NoticesWrapper from '.';
@@ -22,13 +22,15 @@ describe('NoticesWrapper component', () => {
     it('does not show children if redirected', () => {
       useNoticesWrapperData.mockReturnValueOnce({ isRedirected: true });
       el = shallow(<NoticesWrapper>{children}</NoticesWrapper>);
-      expect(el.children().length).toEqual(0);
+      expect(el.instance.children.length).toEqual(0);
     });
     it('shows children if not redirected', () => {
       el = shallow(<NoticesWrapper>{children}</NoticesWrapper>);
-      expect(el.children().length).toEqual(2);
-      expect(el.children().at(0).matchesElement(children[0])).toEqual(true);
-      expect(el.children().at(1).matchesElement(children[1])).toEqual(true);
+      expect(el.instance.children.length).toEqual(2);
+      expect(el.instance.children[0].type).toEqual(shallow(children[0]).type);
+      expect(el.instance.props).toEqual(shallow(children[0]).props);
+      expect(el.instance.children[1].type).toEqual(shallow(children[1]).type);
+      expect(el.instance.props).toEqual(shallow(children[1]).props);
     });
   });
 });

@@ -1,4 +1,4 @@
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { reduxHooks } from 'hooks';
 import { useCourseListData, useIsCollapsed } from './hooks';
@@ -42,13 +42,13 @@ describe('CourseList', () => {
     test('snapshot', () => {
       reduxHooks.useHasCourses.mockReturnValue(true);
       const wrapper = createWrapper();
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
   });
   describe('no filters', () => {
     test('snapshot', () => {
       const wrapper = createWrapper();
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
   });
   describe('with filters', () => {
@@ -57,7 +57,7 @@ describe('CourseList', () => {
         filterOptions: { abitary: 'filter' },
         showFilters: true,
       });
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
   });
   describe('with multiple courses and pages', () => {
@@ -66,7 +66,7 @@ describe('CourseList', () => {
         visibleList: [{ cardId: 'foo' }, { cardId: 'bar' }, { cardId: 'baz' }],
         numPages: 3,
       });
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
   });
   describe('collapsed with multiple courses and pages', () => {
@@ -77,7 +77,7 @@ describe('CourseList', () => {
         numPages: 3,
         showFilters: true,
       });
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
   });
 });

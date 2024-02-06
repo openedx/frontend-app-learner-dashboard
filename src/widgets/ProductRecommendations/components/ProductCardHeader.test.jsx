@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import ProductCardHeader from './ProductCardHeader';
 import { executiveEducation, bootCamp } from '../constants';
@@ -22,14 +22,14 @@ describe('ProductRecommendations ProductCardHeader', () => {
   const coursesType = 'Courses';
 
   it('matches snapshot', () => {
-    expect(shallow(<ProductCardHeader courseType={executiveEducation} />)).toMatchSnapshot();
+    expect(shallow(<ProductCardHeader courseType={executiveEducation} />).snapshot).toMatchSnapshot();
   });
 
   describe('with bootcamp courseType prop', () => {
     it('renders a bootcamp header', () => {
       const wrapper = shallow(<ProductCardHeader courseType={bootCamp} />);
 
-      expect(wrapper.find('h3').text()).toEqual(bootCamp);
+      expect(wrapper.instance.findByType('h3')[0].children[0].el).toEqual(bootCamp);
     });
   });
 
@@ -37,16 +37,16 @@ describe('ProductRecommendations ProductCardHeader', () => {
     it('renders a courses header', () => {
       const wrapper = shallow(<ProductCardHeader courseType={coursesType} />);
 
-      expect(wrapper.find('h3').text()).toEqual(coursesType);
+      expect(wrapper.instance.findByType('h3')[0].children[0].el).toEqual(coursesType);
     });
   });
 
   it('send outs experiment events when clicked', () => {
     const wrapper = shallow(<ProductCardHeader courseType={executiveEducation} />);
-    const hyperLink = wrapper.find('Hyperlink');
+    const hyperLink = wrapper.instance.findByType('Hyperlink')[0];
     const execEdLink = 'http://localhost:18000/executive-education?linked_from=recommender';
 
-    hyperLink.simulate('click');
+    hyperLink.props.onClick();
 
     expect(trackProductHeaderClicked).toHaveBeenCalledWith('1');
     expect(recommendationsHeaderClicked).toHaveBeenCalledWith(executiveEducation, execEdLink);

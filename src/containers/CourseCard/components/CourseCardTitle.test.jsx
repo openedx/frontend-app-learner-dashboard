@@ -1,4 +1,4 @@
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { reduxHooks } from 'hooks';
 import track from 'tracking';
@@ -34,10 +34,10 @@ describe('CourseCardTitle', () => {
   describe('snapshot', () => {
     test('renders clickable link course title', () => {
       const wrapper = shallow(<CourseCardTitle {...props} />);
-      expect(wrapper).toMatchSnapshot();
-      const title = wrapper.find('.course-card-title');
-      expect(title.type()).toBe('a');
-      expect(title.prop('onClick')).toEqual(
+      expect(wrapper.snapshot).toMatchSnapshot();
+      const title = wrapper.instance.findByTestId('CourseCardTitle');
+      expect(title[0].type).toBe('a');
+      expect(title[0].props.onClick).toEqual(
         reduxHooks.useTrackCourseEvent(
           track.course.courseTitleClicked,
           props.cardId,
@@ -48,10 +48,10 @@ describe('CourseCardTitle', () => {
     test('renders disabled link', () => {
       useActionDisabledState.mockReturnValueOnce({ disableCourseTitle: true });
       const wrapper = shallow(<CourseCardTitle {...props} />);
-      expect(wrapper).toMatchSnapshot();
-      const title = wrapper.find('.course-card-title');
-      expect(title.type()).toBe('span');
-      expect(title.prop('onClick')).toBeUndefined();
+      expect(wrapper.snapshot).toMatchSnapshot();
+      const title = wrapper.instance.findByTestId('CourseCardTitle');
+      expect(title[0].type).toBe('span');
+      expect(title[0].props.onClick).toBeUndefined();
     });
   });
   describe('behavior', () => {

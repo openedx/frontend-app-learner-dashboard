@@ -1,4 +1,4 @@
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import hooks from 'widgets/ProductRecommendations/hooks';
 import { mockFooterRecommendationsHook } from 'widgets/ProductRecommendations/testData';
@@ -19,7 +19,7 @@ describe('WidgetFooter', () => {
       const wrapper = shallow(<WidgetFooter />);
 
       expect(hooks.useActivateRecommendationsExperiment).toHaveBeenCalled();
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
   });
 
@@ -30,7 +30,7 @@ describe('WidgetFooter', () => {
     const wrapper = shallow(<WidgetFooter />);
 
     expect(hooks.useActivateRecommendationsExperiment).toHaveBeenCalled();
-    expect(wrapper.type()).toBeNull();
+    expect(wrapper.shallowWrapper).toBeNull();
   });
 
   test('is hidden when the experiment has the control values', () => {
@@ -40,6 +40,6 @@ describe('WidgetFooter', () => {
     const wrapper = shallow(<WidgetFooter />);
 
     expect(hooks.useActivateRecommendationsExperiment).toHaveBeenCalled();
-    expect(wrapper.type()).toBeNull();
+    expect(wrapper.shallowWrapper).toBeNull();
   });
 });

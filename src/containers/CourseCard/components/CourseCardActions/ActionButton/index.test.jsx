@@ -1,4 +1,4 @@
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import ActionButton from '.';
 
@@ -14,12 +14,12 @@ describe('ActionButton', () => {
     test('is collapsed', () => {
       useIsCollapsed.mockReturnValueOnce(true);
       const wrapper = shallow(<ActionButton {...props} />);
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
     test('is not collapsed', () => {
       useIsCollapsed.mockReturnValueOnce(false);
       const wrapper = shallow(<ActionButton {...props} />);
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
   });
 });

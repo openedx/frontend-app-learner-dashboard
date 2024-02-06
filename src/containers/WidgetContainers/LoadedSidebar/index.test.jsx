@@ -1,4 +1,4 @@
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import hooks from 'widgets/ProductRecommendations/hooks';
 import { mockFooterRecommendationsHook } from 'widgets/ProductRecommendations/testData';
@@ -23,7 +23,7 @@ describe('WidgetSidebar', () => {
       const wrapper = shallow(<WidgetSidebar {...props} />);
 
       expect(props.setSidebarShowing).toHaveBeenCalledWith(true);
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
   });
 
@@ -34,7 +34,7 @@ describe('WidgetSidebar', () => {
     const wrapper = shallow(<WidgetSidebar {...props} />);
 
     expect(props.setSidebarShowing).not.toHaveBeenCalled();
-    expect(wrapper.type()).toBeNull();
+    expect(wrapper.shallowWrapper).toBeNull();
   });
 
   test('is hidden when the has the treatment values', () => {
@@ -44,6 +44,6 @@ describe('WidgetSidebar', () => {
     const wrapper = shallow(<WidgetSidebar {...props} />);
 
     expect(props.setSidebarShowing).not.toHaveBeenCalled();
-    expect(wrapper.type()).toBeNull();
+    expect(wrapper.shallowWrapper).toBeNull();
   });
 });

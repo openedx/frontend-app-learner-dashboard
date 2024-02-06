@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { Button } from '@edx/paragon';
 import LoadedView from './LoadedView';
@@ -40,21 +40,21 @@ describe('RecommendationsPanel LoadedView', () => {
     test('without personalize recommendation', () => {
       usePaintedDoorExperimentContext.mockReturnValueOnce(mockExperimentContext);
       const el = shallow(<LoadedView {...props} />);
-      expect(el).toMatchSnapshot();
-      expect(el.find('h3').text()).toEqual(messages.popularCoursesHeading.defaultMessage);
+      expect(el.snapshot).toMatchSnapshot();
+      expect(el.instance.findByType('h3')[0].children[0].el).toEqual(messages.popularCoursesHeading.defaultMessage);
     });
 
     test('with personalize recommendation', () => {
       usePaintedDoorExperimentContext.mockReturnValueOnce(mockExperimentContext);
       const el = shallow(<LoadedView {...props} isControl={false} />);
-      expect(el).toMatchSnapshot();
-      expect(el.find('h3').text()).toEqual(messages.recommendationsHeading.defaultMessage);
+      expect(el.snapshot).toMatchSnapshot();
+      expect(el.instance.findByType('h3')[0].children[0].el).toEqual(messages.recommendationsHeading.defaultMessage);
     });
 
     test('test painted door button is rendered if user is in variation', () => {
       usePaintedDoorExperimentContext.mockReturnValueOnce(mockExperimentContext);
       const wrapper = shallow(<LoadedView {...props} />);
-      expect(wrapper.find(RecommendationsPaintedDoorBtn).exists()).toEqual(true);
+      expect(wrapper.instance.findByType(RecommendationsPaintedDoorBtn)).not.toHaveLength(0);
     });
 
     test('test explore courses button is returned if user is not in variation', () => {
@@ -64,8 +64,9 @@ describe('RecommendationsPanel LoadedView', () => {
       };
       usePaintedDoorExperimentContext.mockReturnValueOnce(mockExperimentContext);
       const wrapper = shallow(<LoadedView {...props} />);
-      expect(wrapper.find(RecommendationsPaintedDoorBtn).exists()).toEqual(false);
-      expect(wrapper.find(Button).text()).toEqual(messages.exploreCoursesButton.defaultMessage);
+      expect(wrapper.instance.findByType(RecommendationsPaintedDoorBtn)).toHaveLength(0);
+      expect(wrapper.instance.findByType(Button)[0].children[0].el)
+        .toEqual(messages.exploreCoursesButton.defaultMessage);
     });
 
     test('test explore courses button is returned if experiment is loading', () => {
@@ -76,8 +77,9 @@ describe('RecommendationsPanel LoadedView', () => {
       };
       usePaintedDoorExperimentContext.mockReturnValueOnce(mockExperimentContext);
       const wrapper = shallow(<LoadedView {...props} />);
-      expect(wrapper.find(RecommendationsPaintedDoorBtn).exists()).toEqual(false);
-      expect(wrapper.find(Button).text()).toEqual(messages.exploreCoursesButton.defaultMessage);
+      expect(wrapper.instance.findByType(RecommendationsPaintedDoorBtn)).toHaveLength(0);
+      expect(wrapper.instance.findByType(Button)[0].children[0].el)
+        .toEqual(messages.exploreCoursesButton.defaultMessage);
     });
   });
 });
