@@ -42,7 +42,7 @@ export const ExpandedHeader = () => {
         </Button>
         <Button
           as="a"
-          href={urls.programsUrl}
+          href={urls.programsUrl()}
           variant="inverse-primary"
           className="p-4"
         >
