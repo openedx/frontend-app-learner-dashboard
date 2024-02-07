@@ -77,5 +77,13 @@ describe('AuthenticatedUserDropdown', () => {
       const wrapper = shallow(<AuthenticatedUserDropdown />);
       expect(wrapper.snapshot).toMatchSnapshot();
     });
+    test('no username in header', () => {
+      getConfig.mockReturnValue({
+        ...config,
+        HIDE_USERNAME_FROM_HEADER: true,
+      });
+      const wrapper = shallow(<AuthenticatedUserDropdown />);
+      expect(wrapper.snapshot).toMatchSnapshot();
+    });
   });
 });
