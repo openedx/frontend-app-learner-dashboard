@@ -1,4 +1,4 @@
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { reduxHooks } from 'hooks';
 
@@ -22,11 +22,11 @@ describe('CourseCardBanners', () => {
   };
   test('renders default CourseCardBanners', () => {
     const wrapper = shallow(<CourseCardBanners {...props} />);
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.snapshot).toMatchSnapshot();
   });
   test('render with isEnrolled false', () => {
     reduxHooks.useCardEnrollmentData.mockReturnValueOnce({ isEnrolled: false });
     const wrapper = shallow(<CourseCardBanners {...props} />);
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.snapshot).toMatchSnapshot();
   });
 });

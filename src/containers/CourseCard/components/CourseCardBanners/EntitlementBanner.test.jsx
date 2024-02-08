@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { reduxHooks } from 'hooks';
 import EntitlementBanner from './EntitlementBanner';
@@ -50,11 +50,11 @@ describe('EntitlementBanner', () => {
   });
   test('snapshot: no sessions available', () => {
     render({ entitlement: { isFulfilled: false, hasSessions: false } });
-    expect(el).toMatchSnapshot();
+    expect(el.snapshot).toMatchSnapshot();
   });
   test('snapshot: expiration warning', () => {
     render({ entitlement: { showExpirationWarning: true } });
-    expect(el).toMatchSnapshot();
+    expect(el.snapshot).toMatchSnapshot();
   });
   test('no display if sessions available and not displaying warning', () => {
     render();

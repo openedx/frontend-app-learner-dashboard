@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { MockUseState } from 'testUtils';
 
@@ -112,7 +112,7 @@ describe('Painted door experiments context', () => {
         isLoading: false,
       });
 
-      mount(
+      shallow(
         <PaintedDoorExperimentProvider>
           <TestComponent />
         </PaintedDoorExperimentProvider>,
@@ -136,7 +136,7 @@ describe('Painted door experiments context', () => {
         isLoading: false,
       });
 
-      mount(
+      shallow(
         <PaintedDoorExperimentProvider>
           <TestComponent />
         </PaintedDoorExperimentProvider>,

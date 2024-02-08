@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AuthenticatedUserDropdown snapshots no auth render empty 1`] = `""`;
+exports[`AuthenticatedUserDropdown snapshots no auth render empty 1`] = `null`;
 
 exports[`AuthenticatedUserDropdown snapshots with enterprise dashboard 1`] = `
 <Dropdown
@@ -22,26 +22,28 @@ exports[`AuthenticatedUserDropdown snapshots with enterprise dashboard 1`] = `
   <Dropdown.Menu
     className="dropdown-menu-right"
   >
-    <Dropdown.Header>
-      SWITCH DASHBOARD
-    </Dropdown.Header>
-    <Dropdown.Item
-      as="a"
-      className="active"
-      href="/edx-dashboard"
-    >
-      Personal
-    </Dropdown.Item>
-    <Dropdown.Item
-      as="a"
-      href="url"
-      key="label"
-    >
-      label
-       
-      Dashboard
-    </Dropdown.Item>
-    <Dropdown.Divider />
+    <Fragment>
+      <Dropdown.Header>
+        SWITCH DASHBOARD
+      </Dropdown.Header>
+      <Dropdown.Item
+        as="a"
+        className="active"
+        href="/edx-dashboard"
+      >
+        Personal
+      </Dropdown.Item>
+      <Dropdown.Item
+        as="a"
+        href="url"
+        key="label"
+      >
+        label
+         
+        Dashboard
+      </Dropdown.Item>
+      <Dropdown.Divider />
+    </Fragment>
     <Dropdown.Item
       href="http://account-profile-url.test/u/username"
     >
@@ -87,17 +89,19 @@ exports[`AuthenticatedUserDropdown snapshots without enterprise dashboard and ex
   <Dropdown.Menu
     className="dropdown-menu-right"
   >
-    <Dropdown.Header>
-      SWITCH DASHBOARD
-    </Dropdown.Header>
-    <Dropdown.Item
-      as="a"
-      className="active"
-      href="/edx-dashboard"
-    >
-      Personal
-    </Dropdown.Item>
-    <Dropdown.Divider />
+    <Fragment>
+      <Dropdown.Header>
+        SWITCH DASHBOARD
+      </Dropdown.Header>
+      <Dropdown.Item
+        as="a"
+        className="active"
+        href="/edx-dashboard"
+      >
+        Personal
+      </Dropdown.Item>
+      <Dropdown.Divider />
+    </Fragment>
     <Dropdown.Item
       href="http://localhost:18000/career"
     >

@@ -1,10 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SelectSessionButton default render 1`] = `undefined`;
+exports[`SelectSessionButton default render 1`] = `
+<ActionButton
+  disabled={false}
+  onClick={[MockFunction mockOpenSessionModal]}
+>
+  Select Session
+</ActionButton>
+`;
 
 exports[`SelectSessionButton disabled states 1`] = `
 <ActionButton
-  disabled={false}
+  disabled={true}
   onClick={[MockFunction mockOpenSessionModal]}
 >
   Select Session

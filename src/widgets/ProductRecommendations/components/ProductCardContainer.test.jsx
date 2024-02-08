@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { mockCrossProductCourses, mockOpenCourses } from '../testData';
 import ProductCardContainer from './ProductCardContainer';
@@ -12,17 +12,17 @@ describe('ProductRecommendations ProductCardContainer', () => {
   };
 
   it('matches snapshot', () => {
-    expect(shallow(<ProductCardContainer {...props} />)).toMatchSnapshot();
+    expect(shallow(<ProductCardContainer {...props} />).snapshot).toMatchSnapshot();
   });
 
   describe('with finalCourseList containing cross product and open courses', () => {
     it('renders 3 ProductCardHeaders with the 3 different course types', () => {
       const wrapper = shallow(<ProductCardContainer {...props} />);
-      const productCardHeaders = wrapper.find('ProductCardHeader');
+      const productCardHeaders = wrapper.instance.findByType('ProductCardHeader');
 
       expect(productCardHeaders.length).toEqual(3);
       productCardHeaders.forEach((header, index) => {
-        expect(header.props().courseType).toEqual(props.courseTypes[index]);
+        expect(header.props.courseType).toEqual(props.courseTypes[index]);
       });
     });
   });
@@ -35,10 +35,10 @@ describe('ProductRecommendations ProductCardContainer', () => {
       };
 
       const wrapper = shallow(<ProductCardContainer {...openCoursesProps} />);
-      const productCardHeaders = wrapper.find('ProductCardHeader');
+      const productCardHeaders = wrapper.instance.findByType('ProductCardHeader');
 
       expect(productCardHeaders.length).toEqual(1);
-      expect(productCardHeaders.at(0).props().courseType).toEqual(openCoursesProps.courseTypes[0]);
+      expect(productCardHeaders[0].props.courseType).toEqual(openCoursesProps.courseTypes[0]);
     });
   });
 });

@@ -1,4 +1,4 @@
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import LookingForChallengeWidget from '.';
 
@@ -18,7 +18,7 @@ describe('LookingForChallengeWidget', () => {
   describe('snapshots', () => {
     test('default', () => {
       const wrapper = shallow(<LookingForChallengeWidget />);
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
   });
 });

@@ -4,7 +4,7 @@ exports[`ModalView snapshot should renders default ModalView 1`] = `
 <div
   className="containers modal-container"
 >
-  <ModalDialog
+  <[object Object]
     hasCloseButton={false}
     isBlocking={true}
     isFullscreenScroll={true}
@@ -13,11 +13,11 @@ exports[`ModalView snapshot should renders default ModalView 1`] = `
     title=""
   >
     <ModalDialog.Header>
-      <Component
+      <ModalDialog.Title
         className="mt-2"
       >
         Thank you for your interest!
-      </Component>
+      </ModalDialog.Title>
     </ModalDialog.Header>
     <ModalDialog.Body>
       <div>
@@ -31,22 +31,22 @@ exports[`ModalView snapshot should renders default ModalView 1`] = `
         </p>
       </div>
     </ModalDialog.Body>
-    <Component>
+    <ModalDialog.Footer>
       <ActionRow>
-        <Component
+        <ModalDialog.CloseButton
           onClick={[Function]}
           variant="tertiary"
         >
           Skip for now
-        </Component>
-        <Component
+        </ModalDialog.CloseButton>
+        <ModalDialog.CloseButton
           onClick={[Function]}
           variant="primary"
         >
           Count me in!
-        </Component>
+        </ModalDialog.CloseButton>
       </ActionRow>
-    </Component>
-  </ModalDialog>
+    </ModalDialog.Footer>
+  </[object Object]>
 </div>
 `;

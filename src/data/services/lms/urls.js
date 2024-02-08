@@ -10,9 +10,9 @@ export const getApiUrl = () => (`${getConfig().LMS_BASE_URL}/api`);
 
 const getInitApiUrl = () => (`${getApiUrl()}/learner_home/init`);
 
-const event = `${getBaseUrl()}/event`;
-const courseUnenroll = `${getBaseUrl()}/change_enrollment`;
-const updateEmailSettings = `${getApiUrl()}/change_email_settings`;
+const event = () => `${getBaseUrl()}/event`;
+const courseUnenroll = () => `${getBaseUrl()}/change_enrollment`;
+const updateEmailSettings = () => `${getApiUrl()}/change_email_settings`;
 const entitlementEnrollment = (uuid) => `${getApiUrl()}/entitlements/v1/entitlements/${uuid}/enrollments`;
 
 // if url is null or absolute, return it as is
@@ -22,7 +22,7 @@ export const baseAppUrl = (url) => updateUrl(getBaseUrl(), url);
 export const learningMfeUrl = (url) => updateUrl(getConfig().LEARNING_BASE_URL, url);
 
 // static view url
-const programsUrl = baseAppUrl('/dashboard/programs');
+const programsUrl = () => baseAppUrl('/dashboard/programs');
 
 export const creditPurchaseUrl = (courseId) => `${getEcommerceUrl()}/credit/checkout/${courseId}/`;
 export const creditRequestUrl = (providerId) => `${getApiUrl()}/credit/v1/providers/${providerId}/request/`;

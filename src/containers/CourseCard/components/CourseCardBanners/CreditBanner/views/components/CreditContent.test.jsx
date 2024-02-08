@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import CreditContent from './CreditContent';
 
@@ -22,24 +22,24 @@ describe('CreditContent component', () => {
         el = shallow(<CreditContent {...props} />);
       });
       test('snapshot', () => {
-        expect(el).toMatchSnapshot();
+        expect(el.snapshot).toMatchSnapshot();
       });
       it('loads href, onClick, and message into action row button', () => {
-        const buttonEl = el.find('ActionRow Button');
-        expect(buttonEl.props().href).toEqual(action.href);
-        expect(buttonEl.props().onClick).toEqual(action.onClick);
-        expect(buttonEl.props().disabled).toEqual(action.disabled);
-        expect(buttonEl.text()).toEqual(action.message);
+        const buttonEl = el.instance.findByTestId('action-row-btn')[0];
+        expect(buttonEl.props.href).toEqual(action.href);
+        expect(buttonEl.props.onClick).toEqual(action.onClick);
+        expect(buttonEl.props.disabled).toEqual(action.disabled);
+        expect(buttonEl.children[0].el).toEqual(action.message);
       });
       it('loads message into credit-msg div', () => {
-        expect(el.find('div.credit-msg').text()).toEqual(message);
+        expect(el.instance.findByTestId('credit-msg')[0].children[0].el).toEqual(message);
       });
       it('loads CreditRequestForm with passed requestData', () => {
-        expect(el.find('CreditRequestForm').props().requestData).toEqual(requestData);
+        expect(el.instance.findByType('CreditRequestForm')[0].props.requestData).toEqual(requestData);
       });
       test('disables action button when action.disabled is true', () => {
-        el.setProps({ action: { ...action, disabled: true } });
-        expect(el.find('ActionRow Button').props().disabled).toEqual(true);
+        el = shallow(<CreditContent {...props} action={{ ...action, disabled: true }} />);
+        expect(el.instance.findByTestId('action-row-btn')[0].props.disabled).toEqual(true);
       });
     });
     describe('without action', () => {
@@ -47,13 +47,13 @@ describe('CreditContent component', () => {
         el = shallow(<CreditContent {...{ message, requestData }} />);
       });
       test('snapshot', () => {
-        expect(el).toMatchSnapshot();
+        expect(el.snapshot).toMatchSnapshot();
       });
       it('loads message into credit-msg div', () => {
-        expect(el.find('div.credit-msg').text()).toEqual(message);
+        expect(el.instance.findByTestId('credit-msg')[0].children[0].el).toEqual(message);
       });
       it('loads CreditRequestForm with passed requestData', () => {
-        expect(el.find('CreditRequestForm').props().requestData).toEqual(requestData);
+        expect(el.instance.findByType('CreditRequestForm')[0].props.requestData).toEqual(requestData);
       });
     });
   });

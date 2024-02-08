@@ -1,54 +1,56 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`CourseCard Details component does not have change session button on regular course 1`] = `
-<span
-  className="small"
-  data-testid="CourseCardDetails"
->
-  provider-name
-   • 
-  test-course-number
-   • access-message
-</span>
+<div>
+  <span
+    class="small"
+    data-testid="CourseCardDetails"
+  >
+    provider-name
+     • 
+    test-course-number
+     • access-message
+  </span>
+</div>
 `;
 
 exports[`CourseCard Details component has change session button on entitlement course 1`] = `
-<span
-  className="small"
-  data-testid="CourseCardDetails"
->
-  provider-name
-   • 
-  test-course-number
-   • access-message
-   • 
-  <Button
-    className="m-0 p-0"
-    onClick={[MockFunction useSelectSession.openSessionModal]}
-    size="inline"
-    variant="link"
+<div>
+  <span
+    class="small"
+    data-testid="CourseCardDetails"
   >
-    change-or-leave-session-message
-  </Button>
-</span>
+    provider-name
+     • 
+    test-course-number
+     • access-message
+     • 
+    <button
+      class="m-0 p-0"
+      variant="link"
+    >
+      change-or-leave-session-message
+    </button>
+  </span>
+</div>
 `;
 
 exports[`CourseCard Details component has change session button on entitlement course but no access message 1`] = `
-<span
-  className="small"
-  data-testid="CourseCardDetails"
->
-  provider-name
-   • 
-  test-course-number
-   • 
-  <Button
-    className="m-0 p-0"
-    onClick={[MockFunction useSelectSession.openSessionModal]}
-    size="inline"
-    variant="link"
+<div>
+  <span
+    class="small"
+    data-testid="CourseCardDetails"
   >
-    change-or-leave-session-message
-  </Button>
-</span>
+    provider-name
+     • 
+    test-course-number
+     • 
+    <button
+      class="m-0 p-0"
+      variant="link"
+    >
+      change-or-leave-session-message
+    </button>
+  </span>
+</div>
 `;

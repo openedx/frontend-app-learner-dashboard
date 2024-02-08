@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import hooks from './hooks';
 import EmailSettingsModal from '.';
@@ -40,18 +40,18 @@ describe('EmailSettingsModal', () => {
   describe('render', () => {
     test('snapshot: emails disabled, show: false', () => {
       hooks.mockReturnValueOnce(hookProps);
-      expect(shallow(<EmailSettingsModal {...props} show={false} />)).toMatchSnapshot();
+      expect(shallow(<EmailSettingsModal {...props} show={false} />).snapshot).toMatchSnapshot();
     });
     test('snapshot: emails disabled, show: true', () => {
       hooks.mockReturnValueOnce(hookProps);
-      expect(shallow(<EmailSettingsModal {...props} />)).toMatchSnapshot();
+      expect(shallow(<EmailSettingsModal {...props} />).snapshot).toMatchSnapshot();
     });
     test('snapshot: emails enabled, show: true', () => {
       hooks.mockReturnValueOnce({
         ...hookProps,
         isOptedOut: false,
       });
-      expect(shallow(<EmailSettingsModal {...props} />)).toMatchSnapshot();
+      expect(shallow(<EmailSettingsModal {...props} />).snapshot).toMatchSnapshot();
     });
   });
 });

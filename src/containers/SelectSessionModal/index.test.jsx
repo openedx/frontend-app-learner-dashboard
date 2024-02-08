@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import hooks from './hooks';
 import SelectSessionModal from '.';
@@ -30,7 +30,7 @@ describe('SelectSessionModal', () => {
       hooks.mockReturnValueOnce({
         ...hookReturn,
       });
-      expect(shallow(<SelectSessionModal />)).toMatchSnapshot();
+      expect(shallow(<SelectSessionModal />).snapshot).toMatchSnapshot();
     });
 
     test('modal with leave option ', () => {
@@ -38,7 +38,7 @@ describe('SelectSessionModal', () => {
         ...hookReturn,
         availableSessions: [...availableSessions],
       });
-      expect(shallow(<SelectSessionModal />)).toMatchSnapshot();
+      expect(shallow(<SelectSessionModal />).snapshot).toMatchSnapshot();
     });
 
     test('modal without leave option ', () => {
@@ -47,7 +47,7 @@ describe('SelectSessionModal', () => {
         availableSessions,
         showLeaveOption: false,
       });
-      expect(shallow(<SelectSessionModal />)).toMatchSnapshot();
+      expect(shallow(<SelectSessionModal />).snapshot).toMatchSnapshot();
     });
   });
 });

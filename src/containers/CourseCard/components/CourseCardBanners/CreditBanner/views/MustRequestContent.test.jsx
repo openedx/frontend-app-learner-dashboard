@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { formatMessage } from 'testUtils';
 
@@ -45,21 +45,21 @@ describe('MustRequestContent component', () => {
   describe('render', () => {
     describe('rendered CreditContent component', () => {
       beforeEach(() => {
-        component = el.find('CreditContent');
+        component = el.instance.findByType('CreditContent');
       });
       test('action.onClick calls createCreditRequest from useCreditRequestData hook', () => {
-        expect(component.props().action.onClick).toEqual(createCreditRequest);
+        expect(component[0].props.action.onClick).toEqual(createCreditRequest);
       });
       test('action.message is formatted requestCredit message', () => {
-        expect(component.props().action.message).toEqual(
+        expect(component[0].props.action.message).toEqual(
           formatMessage(messages.requestCredit),
         );
       });
       test('action.disabled is false', () => {
-        expect(component.props().action.disabled).toEqual(false);
+        expect(component[0].props.action.disabled).toEqual(false);
       });
       test('message is formatted mustRequest message', () => {
-        expect(component.props().message).toEqual(
+        expect(component[0].props.message).toEqual(
           formatMessage(messages.mustRequest, {
             linkToProviderSite: <ProviderLink cardId={cardId} />,
             requestCredit: <b>{formatMessage(messages.requestCredit)}</b>,
@@ -67,7 +67,7 @@ describe('MustRequestContent component', () => {
         );
       });
       test('requestData drawn from useCreditRequestData hook', () => {
-        expect(component.props().requestData).toEqual(requestData);
+        expect(component[0].props.requestData).toEqual(requestData);
       });
     });
   });

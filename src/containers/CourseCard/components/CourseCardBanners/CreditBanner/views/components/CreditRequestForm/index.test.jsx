@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { keyStore } from 'utils';
 
@@ -46,19 +46,19 @@ describe('CreditRequestForm component', () => {
         shallowRender(requestData);
       });
       test('snapshot', () => {
-        expect(el).toMatchSnapshot();
+        expect(el.snapshot).toMatchSnapshot();
       });
       it('loads Form with requestData url', () => {
-        expect(el.find('Form').props().action).toEqual(requestData.url);
+        expect(el.instance.findByType('Form')[0].props.action).toEqual(requestData.url);
       });
       it('loads a textarea form control for each requestData parameter', () => {
-        const controls = el.find('FormControl');
-        expect(controls.at(0).props().name).toEqual(paramKeys.key1);
-        expect(controls.at(0).props().value).toEqual(requestData.parameters.key1);
-        expect(controls.at(1).props().name).toEqual(paramKeys.key2);
-        expect(controls.at(1).props().value).toEqual(requestData.parameters.key2);
-        expect(controls.at(2).props().name).toEqual(paramKeys.key3);
-        expect(controls.at(2).props().value).toEqual(requestData.parameters.key3);
+        const controls = el.instance.findByType('FormControl');
+        expect(controls[0].props.name).toEqual(paramKeys.key1);
+        expect(controls[0].props.value).toEqual(requestData.parameters.key1);
+        expect(controls[1].props.name).toEqual(paramKeys.key2);
+        expect(controls[1].props.value).toEqual(requestData.parameters.key2);
+        expect(controls[2].props.name).toEqual(paramKeys.key3);
+        expect(controls[2].props.value).toEqual(requestData.parameters.key3);
       });
     });
   });

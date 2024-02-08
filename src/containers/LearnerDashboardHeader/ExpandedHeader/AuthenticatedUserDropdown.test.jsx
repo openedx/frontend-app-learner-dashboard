@@ -1,4 +1,4 @@
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { reduxHooks } from 'hooks';
 import { getConfig } from '@edx/frontend-platform';
@@ -61,7 +61,7 @@ describe('AuthenticatedUserDropdown', () => {
       const { authenticatedUser } = AppContext;
       AppContext.authenticatedUser = null;
       const wrapper = shallow(<AuthenticatedUserDropdown />);
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
       expect(wrapper.isEmptyRender()).toBe(true);
       AppContext.authenticatedUser = authenticatedUser;
     });
@@ -69,13 +69,13 @@ describe('AuthenticatedUserDropdown', () => {
       reduxHooks.useEnterpriseDashboardData.mockReturnValueOnce(defaultDashboardData);
       useIsCollapsed.mockReturnValueOnce(true);
       const wrapper = shallow(<AuthenticatedUserDropdown />);
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
     test('without enterprise dashboard and expanded', () => {
       reduxHooks.useEnterpriseDashboardData.mockReturnValueOnce(null);
       useIsCollapsed.mockReturnValueOnce(false);
       const wrapper = shallow(<AuthenticatedUserDropdown />);
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
   });
 });

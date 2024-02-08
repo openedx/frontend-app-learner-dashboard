@@ -52,4 +52,4 @@ exports[`ExpandedHeader render 1`] = `
 </header>
 `;
 
-exports[`ExpandedHeader render empty if collapsed 1`] = `""`;
+exports[`ExpandedHeader render empty if collapsed 1`] = `null`;
