@@ -34,16 +34,16 @@ export const deleteEntitlementEnrollment = ({ uuid, isRefundable }) => client()
   );
 
 export const updateEmailSettings = ({ courseId, enable }) => post(
-  urls.updateEmailSettings,
+  urls.updateEmailSettings(),
   { [apiKeys.courseId]: courseId, ...(enable && enableEmailsAction) },
 );
 
 export const unenrollFromCourse = ({ courseId }) => post(
-  urls.courseUnenroll,
+  urls.courseUnenroll(),
   { [apiKeys.courseId]: courseId, ...unenrollmentAction },
 );
 
-export const logEvent = ({ eventName, data, courseId }) => post(urls.event, {
+export const logEvent = ({ eventName, data, courseId }) => post(urls.event(), {
   courserun_key: courseId,
   event_type: eventName,
   page: window.location.href,
