@@ -62,10 +62,15 @@ exports[`RecommendationsPanel LoadedView RecommendationPanelLoadedView with pers
   <div
     className="text-center explore-courses-btn"
   >
-    <RecommendationsPaintedDoorBtn
-      experimentVariation=""
-      placement="recommendationsPanel"
-    />
+    <Button
+      as="a"
+      href="http://localhost:18000/course-search-url"
+      iconBefore={[MockFunction icons.Search]}
+      onClick={[MockFunction track.findCoursesWidgetClicked('http://localhost:18000/course-search-url')]}
+      variant="tertiary"
+    >
+      Explore courses
+    </Button>
   </div>
 </div>
 `;
@@ -132,10 +137,15 @@ exports[`RecommendationsPanel LoadedView RecommendationPanelLoadedView without p
   <div
     className="text-center explore-courses-btn"
   >
-    <RecommendationsPaintedDoorBtn
-      experimentVariation=""
-      placement="recommendationsPanel"
-    />
+    <Button
+      as="a"
+      href="http://localhost:18000/course-search-url"
+      iconBefore={[MockFunction icons.Search]}
+      onClick={[MockFunction track.findCoursesWidgetClicked('http://localhost:18000/course-search-url')]}
+      variant="tertiary"
+    >
+      Explore courses
+    </Button>
   </div>
 </div>
 `;

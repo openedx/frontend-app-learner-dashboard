@@ -7,8 +7,6 @@ import mockData from './mockData';
 import LoadedView from './LoadedView';
 import LoadingView from './LoadingView';
 import RecommendationsPanel from '.';
-import { usePaintedDoorExperimentContext } from '../RecommendationsPaintedDoorBtn/PaintedDoorExperimentContext';
-import RecommendationsPaintedDoorBtn from '../RecommendationsPaintedDoorBtn';
 
 jest.mock('./hooks', () => ({
   useRecommendationPanelData: jest.fn(),
@@ -16,9 +14,6 @@ jest.mock('./hooks', () => ({
 jest.mock('widgets/LookingForChallengeWidget', () => 'LookingForChallengeWidget');
 jest.mock('./LoadingView', () => 'LoadingView');
 jest.mock('./LoadedView', () => 'LoadedView');
-jest.mock('widgets/RecommendationsPaintedDoorBtn/PaintedDoorExperimentContext', () => ({
-  usePaintedDoorExperimentContext: jest.fn(),
-}));
 
 const { courses } = mockData;
 
@@ -34,13 +29,6 @@ describe('RecommendationsPanel snapshot', () => {
     ...defaultLoadedViewProps,
   };
   describe('RecommendationsPanel recommendations tests', () => {
-    beforeEach(() => {
-      usePaintedDoorExperimentContext.mockReturnValueOnce({
-        experimentVariation: '',
-        isPaintedDoorWidgetBtnVariation: false,
-        experimentLoading: false,
-      });
-    });
     it('displays LoadingView if request is loading', () => {
       hooks.useRecommendationPanelData.mockReturnValueOnce({
         ...defaultValues,
@@ -72,67 +60,6 @@ describe('RecommendationsPanel snapshot', () => {
       hooks.useRecommendationPanelData.mockReturnValueOnce({
         ...defaultValues,
       });
-      expect({ ...shallow(<RecommendationsPanel />).shallowWrapper, children: expect.any(Array) }).toMatchObject(
-        shallow(<LookingForChallengeWidget />),
-      );
-    });
-  });
-
-  describe('RecommendationsPanel painted door exp tests', () => {
-    it('displays painted door btn if user is in variation and request is failed', () => {
-      hooks.useRecommendationPanelData.mockReturnValueOnce({
-        ...defaultValues,
-        isFailed: true,
-      });
-      usePaintedDoorExperimentContext.mockReturnValueOnce({
-        experimentVariation: '',
-        isPaintedDoorWidgetBtnVariation: true,
-        experimentLoading: false,
-      });
-
-      const wrapper = shallow(<RecommendationsPanel />);
-      expect(wrapper.instance.findByType(RecommendationsPaintedDoorBtn)).not.toHaveLength(0);
-    });
-    it('displays painted door btn if user is in variation and no flags are set (defaults)', () => {
-      hooks.useRecommendationPanelData.mockReturnValueOnce({
-        ...defaultValues,
-        isFailed: true,
-      });
-      usePaintedDoorExperimentContext.mockReturnValueOnce({
-        experimentVariation: '',
-        isPaintedDoorWidgetBtnVariation: true,
-        experimentLoading: false,
-      });
-
-      const wrapper = shallow(<RecommendationsPanel />);
-      expect(wrapper.instance.findByType(RecommendationsPaintedDoorBtn)).not.toHaveLength(0);
-    });
-    it('renders only LookingForChallengeWidget if user is not in variation', () => {
-      hooks.useRecommendationPanelData.mockReturnValueOnce({
-        ...defaultValues,
-        isFailed: true,
-      });
-      usePaintedDoorExperimentContext.mockReturnValueOnce({
-        experimentVariation: '',
-        isPaintedDoorWidgetBtnVariation: false,
-        experimentLoading: false,
-      });
-
-      expect({ ...shallow(<RecommendationsPanel />).shallowWrapper, children: expect.any(Array) }).toMatchObject(
-        shallow(<LookingForChallengeWidget />),
-      );
-    });
-    it('renders only LookingForChallengeWidget if experiment is loading', () => {
-      hooks.useRecommendationPanelData.mockReturnValueOnce({
-        ...defaultValues,
-        isFailed: true,
-      });
-      usePaintedDoorExperimentContext.mockReturnValueOnce({
-        experimentVariation: '',
-        isPaintedDoorWidgetBtnVariation: false,
-        experimentLoading: true,
-      });
-
       expect({ ...shallow(<RecommendationsPanel />).shallowWrapper, children: expect.any(Array) }).toMatchObject(
         shallow(<LookingForChallengeWidget />),
       );
