@@ -6,8 +6,8 @@ jest.mock('../../track', () => ({
   trackPaintedDoorRecommendationHomeSkipBtnClicked: jest.fn(),
   trackPaintedDoorRecommendationHomeInterestBtnClicked: jest.fn(),
 }));
-jest.mock('@edx/paragon', () => ({
-  ...jest.requireActual('@edx/paragon'),
+jest.mock('@openedx/paragon', () => ({
+  ...jest.requireActual('@openedx/paragon'),
   ModalDialog: {
     Body: 'ModalDialog.Body',
     Header: 'ModalDialog.Header',
