@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { formatMessage } from 'testUtils';
 import { reduxHooks } from 'hooks';
@@ -25,7 +25,7 @@ reduxHooks.useCardCreditData.mockReturnValue(credit);
 let el;
 let component;
 const render = () => { el = shallow(<RejectedContent cardId={cardId} />); };
-const loadComponent = () => { component = el.find('CreditContent'); };
+const loadComponent = () => { component = el.instance.findByType('CreditContent'); };
 
 describe('RejectedContent component', () => {
   beforeEach(render);
@@ -38,10 +38,10 @@ describe('RejectedContent component', () => {
     describe('rendered CreditContent component', () => {
       beforeAll(loadComponent);
       test('no action is passed', () => {
-        expect(component.props().action).toEqual(undefined);
+        expect(component[0].props.action).toEqual(undefined);
       });
       test('message is formatted rejected message', () => {
-        expect(component.props().message).toEqual(formatMessage(
+        expect(component[0].props.message).toEqual(formatMessage(
           messages.rejected,
           {
             linkToProviderSite: <ProviderLink cardId={cardId} />,

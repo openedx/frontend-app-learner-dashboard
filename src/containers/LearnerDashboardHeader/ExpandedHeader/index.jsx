@@ -19,10 +19,15 @@ export const ExpandedHeader = () => {
   const { courseSearchUrl } = reduxHooks.usePlatformSettingsData();
   const isCollapsed = useIsCollapsed();
 
-  const exploreCoursesClick = findCoursesNavClicked(urls.baseAppUrl(courseSearchUrl));
+  const exploreCoursesClick = findCoursesNavClicked(
+    urls.baseAppUrl(courseSearchUrl),
+  );
+
+  if (isCollapsed) {
+    return null;
+  }
 
   return (
-    !isCollapsed && (
     <header className="d-flex shadow-sm align-items-center learner-variant-header pl-4">
       <div className="flex-grow-1 d-flex align-items-center">
         <BrandLogo />
@@ -37,7 +42,7 @@ export const ExpandedHeader = () => {
         </Button>
         <Button
           as="a"
-          href={urls.programsUrl}
+          href={urls.programsUrl()}
           variant="inverse-primary"
           className="p-4"
         >
@@ -66,7 +71,6 @@ export const ExpandedHeader = () => {
 
       <AuthenticatedUserDropdown />
     </header>
-    )
   );
 };
 

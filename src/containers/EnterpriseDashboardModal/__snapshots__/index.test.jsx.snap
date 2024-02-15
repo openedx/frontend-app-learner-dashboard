@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`EnterpriseDashboard empty snapshot 1`] = `""`;
+exports[`EnterpriseDashboard empty snapshot 1`] = `null`;
 
 exports[`EnterpriseDashboard snapshot 1`] = `
 <ModalDialog

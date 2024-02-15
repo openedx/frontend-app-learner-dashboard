@@ -6,7 +6,7 @@ import CreditRequestForm from './CreditRequestForm';
 
 export const CreditContent = ({ action, message, requestData }) => (
   <>
-    <div className="message-copy credit-msg">
+    <div className="message-copy credit-msg" data-testid="credit-msg">
       {message}
     </div>
     {action && (
@@ -21,6 +21,7 @@ export const CreditContent = ({ action, message, requestData }) => (
           variant="outline-primary"
           className="border-gray-400"
           onClick={action.onClick}
+          data-testid="action-row-btn"
         >
           {action.message}
         </Button>

@@ -1,4 +1,4 @@
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { Alert } from '@openedx/paragon';
 
@@ -11,17 +11,17 @@ describe('Banner', () => {
   describe('snapshot', () => {
     test('renders default banner', () => {
       const wrapper = shallow(<Banner {...props} />);
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
     test('renders with variants', () => {
       const wrapper = shallow(<Banner {...props} variant="success" />);
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
 
-      expect(wrapper.find(Alert).prop('variant')).toEqual('success');
+      expect(wrapper.instance.findByType(Alert)[0].props.variant).toEqual('success');
     });
     test('renders with custom class', () => {
       const wrapper = shallow(<Banner {...props} className="custom-class" />);
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
   });
 });

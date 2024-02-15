@@ -1,4 +1,4 @@
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { reduxHooks } from 'hooks';
 import BrandLogo from './BrandLogo';
@@ -15,14 +15,14 @@ describe('BrandLogo', () => {
       url: 'url',
     });
     const wrapper = shallow(<BrandLogo />);
-    expect(wrapper).toMatchSnapshot();
-    expect(wrapper.find('a').prop('href')).toEqual('url');
+    expect(wrapper.snapshot).toMatchSnapshot();
+    expect(wrapper.instance.findByType('a')[0].props.href).toEqual('url');
   });
 
   test('dashboard undefined', () => {
     reduxHooks.useEnterpriseDashboardData.mockReturnValueOnce(null);
     const wrapper = shallow(<BrandLogo />);
-    expect(wrapper).toMatchSnapshot();
-    expect(wrapper.find('a').prop('href')).toEqual('/');
+    expect(wrapper.snapshot).toMatchSnapshot();
+    expect(wrapper.instance.findByType('a')[0].props.href).toEqual('/');
   });
 });

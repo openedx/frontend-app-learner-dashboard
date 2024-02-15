@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import useRelatedProgramsBadge from './hooks';
 import RelatedProgramsBadge from '.';
@@ -25,6 +25,6 @@ describe('RelatedProgramsBadge component', () => {
   });
   test('snapshot: 3 programs', () => {
     useRelatedProgramsBadge.mockReturnValueOnce(hookProps);
-    expect(shallow(<RelatedProgramsBadge cardId={cardId} />)).toMatchSnapshot();
+    expect(shallow(<RelatedProgramsBadge cardId={cardId} />).snapshot).toMatchSnapshot();
   });
 });

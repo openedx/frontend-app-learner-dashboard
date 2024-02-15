@@ -1,4 +1,4 @@
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { FilterKeys } from 'data/constants/app';
 import ActiveCourseFilters from './ActiveCourseFilters';
@@ -15,7 +15,7 @@ describe('ActiveCourseFilters', () => {
   describe('snapshot', () => {
     test('renders', () => {
       const wrapper = shallow(<ActiveCourseFilters {...props} />);
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
   });
 });

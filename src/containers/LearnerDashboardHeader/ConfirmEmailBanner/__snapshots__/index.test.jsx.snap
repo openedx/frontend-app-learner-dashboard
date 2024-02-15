@@ -63,10 +63,10 @@ exports[`ConfirmEmailBanner snapshot Show on unverified 1`] = `
     <p
       className="text-center"
     >
-      We've sent you an email to verify your acccount. Please check your inbox and click on the big red button to confirm and keep learning.
+      We've sent you an email to verify your account. Please check your inbox and click on the big red button to confirm and keep learning.
     </p>
   </MarketingModal>
 </Fragment>
 `;
 
-exports[`ConfirmEmailBanner snapshot do not show on already verified 1`] = `""`;
+exports[`ConfirmEmailBanner snapshot do not show on already verified 1`] = `null`;

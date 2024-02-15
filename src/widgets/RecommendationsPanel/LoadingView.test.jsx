@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { useDashboardMessages } from 'containers/Dashboard/hooks';
 import LoadingView from './LoadingView';
@@ -14,6 +14,6 @@ useDashboardMessages.mockReturnValue(spinnerScreenReaderText);
 
 describe('RecommendationsPanel LoadingView', () => {
   test('snapshot', () => {
-    expect(shallow(<LoadingView />)).toMatchSnapshot();
+    expect(shallow(<LoadingView />).snapshot).toMatchSnapshot();
   });
 });

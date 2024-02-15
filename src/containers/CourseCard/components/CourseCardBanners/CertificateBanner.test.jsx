@@ -1,4 +1,4 @@
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { reduxHooks } from 'hooks';
 import CertificateBanner from './CertificateBanner';
@@ -61,7 +61,7 @@ describe('CertificateBanner', () => {
           isRestricted: true,
         },
       });
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
     test('is restricted with support email', () => {
       const wrapper = createWrapper({
@@ -72,7 +72,7 @@ describe('CertificateBanner', () => {
           supportEmail: 'suport@email',
         },
       });
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
     test('is restricted with billing email', () => {
       const wrapper = createWrapper({
@@ -83,7 +83,7 @@ describe('CertificateBanner', () => {
           billingEmail: 'billing@email',
         },
       });
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
     test('is restricted and verified', () => {
       const wrapper = createWrapper({
@@ -94,7 +94,7 @@ describe('CertificateBanner', () => {
           isVerified: true,
         },
       });
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
     test('is restricted and verified with support email', () => {
       const wrapper = createWrapper({
@@ -108,7 +108,7 @@ describe('CertificateBanner', () => {
           supportEmail: 'suport@email',
         },
       });
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
     test('is restricted and verified with billing email', () => {
       const wrapper = createWrapper({
@@ -122,7 +122,7 @@ describe('CertificateBanner', () => {
           billingEmail: 'billing@email',
         },
       });
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
     test('is restricted and verified with support and billing email', () => {
       const wrapper = createWrapper({
@@ -137,21 +137,21 @@ describe('CertificateBanner', () => {
           billingEmail: 'billing@email',
         },
       });
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
     test('is passing and is downloadable', () => {
       const wrapper = createWrapper({
         grade: { isPassing: true },
         certificate: { isDownloadable: true },
       });
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
     test('not passing and is downloadable', () => {
       const wrapper = createWrapper({
         grade: { isPassing: false },
         certificate: { isDownloadable: true },
       });
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
     test('not passing and audit', () => {
       const wrapper = createWrapper({
@@ -159,17 +159,17 @@ describe('CertificateBanner', () => {
           isAudit: true,
         },
       });
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
     test('not passing and has finished', () => {
       const wrapper = createWrapper({
         courseRun: { isArchived: true },
       });
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
     test('not passing and not audit and not finished', () => {
       const wrapper = createWrapper({});
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
     test('is passing and is earned but unavailable', () => {
       const wrapper = createWrapper({
@@ -180,7 +180,7 @@ describe('CertificateBanner', () => {
           isEarnedButUnavailable: true,
         },
       });
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
     test('is passing and not downloadable render empty', () => {
       const wrapper = createWrapper({
@@ -188,7 +188,7 @@ describe('CertificateBanner', () => {
           isPassing: true,
         },
       });
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
   });
   describe('behavior', () => {
@@ -202,7 +202,7 @@ describe('CertificateBanner', () => {
           billingEmail: 'billing@email',
         },
       });
-      const bannerMessage = wrapper.find('format-message-function').map(el => el.prop('message').defaultMessage).join('\n');
+      const bannerMessage = wrapper.instance.findByType('format-message-function').map(el => el.props.message.defaultMessage).join('\n');
       expect(bannerMessage).toEqual(messages.certRestricted.defaultMessage);
       expect(bannerMessage).toContain(messages.certRestricted.defaultMessage);
     });
@@ -219,7 +219,7 @@ describe('CertificateBanner', () => {
           billingEmail: 'billing@email',
         },
       });
-      const bannerMessage = wrapper.find('format-message-function').map(el => el.prop('message').defaultMessage).join('\n');
+      const bannerMessage = wrapper.instance.findByType('format-message-function').map(el => el.props.message.defaultMessage).join('\n');
       expect(bannerMessage).toContain(messages.certRestricted.defaultMessage);
       expect(bannerMessage).toContain(messages.certRefundContactBilling.defaultMessage);
     });

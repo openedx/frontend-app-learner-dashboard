@@ -10,13 +10,14 @@ import useRelatedProgramsBadgeData from './hooks';
 
 export const RelatedProgramsBadge = ({ cardId }) => {
   const {
-    isOpen,
-    openModal,
-    closeModal,
-    numPrograms,
-    programsMessage,
+    isOpen, openModal, closeModal, numPrograms, programsMessage,
   } = useRelatedProgramsBadgeData({ cardId });
-  return (numPrograms > 0) && (
+
+  if (numPrograms === 0) {
+    return null;
+  }
+
+  return (
     <>
       <Button
         data-testid="RelatedProgramsBadge"

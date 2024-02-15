@@ -21,7 +21,7 @@ export const CreditBanner = ({ cardId }) => {
   return (
     <Banner {...(error && { variant: 'danger' })}>
       {error && (
-        <p className="credit-error-msg">
+        <p className="credit-error-msg" data-testid="credit-error-msg">
           {supportEmail ? formatMessage(messages.error, { supportEmailLink }) : formatMessage(messages.errorNoEmail)}
         </p>
       )}

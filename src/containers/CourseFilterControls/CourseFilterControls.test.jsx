@@ -1,4 +1,4 @@
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { breakpoints, useWindowSize } from '@openedx/paragon';
 
@@ -44,21 +44,21 @@ describe('CourseFilterControls', () => {
       reduxHooks.useHasCourses.mockReturnValueOnce(false);
       useWindowSize.mockReturnValueOnce({ width: breakpoints.small.minWidth });
       const wrapper = shallow(<CourseFilterControls {...props} />);
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
   });
   describe('mobile', () => {
     test('snapshot', () => {
       useWindowSize.mockReturnValueOnce({ width: breakpoints.small.minWidth - 1 });
       const wrapper = shallow(<CourseFilterControls {...props} />);
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
   });
   describe('is not mobile', () => {
     test('snapshot', () => {
       useWindowSize.mockReturnValueOnce({ width: breakpoints.small.minWidth });
       const wrapper = shallow(<CourseFilterControls {...props} />);
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
   });
 });

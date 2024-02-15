@@ -15,16 +15,20 @@ export const RelatedProgramsBanner = ({ cardId }) => {
 
   const programData = reduxHooks.useCardRelatedProgramsData(cardId);
 
+  if (!programData?.length) {
+    return null;
+  }
+
   return (
-    programData?.length > 0 && (
-      <Banner
-        icon={Program}
-        className="bg-white border-top border-bottom mb-0 related-programs-banner"
-      >
-        <span className="font-weight-bolder">{formatMessage(messages.relatedPrograms)}</span>
-        <ProgramList programs={programData.list} />
-      </Banner>
-    )
+    <Banner
+      icon={Program}
+      className="bg-white border-top border-bottom mb-0 related-programs-banner"
+    >
+      <span className="font-weight-bolder">
+        {formatMessage(messages.relatedPrograms)}
+      </span>
+      <ProgramList programs={programData.list} />
+    </Banner>
   );
 };
 RelatedProgramsBanner.propTypes = {

@@ -1,4 +1,4 @@
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { FilterKeys } from 'data/constants/app';
 import FilterForm, { filterOrder } from './FilterForm';
@@ -13,7 +13,7 @@ describe('FilterForm', () => {
   describe('snapshot', () => {
     test('renders', () => {
       const wrapper = shallow(<FilterForm {...props} />);
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
   });
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import hooks from './hooks';
 import ConfirmEmailBanner from '.';
@@ -24,12 +24,12 @@ describe('ConfirmEmailBanner', () => {
     test('do not show on already verified', () => {
       hooks.mockReturnValueOnce({ ...hookProps, isNeeded: false });
       const el = shallow(<ConfirmEmailBanner />);
-      expect(el).toMatchSnapshot();
+      expect(el.snapshot).toMatchSnapshot();
     });
     test('Show on unverified', () => {
       hooks.mockReturnValueOnce({ ...hookProps });
       const el = shallow(<ConfirmEmailBanner />);
-      expect(el).toMatchSnapshot();
+      expect(el.snapshot).toMatchSnapshot();
     });
   });
 });
