@@ -1,7 +1,7 @@
 /* eslint-disable quotes */
-import { StrictDict } from 'utils';
+import { defineMessages } from '@edx/frontend-platform/i18n';
 
-export const messages = StrictDict({
+const messages = defineMessages({
   changeOrLeaveHeader: {
     id: 'learner-dash.selectSession.changeOrLeaveHeader',
     description: 'Header for session that allow leave option',
