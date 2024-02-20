@@ -19,6 +19,7 @@ jest.mock('react-dom', () => ({
 
 jest.mock('@edx/frontend-platform', () => ({
   mergeConfig: jest.fn(),
+  ensureConfig: jest.fn(),
   APP_READY: 'app-is-ready-key',
   APP_INIT_ERROR: 'app-init-error',
   initialize: jest.fn(),
