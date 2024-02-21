@@ -22,4 +22,3 @@ spec:
   lifecycle: 'production'
   owner: 2U-aperture
 # (Optional) An array of different components or resources.
-dependsOn:
