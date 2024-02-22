@@ -1,6 +1,6 @@
-import { StrictDict } from 'utils';
+import { defineMessages } from '@edx/frontend-platform/i18n';
 
-export const messages = StrictDict({
+const messages = defineMessages({
   accessExpired: {
     id: 'learner-dash.courseCard.CourseCardDetails.accessExpired',
     description: 'Course access expiration date message on course card for expired access.',

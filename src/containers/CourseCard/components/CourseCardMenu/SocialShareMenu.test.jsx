@@ -21,6 +21,7 @@ jest.mock('tracking', () => ({
 }));
 
 jest.mock('@edx/frontend-platform/i18n', () => ({
+  ...jest.requireActual('@edx/frontend-platform/i18n'),
   useIntl: jest.fn().mockReturnValue({
     formatMessage: jest.requireActual('@edx/react-unit-test-utils').formatMessage,
   }),
