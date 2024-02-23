@@ -33,9 +33,6 @@ exports[`ExpandedHeader render 1`] = `
     >
       Discover New
     </Button>
-    <WidgetNavbar
-      placement="expendedNavbar"
-    />
     <span
       className="flex-grow-1"
     />
