@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {useIntl} from "@edx/frontend-platform/i18n";
+import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { FilterKeys } from 'data/constants/app';
 
@@ -31,7 +31,7 @@ export const FilterForm = ({
         value={filters}
       >
         {filterOrder.map(filterKey => (
-          <Checkbox filterKey={filterKey} key={filterKey}/>
+          <Checkbox filterKey={filterKey} key={filterKey} />
         ))}
       </Form.CheckboxSet>
     </Form.Group>
