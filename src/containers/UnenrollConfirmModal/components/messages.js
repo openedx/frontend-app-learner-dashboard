@@ -1,7 +1,7 @@
 /* eslint-disable quotes */
-import { StrictDict } from 'utils';
+import { defineMessages } from '@edx/frontend-platform/i18n';
 
-export const messages = StrictDict({
+const messages = defineMessages({
   confirmHeader: {
     id: 'learner-dash.unenrollConfirm.confirm.header',
     description: 'Header for confirm unenroll modal',

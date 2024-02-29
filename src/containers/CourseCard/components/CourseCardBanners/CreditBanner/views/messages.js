@@ -1,6 +1,6 @@
-import { StrictDict } from 'utils';
+import { defineMessages } from '@edx/frontend-platform/i18n';
 
-export const messages = StrictDict({
+const messages = defineMessages({
   approved: {
     id: 'learner-dash.courseCard.banners.credit.approved',
     description: '',
