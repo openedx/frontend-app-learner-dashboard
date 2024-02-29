@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Card } from '@edx/paragon';
+import { Card } from '@openedx/paragon';
 
 import { useIsCollapsed } from './hooks';
 import CourseCardBanners from './components/CourseCardBanners';

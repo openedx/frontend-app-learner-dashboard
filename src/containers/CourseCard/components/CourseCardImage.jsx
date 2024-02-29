@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { Badge } from '@edx/paragon';
+import { Badge } from '@openedx/paragon';
 
 import track from 'tracking';
 import { reduxHooks } from 'hooks';

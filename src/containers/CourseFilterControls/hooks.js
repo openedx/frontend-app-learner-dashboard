@@ -1,5 +1,5 @@
 import React from 'react';
-import { useToggle } from '@edx/paragon';
+import { useToggle } from '@openedx/paragon';
 
 import { StrictDict } from 'utils';
 import track from 'tracking';

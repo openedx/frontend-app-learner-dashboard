@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from '@edx/react-unit-test-utils';
-import { Col, Row } from '@edx/paragon';
+import { Col, Row } from '@openedx/paragon';
 
 import hooks from './hooks';
 import DashboardLayout, { columnConfig } from './DashboardLayout';

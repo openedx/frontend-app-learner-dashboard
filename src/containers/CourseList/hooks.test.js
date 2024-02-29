@@ -1,4 +1,4 @@
-import * as paragon from '@edx/paragon';
+import * as paragon from '@openedx/paragon';
 
 import queryString from 'query-string';
 

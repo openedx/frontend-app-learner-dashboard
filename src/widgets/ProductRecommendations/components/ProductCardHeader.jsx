@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { getAuthenticatedUser } from '@edx/frontend-platform/auth';
 
-import { Icon, Hyperlink } from '@edx/paragon';
-import { ChevronRight } from '@edx/paragon/icons';
+import { Icon, Hyperlink } from '@openedx/paragon';
+import { ChevronRight } from '@openedx/paragon/icons';
 import { getConfig } from '@edx/frontend-platform';
 import { trackProductHeaderClicked } from '../optimizelyExperiment';
 import { recommendationsHeaderClicked } from '../track';

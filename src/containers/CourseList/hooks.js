@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useCheckboxSetValues, useWindowSize, breakpoints } from '@edx/paragon';
+import { useCheckboxSetValues, useWindowSize, breakpoints } from '@openedx/paragon';
 import queryString from 'query-string';
 
 import { ListPageSize, SortKeys } from 'data/constants/app';

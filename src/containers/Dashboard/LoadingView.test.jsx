@@ -1,5 +1,5 @@
 import { shallow } from '@edx/react-unit-test-utils';
-import { Spinner } from '@edx/paragon';
+import { Spinner } from '@openedx/paragon';
 
 import hooks from './hooks';
 import LoadingView from './LoadingView';

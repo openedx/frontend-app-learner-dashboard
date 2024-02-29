@@ -1,4 +1,4 @@
-import { useWindowSize, breakpoints } from '@edx/paragon';
+import { useWindowSize, breakpoints } from '@openedx/paragon';
 import track from 'tracking';
 import { linkNames } from 'tracking/constants';
 

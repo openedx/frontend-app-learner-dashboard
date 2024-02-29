@@ -4,7 +4,7 @@ import React from 'react';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import {
   ModalDialog, ActionRow, Button,
-} from '@edx/paragon';
+} from '@openedx/paragon';
 
 import messages from './messages';
 import useEnterpriseDashboardHook from './hooks';

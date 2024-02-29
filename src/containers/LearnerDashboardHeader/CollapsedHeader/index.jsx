@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { MenuIcon, Close } from '@edx/paragon/icons';
-import { IconButton, Icon } from '@edx/paragon';
+import { MenuIcon, Close } from '@openedx/paragon/icons';
+import { IconButton, Icon } from '@openedx/paragon';
 
 import { useLearnerDashboardHeaderData, useIsCollapsed } from '../hooks';
 

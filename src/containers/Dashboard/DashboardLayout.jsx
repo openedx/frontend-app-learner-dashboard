@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Container, Col, Row } from '@edx/paragon';
+import { Container, Col, Row } from '@openedx/paragon';
 
 import WidgetFooter from 'containers/WidgetContainers/WidgetFooter';
 import hooks from './hooks';

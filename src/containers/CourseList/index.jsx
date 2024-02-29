@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { Pagination } from '@edx/paragon';
+import { Pagination } from '@openedx/paragon';
 
 import { reduxHooks } from 'hooks';
 import {

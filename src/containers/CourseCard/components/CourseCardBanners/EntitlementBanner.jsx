@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { Button, MailtoLink } from '@edx/paragon';
+import { Button, MailtoLink } from '@openedx/paragon';
 
 import { utilHooks, reduxHooks } from 'hooks';
 

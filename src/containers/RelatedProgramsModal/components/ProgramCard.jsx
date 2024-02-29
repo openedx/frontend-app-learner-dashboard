@@ -7,8 +7,8 @@ import {
   Card,
   // Hyperlink,
   Icon,
-} from '@edx/paragon';
-import { Program } from '@edx/paragon/icons';
+} from '@openedx/paragon';
+import { Program } from '@openedx/paragon/icons';
 
 import messages from './messages';
 import './index.scss';

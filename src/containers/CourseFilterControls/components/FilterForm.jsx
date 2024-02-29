@@ -4,7 +4,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { FilterKeys } from 'data/constants/app';
 
-import { Form } from '@edx/paragon';
+import { Form } from '@openedx/paragon';
 
 import Checkbox from './Checkbox';
 import messages from '../messages';

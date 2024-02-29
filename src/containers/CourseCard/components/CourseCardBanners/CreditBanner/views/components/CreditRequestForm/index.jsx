@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button, Form, FormControl } from '@edx/paragon';
+import { Button, Form, FormControl } from '@openedx/paragon';
 
 import useCreditRequestFormData from './hooks';
 

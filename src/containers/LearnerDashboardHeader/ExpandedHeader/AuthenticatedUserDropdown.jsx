@@ -3,7 +3,7 @@ import React from 'react';
 import { getConfig } from '@edx/frontend-platform';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
-import { AvatarButton, Dropdown, Badge } from '@edx/paragon';
+import { AvatarButton, Dropdown, Badge } from '@openedx/paragon';
 
 import { reduxHooks } from 'hooks';
 

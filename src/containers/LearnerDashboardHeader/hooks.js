@@ -1,5 +1,5 @@
 import React from 'react';
-import { useWindowSize, breakpoints } from '@edx/paragon';
+import { useWindowSize, breakpoints } from '@openedx/paragon';
 import track from 'tracking';
 import { StrictDict } from 'utils';
 import { linkNames } from 'tracking/constants';
