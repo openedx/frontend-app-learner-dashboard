@@ -1,6 +1,10 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import '@testing-library/jest-dom';
 import '@testing-library/jest-dom/extend-expect';
+import { mergeConfig } from '@edx/frontend-platform';
+import envConfig from '../env.config';
+
+mergeConfig(envConfig);
 
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
