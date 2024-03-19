@@ -14,23 +14,41 @@ export const useIsCollapsed = () => {
   return width < breakpoints.medium.maxWidth;
 };
 
+// TODO: find out why we are wrapping useState in a function???
+// TODO: WTF is StrictDict???
+// TODO: do we want to move sortBy to redux as well?
 export const state = StrictDict({
   sortBy: (val) => React.useState(val), // eslint-disable-line
 });
 
+// TODO: BLOCKED: docs: explain this hook
 export const useCourseListData = () => {
-  const [filters, setFilters] = useCheckboxSetValues([]);
+  // TODO: refactor: filter logic to use redux
+  // const [filters, setFilters] = useCheckboxSetValues([]);
+  const filters = reduxHooks.useFilters();
+  const removeFilter = reduxHooks.useRemoveFilter();
+  const setFilters = reduxHooks.useSetFilters();
+
+  // TODO: docs:
   const [sortBy, setSortBy] = module.state.sortBy(SortKeys.enrolled);
+
+  // TODO: docs:
   const pageNumber = reduxHooks.usePageNumber();
+  // NOTE: consider replicating logic used for pageNumber
+
+  // TODO: docs:
   const querySearch = queryString.parse(window.location.search, { parseNumbers: true });
 
+  // TODO: docs:
   const { numPages, visible } = reduxHooks.useCurrentCourseList({
     sortBy,
     filters,
     pageSize: querySearch?.disable_pagination === 1 ? 0 : ListPageSize,
   });
 
-  const handleRemoveFilter = (filter) => () => setFilters.remove(filter);
+  // TODO: refactor:
+  const handleRemoveFilter = (filter) => () => removeFilter(filter);
+  // TODO: docs:
   const setPageNumber = reduxHooks.useSetPageNumber();
 
   return {

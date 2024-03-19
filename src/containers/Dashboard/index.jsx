@@ -14,6 +14,7 @@ import DashboardLayout from './DashboardLayout';
 import hooks from './hooks';
 import './index.scss';
 
+// TODO: docs: explain this component
 export const Dashboard = () => {
   hooks.useInitializeDashboard();
   const { pageTitle } = hooks.useDashboardMessages();

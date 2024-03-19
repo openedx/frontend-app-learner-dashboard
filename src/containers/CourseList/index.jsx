@@ -17,6 +17,7 @@ import messages from './messages';
 
 import './index.scss';
 
+// TODO: docs: explain this component
 export const CourseList = () => {
   const { formatMessage } = useIntl();
   const hasCourses = reduxHooks.useHasCourses();
@@ -28,6 +29,13 @@ export const CourseList = () => {
     visibleList,
   } = useCourseListData();
   const isCollapsed = useIsCollapsed();
+  // const filters = reduxHooks.useFilters();
+  // const setFilters = reduxHooks.useSetFilters();
+
+  // useEffect(() => {
+  //   setFilters('hello-world');
+  // }, []);
+
   return (
     <div className="course-list-container">
       <div className="course-list-heading-container">

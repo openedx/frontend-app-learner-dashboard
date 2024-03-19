@@ -1,3 +1,4 @@
+// TODO: research: what do useSelector and useDispatch do?
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -9,6 +10,8 @@ const actions = redux.actions.app;
 
 /** Simple Selectors **/
 export const usePageNumber = () => useSelector(selectors.pageNumber);
+// TODO: refactor: use the filters selector
+export const useFilters = () => useSelector(selectors.filters);
 export const useEmailConfirmationData = () => useSelector(selectors.emailConfirmation);
 export const useEnterpriseDashboardData = () => useSelector(selectors.enterpriseDashboard);
 export const usePlatformSettingsData = () => useSelector(selectors.platformSettings);
@@ -75,6 +78,27 @@ export const useTrackCourseEvent = (tracker, cardId, ...args) => {
 export const useSetPageNumber = () => {
   const dispatch = useDispatch();
   return (value) => dispatch(actions.setPageNumber(value));
+};
+
+// TODO: refactor: add event to use setFilter action
+export const useSetFilters = () => {
+  const dispatch = useDispatch();
+  return (value) => dispatch(actions.setFilters(value));
+};
+
+export const useAddFilter = () => {
+  const dispatch = useDispatch();
+  return (value) => dispatch(actions.addFilter(value));
+};
+
+export const useRemoveFilter = () => {
+  const dispatch = useDispatch();
+  return (value) => dispatch(actions.removeFilter(value));
+};
+
+export const useClearFilters = () => {
+  const dispatch = useDispatch();
+  return (value) => dispatch(actions.clearFilters(value));
 };
 
 export const useLoadData = () => {

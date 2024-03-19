@@ -1,3 +1,4 @@
+// TODO: research: what is createSelector
 import { createSelector } from 'reselect';
 import { StrictDict } from 'utils';
 
@@ -15,6 +16,8 @@ export const simpleSelectors = StrictDict({
   enterpriseDashboard: mkSimpleSelector(app => app.enterpriseDashboard || {}),
   selectSessionModal: mkSimpleSelector(app => app.selectSessionModal),
   pageNumber: mkSimpleSelector(app => app.pageNumber),
+  // TODO: refactor: add simpleSelector for filters
+  filters: mkSimpleSelector(app => app.filters),
   socialShareSettings: mkSimpleSelector(app => app.socialShareSettings),
 });
 

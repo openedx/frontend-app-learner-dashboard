@@ -3,6 +3,7 @@ import { useToggle } from '@openedx/paragon';
 
 import { StrictDict } from 'utils';
 import track from 'tracking';
+import { reduxHooks } from 'hooks';
 
 import * as module from './hooks';
 
@@ -17,8 +18,13 @@ export const useCourseFilterControlsData = ({
 }) => {
   const [isOpen, toggleOpen, toggleClose] = useToggle(false);
   const [target, setTarget] = module.state.target(null);
+
+  const addFilter = reduxHooks.useAddFilter();
+  const removeFilter = reduxHooks.useRemoveFilter();
+
+  // TODO: refactor: make sure this still works with the new setFilters function
   const handleFilterChange = ({ target: { checked, value } }) => {
-    const update = checked ? setFilters.add : setFilters.remove;
+    const update = checked ? addFilter : removeFilter;
     update(value);
   };
   const handleSortChange = ({ target: { value } }) => {

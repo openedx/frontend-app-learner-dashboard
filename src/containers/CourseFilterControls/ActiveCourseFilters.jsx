@@ -4,6 +4,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { Button, Chip } from '@openedx/paragon';
 import { CloseSmall } from '@openedx/paragon/icons';
+import { reduxHooks } from 'hooks';
 
 import messages from './messages';
 import './index.scss';
@@ -14,6 +15,7 @@ export const ActiveCourseFilters = ({
   handleRemoveFilter,
 }) => {
   const { formatMessage } = useIntl();
+  const clearFilters = reduxHooks.useClearFilters();
   return (
     <div id="course-list-active-filters">
       {filters.map(filter => (
@@ -25,7 +27,7 @@ export const ActiveCourseFilters = ({
           {formatMessage(messages[filter])}
         </Chip>
       ))}
-      <Button variant="link" onClick={setFilters.clear}>
+      <Button variant="link" onClick={clearFilters}>
         {formatMessage(messages.clearAll)}
       </Button>
     </div>

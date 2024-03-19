@@ -1,3 +1,4 @@
+// TODO: research: waht is createSlice?
 import { createSlice } from '@reduxjs/toolkit';
 
 import { StrictDict } from 'utils';
@@ -10,8 +11,11 @@ const initialState = {
   enterpriseDashboard: {},
   platformSettings: {},
   suggestedCourses: [],
+  // TODO: remove this?? It's not currently being used by anything
   filterState: {},
   selectSessionModal: {},
+  // TODO: refactor: add initial state for filters array
+  filters: [],
 };
 
 export const cardId = (val) => `card-${val}`;
@@ -49,6 +53,25 @@ const app = createSlice({
       selectSessionModal: { cardId: payload },
     }),
     setPageNumber: (state, { payload }) => ({ ...state, pageNumber: payload }),
+    // TODO: refactor: create setFilters action
+    // consider whether this should look similar to useCheckboxValues
+    // TODO: research: look up "how to manage an array in redux"
+    setFilters: (state, { payload }) => ({
+      ...state,
+      filters: payload,
+    }),
+    addFilter: (state, { payload }) => ({
+      ...state,
+      filters: [...state.filters, payload],
+    }),
+    removeFilter: (state, { payload }) => ({
+      ...state,
+      filters: state.filters.filter(item => item !== payload),
+    }),
+    clearFilters: (state) => ({
+      ...state,
+      filters: [],
+    }),
   },
 });
 
