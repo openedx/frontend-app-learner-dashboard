@@ -4,14 +4,12 @@ import { FilterKeys, SortKeys } from 'data/constants/app';
 import simpleSelectors from './simpleSelectors';
 import * as module from './currentList';
 
-// TODO: docs:
 export const sortFn = (transform, { reverse }) => (v1, v2) => {
   const [a, b] = [v1, v2].map(transform);
   if (a === b) { return 0; }
   return ((a > b) ? 1 : -1) * (reverse ? -1 : 1);
 };
 
-// TODO: docs:
 export const courseFilters = StrictDict({
   [FilterKeys.notEnrolled]: (course) => !course.enrollment.isEnrolled,
   [FilterKeys.done]: (course) => course.courseRun !== null && course.courseRun.isArchived,
@@ -20,18 +18,15 @@ export const courseFilters = StrictDict({
   [FilterKeys.notStarted]: (course) => !course.enrollment.hasStarted,
 });
 
-// TODO: docs:
 export const transforms = StrictDict({
   [SortKeys.enrolled]: ({ enrollment }) => new Date(enrollment.lastEnrolled),
   [SortKeys.title]: ({ course }) => course.courseName.toLowerCase(),
 });
 
-// TODO: docs:
 export const courseFilterFn = filters => (filters.length
   ? course => filters.reduce((match, filter) => match && courseFilters[filter](course), true)
   : () => true);
 
-// TODO: docs:
 export const currentList = (allCourses, {
   sortBy,
   filters,
@@ -39,7 +34,6 @@ export const currentList = (allCourses, {
   .filter(module.courseFilterFn(filters))
   .sort(module.sortFn(transforms[sortBy], { reverse: sortBy === SortKeys.enrolled }));
 
-// TODO: docs:
 export const visibleList = (state, {
   sortBy,
   filters,
@@ -56,7 +50,7 @@ export const visibleList = (state, {
     };
   }
   return {
-    visible: list.slice((pageNumber - 1) * pageSize, pageNumber * pageSize),
+    visibleList: list.slice((pageNumber - 1) * pageSize, pageNumber * pageSize),
     numPages: Math.ceil(list.length / pageSize),
   };
 };

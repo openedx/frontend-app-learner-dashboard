@@ -1,8 +1,6 @@
 import React from 'react';
 
-// TODO: remove this
-// eslint-disable-next-line no-unused-vars
-import { useCheckboxSetValues, useWindowSize, breakpoints } from '@openedx/paragon';
+import { useWindowSize, breakpoints } from '@openedx/paragon';
 import queryString from 'query-string';
 
 import { ListPageSize, SortKeys } from 'data/constants/app';
@@ -20,39 +18,36 @@ export const state = StrictDict({
   sortBy: (val) => React.useState(val), // eslint-disable-line
 });
 
-// TODO: BLOCKED: docs: explain this hook
+/**
+ * Filters are fetched from the store and used to generate a list of "visible" courses.
+ * Other values returned and used for the layout of the CourseList component are:
+ * the current page number, the sorting method, and whether or not to enable filters and pagination.
+ *
+ * @returns data for the CourseList component
+ */
 export const useCourseListData = () => {
-  // TODO: refactor: filter logic to use redux
   const filters = reduxHooks.useFilters();
   const removeFilter = reduxHooks.useRemoveFilter();
+  const pageNumber = reduxHooks.usePageNumber();
+  const setPageNumber = reduxHooks.useSetPageNumber();
 
-  // TODO: docs:
   const [sortBy, setSortBy] = module.state.sortBy(SortKeys.enrolled);
 
-  // TODO: docs: move this up
-  const pageNumber = reduxHooks.usePageNumber();
-
-  // TODO: docs:
   const querySearch = queryString.parse(window.location.search, { parseNumbers: true });
 
-  // TODO: docs: should this be renamed? visible sounds like a boolean
-  const { numPages, visible } = reduxHooks.useCurrentCourseList({
+  const { numPages, visibleList } = reduxHooks.useCurrentCourseList({
     sortBy,
     filters,
     pageSize: querySearch?.disable_pagination === 1 ? 0 : ListPageSize,
   });
 
-  // TODO: refactor:
   const handleRemoveFilter = (filter) => () => removeFilter(filter);
-
-  // TODO: docs: move this up
-  const setPageNumber = reduxHooks.useSetPageNumber();
 
   return {
     pageNumber,
     numPages,
     setPageNumber,
-    visibleList: visible,
+    visibleList,
     filterOptions: {
       sortBy,
       setSortBy,

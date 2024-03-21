@@ -9,7 +9,6 @@ import { reduxHooks } from 'hooks';
 import messages from './messages';
 import './index.scss';
 
-// TODO: check changes — removed setFilter prop
 export const ActiveCourseFilters = ({
   filters,
   handleRemoveFilter,
