@@ -10,6 +10,7 @@ const modules = {
   requests,
 };
 
+// TODO: docs:
 const moduleProps = (propName) => Object.keys(modules).reduce(
   (obj, moduleKey) => {
     const value = modules[moduleKey][propName];

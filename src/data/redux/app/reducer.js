@@ -22,6 +22,9 @@ export const cardId = (val) => `card-${val}`;
 
 export const today = Date.now();
 
+// NOTE: createSlice accepts a name, initial state, and an object of reducer functions
+// The reducer functions are what's used to generate the action types
+// Think of each reducer function as a case in a switch statement
 // eslint-disable-next-line no-unused-vars
 const app = createSlice({
   name: 'app',
@@ -53,9 +56,7 @@ const app = createSlice({
       selectSessionModal: { cardId: payload },
     }),
     setPageNumber: (state, { payload }) => ({ ...state, pageNumber: payload }),
-    // TODO: refactor: create setFilters action
-    // consider whether this should look similar to useCheckboxValues
-    // TODO: research: look up "how to manage an array in redux"
+    // TODO: refactor:
     setFilters: (state, { payload }) => ({
       ...state,
       filters: payload,

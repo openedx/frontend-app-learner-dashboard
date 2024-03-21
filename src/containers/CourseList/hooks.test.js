@@ -1,5 +1,3 @@
-import * as paragon from '@openedx/paragon';
-
 import queryString from 'query-string';
 
 import { MockUseState } from 'testUtils';
@@ -12,6 +10,8 @@ jest.mock('hooks', () => ({
     useCurrentCourseList: jest.fn(),
     usePageNumber: jest.fn(() => 23),
     useSetPageNumber: jest.fn(),
+    useFilters: jest.fn(),
+    useRemoveFilter: jest.fn(),
   },
 }));
 
@@ -28,16 +28,18 @@ const testListData = {
 };
 const testSortBy = 'fake sort option';
 const testFilters = ['some', 'fake', 'filters'];
-const testSetFilters = { add: jest.fn(), remove: jest.fn() };
-const testCheckboxSetValues = [testFilters, testSetFilters];
+
 const setPageNumber = jest.fn(val => ({ setPageNumber: val }));
 reduxHooks.useSetPageNumber.mockReturnValue(setPageNumber);
+
+const removeFilter = jest.fn();
+reduxHooks.useRemoveFilter.mockReturnValue(removeFilter);
+reduxHooks.useFilters.mockReturnValue(['some', 'fake', 'filters']);
 
 describe('CourseList hooks', () => {
   let out;
 
   reduxHooks.useCurrentCourseList.mockReturnValue(testListData);
-  paragon.useCheckboxSetValues.mockImplementation(() => testCheckboxSetValues);
 
   describe('state values', () => {
     state.testGetter(state.keys.sortBy);
@@ -85,7 +87,7 @@ describe('CourseList hooks', () => {
       test('showFilters is true iff filters is not empty', () => {
         expect(out.showFilters).toEqual(true);
         state.mockVal(state.keys.sortBy, testSortBy);
-        paragon.useCheckboxSetValues.mockReturnValueOnce([[], testSetFilters]);
+        reduxHooks.useFilters.mockReturnValueOnce([]);
         out = hooks.useCourseListData();
         // don't show filter when list is empty.
         expect(out.showFilters).toEqual(false);
@@ -95,15 +97,14 @@ describe('CourseList hooks', () => {
           expect(out.filterOptions.sortBy).toEqual(testSortBy);
           expect(out.filterOptions.setSortBy).toEqual(state.setState.sortBy);
         });
-        test('filters and setFilters passed by useCheckboxSetValues', () => {
+        test('filters passed by useFilters hook', () => {
           expect(out.filterOptions.filters).toEqual(testFilters);
-          expect(out.filterOptions.setFilters).toEqual(testSetFilters);
         });
         test('handleRemoveFilter creates callback to call setFilter.remove', () => {
           const cb = out.filterOptions.handleRemoveFilter(testFilters[0]);
-          expect(testSetFilters.remove).not.toHaveBeenCalled();
+          expect(removeFilter).not.toHaveBeenCalled();
           cb();
-          expect(testSetFilters.remove).toHaveBeenCalledWith(testFilters[0]);
+          expect(removeFilter).toHaveBeenCalledWith(testFilters[0]);
         });
         test('setPageNumber dispatches setPageNumber action with passed value', () => {
           expect(out.setPageNumber(2)).toEqual(setPageNumber(2));

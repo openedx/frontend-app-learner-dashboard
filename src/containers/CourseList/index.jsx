@@ -29,12 +29,6 @@ export const CourseList = () => {
     visibleList,
   } = useCourseListData();
   const isCollapsed = useIsCollapsed();
-  // const filters = reduxHooks.useFilters();
-  // const setFilters = reduxHooks.useSetFilters();
-
-  // useEffect(() => {
-  //   setFilters('hello-world');
-  // }, []);
 
   return (
     <div className="course-list-container">

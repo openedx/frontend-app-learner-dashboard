@@ -9,9 +9,9 @@ import { reduxHooks } from 'hooks';
 import messages from './messages';
 import './index.scss';
 
+// TODO: check changes — removed setFilter prop
 export const ActiveCourseFilters = ({
   filters,
-  setFilters,
   handleRemoveFilter,
 }) => {
   const { formatMessage } = useIntl();
@@ -35,10 +35,6 @@ export const ActiveCourseFilters = ({
 };
 ActiveCourseFilters.propTypes = {
   filters: PropTypes.arrayOf(PropTypes.string).isRequired,
-  setFilters: PropTypes.shape({
-    remove: PropTypes.func,
-    clear: PropTypes.func,
-  }).isRequired,
   handleRemoveFilter: PropTypes.func.isRequired,
 };
 

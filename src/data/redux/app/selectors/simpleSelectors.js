@@ -1,12 +1,18 @@
-// TODO: research: what is createSelector
 import { createSelector } from 'reselect';
 import { StrictDict } from 'utils';
 
 import * as module from './simpleSelectors';
 
 export const appSelector = (state) => state.app;
+// NOTE: createSelector has two parameters here
+// The first parameter — inputSelectors is an array [module.appSelector]
+// here it is just referencing the above appSelector to select the "app" slice
+// In this case, there is only one input selector, but there can be multiple
+// The second parameter — is a result function which will take in the input selectors as separate arguments
 const mkSimpleSelector = (cb) => createSelector([module.appSelector], cb);
 
+// NOTE: These selectors use the above util to generate selectors for values in the store
+// Selectors are used in the app.js file to create exported hooks that eventually called in React components/hooks
 // top-level app data selectors
 export const simpleSelectors = StrictDict({
   courseData: mkSimpleSelector(app => app.courseData),

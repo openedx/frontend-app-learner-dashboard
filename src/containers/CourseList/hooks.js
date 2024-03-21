@@ -1,5 +1,7 @@
 import React from 'react';
 
+// TODO: remove this
+// eslint-disable-next-line no-unused-vars
 import { useCheckboxSetValues, useWindowSize, breakpoints } from '@openedx/paragon';
 import queryString from 'query-string';
 
@@ -14,9 +16,6 @@ export const useIsCollapsed = () => {
   return width < breakpoints.medium.maxWidth;
 };
 
-// TODO: find out why we are wrapping useState in a function???
-// TODO: WTF is StrictDict???
-// TODO: do we want to move sortBy to redux as well?
 export const state = StrictDict({
   sortBy: (val) => React.useState(val), // eslint-disable-line
 });
@@ -24,22 +23,19 @@ export const state = StrictDict({
 // TODO: BLOCKED: docs: explain this hook
 export const useCourseListData = () => {
   // TODO: refactor: filter logic to use redux
-  // const [filters, setFilters] = useCheckboxSetValues([]);
   const filters = reduxHooks.useFilters();
   const removeFilter = reduxHooks.useRemoveFilter();
-  const setFilters = reduxHooks.useSetFilters();
 
   // TODO: docs:
   const [sortBy, setSortBy] = module.state.sortBy(SortKeys.enrolled);
 
-  // TODO: docs:
+  // TODO: docs: move this up
   const pageNumber = reduxHooks.usePageNumber();
-  // NOTE: consider replicating logic used for pageNumber
 
   // TODO: docs:
   const querySearch = queryString.parse(window.location.search, { parseNumbers: true });
 
-  // TODO: docs:
+  // TODO: docs: should this be renamed? visible sounds like a boolean
   const { numPages, visible } = reduxHooks.useCurrentCourseList({
     sortBy,
     filters,
@@ -48,7 +44,8 @@ export const useCourseListData = () => {
 
   // TODO: refactor:
   const handleRemoveFilter = (filter) => () => removeFilter(filter);
-  // TODO: docs:
+
+  // TODO: docs: move this up
   const setPageNumber = reduxHooks.useSetPageNumber();
 
   return {
@@ -60,7 +57,6 @@ export const useCourseListData = () => {
       sortBy,
       setSortBy,
       filters,
-      setFilters,
       handleRemoveFilter,
     },
     showFilters: filters.length > 0,

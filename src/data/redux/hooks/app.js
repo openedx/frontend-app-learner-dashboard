@@ -8,6 +8,7 @@ import * as module from './app';
 const selectors = redux.selectors.app;
 const actions = redux.actions.app;
 
+// NOTE: here is where selectors are used inside hooks that are used by React components
 /** Simple Selectors **/
 export const usePageNumber = () => useSelector(selectors.pageNumber);
 // TODO: refactor: use the filters selector
@@ -80,7 +81,9 @@ export const useSetPageNumber = () => {
   return (value) => dispatch(actions.setPageNumber(value));
 };
 
-// TODO: refactor: add event to use setFilter action
+// TODO: refactor:
+// NOTE: These are hooks use to call actions in redux
+// Actions are found in the reducer.js files
 export const useSetFilters = () => {
   const dispatch = useDispatch();
   return (value) => dispatch(actions.setFilters(value));

@@ -13,7 +13,6 @@ export const state = StrictDict({
 
 export const useCourseFilterControlsData = ({
   filters,
-  setFilters,
   setSortBy,
 }) => {
   const [isOpen, toggleOpen, toggleClose] = useToggle(false);
@@ -22,7 +21,7 @@ export const useCourseFilterControlsData = ({
   const addFilter = reduxHooks.useAddFilter();
   const removeFilter = reduxHooks.useRemoveFilter();
 
-  // TODO: refactor: make sure this still works with the new setFilters function
+  // TODO: refactor:
   const handleFilterChange = ({ target: { checked, value } }) => {
     const update = checked ? addFilter : removeFilter;
     update(value);
