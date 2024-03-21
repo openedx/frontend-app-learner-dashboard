@@ -24,7 +24,7 @@ const state = new MockUseState(hooks);
 const testList = ['a', 'b'];
 const testListData = {
   numPages: 52,
-  visible: testList,
+  visibleList: testList,
 };
 const testSortBy = 'fake sort option';
 const testFilters = ['some', 'fake', 'filters'];
@@ -82,7 +82,7 @@ describe('CourseList hooks', () => {
       });
       test('numPages and visible list load from useCurrentCourseList hook', () => {
         expect(out.numPages).toEqual(testListData.numPages);
-        expect(out.visibleList).toEqual(testListData.visible);
+        expect(out.visibleList).toEqual(testListData.visibleList);
       });
       test('showFilters is true iff filters is not empty', () => {
         expect(out.showFilters).toEqual(true);
