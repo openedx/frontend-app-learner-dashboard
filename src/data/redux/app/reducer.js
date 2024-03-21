@@ -19,7 +19,7 @@ export const cardId = (val) => `card-${val}`;
 export const today = Date.now();
 
 /**
- * Creates a redux slice for the app with actions to manage dashboard data and layout
+ * Creates a redux slice with actions to load dashboard data and manage visual layout
  */
 const app = createSlice({
   name: 'app',
