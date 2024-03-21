@@ -171,7 +171,7 @@ describe('courseList selector module', () => {
     });
     it('returns visible page based on passed page size and stored pageNumber', () => {
       // page 3, 2 per page. [0 1] [2 3] [4 5] ...
-      expect(out.visible).toEqual([testList[4], testList[5]]);
+      expect(out.visibleList).toEqual([testList[4], testList[5]]);
     });
     it('returns number of pages based on page size and list length', () => {
       expect(out.numPages).toEqual(6);
