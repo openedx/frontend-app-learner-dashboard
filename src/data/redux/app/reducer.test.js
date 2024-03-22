@@ -4,7 +4,6 @@ import {
   reducer,
   actions,
   today,
-  caseReducers,
 } from './reducer';
 
 describe('app reducer', () => {
