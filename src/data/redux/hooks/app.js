@@ -7,8 +7,6 @@ import * as module from './app';
 const selectors = redux.selectors.app;
 const actions = redux.actions.app;
 
-// TODO: docs: this entire file
-
 /** Simple Selectors **/
 export const usePageNumber = () => useSelector(selectors.pageNumber);
 export const useFilters = () => useSelector(selectors.filters);
