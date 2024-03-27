@@ -2,6 +2,7 @@ import React from 'react';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { Pagination } from '@openedx/paragon';
+import { PluginSlot } from '@openedx/frontend-plugin-framework';
 
 import { reduxHooks } from 'hooks';
 import {
@@ -14,7 +15,6 @@ import NoCoursesView from './NoCoursesView';
 import List from './List';
 
 // TODO: test wrapping the List component and previous implementation with PluginSlot
-// import { PluginSlot } from '@ope'
 
 import { useCourseListData, useIsCollapsed } from './hooks';
 
@@ -22,6 +22,7 @@ import messages from './messages';
 
 import './index.scss';
 
+// TODO: change the name of this component
 export const CourseList = () => {
   const { formatMessage } = useIntl();
   const hasCourses = reduxHooks.useHasCourses();
@@ -45,13 +46,16 @@ export const CourseList = () => {
         ? (
           // TODO: refactor this into a component
           // TODO: test: can we wrap it in a PluginSlot the way it is now?
-          <List
-            setPageNumber={setPageNumber}
-            numPages={numPages}
-            visibleList={visibleList}
-            showFilters={showFilters}
-            filterOptions={filterOptions}
-          />
+          // TODO: name this component CourseList
+          <PluginSlot id="test_course_list">
+            <List
+              setPageNumber={setPageNumber}
+              numPages={numPages}
+              visibleList={visibleList}
+              showFilters={showFilters}
+              filterOptions={filterOptions}
+            />
+          </PluginSlot>
           // <>
           //   {showFilters && (
           //     <div id="course-list-active-filters-container">
