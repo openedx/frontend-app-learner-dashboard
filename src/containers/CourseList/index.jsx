@@ -13,6 +13,9 @@ import NoCoursesView from './NoCoursesView';
 
 import List from './List';
 
+// TODO: test wrapping the List component and previous implementation with PluginSlot
+// import { PluginSlot } from '@ope'
+
 import { useCourseListData, useIsCollapsed } from './hooks';
 
 import messages from './messages';
@@ -47,6 +50,7 @@ export const CourseList = () => {
             numPages={numPages}
             visibleList={visibleList}
             showFilters={showFilters}
+            filterOptions={filterOptions}
           />
           // <>
           //   {showFilters && (

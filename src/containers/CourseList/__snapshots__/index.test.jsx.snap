@@ -19,6 +19,7 @@ exports[`CourseList collapsed with multiple courses and pages snapshot 1`] = `
     </div>
   </div>
   <List
+    filterOptions={Object {}}
     numPages={3}
     setPageNumber={[MockFunction setPageNumber]}
     showFilters={true}
@@ -58,6 +59,7 @@ exports[`CourseList no courses snapshot 1`] = `
     </div>
   </div>
   <List
+    filterOptions={Object {}}
     numPages={1}
     setPageNumber={[MockFunction setPageNumber]}
     showFilters={false}
@@ -85,6 +87,7 @@ exports[`CourseList no filters snapshot 1`] = `
     </div>
   </div>
   <List
+    filterOptions={Object {}}
     numPages={1}
     setPageNumber={[MockFunction setPageNumber]}
     showFilters={false}
@@ -114,6 +117,11 @@ exports[`CourseList with filters snapshot 1`] = `
     </div>
   </div>
   <List
+    filterOptions={
+      Object {
+        "abitary": "filter",
+      }
+    }
     numPages={1}
     setPageNumber={[MockFunction setPageNumber]}
     showFilters={true}
@@ -141,6 +149,7 @@ exports[`CourseList with multiple courses and pages snapshot 1`] = `
     </div>
   </div>
   <List
+    filterOptions={Object {}}
     numPages={3}
     setPageNumber={[MockFunction setPageNumber]}
     showFilters={false}
