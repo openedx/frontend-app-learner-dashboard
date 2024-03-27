@@ -11,6 +11,8 @@ import {
 import CourseCard from 'containers/CourseCard';
 import NoCoursesView from './NoCoursesView';
 
+import List from './List';
+
 import { useCourseListData, useIsCollapsed } from './hooks';
 
 import messages from './messages';
@@ -27,7 +29,7 @@ export const CourseList = () => {
     showFilters,
     visibleList,
   } = useCourseListData();
-  const isCollapsed = useIsCollapsed();
+  // const isCollapsed = useIsCollapsed();
   return (
     <div className="course-list-container">
       <div className="course-list-heading-container">
@@ -38,27 +40,35 @@ export const CourseList = () => {
       </div>
       {hasCourses
         ? (
-          <>
-            {showFilters && (
-              <div id="course-list-active-filters-container">
-                <ActiveCourseFilters {...filterOptions} />
-              </div>
-            )}
-            <div className="d-flex flex-column flex-grow-1">
-              {visibleList.map(({ cardId }) => (
-                <CourseCard key={cardId} cardId={cardId} />
-              ))}
-              {numPages > 1 && (
-                <Pagination
-                  variant={isCollapsed ? 'reduced' : 'secondary'}
-                  paginationLabel="Course List"
-                  className="mx-auto mb-2"
-                  pageCount={numPages}
-                  onPageSelect={setPageNumber}
-                />
-              )}
-            </div>
-          </>
+          // TODO: refactor this into a component
+          // TODO: test: can we wrap it in a PluginSlot the way it is now?
+          <List
+            setPageNumber={setPageNumber}
+            numPages={numPages}
+            visibleList={visibleList}
+            showFilters={showFilters}
+          />
+          // <>
+          //   {showFilters && (
+          //     <div id="course-list-active-filters-container">
+          //       <ActiveCourseFilters {...filterOptions} />
+          //     </div>
+          //   )}
+          //   <div className="d-flex flex-column flex-grow-1">
+          //     {visibleList.map(({ cardId }) => (
+          //       <CourseCard key={cardId} cardId={cardId} />
+          //     ))}
+          //     {numPages > 1 && (
+          //       <Pagination
+          //         variant={isCollapsed ? 'reduced' : 'secondary'}
+          //         paginationLabel="Course List"
+          //         className="mx-auto mb-2"
+          //         pageCount={numPages}
+          //         onPageSelect={setPageNumber}
+          //       />
+          //     )}
+          //   </div>
+          // </>
         ) : (
           <NoCoursesView />
         )}
