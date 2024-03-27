@@ -23,10 +23,6 @@ describe('CourseFilterControls', () => {
     sortBy: 'test-sort-by',
     setSortBy: jest.fn().mockName('setSortBy'),
     filters: ['test-filter'],
-    setFilters: {
-      add: jest.fn().mockName('setFilters.add'),
-      remove: jest.fn().mockName('setFilters.remove'),
-    },
   };
 
   useCourseFilterControlsData.mockReturnValue({
