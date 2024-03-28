@@ -10,6 +10,14 @@ const modules = {
   requests,
 };
 
+/**
+ * Extracts keys from the modules object and the provided propName parameter to locate the
+ * corresponding object for that propName.
+ * Example: moduleProps('reducer') will return an aggregated object containing the reducer for each module
+ *
+ * @param {string} propName Used to locate the prop in each module
+ * @returns {object} Aggregated values for the provided propName
+ */
 const moduleProps = (propName) => Object.keys(modules).reduce(
   (obj, moduleKey) => {
     const value = modules[moduleKey][propName];
