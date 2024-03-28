@@ -1,6 +1,3 @@
-import { mergeConfig } from '@edx/frontend-platform';
-import envConfig from 'env.config';
-
 const configuration = {
   // BASE_URL: process.env.BASE_URL,
   LMS_BASE_URL: process.env.LMS_BASE_URL,
@@ -22,9 +19,6 @@ const configuration = {
   LOGO_URL: process.env.LOGO_URL,
   ENABLE_EDX_PERSONAL_DASHBOARD: process.env.ENABLE_EDX_PERSONAL_DASHBOARD === 'true',
 };
-
-// This mergeConfig ensures that any variables assigned by process.env are still overwritten if declared in JS config
-mergeConfig(envConfig);
 
 const features = {};
 
