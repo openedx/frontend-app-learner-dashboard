@@ -50,7 +50,7 @@ export const visibleList = (state, {
     };
   }
   return {
-    visible: list.slice((pageNumber - 1) * pageSize, pageNumber * pageSize),
+    visibleList: list.slice((pageNumber - 1) * pageSize, pageNumber * pageSize),
     numPages: Math.ceil(list.length / pageSize),
   };
 };

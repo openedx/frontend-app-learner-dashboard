@@ -1,6 +1,8 @@
 import { useToggle } from '@openedx/paragon';
 
 import { MockUseState } from 'testUtils';
+import { reduxHooks } from 'hooks';
+
 import track from 'tracking';
 
 import * as hooks from './hooks';
@@ -12,18 +14,28 @@ jest.mock('tracking', () => ({
   },
 }));
 
+jest.mock('hooks', () => ({
+  reduxHooks: {
+    useAddFilter: jest.fn(),
+    useRemoveFilter: jest.fn(),
+  },
+}));
+
 const state = new MockUseState(hooks);
 
 describe('CourseFilterControls hooks', () => {
   let out;
   const filters = ['a', 'b', 'c'];
   const setSortBy = jest.fn();
-  const setFilters = {
-    add: jest.fn(),
-    remove: jest.fn(),
-  };
+
+  const removeFilter = jest.fn();
+  reduxHooks.useRemoveFilter.mockReturnValue(removeFilter);
+  const addFilter = jest.fn();
+  reduxHooks.useAddFilter.mockReturnValue(addFilter);
+
   const toggleOpen = jest.fn();
   const toggleClose = jest.fn();
+
   describe('state values', () => {
     state.testGetter(state.keys.target);
   });
@@ -37,7 +49,6 @@ describe('CourseFilterControls hooks', () => {
       state.mock();
       out = hooks.useCourseFilterControlsData({
         filters,
-        setFilters,
         setSortBy,
       });
     });
@@ -66,7 +77,6 @@ describe('CourseFilterControls hooks', () => {
       state.mockVal(state.keys.target, 'foo');
       out = hooks.useCourseFilterControlsData({
         filters,
-        setFilters,
         setSortBy,
       });
       expect(out.isOpen).toEqual(true);
@@ -81,14 +91,14 @@ describe('CourseFilterControls hooks', () => {
           value,
         },
       });
-      expect(setFilters.add).toHaveBeenCalledWith(value);
+      expect(addFilter).toHaveBeenCalledWith(value);
       out.handleFilterChange({
         target: {
           checked: false,
           value,
         },
       });
-      expect(setFilters.remove).toHaveBeenCalledWith(value);
+      expect(removeFilter).toHaveBeenCalledWith(value);
     });
     test('handle sort change', () => {
       const value = 'a';

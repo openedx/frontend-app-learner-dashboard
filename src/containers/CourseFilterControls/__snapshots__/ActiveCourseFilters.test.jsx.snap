@@ -30,7 +30,7 @@ exports[`ActiveCourseFilters snapshot renders 1`] = `
     Upgraded
   </Chip>
   <Button
-    onClick={[MockFunction setFilters.clear]}
+    onClick={[Function]}
     variant="link"
   >
     Clear all

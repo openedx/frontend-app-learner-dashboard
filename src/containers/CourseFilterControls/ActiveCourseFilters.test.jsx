@@ -6,10 +6,6 @@ import ActiveCourseFilters from './ActiveCourseFilters';
 describe('ActiveCourseFilters', () => {
   const props = {
     filters: Object.values(FilterKeys),
-    setFilters: {
-      remove: jest.fn().mockName('setFilters.remove'),
-      clear: jest.fn().mockName('setFilters.clear'),
-    },
     handleRemoveFilter: jest.fn().mockName('handleRemoveFilter'),
   };
   describe('snapshot', () => {
