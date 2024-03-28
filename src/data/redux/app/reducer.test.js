@@ -14,12 +14,14 @@ describe('app reducer', () => {
     it('returns initial state', () => {
       expect(reducer(undefined, {})).toEqual(initialState);
     });
+    const initialFilter = 'initial filter';
     const testState = {
       ...initialState,
       enrollments: [],
       courseData: {
       },
       entitlement: [],
+      filters: [initialFilter],
     };
     describe('action handlers', () => {
       describe('loadCourses', () => {
@@ -91,6 +93,30 @@ describe('app reducer', () => {
               enrollment: { lastEnrolled: today },
             },
           });
+        });
+      });
+      describe('filters', () => {
+        const newFilter = 'new filter';
+        let out;
+        beforeEach(() => {
+          out = reducer(testState, {});
+        });
+        it('overwrites the filters object when using setFilters', () => {
+          expect(out.filters).toEqual([initialFilter]);
+          out = reducer(testState, actions.setFilters([newFilter]));
+          expect(out.filters).toEqual([newFilter]);
+        });
+        it('adds a filter when using addFilter', () => {
+          out = reducer(testState, actions.addFilter(newFilter));
+          expect(out.filters).toEqual([initialFilter, newFilter]);
+        });
+        it('removes a filter when using removeFilter', () => {
+          out = reducer(testState, actions.removeFilter(initialFilter));
+          expect(out.filters).toEqual([]);
+        });
+        it('clears the filters when using clearFilters', () => {
+          out = reducer(testState, actions.clearFilters());
+          expect(out.filters).toEqual([]);
         });
       });
     });
