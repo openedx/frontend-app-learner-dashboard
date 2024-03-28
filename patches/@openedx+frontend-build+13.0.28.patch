@@ -1,0 +1,58 @@
+diff --git a/node_modules/@openedx/frontend-build/config/jest.config.js b/node_modules/@openedx/frontend-build/config/jest.config.js
+index ac5f730..ddce396 100644
+--- a/node_modules/@openedx/frontend-build/config/jest.config.js
++++ b/node_modules/@openedx/frontend-build/config/jest.config.js
+@@ -3,11 +3,16 @@ const fs = require('fs');
+ 
+ const presets = require('../lib/presets');
+ 
++// This assigns the envConfigPath filepath based on whether env.config exists, otherwise it uses the fallback filepath.
++
+ let envConfigPath = path.resolve(__dirname, './jest/fallback.env.config.js');
+-const appEnvConfigPath = path.resolve(process.cwd(), './env.config.js');
++const appEnvConfigPathJs = path.resolve(process.cwd(), './env.config.js');
++const appEnvConfigPathJsx = path.resolve(process.cwd(), './env.config.jsx');
+ 
+-if (fs.existsSync(appEnvConfigPath)) {
+-  envConfigPath = appEnvConfigPath;
++if (fs.existsSync(appEnvConfigPathJs)) {
++  envConfigPath = appEnvConfigPathJs;
++} else if (fs.existsSync(appEnvConfigPathJsx)) {
++  envConfigPath = appEnvConfigPathJsx;
+ }
+ 
+ module.exports = {
+diff --git a/node_modules/@openedx/frontend-build/config/webpack.prod.config.js b/node_modules/@openedx/frontend-build/config/webpack.prod.config.js
+index 2879dd9..dd819bc 100644
+--- a/node_modules/@openedx/frontend-build/config/webpack.prod.config.js
++++ b/node_modules/@openedx/frontend-build/config/webpack.prod.config.js
+@@ -11,6 +11,7 @@ const dotenv = require('dotenv');
+ const NewRelicSourceMapPlugin = require('@edx/new-relic-source-map-webpack-plugin');
+ const HtmlWebpackPlugin = require('html-webpack-plugin');
+ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
++const fs = require('fs');
+ const path = require('path');
+ const PostCssAutoprefixerPlugin = require('autoprefixer');
+ const PostCssRTLCSS = require('postcss-rtlcss');
+@@ -23,6 +24,21 @@ const HtmlWebpackNewRelicPlugin = require('../lib/plugins/html-webpack-new-relic
+ const commonConfig = require('./webpack.common.config');
+ const presets = require('../lib/presets');
+ 
++/** This condition confirms whether the configuration for the MFE has switched to a JS-based configuration
++ * as previously implemented in frontend-build and frontend-platform. If the environment variable exists, then
++ * an env.config.js file will be created at the root directory and its env variables can be accessed with getConfig().
++ *
++ * https://github.com/openedx/frontend-build/blob/master/docs/0002-js-environment-config.md
++ * https://github.com/openedx/frontend-platform/blob/master/docs/decisions/0007-javascript-file-configuration.rst
++ */
++
++const envConfigPath = process.env.JS_CONFIG_FILEPATH;
++
++if (envConfigPath) {
++  const envConfigFilename = envConfigPath.slice(envConfigPath.indexOf('env.config'));
++  fs.copyFileSync(envConfigPath, envConfigFilename);
++}
++
+ // Add process env vars. Currently used only for setting the PUBLIC_PATH.
+ dotenv.config({
+   path: path.resolve(process.cwd(), '.env'),
