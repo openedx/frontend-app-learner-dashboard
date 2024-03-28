@@ -9,8 +9,9 @@ import CourseCard from 'containers/CourseCard';
 
 import { useIsCollapsed } from './hooks';
 
+// TODO: name this component CourseList?
 export const List = ({
-  showFilters, filterOptions, visibleList, numPages, setPageNumber,
+  filterOptions, setPageNumber, numPages, showFilters, visibleList,
 }) => {
   const isCollapsed = useIsCollapsed();
   return (
