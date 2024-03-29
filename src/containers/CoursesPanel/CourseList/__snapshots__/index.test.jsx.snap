@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CourseList collapsed with multiple courses and pages snapshot 1`] = `
+<Fragment>
+  <div
+    id="course-list-active-filters-container"
+  >
+    <ActiveCourseFilters />
+  </div>
+  <div
+    className="d-flex flex-column flex-grow-1"
+  >
+    <CourseCard
+      cardId="foo"
+      key="foo"
+    />
+    <CourseCard
+      cardId="bar"
+      key="bar"
+    />
+    <CourseCard
+      cardId="baz"
+      key="baz"
+    />
+    <Pagination
+      className="mx-auto mb-2"
+      pageCount={3}
+      paginationLabel="Course List"
+      variant="reduced"
+    />
+  </div>
+</Fragment>
+`;
+
+exports[`CourseList no courses or filters snapshot 1`] = `
+<Fragment>
+  <div
+    className="d-flex flex-column flex-grow-1"
+  />
+</Fragment>
+`;
+
+exports[`CourseList with filters snapshot 1`] = `undefined`;
+
+exports[`CourseList with multiple courses and pages snapshot 1`] = `
+<Fragment>
+  <div
+    className="d-flex flex-column flex-grow-1"
+  >
+    <CourseCard
+      cardId="foo"
+      key="foo"
+    />
+    <CourseCard
+      cardId="bar"
+      key="bar"
+    />
+    <CourseCard
+      cardId="baz"
+      key="baz"
+    />
+    <Pagination
+      className="mx-auto mb-2"
+      pageCount={3}
+      paginationLabel="Course List"
+      variant="secondary"
+    />
+  </div>
+</Fragment>
+`;

@@ -8,7 +8,7 @@ import {
 } from 'containers/CourseFilterControls';
 import NoCoursesView from './NoCoursesView';
 
-import List from './List';
+import CourseList from './CourseList';
 
 import { useCourseListData } from './hooks';
 
@@ -19,16 +19,11 @@ import './index.scss';
 /**
  * Renders the list of CourseCards, as well as the controls (CourseFilterControls) for modifying the list.
  * Also houses the NoCoursesView to display if the user hasn't enrolled in any courses.
- * @returns List of courses as CourseCards
+ * @returns List of courses as CourseCards or empty state
 */
-// TODO: change the name of this component
-export const CourseList = () => {
+export const CoursesPanel = () => {
   const { formatMessage } = useIntl();
   const hasCourses = reduxHooks.useHasCourses();
-  // const {
-  //   filterOptions,
-  //   ...otherSettings
-  // } = useCourseListData();
   const courseListData = useCourseListData();
   return (
     <div className="course-list-container">
@@ -40,7 +35,7 @@ export const CourseList = () => {
       </div>
       {hasCourses
         ? (
-          <List {...courseListData} />
+          <CourseList {...courseListData} />
         ) : (
           <NoCoursesView />
         )}
@@ -48,6 +43,6 @@ export const CourseList = () => {
   );
 };
 
-CourseList.propTypes = {};
+CoursesPanel.propTypes = {};
 
-export default CourseList;
+export default CoursesPanel;

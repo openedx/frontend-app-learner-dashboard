@@ -9,8 +9,7 @@ import CourseCard from 'containers/CourseCard';
 
 import { useIsCollapsed } from './hooks';
 
-// TODO: name this component CourseList?
-export const List = ({
+export const CourseList = ({
   filterOptions, setPageNumber, numPages, showFilters, visibleList,
 }) => {
   const isCollapsed = useIsCollapsed();
@@ -39,7 +38,7 @@ export const List = ({
   );
 };
 
-List.propTypes = {
+CourseList.propTypes = {
   showFilters: PropTypes.bool.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   visibleList: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -49,4 +48,4 @@ List.propTypes = {
   setPageNumber: PropTypes.func.isRequired,
 };
 
-export default List;
+export default CourseList;
