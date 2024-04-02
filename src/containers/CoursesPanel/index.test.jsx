@@ -30,8 +30,6 @@ describe('CourseList', () => {
     visibleList: [],
   };
 
-  // TODO: is this needed? overkill?
-  // TODO: if not, this is done
   const createWrapper = (courseListData) => {
     useCourseListData.mockReturnValueOnce({
       ...defaultCourseListData,
