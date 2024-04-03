@@ -21,7 +21,7 @@ jest.mock('./CourseList', () => 'CourseList');
 
 reduxHooks.useHasCourses.mockReturnValue(true);
 
-describe('CourseList', () => {
+describe('CoursesPanel', () => {
   const defaultCourseListData = {
     filterOptions: {},
     numPages: 1,
