@@ -1,25 +1,16 @@
 import { shallow } from '@edx/react-unit-test-utils';
 
-import { reduxHooks } from 'hooks';
-import { useCourseListData, useIsCollapsed } from './hooks';
+import { useIsCollapsed } from './hooks';
 import CourseList from '.';
 
-jest.mock('hooks', () => ({
-  reduxHooks: { useHasCourses: jest.fn() },
-}));
-
 jest.mock('./hooks', () => ({
-  useCourseListData: jest.fn(),
   useIsCollapsed: jest.fn(),
 }));
 
 jest.mock('containers/CourseCard', () => 'CourseCard');
 jest.mock('containers/CourseFilterControls', () => ({
   ActiveCourseFilters: 'ActiveCourseFilters',
-  CourseFilterControls: 'CourseFilterControls',
 }));
-
-reduxHooks.useHasCourses.mockReturnValue(true);
 
 describe('CourseList', () => {
   const defaultCourseListData = {
@@ -30,22 +21,12 @@ describe('CourseList', () => {
     visibleList: [],
   };
   useIsCollapsed.mockReturnValue(false);
-  const createWrapper = (courseListData) => {
-    useCourseListData.mockReturnValueOnce({
-      ...defaultCourseListData,
-      ...courseListData,
-    });
-    return shallow(<CourseList />);
-  };
 
-  describe('no courses', () => {
-    test('snapshot', () => {
-      reduxHooks.useHasCourses.mockReturnValue(true);
-      const wrapper = createWrapper();
-      expect(wrapper.snapshot).toMatchSnapshot();
-    });
-  });
-  describe('no filters', () => {
+  const createWrapper = (courseListData = defaultCourseListData) => (
+    shallow(<CourseList {...courseListData} />)
+  );
+
+  describe('no courses or filters', () => {
     test('snapshot', () => {
       const wrapper = createWrapper();
       expect(wrapper.snapshot).toMatchSnapshot();
