@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CourseList no courses snapshot 1`] = `
+exports[`CoursesPanel no courses snapshot 1`] = `
 <div
   className="course-list-container"
 >
@@ -22,7 +22,7 @@ exports[`CourseList no courses snapshot 1`] = `
 </div>
 `;
 
-exports[`CourseList with courses snapshot 1`] = `
+exports[`CoursesPanel with courses snapshot 1`] = `
 <div
   className="course-list-container"
 >
