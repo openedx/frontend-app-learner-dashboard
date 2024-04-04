@@ -34,16 +34,19 @@ export const CoursesPanel = () => {
           <CourseFilterControls {...courseListData.filterOptions} />
         </div>
       </div>
+    {hasCourses ? (
       <PluginSlot
-        id="courselist"
+        id="course_list"
       >
-        { hasCourses && <CourseList {...courseListData} /> }
+        <CourseList {...courseListData} />
       </PluginSlot>
+    ) : (
       <PluginSlot
-        id="nocoursesview"
+        id="no_courses_view"
       >
-        { !hasCourses && <NoCoursesView /> }
+        <NoCoursesView />
       </PluginSlot>
+    )}
     </div>
   );
 };
