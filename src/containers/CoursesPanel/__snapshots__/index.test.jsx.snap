@@ -18,7 +18,11 @@ exports[`CoursesPanel no courses snapshot 1`] = `
       <CourseFilterControls />
     </div>
   </div>
-  <NoCoursesView />
+  <PluginSlot
+    id="no_courses_view"
+  >
+    <NoCoursesView />
+  </PluginSlot>
 </div>
 `;
 
@@ -40,12 +44,16 @@ exports[`CoursesPanel with courses snapshot 1`] = `
       <CourseFilterControls />
     </div>
   </div>
-  <CourseList
-    filterOptions={Object {}}
-    numPages={1}
-    setPageNumber={[MockFunction setPageNumber]}
-    showFilters={false}
-    visibleList={Array []}
-  />
+  <PluginSlot
+    id="course_list"
+  >
+    <CourseList
+      filterOptions={Object {}}
+      numPages={1}
+      setPageNumber={[MockFunction setPageNumber]}
+      showFilters={false}
+      visibleList={Array []}
+    />
+  </PluginSlot>
 </div>
 `;

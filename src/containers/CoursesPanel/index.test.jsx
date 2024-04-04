@@ -17,6 +17,9 @@ jest.mock('containers/CourseFilterControls', () => ({
   ActiveCourseFilters: 'ActiveCourseFilters',
   CourseFilterControls: 'CourseFilterControls',
 }));
+jest.mock('@openedx/frontend-plugin-framework', () => ({
+  PluginSlot: 'PluginSlot',
+}));
 jest.mock('./CourseList', () => 'CourseList');
 
 reduxHooks.useHasCourses.mockReturnValue(true);
