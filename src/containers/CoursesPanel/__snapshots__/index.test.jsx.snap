@@ -41,11 +41,11 @@ exports[`CoursesPanel with courses snapshot 1`] = `
     </div>
   </div>
   <CourseList
-    filterOptions={Object {}}
+    filterOptions={{}}
     numPages={1}
     setPageNumber={[MockFunction setPageNumber]}
     showFilters={false}
-    visibleList={Array []}
+    visibleList={[]}
   />
 </div>
 `;

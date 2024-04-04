@@ -28,7 +28,7 @@ exports[`CourseFilterControls is not mobile snapshot 1`] = `
         >
           <FilterForm
             filters={
-              Array [
+              [
                 "test-filter",
               ]
             }
@@ -84,7 +84,7 @@ exports[`CourseFilterControls mobile snapshot 1`] = `
       >
         <FilterForm
           filters={
-            Array [
+            [
               "test-filter",
             ]
           }
@@ -144,7 +144,7 @@ exports[`CourseFilterControls no courses snapshot 1`] = `
         >
           <FilterForm
             filters={
-              Array [
+              [
                 "test-filter",
               ]
             }

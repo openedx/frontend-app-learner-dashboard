@@ -5,23 +5,23 @@ exports[`ZendeskFab snapshot 1`] = `
   cookies={true}
   defer={true}
   webWidget={
-    Object {
-      "answerBot": Object {
-        "avatar": Object {
-          "name": Object {
+    {
+      "answerBot": {
+        "avatar": {
+          "name": {
             "*": "edX Support",
           },
           "url": "https://edx-cdn.org/v3/prod/favicon.ico",
         },
         "contactOnlyAfterQuery": true,
         "suppress": false,
-        "title": Object {
+        "title": {
           "*": "edX Support",
         },
       },
-      "chat": Object {
-        "departments": Object {
-          "enabled": Array [
+      "chat": {
+        "departments": {
+          "enabled": [
             "account settings",
             "billing and payments",
             "certificates",
@@ -33,17 +33,17 @@ exports[`ZendeskFab snapshot 1`] = `
         },
         "suppress": false,
       },
-      "contactForm": Object {
+      "contactForm": {
         "attachments": true,
-        "selectTicketForm": Object {
+        "selectTicketForm": {
           "*": "Please choose your request type:",
         },
-        "ticketForms": Array [
-          Object {
-            "fields": Array [
-              Object {
+        "ticketForms": [
+          {
+            "fields": [
+              {
                 "id": "description",
-                "prefill": Object {
+                "prefill": {
                   "*": "",
                 },
               },
@@ -53,10 +53,10 @@ exports[`ZendeskFab snapshot 1`] = `
           },
         ],
       },
-      "contactOptions": Object {
+      "contactOptions": {
         "enabled": false,
       },
-      "helpCenter": Object {
+      "helpCenter": {
         "originalArticleButton": true,
       },
     }

@@ -9,7 +9,7 @@ exports[`app registry subscribe: APP_INIT_ERROR.  snapshot: displays an ErrorPag
 exports[`app registry subscribe: APP_READY.  links App to root element 1`] = `
 <AppProvider
   store={
-    Object {
+    {
       "redux": "store",
     }
   }

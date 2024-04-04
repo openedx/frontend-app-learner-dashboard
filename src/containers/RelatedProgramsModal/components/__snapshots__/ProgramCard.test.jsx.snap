@@ -7,7 +7,7 @@ exports[`RelatedProgramsModal ProgramCard snapshot 1`] = `
   href="props.data.programUrl"
   isClickable={true}
   style={
-    Object {
+    {
       "color": "white",
       "width": "18rem",
     }

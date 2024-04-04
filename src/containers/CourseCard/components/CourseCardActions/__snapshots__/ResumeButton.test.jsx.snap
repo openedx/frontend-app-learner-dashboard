@@ -6,8 +6,8 @@ exports[`ResumeButton snapshot disabled snapshot 1`] = `
   disabled={true}
   href="#"
   onClick={
-    Object {
-      "trackCourseEvent": Object {
+    {
+      "trackCourseEvent": {
         "cardId": "cardId",
         "eventName": [MockFunction segment.enterCourseClicked],
         "upgradeUrl": "resume-urlexec-ed-tracking-path=cardId",
@@ -25,8 +25,8 @@ exports[`ResumeButton snapshot enabled snapshot 1`] = `
   disabled={false}
   href="#"
   onClick={
-    Object {
-      "trackCourseEvent": Object {
+    {
+      "trackCourseEvent": {
         "cardId": "cardId",
         "eventName": [MockFunction segment.enterCourseClicked],
         "upgradeUrl": "resume-urlexec-ed-tracking-path=cardId",

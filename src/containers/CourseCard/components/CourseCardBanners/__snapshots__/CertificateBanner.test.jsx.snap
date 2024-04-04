@@ -43,14 +43,14 @@ exports[`CertificateBanner snapshot is restricted and verified with billing emai
     
   <format-message-function
     message={
-      Object {
+      {
         "defaultMessage": "If you would like a refund on your Certificate of Achievement, please contact our billing address {billingEmail}",
         "description": "Message to learners to contact billing for certificate refunds",
         "id": "learner-dash.courseCard.banners.certificateRefundContactBilling",
       }
     }
     values={
-      Object {
+      {
         "billingEmail": <MailtoLink
           to="billing@email"
         >
@@ -68,14 +68,14 @@ exports[`CertificateBanner snapshot is restricted and verified with support and 
 >
   <format-message-function
     message={
-      Object {
+      {
         "defaultMessage": "Your Certificate of Achievement is being held pending confirmation that the issuance of your Certificate is in compliance with strict U.S. embargoes on Iran, Cuba, Syria, and Sudan.  If you think our system has mistakenly identified you as being connected with one of those countries, please let us know by contacting {supportEmail}.",
         "description": "Restricted certificate warning message",
         "id": "learner-dash.courseCard.banners.certificateRestricted",
       }
     }
     values={
-      Object {
+      {
         "supportEmail": <MailtoLink
           to="suport@email"
         >
@@ -87,14 +87,14 @@ exports[`CertificateBanner snapshot is restricted and verified with support and 
     
   <format-message-function
     message={
-      Object {
+      {
         "defaultMessage": "If you would like a refund on your Certificate of Achievement, please contact our billing address {billingEmail}",
         "description": "Message to learners to contact billing for certificate refunds",
         "id": "learner-dash.courseCard.banners.certificateRefundContactBilling",
       }
     }
     values={
-      Object {
+      {
         "billingEmail": <MailtoLink
           to="billing@email"
         >
@@ -112,14 +112,14 @@ exports[`CertificateBanner snapshot is restricted and verified with support emai
 >
   <format-message-function
     message={
-      Object {
+      {
         "defaultMessage": "Your Certificate of Achievement is being held pending confirmation that the issuance of your Certificate is in compliance with strict U.S. embargoes on Iran, Cuba, Syria, and Sudan.  If you think our system has mistakenly identified you as being connected with one of those countries, please let us know by contacting {supportEmail}.",
         "description": "Restricted certificate warning message",
         "id": "learner-dash.courseCard.banners.certificateRestricted",
       }
     }
     values={
-      Object {
+      {
         "supportEmail": <MailtoLink
           to="suport@email"
         >
@@ -147,14 +147,14 @@ exports[`CertificateBanner snapshot is restricted with support email 1`] = `
 >
   <format-message-function
     message={
-      Object {
+      {
         "defaultMessage": "Your Certificate of Achievement is being held pending confirmation that the issuance of your Certificate is in compliance with strict U.S. embargoes on Iran, Cuba, Syria, and Sudan.  If you think our system has mistakenly identified you as being connected with one of those countries, please let us know by contacting {supportEmail}.",
         "description": "Restricted certificate warning message",
         "id": "learner-dash.courseCard.banners.certificateRestricted",
       }
     }
     values={
-      Object {
+      {
         "supportEmail": <MailtoLink
           to="suport@email"
         >

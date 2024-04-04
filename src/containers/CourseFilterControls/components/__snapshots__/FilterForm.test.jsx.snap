@@ -11,7 +11,7 @@ exports[`FilterForm snapshot renders 1`] = `
     name="course-status-filters"
     onChange={[MockFunction handleFilterChange]}
     value={
-      Array [
+      [
         "test-filter",
       ]
     }

@@ -9,14 +9,14 @@ exports[`ConfirmEmailBanner snapshot Show on unverified 1`] = `
   >
     <format-message-function
       message={
-        Object {
+        {
           "defaultMessage": "Remember to confirm your email so that you can keep learning on edX! {confirmNowButton}.",
           "description": "Text for reminding user to confirm email",
           "id": "leanerDashboard.confirmEmailTextReminderBanner",
         }
       }
       values={
-        Object {
+        {
           "confirmNowButton": <Button
             className="confirm-email-now-button"
             onClick={[MockFunction openConfirmModalButtonClick]}
