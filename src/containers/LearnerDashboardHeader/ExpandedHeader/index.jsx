@@ -2,12 +2,10 @@ import React from 'react';
 
 import { getConfig } from '@edx/frontend-platform';
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { Button } from '@edx/paragon';
+import { Button } from '@openedx/paragon';
 
-import WidgetNavbar from 'containers/WidgetContainers/WidgetNavbar';
 import urls from 'data/services/lms/urls';
 import { reduxHooks } from 'hooks';
-import { EXPANDED_NAVBAR } from 'widgets/RecommendationsPaintedDoorBtn/constants';
 
 import AuthenticatedUserDropdown from './AuthenticatedUserDropdown';
 import { useIsCollapsed, findCoursesNavClicked } from '../hooks';
@@ -19,10 +17,15 @@ export const ExpandedHeader = () => {
   const { courseSearchUrl } = reduxHooks.usePlatformSettingsData();
   const isCollapsed = useIsCollapsed();
 
-  const exploreCoursesClick = findCoursesNavClicked(urls.baseAppUrl(courseSearchUrl));
+  const exploreCoursesClick = findCoursesNavClicked(
+    urls.baseAppUrl(courseSearchUrl),
+  );
+
+  if (isCollapsed) {
+    return null;
+  }
 
   return (
-    !isCollapsed && (
     <header className="d-flex shadow-sm align-items-center learner-variant-header pl-4">
       <div className="flex-grow-1 d-flex align-items-center">
         <BrandLogo />
@@ -37,7 +40,7 @@ export const ExpandedHeader = () => {
         </Button>
         <Button
           as="a"
-          href={urls.programsUrl}
+          href={urls.programsUrl()}
           variant="inverse-primary"
           className="p-4"
         >
@@ -52,7 +55,6 @@ export const ExpandedHeader = () => {
         >
           {formatMessage(messages.discoverNew)}
         </Button>
-        <WidgetNavbar placement={EXPANDED_NAVBAR} />
         <span className="flex-grow-1" />
         <Button
           as="a"
@@ -66,7 +68,6 @@ export const ExpandedHeader = () => {
 
       <AuthenticatedUserDropdown />
     </header>
-    )
   );
 };
 

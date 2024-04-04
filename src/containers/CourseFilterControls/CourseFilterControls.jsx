@@ -11,8 +11,8 @@ import {
   breakpoints,
   useWindowSize,
   ModalCloseButton,
-} from '@edx/paragon';
-import { Close, Tune } from '@edx/paragon/icons';
+} from '@openedx/paragon';
+import { Close, Tune } from '@openedx/paragon/icons';
 
 import { reduxHooks } from 'hooks';
 
@@ -27,7 +27,6 @@ export const CourseFilterControls = ({
   sortBy,
   setSortBy,
   filters,
-  setFilters,
 }) => {
   const { formatMessage } = useIntl();
   const hasCourses = reduxHooks.useHasCourses();
@@ -41,7 +40,6 @@ export const CourseFilterControls = ({
     handleSortChange,
   } = useCourseFilterControlsData({
     filters,
-    setFilters,
     setSortBy,
   });
   const { width } = useWindowSize();
@@ -112,10 +110,6 @@ CourseFilterControls.propTypes = {
   sortBy: PropTypes.string.isRequired,
   setSortBy: PropTypes.func.isRequired,
   filters: PropTypes.arrayOf(PropTypes.string).isRequired,
-  setFilters: PropTypes.shape({
-    add: PropTypes.func.isRequired,
-    remove: PropTypes.func.isRequired,
-  }).isRequired,
 };
 
 export default CourseFilterControls;

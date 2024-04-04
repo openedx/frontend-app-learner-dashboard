@@ -2,21 +2,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button, Icon } from '@edx/paragon';
-import { Program } from '@edx/paragon/icons';
+import { Button, Icon } from '@openedx/paragon';
+import { Program } from '@openedx/paragon/icons';
 
 import RelatedProgramsBadgeModal from 'containers/RelatedProgramsModal';
 import useRelatedProgramsBadgeData from './hooks';
 
 export const RelatedProgramsBadge = ({ cardId }) => {
   const {
-    isOpen,
-    openModal,
-    closeModal,
-    numPrograms,
-    programsMessage,
+    isOpen, openModal, closeModal, numPrograms, programsMessage,
   } = useRelatedProgramsBadgeData({ cardId });
-  return (numPrograms > 0) && (
+
+  if (numPrograms === 0) {
+    return null;
+  }
+
+  return (
     <>
       <Button
         data-testid="RelatedProgramsBadge"

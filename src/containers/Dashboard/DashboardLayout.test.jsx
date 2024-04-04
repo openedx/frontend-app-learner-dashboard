@@ -1,8 +1,7 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { Col, Row } from '@edx/paragon';
+import { shallow } from '@edx/react-unit-test-utils';
+import { Col, Row } from '@openedx/paragon';
 
-import WidgetFooter from 'containers/WidgetContainers/WidgetFooter';
 import hooks from './hooks';
 import DashboardLayout, { columnConfig } from './DashboardLayout';
 
@@ -32,43 +31,43 @@ describe('DashboardLayout', () => {
 
   const testColumns = () => {
     it('loads courseList and sidebar column layout', () => {
-      const columns = el.find(Row).find(Col);
+      const columns = el.instance.findByType(Row)[0].findByType(Col);
       Object.keys(columnConfig.sidebar).forEach(size => {
-        expect(columns.at(1).props()[size]).toEqual(columnConfig.sidebar[size]);
+        expect(columns[1].props[size]).toEqual(columnConfig.sidebar[size]);
       });
     });
     it('displays children in first column', () => {
-      const columns = el.find(Row).find(Col);
-      expect(columns.at(0).contains(children)).toEqual(true);
+      const columns = el.instance.findByType(Row)[0].findByType(Col);
+      expect(columns[0].children).not.toHaveLength(0);
     });
     it('displays sidebar prop in second column', () => {
-      const columns = el.find(Row).find(Col);
-      expect(columns.at(1).find(props.sidebar)).toHaveLength(1);
+      const columns = el.instance.findByType(Row)[0].findByType(Col);
+      expect(columns[1].findByType(props.sidebar)).toHaveLength(1);
     });
     it('displays a footer in the second row', () => {
-      const columns = el.find(Row).at(1).find(Col);
-      expect(columns.at(0).containsMatchingElement(<WidgetFooter />)).toBeTruthy();
+      const columns = el.instance.findByType(Row)[1].findByType(Col);
+      expect(columns[0].children[0].type).toEqual('WidgetFooter');
     });
   };
   const testSidebarLayout = () => {
     it('displays widthSidebar width for course list column', () => {
-      const columns = el.find(Row).find(Col);
+      const columns = el.instance.findByType(Row)[0].findByType(Col);
       Object.keys(columnConfig.courseList.withSidebar).forEach(size => {
-        expect(columns.at(0).props()[size]).toEqual(columnConfig.courseList.withSidebar[size]);
+        expect(columns[0].props[size]).toEqual(columnConfig.courseList.withSidebar[size]);
       });
     });
   };
   const testNoSidebarLayout = () => {
     it('displays noSidebar width for course list column', () => {
-      const columns = el.find(Row).find(Col);
+      const columns = el.instance.findByType(Row)[0].findByType(Col);
       Object.keys(columnConfig.courseList.noSidebar).forEach(size => {
-        expect(columns.at(0).props()[size]).toEqual(columnConfig.courseList.noSidebar[size]);
+        expect(columns[0].props[size]).toEqual(columnConfig.courseList.noSidebar[size]);
       });
     });
   };
   const testSnapshot = () => {
     test('snapshot', () => {
-      expect(el).toMatchSnapshot();
+      expect(el.snapshot).toMatchSnapshot();
     });
   };
   describe('collapsed', () => {
@@ -86,17 +85,17 @@ describe('DashboardLayout', () => {
       testNoSidebarLayout();
     });
     it('does not show spacer component above widget sidebar', () => {
-      const columns = el.find(Col);
-      expect(columns.at(1).find('h2').length).toEqual(0);
+      const columns = el.instance.findByType(Col);
+      expect(columns[1].findByType('h2').length).toEqual(0);
     });
   });
 
   describe('not collapsed', () => {
     const testWidgetSpacing = () => {
       it('shows a blank (nbsp) h2 spacer component above widget sidebar', () => {
-        const columns = el.find(Col);
+        const columns = el.instance.findByType(Col);
         // nonbreaking space equivalent
-        expect(columns.at(1).find('h2').text()).toEqual('\xA0');
+        expect(columns[1].findByType('h2')[0].children[0].el).toEqual('\xA0');
       });
     };
     describe('sidebar showing', () => {

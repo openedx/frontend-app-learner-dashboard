@@ -6,7 +6,7 @@ import {
   Button,
   Form,
   ModalDialog,
-} from '@edx/paragon';
+} from '@openedx/paragon';
 
 import { utilHooks } from 'hooks';
 import { nullMethod, dateFormatter } from 'utils';

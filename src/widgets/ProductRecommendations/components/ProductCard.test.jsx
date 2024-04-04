@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { mockCrossProductCourses, mockOpenCourses, mockFallbackOpenCourse } from '../testData';
 import { trackProductCardClicked, trackCourseCardClicked } from '../optimizelyExperiment';
@@ -46,12 +46,12 @@ describe('ProductRecommendations ProductCard', () => {
   const fallbackOpenCourseProps = getProps(mockFallbackOpenCourse[0]);
 
   it('matches snapshot', () => {
-    expect(shallow(<ProductCard {...crossProductProps} />)).toMatchSnapshot();
+    expect(shallow(<ProductCard {...crossProductProps} />).snapshot).toMatchSnapshot();
   });
 
   it('has the query string parameter attached to a fallback recommendations url', () => {
     const wrapper = shallow(<ProductCard {...fallbackOpenCourseProps} />);
-    const cardUrl = wrapper.find('Card').props().destination;
+    const cardUrl = wrapper.instance.findByType('Card')[0].props.destination;
 
     expect(cardUrl).toEqual('https://www.edx.org/course/some-course?linked_from=recommender');
   });
@@ -60,7 +60,7 @@ describe('ProductRecommendations ProductCard', () => {
     const wrapper = shallow(<ProductCard {...openCourseProps} />);
     const { courseRunKey, title, url } = openCourseProps;
 
-    wrapper.simulate('click');
+    wrapper.instance.props.onClick();
 
     expect(trackCourseCardClicked).toHaveBeenCalledWith('1');
     expect(discoveryCardClicked).toHaveBeenCalledWith(courseRunKey, title, `${url}&linked_from=recommender`);
@@ -75,7 +75,7 @@ describe('ProductRecommendations ProductCard', () => {
       url,
     } = crossProductProps;
 
-    wrapper.simulate('click');
+    wrapper.instance.props.onClick();
 
     expect(trackProductCardClicked).toHaveBeenCalledWith('1');
     expect(productCardClicked).toHaveBeenCalledWith(courseRunKey, title, courseType, `${url}&linked_from=recommender`);

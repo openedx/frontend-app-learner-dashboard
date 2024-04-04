@@ -1,7 +1,6 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import { waitFor } from '@testing-library/react';
-import { useWindowSize } from '@edx/paragon';
+import { waitFor, render } from '@testing-library/react';
+import { useWindowSize } from '@openedx/paragon';
 
 import api from 'widgets/ProductRecommendations/api';
 import { MockUseState } from 'testUtils';
@@ -40,7 +39,7 @@ describe('experiments context', () => {
         it('calls useEffect once', () => {
           expect(calls.length).toEqual(1);
         });
-        describe('successfull fetch', () => {
+        describe('successful fetch', () => {
           it('sets the country code', async () => {
             let resolveFn;
             api.fetchRecommendationsContext.mockReturnValueOnce(
@@ -58,7 +57,7 @@ describe('experiments context', () => {
             });
           });
         });
-        describe('unsuccessfull fetch', () => {
+        describe('unsuccessful fetch', () => {
           it('sets the country code to an empty string', async () => {
             let rejectFn;
             api.fetchRecommendationsContext.mockReturnValueOnce(
@@ -109,7 +108,7 @@ describe('experiments context', () => {
 
       state.mock();
 
-      mount(
+      render(
         <ExperimentProvider>
           <TestComponent />
         </ExperimentProvider>,

@@ -26,9 +26,6 @@ exports[`CollapseMenuBody render 1`] = `
   >
     Discover New
   </Button>
-  <WidgetNavbar
-    placement="collapsedNavbar"
-  />
   <Button
     as="a"
     href="http://localhost:18000/support"
@@ -36,38 +33,40 @@ exports[`CollapseMenuBody render 1`] = `
   >
     Help
   </Button>
-  <Button
-    as="a"
-    href="url"
-    variant="inverse-primary"
-  >
-    Dashboard
-  </Button>
-  <Button
-    as="a"
-    href="http://localhost:18000/u/username"
-    variant="inverse-primary"
-  >
-    Profile
-  </Button>
-  <Button
-    as="a"
-    href="http://localhost:18000/account/settings"
-    variant="inverse-primary"
-  >
-    Account
-  </Button>
-  <Button
-    as="a"
-    href="http://localhost:18000/logout"
-    variant="inverse-primary"
-  >
-    Sign Out
-  </Button>
+  <Fragment>
+    <Button
+      as="a"
+      href="url"
+      variant="inverse-primary"
+    >
+      Dashboard
+    </Button>
+    <Button
+      as="a"
+      href="http://localhost:18000/u/username"
+      variant="inverse-primary"
+    >
+      Profile
+    </Button>
+    <Button
+      as="a"
+      href="http://localhost:18000/account/settings"
+      variant="inverse-primary"
+    >
+      Account
+    </Button>
+    <Button
+      as="a"
+      href="http://localhost:18000/logout"
+      variant="inverse-primary"
+    >
+      Sign Out
+    </Button>
+  </Fragment>
 </div>
 `;
 
-exports[`CollapseMenuBody render empty if not open 1`] = `""`;
+exports[`CollapseMenuBody render empty if not open 1`] = `null`;
 
 exports[`CollapseMenuBody render unauthenticated 1`] = `
 <div
@@ -95,9 +94,6 @@ exports[`CollapseMenuBody render unauthenticated 1`] = `
   >
     Discover New
   </Button>
-  <WidgetNavbar
-    placement="collapsedNavbar"
-  />
   <Button
     as="a"
     href="http://localhost:18000/support"

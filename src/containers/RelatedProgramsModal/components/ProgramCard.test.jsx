@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import ProgramCard from './ProgramCard';
 
@@ -18,6 +18,6 @@ const props = {
 
 describe('RelatedProgramsModal ProgramCard', () => {
   test('snapshot', () => {
-    expect(shallow(<ProgramCard {...props} />)).toMatchSnapshot();
+    expect(shallow(<ProgramCard {...props} />).snapshot).toMatchSnapshot();
   });
 });

@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { Dropdown, Icon, IconButton } from '@edx/paragon';
-import { MoreVert } from '@edx/paragon/icons';
+import { Dropdown, Icon, IconButton } from '@openedx/paragon';
+import { MoreVert } from '@openedx/paragon/icons';
 import { StrictDict } from '@edx/react-unit-test-utils';
 
 import EmailSettingsModal from 'containers/EmailSettingsModal';

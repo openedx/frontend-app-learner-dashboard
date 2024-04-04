@@ -1,6 +1,6 @@
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
-import { breakpoints, useWindowSize } from '@edx/paragon';
+import { breakpoints, useWindowSize } from '@openedx/paragon';
 
 import { reduxHooks } from 'hooks';
 
@@ -23,10 +23,6 @@ describe('CourseFilterControls', () => {
     sortBy: 'test-sort-by',
     setSortBy: jest.fn().mockName('setSortBy'),
     filters: ['test-filter'],
-    setFilters: {
-      add: jest.fn().mockName('setFilters.add'),
-      remove: jest.fn().mockName('setFilters.remove'),
-    },
   };
 
   useCourseFilterControlsData.mockReturnValue({
@@ -44,21 +40,21 @@ describe('CourseFilterControls', () => {
       reduxHooks.useHasCourses.mockReturnValueOnce(false);
       useWindowSize.mockReturnValueOnce({ width: breakpoints.small.minWidth });
       const wrapper = shallow(<CourseFilterControls {...props} />);
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
   });
   describe('mobile', () => {
     test('snapshot', () => {
       useWindowSize.mockReturnValueOnce({ width: breakpoints.small.minWidth - 1 });
       const wrapper = shallow(<CourseFilterControls {...props} />);
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
   });
   describe('is not mobile', () => {
     test('snapshot', () => {
       useWindowSize.mockReturnValueOnce({ width: breakpoints.small.minWidth });
       const wrapper = shallow(<CourseFilterControls {...props} />);
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.snapshot).toMatchSnapshot();
     });
   });
 });

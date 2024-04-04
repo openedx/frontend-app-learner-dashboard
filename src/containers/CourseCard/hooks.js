@@ -1,5 +1,5 @@
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { useWindowSize, breakpoints } from '@edx/paragon';
+import { useWindowSize, breakpoints } from '@openedx/paragon';
 import { reduxHooks } from 'hooks';
 
 export const useIsCollapsed = () => {

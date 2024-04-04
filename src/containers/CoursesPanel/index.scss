@@ -1,0 +1,42 @@
+@import "@openedx/paragon/scss/core/core";
+
+.course-list-heading-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.course-list-title {
+  font-size: $h2-font-size;
+  margin: map-get($spacers, 3) 0;
+}
+
+.course-list-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.course-filter-controls-container {
+  text-align: right;
+  align-self: center;
+}
+
+@include media-breakpoint-down(md) {
+  .course-list-heading-container {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+  }
+
+  .course-filter-controls-container {
+    text-align: left;
+    align-self: flex-start;
+  }
+
+  .course-list-title {
+    font-size: $h3-font-size;
+    margin: map-get($spacers, 2) 0;
+  }
+}

@@ -2,18 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { Button, Chip } from '@edx/paragon';
-import { CloseSmall } from '@edx/paragon/icons';
+import { Button, Chip } from '@openedx/paragon';
+import { CloseSmall } from '@openedx/paragon/icons';
+import { reduxHooks } from 'hooks';
 
 import messages from './messages';
 import './index.scss';
 
 export const ActiveCourseFilters = ({
   filters,
-  setFilters,
   handleRemoveFilter,
 }) => {
   const { formatMessage } = useIntl();
+  const clearFilters = reduxHooks.useClearFilters();
   return (
     <div id="course-list-active-filters">
       {filters.map(filter => (
@@ -25,7 +26,7 @@ export const ActiveCourseFilters = ({
           {formatMessage(messages[filter])}
         </Chip>
       ))}
-      <Button variant="link" onClick={setFilters.clear}>
+      <Button variant="link" onClick={clearFilters}>
         {formatMessage(messages.clearAll)}
       </Button>
     </div>
@@ -33,10 +34,6 @@ export const ActiveCourseFilters = ({
 };
 ActiveCourseFilters.propTypes = {
   filters: PropTypes.arrayOf(PropTypes.string).isRequired,
-  setFilters: PropTypes.shape({
-    remove: PropTypes.func,
-    clear: PropTypes.func,
-  }).isRequired,
   handleRemoveFilter: PropTypes.func.isRequired,
 };
 

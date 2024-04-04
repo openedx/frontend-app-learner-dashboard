@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { Card, Hyperlink, Icon } from '@edx/paragon';
-import { ArrowForward } from '@edx/paragon/icons';
+import { Card, Hyperlink, Icon } from '@openedx/paragon';
+import { ArrowForward } from '@openedx/paragon/icons';
 
 import { reduxHooks } from 'hooks';
 import moreCoursesSVG from 'assets/more-courses-sidewidget.svg';

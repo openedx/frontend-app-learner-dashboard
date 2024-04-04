@@ -4,7 +4,7 @@ import { reduxHooks } from 'hooks';
 import { RequestKeys } from 'data/constants/requests';
 import EnterpriseDashboardModal from 'containers/EnterpriseDashboardModal';
 import SelectSessionModal from 'containers/SelectSessionModal';
-import CourseList from 'containers/CourseList';
+import CoursesPanel from 'containers/CoursesPanel';
 
 import LoadedSidebar from 'containers/WidgetContainers/LoadedSidebar';
 import NoCoursesSidebar from 'containers/WidgetContainers/NoCoursesSidebar';
@@ -31,12 +31,12 @@ export const Dashboard = () => {
           {(hasCourses && showSelectSessionModal) && <SelectSessionModal />}
         </>
       )}
-      <div id="dashboard-content">
+      <div id="dashboard-content" data-testid="dashboard-content">
         {initIsPending
           ? (<LoadingView />)
           : (
             <DashboardLayout sidebar={hasCourses ? LoadedSidebar : NoCoursesSidebar}>
-              <CourseList />
+              <CoursesPanel />
             </DashboardLayout>
           )}
       </div>

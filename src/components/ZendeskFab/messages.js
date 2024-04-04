@@ -1,6 +1,6 @@
-import { StrictDict } from 'utils';
+import { defineMessages } from '@edx/frontend-platform/i18n';
 
-export const messages = StrictDict({
+const messages = defineMessages({
   supportTitle: {
     id: 'zendesk.supportTitle',
     description: 'Title for the support button',

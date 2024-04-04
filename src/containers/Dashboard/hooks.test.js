@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { useWindowSize, breakpoints } from '@edx/paragon';
+import { useWindowSize, breakpoints } from '@openedx/paragon';
 
 import { apiHooks } from 'hooks';
 import { MockUseState } from 'testUtils';
@@ -9,7 +9,7 @@ import { MockUseState } from 'testUtils';
 import appMessages from 'messages';
 import * as hooks from './hooks';
 
-jest.mock('@edx/paragon', () => ({
+jest.mock('@openedx/paragon', () => ({
   useWindowSize: jest.fn(),
   breakpoints: {},
 }));

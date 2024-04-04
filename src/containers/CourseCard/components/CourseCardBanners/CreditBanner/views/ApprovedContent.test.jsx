@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { formatMessage } from 'testUtils';
 import { reduxHooks } from 'hooks';
@@ -38,19 +38,19 @@ describe('ApprovedContent component', () => {
     describe('rendered CreditContent component', () => {
       let component;
       beforeAll(() => {
-        component = el.find('CreditContent');
+        component = el.instance.findByType('CreditContent');
       });
       test('action.href from credit.providerStatusUrl', () => {
-        expect(component.props().action.href).toEqual(credit.providerStatusUrl);
+        expect(component[0].props.action.href).toEqual(credit.providerStatusUrl);
       });
       test('action.message is formatted viewCredit message', () => {
-        expect(component.props().action.message).toEqual(formatMessage(messages.viewCredit));
+        expect(component[0].props.action.message).toEqual(formatMessage(messages.viewCredit));
       });
       test('action.disabled is false', () => {
-        expect(component.props().action.disabled).toEqual(false);
+        expect(component[0].props.action.disabled).toEqual(false);
       });
       test('message is formatted approved message', () => {
-        expect(component.props().message).toEqual(formatMessage(
+        expect(component[0].props.message).toEqual(formatMessage(
           messages.approved,
           {
             congratulations: (<b>{formatMessage(messages.congratulations)}</b>),

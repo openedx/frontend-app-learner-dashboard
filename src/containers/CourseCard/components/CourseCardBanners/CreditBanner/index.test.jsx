@@ -1,8 +1,8 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { formatMessage } from 'testUtils';
-import { MailtoLink } from '@edx/paragon';
+import { MailtoLink } from '@openedx/paragon';
 
 import hooks from './hooks';
 import messages from './messages';
@@ -44,20 +44,18 @@ describe('CreditBanner component', () => {
         el = shallow(<CreditBanner cardId={cardId} />);
       });
       test('snapshot', () => {
-        expect(el).toMatchSnapshot();
+        expect(el.snapshot).toMatchSnapshot();
       });
       it('passes danger variant to Banner parent', () => {
-        expect(el.find('Banner').props().variant).toEqual('danger');
+        expect(el.instance.findByType('Banner')[0].props.variant).toEqual('danger');
       });
       it('includes credit-error-msg with support email link', () => {
-        expect(el.find('.credit-error-msg').containsMatchingElement(
-          formatMessage(messages.error, {
-            supportEmailLink: (<MailtoLink to={supportEmail}>{supportEmail}</MailtoLink>),
-          }),
-        )).toEqual(true);
+        expect(el.instance.findByTestId('credit-error-msg')[0].children[0].el).toEqual(shallow(formatMessage(messages.error, {
+          supportEmailLink: (<MailtoLink to={supportEmail}>{supportEmail}</MailtoLink>),
+        })));
       });
       it('loads ContentComponent with cardId', () => {
-        expect(el.find('ContentComponent').props().cardId).toEqual(cardId);
+        expect(el.instance.findByType('ContentComponent')[0].props.cardId).toEqual(cardId);
       });
     });
 
@@ -70,12 +68,10 @@ describe('CreditBanner component', () => {
         el = shallow(<CreditBanner cardId={cardId} />);
       });
       test('snapshot', () => {
-        expect(el).toMatchSnapshot();
+        expect(el.snapshot).toMatchSnapshot();
       });
       it('includes credit-error-msg without support email link', () => {
-        expect(el.find('.credit-error-msg').containsMatchingElement(
-          formatMessage(messages.errorNoEmail),
-        )).toEqual(true);
+        expect(el.instance.findByTestId('credit-error-msg')[0].children[0].el).toEqual(formatMessage(messages.errorNoEmail));
       });
     });
 
@@ -89,10 +85,10 @@ describe('CreditBanner component', () => {
         el = shallow(<CreditBanner cardId={cardId} />);
       });
       test('snapshot', () => {
-        expect(el).toMatchSnapshot();
+        expect(el.snapshot).toMatchSnapshot();
       });
       it('loads ContentComponent with cardId', () => {
-        expect(el.find('ContentComponent').props().cardId).toEqual(cardId);
+        expect(el.instance.findByType('ContentComponent')[0].props.cardId).toEqual(cardId);
       });
     });
   });

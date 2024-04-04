@@ -1,11 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 import { reduxHooks } from 'hooks';
 import hooks from './hooks';
 import ProductRecommendations from './index';
 import LoadingView from './components/LoadingView';
 import LoadedView from './components/LoadedView';
-import NoCoursesView from '../../containers/CourseList/NoCoursesView';
+import NoCoursesView from '../../containers/CoursesPanel/NoCoursesView';
 import { mockCrossProductResponse, mockAmplitudeResponse } from './testData';
 
 jest.mock('./hooks', () => ({
@@ -21,7 +21,7 @@ jest.mock('hooks', () => ({
 
 jest.mock('./components/LoadingView', () => 'LoadingView');
 jest.mock('./components/LoadedView', () => 'LoadedView');
-jest.mock('containers/CourseList/NoCoursesView', () => 'NoCoursesView');
+jest.mock('containers/CoursesPanel/NoCoursesView', () => 'NoCoursesView');
 
 describe('ProductRecommendations', () => {
   const defaultValues = {
@@ -31,7 +31,7 @@ describe('ProductRecommendations', () => {
     hasFailed: false,
   };
 
-  const successfullLoadValues = {
+  const successfulLoadValues = {
     ...defaultValues,
     isLoaded: true,
     productRecommendations: mockCrossProductResponse,
@@ -42,10 +42,10 @@ describe('ProductRecommendations', () => {
   it('matches snapshot', () => {
     hooks.useIsMobile.mockReturnValueOnce(false);
     hooks.useProductRecommendationsData.mockReturnValueOnce({
-      ...successfullLoadValues,
+      ...successfulLoadValues,
     });
 
-    expect(shallow(<ProductRecommendations />)).toMatchSnapshot();
+    expect(shallow(<ProductRecommendations />).snapshot).toMatchSnapshot();
   });
 
   it('renders the LoadingView if the request is pending', () => {
@@ -55,7 +55,7 @@ describe('ProductRecommendations', () => {
       isLoading: true,
     });
 
-    expect(shallow(<ProductRecommendations />)).toMatchObject(
+    expect({ ...shallow(<ProductRecommendations />).shallowWrapper, children: expect.any(Array) }).toMatchObject(
       shallow(<LoadingView />),
     );
   });
@@ -68,30 +68,30 @@ describe('ProductRecommendations', () => {
 
     const wrapper = shallow(<ProductRecommendations />);
 
-    expect(wrapper.type()).toBeNull();
+    expect(wrapper.shallowWrapper).toBeNull();
   });
   it('renders nothing if the user is on the mobile view', () => {
     hooks.useIsMobile.mockReturnValueOnce(true);
     hooks.useProductRecommendationsData.mockReturnValueOnce({
-      ...successfullLoadValues,
+      ...successfulLoadValues,
     });
 
     const wrapper = shallow(<ProductRecommendations />);
 
-    expect(wrapper.type()).toBeNull();
+    expect(wrapper.shallowWrapper).toBeNull();
   });
 
   it('renders NoCoursesView if the request is loaded, user has courses, and the response is empty', () => {
     hooks.useIsMobile.mockReturnValueOnce(false);
     hooks.useProductRecommendationsData.mockReturnValueOnce({
-      ...successfullLoadValues,
+      ...successfulLoadValues,
       productRecommendations: {
         amplitudeCourses: [],
         crossProductCourses: [],
       },
     });
 
-    expect(shallow(<ProductRecommendations />)).toMatchObject(
+    expect({ ...shallow(<ProductRecommendations />).shallowWrapper, children: expect.any(Array) }).toMatchObject(
       shallow(<NoCoursesView />),
     );
   });
@@ -100,10 +100,10 @@ describe('ProductRecommendations', () => {
     it('renders with cross product data if the request completed and the user has courses', () => {
       hooks.useIsMobile.mockReturnValueOnce(false);
       hooks.useProductRecommendationsData.mockReturnValueOnce({
-        ...successfullLoadValues,
+        ...successfulLoadValues,
       });
 
-      expect(shallow(<ProductRecommendations />)).toMatchObject(
+      expect({ ...shallow(<ProductRecommendations />).shallowWrapper, children: expect.any(Array) }).toMatchObject(
         shallow(
           <LoadedView
             openCourses={mockCrossProductResponse.amplitudeCourses}
@@ -116,11 +116,11 @@ describe('ProductRecommendations', () => {
     it('renders the LoadedView with Amplitude course data if the request completed', () => {
       hooks.useIsMobile.mockReturnValueOnce(false);
       hooks.useProductRecommendationsData.mockReturnValueOnce({
-        ...successfullLoadValues,
+        ...successfulLoadValues,
         productRecommendations: mockAmplitudeResponse,
       });
 
-      expect(shallow(<ProductRecommendations />)).toMatchObject(
+      expect({ ...shallow(<ProductRecommendations />).shallowWrapper, children: expect.any(Array) }).toMatchObject(
         shallow(
           <LoadedView
             openCourses={mockCrossProductResponse.amplitudeCourses}

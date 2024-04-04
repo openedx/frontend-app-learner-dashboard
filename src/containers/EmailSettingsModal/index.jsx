@@ -7,7 +7,7 @@ import {
   Button,
   Form,
   ModalDialog,
-} from '@edx/paragon';
+} from '@openedx/paragon';
 
 import { nullMethod } from 'utils';
 

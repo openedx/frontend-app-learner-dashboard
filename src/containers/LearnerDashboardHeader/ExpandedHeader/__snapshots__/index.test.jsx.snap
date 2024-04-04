@@ -33,9 +33,6 @@ exports[`ExpandedHeader render 1`] = `
     >
       Discover New
     </Button>
-    <WidgetNavbar
-      placement="expendedNavbar"
-    />
     <span
       className="flex-grow-1"
     />
@@ -52,4 +49,4 @@ exports[`ExpandedHeader render 1`] = `
 </header>
 `;
 
-exports[`ExpandedHeader render empty if collapsed 1`] = `""`;
+exports[`ExpandedHeader render empty if collapsed 1`] = `null`;

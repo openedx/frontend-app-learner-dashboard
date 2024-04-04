@@ -1,7 +1,7 @@
 import React from 'react';
 import './index.scss';
 import { reduxHooks } from 'hooks';
-import NoCoursesView from 'containers/CourseList/NoCoursesView';
+import NoCoursesView from 'containers/CoursesPanel/NoCoursesView';
 import LoadingView from './components/LoadingView';
 import LoadedView from './components/LoadedView';
 import hooks from './hooks';

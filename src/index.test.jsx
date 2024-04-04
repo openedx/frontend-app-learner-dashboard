@@ -8,8 +8,6 @@ import {
   subscribe,
 } from '@edx/frontend-platform';
 
-import { messages as footerMessages } from '@edx/frontend-component-footer';
-
 import { configuration } from './config';
 import * as app from '.';
 
@@ -19,6 +17,7 @@ jest.mock('react-dom', () => ({
 
 jest.mock('@edx/frontend-platform', () => ({
   mergeConfig: jest.fn(),
+  ensureConfig: jest.fn(),
   APP_READY: 'app-is-ready-key',
   APP_INIT_ERROR: 'app-init-error',
   initialize: jest.fn(),
@@ -58,10 +57,9 @@ describe('app registry', () => {
     expect(rendered).toMatchSnapshot();
     expect(target).toEqual(document.getElementById('root'));
   });
-  test('initialize is called with footerMessages and requireAuthenticatedUser', () => {
+  test('initialize is called with requireAuthenticatedUser', () => {
     expect(initialize).toHaveBeenCalledTimes(1);
     const initializeArg = initialize.mock.calls[0][0];
-    expect(initializeArg.messages[0]).toEqual(footerMessages);
     expect(initializeArg.requireAuthenticatedUser).toEqual(true);
   });
   test('initialize config', () => {

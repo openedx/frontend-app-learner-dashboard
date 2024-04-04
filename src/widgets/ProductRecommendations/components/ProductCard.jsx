@@ -5,7 +5,7 @@ import {
   Card,
   Truncate,
   Hyperlink,
-} from '@edx/paragon';
+} from '@openedx/paragon';
 import { getAuthenticatedUser } from '@edx/frontend-platform/auth';
 
 import { trackProductCardClicked, trackCourseCardClicked } from '../optimizelyExperiment';

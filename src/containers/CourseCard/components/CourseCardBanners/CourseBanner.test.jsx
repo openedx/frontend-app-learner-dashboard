@@ -1,6 +1,6 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { Hyperlink } from '@edx/paragon';
+import { shallow } from '@edx/react-unit-test-utils';
+import { Hyperlink } from '@openedx/paragon';
 
 import { reduxHooks } from 'hooks';
 import { formatMessage } from 'testUtils';
@@ -70,11 +70,11 @@ describe('CourseBanner', () => {
       render({ enrollment: { isAuditAccessExpired: true, canUpgrade: true } });
     });
     test('snapshot: (auditAccessExpired, upgradeToAccess)', () => {
-      expect(el).toMatchSnapshot();
+      expect(el.snapshot).toMatchSnapshot();
     });
     test('messages: (auditAccessExpired, upgradeToAccess)', () => {
-      expect(el.text()).toContain(messages.auditAccessExpired.defaultMessage);
-      expect(el.text()).toContain(messages.upgradeToAccess.defaultMessage);
+      expect(el.instance.children[0].children[0].el).toContain(messages.auditAccessExpired.defaultMessage);
+      expect(el.instance.children[0].children[2].el).toContain(messages.upgradeToAccess.defaultMessage);
     });
   });
   describe('audit access expired, cannot upgrade', () => {
@@ -82,11 +82,11 @@ describe('CourseBanner', () => {
       render({ enrollment: { isAuditAccessExpired: true } });
     });
     test('snapshot: (auditAccessExpired, findAnotherCourse hyperlink)', () => {
-      expect(el).toMatchSnapshot();
+      expect(el.snapshot).toMatchSnapshot();
     });
     test('messages: (auditAccessExpired, upgradeToAccess)', () => {
-      expect(el.text()).toContain(messages.auditAccessExpired.defaultMessage);
-      expect(el.find(Hyperlink).text()).toEqual(messages.findAnotherCourse.defaultMessage);
+      expect(el.instance.children[0].children[0].el).toContain(messages.auditAccessExpired.defaultMessage);
+      expect(el.instance.findByType(Hyperlink)[0].children[0].el).toEqual(messages.findAnotherCourse.defaultMessage);
     });
   });
   describe('course run active and cannot upgrade', () => {
@@ -94,31 +94,31 @@ describe('CourseBanner', () => {
       render({ courseRun: { isActive: true } });
     });
     test('snapshot: (upgradseDeadlinePassed, exploreCourseDetails hyperlink)', () => {
-      expect(el).toMatchSnapshot();
+      expect(el.snapshot).toMatchSnapshot();
     });
     test('messages: (upgradseDeadlinePassed, exploreCourseDetails hyperlink)', () => {
-      expect(el.text()).toContain(messages.upgradeDeadlinePassed.defaultMessage);
-      const link = el.find(Hyperlink);
-      expect(link.text()).toEqual(messages.exploreCourseDetails.defaultMessage);
-      expect(link.props().destination).toEqual(courseRunData.marketingUrl);
+      expect(el.instance.children[0].children[0].el).toContain(messages.upgradeDeadlinePassed.defaultMessage);
+      const link = el.instance.findByType(Hyperlink);
+      expect(link[0].children[0].el).toEqual(messages.exploreCourseDetails.defaultMessage);
+      expect(link[0].props.destination).toEqual(courseRunData.marketingUrl);
     });
   });
   test('no display if audit access not expired and (course is not active or can upgrade)', () => {
     render();
     // isEmptyRender() isn't true because the minimal is <Fragment />
-    expect(el.html()).toEqual('');
+    expect(el.instance.children).toEqual([]);
     render({ enrollment: { canUpgrade: true }, courseRun: { isActive: true } });
-    expect(el.html()).toEqual('');
+    expect(el.instance.children).toEqual([]);
   });
   describe('unmet prerequisites', () => {
     beforeEach(() => {
       render({ enrollment: { coursewareAccess: { hasUnmetPrerequisites: true } } });
     });
     test('snapshot: unmetPrerequisites', () => {
-      expect(el).toMatchSnapshot();
+      expect(el.snapshot).toMatchSnapshot();
     });
     test('messages: prerequisitesNotMet', () => {
-      expect(el.text()).toContain(messages.prerequisitesNotMet.defaultMessage);
+      expect(el.instance.children[0].children[0].el).toContain(messages.prerequisitesNotMet.defaultMessage);
     });
   });
   describe('too early', () => {
@@ -126,17 +126,17 @@ describe('CourseBanner', () => {
       beforeEach(() => {
         render({ enrollment: { coursewareAccess: { isTooEarly: true } }, courseRun: { startDate: null } });
       });
-      test('snapshot', () => expect(el).toMatchSnapshot());
-      test('messages', () => expect(el.text()).toEqual(''));
+      test('snapshot', () => expect(el.snapshot).toMatchSnapshot());
+      test('messages', () => expect(el.instance.children).toEqual([]));
     });
     describe('has start date', () => {
       beforeEach(() => {
         render({ enrollment: { coursewareAccess: { isTooEarly: true } } });
       });
-      test('snapshot', () => expect(el).toMatchSnapshot());
+      test('snapshot', () => expect(el.snapshot).toMatchSnapshot());
 
       test('messages: courseHasNotStarted', () => {
-        expect(el.text()).toContain(
+        expect(el.instance.children[0].children[0].el).toContain(
           formatMessage(messages.courseHasNotStarted, { startDate: courseRunData.startDate }),
         );
       });
@@ -147,7 +147,7 @@ describe('CourseBanner', () => {
       render({ enrollment: { coursewareAccess: { isStaff: true } } });
     });
     test('snapshot: isStaff', () => {
-      expect(el).toMatchSnapshot();
+      expect(el.snapshot).toMatchSnapshot();
     });
   });
   test('snapshot: stacking banners', () => {
@@ -160,6 +160,6 @@ describe('CourseBanner', () => {
         },
       },
     });
-    expect(el).toMatchSnapshot();
+    expect(el.snapshot).toMatchSnapshot();
   });
 });

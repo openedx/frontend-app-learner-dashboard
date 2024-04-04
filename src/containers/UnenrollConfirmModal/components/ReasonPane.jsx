@@ -6,7 +6,7 @@ import {
   ActionRow,
   Button,
   Form,
-} from '@edx/paragon';
+} from '@openedx/paragon';
 
 import constants from '../constants';
 import messages from './messages';

@@ -10,14 +10,17 @@ exports[`Dashboard snapshots courses loaded, show select session modal, no avail
   >
     test-page-title
   </h1>
-  <SelectSessionModal />
+  <Fragment>
+    <SelectSessionModal />
+  </Fragment>
   <div
+    data-testid="dashboard-content"
     id="dashboard-content"
   >
     <DashboardLayout
       sidebar="LoadedWidgetSidebar"
     >
-      <CourseList />
+      <CoursesPanel />
     </DashboardLayout>
   </div>
 </div>
@@ -34,6 +37,7 @@ exports[`Dashboard snapshots courses still loading snapshot 1`] = `
     test-page-title
   </h1>
   <div
+    data-testid="dashboard-content"
     id="dashboard-content"
   >
     <LoadingView />
@@ -51,14 +55,17 @@ exports[`Dashboard snapshots there are no courses, there ARE available dashboard
   >
     test-page-title
   </h1>
-  <EnterpriseDashboardModal />
+  <Fragment>
+    <EnterpriseDashboardModal />
+  </Fragment>
   <div
+    data-testid="dashboard-content"
     id="dashboard-content"
   >
     <DashboardLayout
       sidebar="NoCoursesWidgetSidebar"
     >
-      <CourseList />
+      <CoursesPanel />
     </DashboardLayout>
   </div>
 </div>

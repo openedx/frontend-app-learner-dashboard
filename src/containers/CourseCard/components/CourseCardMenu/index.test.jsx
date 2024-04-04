@@ -1,6 +1,6 @@
 import { when } from 'jest-when';
 
-import { Dropdown } from '@edx/paragon';
+import { Dropdown } from '@openedx/paragon';
 import { shallow } from '@edx/react-unit-test-utils';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
@@ -12,6 +12,7 @@ import * as hooks from './hooks';
 import CourseCardMenu, { testIds } from '.';
 
 jest.mock('@edx/frontend-platform/i18n', () => ({
+  ...jest.requireActual('@edx/frontend-platform/i18n'),
   useIntl: jest.fn().mockReturnValue({
     formatMessage: jest.requireActual('@edx/react-unit-test-utils').formatMessage,
   }),

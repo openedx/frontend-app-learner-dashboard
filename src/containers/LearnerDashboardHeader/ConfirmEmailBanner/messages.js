@@ -24,7 +24,7 @@ const messages = defineMessages({
   confirmEmailModalBody: {
     id: 'leanerDashboard.confirmEmailModalBody',
     description: 'text hint for confirming email modal',
-    defaultMessage: 'We\'ve sent you an email to verify your acccount. Please check your inbox and click on the big red button to confirm and keep learning.',
+    defaultMessage: 'We\'ve sent you an email to verify your account. Please check your inbox and click on the big red button to confirm and keep learning.',
   },
   confirmEmailImageAlt: {
     id: 'leanerDashboard.confirmEmailImageAlt',

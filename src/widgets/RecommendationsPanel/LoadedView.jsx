@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { Button } from '@edx/paragon';
-import { Search } from '@edx/paragon/icons';
+import { Button } from '@openedx/paragon';
+import { Search } from '@openedx/paragon/icons';
 import { baseAppUrl } from 'data/services/lms/urls';
 
 import { reduxHooks } from 'hooks';
@@ -12,9 +12,6 @@ import CourseCard from './components/CourseCard';
 import messages from './messages';
 
 import './index.scss';
-import { usePaintedDoorExperimentContext } from '../RecommendationsPaintedDoorBtn/PaintedDoorExperimentContext';
-import { RECOMMENDATIONS_PANEL } from '../RecommendationsPaintedDoorBtn/constants';
-import RecommendationsPaintedDoorBtn from '../RecommendationsPaintedDoorBtn';
 
 export const LoadedView = ({
   courses,
@@ -22,11 +19,6 @@ export const LoadedView = ({
 }) => {
   const { formatMessage } = useIntl();
   const { courseSearchUrl } = reduxHooks.usePlatformSettingsData();
-  const {
-    experimentVariation,
-    isPaintedDoorWidgetBtnVariation,
-    experimentLoading,
-  } = usePaintedDoorExperimentContext();
 
   return (
     <div className="p-4 w-100 panel-background">
@@ -43,19 +35,15 @@ export const LoadedView = ({
         ))}
       </div>
       <div className="text-center explore-courses-btn">
-        {!experimentLoading && isPaintedDoorWidgetBtnVariation ? (
-          <RecommendationsPaintedDoorBtn placement={RECOMMENDATIONS_PANEL} experimentVariation={experimentVariation} />
-        ) : (
-          <Button
-            variant="tertiary"
-            iconBefore={Search}
-            as="a"
-            href={baseAppUrl(courseSearchUrl)}
-            onClick={track.findCoursesWidgetClicked(baseAppUrl(courseSearchUrl))}
-          >
-            {formatMessage(messages.exploreCoursesButton)}
-          </Button>
-        )}
+        <Button
+          variant="tertiary"
+          iconBefore={Search}
+          as="a"
+          href={baseAppUrl(courseSearchUrl)}
+          onClick={track.findCoursesWidgetClicked(baseAppUrl(courseSearchUrl))}
+        >
+          {formatMessage(messages.exploreCoursesButton)}
+        </Button>
       </div>
     </div>
   );

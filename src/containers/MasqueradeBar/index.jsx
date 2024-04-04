@@ -10,8 +10,8 @@ import {
   FormGroup,
   StatefulButton,
   Icon,
-} from '@edx/paragon';
-import { Close, PersonSearch } from '@edx/paragon/icons';
+} from '@openedx/paragon';
+import { Close, PersonSearch } from '@openedx/paragon/icons';
 
 import messages from './messages';
 import { useMasqueradeBarData } from './hooks';
