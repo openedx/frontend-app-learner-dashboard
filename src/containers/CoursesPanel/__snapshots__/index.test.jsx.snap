@@ -18,18 +18,11 @@ exports[`CoursesPanel no courses snapshot 1`] = `
       <CourseFilterControls />
     </div>
   </div>
-  <ForwardRef
-    as={Symbol(react.fragment)}
-    id="courselist"
-    pluginProps={Object {}}
-  />
-  <ForwardRef
-    as={Symbol(react.fragment)}
-    id="nocoursesview"
-    pluginProps={Object {}}
+  <PluginSlot
+    id="no_courses_view"
   >
     <NoCoursesView />
-  </ForwardRef>
+  </PluginSlot>
 </div>
 `;
 
@@ -51,10 +44,8 @@ exports[`CoursesPanel with courses snapshot 1`] = `
       <CourseFilterControls />
     </div>
   </div>
-  <ForwardRef
-    as={Symbol(react.fragment)}
-    id="courselist"
-    pluginProps={Object {}}
+  <PluginSlot
+    id="course_list"
   >
     <CourseList
       filterOptions={Object {}}
@@ -63,11 +54,6 @@ exports[`CoursesPanel with courses snapshot 1`] = `
       showFilters={false}
       visibleList={Array []}
     />
-  </ForwardRef>
-  <ForwardRef
-    as={Symbol(react.fragment)}
-    id="nocoursesview"
-    pluginProps={Object {}}
-  />
+  </PluginSlot>
 </div>
 `;
