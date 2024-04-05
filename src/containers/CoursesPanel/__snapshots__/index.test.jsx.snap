@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CoursesPanel no courses snapshot 1`] = `
+<div
+  className="course-list-container"
+>
+  <div
+    className="course-list-heading-container"
+  >
+    <h2
+      className="course-list-title"
+    >
+      My Courses
+    </h2>
+    <div
+      className="course-filter-controls-container"
+    >
+      <CourseFilterControls />
+    </div>
+  </div>
+  <PluginSlot
+    id="no_courses_view"
+  >
+    <NoCoursesView />
+  </PluginSlot>
+</div>
+`;
+
+exports[`CoursesPanel with courses snapshot 1`] = `
+<div
+  className="course-list-container"
+>
+  <div
+    className="course-list-heading-container"
+  >
+    <h2
+      className="course-list-title"
+    >
+      My Courses
+    </h2>
+    <div
+      className="course-filter-controls-container"
+    >
+      <CourseFilterControls />
+    </div>
+  </div>
+  <PluginSlot
+    id="course_list"
+  >
+    <CourseList
+      filterOptions={Object {}}
+      numPages={1}
+      setPageNumber={[MockFunction setPageNumber]}
+      showFilters={false}
+      visibleList={Array []}
+    />
+  </PluginSlot>
+</div>
+`;

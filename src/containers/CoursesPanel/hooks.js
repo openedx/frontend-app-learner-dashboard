@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { useWindowSize, breakpoints } from '@openedx/paragon';
 import queryString from 'query-string';
 
 import { ListPageSize, SortKeys } from 'data/constants/app';
@@ -9,21 +8,16 @@ import { StrictDict } from 'utils';
 
 import * as module from './hooks';
 
-export const useIsCollapsed = () => {
-  const { width } = useWindowSize();
-  return width < breakpoints.medium.maxWidth;
-};
-
 export const state = StrictDict({
   sortBy: (val) => React.useState(val), // eslint-disable-line
 });
 
 /**
  * Filters are fetched from the store and used to generate a list of "visible" courses.
- * Other values returned and used for the layout of the CourseList component are:
+ * Other values returned and used for the layout of the CoursesPanel component are:
  * the current page number, the sorting method, and whether or not to enable filters and pagination.
  *
- * @returns data for the CourseList component
+ * @returns data for the CoursesPanel component
  */
 export const useCourseListData = () => {
   const filters = reduxHooks.useFilters();

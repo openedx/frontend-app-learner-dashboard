@@ -5,7 +5,7 @@ import hooks from './hooks';
 import ProductRecommendations from './index';
 import LoadingView from './components/LoadingView';
 import LoadedView from './components/LoadedView';
-import NoCoursesView from '../../containers/CourseList/NoCoursesView';
+import NoCoursesView from '../../containers/CoursesPanel/NoCoursesView';
 import { mockCrossProductResponse, mockAmplitudeResponse } from './testData';
 
 jest.mock('./hooks', () => ({
@@ -21,7 +21,7 @@ jest.mock('hooks', () => ({
 
 jest.mock('./components/LoadingView', () => 'LoadingView');
 jest.mock('./components/LoadedView', () => 'LoadedView');
-jest.mock('containers/CourseList/NoCoursesView', () => 'NoCoursesView');
+jest.mock('containers/CoursesPanel/NoCoursesView', () => 'NoCoursesView');
 
 describe('ProductRecommendations', () => {
   const defaultValues = {
