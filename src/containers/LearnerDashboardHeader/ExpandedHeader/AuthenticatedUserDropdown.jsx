@@ -25,7 +25,7 @@ export const AuthenticatedUserDropdown = () => {
           className="p-4"
         >
           <span data-hj-suppress className="d-md-inline">
-            {authenticatedUser.username}
+            {authenticatedUser.name || authenticatedUser.username}
           </span>
         </Dropdown.Toggle>
         <Dropdown.Menu className="dropdown-menu-right">
