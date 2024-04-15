@@ -11,6 +11,7 @@
     "i18n_extract": "fedx-scripts formatjs extract",
     "lint": "fedx-scripts eslint --ext .jsx,.js src/",
     "lint-fix": "fedx-scripts eslint --fix --ext .jsx,.js src/",
+    "postinstall": "patch-package",
     "semantic-release": "semantic-release",
     "start": "fedx-scripts webpack-dev-server --progress",
     "test": "TZ=GMT fedx-scripts jest --coverage --passWithNoTests",
