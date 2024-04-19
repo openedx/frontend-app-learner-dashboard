@@ -8,6 +8,9 @@ jest.mock('widgets/LookingForChallengeWidget', () => 'LookingForChallengeWidget'
 jest.mock('widgets/ProductRecommendations/hooks', () => ({
   useShowRecommendationsFooter: jest.fn(),
 }));
+jest.mock('@openedx/frontend-plugin-framework', () => ({
+  PluginSlot: 'PluginSlot',
+}));
 
 describe('WidgetSidebar', () => {
   beforeEach(() => jest.resetAllMocks());
