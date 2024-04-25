@@ -18,6 +18,7 @@ export const CertificateBanner = ({ cardId }) => {
   const {
     isAudit,
     isVerified,
+    isExecEd2UCourse,
   } = reduxHooks.useCardEnrollmentData(cardId);
   const { isPassing } = reduxHooks.useCardGradeData(cardId);
   const { isArchived } = reduxHooks.useCardCourseRunData(cardId);
@@ -52,7 +53,7 @@ export const CertificateBanner = ({ cardId }) => {
       </Banner>
     );
   }
-  if (!isPassing) {
+  if (!isPassing && !isExecEd2UCourse) {
     if (isAudit) {
       return (
         <Banner>
