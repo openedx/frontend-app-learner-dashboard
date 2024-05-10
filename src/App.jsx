@@ -6,7 +6,7 @@ import { logError } from '@edx/frontend-platform/logging';
 import { initializeHotjar } from '@edx/frontend-enterprise-hotjar';
 
 import { ErrorPage, AppContext } from '@edx/frontend-platform/react';
-import Footer from '@edx/frontend-component-footer';
+import FooterSlot from '@openedx/frontend-slot-footer';
 import { Alert } from '@openedx/paragon';
 
 import { RequestKeys } from 'data/constants/requests';
@@ -109,7 +109,7 @@ export const App = () => {
               )}
           </main>
         </AppWrapper>
-        <Footer logo={getConfig().LOGO_POWERED_BY_OPEN_EDX_URL_SVG} />
+        <FooterSlot />
         <ZendeskFab />
       </div>
     </>
