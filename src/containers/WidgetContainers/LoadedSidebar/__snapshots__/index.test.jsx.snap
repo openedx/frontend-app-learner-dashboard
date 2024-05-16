@@ -7,7 +7,9 @@ exports[`WidgetSidebar snapshots default 1`] = `
   <div
     className="d-flex flex-column"
   >
-    <RecommendationsPanel />
+    <PluginSlot
+      id="widget_sidebar_plugin_slot"
+    />
   </div>
 </div>
 `;

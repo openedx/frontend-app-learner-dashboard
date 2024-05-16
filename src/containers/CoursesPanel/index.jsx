@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { PluginSlot } from '@openedx/frontend-plugin-framework';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { reduxHooks } from 'hooks';
@@ -33,12 +34,19 @@ export const CoursesPanel = () => {
           <CourseFilterControls {...courseListData.filterOptions} />
         </div>
       </div>
-      {hasCourses
-        ? (
+      {hasCourses ? (
+        <PluginSlot
+          id="course_list"
+        >
           <CourseList {...courseListData} />
-        ) : (
+        </PluginSlot>
+      ) : (
+        <PluginSlot
+          id="no_courses_view"
+        >
           <NoCoursesView />
-        )}
+        </PluginSlot>
+      )}
     </div>
   );
 };

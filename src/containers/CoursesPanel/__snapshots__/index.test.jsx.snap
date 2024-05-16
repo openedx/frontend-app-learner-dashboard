@@ -18,7 +18,11 @@ exports[`CoursesPanel no courses snapshot 1`] = `
       <CourseFilterControls />
     </div>
   </div>
-  <NoCoursesView />
+  <PluginSlot
+    id="no_courses_view"
+  >
+    <NoCoursesView />
+  </PluginSlot>
 </div>
 `;
 
