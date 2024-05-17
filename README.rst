@@ -30,6 +30,12 @@ To start the MFE and enable the feature in LMS:
 From there, simply load the configured address/port.  You should be prompted to log into your LMS if you are not
 already, and then redirected to your home page.
 
+Plugins
+-------
+This MFE can be customized using `Frontend Plugin Framework <https://github.com/openedx/frontend-plugin-framework>`_.
+
+The parts of this MFE that can be customized in that manner are documented `here </src/plugin-slots>`_.
+
 Contributing
 ------------
 
