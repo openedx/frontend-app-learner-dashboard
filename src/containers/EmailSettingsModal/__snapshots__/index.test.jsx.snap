@@ -10,7 +10,7 @@ exports[`EmailSettingsModal render snapshot: emails disabled, show: false 1`] = 
   <div
     className="bg-white p-3 rounded shadow"
     style={
-      Object {
+      {
         "textAlign": "start",
       }
     }
@@ -54,7 +54,7 @@ exports[`EmailSettingsModal render snapshot: emails disabled, show: true 1`] = `
   <div
     className="bg-white p-3 rounded shadow"
     style={
-      Object {
+      {
         "textAlign": "start",
       }
     }
@@ -98,7 +98,7 @@ exports[`EmailSettingsModal render snapshot: emails enabled, show: true 1`] = `
   <div
     className="bg-white p-3 rounded shadow"
     style={
-      Object {
+      {
         "textAlign": "start",
       }
     }

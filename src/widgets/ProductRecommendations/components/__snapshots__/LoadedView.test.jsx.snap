@@ -10,23 +10,23 @@ exports[`ProductRecommendations LoadedView matches snapshot 1`] = `
   </h2>
   <ProductCardContainer
     courseTypes={
-      Array [
+      [
         "Executive Education",
         "Boot Camp",
         "Course",
       ]
     }
     finalProductList={
-      Array [
-        Object {
+      [
+        {
           "courseRunKey": "course-v1:Test+Course+2022T2",
           "courseType": "executive-education-2u",
-          "image": Object {
+          "image": {
             "src": "https://www.image-2.com/ed79a49b-64c1-48d2-afdc-054bf921e38d-6a76ceb47dea.small.jpg",
           },
           "marketingUrl": "https://www.edx.org/course/some-course?utm_source=source",
-          "owners": Array [
-            Object {
+          "owners": [
+            {
               "key": "HarvardX",
               "logoImageUrl": "http://www.image.com/ef72daf3-c9a1-4c00-ba37-b3514392bdcf-8839c516815a.png",
               "name": "Harvard University",
@@ -34,15 +34,15 @@ exports[`ProductRecommendations LoadedView matches snapshot 1`] = `
           ],
           "title": "Introduction to Computer Science",
         },
-        Object {
+        {
           "courseRunKey": "course-v1:Test+Course+2022T2",
           "courseType": "bootcamp-2u",
-          "image": Object {
+          "image": {
             "src": "https://www.image-2.com/ed79a49b-64c1-48d2-afdc-054bf921e38d-6a76ceb47dea.small.jpg",
           },
           "marketingUrl": "https://www.edx.org/course/some-course?utm_source=source",
-          "owners": Array [
-            Object {
+          "owners": [
+            {
               "key": "HarvardX",
               "logoImageUrl": "http://www.image.com/ef72daf3-c9a1-4c00-ba37-b3514392bdcf-8839c516815a.png",
               "name": "Harvard University",
@@ -50,15 +50,15 @@ exports[`ProductRecommendations LoadedView matches snapshot 1`] = `
           ],
           "title": "Introduction to Computer Science",
         },
-        Object {
+        {
           "courseRunKey": "course-v1:Test+Course+2022T2",
           "courseType": "verified-audit",
-          "image": Object {
+          "image": {
             "src": "https://www.image-2.com/ed79a49b-64c1-48d2-afdc-054bf921e38d-6a76ceb47dea.small.jpg",
           },
           "marketingUrl": "https://www.edx.org/course/some-course?utm_source=source",
-          "owners": Array [
-            Object {
+          "owners": [
+            {
               "key": "HarvardX",
               "logoImageUrl": "http://www.image.com/ef72daf3-c9a1-4c00-ba37-b3514392bdcf-8839c516815a.png",
               "name": "Harvard University",
@@ -66,15 +66,15 @@ exports[`ProductRecommendations LoadedView matches snapshot 1`] = `
           ],
           "title": "Introduction to Computer Science",
         },
-        Object {
+        {
           "courseRunKey": "course-v1:Test+Course+2022T2",
           "courseType": "audit",
-          "image": Object {
+          "image": {
             "src": "https://www.image-2.com/ed79a49b-64c1-48d2-afdc-054bf921e38d-6a76ceb47dea.small.jpg",
           },
           "marketingUrl": "https://www.edx.org/course/some-course?utm_source=source",
-          "owners": Array [
-            Object {
+          "owners": [
+            {
               "key": "HarvardX",
               "logoImageUrl": "http://www.image.com/ef72daf3-c9a1-4c00-ba37-b3514392bdcf-8839c516815a.png",
               "name": "Harvard University",

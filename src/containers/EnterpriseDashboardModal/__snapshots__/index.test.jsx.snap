@@ -11,7 +11,7 @@ exports[`EnterpriseDashboard snapshot 1`] = `
   <div
     className="bg-white p-3 rounded shadow"
     style={
-      Object {
+      {
         "textAlign": "start",
       }
     }

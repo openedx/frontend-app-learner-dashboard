@@ -27,8 +27,8 @@ exports[`CreditContent component render with action snapshot 1`] = `
   </ActionRow>
   <CreditRequestForm
     requestData={
-      Object {
-        "parameters": Object {
+      {
+        "parameters": {
           "key1": "val1",
         },
         "url": "test-request-data-url",
@@ -48,8 +48,8 @@ exports[`CreditContent component render without action snapshot 1`] = `
   </div>
   <CreditRequestForm
     requestData={
-      Object {
-        "parameters": Object {
+      {
+        "parameters": {
           "key1": "val1",
         },
         "url": "test-request-data-url",

@@ -13,12 +13,12 @@ exports[`RelatedProgramsBanner render with programs 1`] = `
   </span>
   <ProgramsList
     programs={
-      Array [
-        Object {
+      [
+        {
           "title": "Program 1",
           "url": "http://example.com/program1",
         },
-        Object {
+        {
           "title": "Program 2",
           "url": "http://example.com/program2",
         },

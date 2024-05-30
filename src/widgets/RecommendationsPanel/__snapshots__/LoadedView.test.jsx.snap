@@ -12,7 +12,7 @@ exports[`RecommendationsPanel LoadedView RecommendationPanelLoadedView with pers
   <div>
     <CourseCard
       course={
-        Object {
+        {
           "courseKey": "cs-1",
           "logoImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg",
           "marketingUrl": "www.edx/recommended-course",
@@ -24,7 +24,7 @@ exports[`RecommendationsPanel LoadedView RecommendationPanelLoadedView with pers
     />
     <CourseCard
       course={
-        Object {
+        {
           "courseKey": "cs-2",
           "logoImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg",
           "marketingUrl": "www.edx/recommended-course",
@@ -36,7 +36,7 @@ exports[`RecommendationsPanel LoadedView RecommendationPanelLoadedView with pers
     />
     <CourseCard
       course={
-        Object {
+        {
           "courseKey": "cs-3",
           "logoImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg",
           "marketingUrl": "www.edx/recommended-course",
@@ -48,7 +48,7 @@ exports[`RecommendationsPanel LoadedView RecommendationPanelLoadedView with pers
     />
     <CourseCard
       course={
-        Object {
+        {
           "courseKey": "cs-4",
           "logoImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg",
           "marketingUrl": "www.edx/recommended-course",
@@ -87,7 +87,7 @@ exports[`RecommendationsPanel LoadedView RecommendationPanelLoadedView without p
   <div>
     <CourseCard
       course={
-        Object {
+        {
           "courseKey": "cs-1",
           "logoImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg",
           "marketingUrl": "www.edx/recommended-course",
@@ -99,7 +99,7 @@ exports[`RecommendationsPanel LoadedView RecommendationPanelLoadedView without p
     />
     <CourseCard
       course={
-        Object {
+        {
           "courseKey": "cs-2",
           "logoImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg",
           "marketingUrl": "www.edx/recommended-course",
@@ -111,7 +111,7 @@ exports[`RecommendationsPanel LoadedView RecommendationPanelLoadedView without p
     />
     <CourseCard
       course={
-        Object {
+        {
           "courseKey": "cs-3",
           "logoImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg",
           "marketingUrl": "www.edx/recommended-course",
@@ -123,7 +123,7 @@ exports[`RecommendationsPanel LoadedView RecommendationPanelLoadedView without p
     />
     <CourseCard
       course={
-        Object {
+        {
           "courseKey": "cs-4",
           "logoImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg",
           "marketingUrl": "www.edx/recommended-course",

@@ -48,11 +48,11 @@ exports[`CoursesPanel with courses snapshot 1`] = `
     id="course_list"
   >
     <CourseList
-      filterOptions={Object {}}
+      filterOptions={{}}
       numPages={1}
       setPageNumber={[MockFunction setPageNumber]}
       showFilters={false}
-      visibleList={Array []}
+      visibleList={[]}
     />
   </PluginSlot>
 </div>

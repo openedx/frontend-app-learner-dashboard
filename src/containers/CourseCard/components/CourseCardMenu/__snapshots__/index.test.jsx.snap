@@ -17,7 +17,7 @@ exports[`CourseCardMenu render show dropdown hide unenroll item and disable emai
       <SocialShareMenu
         cardId="test-card-id"
         emailSettings={
-          Object {
+          {
             "hide": [MockFunction emailSettingHide],
             "isVisible": false,
             "show": [MockFunction emailSettingShow],
@@ -58,7 +58,7 @@ exports[`CourseCardMenu render show dropdown show unenroll and enable email snap
       <SocialShareMenu
         cardId="test-card-id"
         emailSettings={
-          Object {
+          {
             "hide": [MockFunction emailSettingHide],
             "isVisible": false,
             "show": [MockFunction emailSettingShow],

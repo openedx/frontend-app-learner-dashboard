@@ -9,13 +9,13 @@ exports[`DashboardLayout collapsed sidebar not showing snapshot 1`] = `
     <Col
       className="course-list-column"
       lg={
-        Object {
+        {
           "offset": 0,
           "span": 12,
         }
       }
       xl={
-        Object {
+        {
           "offset": 0,
           "span": 12,
         }
@@ -26,13 +26,13 @@ exports[`DashboardLayout collapsed sidebar not showing snapshot 1`] = `
     <Col
       className="sidebar-column"
       lg={
-        Object {
+        {
           "offset": 0,
           "span": 12,
         }
       }
       xl={
-        Object {
+        {
           "offset": 0,
           "span": 4,
         }
@@ -60,13 +60,13 @@ exports[`DashboardLayout collapsed sidebar showing snapshot 1`] = `
     <Col
       className="course-list-column"
       lg={
-        Object {
+        {
           "offset": 0,
           "span": 12,
         }
       }
       xl={
-        Object {
+        {
           "offset": 0,
           "span": 8,
         }
@@ -77,13 +77,13 @@ exports[`DashboardLayout collapsed sidebar showing snapshot 1`] = `
     <Col
       className="sidebar-column"
       lg={
-        Object {
+        {
           "offset": 0,
           "span": 12,
         }
       }
       xl={
-        Object {
+        {
           "offset": 0,
           "span": 4,
         }
@@ -111,13 +111,13 @@ exports[`DashboardLayout not collapsed sidebar not showing snapshot 1`] = `
     <Col
       className="course-list-column"
       lg={
-        Object {
+        {
           "offset": 0,
           "span": 12,
         }
       }
       xl={
-        Object {
+        {
           "offset": 0,
           "span": 12,
         }
@@ -128,13 +128,13 @@ exports[`DashboardLayout not collapsed sidebar not showing snapshot 1`] = `
     <Col
       className="sidebar-column"
       lg={
-        Object {
+        {
           "offset": 0,
           "span": 12,
         }
       }
       xl={
-        Object {
+        {
           "offset": 0,
           "span": 4,
         }
@@ -167,13 +167,13 @@ exports[`DashboardLayout not collapsed sidebar showing snapshot 1`] = `
     <Col
       className="course-list-column"
       lg={
-        Object {
+        {
           "offset": 0,
           "span": 12,
         }
       }
       xl={
-        Object {
+        {
           "offset": 0,
           "span": 8,
         }
@@ -184,13 +184,13 @@ exports[`DashboardLayout not collapsed sidebar showing snapshot 1`] = `
     <Col
       className="sidebar-column"
       lg={
-        Object {
+        {
           "offset": 0,
           "span": 12,
         }
       }
       xl={
-        Object {
+        {
           "offset": 0,
           "span": 4,
         }
