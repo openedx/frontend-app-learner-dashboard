@@ -9,7 +9,7 @@ const messages = defineMessages({
   confirmEmailTextReminderBanner: {
     id: 'leanerDashboard.confirmEmailTextReminderBanner',
     description: 'Text for reminding user to confirm email',
-    defaultMessage: 'Remember to confirm your email so that you can keep learning on edX! {confirmNowButton}.',
+    defaultMessage: 'Remember to confirm your email so that you can keep learning! {confirmNowButton}.',
   },
   verifiedConfirmEmailButton: {
     id: 'leanerDashboard.verifiedConfirmEmailButton',
