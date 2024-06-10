@@ -10,7 +10,7 @@ exports[`ConfirmEmailBanner snapshot Show on unverified 1`] = `
     <format-message-function
       message={
         Object {
-          "defaultMessage": "Remember to confirm your email so that you can keep learning on edX! {confirmNowButton}.",
+          "defaultMessage": "Remember to confirm your email so that you can keep learning! {confirmNowButton}.",
           "description": "Text for reminding user to confirm email",
           "id": "leanerDashboard.confirmEmailTextReminderBanner",
         }
