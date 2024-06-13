@@ -33,7 +33,7 @@ exports[`MasqueradeBar snapshot can masquerade 1`] = `
         className="mr-3"
         disabled={true}
         labels={
-          Object {
+          {
             "default": "Submit",
           }
         }
@@ -79,7 +79,7 @@ exports[`MasqueradeBar snapshot can masquerade with input 1`] = `
         className="mr-3"
         disabled={false}
         labels={
-          Object {
+          {
             "default": "Submit",
           }
         }
@@ -131,7 +131,7 @@ exports[`MasqueradeBar snapshot is masquerading failed with error 1`] = `
         className="mr-3"
         disabled={true}
         labels={
-          Object {
+          {
             "default": "Submit",
           }
         }
@@ -177,7 +177,7 @@ exports[`MasqueradeBar snapshot is masquerading pending 1`] = `
         className="mr-3"
         disabled={true}
         labels={
-          Object {
+          {
             "default": "Submit",
           }
         }

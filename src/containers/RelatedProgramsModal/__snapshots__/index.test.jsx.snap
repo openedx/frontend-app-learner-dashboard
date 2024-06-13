@@ -37,8 +37,8 @@ exports[`RelatedProgramsModal snapshot: closed 1`] = `
         >
           <ProgramCard
             data={
-              Object {
-                "programData": Object {
+              {
+                "programData": {
                   "dataFor": "program1",
                 },
                 "programUrl": "program-1-url",
@@ -53,8 +53,8 @@ exports[`RelatedProgramsModal snapshot: closed 1`] = `
         >
           <ProgramCard
             data={
-              Object {
-                "programData": Object {
+              {
+                "programData": {
                   "dataFor": "program2",
                 },
                 "programUrl": "program-2-url",
@@ -69,8 +69,8 @@ exports[`RelatedProgramsModal snapshot: closed 1`] = `
         >
           <ProgramCard
             data={
-              Object {
-                "programData": Object {
+              {
+                "programData": {
                   "dataFor": "program3",
                 },
                 "programUrl": "program-3-url",
@@ -121,8 +121,8 @@ exports[`RelatedProgramsModal snapshot: open 1`] = `
         >
           <ProgramCard
             data={
-              Object {
-                "programData": Object {
+              {
+                "programData": {
                   "dataFor": "program1",
                 },
                 "programUrl": "program-1-url",
@@ -137,8 +137,8 @@ exports[`RelatedProgramsModal snapshot: open 1`] = `
         >
           <ProgramCard
             data={
-              Object {
-                "programData": Object {
+              {
+                "programData": {
                   "dataFor": "program2",
                 },
                 "programUrl": "program-2-url",
@@ -153,8 +153,8 @@ exports[`RelatedProgramsModal snapshot: open 1`] = `
         >
           <ProgramCard
             data={
-              Object {
-                "programData": Object {
+              {
+                "programData": {
                   "dataFor": "program3",
                 },
                 "programUrl": "program-3-url",

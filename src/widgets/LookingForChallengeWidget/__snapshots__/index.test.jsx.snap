@@ -24,14 +24,14 @@ exports[`LookingForChallengeWidget snapshots default 1`] = `
       >
         <format-message-function
           message={
-            Object {
+            {
               "defaultMessage": "Find a course {arrow}",
               "description": "Button to explore more courses",
               "id": "WidgetSidebar.findCoursesButton",
             }
           }
           values={
-            Object {
+            {
               "arrow": <Icon
                 className="mx-1"
               />,

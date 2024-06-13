@@ -5,8 +5,8 @@ exports[`CourseCardImage snapshot renders clickable link course Image 1`] = `
   className="pgn__card-wrapper-image-cap overflow-visible orientation"
   href="home-url"
   onClick={
-    Object {
-      "trackCourseEvent": Object {
+    {
+      "trackCourseEvent": {
         "cardId": "cardId",
         "eventName": [MockFunction segment.courseImageClicked],
         "upgradeUrl": "home-url",
