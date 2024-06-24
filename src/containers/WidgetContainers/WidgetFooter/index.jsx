@@ -1,7 +1,7 @@
 import React from 'react';
 
 import ProductRecommendations from 'widgets/ProductRecommendations';
-import hooks from 'widgets/ProductRecommendations/hooks';
+// import hooks from 'widgets/ProductRecommendations/hooks';
 
 // eslint-disable-next-line arrow-body-style
 export const WidgetFooter = () => {
