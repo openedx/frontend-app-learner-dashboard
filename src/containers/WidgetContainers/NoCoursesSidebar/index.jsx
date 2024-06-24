@@ -4,22 +4,23 @@ import { PluginSlot } from '@openedx/frontend-plugin-framework';
 
 import hooks from 'widgets/ProductRecommendations/hooks';
 
+// eslint-disable-next-line arrow-body-style
 export const WidgetSidebar = ({ setSidebarShowing }) => {
-  const { inRecommendationsVariant, isExperimentActive } = hooks.useShowRecommendationsFooter();
+  // const { inRecommendationsVariant, isExperimentActive } = hooks.useShowRecommendationsFooter();
 
-  if (!inRecommendationsVariant && isExperimentActive) {
-    setSidebarShowing(true);
+  // if (!inRecommendationsVariant && isExperimentActive) {
+  //   setSidebarShowing(true);
 
-    return (
-      <div className="widget-sidebar px-2">
-        <div className="d-flex">
-          <PluginSlot id="widget_sidebar_plugin_slot" />
-        </div>
+  return (
+    <div className="widget-sidebar px-2">
+      <div className="d-flex">
+        <PluginSlot id="widget_sidebar_plugin_slot" />
       </div>
-    );
-  }
+    </div>
+  );
+  // }
 
-  return null;
+  // return null;
 };
 
 WidgetSidebar.propTypes = {

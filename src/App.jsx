@@ -42,6 +42,7 @@ export const App = () => {
   const { supportEmail } = reduxHooks.usePlatformSettingsData();
   const loadData = reduxHooks.useLoadData();
 
+  // TODO: remove as part of https://2u-internal.atlassian.net/browse/APER-3499
   const optimizelyScript = () => {
     if (getConfig().OPTIMIZELY_URL) {
       return <script src={getConfig().OPTIMIZELY_URL} />;

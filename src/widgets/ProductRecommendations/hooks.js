@@ -34,60 +34,60 @@ export const useMostRecentCourseRunKey = () => {
   return mostRecentCourseRunKey;
 };
 
-export const useActivateRecommendationsExperiment = () => {
-  const enterpriseDashboardData = reduxHooks.useEnterpriseDashboardData();
-  const hasRequestCompleted = reduxHooks.useRequestIsCompleted(RequestKeys.initialize);
-  const mostRecentCourseRunKey = module.useMostRecentCourseRunKey();
-  const userId = getAuthenticatedUser().userId.toString();
+// export const useActivateRecommendationsExperiment = () => {
+//   const enterpriseDashboardData = reduxHooks.useEnterpriseDashboardData();
+//   const hasRequestCompleted = reduxHooks.useRequestIsCompleted(RequestKeys.initialize);
+//   const mostRecentCourseRunKey = module.useMostRecentCourseRunKey();
+//   const userId = getAuthenticatedUser().userId.toString();
 
-  const {
-    experiment: { isExperimentActive },
-    setExperiment,
-    isMobile,
-    countryCode,
-  } = useExperimentContext();
+//   const {
+//     experiment: { isExperimentActive },
+//     setExperiment,
+//     isMobile,
+//     countryCode,
+//   } = useExperimentContext();
 
-  useEffect(() => {
-    if (!isExperimentActive && countryCode !== null) {
-      const activateExperiment = () => {
-        const userAttributes = {
-          is_mobile_user: isMobile,
-          is_enterprise_user: !!enterpriseDashboardData,
-          location: countryCode ? countryCode.toLowerCase() : '',
-        };
-        const experiment = activateProductRecommendationsExperiment(userId, userAttributes);
+//   useEffect(() => {
+//     if (!isExperimentActive && countryCode !== null) {
+//       const activateExperiment = () => {
+//         const userAttributes = {
+//           is_mobile_user: isMobile,
+//           is_enterprise_user: !!enterpriseDashboardData,
+//           location: countryCode ? countryCode.toLowerCase() : '',
+//         };
+//         const experiment = activateProductRecommendationsExperiment(userId, userAttributes);
 
-        setExperiment((prev) => ({
-          ...prev,
-          isExperimentActive: true,
-          inRecommendationsVariant: experiment.inExperimentVariant,
-        }));
+//         setExperiment((prev) => ({
+//           ...prev,
+//           isExperimentActive: true,
+//           inRecommendationsVariant: experiment.inExperimentVariant,
+//         }));
 
-        return experiment;
-      };
+//         return experiment;
+//       };
 
-      const sendViewedEvent = () => {
-        trackProductRecommendationsViewed(userId);
-        recommendationsViewed(true, control, mostRecentCourseRunKey);
-      };
+//       const sendViewedEvent = () => {
+//         trackProductRecommendationsViewed(userId);
+//         recommendationsViewed(true, control, mostRecentCourseRunKey);
+//       };
 
-      if (hasRequestCompleted) {
-        const { experimentActivated, inExperimentVariant } = activateExperiment();
+//       if (hasRequestCompleted) {
+//         const { experimentActivated, inExperimentVariant } = activateExperiment();
 
-        if (experimentActivated && !inExperimentVariant) {
-          sendViewedEvent();
-        }
-      }
-    }
-  /* eslint-disable */
-  }, [isExperimentActive, countryCode])
-};
+//         if (experimentActivated && !inExperimentVariant) {
+//           sendViewedEvent();
+//         }
+//       }
+//     }
+//   /* eslint-disable */
+//   }, [isExperimentActive, countryCode])
+// };
 
-export const useShowRecommendationsFooter = () => {
-  const { experiment } = useExperimentContext();
+// export const useShowRecommendationsFooter = () => {
+//   const { experiment } = useExperimentContext();
 
-  return experiment;
-};
+//   return experiment;
+// };
 
 export const useFetchRecommendations = (setRequestState, setData) => {
   const courseRunKey = module.useMostRecentCourseRunKey();
@@ -158,4 +158,4 @@ export const useProductRecommendationsData = () => {
   };
 };
 
-export default { useProductRecommendationsData, useShowRecommendationsFooter, useIsMobile, useActivateRecommendationsExperiment };
+export default { useProductRecommendationsData, useIsMobile };
