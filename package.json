@@ -71,7 +71,7 @@
     "react-zendesk": "^0.1.13",
     "redux": "4.1.1",
     "redux-beacon": "^2.1.0",
-    "redux-devtools-extension": "2.13.9",
+    "@redux-devtools/extension": "3.0.0",
     "redux-logger": "3.0.6",
     "redux-thunk": "2.3.0",
     "regenerator-runtime": "^0.13.9",
