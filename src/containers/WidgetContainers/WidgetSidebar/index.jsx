@@ -1,16 +1,15 @@
 import React from 'react';
+import classNames from 'classnames';
 
 import { reduxHooks } from 'hooks';
 import { PluginSlot } from '@openedx/frontend-plugin-framework';
-
-// TODO: is this the same as NoCoursesSidebar?
 
 // eslint-disable-next-line arrow-body-style
 export const WidgetSidebar = () => {
   const hasCourses = reduxHooks.useHasCourses();
 
-  const widgetSidebarClassNames = `widget-sidebar ${hasCourses ? '' : 'px-2'}`;
-  const innerWrapperClassNames = `d-flex ${hasCourses ? 'flex-column' : ''}`;
+  const widgetSidebarClassNames = classNames('widget-sidebar', { 'px-2': !hasCourses });
+  const innerWrapperClassNames = classNames('d-flex', { 'flex-column': hasCourses });
 
   return (
     <div className={widgetSidebarClassNames}>

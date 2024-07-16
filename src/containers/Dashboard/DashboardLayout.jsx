@@ -34,7 +34,6 @@ export const DashboardLayout = ({ children }) => {
     ? columnConfig.courseList.withSidebar
     : columnConfig.courseList.noSidebar;
 
-  // TODO: check here to see why layout is getting flipped
   return (
     <Container fluid size="xl">
       <Row>
