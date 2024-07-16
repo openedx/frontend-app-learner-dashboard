@@ -18,7 +18,6 @@ import {
 import { reduxHooks } from 'hooks';
 import Dashboard from 'containers/Dashboard';
 import ZendeskFab from 'components/ZendeskFab';
-import { ExperimentProvider } from 'ExperimentContext';
 
 import track from 'tracking';
 
@@ -41,20 +40,6 @@ export const App = () => {
   const hasNetworkFailure = isFailed.initialize || isFailed.refreshList;
   const { supportEmail } = reduxHooks.usePlatformSettingsData();
   const loadData = reduxHooks.useLoadData();
-
-  // TODO: remove as part of https://2u-internal.atlassian.net/browse/APER-3499
-  const optimizelyScript = () => {
-    if (getConfig().OPTIMIZELY_URL) {
-      return <script src={getConfig().OPTIMIZELY_URL} />;
-    } if (getConfig().OPTIMIZELY_PROJECT_ID) {
-      return (
-        <script
-          src={`${getConfig().MARKETING_SITE_BASE_URL}/optimizelyjs/${getConfig().OPTIMIZELY_PROJECT_ID}.js`}
-        />
-      );
-    }
-    return null;
-  };
 
   React.useEffect(() => {
     if (authenticatedUser?.administrator || getConfig().NODE_ENV === 'development') {
@@ -92,7 +77,6 @@ export const App = () => {
       <Helmet>
         <title>{formatMessage(messages.pageTitle)}</title>
         <link rel="shortcut icon" href={getConfig().FAVICON_URL} type="image/x-icon" />
-        {optimizelyScript()}
       </Helmet>
       <div>
         <AppWrapper>
@@ -104,9 +88,7 @@ export const App = () => {
                   <ErrorPage message={formatMessage(messages.errorMessage, { supportEmail })} />
                 </Alert>
               ) : (
-                <ExperimentProvider>
-                  <Dashboard />
-                </ExperimentProvider>
+                <Dashboard />
               )}
           </main>
         </AppWrapper>

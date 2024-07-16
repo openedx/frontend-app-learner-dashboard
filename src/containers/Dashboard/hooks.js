@@ -26,7 +26,9 @@ export const useDashboardMessages = () => {
 
 export const useDashboardLayoutData = () => {
   const { width } = useWindowSize();
-  const [sidebarShowing, setSidebarShowing] = module.state.sidebarShowing(false);
+
+  // TODO: should this defaul to true? AXIM wants the sidebar by default right?
+  const [sidebarShowing, setSidebarShowing] = module.state.sidebarShowing(true);
   return {
     isDashboardCollapsed: width < breakpoints.large.maxWidth,
     sidebarShowing,
