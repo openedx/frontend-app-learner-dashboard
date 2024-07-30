@@ -96,17 +96,17 @@ export const App = () => {
         <GymHeader secondaryNav="dashboard" />
         <main>
           <div className="container">
-          {hasNetworkFailure
-            ? (
-              <Alert variant="danger">
-                <ErrorPage message={formatMessage(messages.errorMessage, { supportEmail })} />
-              </Alert>
-            ) : (
-              <ExperimentProvider>
-                <Dashboard />
-              </ExperimentProvider>
-            )}
-            </div>
+            {hasNetworkFailure
+              ? (
+                <Alert variant="danger">
+                  <ErrorPage message={formatMessage(messages.errorMessage, { supportEmail })} />
+                </Alert>
+              ) : (
+                <ExperimentProvider>
+                  <Dashboard />
+                </ExperimentProvider>
+              )}
+          </div>
         </main>
       </AppWrapper>
       <FooterSlot />
