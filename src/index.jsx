@@ -26,7 +26,7 @@ import { configuration } from './config';
 
 import messages from './i18n';
 
-import App from './App';
+import GymApp from './GymApp';
 import NoticesWrapper from './components/NoticesWrapper';
 
 subscribe(APP_READY, () => {
@@ -34,7 +34,7 @@ subscribe(APP_READY, () => {
     <AppProvider store={store}>
       <NoticesWrapper>
         <Routes>
-          <Route path="/" element={<PageWrap><App /></PageWrap>} />
+          <Route path="/" element={<PageWrap><GymApp /></PageWrap>} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </NoticesWrapper>
