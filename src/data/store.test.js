@@ -24,8 +24,8 @@ jest.mock('redux', () => ({
   applyMiddleware: (...middleware) => ({ applied: middleware }),
   createStore: (reducer, middleware) => ({ reducer, middleware }),
 }));
-jest.mock('redux-devtools/extension', () => ({
-  composeWithDevToolsLogOnly: (middleware) => ({ withDevTools: middleware }),
+jest.mock('@redux-devtools/extension', () => ({
+  composeWithDevToolsLogOnlyInProduction: (middleware) => ({ withDevTools: middleware }),
 }));
 
 describe('store aggregator module', () => {
