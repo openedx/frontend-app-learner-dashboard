@@ -1,0 +1,8 @@
+// Hide everything until our external CSS loads.
+html {
+  background-color: black;
+}
+
+#root {
+  display: none;
+}
