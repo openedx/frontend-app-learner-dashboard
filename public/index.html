@@ -1,8 +1,11 @@
 <!doctype html>
 <html lang="en-us" dir="ltr">
   <head>
+      <title>Dashboard | <%= process.env.SITE_NAME %></title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="shortcut icon" href="<%= process.env.FAVICON_URL %>" type="image/x-icon" />
+      <link rel="stylesheet" href="<%= process.env.MARKETING_SITE_BASE_URL %>/css/mfe-learner-dashboard.css" />
   </head>
   <body>
     <div id="root"></div>
