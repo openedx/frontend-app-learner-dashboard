@@ -17,7 +17,6 @@ import {
 } from 'data/redux';
 import { reduxHooks } from 'hooks';
 import Dashboard from 'containers/Dashboard';
-import ZendeskFab from 'components/ZendeskFab';
 import { ExperimentProvider } from 'ExperimentContext';
 
 import track from 'tracking';
@@ -26,9 +25,8 @@ import fakeData from 'data/services/lms/fakeData/courses';
 
 import AppWrapper from 'containers/WidgetContainers/AppWrapper';
 
-import { GymFooter as FooterSlot, GymHeader } from '../@edx/gym-frontend';
-
 import { getConfig } from '@edx/frontend-platform';
+import { GymFooter as FooterSlot, GymHeader } from '@edx/gym-frontend';
 import messages from './messages';
 import './GymApp.scss';
 
