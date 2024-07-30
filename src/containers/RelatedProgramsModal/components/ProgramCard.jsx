@@ -11,7 +11,7 @@ import {
 import { Program } from '@openedx/paragon/icons';
 
 import messages from './messages';
-import './index.scss';
+// import './index.scss';
 
 export const whiteFontWrapper = (node) => (<span className="text-white">{node}</span>);
 

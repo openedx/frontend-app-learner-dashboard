@@ -11,7 +11,7 @@ import track from './track';
 import CourseCard from './components/CourseCard';
 import messages from './messages';
 
-import './index.scss';
+// import './index.scss';
 
 export const LoadedView = ({
   courses,

@@ -8,7 +8,7 @@ import emptyCourseSVG from 'assets/empty-course.svg';
 import { reduxHooks } from 'hooks';
 
 import messages from './messages';
-import './index.scss';
+// import './index.scss';
 
 export const NoCoursesView = () => {
   const { formatMessage } = useIntl();

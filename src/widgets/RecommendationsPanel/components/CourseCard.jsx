@@ -5,7 +5,7 @@ import { Card, Hyperlink, Truncate } from '@openedx/paragon';
 
 import { useIsCollapsed } from 'containers/CourseCard/hooks';
 import useCourseCardData from './hooks';
-import './index.scss';
+// import './index.scss';
 
 export const CourseCard = ({ course, isControl }) => {
   const isCollapsed = useIsCollapsed();

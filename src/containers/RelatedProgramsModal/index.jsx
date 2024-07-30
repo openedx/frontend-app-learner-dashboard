@@ -10,7 +10,7 @@ import {
 import { reduxHooks } from 'hooks';
 import ProgramCard from './components/ProgramCard';
 import messages from './messages';
-import './index.scss';
+// import './index.scss';
 
 export const RelatedProgramsModal = ({
   isOpen,

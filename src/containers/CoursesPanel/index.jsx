@@ -15,7 +15,7 @@ import { useCourseListData } from './hooks';
 
 import messages from './messages';
 
-import './index.scss';
+// import './index.scss';
 
 /**
  * Renders the list of CourseCards, as well as the controls (CourseFilterControls) for modifying the list.

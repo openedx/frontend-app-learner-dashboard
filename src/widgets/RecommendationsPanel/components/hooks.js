@@ -1,5 +1,5 @@
 import track from '../track';
-import './index.scss';
+// import './index.scss';
 
 export const useCourseCardData = (course, isControl) => {
   const handleCourseClick = (e) => {

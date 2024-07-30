@@ -1,5 +1,5 @@
 import React from 'react';
-import './index.scss';
+// import './index.scss';
 import { reduxHooks } from 'hooks';
 import NoCoursesView from 'containers/CoursesPanel/NoCoursesView';
 import LoadingView from './components/LoadingView';

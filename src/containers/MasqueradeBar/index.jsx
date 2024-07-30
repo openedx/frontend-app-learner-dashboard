@@ -15,7 +15,7 @@ import { Close, PersonSearch } from '@openedx/paragon/icons';
 
 import messages from './messages';
 import { useMasqueradeBarData } from './hooks';
-import './index.scss';
+// import './index.scss';
 
 export const MasqueradeBar = () => {
   const { authenticatedUser } = React.useContext(AppContext);

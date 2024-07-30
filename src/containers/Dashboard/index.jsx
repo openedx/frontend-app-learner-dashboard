@@ -12,7 +12,7 @@ import NoCoursesSidebar from 'containers/WidgetContainers/NoCoursesSidebar';
 import LoadingView from './LoadingView';
 import DashboardLayout from './DashboardLayout';
 import hooks from './hooks';
-import './index.scss';
+// import './index.scss';
 
 export const Dashboard = () => {
   hooks.useInitializeDashboard();

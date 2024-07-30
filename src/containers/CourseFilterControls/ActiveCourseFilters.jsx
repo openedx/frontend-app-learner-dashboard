@@ -7,7 +7,7 @@ import { CloseSmall } from '@openedx/paragon/icons';
 import { reduxHooks } from 'hooks';
 
 import messages from './messages';
-import './index.scss';
+// import './index.scss';
 
 export const ActiveCourseFilters = ({
   filters,

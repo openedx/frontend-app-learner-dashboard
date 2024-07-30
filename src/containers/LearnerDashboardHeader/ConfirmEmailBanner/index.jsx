@@ -11,7 +11,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 
 import confirmEmailSVG from 'assets/confirm-email.svg';
 import messages from './messages';
-import './ConfirmEmailBanner.scss';
+// import './ConfirmEmailBanner.scss';
 import useConfirmEmailBannerData from './hooks';
 
 export const ConfirmEmailBanner = () => {

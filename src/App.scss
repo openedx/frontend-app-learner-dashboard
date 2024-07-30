@@ -1,15 +1,15 @@
 // frontend-app-*/src/index.scss
-@import "~@edx/brand/paragon/fonts";
-@import "~@edx/brand/paragon/variables";
-@import "~@openedx/paragon/scss/core/core";
-@import "~@edx/brand/paragon/overrides";
+@use "~@edx/brand/paragon/fonts";
+@use "~@edx/brand/paragon/variables";
+@use "~@openedx/paragon/scss/core/core";
+@use "~@edx/brand/paragon/overrides";
 
 $fa-font-path: "~font-awesome/fonts";
-@import "~font-awesome/scss/font-awesome";
+@use "~font-awesome/scss/font-awesome";
 
 $input-focus-box-shadow: $input-box-shadow; // hack to get upgrade to paragon 4.0.0 to work
 
-@import "~@edx/frontend-component-footer/dist/_footer";
+@use "~@edx/frontend-component-footer/dist/_footer";
 
 .text-ellipsis {
   overflow: hidden;
