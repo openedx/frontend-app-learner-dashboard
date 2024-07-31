@@ -16,17 +16,13 @@ const hookProps = {
 };
 hooks.useDashboardLayoutData.mockReturnValue(hookProps);
 
-const props = {
-  sidebar: jest.fn(() => 'test-sidebar-content'),
-};
-
 const children = 'test-children';
 
 let el;
 describe('DashboardLayout', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    el = shallow(<DashboardLayout {...props}>{children}</DashboardLayout>);
+    el = shallow(<DashboardLayout>{children}</DashboardLayout>);
   });
 
   const testColumns = () => {
@@ -40,17 +36,13 @@ describe('DashboardLayout', () => {
       const columns = el.instance.findByType(Row)[0].findByType(Col);
       expect(columns[0].children).not.toHaveLength(0);
     });
-    it('displays sidebar prop in second column', () => {
+    it('displays WidgetSidebar in second column', () => {
       const columns = el.instance.findByType(Row)[0].findByType(Col);
-      expect(columns[1].findByType(props.sidebar)).toHaveLength(1);
-    });
-    it('displays a footer in the second row', () => {
-      const columns = el.instance.findByType(Row)[1].findByType(Col);
-      expect(columns[0].children[0].type).toEqual('WidgetFooter');
+      expect(columns[1].findByType('WidgetSidebar')).toHaveLength(1);
     });
   };
   const testSidebarLayout = () => {
-    it('displays widthSidebar width for course list column', () => {
+    it('displays withSidebar width for course list column', () => {
       const columns = el.instance.findByType(Row)[0].findByType(Col);
       Object.keys(columnConfig.courseList.withSidebar).forEach(size => {
         expect(columns[0].props[size]).toEqual(columnConfig.courseList.withSidebar[size]);

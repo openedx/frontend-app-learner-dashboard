@@ -69,6 +69,5 @@ module.exports = {
   ACCOUNT_PROFILE_URL: 'http://localhost:1995',
   ENABLE_NOTICES: '',
   CAREER_LINK_URL: '',
-  OPTIMIZELY_FULL_STACK_SDK_KEY: '',
   EXPERIMENT_08_23_VAN_PAINTED_DOOR: true,
 };
