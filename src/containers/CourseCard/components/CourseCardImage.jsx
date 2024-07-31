@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { getConfig } from '@edx/frontend-platform';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { Badge } from '@openedx/paragon';
@@ -15,18 +16,23 @@ const { courseImageClicked } = track.course;
 
 export const CourseCardImage = ({ cardId, orientation }) => {
   const { formatMessage } = useIntl();
+  const [hasImageError, setHasImageError] = useState(false);
   const { bannerImgSrc } = reduxHooks.useCardCourseData(cardId);
   const { homeUrl } = reduxHooks.useCardCourseRunData(cardId);
   const { isVerified } = reduxHooks.useCardEnrollmentData(cardId);
   const { disableCourseTitle } = useActionDisabledState(cardId);
   const handleImageClicked = reduxHooks.useTrackCourseEvent(courseImageClicked, cardId, homeUrl);
   const wrapperClassName = `pgn__card-wrapper-image-cap overflow-visible ${orientation}`;
+  const fallbackImageSrc = `${getConfig().LMS_BASE_URL}/theming/asset/images/no_course_image.png`;
   const image = (
     <>
       <img
         className="pgn__card-image-cap show"
-        src={bannerImgSrc}
+        src={!hasImageError ? bannerImgSrc : fallbackImageSrc}
         alt={formatMessage(messages.bannerAlt)}
+        onError={() => {
+          if (!hasImageError) { setHasImageError(true); }
+        }}
       />
       {
         isVerified && (
