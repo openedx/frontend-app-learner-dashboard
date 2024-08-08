@@ -26,7 +26,8 @@ export const useDashboardMessages = () => {
 
 export const useDashboardLayoutData = () => {
   const { width } = useWindowSize();
-  const [sidebarShowing, setSidebarShowing] = module.state.sidebarShowing(false);
+
+  const [sidebarShowing, setSidebarShowing] = module.state.sidebarShowing(true);
   return {
     isDashboardCollapsed: width < breakpoints.large.maxWidth,
     sidebarShowing,

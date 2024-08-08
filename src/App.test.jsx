@@ -10,7 +10,6 @@ import { reduxHooks } from 'hooks';
 import Dashboard from 'containers/Dashboard';
 import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
 import AppWrapper from 'containers/WidgetContainers/AppWrapper';
-import { ExperimentProvider } from 'ExperimentContext';
 import { App } from './App';
 import messages from './messages';
 
@@ -19,9 +18,6 @@ jest.mock('@edx/frontend-component-footer', () => ({ FooterSlot: 'Footer' }));
 jest.mock('containers/Dashboard', () => 'Dashboard');
 jest.mock('containers/LearnerDashboardHeader', () => 'LearnerDashboardHeader');
 jest.mock('components/ZendeskFab', () => 'ZendeskFab');
-jest.mock('ExperimentContext', () => ({
-  ExperimentProvider: 'ExperimentProvider',
-}));
 jest.mock('containers/WidgetContainers/AppWrapper', () => 'AppWrapper');
 jest.mock('data/redux', () => ({
   selectors: 'redux.selectors',
@@ -79,11 +75,10 @@ describe('App router component', () => {
       it('loads dashboard', () => {
         const main = el.instance.findByType('main')[0];
         expect(main.children.length).toEqual(1);
-        const expProvider = main.children[0];
-        expect(expProvider.type).toEqual('ExperimentProvider');
-        expect(expProvider.children.length).toEqual(1);
+        const dashboard = main.children[0];
+        expect(dashboard.type).toEqual('Dashboard');
         expect(
-          expProvider.matches(shallow(<ExperimentProvider><Dashboard /></ExperimentProvider>)),
+          dashboard.matches(shallow(<Dashboard />)),
         ).toEqual(true);
       });
     });
@@ -97,11 +92,10 @@ describe('App router component', () => {
       it('loads dashboard', () => {
         const main = el.instance.findByType('main')[0];
         expect(main.children.length).toEqual(1);
-        const expProvider = main.children[0];
-        expect(expProvider.type).toEqual('ExperimentProvider');
-        expect(expProvider.children.length).toEqual(1);
+        const dashboard = main.children[0];
+        expect(dashboard.type).toEqual('Dashboard');
         expect(
-          expProvider.matches(shallow(<ExperimentProvider><Dashboard /></ExperimentProvider>)),
+          dashboard.matches(shallow(<Dashboard />)),
         ).toEqual(true);
       });
     });
@@ -115,11 +109,10 @@ describe('App router component', () => {
       it('loads dashboard', () => {
         const main = el.instance.findByType('main')[0];
         expect(main.children.length).toEqual(1);
-        const expProvider = main.children[0];
-        expect(expProvider.type).toEqual('ExperimentProvider');
-        expect(expProvider.children.length).toEqual(1);
+        const dashboard = main.children[0];
+        expect(dashboard.type).toEqual('Dashboard');
         expect(
-          expProvider.matches(shallow(<ExperimentProvider><Dashboard /></ExperimentProvider>)),
+          dashboard.matches(shallow(<Dashboard />)),
         ).toEqual(true);
       });
     });

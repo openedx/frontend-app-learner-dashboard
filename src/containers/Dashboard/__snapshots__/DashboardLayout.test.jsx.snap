@@ -38,14 +38,7 @@ exports[`DashboardLayout collapsed sidebar not showing snapshot 1`] = `
         }
       }
     >
-      <mockConstructor
-        setSidebarShowing={[MockFunction hooks.setSidebarShowing]}
-      />
-    </Col>
-  </Row>
-  <Row>
-    <Col>
-      <WidgetFooter />
+      <WidgetSidebar />
     </Col>
   </Row>
 </Container>
@@ -89,14 +82,7 @@ exports[`DashboardLayout collapsed sidebar showing snapshot 1`] = `
         }
       }
     >
-      <mockConstructor
-        setSidebarShowing={[MockFunction hooks.setSidebarShowing]}
-      />
-    </Col>
-  </Row>
-  <Row>
-    <Col>
-      <WidgetFooter />
+      <WidgetSidebar />
     </Col>
   </Row>
 </Container>
@@ -145,14 +131,7 @@ exports[`DashboardLayout not collapsed sidebar not showing snapshot 1`] = `
       >
          
       </h2>
-      <mockConstructor
-        setSidebarShowing={[MockFunction hooks.setSidebarShowing]}
-      />
-    </Col>
-  </Row>
-  <Row>
-    <Col>
-      <WidgetFooter />
+      <WidgetSidebar />
     </Col>
   </Row>
 </Container>
@@ -201,14 +180,7 @@ exports[`DashboardLayout not collapsed sidebar showing snapshot 1`] = `
       >
          
       </h2>
-      <mockConstructor
-        setSidebarShowing={[MockFunction hooks.setSidebarShowing]}
-      />
-    </Col>
-  </Row>
-  <Row>
-    <Col>
-      <WidgetFooter />
+      <WidgetSidebar />
     </Col>
   </Row>
 </Container>
