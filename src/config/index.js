@@ -18,6 +18,7 @@ const configuration = {
   CAREER_LINK_URL: process.env.CAREER_LINK_URL || null,
   LOGO_URL: process.env.LOGO_URL,
   ENABLE_EDX_PERSONAL_DASHBOARD: process.env.ENABLE_EDX_PERSONAL_DASHBOARD === 'true',
+  SEARCH_CATALOG_URL: process.env.SEARCH_CATALOG_URL || null,
 };
 
 const features = {};
