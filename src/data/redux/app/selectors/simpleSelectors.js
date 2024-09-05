@@ -4,15 +4,24 @@ import { StrictDict } from 'utils';
 import * as module from './simpleSelectors';
 
 export const appSelector = (state) => state.app;
-const mkSimpleSelector = (cb) => createSelector([module.appSelector], cb);
+const mkSimpleSelector = (cb) => {
+  console.log('callback: ', cb, 'appSelector: ', [module.appSelector]);
+  createSelector([module.appSelector], cb);
+};
 
 // top-level app data selectors
 export const simpleSelectors = StrictDict({
   courseData: mkSimpleSelector(app => app.courseData),
-  platformSettings: mkSimpleSelector(app => app.platformSettings),
+  platformSettings: mkSimpleSelector(app => {
+    console.log('this is the app for platformSettings: ', app);
+    return app.platformSettings;
+  }),
   suggestedCourses: mkSimpleSelector(app => app.suggestedCourses),
   emailConfirmation: mkSimpleSelector(app => app.emailConfirmation),
-  enterpriseDashboard: mkSimpleSelector(app => app.enterpriseDashboard || {}),
+  enterpriseDashboard: mkSimpleSelector(app => {
+    console.log('this is the enterpriseDashboard app: ', app);
+    return app.enterpriseDashboard || {};
+  }),
   selectSessionModal: mkSimpleSelector(app => app.selectSessionModal),
   pageNumber: mkSimpleSelector(app => app.pageNumber),
   filters: mkSimpleSelector(app => app.filters),
