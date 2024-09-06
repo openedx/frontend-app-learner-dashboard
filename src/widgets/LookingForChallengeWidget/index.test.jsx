@@ -10,7 +10,7 @@ jest.mock('hooks', () => ({
   },
 }));
 
-jest.mock('../RecommendationsPanel/track', () => ({
+jest.mock('./track', () => ({
   findCoursesWidgetClicked: (href) => jest.fn().mockName(`track.findCoursesWidgetClicked('${href}')`),
 }));
 
