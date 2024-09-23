@@ -13,7 +13,6 @@ const {
   findCoursesNavClicked,
   findCoursesNavDropdownClicked,
   useLearnerDashboardHeaderData,
-  useLearnerDashboardHeaderMenu,
 } = hooks;
 
 jest.mock('tracking', () => ({
@@ -46,17 +45,6 @@ describe('LearnerDashboardHeader hooks', () => {
       expect(track.findCourses.findCoursesClicked).toHaveBeenCalledWith(url, {
         linkName: linkNames.learnerHomeNavExplore,
       });
-    });
-  });
-
-  describe('getLearnerDashboardHeaderMenu', () => {
-    test('calls header menu data hook', () => {
-      const courseSearchUrl = '/courses';
-      const authenticatedUser = {
-        username: 'test',
-      };
-      const learnerHomeHeaderMenu = useLearnerDashboardHeaderMenu({ courseSearchUrl, authenticatedUser });
-      expect(learnerHomeHeaderMenu.mainMenu.length).toBe(3);
     });
   });
 

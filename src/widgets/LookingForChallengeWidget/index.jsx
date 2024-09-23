@@ -8,7 +8,7 @@ import { reduxHooks } from 'hooks';
 import moreCoursesSVG from 'assets/more-courses-sidewidget.svg';
 import { baseAppUrl } from 'data/services/lms/urls';
 
-import track from './track';
+import track from '../RecommendationsPanel/track';
 import messages from './messages';
 import './index.scss';
 

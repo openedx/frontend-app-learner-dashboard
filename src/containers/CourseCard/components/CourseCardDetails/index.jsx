@@ -1,5 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 import { Button } from '@openedx/paragon';
 
@@ -20,10 +20,7 @@ export const CourseCardDetails = ({ cardId }) => {
 
   return (
     <span className="small" data-testid="CourseCardDetails">
-      {providerName} • {courseNumber}
-      {!(isEntitlement && !isFulfilled) && accessMessage && (
-        ` • ${accessMessage}`
-      )}
+      <b>{providerName}</b> • {courseNumber}
       {isEntitlement && isFulfilled && canChange ? (
         <>
           {' • '}
@@ -32,6 +29,12 @@ export const CourseCardDetails = ({ cardId }) => {
           </Button>
         </>
       ) : null}
+      <hr />
+      <div className=" text-success">
+        {!(isEntitlement && !isFulfilled) && accessMessage && (
+          `${accessMessage}`
+        )}
+      </div>
     </span>
   );
 };

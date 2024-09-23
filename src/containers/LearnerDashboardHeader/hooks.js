@@ -1,11 +1,8 @@
 import React from 'react';
 import { useWindowSize, breakpoints } from '@openedx/paragon';
-import { useIntl } from '@edx/frontend-platform/i18n';
 import track from 'tracking';
 import { StrictDict } from 'utils';
 import { linkNames } from 'tracking/constants';
-
-import getLearnerHeaderMenu from './LearnerDashboardMenu';
 
 import * as module from './hooks';
 
@@ -27,13 +24,6 @@ export const findCoursesNavDropdownClicked = (href) => track.findCourses.findCou
   linkName: linkNames.learnerHomeNavDropdownExplore,
 });
 
-export const useLearnerDashboardHeaderMenu = ({
-  courseSearchUrl, authenticatedUser, exploreCoursesClick,
-}) => {
-  const { formatMessage } = useIntl();
-  return getLearnerHeaderMenu(formatMessage, courseSearchUrl, authenticatedUser, exploreCoursesClick);
-};
-
 export const useLearnerDashboardHeaderData = () => {
   const [isOpen, setIsOpen] = module.state.isOpen(false);
   const toggleIsOpen = () => setIsOpen(!isOpen);
@@ -49,5 +39,4 @@ export default {
   findCoursesNavClicked,
   findCoursesNavDropdownClicked,
   useLearnerDashboardHeaderData,
-  useLearnerDashboardHeaderMenu,
 };

@@ -1,0 +1,151 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RecommendationsPanel LoadedView RecommendationPanelLoadedView with personalize recommendation 1`] = `
+<div
+  className="p-4 w-100 panel-background"
+>
+  <h3
+    className="pb-2"
+  >
+    Recommendations for you
+  </h3>
+  <div>
+    <CourseCard
+      course={
+        {
+          "courseKey": "cs-1",
+          "logoImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg",
+          "marketingUrl": "www.edx/recommended-course",
+          "title": "Recommended course 1",
+        }
+      }
+      isControl={false}
+      key="cs-1"
+    />
+    <CourseCard
+      course={
+        {
+          "courseKey": "cs-2",
+          "logoImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg",
+          "marketingUrl": "www.edx/recommended-course",
+          "title": "Recommended course 2 with a really really really long name for some reason",
+        }
+      }
+      isControl={false}
+      key="cs-2"
+    />
+    <CourseCard
+      course={
+        {
+          "courseKey": "cs-3",
+          "logoImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg",
+          "marketingUrl": "www.edx/recommended-course",
+          "title": "Recommended course 3",
+        }
+      }
+      isControl={false}
+      key="cs-3"
+    />
+    <CourseCard
+      course={
+        {
+          "courseKey": "cs-4",
+          "logoImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg",
+          "marketingUrl": "www.edx/recommended-course",
+          "title": "Recommended course 4",
+        }
+      }
+      isControl={false}
+      key="cs-4"
+    />
+  </div>
+  <div
+    className="text-center explore-courses-btn"
+  >
+    <Button
+      as="a"
+      href="http://localhost:18000/course-search-url"
+      iconBefore={[MockFunction icons.Search]}
+      onClick={[MockFunction track.findCoursesWidgetClicked('http://localhost:18000/course-search-url')]}
+      variant="tertiary"
+    >
+      Explore courses
+    </Button>
+  </div>
+</div>
+`;
+
+exports[`RecommendationsPanel LoadedView RecommendationPanelLoadedView without personalize recommendation 1`] = `
+<div
+  className="p-4 w-100 panel-background"
+>
+  <h3
+    className="pb-2"
+  >
+    Popular courses
+  </h3>
+  <div>
+    <CourseCard
+      course={
+        {
+          "courseKey": "cs-1",
+          "logoImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg",
+          "marketingUrl": "www.edx/recommended-course",
+          "title": "Recommended course 1",
+        }
+      }
+      isControl={null}
+      key="cs-1"
+    />
+    <CourseCard
+      course={
+        {
+          "courseKey": "cs-2",
+          "logoImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg",
+          "marketingUrl": "www.edx/recommended-course",
+          "title": "Recommended course 2 with a really really really long name for some reason",
+        }
+      }
+      isControl={null}
+      key="cs-2"
+    />
+    <CourseCard
+      course={
+        {
+          "courseKey": "cs-3",
+          "logoImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg",
+          "marketingUrl": "www.edx/recommended-course",
+          "title": "Recommended course 3",
+        }
+      }
+      isControl={null}
+      key="cs-3"
+    />
+    <CourseCard
+      course={
+        {
+          "courseKey": "cs-4",
+          "logoImageUrl": "https://prod-discovery.edx-cdn.org/media/programs/banner_images/9a310b98-8f27-439e-be85-12d6460245c9-f2efca129273.small.jpg",
+          "marketingUrl": "www.edx/recommended-course",
+          "title": "Recommended course 4",
+        }
+      }
+      isControl={null}
+      key="cs-4"
+    />
+  </div>
+  <div
+    className="text-center explore-courses-btn"
+  >
+    <Button
+      as="a"
+      href="http://localhost:18000/course-search-url"
+      iconBefore={[MockFunction icons.Search]}
+      onClick={[MockFunction track.findCoursesWidgetClicked('http://localhost:18000/course-search-url')]}
+      variant="tertiary"
+    >
+      Explore courses
+    </Button>
+  </div>
+</div>
+`;

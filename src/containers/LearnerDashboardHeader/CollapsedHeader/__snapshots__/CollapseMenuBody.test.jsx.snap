@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CollapseMenuBody render 1`] = `
+<div
+  className="d-flex flex-column shadow-sm nav-small-menu"
+>
+  <Button
+    as="a"
+    href="/"
+    variant="inverse-primary"
+  >
+    Courses
+  </Button>
+  <Button
+    as="a"
+    href="http://localhost:18000/dashboard/programs"
+    variant="inverse-primary"
+  >
+    Programs
+  </Button>
+  <Button
+    as="a"
+    href="http://localhost:18000/courseSearchUrl"
+    onClick={[MockFunction findCoursesNavDropdownClicked("http://localhost:18000/courseSearchUrl")]}
+    variant="inverse-primary"
+  >
+    Discover New
+  </Button>
+  <Button
+    as="a"
+    href="http://localhost:18000/support"
+    variant="inverse-primary"
+  >
+    Help
+  </Button>
+  <Fragment>
+    <Button
+      as="a"
+      href="url"
+      variant="inverse-primary"
+    >
+      Dashboard
+    </Button>
+    <Button
+      as="a"
+      href="http://localhost:18000/u/username"
+      variant="inverse-primary"
+    >
+      Profile
+    </Button>
+    <Button
+      as="a"
+      href="http://localhost:18000/account/settings"
+      variant="inverse-primary"
+    >
+      Account
+    </Button>
+    <Button
+      as="a"
+      href="http://localhost:18000/logout"
+      variant="inverse-primary"
+    >
+      Sign Out
+    </Button>
+  </Fragment>
+</div>
+`;
+
+exports[`CollapseMenuBody render empty if not open 1`] = `null`;
+
+exports[`CollapseMenuBody render unauthenticated 1`] = `
+<div
+  className="d-flex flex-column shadow-sm nav-small-menu"
+>
+  <Button
+    as="a"
+    href="/"
+    variant="inverse-primary"
+  >
+    Courses
+  </Button>
+  <Button
+    as="a"
+    href="http://localhost:18000/dashboard/programs"
+    variant="inverse-primary"
+  >
+    Programs
+  </Button>
+  <Button
+    as="a"
+    href="http://localhost:18000/courseSearchUrl"
+    onClick={[MockFunction findCoursesNavDropdownClicked("http://localhost:18000/courseSearchUrl")]}
+    variant="inverse-primary"
+  >
+    Discover New
+  </Button>
+  <Button
+    as="a"
+    href="http://localhost:18000/support"
+    variant="inverse-primary"
+  >
+    Help
+  </Button>
+</div>
+`;

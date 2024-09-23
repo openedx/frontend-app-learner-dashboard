@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React from 'react';
+import { useIntl } from '@edx/frontend-platform/i18n';
 import {
   Button,
   Image,
@@ -7,12 +7,12 @@ import {
   ModalDialog,
   PageBanner,
 } from '@openedx/paragon';
-import { useIntl } from '@edx/frontend-platform/i18n';
+import React from 'react';
 
 import confirmEmailSVG from 'assets/confirm-email.svg';
-import messages from './messages';
 import './ConfirmEmailBanner.scss';
 import useConfirmEmailBannerData from './hooks';
+import messages from './messages';
 
 export const ConfirmEmailBanner = () => {
   const {

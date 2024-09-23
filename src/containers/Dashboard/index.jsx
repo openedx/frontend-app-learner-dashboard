@@ -1,15 +1,15 @@
 import React from 'react';
 
-import { reduxHooks } from 'hooks';
-import { RequestKeys } from 'data/constants/requests';
+import CoursesPanel from 'containers/CoursesPanel';
 import EnterpriseDashboardModal from 'containers/EnterpriseDashboardModal';
 import SelectSessionModal from 'containers/SelectSessionModal';
-import CoursesPanel from 'containers/CoursesPanel';
+import { RequestKeys } from 'data/constants/requests';
+import { reduxHooks } from 'hooks';
 
-import LoadingView from './LoadingView';
 import DashboardLayout from './DashboardLayout';
 import hooks from './hooks';
 import './index.scss';
+import LoadingView from './LoadingView';
 
 export const Dashboard = () => {
   hooks.useInitializeDashboard();
@@ -20,7 +20,7 @@ export const Dashboard = () => {
   const showSelectSessionModal = reduxHooks.useShowSelectSessionModal();
 
   return (
-    <div id="dashboard-container" className="d-flex flex-column p-2 pt-0">
+    <div id="dashboard-container" className="d-flex flex-column">
       <h1 className="sr-only">{pageTitle}</h1>
       {!initIsPending && (
         <>

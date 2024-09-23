@@ -1,8 +1,8 @@
-import React from 'react';
 import classNames from 'classnames';
+import React from 'react';
 
-import { reduxHooks } from 'hooks';
 import { PluginSlot } from '@openedx/frontend-plugin-framework';
+import { reduxHooks } from 'hooks';
 
 // eslint-disable-next-line arrow-body-style
 export const WidgetSidebar = () => {

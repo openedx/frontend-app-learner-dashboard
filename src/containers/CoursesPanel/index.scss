@@ -5,11 +5,13 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  
 }
 
 .course-list-title {
   font-size: $h2-font-size;
   margin: map-get($spacers, 3) 0;
+  color: #21472E !important;
 }
 
 .course-list-loading {
@@ -20,8 +22,17 @@
 }
 
 .course-filter-controls-container {
-  text-align: right;
+
   align-self: center;
+  //background-color: #472128 !important;
+  border: none;
+  #course-filter-controls {
+    button {
+      color: #21472E !important;
+      border: 1px solid #B9B9B9 !important;
+      border-radius: 0px !important;
+    }
+  }
 }
 
 @include media-breakpoint-down(md) {
@@ -33,10 +44,8 @@
   .course-filter-controls-container {
     text-align: left;
     align-self: flex-start;
+    margin-top: 10px;
   }
 
-  .course-list-title {
-    font-size: $h3-font-size;
-    margin: map-get($spacers, 2) 0;
-  }
+
 }

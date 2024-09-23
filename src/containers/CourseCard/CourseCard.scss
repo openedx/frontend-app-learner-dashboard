@@ -7,7 +7,16 @@
       min-height: $card-image-vertical-max-height;
     }
     .pgn__card-image-cap {
-      border-bottom-left-radius: 0 !important;
+      border-top-right-radius: 0% !important;
+      border-top-left-radius: 2% !important;
+      border-bottom-left-radius: 2% !important;
+      width: 350px;
+       
+      @media (max-width: 768px) {
+        border-top-right-radius: 2% !important;
+        border-bottom-left-radius: 0% !important;
+        width: 100%;
+      }
     }
     .overflow-visible {
       overflow: visible;
@@ -26,6 +35,19 @@
         align-self: flex-end;
         white-space: nowrap;
       }
+    }
+    .course-card-title{
+      color: #18324A !important;
+    }
+    .card-button{
+      border-radius: 0% !important;
+      color: #ffffff !important;
+      border-color: #2D8253 !important;
+    }
+
+    .btn-primary {
+      background-color: #2D8253 !important;
+      border-radius: 0px;
     }
 
     .course-card-verify-ribbon-container {
@@ -53,15 +75,19 @@
     > .alert {
       border-radius: 0;
       box-shadow: none;
-      padding: map-get($spacers, 3) map-get($spacers, 4);
 
       &:last-of-type {
-        border-bottom-left-radius: $alert-border-radius;
+        border-bottom-left-radius:0 !important;
         border-bottom-right-radius: $alert-border-radius;
+
+        background-color: #E1ECC5 !important;
+        padding-top: 10px;
+        padding-bottom: 10px;
       }
     }
 
     .related-programs-banner {
+  
       .related-programs-list-container {
         list-style: none;
         display: inline;

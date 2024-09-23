@@ -1,17 +1,24 @@
-import React from 'react';
+import {
+  Button,
+  Col,
+  Container,
+  Form,
+  FormControl,
+  Row,
+} from '@openedx/paragon';
 import PropTypes from 'prop-types';
 
-import { Container, Col, Row } from '@openedx/paragon';
-
+import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import '../../i18n';
 import WidgetSidebar from '../WidgetContainers/WidgetSidebar';
-
 import hooks from './hooks';
 
 export const columnConfig = {
   courseList: {
     withSidebar: {
       lg: { span: 12, offset: 0 },
-      xl: { span: 8, offset: 0 },
+      xl: { span: 9, offset: 0 },
     },
     noSidebar: {
       lg: { span: 12, offset: 0 },
@@ -25,29 +32,72 @@ export const columnConfig = {
 };
 
 export const DashboardLayout = ({ children }) => {
-  const {
-    isCollapsed,
-    sidebarShowing,
-  } = hooks.useDashboardLayoutData();
-
+  const { isCollapsed, sidebarShowing } = hooks.useDashboardLayoutData();
   const courseListColumnProps = sidebarShowing
     ? columnConfig.courseList.withSidebar
     : columnConfig.courseList.noSidebar;
 
+  const handleSearch = () => {
+    const searchText = document.querySelector('.search-input').value;
+    alert(`Searching for: ${searchText}`);
+    // Add your search logic here
+  };
+
+  const { t } = useTranslation();
+
+  useEffect(() => {
+    // Ensuring language preference is consistent
+    if (localStorage.getItem('i18nextLng')?.length > 2) {
+      localStorage.setItem('i18nextLng', 'en');
+    }
+  }, []);
+
   return (
-    <Container fluid size="xl">
-      <Row>
+    <Container fluid className="font-inter">
+      {/* Header Section */}
+      <Row
+        className="banner d-flex justify-content-center align-content-center"
+        style={{ backgroundImage: 'url(/Banner1.jpg)' }}
+      >
+        <Col {...courseListColumnProps}>
+          <div className="contain-title align-items-left">
+            <h1 className="title1">{t('welcome')}</h1>
+            <h1 className="title2">{t('onlineCourses')}</h1>
+            <p>{t('buildSkills')}</p>
+            <Form className="search-form d-flex mt-3">
+              <FormControl
+                type="text"
+                placeholder={t('searchPlaceholder')}
+                className="search-input"
+              />
+              <Button
+                className="search-button"
+                type="button"
+                onClick={handleSearch}
+              >
+                {t('searchButton')}
+                <i className="fa fa-search" />
+              </Button>
+            </Form>
+          </div>
+        </Col>
+      </Row>
+
+      {/* Main Content Section */}
+      <Row className="flex-column d-flex justify-content-center align-content-center">
         <Col {...courseListColumnProps} className="course-list-column">
           {children}
         </Col>
-        <Col {...columnConfig.sidebar} className="sidebar-column">
-          {!isCollapsed && (<h2 className="course-list-title">&nbsp;</h2>)}
-          <WidgetSidebar />
-        </Col>
+        {sidebarShowing && (
+          <Col {...columnConfig.sidebar} className="sidebar-column">
+            {!isCollapsed && <WidgetSidebar />}
+          </Col>
+        )}
       </Row>
     </Container>
   );
 };
+
 DashboardLayout.propTypes = {
   children: PropTypes.node.isRequired,
 };

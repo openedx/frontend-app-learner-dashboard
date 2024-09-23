@@ -1,0 +1,139 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AuthenticatedUserDropdown snapshots no auth render empty 1`] = `null`;
+
+exports[`AuthenticatedUserDropdown snapshots with enterprise dashboard 1`] = `
+<Dropdown
+  className="user-dropdown pr4"
+>
+  <Dropdown.Toggle
+    className="p-4"
+    id="user"
+    src="profileImage"
+    variant="light"
+  >
+    <span
+      className="d-md-inline"
+      data-hj-suppress={true}
+    >
+      username
+    </span>
+  </Dropdown.Toggle>
+  <Dropdown.Menu
+    className="dropdown-menu-right"
+  >
+    <Fragment>
+      <Dropdown.Header>
+        SWITCH DASHBOARD
+      </Dropdown.Header>
+      <Dropdown.Item
+        as="a"
+        className="active"
+        href="/edx-dashboard"
+      >
+        Personal
+      </Dropdown.Item>
+      <Dropdown.Item
+        as="a"
+        href="url"
+        key="label"
+      >
+        label
+         
+        Dashboard
+      </Dropdown.Item>
+      <Dropdown.Divider />
+    </Fragment>
+    <Dropdown.Item
+      href="http://account-profile-url.test/u/username"
+    >
+      Profile
+    </Dropdown.Item>
+    <Dropdown.Item
+      href="http://account-settings-url.test"
+    >
+      Account
+    </Dropdown.Item>
+    <Dropdown.Item
+      href="http://order-history-url.test"
+    >
+      Order History
+    </Dropdown.Item>
+    <Dropdown.Divider />
+    <Dropdown.Item
+      href="http://logout-url.test"
+    >
+      Sign Out
+    </Dropdown.Item>
+  </Dropdown.Menu>
+</Dropdown>
+`;
+
+exports[`AuthenticatedUserDropdown snapshots without enterprise dashboard and expanded 1`] = `
+<Dropdown
+  className="user-dropdown pr4"
+>
+  <Dropdown.Toggle
+    className="p-4"
+    id="user"
+    src="profileImage"
+    variant="light"
+  >
+    <span
+      className="d-md-inline"
+      data-hj-suppress={true}
+    >
+      username
+    </span>
+  </Dropdown.Toggle>
+  <Dropdown.Menu
+    className="dropdown-menu-right"
+  >
+    <Fragment>
+      <Dropdown.Header>
+        SWITCH DASHBOARD
+      </Dropdown.Header>
+      <Dropdown.Item
+        as="a"
+        className="active"
+        href="/edx-dashboard"
+      >
+        Personal
+      </Dropdown.Item>
+      <Dropdown.Divider />
+    </Fragment>
+    <Dropdown.Item
+      href="http://localhost:18000/career"
+    >
+      Career
+      <Badge
+        className="px-2 mx-2"
+        variant="warning"
+      >
+        New
+      </Badge>
+    </Dropdown.Item>
+    <Dropdown.Item
+      href="http://account-profile-url.test/u/username"
+    >
+      Profile
+    </Dropdown.Item>
+    <Dropdown.Item
+      href="http://account-settings-url.test"
+    >
+      Account
+    </Dropdown.Item>
+    <Dropdown.Item
+      href="http://order-history-url.test"
+    >
+      Order History
+    </Dropdown.Item>
+    <Dropdown.Divider />
+    <Dropdown.Item
+      href="http://logout-url.test"
+    >
+      Sign Out
+    </Dropdown.Item>
+  </Dropdown.Menu>
+</Dropdown>
+`;

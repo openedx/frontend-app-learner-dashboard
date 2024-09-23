@@ -1,5 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 import { Alert } from '@openedx/paragon';
 import { Info } from '@openedx/paragon/icons';

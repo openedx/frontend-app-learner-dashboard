@@ -1,4 +1,4 @@
-@import "@openedx/paragon/scss/core/core";
+@import '@openedx/paragon/scss/core/core';
 
 .course-list-column {
   padding: 0 map-get($spacers, 4);
@@ -10,12 +10,84 @@
 
 @include media-breakpoint-down(lg) {
   .sidebar-column {
-    // grid are inheriting dir="ltr" from the body, so we need to override it
-    [dir=ltr] & {
+    // grid are inheriting dir='ltr' from the body, so we need to override it
+    [dir='ltr'] & {
       padding: 0 map-get($spacers, 3);
     }
-    [dir=rtl] & {
+    [dir='rtl'] & {
       padding: 0 map-get($spacers, 3);
     }
   }
 }
+.banner {
+  //margin: -7px -20px 0px -20px !important;
+  height: 450px;
+  width: auto;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+}
+.banner-content {
+  padding-top: 30px;
+
+  color: #858a7e;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.title1 {
+  color: #21472e;
+  font-size: 60px;
+}
+.title2 {
+  color: #d52330;
+  font-size: 60px;
+}
+@media (max-width: 1030px) {
+  .title1,
+  .title2 {
+    font-size: 30px;
+  }
+}
+.search-form {
+  display: flex;
+  align-items: center;
+  max-width: 520px !important;
+}
+
+.search-input {
+  border-radius: 0px !important;
+  font-size: 16px;
+}
+.form-control {
+  border-radius: 0px !important;
+}
+
+.search-button {
+  background-color: #21472e !important;
+  border-radius: 0px !important;
+
+  border: none !important;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  cursor: pointer;
+  
+
+  &:hover  {
+    background-color: #2a8d43 !important;
+    border-color:  #2a8d43 !important;;
+  }
+  &:active {
+  border-radius: 0% !important;
+  border: none !important;
+  }
+  
+
+
+  .fa {
+    margin-left: 5px;
+  }
+
+}
+
+
