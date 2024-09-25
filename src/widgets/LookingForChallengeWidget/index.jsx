@@ -17,6 +17,8 @@ export const arrowIcon = (<Icon className="mx-1" src={ArrowForward} />);
 export const LookingForChallengeWidget = () => {
   const { formatMessage } = useIntl();
   const { courseSearchUrl } = reduxHooks.usePlatformSettingsData();
+  const hyperlinkDestination = baseAppUrl(courseSearchUrl) || '';
+
   return (
     <Card orientation="horizontal" id="looking-for-challenge-widget">
       <Card.ImageCap
@@ -30,8 +32,9 @@ export const LookingForChallengeWidget = () => {
         <h5>
           <Hyperlink
             variant="brand"
-            destination={baseAppUrl(courseSearchUrl)}
-            onClick={track.findCoursesWidgetClicked(baseAppUrl(courseSearchUrl))}
+            // TODO: see if this is happening OOTB
+            destination={hyperlinkDestination}
+            onClick={track.findCoursesWidgetClicked(hyperlinkDestination)}
             className="d-flex align-items-center"
           >
             {formatMessage(messages.findCoursesButton, { arrow: arrowIcon })}

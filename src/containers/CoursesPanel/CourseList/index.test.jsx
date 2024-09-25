@@ -2,9 +2,14 @@ import { shallow } from '@edx/react-unit-test-utils';
 
 import { useIsCollapsed } from './hooks';
 import CourseList from '.';
+import { useCourseListData } from '../hooks';
 
 jest.mock('./hooks', () => ({
   useIsCollapsed: jest.fn(),
+}));
+
+jest.mock('../hooks', () => ({
+  useCourseListData: jest.fn(),
 }));
 
 jest.mock('containers/CourseCard', () => 'CourseCard');
@@ -22,9 +27,12 @@ describe('CourseList', () => {
   };
   useIsCollapsed.mockReturnValue(false);
 
-  const createWrapper = (courseListData = defaultCourseListData) => (
-    shallow(<CourseList {...courseListData} />)
-  );
+  const createWrapper = (courseListData = defaultCourseListData) => {
+    useCourseListData.mockReturnValue(courseListData);
+    return (
+      shallow(<CourseList />)
+    );
+  };
 
   describe('no courses or filters', () => {
     test('snapshot', () => {

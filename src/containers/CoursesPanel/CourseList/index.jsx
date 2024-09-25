@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { Pagination } from '@openedx/paragon';
 import {
@@ -8,11 +7,13 @@ import {
 import CourseCard from 'containers/CourseCard';
 
 import { useIsCollapsed } from './hooks';
+import { useCourseListData } from '../hooks';
 
-export const CourseList = ({
-  filterOptions, setPageNumber, numPages, showFilters, visibleList,
-}) => {
+export const CourseList = () => {
   const isCollapsed = useIsCollapsed();
+  const {
+    filterOptions, setPageNumber, numPages, showFilters, visibleList,
+  } = useCourseListData();
   return (
     <>
       {showFilters && (
@@ -36,16 +37,6 @@ export const CourseList = ({
       </div>
     </>
   );
-};
-
-CourseList.propTypes = {
-  showFilters: PropTypes.bool.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  visibleList: PropTypes.arrayOf(PropTypes.object).isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  filterOptions: PropTypes.object.isRequired,
-  numPages: PropTypes.number.isRequired,
-  setPageNumber: PropTypes.func.isRequired,
 };
 
 export default CourseList;

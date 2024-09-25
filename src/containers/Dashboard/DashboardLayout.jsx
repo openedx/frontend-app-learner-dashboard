@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Container, Col, Row } from '@openedx/paragon';
 
-import WidgetSidebar from '../WidgetContainers/WidgetSidebar';
+import WidgetSidebarSlot from 'plugin-slots/WidgetSidebarSlot';
 
 import hooks from './hooks';
 
@@ -41,8 +41,9 @@ export const DashboardLayout = ({ children }) => {
           {children}
         </Col>
         <Col {...columnConfig.sidebar} className="sidebar-column">
+          {/* TODO: this shouldn't be an h2 but is used for spacing?? */}
           {!isCollapsed && (<h2 className="course-list-title">&nbsp;</h2>)}
-          <WidgetSidebar />
+          <WidgetSidebarSlot />
         </Col>
       </Row>
     </Container>
