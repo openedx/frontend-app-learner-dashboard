@@ -79,7 +79,7 @@ const Footer = () => {
               className="mb-4 mb-md-0 d-flex flex-column align-items-center"
             >
               <img
-                src="assets/logo-white.png`"
+                src="assets/logo-white.png"
                 alt="Logo"
                 style={{ maxWidth: '200px' }}
               />
