@@ -15,8 +15,11 @@ config.plugins.push(
   new CopyPlugin({
     patterns: [
       {
-        from: path.resolve(__dirname, './public/robots.txt'),
-        to: path.resolve(__dirname, './dist/robots.txt'),
+        from: path.resolve(__dirname, './public'), // Copy entire public folder
+        to: path.resolve(__dirname, './dist/public'), // Destination folder for public assets
+        globOptions: {
+          ignore: ['**/robots.txt'], // You can exclude specific files if needed
+        },
       },
     ],
   }),
