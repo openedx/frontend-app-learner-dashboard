@@ -5,11 +5,11 @@ import { ActionRow } from '@openedx/paragon';
 
 import { reduxHooks } from 'hooks';
 
+import CourseCardActionSlot from 'plugin-slots/CourseCardActionSlot';
 import SelectSessionButton from './SelectSessionButton';
 import BeginCourseButton from './BeginCourseButton';
 import ResumeButton from './ResumeButton';
 import ViewCourseButton from './ViewCourseButton';
-import CourseCardActionSlot from '../../../../plugin-slots/CourseCardActionSlot';
 
 export const CourseCardActions = ({ cardId }) => {
   const { isEntitlement, isFulfilled } = reduxHooks.useCardEntitlementData(cardId);

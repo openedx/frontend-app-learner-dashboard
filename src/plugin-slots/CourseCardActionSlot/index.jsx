@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { PluginSlot } from '@openedx/frontend-plugin-framework';
 
 import { reduxHooks } from 'hooks';
-import UpgradeButton from '../../containers/CourseCard/components/CourseCardActions/UpgradeButton';
+import UpgradeButton from 'containers/CourseCard/components/CourseCardActions/UpgradeButton';
 
 const CourseCardActionSlot = ({ cardId }) => {
   const { isEntitlement } = reduxHooks.useCardEntitlementData(cardId);
