@@ -4,7 +4,7 @@
 
 ## Description
 
-This slot is used for replacing or adding content around the `NoCoursesView` component, which renders when the learner has not yet enrolled in any courses.
+This slot is used for replacing or adding content around the `NoCoursesView` component. The `NoCoursesViewSlot` only renders if the learner has not yet enrolled in any courses.
 
 ## Example
 
