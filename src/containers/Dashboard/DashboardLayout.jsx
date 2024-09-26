@@ -41,7 +41,6 @@ export const DashboardLayout = ({ children }) => {
           {children}
         </Col>
         <Col {...columnConfig.sidebar} className="sidebar-column">
-          {/* TODO: this shouldn't be an h2 but is used for spacing?? */}
           {!isCollapsed && (<h2 className="course-list-title">&nbsp;</h2>)}
           <WidgetSidebarSlot />
         </Col>

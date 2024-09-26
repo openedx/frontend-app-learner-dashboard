@@ -32,7 +32,6 @@ export const LookingForChallengeWidget = () => {
         <h5>
           <Hyperlink
             variant="brand"
-            // TODO: see if this is happening OOTB
             destination={hyperlinkDestination}
             onClick={track.findCoursesWidgetClicked(hyperlinkDestination)}
             className="d-flex align-items-center"

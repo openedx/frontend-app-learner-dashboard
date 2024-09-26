@@ -8,9 +8,11 @@ This slot is used for replacing or adding content around the `NoCoursesView` com
 
 ## Example
 
-The space will show the `NoCoursesView` by default. This can be disabled in the configuration with the `keepDefault` boolean. The following `env.config.jsx` will replace the default experience with a `CustomNoCoursesCTA` component.
+The space will show the `NoCoursesView` by default. This can be disabled in the configuration with the `keepDefault` boolean.
 
 ![Screenshot of the no courses view](./images/no_courses_view_slot.png)
+
+Setting the MFE's `env.config.jsx` to the following will replace the default experience with a `CustomNoCoursesCTA` component.
 
 ```js
 import { DIRECT_PLUGIN, PLUGIN_OPERATIONS } from '@openedx/frontend-plugin-framework';

@@ -8,9 +8,11 @@ This slot is used for replacing or adding content around the `CourseList` compon
 
 ## Example
 
-The space will show the `CourseList` component by default. This can be disabled in the configuration with the `keepDefault` boolean. Setting the MFE's `env.config.jsx` to the following will replace the default experience with a `CustomCourseList` component.
+The space will show the `CourseList` component by default. This can be disabled in the configuration with the `keepDefault` boolean. 
 
 ![Screenshot of the CourseListSlot](./images/course_list_slot.png)
+
+Setting the MFE's `env.config.jsx` to the following will replace the default experience with a `CustomCourseList` component.
 
 ```js
 import { DIRECT_PLUGIN, PLUGIN_OPERATIONS } from '@openedx/frontend-plugin-framework';

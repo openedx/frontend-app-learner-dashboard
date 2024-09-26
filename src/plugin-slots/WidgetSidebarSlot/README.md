@@ -8,10 +8,11 @@ This slot is used for adding content to the right-hand sidebar.
 
 ## Example
 
-The space will show the `LookingForChallengeWidget` by default. This can be disabled in the configuration with the `keepDefault` boolean. 
-Setting the MFE's `env.config.jsx` to the following will replace the default experience with a `CustomSidebarPanel` component.
+The space will show the `LookingForChallengeWidget` by default. This can be disabled in the configuration with the `keepDefault` boolean.
 
 ![Screenshot of the widget sidebar](./images/looking_for_challenge_widget.png)
+
+Setting the MFE's `env.config.jsx` to the following will replace the default experience with a `CustomSidebarPanel` component.
 
 ```js
 import { DIRECT_PLUGIN, PLUGIN_OPERATIONS } from '@openedx/frontend-plugin-framework';
