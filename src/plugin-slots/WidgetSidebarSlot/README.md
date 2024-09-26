@@ -14,6 +14,8 @@ The space will show the `LookingForChallengeWidget` by default. This can be disa
 
 Setting the MFE's `env.config.jsx` to the following will replace the default experience with a `CustomSidebarPanel` component.
 
+![Screenshot of a custom call-to-action in the sidebar](./images/custom_CTA_sidebar.png)
+
 ```js
 import { DIRECT_PLUGIN, PLUGIN_OPERATIONS } from '@openedx/frontend-plugin-framework';
 import { CustomSidebarPanel } from 'package-that-exports-your-component';

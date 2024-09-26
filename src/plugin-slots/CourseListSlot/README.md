@@ -14,6 +14,8 @@ The space will show the `CourseList` component by default. This can be disabled 
 
 Setting the MFE's `env.config.jsx` to the following will replace the default experience with a `CustomCourseList` component.
 
+![Screenshot of a custom course list](./images/custom_course_list.png)
+
 ```js
 import { DIRECT_PLUGIN, PLUGIN_OPERATIONS } from '@openedx/frontend-plugin-framework';
 import { CustomCourseList } from '<package-that-exports-your-component>'

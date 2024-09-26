@@ -14,6 +14,8 @@ The space will show the `NoCoursesView` by default. This can be disabled in the 
 
 Setting the MFE's `env.config.jsx` to the following will replace the default experience with a `CustomNoCoursesCTA` component.
 
+![Screenshot of a custom no courses view](./images/custom_no_courses_view.png)
+
 ```js
 import { DIRECT_PLUGIN, PLUGIN_OPERATIONS } from '@openedx/frontend-plugin-framework';
 import { CustomSidebarPanel } from 'package-that-exports-your-component';
