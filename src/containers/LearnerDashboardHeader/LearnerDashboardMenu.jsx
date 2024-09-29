@@ -9,6 +9,7 @@ const getLearnerHeaderMenu = (
   courseSearchUrl,
   authenticatedUser,
   exploreCoursesClick,
+  programsEnabled = false,
 ) => ({
   mainMenu: [
     {
@@ -17,11 +18,11 @@ const getLearnerHeaderMenu = (
       content: formatMessage(messages.course),
       isActive: true,
     },
-    {
+    ...(programsEnabled ? [{
       type: 'item',
       href: `${urls.programsUrl()}`,
       content: formatMessage(messages.program),
-    },
+    }] : []),
     {
       type: 'item',
       href: `${urls.baseAppUrl(courseSearchUrl)}`,
@@ -32,11 +33,11 @@ const getLearnerHeaderMenu = (
     },
   ],
   secondaryMenu: [
-    {
+    ...(getConfig().SUPPORT_URL ? [{
       type: 'item',
-      href: `${getConfig().SUPPORT_URL}`,
+      href: getConfig().SUPPORT_URL,
       content: formatMessage(messages.help),
-    },
+    }] : []),
   ],
   userMenu: [
     {
@@ -70,6 +71,7 @@ const getLearnerHeaderMenu = (
       ],
     },
   ],
-});
+}
+);
 
 export default getLearnerHeaderMenu;
