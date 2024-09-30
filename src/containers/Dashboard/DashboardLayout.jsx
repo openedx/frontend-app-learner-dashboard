@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import banner from '../../assets/banner1.jpg';
 import '../../i18n';
 import WidgetSidebar from '../WidgetContainers/WidgetSidebar';
 import hooks from './hooks';
@@ -57,7 +58,7 @@ export const DashboardLayout = ({ children }) => {
       {/* Header Section */}
       <Row
         className="banner d-flex justify-content-center align-content-center"
-        style={{ backgroundImage: 'url(/Banner1.jpg)' }}
+        style={{ backgroundImage: `url(${banner})` }}
       >
         <Col {...courseListColumnProps}>
           <div className="contain-title align-items-left">

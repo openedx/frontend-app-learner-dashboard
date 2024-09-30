@@ -10,6 +10,7 @@ import React, { useEffect } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import logoWhite from '../assets/logo-white.png';
+import plower from '../assets/plower.png';
 import '../i18n';
 import './Footer.scss';
 
@@ -63,7 +64,7 @@ const Footer = () => {
               className=" d-flex justify-content-center align-items-center"
               md={6}
             >
-              <img src="/plower.png" alt="Logo" style={{ maxWidth: '300px' }} />
+              <img src={plower} alt="Logo" style={{ maxWidth: '300px' }} />
             </Col>
           </Row>
         </Container>
