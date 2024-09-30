@@ -9,11 +9,11 @@ import {
   within,
   prettyDOM,
 } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import {
-  initialize,
-  mergeConfig,
-} from '@edx/frontend-platform';
+// import userEvent from '@testing-library/user-event';
+// import {
+//   initialize,
+//   mergeConfig,
+// } from '@edx/frontend-platform';
 
 import { useIntl, IntlProvider } from '@edx/frontend-platform/i18n';
 
