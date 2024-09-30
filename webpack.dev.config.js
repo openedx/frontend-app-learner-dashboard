@@ -21,6 +21,11 @@ config.plugins.push(
           ignore: ['**/robots.txt'], // You can exclude specific files if needed
         },
       },
+      {
+        from: path.resolve(__dirname, 'public', 'assets'),
+        to: path.join(__dirname, 'dist', 'images'),
+        noErrorOnMissing: true,
+      },
     ],
   }),
 );
