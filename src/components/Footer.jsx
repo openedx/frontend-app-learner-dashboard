@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import logoWhite from '../assets/logo-white.png';
 import '../i18n';
 import './Footer.scss';
 
@@ -79,11 +80,10 @@ const Footer = () => {
               className="mb-4 mb-md-0 d-flex flex-column align-items-center"
             >
               <img
-                src="assets/logo-white.png"
+                src={logoWhite}
                 alt="Logo"
                 style={{ maxWidth: '200px' }}
               />
-
               <ul
                 className="list-unstyled list-inline social-icons mt-3"
                 style={{ maxWidth: '300px' }}
