@@ -4,10 +4,10 @@ import { PluginSlot } from '@openedx/frontend-plugin-framework';
 import LookingForChallengeWidget from 'widgets/LookingForChallengeWidget';
 
 // eslint-disable-next-line arrow-body-style
-export const WidgetSidebar = () => (
-  <PluginSlot id="widget_sidebar_plugin_slot">
+export const WidgetSidebarSlot = () => (
+  <PluginSlot id="widget_sidebar_slot">
     <LookingForChallengeWidget />
   </PluginSlot>
 );
 
-export default WidgetSidebar;
+export default WidgetSidebarSlot;

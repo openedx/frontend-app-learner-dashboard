@@ -8,7 +8,7 @@ import { reduxHooks } from 'hooks';
 import moreCoursesSVG from 'assets/more-courses-sidewidget.svg';
 import { baseAppUrl } from 'data/services/lms/urls';
 
-import track from './track';
+import { findCoursesWidgetClicked } from './track';
 import messages from './messages';
 import './index.scss';
 
@@ -33,7 +33,7 @@ export const LookingForChallengeWidget = () => {
           <Hyperlink
             variant="brand"
             destination={hyperlinkDestination}
-            onClick={track.findCoursesWidgetClicked(hyperlinkDestination)}
+            onClick={findCoursesWidgetClicked(hyperlinkDestination)}
             className="d-flex align-items-center"
           >
             {formatMessage(messages.findCoursesButton, { arrow: arrowIcon })}

@@ -12,13 +12,12 @@ The space will show the `NoCoursesView` by default. This can be disabled in the 
 
 ![Screenshot of the no courses view](./images/no_courses_view_slot.png)
 
-Setting the MFE's `env.config.jsx` to the following will replace the default experience with a `CustomNoCoursesCTA` component.
+Setting the MFE's `env.config.jsx` to the following will replace the default experience with a custom call-to-action component.
 
-![Screenshot of a custom no courses view](./images/custom_no_courses_view.png)
+![Screenshot of a custom no courses view](./images/readme_custom_no_courses_view.png)
 
 ```js
 import { DIRECT_PLUGIN, PLUGIN_OPERATIONS } from '@openedx/frontend-plugin-framework';
-import { CustomSidebarPanel } from 'package-that-exports-your-component';
 
 const config = {
   pluginSlots: {
@@ -26,12 +25,16 @@ const config = {
       keepDefault: false,
       plugins: [
         {
-          op: ops.Insert,
+          op: PLUGIN_OPERATIONS.Insert,
           widget: {
             id: 'custom_no_courses_CTA',
             type: DIRECT_PLUGIN,
             priority: 60,
-            RenderWidget: CustomSidebarPanel,
+            RenderWidget: () => (
+							<h3>
+								Check out our catalog of courses and start learning today!
+							</h3>
+						),
           },
         },
       ],

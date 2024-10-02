@@ -10,15 +10,14 @@ This slot is used for adding content to the right-hand sidebar.
 
 The space will show the `LookingForChallengeWidget` by default. This can be disabled in the configuration with the `keepDefault` boolean.
 
-![Screenshot of the widget sidebar](./images/looking_for_challenge_widget.png)
+![Screenshot of the widget sidebar](./images/widget_sidebar_slot.png)
 
-Setting the MFE's `env.config.jsx` to the following will replace the default experience with a `CustomSidebarPanel` component.
+Setting the MFE's `env.config.jsx` to the following will replace the default experience with a custom sidebar component.
 
-![Screenshot of a custom call-to-action in the sidebar](./images/custom_CTA_sidebar.png)
+![Screenshot of a custom call-to-action in the sidebar](./images/readme_custom_sidebar.png)
 
 ```js
 import { DIRECT_PLUGIN, PLUGIN_OPERATIONS } from '@openedx/frontend-plugin-framework';
-import { CustomSidebarPanel } from 'package-that-exports-your-component';
 
 const config = {
   pluginSlots: {
@@ -26,12 +25,27 @@ const config = {
       keepDefault: false,
       plugins: [
         {
-          op: ops.Insert,
+          op: PLUGIN_OPERATIONS.Insert,
           widget: {
             id: 'custom_sidebar_panel',
             type: DIRECT_PLUGIN,
             priority: 60,
-            RenderWidget: CustomSidebarPanel,
+            RenderWidget: () => (
+							<div>
+								<h3>
+									Sidebar Menu
+								</h3>
+								<p>
+									sidebar item #1
+								</p>
+								<p>
+									sidebar item #2
+								</p>
+								<p>
+									sidebar item #3
+								</p>
+							</div>
+						),
           },
         },
       ],

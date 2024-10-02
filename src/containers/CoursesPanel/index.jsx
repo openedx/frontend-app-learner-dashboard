@@ -32,11 +32,7 @@ export const CoursesPanel = () => {
           <CourseFilterControls {...courseListData.filterOptions} />
         </div>
       </div>
-      {hasCourses ? (
-        <CourseListSlot />
-      ) : (
-        <NoCoursesViewSlot />
-      )}
+      {hasCourses ? <CourseListSlot courseListData={courseListData} /> : <NoCoursesViewSlot />}
     </div>
   );
 };

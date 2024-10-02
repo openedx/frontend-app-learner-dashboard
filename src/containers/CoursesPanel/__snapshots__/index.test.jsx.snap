@@ -40,6 +40,16 @@ exports[`CoursesPanel with courses snapshot 1`] = `
       <CourseFilterControls />
     </div>
   </div>
-  <CourseListSlot />
+  <CourseListSlot
+    courseListData={
+      {
+        "filterOptions": {},
+        "numPages": 1,
+        "setPageNumber": [MockFunction setPageNumber],
+        "showFilters": false,
+        "visibleList": [],
+      }
+    }
+  />
 </div>
 `;
