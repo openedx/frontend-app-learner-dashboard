@@ -41,10 +41,8 @@ export const CourseList = ({ courseListData }) => {
 
 export const courseListDataShape = PropTypes.shape({
   showFilters: PropTypes.bool.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  visibleList: PropTypes.arrayOf(PropTypes.object).isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  filterOptions: PropTypes.object.isRequired,
+  visibleList: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  filterOptions: PropTypes.shape().isRequired,
   numPages: PropTypes.number.isRequired,
   setPageNumber: PropTypes.func.isRequired,
 });
