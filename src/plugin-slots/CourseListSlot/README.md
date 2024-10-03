@@ -26,6 +26,7 @@ import { DIRECT_PLUGIN, PLUGIN_OPERATIONS } from '@openedx/frontend-plugin-frame
 const config = {
   pluginSlots: {
     course_list_slot: {
+      // Hide the default CourseList component
       keepDefault: false,
       plugins: [
         {
@@ -35,17 +36,19 @@ const config = {
             type: DIRECT_PLUGIN,
             priority: 60,
             RenderWidget: ({ courseListData }) => {
-							const courses = courseListData.visibleList;
-							return (
-								<div>
-									{courses.map(courseData => (
-										<p>
-											{courseData.course.courseName}
-										</p>
-									))}
-								</div>
-							)
-						},
+              // Extract the "visibleList"
+              const courses = courseListData.visibleList;
+              // Render a list of course names
+              return (
+                <div>
+                  {courses.map(courseData => (
+                    <p>
+                      {courseData.course.courseName}
+                    </p>
+                  ))}
+                </div>
+              )
+            },
           },
         },
       ],

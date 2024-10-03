@@ -22,6 +22,7 @@ import { DIRECT_PLUGIN, PLUGIN_OPERATIONS } from '@openedx/frontend-plugin-frame
 const config = {
   pluginSlots: {
      widget_sidebar_slot: {
+      // Hide the default LookingForChallenge component
       keepDefault: false,
       plugins: [
         {
@@ -31,21 +32,21 @@ const config = {
             type: DIRECT_PLUGIN,
             priority: 60,
             RenderWidget: () => (
-							<div>
-								<h3>
-									Sidebar Menu
-								</h3>
-								<p>
-									sidebar item #1
-								</p>
-								<p>
-									sidebar item #2
-								</p>
-								<p>
-									sidebar item #3
-								</p>
-							</div>
-						),
+              <div>
+                <h3>
+                  Sidebar Menu
+                </h3>
+                <p>
+                  sidebar item #1
+                </p>
+                <p>
+                  sidebar item #2
+                </p>
+                <p>
+                  sidebar item #3
+                </p>
+              </div>
+            ),
           },
         },
       ],

@@ -22,6 +22,7 @@ import { DIRECT_PLUGIN, PLUGIN_OPERATIONS } from '@openedx/frontend-plugin-frame
 const config = {
   pluginSlots: {
     no_courses_view_slot: {
+      // Hide the default CourseList component
       keepDefault: false,
       plugins: [
         {
@@ -31,10 +32,10 @@ const config = {
             type: DIRECT_PLUGIN,
             priority: 60,
             RenderWidget: () => (
-							<h3>
-								Check out our catalog of courses and start learning today!
-							</h3>
-						),
+              <h3>
+                Check out our catalog of courses and start learning today!
+              </h3>
+            ),
           },
         },
       ],
