@@ -95,7 +95,9 @@ export const App = () => {
             )}
           </main>
         </AppWrapper>
+        <tran />
         <Footer /> {/* Replace FooterSlot with your new Footer component */}
+
         <ZendeskFab />
       </div>
     </>
