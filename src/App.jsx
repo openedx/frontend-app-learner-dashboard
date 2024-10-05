@@ -24,6 +24,7 @@ import AppWrapper from 'containers/WidgetContainers/AppWrapper';
 
 import { getConfig } from '@edx/frontend-platform';
 import Footer from 'components/Footer'; // Adjust the path if necessary
+
 import './App.scss';
 import messages from './messages';
 
@@ -95,7 +96,6 @@ export const App = () => {
             )}
           </main>
         </AppWrapper>
-        <tran />
         <Footer /> {/* Replace FooterSlot with your new Footer component */}
 
         <ZendeskFab />
