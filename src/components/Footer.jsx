@@ -31,7 +31,6 @@ const Footer = () => {
   return (
     <footer>
       {/* Top Footer */}
-      <h2>  111111{t('title')}</h2>
       <div className="footer-top font-inter">
         <Container
           fluid
@@ -43,21 +42,21 @@ const Footer = () => {
               xl={{ span: 5, offset: 1 }}
               md={6}
             >
-              <h2 className="text-white"> {t('learn&grow')}</h2>
+              <h2 className="text-white"> {t('learnAndGrow')}</h2>
               <p>
-                {t('learn&grow-detail')}
+                {t('learnAndGrowDetail')}
               </p>
               <strong> {t('experience')}</strong>
               <p>
-                {t('experience-detail')}
+                {t('experienceDetail')}
               </p>
               <strong>{t('practice')}</strong>
               <p>
-                {t('practice-detail')}
+                {t('practiceDetail')}
               </p>
               <strong>{t('apply')}</strong>
               <p>
-                {t('apply-detail')}
+                {t('applyDetail')}
               </p>
             </Col>
             <Col
@@ -191,21 +190,13 @@ const Footer = () => {
                 </h5>
                 <select
                   className="lang p-2 border-0"
-                 // value={localStorage.getItem('i18nextLng')}
+                  // value={localStorage.getItem('i18nextLng')}
                   defaultValue={i18n.language}
                   onChange={(e) => changeLanguage(e.target.value)}
                 >
                   <option value="en">English</option>
-                  <option value="de">ខ្មែរ</option>
+                  <option value="kh">ខ្មែរ</option>
                 </select>
-
-                {/* <select defaultValue={i18n.language} onChange={onChangeLang}>
-                  {LANGUAGES.map(({ code, label }) => (
-                    <option key={code} value={code}>
-                      {label}
-                    </option>
-                  ))}
-                </select> */}
               </div>
             </Col>
           </Row>
