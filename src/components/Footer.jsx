@@ -31,7 +31,7 @@ const Footer = () => {
   return (
     <footer>
       {/* Top Footer */}
-
+      <h2>{t('title')}</h2>
       <div className="footer-top font-inter">
         <Container
           fluid
@@ -195,7 +195,7 @@ const Footer = () => {
                   onChange={(e) => changeLanguage(e.target.value)}
                 >
                   <option value="en">English</option>
-                  <option value="kh">ខ្មែរ</option>
+                  <option value="de">ខ្មែរ</option>
                 </select>
               </div>
             </Col>
