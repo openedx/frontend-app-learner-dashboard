@@ -191,12 +191,21 @@ const Footer = () => {
                 </h5>
                 <select
                   className="lang p-2 border-0"
-                  value={localStorage.getItem('i18nextLng')}
+                 // value={localStorage.getItem('i18nextLng')}
+                  defaultValue={i18n.language}
                   onChange={(e) => changeLanguage(e.target.value)}
                 >
                   <option value="en">English</option>
                   <option value="de">ខ្មែរ</option>
                 </select>
+
+                {/* <select defaultValue={i18n.language} onChange={onChangeLang}>
+                  {LANGUAGES.map(({ code, label }) => (
+                    <option key={code} value={code}>
+                      {label}
+                    </option>
+                  ))}
+                </select> */}
               </div>
             </Col>
           </Row>
