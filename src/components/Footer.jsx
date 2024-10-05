@@ -31,7 +31,7 @@ const Footer = () => {
   return (
     <footer>
       {/* Top Footer */}
-      <h2>  333333333333{t('title')}</h2>
+      <h2>  44{t('title')}</h2>
       <div className="footer-top font-inter">
         <Container
           fluid
