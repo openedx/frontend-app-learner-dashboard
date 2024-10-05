@@ -12,7 +12,7 @@ i18n
       escapeValue: false,
     },
     backend: {
-      loadPath: `${window.location.origin}/i18n/{{lng}}.json`,
+      loadPath: 'https://github.com/ReaksmeyThan/frontend-app-learner-dashboard/tree/tran/public/i18n/{{lng}}.json',
     },
   });
 
