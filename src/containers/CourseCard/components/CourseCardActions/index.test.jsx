@@ -2,6 +2,7 @@ import { shallow } from '@edx/react-unit-test-utils';
 
 import { reduxHooks } from 'hooks';
 
+import CourseCardActionSlot from 'plugin-slots/CourseCardActionSlot';
 import UpgradeButton from './UpgradeButton';
 import SelectSessionButton from './SelectSessionButton';
 import BeginCourseButton from './BeginCourseButton';
@@ -19,6 +20,7 @@ jest.mock('hooks', () => ({
   },
 }));
 
+jest.mock('plugin-slots/CourseCardActionSlot', () => 'CustomActionButton');
 jest.mock('./UpgradeButton', () => 'UpgradeButton');
 jest.mock('./SelectSessionButton', () => 'SelectSessionButton');
 jest.mock('./ViewCourseButton', () => 'ViewCourseButton');
@@ -88,18 +90,18 @@ describe('CourseCardActions', () => {
         expect(el.instance.findByType(UpgradeButton).length).toEqual(0);
       });
     });
-    describe('not entielement, verified, or exec ed', () => {
+    describe('not entitlement, verified, or exec ed', () => {
       it('renders UpgradeButton and ViewCourseButton for archived courses', () => {
         mockHooks({ isArchived: true });
         render();
-        expect(el.instance.findByType(UpgradeButton)[0].props.cardId).toEqual(cardId);
+        expect(el.instance.findByType(CourseCardActionSlot)[0].props.cardId).toEqual(cardId);
         expect(el.instance.findByType(ViewCourseButton)[0].props.cardId).toEqual(cardId);
       });
       describe('unstarted courses', () => {
         it('renders UpgradeButton and BeginCourseButton', () => {
           mockHooks();
           render();
-          expect(el.instance.findByType(UpgradeButton)[0].props.cardId).toEqual(cardId);
+          expect(el.instance.findByType(CourseCardActionSlot)[0].props.cardId).toEqual(cardId);
           expect(el.instance.findByType(BeginCourseButton)[0].props.cardId).toEqual(cardId);
         });
       });
@@ -107,7 +109,7 @@ describe('CourseCardActions', () => {
         it('renders UpgradeButton and ResumeButton', () => {
           mockHooks({ hasStarted: true });
           render();
-          expect(el.instance.findByType(UpgradeButton)[0].props.cardId).toEqual(cardId);
+          expect(el.instance.findByType(CourseCardActionSlot)[0].props.cardId).toEqual(cardId);
           expect(el.instance.findByType(ResumeButton)[0].props.cardId).toEqual(cardId);
         });
       });
