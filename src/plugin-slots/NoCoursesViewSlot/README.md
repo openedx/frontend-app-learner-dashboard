@@ -22,7 +22,7 @@ import { DIRECT_PLUGIN, PLUGIN_OPERATIONS } from '@openedx/frontend-plugin-frame
 const config = {
   pluginSlots: {
     no_courses_view_slot: {
-      // Hide the default CourseList component
+      // Hide the default NoCoursesView component
       keepDefault: false,
       plugins: [
         {

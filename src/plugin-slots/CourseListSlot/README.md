@@ -4,7 +4,7 @@
 
 ## Plugin Props
 
-* courseListData — from `useCourseListData` in `/containers/CoursesPanel/hooks.js`
+* courseListData
 
 ## Description
 

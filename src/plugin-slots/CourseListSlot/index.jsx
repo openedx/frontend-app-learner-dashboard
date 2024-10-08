@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { PluginSlot } from '@openedx/frontend-plugin-framework';
-import { CourseList, courseListDataShape } from 'containers/CoursesPanel/CourseList';
+import { CourseList } from 'containers/CoursesPanel/CourseList';
 
 export const CourseListSlot = ({ courseListData }) => (
   <PluginSlot id="course_list_slot" pluginProps={{ courseListData }}>
@@ -10,7 +11,7 @@ export const CourseListSlot = ({ courseListData }) => (
 );
 
 CourseListSlot.propTypes = {
-  courseListData: courseListDataShape,
+  courseListData: PropTypes.shape().isRequired,
 };
 
 export default CourseListSlot;
