@@ -1,9 +1,6 @@
 import {
-  Button,
   Col,
   Container,
-  Form,
-  FormControl,
   Row,
 } from '@openedx/paragon';
 import PropTypes from 'prop-types';
@@ -38,11 +35,11 @@ export const DashboardLayout = ({ children }) => {
     ? columnConfig.courseList.withSidebar
     : columnConfig.courseList.noSidebar;
 
-  const handleSearch = () => {
-    const searchText = document.querySelector('.search-input').value;
-    alert(`Searching for: ${searchText}`);
-    // Add your search logic here
-  };
+  // const handleSearch = () => {
+  //   const searchText = document.querySelector('.search-input').value;
+  //   alert(`Searching for: ${searchText}`);
+  //   // Add your search logic here
+  // };
 
   const { t } = useTranslation();
 
@@ -64,8 +61,8 @@ export const DashboardLayout = ({ children }) => {
           <div className="contain-title align-items-left">
             <h1 className="title1">{t('welcome')}</h1>
             <h1 className="title2">{t('onlineCourses')}</h1>
-            <p>{t('buildSkills')}</p>
-            <Form className="search-form d-flex mt-3">
+            <p className="small_title">{t('buildSkills')}</p>
+            {/* <Form className="search-form d-flex mt-3">
               <FormControl
                 type="text"
                 placeholder={t('searchPlaceholder')}
@@ -79,7 +76,7 @@ export const DashboardLayout = ({ children }) => {
                 {t('searchButton')}
                 <i className="fa fa-search" />
               </Button>
-            </Form>
+            </Form> */}
           </div>
         </Col>
       </Row>
