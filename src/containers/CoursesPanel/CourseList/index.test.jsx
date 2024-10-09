@@ -23,7 +23,7 @@ describe('CourseList', () => {
   useIsCollapsed.mockReturnValue(false);
 
   const createWrapper = (courseListData = defaultCourseListData) => (
-    shallow(<CourseList {...courseListData} />)
+    shallow(<CourseList courseListData={courseListData} />)
   );
 
   describe('no courses or filters', () => {

@@ -1,15 +1,13 @@
 import React from 'react';
 
-import { PluginSlot } from '@openedx/frontend-plugin-framework';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { reduxHooks } from 'hooks';
 import {
   CourseFilterControls,
 } from 'containers/CourseFilterControls';
-import NoCoursesView from './NoCoursesView';
-
-import CourseList from './CourseList';
+import CourseListSlot from 'plugin-slots/CourseListSlot';
+import NoCoursesViewSlot from 'plugin-slots/NoCoursesViewSlot';
 
 import { useCourseListData } from './hooks';
 
@@ -34,19 +32,7 @@ export const CoursesPanel = () => {
           <CourseFilterControls {...courseListData.filterOptions} />
         </div>
       </div>
-      {hasCourses ? (
-        <PluginSlot
-          id="course_list"
-        >
-          <CourseList {...courseListData} />
-        </PluginSlot>
-      ) : (
-        <PluginSlot
-          id="no_courses_view"
-        >
-          <NoCoursesView />
-        </PluginSlot>
-      )}
+      {hasCourses ? <CourseListSlot courseListData={courseListData} /> : <NoCoursesViewSlot />}
     </div>
   );
 };

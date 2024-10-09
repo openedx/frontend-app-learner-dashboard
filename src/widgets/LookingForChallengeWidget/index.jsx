@@ -8,7 +8,7 @@ import { reduxHooks } from 'hooks';
 import moreCoursesSVG from 'assets/more-courses-sidewidget.svg';
 import { baseAppUrl } from 'data/services/lms/urls';
 
-import track from './track';
+import { findCoursesWidgetClicked } from './track';
 import messages from './messages';
 import './index.scss';
 
@@ -17,6 +17,8 @@ export const arrowIcon = (<Icon className="mx-1" src={ArrowForward} />);
 export const LookingForChallengeWidget = () => {
   const { formatMessage } = useIntl();
   const { courseSearchUrl } = reduxHooks.usePlatformSettingsData();
+  const hyperlinkDestination = baseAppUrl(courseSearchUrl) || '';
+
   return (
     <Card orientation="horizontal" id="looking-for-challenge-widget">
       <Card.ImageCap
@@ -30,8 +32,8 @@ export const LookingForChallengeWidget = () => {
         <h5>
           <Hyperlink
             variant="brand"
-            destination={baseAppUrl(courseSearchUrl)}
-            onClick={track.findCoursesWidgetClicked(baseAppUrl(courseSearchUrl))}
+            destination={hyperlinkDestination}
+            onClick={findCoursesWidgetClicked(hyperlinkDestination)}
             className="d-flex align-items-center"
           >
             {formatMessage(messages.findCoursesButton, { arrow: arrowIcon })}

@@ -38,7 +38,7 @@ exports[`DashboardLayout collapsed sidebar not showing snapshot 1`] = `
         }
       }
     >
-      <WidgetSidebar />
+      <WidgetSidebarSlot />
     </Col>
   </Row>
 </Container>
@@ -82,7 +82,7 @@ exports[`DashboardLayout collapsed sidebar showing snapshot 1`] = `
         }
       }
     >
-      <WidgetSidebar />
+      <WidgetSidebarSlot />
     </Col>
   </Row>
 </Container>
@@ -131,7 +131,7 @@ exports[`DashboardLayout not collapsed sidebar not showing snapshot 1`] = `
       >
          
       </h2>
-      <WidgetSidebar />
+      <WidgetSidebarSlot />
     </Col>
   </Row>
 </Container>
@@ -180,7 +180,7 @@ exports[`DashboardLayout not collapsed sidebar showing snapshot 1`] = `
       >
          
       </h2>
-      <WidgetSidebar />
+      <WidgetSidebarSlot />
     </Col>
   </Row>
 </Container>

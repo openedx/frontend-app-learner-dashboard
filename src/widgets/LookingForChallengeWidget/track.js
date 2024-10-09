@@ -8,3 +8,8 @@ export const linkNames = StrictDict({
 export const findCoursesWidgetClicked = (href) => track.findCourses.findCoursesClicked(href, {
   linkName: linkNames.findCoursesWidget,
 });
+
+export default {
+  linkNames,
+  findCoursesWidgetClicked,
+};

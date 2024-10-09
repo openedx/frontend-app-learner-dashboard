@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WidgetSidebar snapshots 1`] = `
+<PluginSlot
+  id="widget_sidebar_slot"
+>
+  <LookingForChallengeWidget />
+</PluginSlot>
+`;

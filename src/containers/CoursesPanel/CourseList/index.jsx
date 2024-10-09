@@ -9,9 +9,10 @@ import CourseCard from 'containers/CourseCard';
 
 import { useIsCollapsed } from './hooks';
 
-export const CourseList = ({
-  filterOptions, setPageNumber, numPages, showFilters, visibleList,
-}) => {
+export const CourseList = ({ courseListData }) => {
+  const {
+    filterOptions, setPageNumber, numPages, showFilters, visibleList,
+  } = courseListData;
   const isCollapsed = useIsCollapsed();
   return (
     <>
@@ -38,14 +39,16 @@ export const CourseList = ({
   );
 };
 
-CourseList.propTypes = {
+export const courseListDataShape = PropTypes.shape({
   showFilters: PropTypes.bool.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  visibleList: PropTypes.arrayOf(PropTypes.object).isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  filterOptions: PropTypes.object.isRequired,
+  visibleList: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  filterOptions: PropTypes.shape().isRequired,
   numPages: PropTypes.number.isRequired,
   setPageNumber: PropTypes.func.isRequired,
+});
+
+CourseList.propTypes = {
+  courseListData: courseListDataShape,
 };
 
 export default CourseList;
