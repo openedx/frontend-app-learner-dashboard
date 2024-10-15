@@ -12,6 +12,9 @@ jest.mock('hooks', () => ({
       courseSearchUrl: '/course-search-url',
     })),
   },
+  apiHooks: {
+    useProgramsConfig: jest.fn(() => ({ enabled: true })),
+  },
 }));
 jest.mock('./hooks', () => ({
   ...jest.requireActual('./hooks'),

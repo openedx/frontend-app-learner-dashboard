@@ -4,6 +4,8 @@ import { linkNames } from 'tracking/constants';
 
 import { MockUseState } from 'testUtils';
 
+import { apiHooks } from 'hooks';
+import { mergeConfig } from '@edx/frontend-platform';
 import * as hooks from './hooks';
 
 const state = new MockUseState(hooks);
@@ -19,6 +21,12 @@ const {
 jest.mock('tracking', () => ({
   findCourses: {
     findCoursesClicked: jest.fn(),
+  },
+}));
+
+jest.mock('hooks', () => ({
+  apiHooks: {
+    useProgramsConfig: jest.fn(() => ({})),
   },
 }));
 
@@ -50,13 +58,21 @@ describe('LearnerDashboardHeader hooks', () => {
   });
 
   describe('getLearnerDashboardHeaderMenu', () => {
+    const courseSearchUrl = '/courses';
+    const authenticatedUser = {
+      username: 'test',
+    };
     test('calls header menu data hook', () => {
-      const courseSearchUrl = '/courses';
-      const authenticatedUser = {
-        username: 'test',
-      };
+      const learnerHomeHeaderMenu = useLearnerDashboardHeaderMenu({ courseSearchUrl, authenticatedUser });
+      expect(learnerHomeHeaderMenu.mainMenu.length).toBe(2);
+      expect(learnerHomeHeaderMenu.secondaryMenu.length).toBe(0);
+    });
+    test('should add programs and/or support link to menu if the service are configured', () => {
+      mergeConfig({ SUPPORT_URL: 'http://localhost:18000/support' });
+      apiHooks.useProgramsConfig.mockReturnValue({ enabled: true });
       const learnerHomeHeaderMenu = useLearnerDashboardHeaderMenu({ courseSearchUrl, authenticatedUser });
       expect(learnerHomeHeaderMenu.mainMenu.length).toBe(3);
+      expect(learnerHomeHeaderMenu.secondaryMenu.length).toBe(1);
     });
   });
 
