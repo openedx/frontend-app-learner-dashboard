@@ -1,6 +1,6 @@
 import { shallow } from '@edx/react-unit-test-utils';
 
-import WidgetSidebar from '.';
+import WidgetSidebarSlot from '.';
 
 jest.mock('widgets/LookingForChallengeWidget', () => 'LookingForChallengeWidget');
 
@@ -12,7 +12,7 @@ describe('WidgetSidebar', () => {
   beforeEach(() => jest.resetAllMocks());
 
   test('snapshots', () => {
-    const wrapper = shallow(<WidgetSidebar />);
+    const wrapper = shallow(<WidgetSidebarSlot />);
     expect(wrapper.snapshot).toMatchSnapshot();
   });
 });
