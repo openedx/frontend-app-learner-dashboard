@@ -24,7 +24,7 @@ export const CourseCardImage = ({ cardId, orientation }) => {
   const image = (
     <>
       <img
-        className="pgn__card-image-cap show"
+        className="pgn__card-image-cap show w-100"
         src={bannerImgSrc}
         alt={formatMessage(messages.bannerAlt)}
       />
