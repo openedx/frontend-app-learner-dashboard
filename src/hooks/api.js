@@ -31,6 +31,25 @@ export const useInitializeApp = () => {
   });
 };
 
+export const useProgramsConfig = () => {
+  const [config, setConfig] = React.useState({});
+
+  React.useEffect(() => {
+    const fetchProgramsConfig = async () => {
+      try {
+        const { data } = await api.getProgramsConfig();
+        setConfig(data);
+      } catch (error) {
+        console.error('Error accessing programs configuration', error);
+      }
+    };
+
+    fetchProgramsConfig();
+  }, []);
+
+  return config;
+};
+
 export const useNewEntitlementEnrollment = (cardId) => {
   const { uuid } = reduxHooks.useCardEntitlementData(cardId);
   const onSuccess = module.useInitializeApp();
