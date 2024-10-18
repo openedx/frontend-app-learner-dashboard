@@ -25,15 +25,7 @@ exports[`LearnerDashboardHeader render 1`] = `
         },
       ]
     }
-    secondaryMenuItems={
-      [
-        {
-          "content": "Help",
-          "href": "http://localhost:18000/support",
-          "type": "item",
-        },
-      ]
-    }
+    secondaryMenuItems={[]}
     userMenuItems={
       [
         {
