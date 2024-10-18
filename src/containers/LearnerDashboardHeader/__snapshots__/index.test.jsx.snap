@@ -13,11 +13,6 @@ exports[`LearnerDashboardHeader render 1`] = `
           "type": "item",
         },
         {
-          "content": "Programs",
-          "href": "http://localhost:18000/dashboard/programs",
-          "type": "item",
-        },
-        {
           "content": "Discover New",
           "href": "http://localhost:18000/course-search-url",
           "onClick": [Function],
