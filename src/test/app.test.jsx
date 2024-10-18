@@ -42,7 +42,7 @@ jest.unmock('react-redux');
 jest.unmock('reselect');
 jest.unmock('hooks');
 
-jest.mock('containers/WidgetContainers/WidgetSidebar', () => jest.fn(() => 'widget-sidebar'));
+jest.mock('plugin-slots/WidgetSidebarSlot', () => jest.fn(() => 'widget-sidebar'));
 jest.mock('components/NoticesWrapper', () => 'notices-wrapper');
 
 jest.mock('@edx/frontend-platform', () => ({
