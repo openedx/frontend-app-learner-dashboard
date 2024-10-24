@@ -13,6 +13,7 @@ const reduxKeys = keyStore(reduxHooks);
 jest.mock('data/services/lms/utils', () => ({
   post: jest.fn((...args) => ({ post: args })),
 }));
+
 jest.mock('data/services/lms/api', () => ({
   initializeList: jest.fn(),
   updateEntitlementEnrollment: jest.fn(),
@@ -20,7 +21,9 @@ jest.mock('data/services/lms/api', () => ({
   deleteEntitlementEnrollment: jest.fn(),
   updateEmailSettings: jest.fn(),
   createCreditRequest: jest.fn(),
+  getProgramsConfig: jest.fn(),
 }));
+
 jest.mock('data/redux/hooks', () => ({
   useCardCourseRunData: jest.fn(),
   useCardCreditData: jest.fn(),
@@ -107,6 +110,31 @@ describe('api hooks', () => {
       it('calls loadData with data on success', () => {
         hook.args.onSuccess({ data: testString });
         expect(loadData).toHaveBeenCalledWith(testString);
+      });
+    });
+
+    describe('useProgramsConfig', () => {
+      const mockState = {};
+      const setState = jest.fn((newState) => { Object.assign(mockState, newState); });
+      React.useState.mockReturnValue([mockState, setState]);
+      it('should return the programs configuration when the API call is successful', async () => {
+        api.getProgramsConfig.mockResolvedValue({ data: { enabled: true } });
+        const config = apiHooks.useProgramsConfig();
+        const [cb] = React.useEffect.mock.calls[0];
+        await cb();
+        expect(setState).toHaveBeenCalled();
+        expect(config).toEqual({ enabled: true });
+      });
+
+      it.only('should return an empty object if the api call fails', async () => {
+        api.getProgramsConfig.mockRejectedValue(new Error('error test'));
+        const consoleSpy = jest.spyOn(global.console, 'error').mockImplementation(() => { });
+        const config = apiHooks.useProgramsConfig();
+        const [cb] = React.useEffect.mock.calls[0];
+        await cb();
+
+        expect(config).toEqual({});
+        expect(consoleSpy).toHaveBeenCalled();
       });
     });
 
