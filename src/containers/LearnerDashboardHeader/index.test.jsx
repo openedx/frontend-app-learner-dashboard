@@ -31,5 +31,12 @@ describe('LearnerDashboardHeader', () => {
     expect(wrapper.instance.findByType(Header)).toHaveLength(1);
     wrapper.instance.findByType(Header)[0].props.mainMenuItems[2].onClick();
     expect(findCoursesNavClicked).toHaveBeenCalledWith(urls.baseAppUrl('/course-search-url'));
+    expect(wrapper.instance.findByType(Header)[0].props.secondaryMenuItems.length).toBe(0);
+  });
+
+  test('should display Help link if SUPPORT_URL is set', () => {
+    mergeConfig({ SUPPORT_URL: 'http://localhost:18000/support' });
+    const wrapper = shallow(<LearnerDashboardHeader />);
+    expect(wrapper.instance.findByType(Header)[0].props.secondaryMenuItems.length).toBe(1);
   });
 });
