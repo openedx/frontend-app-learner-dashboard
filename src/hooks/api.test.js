@@ -1,4 +1,5 @@
 import React from 'react';
+import { logError } from '@edx/frontend-platform/logging';
 import { AppContext } from '@edx/frontend-platform/react';
 import { keyStore } from 'utils';
 import { RequestKeys } from 'data/constants/requests';
@@ -9,6 +10,10 @@ import * as reduxHooks from 'data/redux/hooks';
 import * as apiHooks from './api';
 
 const reduxKeys = keyStore(reduxHooks);
+
+jest.mock('@edx/frontend-platform/logging', () => ({
+  logError: jest.fn(),
+}));
 
 jest.mock('data/services/lms/utils', () => ({
   post: jest.fn((...args) => ({ post: args })),
@@ -114,9 +119,13 @@ describe('api hooks', () => {
     });
 
     describe('useProgramsConfig', () => {
-      const mockState = {};
+      let mockState;
       const setState = jest.fn((newState) => { Object.assign(mockState, newState); });
-      React.useState.mockReturnValue([mockState, setState]);
+      beforeEach(() => {
+        mockState = {};
+        React.useState.mockReturnValue([mockState, setState]);
+      });
+
       it('should return the programs configuration when the API call is successful', async () => {
         api.getProgramsConfig.mockResolvedValue({ data: { enabled: true } });
         const config = apiHooks.useProgramsConfig();
@@ -126,15 +135,14 @@ describe('api hooks', () => {
         expect(config).toEqual({ enabled: true });
       });
 
-      it.only('should return an empty object if the api call fails', async () => {
+      it('should return an empty object if the api call fails', async () => {
+        mockState = {};
         api.getProgramsConfig.mockRejectedValue(new Error('error test'));
-        const consoleSpy = jest.spyOn(global.console, 'error').mockImplementation(() => { });
         const config = apiHooks.useProgramsConfig();
         const [cb] = React.useEffect.mock.calls[0];
         await cb();
-
         expect(config).toEqual({});
-        expect(consoleSpy).toHaveBeenCalled();
+        expect(logError).toHaveBeenCalled();
       });
     });
 

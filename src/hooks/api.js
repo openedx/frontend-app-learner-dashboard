@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { logError } from '@edx/frontend-platform/logging';
 import { AppContext } from '@edx/frontend-platform/react';
 
 import { RequestKeys } from 'data/constants/requests';
@@ -40,7 +41,7 @@ export const useProgramsConfig = () => {
         const { data } = await api.getProgramsConfig();
         setConfig(data);
       } catch (error) {
-        console.error('Error accessing programs configuration', error);
+        logError(`Error accessing programs configuration ${error}`);
       }
     };
 
