@@ -17,7 +17,6 @@ import {
 } from 'data/redux';
 import { reduxHooks } from 'hooks';
 import Dashboard from 'containers/Dashboard';
-import ZendeskFab from 'components/ZendeskFab';
 
 import track from 'tracking';
 
@@ -93,7 +92,6 @@ export const App = () => {
           </main>
         </AppWrapper>
         <FooterSlot />
-        <ZendeskFab />
       </div>
     </>
   );

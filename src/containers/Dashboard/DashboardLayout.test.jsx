@@ -36,9 +36,9 @@ describe('DashboardLayout', () => {
       const columns = el.instance.findByType(Row)[0].findByType(Col);
       expect(columns[0].children).not.toHaveLength(0);
     });
-    it('displays WidgetSidebar in second column', () => {
+    it('displays WidgetSidebarSlot in second column', () => {
       const columns = el.instance.findByType(Row)[0].findByType(Col);
-      expect(columns[1].findByType('WidgetSidebar')).toHaveLength(1);
+      expect(columns[1].findByType('WidgetSidebarSlot')).toHaveLength(1);
     });
   };
   const testSidebarLayout = () => {
