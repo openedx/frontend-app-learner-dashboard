@@ -89,7 +89,7 @@ const Footer = () => {
                 className="list-unstyled list-inline social-icons mt-3"
                 style={{ maxWidth: '300px' }}
               >
-                <li className="list-inline-item  border-green rounded-circle p-2">
+                <li className="list-inline-item">
                   <a href="https://www.facebook.com/creditbureaucambodia/">
                     <FontAwesomeIcon icon={faFacebookF} />
                   </a>
