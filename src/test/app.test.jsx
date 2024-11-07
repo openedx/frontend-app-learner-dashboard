@@ -3,17 +3,9 @@ import React from 'react';
 import * as redux from 'redux';
 import { Provider } from 'react-redux';
 import {
-  act,
   render,
   waitFor,
-  within,
-  prettyDOM,
 } from '@testing-library/react';
-// import userEvent from '@testing-library/user-event';
-// import {
-//   initialize,
-//   mergeConfig,
-// } from '@edx/frontend-platform';
 
 import { useIntl, IntlProvider } from '@edx/frontend-platform/i18n';
 
@@ -24,7 +16,6 @@ import * as fakeData from 'data/services/lms/fakeData/courses';
 import { RequestKeys, RequestStates } from 'data/constants/requests';
 import reducers from 'data/redux';
 import { selectors } from 'data/redux';
-import { apiHooks } from 'hooks';
 import { cardId as genCardId } from 'data/redux/app/reducer';
 
 import messages from 'i18n';
@@ -82,7 +73,6 @@ jest.mock('utils/hooks', () => {
     useFormatDate: () => formatDate,
   };
 });
-
 
 const configureStore = () => redux.createStore(
   reducers,
