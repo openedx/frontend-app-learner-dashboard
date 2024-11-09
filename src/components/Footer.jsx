@@ -105,7 +105,6 @@ const Footer = () => {
             {/* Our Products */}
             <Col xs={6} md={2} className="mb-4 mb-md-0">
               <h5 className="text-uppercase text-white mb-4 font-weight-bold">
-                Our Products
                 {formatMessage(messages.browseCourses)}
               </h5>
               <ul className="list-unstyled  small">
@@ -126,8 +125,7 @@ const Footer = () => {
             {/* Reports */}
             <Col xs={6} md={2} className="mb-4 mb-md-0">
               <h5 className="text-uppercase text-white mb-4 font-weight-bold">
-                Reports
-                {formatMessage(messages.aboutUs)}
+                {formatMessage(messages.report)}
               </h5>
               <ul className="list-unstyled  small">
                 <li><a href="https://www.creditbureau.com.kh/data-for-good-annual-report">Annual Reports</a></li>
@@ -140,7 +138,7 @@ const Footer = () => {
             {/* Media */}
             <Col xs={6} md={2} className="mb-4 mb-md-0">
               <h5 className="text-uppercase text-white mb-4 font-weight-bold">
-                CBC Members
+              {formatMessage(messages.cbcMembers)}
               </h5>
               <ul className="list-unstyled  small">
                 <li><a href="https://www.creditbureau.com.kh/null">Benefits</a></li>
@@ -150,7 +148,7 @@ const Footer = () => {
             </Col>
             <Col xs={6} md={2} className="mb-4 mb-md-0">
               <h5 className="text-uppercase text-white mb-4 font-weight-bold">
-                About Us
+                {formatMessage(messages.aboutUs)}
               </h5>
               <ul className="list-unstyled  small">
                 <li><a href="https://www.creditbureau.com.kh/null">Company Profile</a></li>

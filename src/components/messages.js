@@ -44,12 +44,22 @@ const messages = defineMessages({
   browseCourses: {
     id: 'browseCourses',
     description: '',
-    defaultMessage: 'Browse Course',
+    defaultMessage: 'Our Products',
   },
   aboutUs: {
     id: 'aboutUs',
     description: '',
     defaultMessage: 'About Us',
+  },
+  reports: {
+    id: 'reports',
+    description: '',
+    defaultMessage: 'Reports',
+  },
+  cbcMembers: {
+    id: 'cbcMembers',
+    description: '',
+    defaultMessage: 'CBC Members',
   },
 });
 
