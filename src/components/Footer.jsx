@@ -125,7 +125,7 @@ const Footer = () => {
             {/* Reports */}
             <Col xs={6} md={2} className="mb-4 mb-md-0">
               <h5 className="text-uppercase text-white mb-4 font-weight-bold">
-                {formatMessage(messages.report)}
+                {formatMessage(messages.reports)}
               </h5>
               <ul className="list-unstyled  small">
                 <li><a href="https://www.creditbureau.com.kh/data-for-good-annual-report">Annual Reports</a></li>
