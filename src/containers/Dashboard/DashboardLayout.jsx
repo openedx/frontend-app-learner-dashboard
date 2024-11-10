@@ -6,11 +6,12 @@ import {
 import PropTypes from 'prop-types';
 
 import React, { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useIntl } from '@edx/frontend-platform/i18n';
 import banner from '../../assets/banner1.jpg';
 import '../../i18n';
 import WidgetSidebar from '../WidgetContainers/WidgetSidebar';
 import hooks from './hooks';
+import messages from './messages';
 
 export const columnConfig = {
   courseList: {
@@ -41,7 +42,7 @@ export const DashboardLayout = ({ children }) => {
   //   // Add your search logic here
   // };
 
-  const { t } = useTranslation();
+  const { formatMessage } = useIntl();
 
   useEffect(() => {
     // Ensuring language preference is consistent
@@ -59,9 +60,9 @@ export const DashboardLayout = ({ children }) => {
       >
         <Col {...courseListColumnProps}>
           <div className="contain-title align-items-left">
-            <h1 className="title1">{t('welcome')}</h1>
-            <h1 className="title2">{t('onlineCourses')}</h1>
-            <p className="small_title">{t('buildSkills')}</p>
+            <h1 className="title1">{formatMessage(messages.welcome)}</h1>
+            <h1 className="title2">{formatMessage(messages.onlineCourses)}</h1>
+            <p className="small_title">{formatMessage(messages.buildSkills)}</p>
             {/* <Form className="search-form d-flex mt-3">
               <FormControl
                 type="text"

@@ -1,6 +1,6 @@
 import React from 'react';
 
-// import { useIntl } from '@edx/frontend-platform/i18n';
+import { useIntl } from '@edx/frontend-platform/i18n';
 import { Button } from '@openedx/paragon';
 
 import urls from 'data/services/lms/urls';
@@ -9,10 +9,10 @@ import { useTranslation } from 'react-i18next';
 import BrandLogo from '../BrandLogo';
 import { findCoursesNavClicked, useIsCollapsed } from '../hooks';
 import AuthenticatedUserDropdown from './AuthenticatedUserDropdown';
+import messages from '../messages';
 
 export const ExpandedHeader = () => {
-  const { t } = useTranslation(); // Get the t function from useTranslation
-  // const { formatMessage } = useIntl();
+  const { formatMessage } = useIntl();
   const { courseSearchUrl } = reduxHooks.usePlatformSettingsData();
   const isCollapsed = useIsCollapsed();
 
@@ -35,8 +35,7 @@ export const ExpandedHeader = () => {
           variant="inverse-primary"
           className="p-4 course-link"
         >
-          {/* {formatMessage(messages.course)} */}
-          {t('course')}
+          {formatMessage(messages.course)}
         </Button>
         {/* <Button
           as="a"
@@ -53,8 +52,7 @@ export const ExpandedHeader = () => {
           className="p-4"
           onClick={exploreCoursesClick}
         >
-          {/* {formatMessage(messages.discoverNew)} */}
-          {t('discoverNew')}
+          {formatMessage(messages.discoverNew)}
         </Button>
         <span className="flex-grow-1" />
         {/* <Button

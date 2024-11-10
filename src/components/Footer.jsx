@@ -6,28 +6,16 @@ import {
   faYoutube,
 } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
+import { useIntl } from '@edx/frontend-platform/i18n';
 import logoWhite from '../assets/logo-white.png';
 import plower from '../assets/plower.png';
-import '../i18n';
 import './Footer.scss';
+import messages from './messages';
 
 const Footer = () => {
-  const { i18n, t } = useTranslation();
-
-  const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
-  };
-
-  useEffect(() => {
-    // Ensuring language preference is consistent
-    if (localStorage.getItem('i18nextLng')?.length > 2) {
-      localStorage.setItem('i18nextLng', 'en');
-    }
-  }, []);
-
+  const { formatMessage } = useIntl();
   return (
     <footer>
       {/* Top Footer */}
@@ -42,21 +30,21 @@ const Footer = () => {
               xl={{ span: 5, offset: 1 }}
               md={6}
             >
-              <h2 className="text-white"> {t('learnAndGrow')}</h2>
+              <h2 className="text-white"> {formatMessage(messages.learnAndGrow)}</h2>
               <p>
-                {t('learnAndGrowDetail')}
+                {formatMessage(messages.learnAndGrowDetail)}
               </p>
-              <strong> {t('experience')}</strong>
+              <strong> {formatMessage(messages.experience)}</strong>
               <p>
-                {t('experienceDetail')}
+                {formatMessage(messages.experienceDetail)}
               </p>
-              <strong>{t('practice')}</strong>
+              <strong>{formatMessage(messages.practice)}</strong>
               <p>
-                {t('practiceDetail')}
+                {formatMessage(messages.practiceDetail)}
               </p>
-              <strong>{t('apply')}</strong>
+              <strong>{formatMessage(messages.apply)}</strong>
               <p>
-                {t('applyDetail')}
+                {formatMessage(messages.applyDetail)}
               </p>
             </Col>
             <Col
@@ -117,8 +105,7 @@ const Footer = () => {
             {/* Our Products */}
             <Col xs={6} md={2} className="mb-4 mb-md-0">
               <h5 className="text-uppercase text-white mb-4 font-weight-bold">
-                {/* {t('browseCourses')} */}
-                Our Products
+                {formatMessage(messages.browseCourses)}
               </h5>
               <ul className="list-unstyled  small">
                 <li><a href="https://www.creditbureau.com.kh/b2c-personal-credit-report">Personal Credit Report</a></li>
@@ -138,8 +125,7 @@ const Footer = () => {
             {/* Reports */}
             <Col xs={6} md={2} className="mb-4 mb-md-0">
               <h5 className="text-uppercase text-white mb-4 font-weight-bold">
-                {/* {t('aboutUs')} */}
-                Reports
+                {formatMessage(messages.reports)}
               </h5>
               <ul className="list-unstyled  small">
                 <li><a href="https://www.creditbureau.com.kh/data-for-good-annual-report">Annual Reports</a></li>
@@ -152,7 +138,7 @@ const Footer = () => {
             {/* Media */}
             <Col xs={6} md={2} className="mb-4 mb-md-0">
               <h5 className="text-uppercase text-white mb-4 font-weight-bold">
-                CBC Members
+              {formatMessage(messages.cbcMembers)}
               </h5>
               <ul className="list-unstyled  small">
                 <li><a href="https://www.creditbureau.com.kh/null">Benefits</a></li>
@@ -162,7 +148,7 @@ const Footer = () => {
             </Col>
             <Col xs={6} md={2} className="mb-4 mb-md-0">
               <h5 className="text-uppercase text-white mb-4 font-weight-bold">
-                About Us
+                {formatMessage(messages.aboutUs)}
               </h5>
               <ul className="list-unstyled  small">
                 <li><a href="https://www.creditbureau.com.kh/null">Company Profile</a></li>
@@ -182,17 +168,7 @@ const Footer = () => {
 
               <div>
                 <h5 className="text-uppercase text-white mb-4 font-weight-bold">
-                  {t('language')}
                 </h5>
-                <select
-                  className="lang p-2 border-0"
-                  // value={localStorage.getItem('i18nextLng')}
-                  defaultValue={i18n.language}
-                  onChange={(e) => changeLanguage(e.target.value)}
-                >
-                  <option value="en">English</option>
-                  <option value="kh">ខ្មែរ</option>
-                </select>
               </div>
             </Col>
           </Row>
