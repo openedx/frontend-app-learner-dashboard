@@ -26,6 +26,9 @@
   background-size: cover;
   background-position: center;
   display: flex;
+    @include media-breakpoint-down(sm) {
+    height: 300px;
+  }
 }
 .banner-content {
   padding-top: 30px;
