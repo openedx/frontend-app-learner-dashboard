@@ -17,7 +17,7 @@
     "quality": "npm run lint-fix && npm run test",
     "watch-tests": "jest --watch",
     "snapshot": "fedx-scripts jest --updateSnapshot",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "author": "edX",
   "license": "AGPL-3.0",
