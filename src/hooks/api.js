@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { AppContext } from '@edx/frontend-platform/react';
+import { logError } from '@edx/frontend-platform/logging';
 
 import { RequestKeys } from 'data/constants/requests';
 import { post } from 'data/services/lms/utils';
@@ -29,6 +30,25 @@ export const useInitializeApp = () => {
     requestKey: RequestKeys.initialize,
     onSuccess: ({ data }) => loadData(data),
   });
+};
+
+export const useProgramsConfig = () => {
+  const [config, setConfig] = React.useState({});
+
+  const fetchProgramsConfig = React.useCallback(async () => {
+    try {
+      const { data } = await api.getProgramsConfig();
+      setConfig(data);
+    } catch (error) {
+      logError(`Error accessing programs configuration: ${error.message}`);
+    }
+  }, []);
+
+  React.useEffect(() => {
+    fetchProgramsConfig();
+  }, [fetchProgramsConfig]);
+
+  return config;
 };
 
 export const useNewEntitlementEnrollment = (cardId) => {

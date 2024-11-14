@@ -22,6 +22,7 @@ export const baseAppUrl = (url) => updateUrl(getBaseUrl(), url);
 export const learningMfeUrl = (url) => updateUrl(getConfig().LEARNING_BASE_URL, url);
 
 // static view url
+const programsConfigUrl = () => baseAppUrl('/config/programs');
 const programsUrl = () => baseAppUrl('/dashboard/programs');
 
 export const creditPurchaseUrl = (courseId) => `${getEcommerceUrl()}/credit/checkout/${courseId}/`;
@@ -38,5 +39,6 @@ export default StrictDict({
   getInitApiUrl,
   learningMfeUrl,
   programsUrl,
+  programsConfigUrl,
   updateEmailSettings,
 });

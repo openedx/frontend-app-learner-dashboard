@@ -1,6 +1,7 @@
 import { shallow } from '@edx/react-unit-test-utils';
 import { AppContext } from '@edx/frontend-platform/react';
 
+import { apiHooks } from 'hooks';
 import CollapseMenuBody from './CollapseMenuBody';
 
 jest.mock('@edx/frontend-platform/react', () => ({
@@ -18,6 +19,11 @@ jest.mock('hooks', () => ({
     }),
     usePlatformSettingsData: () => ({
       courseSearchUrl: '/courseSearchUrl',
+    }),
+  },
+  apiHooks: {
+    useProgramsConfig: () => ({
+      enabled: true,
     }),
   },
 }));
@@ -44,5 +50,11 @@ describe('CollapseMenuBody', () => {
     const wrapper = shallow(<CollapseMenuBody isOpen />);
     expect(wrapper.snapshot).toMatchSnapshot();
     AppContext.authenticatedUser = authenticatedUser;
+  });
+
+  test('render with disabled programs', () => {
+    apiHooks.useProgramsConfig = () => ({ enabled: false });
+    const wrapper = shallow(<CollapseMenuBody isOpen />);
+    expect(wrapper.snapshot).toMatchSnapshot();
   });
 });

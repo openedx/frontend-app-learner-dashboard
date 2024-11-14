@@ -7,7 +7,7 @@ import { AppContext } from '@edx/frontend-platform/react';
 import { Button, Badge } from '@openedx/paragon';
 
 import urls from 'data/services/lms/urls';
-import { reduxHooks } from 'hooks';
+import { reduxHooks, apiHooks } from 'hooks';
 
 import { findCoursesNavDropdownClicked } from '../hooks';
 import messages from '../messages';
@@ -15,6 +15,8 @@ import messages from '../messages';
 export const CollapseMenuBody = ({ isOpen }) => {
   const { formatMessage } = useIntl();
   const { authenticatedUser } = React.useContext(AppContext);
+
+  const { enabled: programsEnabled } = apiHooks.useProgramsConfig();
 
   const dashboard = reduxHooks.useEnterpriseDashboardData();
   const { courseSearchUrl } = reduxHooks.usePlatformSettingsData();
@@ -32,9 +34,11 @@ export const CollapseMenuBody = ({ isOpen }) => {
       <Button as="a" href="/" variant="inverse-primary">
         {formatMessage(messages.course)}
       </Button>
-      <Button as="a" href={urls.programsUrl()} variant="inverse-primary">
-        {formatMessage(messages.program)}
-      </Button>
+      {programsEnabled && (
+        <Button as="a" href={urls.programsUrl()} variant="inverse-primary">
+          {formatMessage(messages.program)}
+        </Button>
+      )}
       <Button
         as="a"
         href={urls.baseAppUrl(courseSearchUrl)}

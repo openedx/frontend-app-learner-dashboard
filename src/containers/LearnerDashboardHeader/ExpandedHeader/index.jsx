@@ -5,7 +5,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { Button } from '@openedx/paragon';
 
 import urls from 'data/services/lms/urls';
-import { reduxHooks } from 'hooks';
+import { reduxHooks, apiHooks } from 'hooks';
 
 import AuthenticatedUserDropdown from './AuthenticatedUserDropdown';
 import { useIsCollapsed, findCoursesNavClicked } from '../hooks';
@@ -16,6 +16,8 @@ export const ExpandedHeader = () => {
   const { formatMessage } = useIntl();
   const { courseSearchUrl } = reduxHooks.usePlatformSettingsData();
   const isCollapsed = useIsCollapsed();
+
+  const { enabled: programsEnabled } = apiHooks.useProgramsConfig();
 
   const exploreCoursesClick = findCoursesNavClicked(
     urls.baseAppUrl(courseSearchUrl),
@@ -38,14 +40,16 @@ export const ExpandedHeader = () => {
         >
           {formatMessage(messages.course)}
         </Button>
-        <Button
-          as="a"
-          href={urls.programsUrl()}
-          variant="inverse-primary"
-          className="p-4"
-        >
-          {formatMessage(messages.program)}
-        </Button>
+        {programsEnabled && (
+          <Button
+            as="a"
+            href={urls.programsUrl()}
+            variant="inverse-primary"
+            className="p-4"
+          >
+            {formatMessage(messages.program)}
+          </Button>
+        )}
         <Button
           as="a"
           href={urls.baseAppUrl(courseSearchUrl)}
