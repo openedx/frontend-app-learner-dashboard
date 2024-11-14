@@ -6,6 +6,10 @@ import {
   render,
   waitFor,
 } from '@testing-library/react';
+import {
+  initialize,
+  mergeConfig,
+} from '@edx/frontend-platform';
 
 import { useIntl, IntlProvider } from '@edx/frontend-platform/i18n';
 
