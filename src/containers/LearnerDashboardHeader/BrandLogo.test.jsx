@@ -9,6 +9,14 @@ jest.mock('hooks', () => ({
   },
 }));
 
+jest.mock('@edx/frontend-platform/react', () => ({
+  AppContext: {
+    config: {
+      LMS_BASE_URL: '/',
+    },
+  },
+}));
+
 describe('BrandLogo', () => {
   test('dashboard defined', () => {
     reduxHooks.useEnterpriseDashboardData.mockReturnValueOnce({
