@@ -113,7 +113,6 @@ const mockForbiddenError = (reject) => () => reject(new Error({
   response: { status: ErrorStatuses.forbidden },
 }));
 
-
 const allCourses = [
   ...fakeData.courseRunData,
   ...fakeData.entitlementData,
