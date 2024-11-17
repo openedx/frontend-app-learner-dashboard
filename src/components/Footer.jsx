@@ -165,9 +165,9 @@ const Footer = () => {
             </Col>
             {/* Our Members */}
             <Col xs={6} md={1} className="mb-4 mb-md-0">
-
               <div>
                 <h5 className="text-uppercase text-white mb-4 font-weight-bold">
+                {formatMessage(messages.language)}
                 </h5>
                 <select
                   className="lang p-2 border-0"
@@ -175,7 +175,7 @@ const Footer = () => {
                   onChange={(e) => location.reload()}
                 >
                   <option value="en">English</option>
-                  <option value="km">ខ្មែរ</option>
+                  <option value="km">ភាសាខ្មែរ</option>
                 </select>
               </div>
             </Col>

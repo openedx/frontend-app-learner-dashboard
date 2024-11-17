@@ -11,6 +11,11 @@ const messages = defineMessages({
     description: '',
     defaultMessage: 'Our edX learning experience is grounded in cutting-edge cognitivescience. With more than two dozen distinct learning features to help you achieve your goals, our approach follows three key principles;',
   },
+  language: {
+    id: 'language',
+    description: '',
+    defaultMessage: 'Language',
+  },
   experience: {
     id: 'experience',
     description: '',
