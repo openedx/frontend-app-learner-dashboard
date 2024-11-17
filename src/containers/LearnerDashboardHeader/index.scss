@@ -3,8 +3,12 @@
   position: absolute;
   left: 0;
 }
+.dropdown-menu{
+  border-radius: 0% !important;
+}
 
 .learner-variant-header {
+
   a {
     // needed to make the link not resize the header
     border-bottom: 2px solid transparent;
