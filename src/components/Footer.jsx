@@ -169,6 +169,14 @@ const Footer = () => {
               <div>
                 <h5 className="text-uppercase text-white mb-4 font-weight-bold">
                 </h5>
+                <select
+                  className="lang p-2 border-0"
+                  defaultValue={"km"}
+                  onChange={(e) => location.reload()}
+                >
+                  <option value="en">English</option>
+                  <option value="km">ខ្មែរ</option>
+                </select>
               </div>
             </Col>
           </Row>
