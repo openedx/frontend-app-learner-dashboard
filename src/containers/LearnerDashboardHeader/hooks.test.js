@@ -56,7 +56,7 @@ describe('LearnerDashboardHeader hooks', () => {
         username: 'test',
       };
       const learnerHomeHeaderMenu = useLearnerDashboardHeaderMenu({ courseSearchUrl, authenticatedUser });
-      expect(learnerHomeHeaderMenu.mainMenu.length).toBe(3);
+      expect(learnerHomeHeaderMenu.mainMenu.length).toBe(2);
     });
   });
 
