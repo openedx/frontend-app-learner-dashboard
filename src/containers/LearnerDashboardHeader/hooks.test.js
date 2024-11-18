@@ -21,11 +21,6 @@ jest.mock('tracking', () => ({
     findCoursesClicked: jest.fn(),
   },
 }));
-jest.mock('hooks', () => ({
-  apiHooks: {
-    useProgramsConfig: jest.fn(() => ({})),
-  },
-}));
 
 const url = 'http://example.com';
 
@@ -61,7 +56,7 @@ describe('LearnerDashboardHeader hooks', () => {
         username: 'test',
       };
       const learnerHomeHeaderMenu = useLearnerDashboardHeaderMenu({ courseSearchUrl, authenticatedUser });
-      expect(learnerHomeHeaderMenu.mainMenu.length).toBe(2);
+      expect(learnerHomeHeaderMenu.mainMenu.length).toBe(3);
     });
   });
 
