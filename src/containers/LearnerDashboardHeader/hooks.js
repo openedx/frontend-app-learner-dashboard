@@ -5,7 +5,6 @@ import track from 'tracking';
 import { StrictDict } from 'utils';
 import { linkNames } from 'tracking/constants';
 
-import { apiHooks } from 'hooks';
 import getLearnerHeaderMenu from './LearnerDashboardMenu';
 
 import * as module from './hooks';
@@ -31,9 +30,8 @@ export const findCoursesNavDropdownClicked = (href) => track.findCourses.findCou
 export const useLearnerDashboardHeaderMenu = ({
   courseSearchUrl, authenticatedUser, exploreCoursesClick,
 }) => {
-  const { enabled: programsEnabled } = apiHooks.useProgramsConfig();
   const { formatMessage } = useIntl();
-  return getLearnerHeaderMenu(formatMessage, courseSearchUrl, authenticatedUser, exploreCoursesClick, programsEnabled);
+  return getLearnerHeaderMenu(formatMessage, courseSearchUrl, authenticatedUser, exploreCoursesClick);
 };
 
 export const useLearnerDashboardHeaderData = () => {
