@@ -29,7 +29,7 @@ describe('LearnerDashboardHeader', () => {
     expect(wrapper.instance.findByType('ConfirmEmailBanner')).toHaveLength(1);
     expect(wrapper.instance.findByType('MasqueradeBar')).toHaveLength(1);
     expect(wrapper.instance.findByType(Header)).toHaveLength(1);
-    wrapper.instance.findByType(Header)[0].props.mainMenuItems[2].onClick();
+    wrapper.instance.findByType(Header)[0].props.mainMenuItems[1].onClick();
     expect(findCoursesNavClicked).toHaveBeenCalledWith(urls.baseAppUrl('/course-search-url'));
     expect(wrapper.instance.findByType(Header)[0].props.secondaryMenuItems.length).toBe(0);
   });
@@ -38,5 +38,10 @@ describe('LearnerDashboardHeader', () => {
     mergeConfig({ SUPPORT_URL: 'http://localhost:18000/support' });
     const wrapper = shallow(<LearnerDashboardHeader />);
     expect(wrapper.instance.findByType(Header)[0].props.secondaryMenuItems.length).toBe(1);
+  });
+  test('should display Programs link if it is enabled by configuration', () => {
+    mergeConfig({ ENABLE_PROGRAMS: true });
+    const wrapper = shallow(<LearnerDashboardHeader />);
+    expect(wrapper.instance.findByType(Header)[0].props.mainMenuItems.length).toBe(3);
   });
 });
