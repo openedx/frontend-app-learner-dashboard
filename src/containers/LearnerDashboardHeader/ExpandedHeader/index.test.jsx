@@ -1,5 +1,6 @@
 import { shallow } from '@edx/react-unit-test-utils';
 
+import { apiHooks } from 'hooks';
 import ExpandedHeader from '.';
 
 import { useIsCollapsed } from '../hooks';
@@ -13,6 +14,11 @@ jest.mock('hooks', () => ({
   reduxHooks: {
     usePlatformSettingsData: () => ({
       courseSearchUrl: '/courseSearchUrl',
+    }),
+  },
+  apiHooks: {
+    useProgramsConfig: () => ({
+      enabled: true,
     }),
   },
 }));
@@ -37,5 +43,11 @@ describe('ExpandedHeader', () => {
     const wrapper = shallow(<ExpandedHeader />);
     expect(wrapper.snapshot).toMatchSnapshot();
     expect(wrapper.isEmptyRender()).toBe(true);
+  });
+
+  test('render with disabled programs', () => {
+    apiHooks.useProgramsConfig = () => ({ enabled: false });
+    const wrapper = shallow(<ExpandedHeader />);
+    expect(wrapper.snapshot).toMatchSnapshot();
   });
 });
