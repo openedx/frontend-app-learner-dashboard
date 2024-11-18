@@ -3,6 +3,7 @@ import { shallow } from '@edx/react-unit-test-utils';
 import Header from '@edx/frontend-component-header';
 
 import urls from 'data/services/lms/urls';
+import { apiHooks } from 'hooks';
 import LearnerDashboardHeader from '.';
 import { findCoursesNavClicked } from './hooks';
 
@@ -11,6 +12,9 @@ jest.mock('hooks', () => ({
     usePlatformSettingsData: jest.fn(() => ({
       courseSearchUrl: '/course-search-url',
     })),
+  },
+  apiHooks: {
+    useProgramsConfig: jest.fn(() => ({})),
   },
 }));
 jest.mock('./hooks', () => ({
@@ -29,7 +33,7 @@ describe('LearnerDashboardHeader', () => {
     expect(wrapper.instance.findByType('ConfirmEmailBanner')).toHaveLength(1);
     expect(wrapper.instance.findByType('MasqueradeBar')).toHaveLength(1);
     expect(wrapper.instance.findByType(Header)).toHaveLength(1);
-    wrapper.instance.findByType(Header)[0].props.mainMenuItems[2].onClick();
+    wrapper.instance.findByType(Header)[0].props.mainMenuItems[1].onClick();
     expect(findCoursesNavClicked).toHaveBeenCalledWith(urls.baseAppUrl('/course-search-url'));
     expect(wrapper.instance.findByType(Header)[0].props.secondaryMenuItems.length).toBe(0);
   });
@@ -38,5 +42,11 @@ describe('LearnerDashboardHeader', () => {
     mergeConfig({ SUPPORT_URL: 'http://localhost:18000/support' });
     const wrapper = shallow(<LearnerDashboardHeader />);
     expect(wrapper.instance.findByType(Header)[0].props.secondaryMenuItems.length).toBe(1);
+    expect(wrapper.instance.findByType(Header)[0].props.mainMenuItems.length).toBe(2);
+  });
+  test('should display Programs link if the service is configured in the backend', () => {
+    apiHooks.useProgramsConfig.mockReturnValue({ enabled: true });
+    const wrapper = shallow(<LearnerDashboardHeader />);
+    expect(wrapper.instance.findByType(Header)[0].props.mainMenuItems.length).toBe(3);
   });
 });

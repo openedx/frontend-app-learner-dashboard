@@ -1,4 +1,5 @@
 import React from 'react';
+import { logError } from '@edx/frontend-platform/logging';
 import { AppContext } from '@edx/frontend-platform/react';
 import { keyStore } from 'utils';
 import { RequestKeys } from 'data/constants/requests';
@@ -10,9 +11,14 @@ import * as apiHooks from './api';
 
 const reduxKeys = keyStore(reduxHooks);
 
+jest.mock('@edx/frontend-platform/logging', () => ({
+  logError: jest.fn(),
+}));
+
 jest.mock('data/services/lms/utils', () => ({
   post: jest.fn((...args) => ({ post: args })),
 }));
+
 jest.mock('data/services/lms/api', () => ({
   initializeList: jest.fn(),
   updateEntitlementEnrollment: jest.fn(),
@@ -20,7 +26,9 @@ jest.mock('data/services/lms/api', () => ({
   deleteEntitlementEnrollment: jest.fn(),
   updateEmailSettings: jest.fn(),
   createCreditRequest: jest.fn(),
+  getProgramsConfig: jest.fn(),
 }));
+
 jest.mock('data/redux/hooks', () => ({
   useCardCourseRunData: jest.fn(),
   useCardCreditData: jest.fn(),
@@ -107,6 +115,34 @@ describe('api hooks', () => {
       it('calls loadData with data on success', () => {
         hook.args.onSuccess({ data: testString });
         expect(loadData).toHaveBeenCalledWith(testString);
+      });
+    });
+
+    describe('useProgramsConfig', () => {
+      let mockState;
+      const setState = jest.fn((newState) => { Object.assign(mockState, newState); });
+      beforeEach(() => {
+        mockState = {};
+        React.useState.mockReturnValue([mockState, setState]);
+      });
+
+      it('should return the programs configuration when the API call is successful', async () => {
+        api.getProgramsConfig.mockResolvedValue({ data: { enabled: true } });
+        const config = apiHooks.useProgramsConfig();
+        const [cb] = React.useEffect.mock.calls[0];
+        await cb();
+        expect(setState).toHaveBeenCalled();
+        expect(config).toEqual({ enabled: true });
+      });
+
+      it('should return an empty object if the api call fails', async () => {
+        mockState = {};
+        api.getProgramsConfig.mockRejectedValue(new Error('error test'));
+        const config = apiHooks.useProgramsConfig();
+        const [cb] = React.useEffect.mock.calls[0];
+        await cb();
+        expect(config).toEqual({});
+        expect(logError).toHaveBeenCalled();
       });
     });
 
