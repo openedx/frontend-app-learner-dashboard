@@ -17,11 +17,11 @@ const getLearnerHeaderMenu = (
       content: formatMessage(messages.course),
       isActive: true,
     },
-    {
+    ...(getConfig().ENABLE_PROGRAMS ? [{
       type: 'item',
       href: `${urls.programsUrl()}`,
       content: formatMessage(messages.program),
-    },
+    }] : []),
     {
       type: 'item',
       href: `${urls.baseAppUrl(courseSearchUrl)}`,
