@@ -1,19 +1,12 @@
 import { shallow } from '@edx/react-unit-test-utils';
-
+import { getConfig } from '@edx/frontend-platform';
 import { reduxHooks } from 'hooks';
+
 import BrandLogo from './BrandLogo';
 
 jest.mock('hooks', () => ({
   reduxHooks: {
     useEnterpriseDashboardData: jest.fn(),
-  },
-}));
-
-jest.mock('@edx/frontend-platform/react', () => ({
-  AppContext: {
-    config: {
-      LMS_BASE_URL: '/',
-    },
   },
 }));
 
@@ -31,6 +24,6 @@ describe('BrandLogo', () => {
     reduxHooks.useEnterpriseDashboardData.mockReturnValueOnce(null);
     const wrapper = shallow(<BrandLogo />);
     expect(wrapper.snapshot).toMatchSnapshot();
-    expect(wrapper.instance.findByType('a')[0].props.href).toEqual('/');
+    expect(wrapper.instance.findByType('a')[0].props.href).toEqual(getConfig().LMS_BASE_URL);
   });
 });

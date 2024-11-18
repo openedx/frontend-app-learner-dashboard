@@ -16,7 +16,7 @@ exports[`BrandLogo dashboard defined 1`] = `
 exports[`BrandLogo dashboard undefined 1`] = `
 <a
   className="mx-auto"
-  href="/"
+  href="http://localhost:18000"
 >
   <img
     alt="edX, Inc. Dashboard"
