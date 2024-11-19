@@ -39,7 +39,7 @@ describe('LearnerDashboardHeader', () => {
     const wrapper = shallow(<LearnerDashboardHeader />);
     expect(wrapper.instance.findByType(Header)[0].props.secondaryMenuItems.length).toBe(1);
   });
-  test('should display Programs link if the service is configured in the backend', () => {
+  test('should display Programs link if it is enabled by configuration', () => {
     mergeConfig({ ENABLE_PROGRAMS: true });
     const wrapper = shallow(<LearnerDashboardHeader />);
     expect(wrapper.instance.findByType(Header)[0].props.mainMenuItems.length).toBe(3);
