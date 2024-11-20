@@ -6,7 +6,7 @@ exports[`CollapseMenuBody render 1`] = `
 >
   <Button
     as="a"
-    href="/"
+    href="http://localhost:18000/dashboard/"
     variant="inverse-primary"
   >
     Courses
@@ -74,7 +74,7 @@ exports[`CollapseMenuBody render unauthenticated 1`] = `
 >
   <Button
     as="a"
-    href="/"
+    href="http://localhost:18000/dashboard/"
     variant="inverse-primary"
   >
     Courses
@@ -110,7 +110,7 @@ exports[`CollapseMenuBody render with disabled programs 1`] = `
 >
   <Button
     as="a"
-    href="/"
+    href="http://localhost:18000/dashboard/"
     variant="inverse-primary"
   >
     Courses
