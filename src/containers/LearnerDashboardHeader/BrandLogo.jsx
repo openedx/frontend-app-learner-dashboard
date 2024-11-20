@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { reduxHooks } from 'hooks';
@@ -12,7 +10,7 @@ export const BrandLogo = () => {
   const dashboard = reduxHooks.useEnterpriseDashboardData();
 
   return (
-    <a href={dashboard?.url || '/'} className="mx-auto">
+    <a href={dashboard?.url || getConfig().LMS_BASE_URL} className="mx-auto">
       <img
         className="logo py-3"
         src={getConfig().LOGO_URL}
