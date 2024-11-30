@@ -26,7 +26,7 @@ export const CoursesPanel = () => {
   const { formatMessage } = useIntl();
   const hasCourses = reduxHooks.useHasCourses();
   const courseListData = useCourseListData();
-  
+
   return (
     <div className="course-list-container">
       <div className="course-list-heading-container">
