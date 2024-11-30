@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import { useIntl } from '@edx/frontend-platform/i18n';
 import {
   faFacebookF,
   faLinkedin,
@@ -8,7 +9,6 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import { useIntl } from '@edx/frontend-platform/i18n';
 import logoWhite from '../assets/logo-white.png';
 import plower from '../assets/plower.png';
 import './Footer.scss';
@@ -138,7 +138,7 @@ const Footer = () => {
             {/* Media */}
             <Col xs={6} md={2} className="mb-4 mb-md-0">
               <h5 className="text-uppercase text-white mb-4 font-weight-bold">
-              {formatMessage(messages.cbcMembers)}
+                {formatMessage(messages.cbcMembers)}
               </h5>
               <ul className="list-unstyled  small">
                 <li><a href="https://www.creditbureau.com.kh/null">Benefits</a></li>
@@ -167,12 +167,13 @@ const Footer = () => {
             <Col xs={6} md={1} className="mb-4 mb-md-0">
               <div>
                 <h5 className="text-uppercase text-white mb-4 font-weight-bold">
-                {formatMessage(messages.language)}
+                  {formatMessage(messages.language)}
                 </h5>
                 <select
                   className="lang p-2 border-0"
-                  defaultValue={"km"}
-                  onChange={(e) => location.reload()}
+                  defaultValue="km"
+                  // eslint-disable-next-line no-restricted-globals
+                  onChange={() => location.reload()}
                 >
                   <option value="en">English</option>
                   <option value="km">ភាសាខ្មែរ</option>
