@@ -11,6 +11,28 @@ $input-focus-box-shadow: $input-box-shadow; // hack to get upgrade to paragon 4.
 
 @import "~@edx/frontend-component-footer/dist/_footer";
 
+@import './styles/fonts';
+
+
+// Apply Global Font Styles
+body {
+  margin: 0;
+  padding: 0;
+  font-family: $font-default;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-title-english;
+}
+
+.khm-title {
+  font-family: $font-title-khmer; 
+}
+
+.khm-text {
+  font-family: $font-general-khmer; 
+}
+
 
 .text-ellipsis {
   overflow: hidden;

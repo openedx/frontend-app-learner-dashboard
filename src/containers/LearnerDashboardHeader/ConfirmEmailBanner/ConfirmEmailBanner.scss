@@ -1,24 +1,51 @@
 
-.logo{
+.logo {
   max-width: 120px !important;
   height: auto !important;
 }
+
 .confirm-email-now-button {
   text-decoration: underline !important;
 }
-.p-4{
-border-radius: 0% !important;
-
+.p-4 {
+  border-radius: 0 !important;
 }
-.p-4:hover{
+
+.p-4:hover {
   background-color: #21472E !important;
   color: white !important;
 }
-.profile{
-  background-color: #3EAB48 !important;
-  border-radius: 0% !important;
-  border:  2px solid green !important;
-  padding: 0% !important;
-  margin: 0% !important;
-  height: 100% !important;
+
+.profile {
+  padding: 9px 15px !important;
+  background: white !important;
+  color: #134223 !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  line-height: 20px !important;
+  border-radius: 0 !important;
+  border: 1px solid #134223 !important;
+  height: 50px !important;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+header {
+
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+
+  width: 100%;
+  padding: 0 !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+header .align-items-center {
+  width: 100%; 
+  max-width: 1600px;
+  border-radius: 0; 
 }
