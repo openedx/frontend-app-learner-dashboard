@@ -48,13 +48,13 @@ footer {
     line-height: 50px;
     border-radius: 50%;
     background-color: none;
-    border: 2px solid green;
+    border: 1px solid green;
     text-align: center;
-    margin-right: 10px;
+    // margin-right: 10px;
     font-size: 24px;
   
     &:hover{
-      background-color: #2BAF65;
+      background-color: green;
     &i{
       vertical-align: middle;
     }

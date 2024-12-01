@@ -104,9 +104,9 @@ const Footer = () => {
 
             {/* Our Products */}
             <Col xs={6} md={2} className="mb-4 mb-md-0">
-              <h5 className="text-uppercase text-white mb-4 font-weight-bold">
+              <h4 className="text-uppercase text-white mb-4">
                 {formatMessage(messages.browseCourses)}
-              </h5>
+              </h4>
               <ul className="list-unstyled  small">
                 <li><a href="https://www.creditbureau.com.kh/b2c-personal-credit-report">Personal Credit Report</a></li>
                 <li><a href="https://www.creditbureau.com.kh/b2c-financial-health-check">Financial Health Check</a></li>
@@ -124,9 +124,9 @@ const Footer = () => {
 
             {/* Reports */}
             <Col xs={6} md={2} className="mb-4 mb-md-0">
-              <h5 className="text-uppercase text-white mb-4 font-weight-bold">
+              <h4 className="text-uppercase text-white mb-4 ">
                 {formatMessage(messages.reports)}
-              </h5>
+              </h4>
               <ul className="list-unstyled  small">
                 <li><a href="https://www.creditbureau.com.kh/data-for-good-annual-report">Annual Reports</a></li>
                 <li><a href="https://www.creditbureau.com.kh/news-and-event-newsletter">Newsletter</a></li>
@@ -137,9 +137,9 @@ const Footer = () => {
 
             {/* Media */}
             <Col xs={6} md={2} className="mb-4 mb-md-0">
-              <h5 className="text-uppercase text-white mb-4 font-weight-bold">
+              <h4 className="text-uppercase text-white mb-4 ">
                 {formatMessage(messages.cbcMembers)}
-              </h5>
+              </h4>
               <ul className="list-unstyled  small">
                 <li><a href="https://www.creditbureau.com.kh/null">Benefits</a></li>
                 <li><a href="https://www.creditbureau.com.kh/b2b-our-members-become-member">How to Become Member</a></li>
@@ -147,9 +147,9 @@ const Footer = () => {
               </ul>
             </Col>
             <Col xs={6} md={2} className="mb-4 mb-md-0">
-              <h5 className="text-uppercase text-white mb-4 font-weight-bold">
+              <h4 className="text-uppercase text-white mb-4 ">
                 {formatMessage(messages.aboutUs)}
-              </h5>
+              </h4>
               <ul className="list-unstyled  small">
                 <li><a href="https://www.creditbureau.com.kh/null">Company Profile</a></li>
                 <li><a href="https://www.creditbureau.com.kh/null">Organizational Chart</a></li>
@@ -166,14 +166,13 @@ const Footer = () => {
             {/* Our Members */}
             <Col xs={6} md={1} className="mb-4 mb-md-0">
               <div>
-                <h5 className="text-uppercase text-white mb-4 font-weight-bold">
+                <h4 className="text-uppercase text-white mb-4 ">
                   {formatMessage(messages.language)}
-                </h5>
+                </h4>
                 <select
                   className="lang p-2 border-0"
                   defaultValue="km"
-                  // eslint-disable-next-line no-restricted-globals
-                  onChange={() => location.reload()}
+                  onChange={() => null}
                 >
                   <option value="en">English</option>
                   <option value="km">ភាសាខ្មែរ</option>
