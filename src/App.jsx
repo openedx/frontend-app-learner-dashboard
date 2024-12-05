@@ -80,7 +80,7 @@ export const App = () => {
       <div>
         <AppWrapper>
           <LearnerDashboardHeader />
-          <main id='main'>
+          <main id="main">
             {hasNetworkFailure
               ? (
                 <Alert variant="danger">
