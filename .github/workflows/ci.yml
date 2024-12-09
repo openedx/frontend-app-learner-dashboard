@@ -41,20 +41,3 @@ jobs:
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
         fail_ci_if_error: true
-
-    - name: Send failure notification
-      if: ${{ failure() }}
-      uses: dawidd6/action-send-mail@v4
-      with:
-        server_address: email-smtp.us-east-1.amazonaws.com
-        server_port: 465
-        username: ${{ secrets.EDX_SMTP_USERNAME }}
-        password: ${{ secrets.EDX_SMTP_PASSWORD }}
-        subject: CI workflow failed in ${{github.repository}}
-        to: masters-grades@edx.org,aperture@2u-internal.opsgenie.net
-        from: github-actions <github-actions@edx.org>
-        nodemailerlog: true
-        nodemailerdebug: true
-        body: CI workflow in ${{github.repository}} failed!
-          For details see "github.com/${{ github.repository }}/actions/runs/${{ github.run_id
-          }}"
