@@ -11,7 +11,7 @@ exports[`ExpandedHeader render 1`] = `
     <Button
       as="a"
       className="p-4 course-link"
-      href="/"
+      href="http://localhost:18000/dashboard/"
       variant="inverse-primary"
     >
       Courses
@@ -62,7 +62,7 @@ exports[`ExpandedHeader render with disabled programs 1`] = `
     <Button
       as="a"
       className="p-4 course-link"
-      href="/"
+      href="http://localhost:18000/dashboard/"
       variant="inverse-primary"
     >
       Courses

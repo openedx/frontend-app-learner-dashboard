@@ -34,7 +34,7 @@ export const ExpandedHeader = () => {
 
         <Button
           as="a"
-          href="/"
+          href={`${getConfig().LMS_BASE_URL}/dashboard/`}
           variant="inverse-primary"
           className="p-4 course-link"
         >

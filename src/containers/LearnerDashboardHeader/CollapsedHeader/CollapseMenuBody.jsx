@@ -31,7 +31,7 @@ export const CollapseMenuBody = ({ isOpen }) => {
 
   return (
     <div className="d-flex flex-column shadow-sm nav-small-menu">
-      <Button as="a" href="/" variant="inverse-primary">
+      <Button as="a" href={`${getConfig().LMS_BASE_URL}/dashboard/`} variant="inverse-primary">
         {formatMessage(messages.course)}
       </Button>
       {programsEnabled && (
