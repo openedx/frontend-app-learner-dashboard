@@ -16,6 +16,7 @@
     "lint-fix": "fedx-scripts eslint --fix --ext .jsx,.js src/",
     "semantic-release": "semantic-release",
     "start": "fedx-scripts webpack-dev-server --progress",
+    "dev": "PUBLIC_PATH=/learner-dashboard/ MFE_CONFIG_API_URL='http://localhost:8000/api/mfe_config/v1' fedx-scripts webpack-dev-server --progress --host apps.local.openedx.io",
     "test": "TZ=GMT fedx-scripts jest --coverage --passWithNoTests",
     "quality": "npm run lint-fix && npm run test",
     "watch-tests": "jest --watch",
