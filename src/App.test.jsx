@@ -17,7 +17,6 @@ jest.mock('@edx/frontend-component-footer', () => ({ FooterSlot: 'Footer' }));
 
 jest.mock('containers/Dashboard', () => 'Dashboard');
 jest.mock('containers/LearnerDashboardHeader', () => 'LearnerDashboardHeader');
-jest.mock('components/ZendeskFab', () => 'ZendeskFab');
 jest.mock('containers/WidgetContainers/AppWrapper', () => 'AppWrapper');
 jest.mock('data/redux', () => ({
   selectors: 'redux.selectors',
