@@ -12,7 +12,6 @@ const configuration = {
   // ACCESS_TOKEN_COOKIE_NAME: process.env.ACCESS_TOKEN_COOKIE_NAME,
   LEARNING_BASE_URL: process.env.LEARNING_BASE_URL,
   SESSION_COOKIE_DOMAIN: process.env.SESSION_COOKIE_DOMAIN || '',
-  ZENDESK_KEY: process.env.ZENDESK_KEY,
   SUPPORT_URL: process.env.SUPPORT_URL || null,
   ENABLE_NOTICES: process.env.ENABLE_NOTICES || null,
   CAREER_LINK_URL: process.env.CAREER_LINK_URL || null,

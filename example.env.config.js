@@ -59,7 +59,6 @@ module.exports = {
   ENTERPRISE_MARKETING_FOOTER_UTM_MEDIUM: 'Footer',
   LEARNING_BASE_URL: 'http://localhost:2000',
   SESSION_COOKIE_DOMAIN: 'localhost',
-  ZENDESK_KEY: '',
   HOTJAR_APP_ID: '',
   HOTJAR_VERSION: 6,
   HOTJAR_DEBUG: '',
