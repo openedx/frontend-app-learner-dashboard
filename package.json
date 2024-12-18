@@ -61,7 +61,6 @@
     "react-redux": "^7.2.4",
     "react-router-dom": "6.27.0",
     "react-share": "^4.4.0",
-    "react-zendesk": "^0.1.13",
     "redux": "4.2.1",
     "redux-logger": "3.0.6",
     "redux-thunk": "2.4.2",
