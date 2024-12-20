@@ -10,7 +10,7 @@ exports[`ResumeButton snapshot disabled snapshot 1`] = `
       "trackCourseEvent": {
         "cardId": "cardId",
         "eventName": [MockFunction segment.enterCourseClicked],
-        "upgradeUrl": "resume-urlexec-ed-tracking-path=cardId",
+        "url": "resume-urlexec-ed-tracking-path=cardId",
       },
     }
   }
@@ -29,7 +29,7 @@ exports[`ResumeButton snapshot enabled snapshot 1`] = `
       "trackCourseEvent": {
         "cardId": "cardId",
         "eventName": [MockFunction segment.enterCourseClicked],
-        "upgradeUrl": "resume-urlexec-ed-tracking-path=cardId",
+        "url": "resume-urlexec-ed-tracking-path=cardId",
       },
     }
   }
