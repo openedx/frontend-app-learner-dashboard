@@ -26,7 +26,7 @@ reduxHooks.useCardCourseRunData.mockReturnValue({ resumeUrl });
 const execEdPath = (cardId) => `exec-ed-tracking-path=${cardId}`;
 reduxHooks.useCardExecEdTrackingParam.mockImplementation(execEdPath);
 reduxHooks.useTrackCourseEvent.mockImplementation(
-  (eventName, cardId, upgradeUrl) => ({ trackCourseEvent: { eventName, cardId, upgradeUrl } }),
+  (eventName, cardId, url) => ({ trackCourseEvent: { eventName, cardId, url } }),
 );
 
 let wrapper;

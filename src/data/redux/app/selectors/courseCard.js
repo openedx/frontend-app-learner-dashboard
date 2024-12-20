@@ -52,7 +52,6 @@ export const courseCard = StrictDict({
 
       homeUrl: courseRun.homeUrl,
       marketingUrl: courseRun.marketingUrl,
-      upgradeUrl: courseRun.upgradeUrl,
 
       progressUrl: baseAppUrl(courseRun.progressUrl),
       resumeUrl: baseAppUrl(courseRun.resumeUrl), // resume will route this to learning mfe.
@@ -91,6 +90,7 @@ export const courseCard = StrictDict({
         hasStarted: enrollment.hasStarted,
 
         accessExpirationDate: module.loadDateVal(enrollment.accessExpirationDate),
+        // TODO: find out where "canUpgrade" comes from and if it's still needed by other components (see CourseBanner)
         canUpgrade: enrollment.canUpgrade,
         isAudit: enrollment.isAudit,
         isAuditAccessExpired: enrollment.isAuditAccessExpired,

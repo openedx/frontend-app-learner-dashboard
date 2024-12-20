@@ -18,8 +18,8 @@ jest.mock('hooks', () => ({
     useCardCourseData: jest.fn(() => ({ bannerImgSrc: 'banner-img-src' })),
     useCardCourseRunData: jest.fn(() => ({ homeUrl })),
     useCardEnrollmentData: jest.fn(() => ({ isVerified: true })),
-    useTrackCourseEvent: jest.fn((eventName, cardId, upgradeUrl) => ({
-      trackCourseEvent: { eventName, cardId, upgradeUrl },
+    useTrackCourseEvent: jest.fn((eventName, cardId, url) => ({
+      trackCourseEvent: { eventName, cardId, url },
     })),
   },
 }));
