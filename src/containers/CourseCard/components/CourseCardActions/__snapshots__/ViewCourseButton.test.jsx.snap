@@ -10,7 +10,7 @@ exports[`ViewCourseButton learner can view course 1`] = `
       "trackCourseEvent": {
         "cardId": "cardId",
         "eventName": [MockFunction segment.enterCourseClicked],
-        "upgradeUrl": "homeUrl",
+        "url": "homeUrl",
       },
     }
   }
@@ -29,7 +29,7 @@ exports[`ViewCourseButton learner cannot view course 1`] = `
       "trackCourseEvent": {
         "cardId": "cardId",
         "eventName": [MockFunction segment.enterCourseClicked],
-        "upgradeUrl": "homeUrl",
+        "url": "homeUrl",
       },
     }
   }

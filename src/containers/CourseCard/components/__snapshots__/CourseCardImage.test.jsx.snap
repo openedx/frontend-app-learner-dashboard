@@ -9,7 +9,7 @@ exports[`CourseCardImage snapshot renders clickable link course Image 1`] = `
       "trackCourseEvent": {
         "cardId": "cardId",
         "eventName": [MockFunction segment.courseImageClicked],
-        "upgradeUrl": "home-url",
+        "url": "home-url",
       },
     }
   }

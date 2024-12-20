@@ -17,8 +17,8 @@ jest.mock('hooks', () => ({
   reduxHooks: {
     useCardCourseData: jest.fn(() => ({ courseName: 'course-name' })),
     useCardCourseRunData: jest.fn(() => ({ homeUrl })),
-    useTrackCourseEvent: jest.fn((eventName, cardId, upgradeUrl) => ({
-      trackCourseEvent: { eventName, cardId, upgradeUrl },
+    useTrackCourseEvent: jest.fn((eventName, cardId, url) => ({
+      trackCourseEvent: { eventName, cardId, url },
     })),
   },
 }));

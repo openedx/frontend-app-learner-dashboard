@@ -1,4 +1,3 @@
-import api from 'data/services/lms/api';
 import { createEventTracker, createLinkTracker } from 'data/services/segment/utils';
 import { categories, eventNames } from '../constants';
 import * as module from './course';
@@ -31,20 +30,6 @@ export const courseLinkTracker = (eventName) => (courseId, href) => (
   createLinkTracker(module.courseEventTracker(eventName, courseId), href)
 );
 
-// Upgrade Events
-/**
- * There are currently multiple tracked api events for the upgrade event, with different targets.
- * Goal here is to split out the tracked events for easier testing.
- */
-export const upgradeButtonClicked = (courseId) => createEventTracker(
-  eventNames.upgradeButtonClicked,
-  { category: categories.upgrade, label: courseId },
-);
-export const upgradeButtonClickedUpsell = (courseId) => createEventTracker(
-  eventNames.upgradeButtonClickedUpsell,
-  { ...upsellOptions, courseId },
-);
-
 // Non-Link events
 export const courseOptionsDropdownClicked = (courseId) => (
   module.courseEventTracker(eventNames.courseOptionsDropdownClicked, courseId)
@@ -57,19 +42,10 @@ export const courseTitleClicked = (...args) => (
   module.courseLinkTracker(eventNames.courseTitleClicked)(...args));
 export const enterCourseClicked = (...args) => (
   module.courseLinkTracker(eventNames.enterCourseClicked)(...args));
-export const upgradeClicked = (courseId, href) => createLinkTracker(
-  () => {
-    module.upgradeButtonClicked(courseId)();
-    module.upgradeButtonClickedUpsell(courseId)();
-    api.logUpgrade({ courseId });
-  },
-  href,
-);
 
 export default {
   courseImageClicked,
   courseOptionsDropdownClicked,
   courseTitleClicked,
   enterCourseClicked,
-  upgradeClicked,
 };

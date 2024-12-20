@@ -779,9 +779,6 @@ export const compileCourseRunData = ({ courseName, ...data }, index) => {
     courseProvider: getOption(providerOptions, index),
     programs: getOption(programsOptions, index),
   };
-  if (out.enrollment.canUpgrade) {
-    out.courseRun.upgradeUrl = 'test-upgrade-url';
-  }
   return out;
 };
 
