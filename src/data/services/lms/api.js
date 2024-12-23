@@ -50,12 +50,6 @@ export const logEvent = ({ eventName, data, courseId }) => post(urls.event(), {
   event: JSON.stringify(data),
 });
 
-export const logUpgrade = ({ courseId }) => module.logEvent({
-  eventName: eventNames.upgradeButtonClickedEnrollment,
-  courseId,
-  data: { location: 'learner-dashboard' },
-});
-
 export const logShare = ({ courseId, site }) => module.logEvent({
   eventName: eventNames.shareClicked,
   courseId,
@@ -78,7 +72,6 @@ export default {
   updateEntitlementEnrollment,
   deleteEntitlementEnrollment,
   logEvent,
-  logUpgrade,
   logShare,
   createCreditRequest,
 };
