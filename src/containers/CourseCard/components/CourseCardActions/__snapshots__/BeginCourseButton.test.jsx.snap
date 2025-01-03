@@ -10,7 +10,7 @@ exports[`BeginCourseButton snapshot disabled snapshot 1`] = `
       "trackCourseEvent": {
         "cardId": "cardId",
         "eventName": [MockFunction segment.enterCourseClicked],
-        "upgradeUrl": "home-urlexec-ed-tracking-path=cardId",
+        "url": "home-urlexec-ed-tracking-path=cardId",
       },
     }
   }
@@ -29,7 +29,7 @@ exports[`BeginCourseButton snapshot enabled snapshot 1`] = `
       "trackCourseEvent": {
         "cardId": "cardId",
         "eventName": [MockFunction segment.enterCourseClicked],
-        "upgradeUrl": "home-urlexec-ed-tracking-path=cardId",
+        "url": "home-urlexec-ed-tracking-path=cardId",
       },
     }
   }
