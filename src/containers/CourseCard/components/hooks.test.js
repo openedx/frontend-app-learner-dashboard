@@ -16,7 +16,6 @@ const cardId = 'my-test-course-number';
 describe('useActionDisabledState', () => {
   const defaultData = {
     isMasquerading: false,
-    canUpgrade: false,
     isEntitlement: false,
     isFulfilled: false,
     canChange: false,
@@ -30,7 +29,6 @@ describe('useActionDisabledState', () => {
   const mockHooksData = (args) => {
     const {
       isMasquerading,
-      canUpgrade,
       isEntitlement,
       isFulfilled,
       canChange,
@@ -43,7 +41,6 @@ describe('useActionDisabledState', () => {
     } = { ...defaultData, ...args };
     reduxHooks.useMasqueradeData.mockReturnValueOnce({ isMasquerading });
     reduxHooks.useCardEnrollmentData.mockReturnValueOnce({
-      canUpgrade,
       hasAccess,
       isAudit,
       isAuditAccessExpired,
