@@ -1,11 +1,6 @@
 import { defineMessages } from '@edx/frontend-platform/i18n';
 
 const messages = defineMessages({
-  upgrade: {
-    id: 'learner-dash.courseCard.actions.upgrade',
-    description: 'Course card upgrade button text',
-    defaultMessage: 'Upgrade',
-  },
   beginCourse: {
     id: 'learner-dash.courseCard.actions.beginCourse',
     description: 'Course card begin-course button text',

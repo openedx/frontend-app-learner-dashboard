@@ -156,7 +156,6 @@ describe('courseCard selectors module', () => {
 
           homeUrl: 'test-home-url',
           marketingUrl: 'test-marketing-url',
-          upgradeUrl: 'test-upgrade-url',
 
           progressUrl: 'test-progress-url',
           resumeUrl: 'test-resume-url',
@@ -181,10 +180,9 @@ describe('courseCard selectors module', () => {
       it('passes minPassingGrade floored from float to a percentage value', () => {
         expect(selected.minPassingGrade).toEqual(93);
       });
-      it('passes [homeUrl, marketingUrl, upgradeUrl]', () => {
+      it('passes [homeUrl, marketingUrl]', () => {
         expect(selected.homeUrl).toEqual(testData.homeUrl);
         expect(selected.marketingUrl).toEqual(testData.marketingUrl);
-        expect(selected.upgradeUrl).toEqual(testData.upgradeUrl);
       });
       it('passes [progressUrl, unenrollUrl, resumeUrl], converted to baseAppUrl', () => {
         expect(selected.progressUrl).toEqual(baseAppUrl(testData.progressUrl));
