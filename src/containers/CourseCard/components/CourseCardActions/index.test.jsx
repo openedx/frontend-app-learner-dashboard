@@ -3,7 +3,6 @@ import { shallow } from '@edx/react-unit-test-utils';
 import { reduxHooks } from 'hooks';
 
 import CourseCardActionSlot from 'plugin-slots/CourseCardActionSlot';
-import UpgradeButton from './UpgradeButton';
 import SelectSessionButton from './SelectSessionButton';
 import BeginCourseButton from './BeginCourseButton';
 import ResumeButton from './ResumeButton';
@@ -21,7 +20,6 @@ jest.mock('hooks', () => ({
 }));
 
 jest.mock('plugin-slots/CourseCardActionSlot', () => 'CustomActionButton');
-jest.mock('./UpgradeButton', () => 'UpgradeButton');
 jest.mock('./SelectSessionButton', () => 'SelectSessionButton');
 jest.mock('./ViewCourseButton', () => 'ViewCourseButton');
 jest.mock('./BeginCourseButton', () => 'BeginCourseButton');
@@ -59,19 +57,7 @@ describe('CourseCardActions', () => {
     });
   });
   describe('output', () => {
-    describe('Exec Ed course', () => {
-      it('does not render upgrade button', () => {
-        mockHooks({ isExecEd2UCourse: true });
-        render();
-        expect(el.instance.findByType(UpgradeButton).length).toEqual(0);
-      });
-    });
     describe('entitlement course', () => {
-      it('does not render upgrade button', () => {
-        mockHooks({ isEntitlement: true });
-        render();
-        expect(el.instance.findByType(UpgradeButton).length).toEqual(0);
-      });
       it('renders ViewCourseButton if fulfilled', () => {
         mockHooks({ isEntitlement: true, isFulfilled: true });
         render();
@@ -83,22 +69,15 @@ describe('CourseCardActions', () => {
         expect(el.instance.findByType(SelectSessionButton)[0].props.cardId).toEqual(cardId);
       });
     });
-    describe('verified course', () => {
-      it('does not render upgrade button', () => {
-        mockHooks({ isVerified: true });
-        render();
-        expect(el.instance.findByType(UpgradeButton).length).toEqual(0);
-      });
-    });
     describe('not entitlement, verified, or exec ed', () => {
-      it('renders UpgradeButton and ViewCourseButton for archived courses', () => {
+      it('renders CourseCardActionSlot and ViewCourseButton for archived courses', () => {
         mockHooks({ isArchived: true });
         render();
         expect(el.instance.findByType(CourseCardActionSlot)[0].props.cardId).toEqual(cardId);
         expect(el.instance.findByType(ViewCourseButton)[0].props.cardId).toEqual(cardId);
       });
       describe('unstarted courses', () => {
-        it('renders UpgradeButton and BeginCourseButton', () => {
+        it('renders CourseCardActionSlot and BeginCourseButton', () => {
           mockHooks();
           render();
           expect(el.instance.findByType(CourseCardActionSlot)[0].props.cardId).toEqual(cardId);
@@ -106,7 +85,7 @@ describe('CourseCardActions', () => {
         });
       });
       describe('active courses (started, and not archived)', () => {
-        it('renders UpgradeButton and ResumeButton', () => {
+        it('renders CourseCardActionSlot and ResumeButton', () => {
           mockHooks({ hasStarted: true });
           render();
           expect(el.instance.findByType(CourseCardActionSlot)[0].props.cardId).toEqual(cardId);

@@ -2,13 +2,6 @@ import { createEventTracker, createLinkTracker } from 'data/services/segment/uti
 import { categories, eventNames } from '../constants';
 import * as module from './course';
 
-export const upsellOptions = {
-  linkName: 'course_dashboard_green',
-  linkType: 'button',
-  pageName: 'course_dashboard',
-  linkCategory: 'green_update',
-};
-
 // Utils/Helpers
 /**
  * Generate a segement event tracker for a given course event.
