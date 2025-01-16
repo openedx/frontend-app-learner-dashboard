@@ -23,6 +23,7 @@ export const EnterpriseDashboardModal = () => {
   }
   return (
     <ModalDialog
+      isBlocking
       isOpen={showModal}
       onClose={handleEscape}
       hasCloseButton={false}
