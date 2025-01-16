@@ -11,7 +11,7 @@ exports[`CourseCardTitle snapshot renders clickable link course title 1`] = `
         "trackCourseEvent": {
           "cardId": "cardId",
           "eventName": [MockFunction segment.courseTitleClicked],
-          "upgradeUrl": "home-url",
+          "url": "home-url",
         },
       }
     }

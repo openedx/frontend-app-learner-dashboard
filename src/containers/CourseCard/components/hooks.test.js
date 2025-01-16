@@ -16,7 +16,6 @@ const cardId = 'my-test-course-number';
 describe('useActionDisabledState', () => {
   const defaultData = {
     isMasquerading: false,
-    canUpgrade: false,
     isEntitlement: false,
     isFulfilled: false,
     canChange: false,
@@ -26,12 +25,10 @@ describe('useActionDisabledState', () => {
     isAuditAccessExpired: false,
     resumeUrl: 'resume.url',
     homeUrl: 'home.url',
-    upgradeUrl: 'upgrade.url',
   };
   const mockHooksData = (args) => {
     const {
       isMasquerading,
-      canUpgrade,
       isEntitlement,
       isFulfilled,
       canChange,
@@ -41,11 +38,9 @@ describe('useActionDisabledState', () => {
       isAuditAccessExpired,
       resumeUrl,
       homeUrl,
-      upgradeUrl,
     } = { ...defaultData, ...args };
     reduxHooks.useMasqueradeData.mockReturnValueOnce({ isMasquerading });
     reduxHooks.useCardEnrollmentData.mockReturnValueOnce({
-      canUpgrade,
       hasAccess,
       isAudit,
       isAuditAccessExpired,
@@ -59,7 +54,6 @@ describe('useActionDisabledState', () => {
     reduxHooks.useCardCourseRunData.mockReturnValueOnce({
       resumeUrl,
       homeUrl,
-      upgradeUrl,
     });
   };
 
@@ -119,21 +113,6 @@ describe('useActionDisabledState', () => {
     });
     it('enable when all conditions are met', () => {
       testDisabled({ hasAccess: true }, false);
-    });
-  });
-  describe('disableUpgradeCourse', () => {
-    const testDisabled = (data, expected) => {
-      mockHooksData(data);
-      expect(runHook().disableUpgradeCourse).toBe(expected);
-    };
-    it('disable when upgradeUrl is invalid', () => {
-      testDisabled({ upgradeUrl: null }, true);
-    });
-    it('disable when isMasquerading is true and canUpgrade is false', () => {
-      testDisabled({ isMasquerading: true, canUpgrade: false }, true);
-    });
-    it('enable when all conditions are met', () => {
-      testDisabled({ canUpgrade: true }, false);
     });
   });
   describe('disableSelectSession', () => {

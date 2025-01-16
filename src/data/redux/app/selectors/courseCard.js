@@ -52,7 +52,6 @@ export const courseCard = StrictDict({
 
       homeUrl: courseRun.homeUrl,
       marketingUrl: courseRun.marketingUrl,
-      upgradeUrl: courseRun.upgradeUrl,
 
       progressUrl: baseAppUrl(courseRun.progressUrl),
       resumeUrl: baseAppUrl(courseRun.resumeUrl), // resume will route this to learning mfe.
