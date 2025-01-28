@@ -5,6 +5,7 @@ exports[`EnterpriseDashboard empty snapshot 1`] = `null`;
 exports[`EnterpriseDashboard snapshot 1`] = `
 <ModalDialog
   hasCloseButton={false}
+  isBlocking={true}
   onClose={[MockFunction useEnterpriseDashboardHook.handleEscape]}
   title=""
 >
