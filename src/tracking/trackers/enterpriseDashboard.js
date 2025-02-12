@@ -8,7 +8,7 @@ import { eventNames } from '../constants';
  * @return {func} - Callback that tracks the event when fired.
  */
 export const modalOpened = (enterpriseUUID) => () => createEventTracker(
-  eventNames.enterpriseDashboardModalOpened,
+  eventNames.dashboardModalOpened,
   { enterpriseUUID },
 );
 
@@ -20,7 +20,7 @@ export const modalOpened = (enterpriseUUID) => () => createEventTracker(
  */
 export const modalCTAClicked = (enterpriseUUID, href) => createLinkTracker(
   createEventTracker(
-    eventNames.enterpriseDashboardModalCTAClicked,
+    eventNames.dashboardModalCTAClicked,
     { enterpriseUUID },
   ),
   href,
@@ -33,7 +33,7 @@ export const modalCTAClicked = (enterpriseUUID, href) => createLinkTracker(
  * @return {func} - Callback that tracks the event when fired.
  */
 export const modalClosed = (enterpriseUUID, source) => createEventTracker(
-  eventNames.enterpriseDashboardModalClosed,
+  eventNames.dashboardModalClosed,
   { enterpriseUUID, source },
 );
 

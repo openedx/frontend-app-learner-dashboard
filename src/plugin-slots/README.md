@@ -5,4 +5,4 @@
 * [`widget_sidebar_slot`](./WidgetSidebarSlot/)
 * [`course_list_slot`](./CourseListSlot/)
 * [`no_courses_view_slot`](./NoCoursesViewSlot/)
-* [`enterprise_dashboard_modal_slot](./EnterpriseDashboardModalSlot)
+* [`dashboard_modal_slot](./DashboardModalSlot)
