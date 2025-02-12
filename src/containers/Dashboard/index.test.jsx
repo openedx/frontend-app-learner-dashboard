@@ -4,7 +4,7 @@ import { reduxHooks } from 'hooks';
 
 import SelectSessionModal from 'containers/SelectSessionModal';
 import CoursesPanel from 'containers/CoursesPanel';
-import EnterpriseDashboardModalSlot from 'plugin-slots/EnterpriseDashboardModalSlot';
+import DashboardModalSlot from 'plugin-slots/DashboardModalSlot';
 
 import DashboardLayout from './DashboardLayout';
 import LoadingView from './LoadingView';
@@ -20,7 +20,7 @@ jest.mock('hooks', () => ({
   },
 }));
 
-jest.mock('plugin-slots/EnterpriseDashboardModalSlot', () => 'EnterpriseDashboardModalSlot');
+jest.mock('plugin-slots/DashboardModalSlot', () => 'DashboardModalSlot');
 jest.mock('containers/CoursesPanel', () => 'CoursesPanel');
 jest.mock('./LoadingView', () => 'LoadingView');
 jest.mock('./DashboardLayout', () => 'DashboardLayout');
@@ -81,7 +81,7 @@ describe('Dashboard', () => {
         testContent(contentEl);
       });
       it(`${renderString(showEnterpriseModal)} dashbaord modal`, () => {
-        expect(wrapper.instance.findByType(EnterpriseDashboardModalSlot).length)
+        expect(wrapper.instance.findByType(DashboardModalSlot).length)
           .toEqual(showEnterpriseModal ? 1 : 0);
       });
       it(`${renderString(showSelectSessionModal)} select session modal`, () => {

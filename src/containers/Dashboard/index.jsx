@@ -4,7 +4,7 @@ import { reduxHooks } from 'hooks';
 import { RequestKeys } from 'data/constants/requests';
 import SelectSessionModal from 'containers/SelectSessionModal';
 import CoursesPanel from 'containers/CoursesPanel';
-import EnterpriseDashboardModalSlot from 'plugin-slots/EnterpriseDashboardModalSlot';
+import DashboardModalSlot from 'plugin-slots/DashboardModalSlot';
 
 import LoadingView from './LoadingView';
 import DashboardLayout from './DashboardLayout';
@@ -24,7 +24,7 @@ export const Dashboard = () => {
       <h1 className="sr-only">{pageTitle}</h1>
       {!initIsPending && (
         <>
-          {hasAvailableDashboards && <EnterpriseDashboardModalSlot />}
+          {hasAvailableDashboards && <DashboardModalSlot />}
           {(hasCourses && showSelectSessionModal) && <SelectSessionModal />}
         </>
       )}
