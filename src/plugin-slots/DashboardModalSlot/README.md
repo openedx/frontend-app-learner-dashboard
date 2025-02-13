@@ -22,6 +22,9 @@ const config = {
             type: DIRECT_PLUGIN,
             priority: 60,
             RenderWidget: DashboardModal,
+            content: {
+              store,
+            },
           },
         },
       ],
