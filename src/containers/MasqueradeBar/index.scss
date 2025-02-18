@@ -1,38 +1,36 @@
-@import "@openedx/paragon/scss/core/core";
-
 .masquerade-bar {
   display: flex;
   align-items: flex-start;
-  padding: map-get($spacers, 3);
-  margin-bottom: map-get($spacers, 2);
+  padding: var(--pgn-spacing-spacer-3);
+  margin-bottom: var(--pgn-spacing-spacer-2);
 
   .masquerade-form-label {
-    padding: map-get($spacers, 2) map-get($spacers, 3);
+    padding: var(--pgn-spacing-spacer-2) var(--pgn-spacing-spacer-3);
     display: flex;
     align-items: center;
     margin-bottom: 0;
     white-space: nowrap;
 
     &>.pgn__icon {
-      margin-right: map-get($spacers, 3);
+      margin-right: var(--pgn-spacing-spacer-3);
     }
   }
 
   .masquerade-form-input {
     margin-bottom: 0;
     flex-grow: 1;
-    max-width: map-get($grid-breakpoints, 'md');
+    max-width: var(--pgn-size-breakpoint-md);
   }
 
   .masquerade-chip {
-    padding: map-get($spacers, 2) map-get($spacers, 3);
-    font-size: $font-size-base;
+    padding: var(--pgn-spacing-spacer-2) var(--pgn-spacing-spacer-3);
+    font-size: var(--pgn-typography-font-size-base);
   }
 }
 
-@include media-breakpoint-down(md) {
+@media (--pgn-size-breakpoint-max-width-md) {
   .masquerade-bar {
     margin: auto;
-    padding: map-get($spacers, 3) map-get($spacers, 4);
+    padding: var(--pgn-spacing-spacer-3) var(--pgn-spacing-spacer-4);
   }
 }
