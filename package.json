@@ -17,7 +17,7 @@
     "quality": "npm run lint-fix && npm run test",
     "watch-tests": "jest --watch",
     "snapshot": "fedx-scripts jest --updateSnapshot",
-    "prepare": "husky install"
+    "prepare": "npm run build"
   },
   "author": "edX",
   "license": "AGPL-3.0",
@@ -44,6 +44,7 @@
     "@reduxjs/toolkit": "^1.6.1",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.28.0",
+    "brand-openedx-zeit": "github:zeit-labs/brand-openedx",
     "classnames": "^2.3.1",
     "core-js": "3.16.2",
     "dompurify": "^2.3.1",
