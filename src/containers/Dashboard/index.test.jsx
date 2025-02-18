@@ -14,7 +14,6 @@ import Dashboard from '.';
 jest.mock('hooks', () => ({
   reduxHooks: {
     useHasCourses: jest.fn(),
-    useHasAvailableDashboards: jest.fn(),
     useShowSelectSessionModal: jest.fn(),
     useRequestIsPending: jest.fn(),
   },
@@ -38,12 +37,10 @@ describe('Dashboard', () => {
   });
   const createWrapper = ({
     hasCourses,
-    hasAvailableDashboards,
     initIsPending,
     showSelectSessionModal,
   }) => {
     reduxHooks.useHasCourses.mockReturnValueOnce(hasCourses);
-    reduxHooks.useHasAvailableDashboards.mockReturnValueOnce(hasAvailableDashboards);
     reduxHooks.useRequestIsPending.mockReturnValueOnce(initIsPending);
     reduxHooks.useShowSelectSessionModal.mockReturnValueOnce(showSelectSessionModal);
     return shallow(<Dashboard />);
@@ -80,7 +77,7 @@ describe('Dashboard', () => {
       it(`renders ${contentName}`, () => {
         testContent(contentEl);
       });
-      it(`${renderString(showEnterpriseModal)} dashbaord modal`, () => {
+      it(`${renderString(showEnterpriseModal)} dashboard modal`, () => {
         expect(wrapper.instance.findByType(DashboardModalSlot).length)
           .toEqual(showEnterpriseModal ? 1 : 0);
       });
@@ -92,7 +89,6 @@ describe('Dashboard', () => {
       testView({
         props: {
           hasCourses: false,
-          hasAvailableDashboards: false,
           initIsPending: true,
           showSelectSessionModal: false,
         },
@@ -102,11 +98,10 @@ describe('Dashboard', () => {
       });
     });
 
-    describe('courses loaded, show select session modal, no available dashboards', () => {
+    describe('courses loaded, show select session modal', () => {
       testView({
         props: {
           hasCourses: true,
-          hasAvailableDashboards: false,
           initIsPending: false,
           showSelectSessionModal: true,
         },
@@ -118,11 +113,10 @@ describe('Dashboard', () => {
       });
     });
 
-    describe('there are no courses, there ARE available dashboards', () => {
+    describe('there are no courses', () => {
       testView({
         props: {
           hasCourses: false,
-          hasAvailableDashboards: true,
           initIsPending: false,
           showSelectSessionModal: false,
         },
