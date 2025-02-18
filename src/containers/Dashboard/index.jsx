@@ -15,7 +15,6 @@ export const Dashboard = () => {
   hooks.useInitializeDashboard();
   const { pageTitle } = hooks.useDashboardMessages();
   const hasCourses = reduxHooks.useHasCourses();
-  const hasAvailableDashboards = reduxHooks.useHasAvailableDashboards();
   const initIsPending = reduxHooks.useRequestIsPending(RequestKeys.initialize);
   const showSelectSessionModal = reduxHooks.useShowSelectSessionModal();
 
@@ -24,7 +23,7 @@ export const Dashboard = () => {
       <h1 className="sr-only">{pageTitle}</h1>
       {!initIsPending && (
         <>
-          {hasAvailableDashboards && <DashboardModalSlot />}
+          <DashboardModalSlot />
           {(hasCourses && showSelectSessionModal) && <SelectSessionModal />}
         </>
       )}
