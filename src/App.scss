@@ -9,6 +9,7 @@ $fa-font-path: "~font-awesome/fonts";
 
 $input-focus-box-shadow: $input-box-shadow; // hack to get upgrade to paragon 4.0.0 to work
 
+@import "~@edx/frontend-component-header/dist/index";
 @import "~@edx/frontend-component-footer/dist/_footer";
 
 .text-ellipsis {
@@ -36,19 +37,6 @@ $input-focus-box-shadow: $input-box-shadow; // hack to get upgrade to paragon 4.
 
   header {
     flex: 0 0 auto;
-
-    .logo {
-      display: block;
-      box-sizing: content-box;
-      position: relative;
-      top: 0.1em;
-      height: 1.75rem;
-      margin-right: 1rem;
-      img {
-        display: block;
-        height: 100%;
-      }
-    }
   }
 
   footer {

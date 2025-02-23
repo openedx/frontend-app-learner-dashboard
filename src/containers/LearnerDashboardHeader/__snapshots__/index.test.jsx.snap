@@ -3,8 +3,72 @@
 exports[`LearnerDashboardHeader render 1`] = `
 <Fragment>
   <ConfirmEmailBanner />
-  <CollapsedHeader />
-  <ExpandedHeader />
+  <Header
+    mainMenuItems={
+      Array [
+        Object {
+          "content": "Courses",
+          "href": "/",
+          "isActive": true,
+          "type": "item",
+        },
+        Object {
+          "content": "Programs",
+          "href": "http://localhost:18000/dashboard/programs",
+          "type": "item",
+        },
+        Object {
+          "content": "Discover New",
+          "href": "http://localhost:18000/course-search-url",
+          "onClick": [Function],
+          "type": "item",
+        },
+      ]
+    }
+    secondaryMenuItems={
+      Array [
+        Object {
+          "content": "Help",
+          "href": "http://localhost:18000/support",
+          "type": "item",
+        },
+      ]
+    }
+    userMenuItems={
+      Array [
+        Object {
+          "heading": "",
+          "items": Array [
+            Object {
+              "content": "Profile",
+              "href": "http://account-profile-url.test/u/undefined",
+              "type": "item",
+            },
+            Object {
+              "content": "Account",
+              "href": "http://account-settings-url.test",
+              "type": "item",
+            },
+            Object {
+              "content": "Order History",
+              "href": "test-url",
+              "type": "item",
+            },
+          ],
+        },
+        Object {
+          "heading": "",
+          "items": Array [
+            Object {
+              "content": "Sign Out",
+              "href": "http://localhost:18000/logout",
+              "type": "item",
+            },
+          ],
+        },
+      ]
+    }
+  />
   <MasqueradeBar />
 </Fragment>
 `;
