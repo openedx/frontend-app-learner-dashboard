@@ -54,7 +54,7 @@ exports[`Dashboard snapshots there are no courses, there ARE available dashboard
     test-page-title
   </h1>
   <Fragment>
-    <EnterpriseDashboardModal />
+    <DashboardModal />
   </Fragment>
   <div
     data-testid="dashboard-content"

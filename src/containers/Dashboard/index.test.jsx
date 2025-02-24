@@ -2,9 +2,9 @@ import { shallow } from '@edx/react-unit-test-utils';
 
 import { reduxHooks } from 'hooks';
 
-import EnterpriseDashboardModal from 'containers/EnterpriseDashboardModal';
 import SelectSessionModal from 'containers/SelectSessionModal';
 import CoursesPanel from 'containers/CoursesPanel';
+import DashboardModalSlot from 'plugin-slots/DashboardModalSlot';
 
 import DashboardLayout from './DashboardLayout';
 import LoadingView from './LoadingView';
@@ -14,13 +14,12 @@ import Dashboard from '.';
 jest.mock('hooks', () => ({
   reduxHooks: {
     useHasCourses: jest.fn(),
-    useHasAvailableDashboards: jest.fn(),
     useShowSelectSessionModal: jest.fn(),
     useRequestIsPending: jest.fn(),
   },
 }));
 
-jest.mock('containers/EnterpriseDashboardModal', () => 'EnterpriseDashboardModal');
+jest.mock('plugin-slots/DashboardModalSlot', () => 'DashboardModalSlot');
 jest.mock('containers/CoursesPanel', () => 'CoursesPanel');
 jest.mock('./LoadingView', () => 'LoadingView');
 jest.mock('./DashboardLayout', () => 'DashboardLayout');
@@ -38,12 +37,10 @@ describe('Dashboard', () => {
   });
   const createWrapper = ({
     hasCourses,
-    hasAvailableDashboards,
     initIsPending,
     showSelectSessionModal,
   }) => {
     reduxHooks.useHasCourses.mockReturnValueOnce(hasCourses);
-    reduxHooks.useHasAvailableDashboards.mockReturnValueOnce(hasAvailableDashboards);
     reduxHooks.useRequestIsPending.mockReturnValueOnce(initIsPending);
     reduxHooks.useShowSelectSessionModal.mockReturnValueOnce(showSelectSessionModal);
     return shallow(<Dashboard />);
@@ -80,8 +77,8 @@ describe('Dashboard', () => {
       it(`renders ${contentName}`, () => {
         testContent(contentEl);
       });
-      it(`${renderString(showEnterpriseModal)} dashbaord modal`, () => {
-        expect(wrapper.instance.findByType(EnterpriseDashboardModal).length)
+      it(`${renderString(showEnterpriseModal)} dashboard modal`, () => {
+        expect(wrapper.instance.findByType(DashboardModalSlot).length)
           .toEqual(showEnterpriseModal ? 1 : 0);
       });
       it(`${renderString(showSelectSessionModal)} select session modal`, () => {
@@ -92,7 +89,6 @@ describe('Dashboard', () => {
       testView({
         props: {
           hasCourses: false,
-          hasAvailableDashboards: false,
           initIsPending: true,
           showSelectSessionModal: false,
         },
@@ -102,11 +98,10 @@ describe('Dashboard', () => {
       });
     });
 
-    describe('courses loaded, show select session modal, no available dashboards', () => {
+    describe('courses loaded, show select session modal', () => {
       testView({
         props: {
           hasCourses: true,
-          hasAvailableDashboards: false,
           initIsPending: false,
           showSelectSessionModal: true,
         },
@@ -118,11 +113,10 @@ describe('Dashboard', () => {
       });
     });
 
-    describe('there are no courses, there ARE available dashboards', () => {
+    describe('there are no courses', () => {
       testView({
         props: {
           hasCourses: false,
-          hasAvailableDashboards: true,
           initIsPending: false,
           showSelectSessionModal: false,
         },
