@@ -10,7 +10,7 @@ The following `env.config.jsx` will render the modal.
 ## Example
 
 Learner dashboard will show modal on initial load
-![Screenshot of the dashboard modal](./images/widget_sidebar_slot.png)
+![Screenshot of the dashboard modal](./images/dashboard_modal_slot.png)
 
 ```js
 import { DIRECT_PLUGIN, PLUGIN_OPERATIONS } from '@openedx/frontend-plugin-framework';
