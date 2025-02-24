@@ -1,16 +1,16 @@
-# Course Card Action Slot
+# Dashboard Modal Slot
 
 ### Slot ID: `dashboard_modal_slot`
 
 ## Description
 
-This slot is used for the modal on a dashboard that appears on initial load.
+This slot is used for the modal on a dashboard.
 The following `env.config.jsx` will render the modal.
 
 ## Example
 
-Learner dashboard will show modal on initial load
-![Screenshot of the dashboard modal](./images/widget_sidebar_slot.png)
+Learner dashboard will show modal
+![Screenshot of the dashboard modal](./images/dashboard_modal_slot.png)
 
 ```js
 import { DIRECT_PLUGIN, PLUGIN_OPERATIONS } from '@openedx/frontend-plugin-framework';
@@ -27,7 +27,7 @@ const config = {
             type: DIRECT_PLUGIN,
             priority: 60,
             RenderWidget: 
-              <ModalDialog title="Modal that appears on initial render of learner dashboard" />,
+              <ModalDialog title="Modal that appears on learner dashboard" />,
           },
         },
       ],
