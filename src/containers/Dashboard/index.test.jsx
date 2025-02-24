@@ -4,7 +4,6 @@ import { reduxHooks } from 'hooks';
 
 import SelectSessionModal from 'containers/SelectSessionModal';
 import CoursesPanel from 'containers/CoursesPanel';
-import DashboardModalSlot from 'plugin-slots/DashboardModalSlot';
 
 import DashboardLayout from './DashboardLayout';
 import LoadingView from './LoadingView';
@@ -68,7 +67,6 @@ describe('Dashboard', () => {
     const testView = ({
       props,
       content: [contentName, contentEl],
-      showEnterpriseModal,
       showSelectSessionModal,
     }) => {
       beforeEach(() => { wrapper = createWrapper(props); });
@@ -76,10 +74,6 @@ describe('Dashboard', () => {
       testSnapshot();
       it(`renders ${contentName}`, () => {
         testContent(contentEl);
-      });
-      it(`${renderString(showEnterpriseModal)} dashboard modal`, () => {
-        expect(wrapper.instance.findByType(DashboardModalSlot).length)
-          .toEqual(showEnterpriseModal ? 1 : 0);
       });
       it(`${renderString(showSelectSessionModal)} select session modal`, () => {
         expect(wrapper.instance.findByType(SelectSessionModal).length).toEqual(showSelectSessionModal ? 1 : 0);
@@ -93,7 +87,6 @@ describe('Dashboard', () => {
           showSelectSessionModal: false,
         },
         content: ['LoadingView', <LoadingView />],
-        showEnterpriseModal: false,
         showSelectSessionModal: false,
       });
     });
@@ -108,7 +101,6 @@ describe('Dashboard', () => {
         content: ['LoadedView', (
           <DashboardLayout><CoursesPanel /></DashboardLayout>
         )],
-        showEnterpriseModal: false,
         showSelectSessionModal: true,
       });
     });
@@ -123,7 +115,6 @@ describe('Dashboard', () => {
         content: ['Dashboard layout with no courses sidebar and content', (
           <DashboardLayout><CoursesPanel /></DashboardLayout>
         )],
-        showEnterpriseModal: true,
         showSelectSessionModal: false,
       });
     });
