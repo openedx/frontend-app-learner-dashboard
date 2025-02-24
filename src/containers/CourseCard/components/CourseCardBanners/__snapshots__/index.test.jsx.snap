@@ -8,7 +8,7 @@ exports[`CourseCardBanners render with isEnrolled false 1`] = `
   <RelatedProgramsBanner
     cardId="test-card-id"
   />
-  <CourseBanner
+  <CourseBannerSlot
     cardId="test-card-id"
   />
   <EntitlementBanner
@@ -25,7 +25,7 @@ exports[`CourseCardBanners renders default CourseCardBanners 1`] = `
   <RelatedProgramsBanner
     cardId="test-card-id"
   />
-  <CourseBanner
+  <CourseBannerSlot
     cardId="test-card-id"
   />
   <EntitlementBanner
