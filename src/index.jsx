@@ -31,14 +31,16 @@ import NoticesWrapper from './components/NoticesWrapper';
 
 subscribe(APP_READY, () => {
   ReactDOM.render(
-    <AppProvider store={store}>
-      <NoticesWrapper>
-        <Routes>
-          <Route path="/" element={<PageWrap><App /></PageWrap>} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </NoticesWrapper>
-    </AppProvider>,
+    <div className='mfe-learner-dashboard'>
+	    <AppProvider store={store}>
+		    <NoticesWrapper>
+			    <Routes>
+				    <Route path="/" element={<PageWrap><App /></PageWrap>} />
+				    <Route path="*" element={<Navigate to="/" replace />} />
+			    </Routes>
+		    </NoticesWrapper>
+	    </AppProvider>
+    </div>,
     document.getElementById('root'),
   );
 });
