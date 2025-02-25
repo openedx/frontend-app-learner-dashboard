@@ -20,11 +20,13 @@ export const CourseCardImage = ({ cardId, orientation }) => {
   const { isVerified } = reduxHooks.useCardEnrollmentData(cardId);
   const { disableCourseTitle } = useActionDisabledState(cardId);
   const handleImageClicked = reduxHooks.useTrackCourseEvent(courseImageClicked, cardId, homeUrl);
-  const wrapperClassName = `pgn__card-wrapper-image-cap overflow-visible ${orientation}`;
+  const wrapperClassName = `pgn__card-wrapper-image-cap d-inline-block overflow-visible ${orientation}`;
   const image = (
     <>
       <img
-        className="pgn__card-image-cap show"
+        // w-100 is necessary for images on Safari, otherwise stretches full height of the image
+        // https://stackoverflow.com/a/44250830
+        className="pgn__card-image-cap w-100 show"
         src={bannerImgSrc}
         alt={formatMessage(messages.bannerAlt)}
       />
