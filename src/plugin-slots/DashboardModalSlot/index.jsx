@@ -2,7 +2,7 @@ import React from 'react';
 import { PluginSlot } from '@openedx/frontend-plugin-framework';
 
 const DashboardModalSlot = () => (
-  <PluginSlot id="org.openedx.frontend.learner_dashboard.dashboard_modal.v1" />
+  <PluginSlot id="dashboard_modal_slot" />
 );
 
 export default DashboardModalSlot;
