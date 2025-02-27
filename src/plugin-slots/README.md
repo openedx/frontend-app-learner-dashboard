@@ -5,4 +5,4 @@
 * [`widget_sidebar_slot`](./WidgetSidebarSlot/)
 * [`course_list_slot`](./CourseListSlot/)
 * [`no_courses_view_slot`](./NoCoursesViewSlot/)
-* [`dashboard_modal_slot`](./DashboardModalSlot)
+* [`org.openedx.frontend.learner_dashboard.dashboard_modal.v1`](./DashboardModalSlot)
