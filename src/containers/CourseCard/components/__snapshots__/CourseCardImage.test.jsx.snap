@@ -2,7 +2,7 @@
 
 exports[`CourseCardImage snapshot renders clickable link course Image 1`] = `
 <a
-  className="pgn__card-wrapper-image-cap overflow-visible orientation"
+  className="pgn__card-wrapper-image-cap d-inline-block overflow-visible orientation"
   href="home-url"
   onClick={
     {
@@ -18,7 +18,7 @@ exports[`CourseCardImage snapshot renders clickable link course Image 1`] = `
   <Fragment>
     <img
       alt="Course thumbnail"
-      className="pgn__card-image-cap show"
+      className="pgn__card-image-cap w-100 show"
       src="banner-img-src"
     />
     <span
@@ -43,12 +43,12 @@ exports[`CourseCardImage snapshot renders clickable link course Image 1`] = `
 
 exports[`CourseCardImage snapshot renders disabled link 1`] = `
 <div
-  className="pgn__card-wrapper-image-cap overflow-visible orientation"
+  className="pgn__card-wrapper-image-cap d-inline-block overflow-visible orientation"
 >
   <Fragment>
     <img
       alt="Course thumbnail"
-      className="pgn__card-image-cap show"
+      className="pgn__card-image-cap w-100 show"
       src="banner-img-src"
     />
     <span
