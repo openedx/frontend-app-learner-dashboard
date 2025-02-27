@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Dashboard snapshots courses loaded, show select session modal, no available dashboards snapshot 1`] = `
+exports[`Dashboard snapshots courses loaded, show select session modal snapshot 1`] = `
 <div
   className="d-flex flex-column p-2 pt-0"
   id="dashboard-container"
@@ -11,6 +11,7 @@ exports[`Dashboard snapshots courses loaded, show select session modal, no avail
     test-page-title
   </h1>
   <Fragment>
+    <DashboardModalSlot />
     <SelectSessionModal />
   </Fragment>
   <div
@@ -43,7 +44,7 @@ exports[`Dashboard snapshots courses still loading snapshot 1`] = `
 </div>
 `;
 
-exports[`Dashboard snapshots there are no courses, there ARE available dashboards snapshot 1`] = `
+exports[`Dashboard snapshots there are no courses snapshot 1`] = `
 <div
   className="d-flex flex-column p-2 pt-0"
   id="dashboard-container"
@@ -54,7 +55,7 @@ exports[`Dashboard snapshots there are no courses, there ARE available dashboard
     test-page-title
   </h1>
   <Fragment>
-    <EnterpriseDashboardModal />
+    <DashboardModalSlot />
   </Fragment>
   <div
     data-testid="dashboard-content"

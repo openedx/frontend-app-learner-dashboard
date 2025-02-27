@@ -17,15 +17,6 @@ describe('basic app selectors', () => {
       expect(cb(0)).toEqual(false);
     });
   });
-  describe('hasAvailableDashboards', () => {
-    it('returns true iff the enterpriseDashboard field is populated and learner portal is enabled', () => {
-      const { preSelectors, cb } = appSelectors.hasAvailableDashboards;
-      expect(preSelectors).toEqual([simpleSelectors.enterpriseDashboard]);
-      expect(cb({ isLearnerPortalEnabled: true })).toEqual(true);
-      expect(cb({ isLearnerPortalEnabled: false })).toEqual(false);
-      expect(cb(null)).toEqual(false);
-    });
-  });
   describe('showSelectSessionModal', () => {
     it('returns true if the selectSessionModal cardId is not null', () => {
       const { preSelectors, cb } = appSelectors.showSelectSessionModal;
