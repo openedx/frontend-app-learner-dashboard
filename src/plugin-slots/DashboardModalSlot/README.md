@@ -1,8 +1,6 @@
 # Dashboard Modal Slot
 
-### Slot ID: `org.openedx.frontend.learner_dashboard.dashboard_modal.v1`
-
-### https://github.com/openedx/frontend-plugin-framework/blob/master/docs/decisions/0003-slot-naming-and-life-cycle.rst#1-naming-format
+### Slot ID: `dashboard_modal_slot`
 
 ## Description
 
@@ -20,7 +18,7 @@ import { ModalDialog } from '@openedx/paragon';
 
 const config = {
   pluginSlots: {
-    org.openedx.frontend.learner_dashboard.dashboard_modal.v1: {
+    dashboard_modal_slot: {
       plugins: [
         {
           op: PLUGIN_OPERATIONS.Insert,
