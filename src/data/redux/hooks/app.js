@@ -18,6 +18,7 @@ export const useSocialShareSettings = () => useSelector(selectors.socialShareSet
 
 /** global-level meta-selectors **/
 export const useHasCourses = () => useSelector(selectors.hasCourses);
+export const useHasAvailableDashboards = () => useSelector(selectors.hasAvailableDashboards);
 export const useCurrentCourseList = (opts) => useSelector(
   state => selectors.currentList(state, opts),
 );

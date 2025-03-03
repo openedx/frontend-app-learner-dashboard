@@ -2,9 +2,9 @@ import React from 'react';
 
 import { reduxHooks } from 'hooks';
 import { RequestKeys } from 'data/constants/requests';
+import EnterpriseDashboardModal from 'containers/EnterpriseDashboardModal';
 import SelectSessionModal from 'containers/SelectSessionModal';
 import CoursesPanel from 'containers/CoursesPanel';
-import DashboardModalSlot from 'plugin-slots/DashboardModalSlot';
 
 import LoadingView from './LoadingView';
 import DashboardLayout from './DashboardLayout';
@@ -15,6 +15,7 @@ export const Dashboard = () => {
   hooks.useInitializeDashboard();
   const { pageTitle } = hooks.useDashboardMessages();
   const hasCourses = reduxHooks.useHasCourses();
+  const hasAvailableDashboards = reduxHooks.useHasAvailableDashboards();
   const initIsPending = reduxHooks.useRequestIsPending(RequestKeys.initialize);
   const showSelectSessionModal = reduxHooks.useShowSelectSessionModal();
 
@@ -23,7 +24,7 @@ export const Dashboard = () => {
       <h1 className="sr-only">{pageTitle}</h1>
       {!initIsPending && (
         <>
-          <DashboardModalSlot />
+          {hasAvailableDashboards && <EnterpriseDashboardModal />}
           {(hasCourses && showSelectSessionModal) && <SelectSessionModal />}
         </>
       )}
