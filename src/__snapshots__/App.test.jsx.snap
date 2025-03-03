@@ -17,7 +17,9 @@ exports[`App router component component initialize failure snapshot 1`] = `
   <div>
     <AppWrapper>
       <LearnerDashboardHeader />
-      <main>
+      <main
+        id="main"
+      >
         <Alert
           variant="danger"
         >
@@ -49,7 +51,9 @@ exports[`App router component component no network failure snapshot 1`] = `
   <div>
     <AppWrapper>
       <LearnerDashboardHeader />
-      <main>
+      <main
+        id="main"
+      >
         <Dashboard />
       </main>
     </AppWrapper>
@@ -75,7 +79,9 @@ exports[`App router component component no network failure with optimizely proje
   <div>
     <AppWrapper>
       <LearnerDashboardHeader />
-      <main>
+      <main
+        id="main"
+      >
         <Dashboard />
       </main>
     </AppWrapper>
@@ -101,7 +107,9 @@ exports[`App router component component no network failure with optimizely url s
   <div>
     <AppWrapper>
       <LearnerDashboardHeader />
-      <main>
+      <main
+        id="main"
+      >
         <Dashboard />
       </main>
     </AppWrapper>
@@ -127,7 +135,9 @@ exports[`App router component component refresh failure snapshot 1`] = `
   <div>
     <AppWrapper>
       <LearnerDashboardHeader />
-      <main>
+      <main
+        id="main"
+      >
         <Alert
           variant="danger"
         >
