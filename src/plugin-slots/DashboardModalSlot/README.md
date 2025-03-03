@@ -4,17 +4,12 @@
 
 ## Description
 
-This slot is used for the modal on a dashboard that appears on initial load.
+This slot is used for the modal on a dashboard that directs you to the enterprise dashboard if applicable. 
 The following `env.config.jsx` will render the modal.
-
-## Example
-
-Learner dashboard will show modal on initial load
-![Screenshot of the dashboard modal](./images/widget_sidebar_slot.png)
 
 ```js
 import { DIRECT_PLUGIN, PLUGIN_OPERATIONS } from '@openedx/frontend-plugin-framework';
-import { ModalDialog } from '@openedx/paragon';
+import { DashboardModal } from '@edx/frontend-plugin-learner-dashboard';
 
 const config = {
   pluginSlots: {
@@ -26,8 +21,10 @@ const config = {
             id: 'dashboard_modal',
             type: DIRECT_PLUGIN,
             priority: 60,
-            RenderWidget: 
-              <ModalDialog title="Modal that appears on initial render of learner dashboard" />,
+            RenderWidget: DashboardModal,
+            content: {
+              store,
+            },
           },
         },
       ],
