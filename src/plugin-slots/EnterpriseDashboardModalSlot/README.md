@@ -1,6 +1,6 @@
 # Course Card Action Slot
 
-### Slot ID: `dashboard_modal_slot`
+### Slot ID: `enterprise_dashboard_modal_slot`
 
 ## Description
 
@@ -9,11 +9,11 @@ The following `env.config.jsx` will render the modal.
 
 ```js
 import { DIRECT_PLUGIN, PLUGIN_OPERATIONS } from '@openedx/frontend-plugin-framework';
-import { DashboardModal } from '@edx/frontend-plugin-learner-dashboard';
+import { EnterpriseDashboardModal } from '@edx/frontend-plugin-learner-dashboard';
 
 const config = {
   pluginSlots: {
-    dashboard_modal_slot: {
+    enterprise_dashboard_modal_slot: {
       plugins: [
         {
           op: PLUGIN_OPERATIONS.Insert,
@@ -21,7 +21,7 @@ const config = {
             id: 'dashboard_modal',
             type: DIRECT_PLUGIN,
             priority: 60,
-            RenderWidget: DashboardModal,
+            RenderWidget: EnterpriseDashboardModal,
           },
         },
       ],

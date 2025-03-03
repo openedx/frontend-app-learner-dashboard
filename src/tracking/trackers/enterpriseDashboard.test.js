@@ -15,7 +15,7 @@ describe('enterpriseDashboard trackers', () => {
     it('creates event tracker for dashboard modal opened event', () => {
       expect(trackers.modalOpened(enterpriseUUID, source)()).toEqual(
         createEventTracker(
-          eventNames.dashboardModalOpened,
+          eventNames.enterpriseDashboardModalOpened,
           { enterpriseUUID, source },
         ),
       );
@@ -28,7 +28,7 @@ describe('enterpriseDashboard trackers', () => {
       expect(href).toEqual(testHref);
       expect(cb).toEqual(
         createEventTracker(
-          eventNames.dashboardModalCTAClicked,
+          eventNames.enterpriseDashboardModalCTAClicked,
           { enterpriseUUID, source },
         ),
       );
@@ -38,7 +38,7 @@ describe('enterpriseDashboard trackers', () => {
     it('creates event tracker for dashboard modal closed event with close source', () => {
       expect(trackers.modalClosed(enterpriseUUID, source)).toEqual(
         createEventTracker(
-          eventNames.dashboardModalClosed,
+          eventNames.enterpriseDashboardModalClosed,
           { enterpriseUUID, source },
         ),
       );
