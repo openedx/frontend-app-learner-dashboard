@@ -20,7 +20,12 @@ export const events = StrictDict({
   leaveSession: 'leaveSession',
   unenrollReason: 'unenrollReason',
   entitlementUnenrollReason: 'entitlementUnenrollReason',
+  dashboardModalOpened: 'dashboardModalOpened',
+  dashboardModalCTAClicked: 'dashboardModalCTAClicked',
+  dashboardModalClosed: 'dashboardModalClosed',
 });
+
+const learnerPortal = 'edx.ui.enterprise.lms.dashboard.learner_portal_modal';
 
 export const eventNames = StrictDict({
   enterCourseClicked: 'edx.bi.dashboard.enter_course.clicked',
@@ -34,6 +39,9 @@ export const eventNames = StrictDict({
   leaveSession: 'course-dashboard.leave-session',
   unenrollReason: 'unenrollment_reason.selected',
   entitlementUnenrollReason: 'entitlement_unenrollment_reason.selected',
+  dashboardModalOpened: `${learnerPortal}.opened`,
+  dashboardModalCTAClicked: `${learnerPortal}.dashboard_cta.clicked`,
+  dashboardModalClosed: `${learnerPortal}.closed`,
   findCoursesClicked: 'edx.bi.dashboard.find_courses_button.clicked',
   purchaseCredit: 'edx.bi.credit.clicked_purchase_credit',
   filterClicked: 'course-dashboard.filter.clicked',
