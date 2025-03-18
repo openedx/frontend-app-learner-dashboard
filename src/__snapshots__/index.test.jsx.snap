@@ -13,7 +13,6 @@ exports[`app registry subscribe: APP_READY.  links App to root element 1`] = `
       "redux": "store",
     }
   }
-  wrapWithRouter={true}
 >
   <NoticesWrapper>
     <Routes>
