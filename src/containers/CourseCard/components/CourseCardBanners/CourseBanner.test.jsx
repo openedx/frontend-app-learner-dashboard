@@ -64,14 +64,14 @@ describe('CourseBanner', () => {
     render({ enrollment: { isVerified: true } });
     expect(el.isEmptyRender()).toEqual(true);
   });
-  describe('audit access expired, cannot upgrade', () => {
+  describe('audit access expired', () => {
     beforeEach(() => {
       render({ enrollment: { isAuditAccessExpired: true } });
     });
     test('snapshot: (auditAccessExpired, findAnotherCourse hyperlink)', () => {
       expect(el.snapshot).toMatchSnapshot();
     });
-    test('messages: (auditAccessExpired, upgradeToAccess)', () => {
+    test('messages: auditAccessExpired', () => {
       expect(el.instance.children[0].children[0].el).toContain(messages.auditAccessExpired.defaultMessage);
       expect(el.instance.findByType(Hyperlink)[0].children[0].el).toEqual(messages.findAnotherCourse.defaultMessage);
     });
