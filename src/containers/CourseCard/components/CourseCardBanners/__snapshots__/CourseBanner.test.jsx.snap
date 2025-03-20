@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CourseBanner audit access expired, cannot upgrade snapshot: (auditAccessExpired, findAnotherCourse hyperlink) 1`] = `
+exports[`CourseBanner audit access expired snapshot: (auditAccessExpired, findAnotherCourse hyperlink) 1`] = `
 <Fragment>
   <Banner>
     Your audit access to this course has expired.
