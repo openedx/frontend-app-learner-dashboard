@@ -5,7 +5,7 @@ import CourseBanner from 'containers/CourseCard/components/CourseCardBanners/Cou
 
 const CourseBannerSlot = ({ cardId }) => (
   <PluginSlot
-    id="course_banner_slot"
+    id="org.openedx.frontend.learner_dashboard.course_card_banner.v1"
     pluginProps={{
       cardId,
     }}
