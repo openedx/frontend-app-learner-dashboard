@@ -28,7 +28,7 @@ const config = {
         {
           op: PLUGIN_OPERATIONS.Insert,
           widget: {
-            id: 'custom_course_banner',
+            id: 'org.openedx.frontend.learner_dashboard.course_card_banner.v1',
             type: DIRECT_PLUGIN,
             priority: 60,
             RenderWidget: ({ cardId }) => (
