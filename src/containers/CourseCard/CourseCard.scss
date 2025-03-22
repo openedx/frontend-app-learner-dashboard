@@ -1,10 +1,8 @@
-@import "@openedx/paragon/scss/core/core";
-
 .course-card {
   .card {
     .pgn__card-wrapper-image-cap.vertical {
       display: flex;
-      min-height: $card-image-vertical-max-height;
+      min-height: var(--pgn-size-card-image-vertical-max-height);
     }
     .pgn__card-image-cap {
       border-bottom-left-radius: 0 !important;
@@ -53,11 +51,11 @@
     > .alert {
       border-radius: 0;
       box-shadow: none;
-      padding: map-get($spacers, 3) map-get($spacers, 4);
+      padding: var(--pgn-spacing-spacer-3) var(--pgn-spacing-spacer-4);
 
       &:last-of-type {
-        border-bottom-left-radius: $alert-border-radius;
-        border-bottom-right-radius: $alert-border-radius;
+        border-bottom-left-radius: var(--pgn-size-alert-border-radius);
+        border-bottom-right-radius: var(--pgn-size-alert-border-radius);
       }
     }
 
