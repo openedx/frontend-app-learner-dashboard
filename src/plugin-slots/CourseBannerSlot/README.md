@@ -1,6 +1,6 @@
 # Course Card Action Slot
 
-### Slot ID: `course_banner_slot`
+### Slot ID: `org.openedx.frontend.learner_dashboard.course_card_banner.v1`
 ### Props:
 * `cardId`
 
@@ -19,10 +19,11 @@ The following `env.config.jsx` will render a custom implemenation of a CourseBan
 
 ```js
 import { DIRECT_PLUGIN, PLUGIN_OPERATIONS } from '@openedx/frontend-plugin-framework';
+import { Alert } from '@openedx/paragon';
 
 const config = {
   pluginSlots: {
-    course_banner_slot: {
+    'org.openedx.frontend.learner_dashboard.course_card_banner.v1': {
       keepDefault: false,
       plugins: [
         {
