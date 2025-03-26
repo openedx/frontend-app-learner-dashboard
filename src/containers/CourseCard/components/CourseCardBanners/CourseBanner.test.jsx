@@ -25,7 +25,6 @@ let el;
 
 const enrollmentData = {
   isVerified: false,
-  canUpgrade: false,
   isAuditAccessExpired: false,
   coursewareAccess: {
     hasUnmetPrerequisites: false,
@@ -65,50 +64,17 @@ describe('CourseBanner', () => {
     render({ enrollment: { isVerified: true } });
     expect(el.isEmptyRender()).toEqual(true);
   });
-  describe('audit access expired, can upgrade', () => {
-    beforeEach(() => {
-      render({ enrollment: { isAuditAccessExpired: true, canUpgrade: true } });
-    });
-    test('snapshot: (auditAccessExpired, upgradeToAccess)', () => {
-      expect(el.snapshot).toMatchSnapshot();
-    });
-    test('messages: (auditAccessExpired, upgradeToAccess)', () => {
-      expect(el.instance.children[0].children[0].el).toContain(messages.auditAccessExpired.defaultMessage);
-      expect(el.instance.children[0].children[2].el).toContain(messages.upgradeToAccess.defaultMessage);
-    });
-  });
-  describe('audit access expired, cannot upgrade', () => {
+  describe('audit access expired', () => {
     beforeEach(() => {
       render({ enrollment: { isAuditAccessExpired: true } });
     });
     test('snapshot: (auditAccessExpired, findAnotherCourse hyperlink)', () => {
       expect(el.snapshot).toMatchSnapshot();
     });
-    test('messages: (auditAccessExpired, upgradeToAccess)', () => {
+    test('messages: auditAccessExpired', () => {
       expect(el.instance.children[0].children[0].el).toContain(messages.auditAccessExpired.defaultMessage);
       expect(el.instance.findByType(Hyperlink)[0].children[0].el).toEqual(messages.findAnotherCourse.defaultMessage);
     });
-  });
-  describe('course run active and cannot upgrade', () => {
-    beforeEach(() => {
-      render({ courseRun: { isActive: true } });
-    });
-    test('snapshot: (upgradseDeadlinePassed, exploreCourseDetails hyperlink)', () => {
-      expect(el.snapshot).toMatchSnapshot();
-    });
-    test('messages: (upgradseDeadlinePassed, exploreCourseDetails hyperlink)', () => {
-      expect(el.instance.children[0].children[0].el).toContain(messages.upgradeDeadlinePassed.defaultMessage);
-      const link = el.instance.findByType(Hyperlink);
-      expect(link[0].children[0].el).toEqual(messages.exploreCourseDetails.defaultMessage);
-      expect(link[0].props.destination).toEqual(courseRunData.marketingUrl);
-    });
-  });
-  test('no display if audit access not expired and (course is not active or can upgrade)', () => {
-    render();
-    // isEmptyRender() isn't true because the minimal is <Fragment />
-    expect(el.instance.children).toEqual([]);
-    render({ enrollment: { canUpgrade: true }, courseRun: { isActive: true } });
-    expect(el.instance.children).toEqual([]);
   });
   describe('unmet prerequisites', () => {
     beforeEach(() => {
