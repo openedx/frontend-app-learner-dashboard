@@ -2,8 +2,8 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 import {
   Route, Navigate, Routes,
 } from 'react-router-dom';
@@ -30,23 +30,29 @@ import App from './App';
 import NoticesWrapper from './components/NoticesWrapper';
 
 subscribe(APP_READY, () => {
-  ReactDOM.render(
-    <AppProvider store={store}>
-      <NoticesWrapper>
-        <Routes>
-          <Route path="/" element={<PageWrap><App /></PageWrap>} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </NoticesWrapper>
-    </AppProvider>,
-    document.getElementById('root'),
+  const root = createRoot(document.getElementById('root'));
+
+  root.render(
+    <StrictMode>
+      <AppProvider store={store}>
+        <NoticesWrapper>
+          <Routes>
+            <Route path="/" element={<PageWrap><App /></PageWrap>} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </NoticesWrapper>
+      </AppProvider>
+    </StrictMode>,
   );
 });
 
 subscribe(APP_INIT_ERROR, (error) => {
-  ReactDOM.render(
-    <ErrorPage message={error.message} />,
-    document.getElementById('root'),
+  const root = createRoot(document.getElementById('root'));
+
+  root.render(
+    <StrictMode>
+      <ErrorPage message={error.message} />
+    </StrictMode>,
   );
 });
 
