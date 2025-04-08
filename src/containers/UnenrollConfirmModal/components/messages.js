@@ -20,7 +20,7 @@ const messages = defineMessages({
   reasonHeading: {
     id: 'learner-dash.unenrollConfirm.confirm.reason.heading',
     description: 'Heading for unenroll reason modal',
-    defaultMessage: `What's your main reason for unenrolling?`,
+    defaultMessage: 'What\'s your main reason for unenrolling?',
   },
   reasonSkip: {
     id: 'learner-dash.unenrollConfirm.confirm.reason.skip',
