@@ -8,8 +8,8 @@ import {
   ModalDialog,
 } from '@openedx/paragon';
 
-import { utilHooks } from 'hooks';
-import { nullMethod, dateFormatter } from 'utils';
+import { utilHooks } from '@src/hooks';
+import { nullMethod, dateFormatter } from '@src/utils';
 
 import useSelectSessionModalData from './hooks';
 import { LEAVE_OPTION } from './constants';

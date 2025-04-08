@@ -4,9 +4,9 @@ import { Dropdown } from '@openedx/paragon';
 import { shallow } from '@edx/react-unit-test-utils';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import EmailSettingsModal from 'containers/EmailSettingsModal';
-import UnenrollConfirmModal from 'containers/UnenrollConfirmModal';
-import { reduxHooks } from 'hooks';
+import EmailSettingsModal from '@src/containers/EmailSettingsModal';
+import UnenrollConfirmModal from '@src/containers/UnenrollConfirmModal';
+import { reduxHooks } from '@src/hooks';
 import SocialShareMenu from './SocialShareMenu';
 import * as hooks from './hooks';
 import CourseCardMenu, { testIds } from '.';

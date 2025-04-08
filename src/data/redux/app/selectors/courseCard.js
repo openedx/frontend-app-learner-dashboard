@@ -1,6 +1,6 @@
-import { StrictDict } from 'utils';
-import { baseAppUrl } from 'data/services/lms/urls';
-import { EXECUTIVE_EDUCATION_COURSE_MODES } from 'data/constants/course';
+import { StrictDict } from '@src/utils';
+import { baseAppUrl } from '@src/data/services/lms/urls';
+import { EXECUTIVE_EDUCATION_COURSE_MODES } from '@src/data/constants/course';
 
 import * as module from './courseCard';
 import * as simpleSelectors from './simpleSelectors';

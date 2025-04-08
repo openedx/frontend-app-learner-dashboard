@@ -1,4 +1,4 @@
-import { createEventTracker, createLinkTracker } from 'data/services/segment/utils';
+import { createEventTracker, createLinkTracker } from '@src/data/services/segment/utils';
 import { categories, eventNames } from '../constants';
 import * as module from './course';
 

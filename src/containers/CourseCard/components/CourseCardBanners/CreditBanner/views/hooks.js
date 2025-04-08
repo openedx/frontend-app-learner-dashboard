@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { StrictDict } from 'utils';
-import { apiHooks } from 'hooks';
+import { StrictDict } from '@src/utils';
+import { apiHooks } from '@src/hooks';
 
 import * as module from './hooks';
 

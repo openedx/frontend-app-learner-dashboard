@@ -1,8 +1,8 @@
 import { shallow } from '@edx/react-unit-test-utils';
 
-import { reduxHooks } from 'hooks';
+import { reduxHooks } from '@src/hooks';
 
-import CourseCardActionSlot from 'plugin-slots/CourseCardActionSlot';
+import CourseCardActionSlot from '@src/plugin-slots/CourseCardActionSlot';
 import SelectSessionButton from './SelectSessionButton';
 import BeginCourseButton from './BeginCourseButton';
 import ResumeButton from './ResumeButton';

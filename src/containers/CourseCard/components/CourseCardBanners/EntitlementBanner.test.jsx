@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from '@edx/react-unit-test-utils';
 
-import { reduxHooks } from 'hooks';
+import { reduxHooks } from '@src/hooks';
 import EntitlementBanner from './EntitlementBanner';
 
 jest.mock('components/Banner', () => 'Banner');

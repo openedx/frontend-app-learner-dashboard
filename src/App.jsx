@@ -9,21 +9,21 @@ import { ErrorPage, AppContext } from '@edx/frontend-platform/react';
 import FooterSlot from '@openedx/frontend-slot-footer';
 import { Alert } from '@openedx/paragon';
 
-import { RequestKeys } from 'data/constants/requests';
-import store from 'data/store';
+import { RequestKeys } from '@src/data/constants/requests';
+import store from '@src/data/store';
 import {
   selectors,
   actions,
-} from 'data/redux';
-import { reduxHooks } from 'hooks';
-import Dashboard from 'containers/Dashboard';
+} from '@src/data/redux';
+import { reduxHooks } from '@src/hooks';
+import Dashboard from '@src/containers/Dashboard';
 
-import track from 'tracking';
+import track from '@src/tracking';
 
-import fakeData from 'data/services/lms/fakeData/courses';
+import fakeData from '@src/data/services/lms/fakeData/courses';
 
-import AppWrapper from 'containers/WidgetContainers/AppWrapper';
-import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
+import AppWrapper from '@src/containers/WidgetContainers/AppWrapper';
+import LearnerDashboardHeader from '@src/containers/LearnerDashboardHeader';
 
 import { getConfig } from '@edx/frontend-platform';
 import messages from './messages';

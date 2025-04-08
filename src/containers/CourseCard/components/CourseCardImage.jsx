@@ -4,9 +4,9 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { Badge } from '@openedx/paragon';
 
-import track from 'tracking';
-import { reduxHooks } from 'hooks';
-import verifiedRibbon from 'assets/verified-ribbon.png';
+import track from '@src/tracking';
+import { reduxHooks } from '@src/hooks';
+import verifiedRibbon from '@src/assets/verified-ribbon.png';
 import useActionDisabledState from './hooks';
 
 import messages from '../messages';

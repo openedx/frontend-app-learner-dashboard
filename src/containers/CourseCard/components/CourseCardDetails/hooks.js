@@ -1,5 +1,5 @@
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { utilHooks, reduxHooks } from 'hooks';
+import { utilHooks, reduxHooks } from '@src/hooks';
 
 import * as hooks from './hooks';
 import messages from './messages';

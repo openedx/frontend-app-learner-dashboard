@@ -2,11 +2,11 @@ import React from 'react';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { StrictDict } from 'utils';
+import { StrictDict } from '@src/utils';
 
-import track from 'tracking';
+import track from '@src/tracking';
 
-import { reduxHooks, apiHooks } from 'hooks';
+import { reduxHooks, apiHooks } from '@src/hooks';
 
 import { LEAVE_OPTION } from './constants';
 import messages from './messages';

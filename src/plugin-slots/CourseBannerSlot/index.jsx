@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { PluginSlot } from '@openedx/frontend-plugin-framework';
-import CourseBanner from 'containers/CourseCard/components/CourseCardBanners/CourseBanner';
+import CourseBanner from '@src/containers/CourseCard/components/CourseCardBanners/CourseBanner';
 
 const CourseBannerSlot = ({ cardId }) => (
   <PluginSlot

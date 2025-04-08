@@ -5,11 +5,11 @@ import { shallow } from '@edx/react-unit-test-utils';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { getConfig } from '@edx/frontend-platform';
 
-import { RequestKeys } from 'data/constants/requests';
-import { reduxHooks } from 'hooks';
-import Dashboard from 'containers/Dashboard';
-import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
-import AppWrapper from 'containers/WidgetContainers/AppWrapper';
+import { RequestKeys } from '@src/data/constants/requests';
+import { reduxHooks } from '@src/hooks';
+import Dashboard from '@src/containers/Dashboard';
+import LearnerDashboardHeader from '@src/containers/LearnerDashboardHeader';
+import AppWrapper from '@src/containers/WidgetContainers/AppWrapper';
 import { App } from './App';
 import messages from './messages';
 

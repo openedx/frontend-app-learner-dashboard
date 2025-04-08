@@ -1,8 +1,8 @@
 import { useWindowSize, breakpoints } from '@openedx/paragon';
-import track from 'tracking';
-import { linkNames } from 'tracking/constants';
+import track from '@src/tracking';
+import { linkNames } from '@src/tracking/constants';
 
-import { MockUseState } from 'testUtils';
+import { MockUseState } from '@src/testUtils';
 
 import * as hooks from './hooks';
 

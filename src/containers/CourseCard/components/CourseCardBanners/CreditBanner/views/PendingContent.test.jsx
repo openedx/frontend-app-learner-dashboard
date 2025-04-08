@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from '@edx/react-unit-test-utils';
 
-import { formatMessage } from 'testUtils';
-import { reduxHooks } from 'hooks';
+import { formatMessage } from '@src/testUtils';
+import { reduxHooks } from '@src/hooks';
 
 import messages from './messages';
 import PendingContent from './PendingContent';

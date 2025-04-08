@@ -1,5 +1,5 @@
-import { MockUseState } from 'testUtils';
-import { reduxHooks, apiHooks } from 'hooks';
+import { MockUseState } from '@src/testUtils';
+import { reduxHooks, apiHooks } from '@src/hooks';
 
 import * as hooks from './hooks';
 

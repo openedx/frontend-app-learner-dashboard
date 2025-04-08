@@ -16,7 +16,7 @@ The following `env.config.jsx` will render the `cardId` of the course as `<p>` e
 
 ```js
 import { DIRECT_PLUGIN, PLUGIN_OPERATIONS } from '@openedx/frontend-plugin-framework';
-import ActionButton from 'containers/CourseCard/components/CourseCardActions/ActionButton';
+import ActionButton from '@src/containers/CourseCard/components/CourseCardActions/ActionButton';
 
 const config = {
   pluginSlots: {

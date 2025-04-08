@@ -9,7 +9,7 @@ import {
 } from '@openedx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import confirmEmailSVG from 'assets/confirm-email.svg';
+import confirmEmailSVG from '@src/assets/confirm-email.svg';
 import messages from './messages';
 import './ConfirmEmailBanner.scss';
 import useConfirmEmailBannerData from './hooks';

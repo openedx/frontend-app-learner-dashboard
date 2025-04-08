@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { reduxHooks } from 'hooks';
+import { reduxHooks } from '@src/hooks';
 import { Hyperlink } from '@openedx/paragon';
 
 export const ProviderLink = ({ cardId }) => {

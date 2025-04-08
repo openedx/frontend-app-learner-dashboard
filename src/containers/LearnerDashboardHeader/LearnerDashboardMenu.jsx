@@ -1,6 +1,6 @@
 import { getConfig } from '@edx/frontend-platform';
 
-import urls from 'data/services/lms/urls';
+import urls from '@src/data/services/lms/urls';
 
 import messages from './messages';
 

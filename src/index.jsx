@@ -13,7 +13,7 @@ import {
   ErrorPage,
   PageWrap,
 } from '@edx/frontend-platform/react';
-import store from 'data/store';
+import store from '@src/data/store';
 import {
   APP_READY,
   APP_INIT_ERROR,

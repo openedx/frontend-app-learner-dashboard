@@ -1,11 +1,11 @@
 import React from 'react';
 import { AppContext } from '@edx/frontend-platform/react';
-import { keyStore } from 'utils';
-import { RequestKeys } from 'data/constants/requests';
-import { post } from 'data/services/lms/utils';
-import api from 'data/services/lms/api';
+import { keyStore } from '@src/utils';
+import { RequestKeys } from '@src/data/constants/requests';
+import { post } from '@src/data/services/lms/utils';
+import api from '@src/data/services/lms/api';
 
-import * as reduxHooks from 'data/redux/hooks';
+import * as reduxHooks from '@src/data/redux/hooks';
 import * as apiHooks from './api';
 
 const reduxKeys = keyStore(reduxHooks);

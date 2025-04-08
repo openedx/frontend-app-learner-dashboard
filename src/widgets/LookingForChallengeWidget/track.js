@@ -1,5 +1,5 @@
-import { StrictDict } from 'utils';
-import track from 'tracking';
+import { StrictDict } from '@src/utils';
+import track from '@src/tracking';
 
 export const linkNames = StrictDict({
   findCoursesWidget: 'learner_home_widget_explore',

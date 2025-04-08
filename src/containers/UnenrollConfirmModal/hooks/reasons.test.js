@@ -1,10 +1,10 @@
-import { MockUseState } from 'testUtils';
-import track from 'tracking';
+import { MockUseState } from '@src/testUtils';
+import track from '@src/tracking';
 import {
   apiHooks,
   reduxHooks,
   utilHooks,
-} from 'hooks';
+} from '@src/hooks';
 
 import * as hooks from './reasons';
 

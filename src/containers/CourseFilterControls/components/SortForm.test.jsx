@@ -1,6 +1,6 @@
 import { shallow } from '@edx/react-unit-test-utils';
 
-import { SortKeys } from 'data/constants/app';
+import { SortKeys } from '@src/data/constants/app';
 import SortForm from './SortForm';
 
 jest.mock('./Checkbox', () => 'Checkbox');

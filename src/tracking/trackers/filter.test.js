@@ -1,4 +1,4 @@
-import { createEventTracker } from 'data/services/segment/utils';
+import { createEventTracker } from '@src/data/services/segment/utils';
 import { eventNames, categories } from '../constants';
 import * as trackers from './filter';
 

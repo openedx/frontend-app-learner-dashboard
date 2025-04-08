@@ -1,9 +1,9 @@
 import { shallow } from '@edx/react-unit-test-utils';
 
-import { reduxHooks } from 'hooks';
+import { reduxHooks } from '@src/hooks';
 
-import SelectSessionModal from 'containers/SelectSessionModal';
-import CoursesPanel from 'containers/CoursesPanel';
+import SelectSessionModal from '@src/containers/SelectSessionModal';
+import CoursesPanel from '@src/containers/CoursesPanel';
 
 import DashboardLayout from './DashboardLayout';
 import LoadingView from './LoadingView';

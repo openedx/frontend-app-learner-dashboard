@@ -1,9 +1,9 @@
-// import { StrictDict } from 'utils';
+// import { StrictDict } from '@src/utils';
 import {
   ErrorStatuses,
   // RequestKeys,
-} from 'data/constants/requests';
-import { actions } from 'data/redux';
+} from '@src/data/constants/requests';
+import { actions } from '@src/data/redux';
 
 export const errorData = (status, data = '') => ({
   response: {

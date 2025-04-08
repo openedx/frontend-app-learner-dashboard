@@ -4,7 +4,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { Button, Chip } from '@openedx/paragon';
 import { CloseSmall } from '@openedx/paragon/icons';
-import { reduxHooks } from 'hooks';
+import { reduxHooks } from '@src/hooks';
 
 import messages from './messages';
 import './index.scss';

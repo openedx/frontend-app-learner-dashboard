@@ -3,10 +3,10 @@ import React from 'react';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { useWindowSize, breakpoints } from '@openedx/paragon';
 
-import { apiHooks } from 'hooks';
-import { MockUseState } from 'testUtils';
+import { apiHooks } from '@src/hooks';
+import { MockUseState } from '@src/testUtils';
 
-import appMessages from 'messages';
+import appMessages from '@src/messages';
 import * as hooks from './hooks';
 
 jest.mock('@openedx/paragon', () => ({

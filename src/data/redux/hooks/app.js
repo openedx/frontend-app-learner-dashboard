@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useSelector, useDispatch } from 'react-redux';
 
-import * as redux from 'data/redux';
+import * as redux from '@src/data/redux';
 import * as module from './app';
 
 const selectors = redux.selectors.app;

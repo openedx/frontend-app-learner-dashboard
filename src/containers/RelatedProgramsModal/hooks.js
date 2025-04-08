@@ -1,4 +1,4 @@
-import { reduxHooks } from 'hooks';
+import { reduxHooks } from '@src/hooks';
 
 export const useProgramData = ({
   cardId,

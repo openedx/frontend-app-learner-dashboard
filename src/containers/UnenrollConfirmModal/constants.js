@@ -1,5 +1,5 @@
 /* eslint-disable quotes */
-import { StrictDict } from 'utils';
+import { StrictDict } from '@src/utils';
 import { defineMessages } from '@edx/frontend-platform/i18n';
 
 export const reasonKeys = StrictDict({
