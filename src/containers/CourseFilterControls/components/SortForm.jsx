@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { SortKeys } from 'data/constants/app';
+import { SortKeys } from '@src/data/constants/app';
 
 import { Form } from '@openedx/paragon';
 

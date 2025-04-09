@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from '@edx/react-unit-test-utils';
 
-import { keyStore } from 'utils';
+import { keyStore } from '@src/utils';
 
 import useCreditRequestFormData from './hooks';
 import CreditRequestForm from '.';

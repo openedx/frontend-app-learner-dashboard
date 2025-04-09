@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { Pagination } from '@openedx/paragon';
 import {
   ActiveCourseFilters,
-} from 'containers/CourseFilterControls';
-import CourseCard from 'containers/CourseCard';
+} from '@src/containers/CourseFilterControls';
+import CourseCard from '@src/containers/CourseCard';
 
 import { useIsCollapsed } from './hooks';
 

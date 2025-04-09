@@ -1,4 +1,4 @@
-import api from 'data/services/lms/api';
+import api from '@src/data/services/lms/api';
 import * as trackers from './socialShare';
 
 jest.mock('data/services/lms/api', () => ({

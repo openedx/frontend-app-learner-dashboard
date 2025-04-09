@@ -14,7 +14,7 @@ import {
 } from '@openedx/paragon';
 import { Close, Tune } from '@openedx/paragon/icons';
 
-import { reduxHooks } from 'hooks';
+import { reduxHooks } from '@src/hooks';
 
 import FilterForm from './components/FilterForm';
 import SortForm from './components/SortForm';

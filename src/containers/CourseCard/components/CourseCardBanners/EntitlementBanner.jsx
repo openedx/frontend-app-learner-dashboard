@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { Button, MailtoLink } from '@openedx/paragon';
 
-import { utilHooks, reduxHooks } from 'hooks';
+import { utilHooks, reduxHooks } from '@src/hooks';
 
-import Banner from 'components/Banner';
+import Banner from '@src/components/Banner';
 import messages from './messages';
 
 export const EntitlementBanner = ({ cardId }) => {

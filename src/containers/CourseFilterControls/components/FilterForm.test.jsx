@@ -1,6 +1,6 @@
 import { shallow } from '@edx/react-unit-test-utils';
 
-import { FilterKeys } from 'data/constants/app';
+import { FilterKeys } from '@src/data/constants/app';
 import FilterForm, { filterOrder } from './FilterForm';
 
 jest.mock('./Checkbox', () => 'Checkbox');

@@ -6,6 +6,9 @@ module.exports = createConfig('jest', {
     '<rootDir>/src/setupTest.jsx',
   ],
   modulePaths: ['<rootDir>/src/'],
+  moduleNameMapper: {
+    '@src/(.*)': '<rootDir>/src/$1',
+  },
   coveragePathIgnorePatterns: [
     'src/segment.js',
     'src/postcss.config.js',

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Button, Icon } from '@openedx/paragon';
 import { Program } from '@openedx/paragon/icons';
 
-import RelatedProgramsBadgeModal from 'containers/RelatedProgramsModal';
+import RelatedProgramsBadgeModal from '@src/containers/RelatedProgramsModal';
 import useRelatedProgramsBadgeData from './hooks';
 
 export const RelatedProgramsBadge = ({ cardId }) => {

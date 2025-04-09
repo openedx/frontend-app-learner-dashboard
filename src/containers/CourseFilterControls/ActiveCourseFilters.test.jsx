@@ -1,6 +1,6 @@
 import { shallow } from '@edx/react-unit-test-utils';
 
-import { FilterKeys } from 'data/constants/app';
+import { FilterKeys } from '@src/data/constants/app';
 import ActiveCourseFilters from './ActiveCourseFilters';
 
 describe('ActiveCourseFilters', () => {

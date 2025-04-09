@@ -1,5 +1,5 @@
-import { keyStore } from 'utils';
-import { createEventTracker, createLinkTracker } from 'data/services/segment/utils';
+import { keyStore } from '@src/utils';
+import { createEventTracker, createLinkTracker } from '@src/data/services/segment/utils';
 import { categories, eventNames } from '../constants';
 import * as trackers from './course';
 

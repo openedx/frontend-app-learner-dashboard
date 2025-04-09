@@ -2,9 +2,9 @@ import React from 'react';
 
 import queryString from 'query-string';
 
-import { ListPageSize, SortKeys } from 'data/constants/app';
-import { reduxHooks } from 'hooks';
-import { StrictDict } from 'utils';
+import { ListPageSize, SortKeys } from '@src/data/constants/app';
+import { reduxHooks } from '@src/hooks';
+import { StrictDict } from '@src/utils';
 
 import * as module from './hooks';
 

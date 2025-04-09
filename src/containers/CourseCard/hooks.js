@@ -1,6 +1,6 @@
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { useWindowSize, breakpoints } from '@openedx/paragon';
-import { reduxHooks } from 'hooks';
+import { reduxHooks } from '@src/hooks';
 
 export const useIsCollapsed = () => {
   const { width } = useWindowSize();

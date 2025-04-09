@@ -9,7 +9,7 @@ import {
   ModalDialog,
 } from '@openedx/paragon';
 
-import { nullMethod } from 'utils';
+import { nullMethod } from '@src/utils';
 
 import useEmailData from './hooks';
 import messages from './messages';

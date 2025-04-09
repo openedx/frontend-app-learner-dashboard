@@ -5,7 +5,7 @@ import {
 } from '@redux-devtools/extension';
 import { createLogger } from 'redux-logger';
 
-import rootReducer, { actions, selectors } from 'data/redux';
+import rootReducer, { actions, selectors } from '@src/data/redux';
 
 import exportedStore, { createStore } from './store';
 

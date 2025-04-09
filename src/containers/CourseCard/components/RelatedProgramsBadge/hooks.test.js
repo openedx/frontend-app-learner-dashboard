@@ -1,7 +1,7 @@
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { MockUseState } from 'testUtils';
-import { reduxHooks } from 'hooks';
+import { MockUseState } from '@src/testUtils';
+import { reduxHooks } from '@src/hooks';
 
 import * as hooks from './hooks';
 import messages from './messages';

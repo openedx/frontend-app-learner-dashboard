@@ -1,4 +1,4 @@
-import { RequestStates, RequestKeys } from 'data/constants/requests';
+import { RequestStates, RequestKeys } from '@src/data/constants/requests';
 
 import selectors from './selectors';
 

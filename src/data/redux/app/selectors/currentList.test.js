@@ -1,5 +1,5 @@
-import { keyStore } from 'utils';
-import { FilterKeys, SortKeys } from 'data/constants/app';
+import { keyStore } from '@src/utils';
+import { FilterKeys, SortKeys } from '@src/data/constants/app';
 import simpleSelectors from './simpleSelectors';
 import * as module from './currentList';
 

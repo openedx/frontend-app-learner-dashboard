@@ -1,7 +1,7 @@
 import { useKeyedState, StrictDict } from '@edx/react-unit-test-utils';
 
-import track from 'tracking';
-import { reduxHooks } from 'hooks';
+import track from '@src/tracking';
+import { reduxHooks } from '@src/hooks';
 
 export const stateKeys = StrictDict({
   isUnenrollConfirmVisible: 'isUnenrollConfirmVisible',

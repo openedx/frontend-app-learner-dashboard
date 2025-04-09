@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 
-import * as redux from 'data/redux';
+import * as redux from '@src/data/redux';
 import * as module from './requests';
 
 const selectors = redux.selectors.requests;

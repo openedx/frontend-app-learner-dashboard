@@ -1,7 +1,7 @@
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { keyStore } from 'utils';
-import { utilHooks, reduxHooks } from 'hooks';
+import { keyStore } from '@src/utils';
+import { utilHooks, reduxHooks } from '@src/hooks';
 
 import * as hooks from './hooks';
 import messages from './messages';

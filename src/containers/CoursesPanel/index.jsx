@@ -2,12 +2,12 @@ import React from 'react';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { reduxHooks } from 'hooks';
+import { reduxHooks } from '@src/hooks';
 import {
   CourseFilterControls,
-} from 'containers/CourseFilterControls';
-import CourseListSlot from 'plugin-slots/CourseListSlot';
-import NoCoursesViewSlot from 'plugin-slots/NoCoursesViewSlot';
+} from '@src/containers/CourseFilterControls';
+import CourseListSlot from '@src/plugin-slots/CourseListSlot';
+import NoCoursesViewSlot from '@src/plugin-slots/NoCoursesViewSlot';
 
 import { useCourseListData } from './hooks';
 

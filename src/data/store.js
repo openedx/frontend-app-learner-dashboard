@@ -5,7 +5,7 @@ import {
 } from '@redux-devtools/extension';
 import { createLogger } from 'redux-logger';
 
-import apiTestUtils from 'data/services/lms/fakeData/testUtils';
+import apiTestUtils from '@src/data/services/lms/fakeData/testUtils';
 
 import reducer, { actions, selectors } from './redux';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from '@edx/react-unit-test-utils';
-import { formatMessage } from 'testUtils';
+import { formatMessage } from '@src/testUtils';
 
 import MasqueradeBar from '.';
 import hooks from './hooks';

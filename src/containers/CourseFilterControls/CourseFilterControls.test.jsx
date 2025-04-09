@@ -2,7 +2,7 @@ import { shallow } from '@edx/react-unit-test-utils';
 
 import { breakpoints, useWindowSize } from '@openedx/paragon';
 
-import { reduxHooks } from 'hooks';
+import { reduxHooks } from '@src/hooks';
 
 import CourseFilterControls from './CourseFilterControls';
 import useCourseFilterControlsData from './hooks';

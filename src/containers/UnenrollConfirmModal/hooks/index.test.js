@@ -1,5 +1,5 @@
-import { apiHooks } from 'hooks';
-import { MockUseState } from 'testUtils';
+import { apiHooks } from '@src/hooks';
+import { MockUseState } from '@src/testUtils';
 
 import * as reasons from './reasons';
 import * as hooks from '.';

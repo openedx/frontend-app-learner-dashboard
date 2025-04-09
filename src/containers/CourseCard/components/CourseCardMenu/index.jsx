@@ -6,9 +6,9 @@ import { Dropdown, Icon, IconButton } from '@openedx/paragon';
 import { MoreVert } from '@openedx/paragon/icons';
 import { StrictDict } from '@edx/react-unit-test-utils';
 
-import EmailSettingsModal from 'containers/EmailSettingsModal';
-import UnenrollConfirmModal from 'containers/UnenrollConfirmModal';
-import { reduxHooks } from 'hooks';
+import EmailSettingsModal from '@src/containers/EmailSettingsModal';
+import UnenrollConfirmModal from '@src/containers/UnenrollConfirmModal';
+import { reduxHooks } from '@src/hooks';
 import SocialShareMenu from './SocialShareMenu';
 import {
   useEmailSettings,

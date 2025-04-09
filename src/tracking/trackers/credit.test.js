@@ -1,5 +1,5 @@
-import { createEventTracker, createLinkTracker } from 'data/services/segment/utils';
-import { creditPurchaseUrl } from 'data/services/lms/urls';
+import { createEventTracker, createLinkTracker } from '@src/data/services/segment/utils';
+import { creditPurchaseUrl } from '@src/data/services/lms/urls';
 
 import { eventNames, categories } from '../constants';
 import * as trackers from './credit';
