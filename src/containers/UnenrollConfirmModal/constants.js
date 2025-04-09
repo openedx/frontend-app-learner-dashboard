@@ -1,5 +1,6 @@
 /* eslint-disable quotes */
 import { StrictDict } from 'utils';
+import { defineMessages } from '@edx/frontend-platform/i18n';
 
 export const reasonKeys = StrictDict({
   prereqs: 'prereqs',
@@ -26,7 +27,7 @@ export const order = [
   reasonKeys.easy,
 ];
 
-const messages = StrictDict({
+const messages = defineMessages({
   [reasonKeys.prereqs]: {
     id: 'learner-dash.unenrollConfirm.reasons.prereqs',
     description: 'Unenroll reason option - missing prerequisites',
