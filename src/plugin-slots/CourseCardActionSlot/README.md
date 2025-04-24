@@ -1,6 +1,10 @@
 # Course Card Action Slot
 
-### Slot ID: `course_card_action_slot`
+### Slot ID: `org.openedx.frontend.learner_dashboard.course_card_action.v1`
+
+### Slot ID Aliases
+* `course_card_action_slot`
+
 ### Props:
 * `cardId`
 
@@ -20,7 +24,7 @@ import ActionButton from 'containers/CourseCard/components/CourseCardActions/Act
 
 const config = {
   pluginSlots: {
-    course_card_action_slot: {
+    'org.openedx.frontend.learner_dashboard.course_card_action.v1': {
       keepDefault: false,
       plugins: [
         {

@@ -1,6 +1,9 @@
 # Course List Slot
 
-### Slot ID: `course_list_slot`
+### Slot ID: `org.openedx.frontend.learner_dashboard.course_list.v1`
+
+### Slot ID Aliases
+* `course_list_slot`
 
 ## Plugin Props
 
@@ -25,7 +28,7 @@ import { DIRECT_PLUGIN, PLUGIN_OPERATIONS } from '@openedx/frontend-plugin-frame
 
 const config = {
   pluginSlots: {
-    course_list_slot: {
+    'org.openedx.frontend.learner_dashboard.course_list.v1': {
       // Hide the default CourseList component
       keepDefault: false,
       plugins: [

@@ -5,7 +5,10 @@ import LookingForChallengeWidget from 'widgets/LookingForChallengeWidget';
 
 // eslint-disable-next-line arrow-body-style
 export const WidgetSidebarSlot = () => (
-  <PluginSlot id="widget_sidebar_slot">
+  <PluginSlot
+    id="org.openedx.frontend.learner_dashboard.widget_sidebar.v1"
+    idAliases={['widget_sidebar_slot']}
+  >
     <LookingForChallengeWidget />
   </PluginSlot>
 );

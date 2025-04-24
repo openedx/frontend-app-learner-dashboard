@@ -1,6 +1,9 @@
 # No Courses View Slot
 
-### Slot ID: `no_courses_view_slot`
+### Slot ID: `org.openedx.frontend.learner_dashboard.no_courses_view.v1`
+
+### Slot ID Aliases
+* `no_courses_view_slot`
 
 ## Description
 
@@ -21,7 +24,7 @@ import { DIRECT_PLUGIN, PLUGIN_OPERATIONS } from '@openedx/frontend-plugin-frame
 
 const config = {
   pluginSlots: {
-    no_courses_view_slot: {
+    'org.openedx.frontend.learner_dashboard.no_courses_view.v1': {
       // Hide the default NoCoursesView component
       keepDefault: false,
       plugins: [
