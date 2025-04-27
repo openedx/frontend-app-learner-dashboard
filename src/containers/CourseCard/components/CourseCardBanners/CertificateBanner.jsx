@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 
 import { MailtoLink, Hyperlink } from '@openedx/paragon';
 import { CheckCircle } from '@openedx/paragon/icons';
-import { useIntl } from '@edx/frontend-platform/i18n';
+import { useIntl } from '@openedx/frontend-base';
 
-import { utilHooks, reduxHooks } from 'hooks';
-import Banner from 'components/Banner';
+import { utilHooks, reduxHooks } from '../../../../hooks';
+import Banner from '../../../../components/Banner';
 
 import messages from './messages';
 
@@ -31,7 +31,7 @@ export const CertificateBanner = ({ cardId }) => {
   if (certificate.isRestricted) {
     return (
       <Banner variant="danger">
-        { supportEmail ? formatMessage(messages.certRestricted, { supportEmail: emailLink(supportEmail) }) : formatMessage(messages.certRestrictedNoEmail)}
+        {supportEmail ? formatMessage(messages.certRestricted, { supportEmail: emailLink(supportEmail) }) : formatMessage(messages.certRestrictedNoEmail)}
         {isVerified && '  '}
         {isVerified && (billingEmail ? formatMessage(messages.certRefundContactBilling, { billingEmail: emailLink(billingEmail) }) : formatMessage(messages.certRefundContactBillingNoEmail))}
       </Banner>

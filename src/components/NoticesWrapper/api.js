@@ -1,8 +1,12 @@
-import { getConfig } from '@edx/frontend-platform';
-import { getAuthenticatedHttpClient, getAuthenticatedUser } from '@edx/frontend-platform/auth';
-import { logError, logInfo } from '@edx/frontend-platform/logging';
+import {
+  getConfig,
+  getAuthenticatedHttpClient,
+  getAuthenticatedUser,
+  logError,
+  logInfo
+} from '@openedx/frontend-base';
 
-export const noticesUrl = `${getConfig().LMS_BASE_URL}/notices/api/v1/unacknowledged`;
+export const noticesUrl = `${getConfig().lmsBaseUrl}/notices/api/v1/unacknowledged`;
 
 export const getNotices = ({ onLoad, notFoundMessage }) => {
   const authenticatedUser = getAuthenticatedUser();

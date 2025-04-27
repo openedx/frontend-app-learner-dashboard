@@ -1,7 +1,7 @@
 import { when } from 'jest-when';
 import * as ReactShare from 'react-share';
 
-import { useIntl } from '@edx/frontend-platform/i18n';
+import { useIntl } from '@openedx/frontend-base';
 import { formatMessage, shallow } from '@edx/react-unit-test-utils';
 
 import track from 'tracking';
@@ -20,8 +20,8 @@ jest.mock('tracking', () => ({
   socialShare: 'test-social-share-key',
 }));
 
-jest.mock('@edx/frontend-platform/i18n', () => ({
-  ...jest.requireActual('@edx/frontend-platform/i18n'),
+jest.mock('@openedx/frontend-base', () => ({
+  ...jest.requireActual('@openedx/frontend-base'),
   useIntl: jest.fn().mockReturnValue({
     formatMessage: jest.requireActual('@edx/react-unit-test-utils').formatMessage,
   }),

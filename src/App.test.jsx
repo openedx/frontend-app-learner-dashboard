@@ -2,8 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { shallow } from '@edx/react-unit-test-utils';
 
-import { useIntl } from '@edx/frontend-platform/i18n';
-import { getConfig } from '@edx/frontend-platform';
+import { useIntl, getConfig } from '@openedx/frontend-base';
 
 import { RequestKeys } from 'data/constants/requests';
 import { reduxHooks } from 'hooks';
@@ -32,7 +31,7 @@ jest.mock('hooks', () => ({
 }));
 jest.mock('data/store', () => 'data/store');
 
-jest.mock('@edx/frontend-platform', () => ({
+jest.mock('@openedx/frontend-base', () => ({
   getConfig: jest.fn(() => ({})),
 }));
 

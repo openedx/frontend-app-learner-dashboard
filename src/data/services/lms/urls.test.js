@@ -1,4 +1,4 @@
-import { getConfig } from '@edx/frontend-platform';
+import { getAppConfig, getConfig } from '@openedx/frontend-base';
 import * as urls from './urls';
 
 describe('urls', () => {
@@ -10,7 +10,7 @@ describe('urls', () => {
     it('returns the url if it is relative', () => {
       const url = '/edx.org';
       expect(urls.baseAppUrl(url)).toEqual(
-        `${getConfig().LMS_BASE_URL}${url}`,
+        `${getConfig().lmsBaseUrl}${url}`,
       );
     });
     it('return null if url is null', () => {
@@ -25,7 +25,7 @@ describe('urls', () => {
     it('returns the url if it is relative', () => {
       const url = '/edx.org';
       expect(urls.learningMfeUrl(url)).toEqual(
-        `${getConfig().LEARNING_BASE_URL}${url}`,
+        `${getAppConfig('openedxLearnerDashboard').LEARNING_BASE_URL}${url}`,
       );
     });
     it('return null if url is null', () => {

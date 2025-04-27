@@ -1,8 +1,8 @@
 import React from 'react';
-import { getConfig } from '@edx/frontend-platform';
+import { getAppConfig } from '@openedx/frontend-base';
 import { useIntl } from 'react-intl';
 
-import { StrictDict } from 'utils';
+import { StrictDict } from '../../utils';
 import { getNotices } from './api';
 import * as module from './hooks';
 import messages from './messages';
@@ -22,7 +22,7 @@ export const useNoticesWrapperData = () => {
   const { formatMessage } = useIntl();
 
   React.useEffect(() => {
-    if (getConfig().ENABLE_NOTICES) {
+    if (getAppConfig('openedxLearnerDashboard').ENABLE_NOTICES) {
       getNotices({
         onLoad: (data) => {
           if (data?.data?.results?.length > 0) {

@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { PluginSlot } from '@openedx/frontend-plugin-framework';
-import NoCoursesView from 'containers/CoursesPanel/NoCoursesView';
+
+import NoCoursesView from '../../containers/CoursesPanel/NoCoursesView';
 
 export const NoCoursesViewSlot = () => (
   <PluginSlot

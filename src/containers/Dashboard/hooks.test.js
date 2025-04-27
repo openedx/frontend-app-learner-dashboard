@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useIntl } from '@edx/frontend-platform/i18n';
+import { useIntl } from '@openedx/frontend-base';
 import { useWindowSize, breakpoints } from '@openedx/paragon';
 
 import { apiHooks } from 'hooks';
@@ -38,7 +38,9 @@ describe('CourseCard hooks', () => {
   });
 
   describe('useDashboardLayoutData', () => {
-    beforeEach(() => { state.mock(); });
+    beforeEach(() => {
+      state.mock();
+    });
     describe('behavior', () => {
       it('initializes sidebarShowing to default true value', () => {
         hooks.useDashboardLayoutData();

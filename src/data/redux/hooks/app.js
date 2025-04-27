@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useSelector, useDispatch } from 'react-redux';
 
-import * as redux from 'data/redux';
+import * as redux from '../../../data/redux';
 import * as module from './app';
 
 const selectors = redux.selectors.app;
@@ -23,7 +23,6 @@ export const useCurrentCourseList = (opts) => useSelector(
 );
 export const useShowSelectSessionModal = () => useSelector(selectors.showSelectSessionModal);
 
-// eslint-disable-next-line
 export const useCourseCardData = (selector) => (cardId) => useSelector(
   (state) => selector(state, cardId),
 );

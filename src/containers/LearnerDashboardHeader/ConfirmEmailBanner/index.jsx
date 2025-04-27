@@ -7,9 +7,10 @@ import {
   ModalDialog,
   PageBanner,
 } from '@openedx/paragon';
-import { useIntl } from '@edx/frontend-platform/i18n';
+import { useIntl } from '@openedx/frontend-base';
 
-import confirmEmailSVG from 'assets/confirm-email.svg';
+import confirmEmailSVG from '../../../assets/confirm-email.svg';
+
 import messages from './messages';
 import './ConfirmEmailBanner.scss';
 import useConfirmEmailBannerData from './hooks';

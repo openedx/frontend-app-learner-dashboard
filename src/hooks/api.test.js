@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppContext } from '@edx/frontend-platform/react';
+import { AppContext } from '@openedx/frontend-base';
 import { keyStore } from 'utils';
 import { RequestKeys } from 'data/constants/requests';
 import { post } from 'data/services/lms/utils';
@@ -86,7 +86,9 @@ describe('api hooks', () => {
   describe('network requests', () => {
     const mockUseNetworkRequest = jest.fn((action, args) => ({ action, args }));
     const testRequestKey = (requestKey) => {
-      test('requestKey', () => { expect(hook.args.requestKey).toEqual(requestKey); });
+      test('requestKey', () => {
+        expect(hook.args.requestKey).toEqual(requestKey);
+      });
     };
 
     beforeEach(() => {

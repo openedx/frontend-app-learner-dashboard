@@ -2,11 +2,11 @@ import React from 'react';
 
 import { MockUseState } from 'testUtils';
 
-import { getConfig } from '@edx/frontend-platform';
+import { getConfig } from '@openedx/frontend-base';
 import { getNotices } from './api';
 import * as hooks from './hooks';
 
-jest.mock('@edx/frontend-platform', () => ({ getConfig: jest.fn() }));
+jest.mock('@openedx/frontend-base', () => ({ getConfig: jest.fn() }));
 jest.mock('./api', () => ({ getNotices: jest.fn() }));
 const mockFormatMessage = jest.fn(message => message.defaultMessage || 'translated-string');
 jest.mock('react-intl', () => ({

@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { useIntl } from '@edx/frontend-platform/i18n';
+import { useIntl } from '@openedx/frontend-base';
 import { Dropdown, Icon, IconButton } from '@openedx/paragon';
 import { MoreVert } from '@openedx/paragon/icons';
 import { StrictDict } from '@edx/react-unit-test-utils';
 
-import EmailSettingsModal from 'containers/EmailSettingsModal';
-import UnenrollConfirmModal from 'containers/UnenrollConfirmModal';
-import { reduxHooks } from 'hooks';
+import EmailSettingsModal from '../../../../containers/EmailSettingsModal';
+import UnenrollConfirmModal from '../../../../containers/UnenrollConfirmModal';
+import { reduxHooks } from '../../../../hooks';
+
 import SocialShareMenu from './SocialShareMenu';
 import {
   useEmailSettings,

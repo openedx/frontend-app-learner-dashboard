@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useIntl } from '@edx/frontend-platform/i18n';
+import { useIntl } from '@openedx/frontend-base';
 
 import { Badge } from '@openedx/paragon';
 
-import track from 'tracking';
-import { reduxHooks } from 'hooks';
-import verifiedRibbon from 'assets/verified-ribbon.png';
+import track from '../../../tracking';
+import { reduxHooks } from '../../../hooks';
+import verifiedRibbon from '../../../assets/verified-ribbon.png';
 import useActionDisabledState from './hooks';
 
 import messages from '../messages';

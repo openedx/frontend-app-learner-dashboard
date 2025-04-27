@@ -1,4 +1,4 @@
-import eventNames from 'tracking/constants';
+import eventNames from '../../../tracking/constants';
 import {
   client,
   get,

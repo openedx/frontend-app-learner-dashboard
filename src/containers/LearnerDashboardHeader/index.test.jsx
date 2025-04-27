@@ -1,4 +1,4 @@
-import { mergeConfig } from '@edx/frontend-platform';
+import { mergeConfig } from '@openedx/frontend-base';
 import { shallow } from '@edx/react-unit-test-utils';
 import Header from '@edx/frontend-component-header';
 

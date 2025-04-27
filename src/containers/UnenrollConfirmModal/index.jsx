@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { ModalDialog } from '@openedx/paragon';
 
-import { nullMethod } from 'utils';
+import { nullMethod } from '../../utils';
 
 import ConfirmPane from './components/ConfirmPane';
 import ReasonPane from './components/ReasonPane';

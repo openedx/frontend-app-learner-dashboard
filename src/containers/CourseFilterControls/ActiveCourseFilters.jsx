@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useIntl } from '@edx/frontend-platform/i18n';
+import { useIntl } from '@openedx/frontend-base';
 
 import { Button, Chip } from '@openedx/paragon';
 import { CloseSmall } from '@openedx/paragon/icons';
-import { reduxHooks } from 'hooks';
+import { reduxHooks } from '../../hooks';
 
 import messages from './messages';
 import './index.scss';

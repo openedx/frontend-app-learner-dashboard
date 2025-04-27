@@ -1,4 +1,4 @@
-import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
+import { getAuthenticatedHttpClient } from '@openedx/frontend-base';
 
 /**
  * stringify(query, existingQuery)
