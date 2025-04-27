@@ -1,5 +1,5 @@
-import { StrictDict } from 'utils';
-import { RequestStates, RequestKeys } from 'data/constants/requests';
+import { StrictDict } from '../../../utils';
+import { RequestStates, RequestKeys } from '../../../data/constants/requests';
 // import * as module from './selectors';
 
 export const requestStatus = (state, { requestKey }) => state.requests[requestKey];
@@ -16,16 +16,6 @@ export const errorCode = (request) => request.error?.response?.data;
 
 export const data = (request) => request.data;
 
-export const masquerade = (state) => {
-  const request = requestStatus(state, { requestKey: RequestKeys.masquerade });
-  return {
-    isMasquerading: isCompleted(request),
-    isMasqueradingFailed: isFailed(request),
-    isMasqueradingPending: isPending(request),
-    masqueradeErrorStatus: errorStatus(request),
-  };
-};
-
 export default StrictDict({
   requestStatus,
   isInactive: statusSelector(isInactive),
@@ -36,5 +26,4 @@ export default StrictDict({
   errorCode: statusSelector(errorCode),
   errorStatus: statusSelector(errorStatus),
   data: statusSelector(data),
-  masquerade,
 });

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { useIntl } from '@edx/frontend-platform/i18n';
+import { useIntl } from '@openedx/frontend-base';
 import {
   ActionRow,
   Button,
@@ -9,7 +9,7 @@ import {
   ModalDialog,
 } from '@openedx/paragon';
 
-import { nullMethod } from 'utils';
+import { nullMethod } from '../../utils';
 
 import useEmailData from './hooks';
 import messages from './messages';

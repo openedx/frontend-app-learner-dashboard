@@ -5,7 +5,7 @@ import {
 } from '@redux-devtools/extension';
 import { createLogger } from 'redux-logger';
 
-import rootReducer, { actions, selectors } from 'data/redux';
+import rootReducer from 'data/redux';
 
 import exportedStore, { createStore } from './store';
 
@@ -42,27 +42,6 @@ describe('store aggregator module', () => {
           composeWithDevToolsLogOnlyInProduction(applyMiddleware(thunkMiddleware, createLogger())),
         );
       });
-    });
-  });
-  describe('dev exposed tools', () => {
-    beforeEach(() => {
-      window.store = undefined;
-      window.actions = undefined;
-      window.selectors = undefined;
-    });
-    it('exposes redux tools if in development env', () => {
-      process.env.NODE_ENV = 'development';
-      const store = createStore();
-      expect(window.store).toEqual(store);
-      expect(window.actions).toEqual(actions);
-      expect(window.selectors).toEqual(selectors);
-    });
-    it('does not expose redux tools if in production env', () => {
-      process.env.NODE_ENV = 'production';
-      createStore();
-      expect(window.store).toEqual(undefined);
-      expect(window.actions).toEqual(undefined);
-      expect(window.selectors).toEqual(undefined);
     });
   });
 });

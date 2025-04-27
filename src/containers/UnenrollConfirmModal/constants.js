@@ -1,6 +1,5 @@
-/* eslint-disable quotes */
-import { StrictDict } from 'utils';
-import { defineMessages } from '@edx/frontend-platform/i18n';
+import { StrictDict } from '../../utils';
+import { defineMessages } from '@openedx/frontend-base';
 
 export const reasonKeys = StrictDict({
   prereqs: 'prereqs',

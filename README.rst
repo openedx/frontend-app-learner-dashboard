@@ -18,7 +18,7 @@ frontend-app-learner-dashboard
 The Learner Home app is a microfrontend (MFE) course listing experience for the Open edX Learning Management System
 (LMS).  This experience was designed to provide a clean and functional interface to allow learners to view all of their
 open enrollments, as well as take relevant actions on those enrollments.  It also serves as host to a number of exposed
-"widget" containers to provide upsell and discovery widgets as sidebar/footer components.
+"widget" containers to provide upsell and discovery widgets as sidebar components.
 
 Quickstart
 ----------
@@ -30,31 +30,10 @@ To start the MFE and enable the feature in LMS:
 From there, simply load the configured address/port.  You should be prompted to log into your LMS if you are not
 already, and then redirected to your home page.
 
-Plugins
+Widgets
 -------
-This MFE can be customized using `Frontend Plugin Framework <https://github.com/openedx/frontend-plugin-framework>`_.
-
-The parts of this MFE that can be customized in that manner are documented `here </src/plugin-slots>`_.
-
-Contributing
-------------
-
-A core goal of this app is to provide a clean experimentation interface.  To promote this end, we have provided a
-silo'ed code directory at ``src/widgets`` in which contributors should add their custom widget components.  In order to
-ensure our ability to maintain the code stability of the app, the code for these widgets should be strictly contained
-within the bounds of that directory.
-
-Once written, the widgets can be configured into one of our widget containers at ``src/containers/WidgetContainers``.
-This can include conditional logic, as well as Optimizely triggers. It is important to note that our integration tests
-will isolate and ignore these containers, and thus testing your widget is the response of the creator/maintainer of the
-widget itself.
-
-Some guidelines for writing widgets:
-
-* Code for the widget should be strictly confined to the ``src/widgets`` directory.
-* You can load data from the redux store, but should not add or modify fields in that structure.
-* Network events should be managed in component hooks, though can use our ``data/constants/requests:requestStates`` for
-  ease of tracking the request states.
+This MFE can be customized with widgets.  The parts of this MFE that can be customized in that manner are documented
+`here </src/slots>`_.
 
 License
 -------

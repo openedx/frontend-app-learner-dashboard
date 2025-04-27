@@ -1,4 +1,4 @@
-import { StrictDict } from 'utils';
+import { StrictDict } from '../../../utils';
 
 export const apiKeys = StrictDict({
   receiveEmails: 'receive_emails',

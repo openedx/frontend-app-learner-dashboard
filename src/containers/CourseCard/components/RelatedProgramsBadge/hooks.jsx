@@ -1,5 +1,5 @@
 import React from 'react';
-import { useIntl } from '@edx/frontend-platform/i18n';
+import { useIntl } from '@openedx/frontend-base';
 
 import { StrictDict } from 'utils';
 import { reduxHooks } from 'hooks';

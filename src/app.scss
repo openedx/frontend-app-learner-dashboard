@@ -1,0 +1,41 @@
+@import "~@edx/brand/paragon/fonts";
+@import "~@edx/brand/paragon/variables";
+@import "~@openedx/paragon/scss/core/core";
+@import "~@edx/brand/paragon/overrides";
+
+$fa-font-path: "~font-awesome/fonts";
+@import "~font-awesome/scss/font-awesome";
+
+$input-focus-box-shadow: $input-box-shadow; // hack to get upgrade to paragon 4.0.0 to work
+
+#learnerDashboardRoot {
+  main {
+    flex-grow: 1;
+  }
+
+  // Removing a odd 1.5 scaling on checkboxes.:
+  input[type=checkbox] {
+    transform: none;
+  }
+
+  .text-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .alert.alert-info .alert-icon {
+    color: black;
+  }
+
+  #paragon-portal-root {
+    .pgn__modal-layer {
+      .pgn__modal-close-container {
+        right: 1rem !important;
+      }
+    }
+    .confirm-modal .pgn__modal-body {
+      overflow: hidden;
+    }
+  }
+}

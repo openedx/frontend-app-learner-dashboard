@@ -1,12 +1,10 @@
-import React from 'react';
-
-import { useIntl } from '@edx/frontend-platform/i18n';
+import { useIntl } from '@openedx/frontend-base';
 import { Card, Hyperlink, Icon } from '@openedx/paragon';
 import { ArrowForward } from '@openedx/paragon/icons';
 
-import { reduxHooks } from 'hooks';
-import moreCoursesSVG from 'assets/more-courses-sidewidget.svg';
-import { baseAppUrl } from 'data/services/lms/urls';
+import { reduxHooks } from '../../hooks';
+import moreCoursesSVG from '../../assets/more-courses-sidewidget.svg';
+import { baseAppUrl } from '../../data/services/lms/urls';
 
 import { findCoursesWidgetClicked } from './track';
 import messages from './messages';

@@ -1,14 +1,16 @@
-import React from 'react';
+import { useContext } from 'react';
 import PropTypes from 'prop-types';
 
-import { useIntl } from '@edx/frontend-platform/i18n';
+import { useIntl } from '@openedx/frontend-base';
 import { Dropdown, Icon, IconButton } from '@openedx/paragon';
 import { MoreVert } from '@openedx/paragon/icons';
 import { StrictDict } from '@edx/react-unit-test-utils';
 
-import EmailSettingsModal from 'containers/EmailSettingsModal';
-import UnenrollConfirmModal from 'containers/UnenrollConfirmModal';
-import { reduxHooks } from 'hooks';
+import MasqueradeUserContext from '../../../../data/contexts/MasqueradeUserContext';
+import EmailSettingsModal from '../../../../containers/EmailSettingsModal';
+import UnenrollConfirmModal from '../../../../containers/UnenrollConfirmModal';
+import { reduxHooks } from '../../../../hooks';
+
 import SocialShareMenu from './SocialShareMenu';
 import {
   useEmailSettings,
@@ -30,7 +32,7 @@ export const CourseCardMenu = ({ cardId }) => {
   const unenrollModal = useUnenrollData();
   const handleToggleDropdown = useHandleToggleDropdown(cardId);
   const { shouldShowUnenrollItem, shouldShowDropdown } = useOptionVisibility(cardId);
-  const { isMasquerading } = reduxHooks.useMasqueradeData();
+  const { isMasquerading } = useContext(MasqueradeUserContext);
   const { isEmailEnabled } = reduxHooks.useCardEnrollmentData(cardId);
 
   if (!shouldShowDropdown) {

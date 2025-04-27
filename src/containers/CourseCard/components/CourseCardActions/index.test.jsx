@@ -2,7 +2,7 @@ import { shallow } from '@edx/react-unit-test-utils';
 
 import { reduxHooks } from 'hooks';
 
-import CourseCardActionSlot from 'plugin-slots/CourseCardActionSlot';
+import CourseCardActionSlot from 'slots/CourseCardActionSlot';
 import SelectSessionButton from './SelectSessionButton';
 import BeginCourseButton from './BeginCourseButton';
 import ResumeButton from './ResumeButton';
@@ -19,7 +19,7 @@ jest.mock('hooks', () => ({
   },
 }));
 
-jest.mock('plugin-slots/CourseCardActionSlot', () => 'CustomActionButton');
+jest.mock('slots/CourseCardActionSlot', () => 'CustomActionButton');
 jest.mock('./SelectSessionButton', () => 'SelectSessionButton');
 jest.mock('./ViewCourseButton', () => 'ViewCourseButton');
 jest.mock('./BeginCourseButton', () => 'BeginCourseButton');

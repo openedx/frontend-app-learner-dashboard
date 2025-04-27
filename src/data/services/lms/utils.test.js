@@ -1,7 +1,8 @@
-import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
+import { getAuthenticatedHttpClient } from '@openedx/frontend-base';
 import * as utils from './utils';
 
-jest.mock('@edx/frontend-platform/auth', () => ({
+jest.mock('@openedx/frontend-base', () => ({
+  ...jest.requireActual('@openedx/frontend-base'),
   getAuthenticatedHttpClient: jest.fn(),
 }));
 

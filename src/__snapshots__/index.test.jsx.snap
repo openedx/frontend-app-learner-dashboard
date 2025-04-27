@@ -10,7 +10,7 @@ exports[`app registry subscribe: APP_INIT_ERROR.  snapshot: displays an ErrorPag
 
 exports[`app registry subscribe: APP_READY.  links App to root element 1`] = `
 <UNDEFINED>
-  <AppProvider
+  <SiteProvider
     store={
       {
         "redux": "store",
@@ -38,6 +38,6 @@ exports[`app registry subscribe: APP_READY.  links App to root element 1`] = `
         />
       </Routes>
     </NoticesWrapper>
-  </AppProvider>
+  </SiteProvider>
 </UNDEFINED>
 `;

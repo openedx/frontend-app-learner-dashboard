@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import * as ReactShare from 'react-share';
 
 import { StrictDict } from '@edx/react-unit-test-utils';
-import { useIntl } from '@edx/frontend-platform/i18n';
+import { useIntl } from '@openedx/frontend-base';
 import { Dropdown } from '@openedx/paragon';
 
-import track from 'tracking';
-import { reduxHooks } from 'hooks';
+import MasqueradeUserContext from '../../../../data/contexts/MasqueradeUserContext';
+import track from '../../../../tracking';
+import { reduxHooks } from '../../../../hooks';
 
 import messages from './messages';
 
@@ -21,7 +22,7 @@ export const SocialShareMenu = ({ cardId, emailSettings }) => {
   const { courseName } = reduxHooks.useCardCourseData(cardId);
   const { isEmailEnabled, isExecEd2UCourse } = reduxHooks.useCardEnrollmentData(cardId);
   const { twitter, facebook } = reduxHooks.useCardSocialSettingsData(cardId);
-  const { isMasquerading } = reduxHooks.useMasqueradeData();
+  const { isMasquerading } = useContext(MasqueradeUserContext);
 
   const handleTwitterShare = reduxHooks.useTrackCourseEvent(track.socialShare, cardId, 'twitter');
   const handleFacebookShare = reduxHooks.useTrackCourseEvent(track.socialShare, cardId, 'facebook');

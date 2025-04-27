@@ -1,0 +1,66 @@
+import { useIntl } from '@openedx/frontend-base';
+import { Button, Image, MarketingModal, ModalDialog, PageBanner } from '@openedx/paragon';
+
+import confirmEmailSVG from './assets/confirm-email.svg';
+import messages from './messages';
+import './ConfirmEmailBanner.scss';
+import useConfirmEmailBannerData from './hooks';
+
+export const ConfirmEmailBanner = () => {
+  const {
+    isNeeded,
+    showConfirmModal,
+    showPageBanner,
+    closePageBanner,
+    closeConfirmModal,
+    openConfirmModalButtonClick,
+    userConfirmEmailButtonClick,
+  } = useConfirmEmailBannerData();
+  const { formatMessage } = useIntl();
+
+  if (!isNeeded) { return null; }
+
+  return (
+    <>
+      <PageBanner show={showPageBanner} dismissible onDismiss={closePageBanner}>
+        {formatMessage(messages.confirmEmailTextReminderBanner, {
+          confirmNowButton: (
+            <Button
+              className="confirm-email-now-button"
+              variant="link"
+              size="inline"
+              onClick={openConfirmModalButtonClick}
+            >
+              {formatMessage(messages.confirmNowButton)}
+            </Button>
+          ),
+        })}
+      </PageBanner>
+      <MarketingModal
+        title=""
+        isOpen={showConfirmModal}
+        onClose={closeConfirmModal}
+        hasCloseButton={false}
+        heroNode={(
+          <ModalDialog.Hero className="bg-gray-300">
+            <Image
+              className="m-auto"
+              src={confirmEmailSVG}
+              alt={formatMessage(messages.confirmEmailImageAlt)}
+            />
+          </ModalDialog.Hero>
+        )}
+        footerNode={(
+          <Button className="mx-auto my-3" variant="danger" onClick={userConfirmEmailButtonClick}>
+            {formatMessage(messages.verifiedConfirmEmailButton)}
+          </Button>
+        )}
+      >
+        <h2 className="text-center p-3 h1">{formatMessage(messages.confirmEmailModalHeader)}</h2>
+        <p className="text-center">{formatMessage(messages.confirmEmailModalBody)}</p>
+      </MarketingModal>
+    </>
+  );
+};
+
+export default ConfirmEmailBanner;

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useIntl } from '@edx/frontend-platform/i18n';
+import { useIntl } from '@openedx/frontend-base';
 
 import {
   Button,
@@ -14,7 +14,7 @@ import {
 } from '@openedx/paragon';
 import { Close, Tune } from '@openedx/paragon/icons';
 
-import { reduxHooks } from 'hooks';
+import { reduxHooks } from '../../hooks';
 
 import FilterForm from './components/FilterForm';
 import SortForm from './components/SortForm';

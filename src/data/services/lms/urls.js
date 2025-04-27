@@ -1,12 +1,13 @@
-import { StrictDict } from 'utils';
+import { appId } from '../../../constants';
+import { StrictDict } from '../../../utils';
 
-import { getConfig } from '@edx/frontend-platform';
+import { getAppConfig, getSiteConfig } from '@openedx/frontend-base';
 
-export const getEcommerceUrl = () => getConfig().ECOMMERCE_BASE_URL;
+export const getEcommerceUrl = () => getAppConfig(appId).ECOMMERCE_BASE_URL;
 
-const getBaseUrl = () => getConfig().LMS_BASE_URL;
+const getBaseUrl = () => getSiteConfig().lmsBaseUrl;
 
-export const getApiUrl = () => (`${getConfig().LMS_BASE_URL}/api`);
+export const getApiUrl = () => (`${getSiteConfig().lmsBaseUrl}/api`);
 
 const getInitApiUrl = () => (`${getApiUrl()}/learner_home/init`);
 
@@ -19,7 +20,7 @@ const entitlementEnrollment = (uuid) => `${getApiUrl()}/entitlements/v1/entitlem
 export const updateUrl = (base, url) => ((url == null || url.startsWith('http://') || url.startsWith('https://')) ? url : `${base}${url}`);
 
 export const baseAppUrl = (url) => updateUrl(getBaseUrl(), url);
-export const learningMfeUrl = (url) => updateUrl(getConfig().LEARNING_BASE_URL, url);
+export const learningMfeUrl = (url) => updateUrl(getAppConfig(appId).LEARNING_BASE_URL, url);
 
 // static view url
 const programsUrl = () => baseAppUrl('/dashboard/programs');

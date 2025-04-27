@@ -2,21 +2,8 @@
 
 exports[`App router component component initialize failure snapshot 1`] = `
 <Fragment>
-  <HelmetWrapper
-    defer={true}
-    encodeSpecialCharacters={true}
-  >
-    <title>
-      Learner Home
-    </title>
-    <link
-      rel="shortcut icon"
-      type="image/x-icon"
-    />
-  </HelmetWrapper>
   <div>
     <AppWrapper>
-      <LearnerDashboardHeader />
       <main
         id="main"
       >
@@ -29,112 +16,56 @@ exports[`App router component component initialize failure snapshot 1`] = `
         </Alert>
       </main>
     </AppWrapper>
-    <FooterSlot />
   </div>
 </Fragment>
 `;
 
 exports[`App router component component no network failure snapshot 1`] = `
 <Fragment>
-  <HelmetWrapper
-    defer={true}
-    encodeSpecialCharacters={true}
-  >
-    <title>
-      Learner Home
-    </title>
-    <link
-      rel="shortcut icon"
-      type="image/x-icon"
-    />
-  </HelmetWrapper>
   <div>
     <AppWrapper>
-      <LearnerDashboardHeader />
       <main
         id="main"
       >
         <Dashboard />
       </main>
     </AppWrapper>
-    <FooterSlot />
   </div>
 </Fragment>
 `;
 
 exports[`App router component component no network failure with optimizely project id snapshot 1`] = `
 <Fragment>
-  <HelmetWrapper
-    defer={true}
-    encodeSpecialCharacters={true}
-  >
-    <title>
-      Learner Home
-    </title>
-    <link
-      rel="shortcut icon"
-      type="image/x-icon"
-    />
-  </HelmetWrapper>
   <div>
     <AppWrapper>
-      <LearnerDashboardHeader />
       <main
         id="main"
       >
         <Dashboard />
       </main>
     </AppWrapper>
-    <FooterSlot />
   </div>
 </Fragment>
 `;
 
 exports[`App router component component no network failure with optimizely url snapshot 1`] = `
 <Fragment>
-  <HelmetWrapper
-    defer={true}
-    encodeSpecialCharacters={true}
-  >
-    <title>
-      Learner Home
-    </title>
-    <link
-      rel="shortcut icon"
-      type="image/x-icon"
-    />
-  </HelmetWrapper>
   <div>
     <AppWrapper>
-      <LearnerDashboardHeader />
       <main
         id="main"
       >
         <Dashboard />
       </main>
     </AppWrapper>
-    <FooterSlot />
   </div>
 </Fragment>
 `;
 
 exports[`App router component component refresh failure snapshot 1`] = `
 <Fragment>
-  <HelmetWrapper
-    defer={true}
-    encodeSpecialCharacters={true}
-  >
-    <title>
-      Learner Home
-    </title>
-    <link
-      rel="shortcut icon"
-      type="image/x-icon"
-    />
-  </HelmetWrapper>
   <div>
     <AppWrapper>
-      <LearnerDashboardHeader />
       <main
         id="main"
       >
@@ -147,7 +78,6 @@ exports[`App router component component refresh failure snapshot 1`] = `
         </Alert>
       </main>
     </AppWrapper>
-    <FooterSlot />
   </div>
 </Fragment>
 `;

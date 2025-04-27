@@ -1,6 +1,5 @@
 .DS_Store
 .eslintcache
-env.config.*
 node_modules
 npm-debug.log
 coverage

@@ -1,4 +1,4 @@
-import { StrictDict } from 'utils';
+import { StrictDict } from '../../../../utils';
 
 import simpleSelectors from './simpleSelectors';
 import appSelectors from './appSelectors';

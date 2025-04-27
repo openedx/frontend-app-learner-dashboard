@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 const strictGet = (target, name) => {
   if (name === Symbol.toStringTag) {
     return target;
@@ -12,10 +11,6 @@ const strictGet = (target, name) => {
     return target[name];
   }
 
-  console.log(name.toString());
-  console.error({ target, name });
-  const e = Error(`invalid property "${name.toString()}"`);
-  console.error(e.stack);
   return undefined;
 };
 

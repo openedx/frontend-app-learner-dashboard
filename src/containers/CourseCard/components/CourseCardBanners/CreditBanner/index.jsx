@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { useIntl } from '@edx/frontend-platform/i18n';
+import { useIntl } from '@openedx/frontend-base';
 
-import Banner from 'components/Banner';
+import Banner from '../../../../../components/Banner';
 
 import { MailtoLink } from '@openedx/paragon';
 import hooks from './hooks';

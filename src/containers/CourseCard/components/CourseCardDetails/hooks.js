@@ -1,5 +1,5 @@
-import { useIntl } from '@edx/frontend-platform/i18n';
-import { utilHooks, reduxHooks } from 'hooks';
+import { useIntl } from '@openedx/frontend-base';
+import { utilHooks, reduxHooks } from '../../../../hooks';
 
 import * as hooks from './hooks';
 import messages from './messages';
@@ -10,8 +10,10 @@ export const useAccessMessage = ({ cardId }) => {
   const courseRun = reduxHooks.useCardCourseRunData(cardId);
   const formatDate = utilHooks.useFormatDate();
   if (!courseRun.isStarted) {
-    if (!courseRun.startDate && !courseRun.advertisedStart) { return null; }
-    const startDate = courseRun.advertisedStart ? courseRun.advertisedStart : formatDate(courseRun.startDate);
+    if (!courseRun.startDate && !courseRun.advertisedStart) {
+      return null;
+    }
+    const startDate = courseRun.advertisedStart ?? formatDate(courseRun.startDate);
     return formatMessage(messages.courseStarts, { startDate });
   }
   if (enrollment.isEnrolled) {
@@ -27,7 +29,9 @@ export const useAccessMessage = ({ cardId }) => {
         { accessExpirationDate: formatDate(accessExpirationDate) },
       );
     }
-    if (!endDate) { return null; }
+    if (!endDate) {
+      return null;
+    }
     return formatMessage(
       isArchived ? messages.courseEnded : messages.courseEnds,
       { endDate: formatDate(endDate) },
@@ -49,7 +53,7 @@ export const useCardDetailsData = ({ cardId }) => {
   const openSessionModal = reduxHooks.useUpdateSelectSessionModalCallback(cardId);
 
   return {
-    providerName: providerName || formatMessage(messages.unknownProviderName),
+    providerName: providerName ?? formatMessage(messages.unknownProviderName),
     accessMessage: hooks.useAccessMessage({ cardId }),
     isEntitlement,
     isFulfilled,

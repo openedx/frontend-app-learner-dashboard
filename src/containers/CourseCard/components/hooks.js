@@ -1,7 +1,10 @@
-import { reduxHooks } from 'hooks';
+import { useContext } from 'react';
+
+import MasqueradeUserContext from '../../../data/contexts/MasqueradeUserContext';
+import { reduxHooks } from '../../../hooks';
 
 export const useActionDisabledState = (cardId) => {
-  const { isMasquerading } = reduxHooks.useMasqueradeData();
+  const { isMasquerading } = useContext(MasqueradeUserContext);
   const {
     hasAccess, isAudit, isAuditAccessExpired,
   } = reduxHooks.useCardEnrollmentData(cardId);

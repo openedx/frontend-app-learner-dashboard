@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 import { ActionRow } from '@openedx/paragon';
 
-import { reduxHooks } from 'hooks';
+import { reduxHooks } from '../../../../hooks';
+import CourseCardActionSlot from '../../../../slots/CourseCardActionSlot';
 
-import CourseCardActionSlot from 'plugin-slots/CourseCardActionSlot';
 import SelectSessionButton from './SelectSessionButton';
 import BeginCourseButton from './BeginCourseButton';
 import ResumeButton from './ResumeButton';

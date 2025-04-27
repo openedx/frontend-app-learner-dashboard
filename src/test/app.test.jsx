@@ -3,18 +3,11 @@ import React from 'react';
 import * as redux from 'redux';
 import { Provider } from 'react-redux';
 import {
-  act,
   render,
   waitFor,
-  within,
-  prettyDOM,
 } from '@testing-library/react';
-import {
-  initialize,
-  mergeConfig,
-} from '@edx/frontend-platform';
 
-import { useIntl, IntlProvider } from '@edx/frontend-platform/i18n';
+import { IntlProvider } from '@openedx/frontend-base';
 
 import { useFormatDate } from 'utils/hooks';
 
@@ -23,7 +16,6 @@ import * as fakeData from 'data/services/lms/fakeData/courses';
 import { RequestKeys, RequestStates } from 'data/constants/requests';
 import reducers from 'data/redux';
 import { selectors } from 'data/redux';
-import { apiHooks } from 'hooks';
 import { cardId as genCardId } from 'data/redux/app/reducer';
 
 import messages from 'i18n';
@@ -34,43 +26,23 @@ import appMessages from './messages';
 
 jest.unmock('@openedx/paragon');
 jest.unmock('@openedx/paragon/icons');
-jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('@edx/frontend-component-footer');
+jest.unmock('@openedx/frontend-base');
 jest.unmock('react');
 jest.unmock('react-redux');
 jest.unmock('reselect');
 jest.unmock('hooks');
 
-jest.mock('plugin-slots/WidgetSidebarSlot', () => jest.fn(() => 'widget-sidebar'));
-jest.mock('components/NoticesWrapper', () => 'notices-wrapper');
+jest.mock('slots/WidgetSidebarSlot', () => jest.fn(() => 'widget-sidebar'));
 
-jest.mock('@edx/frontend-platform', () => ({
-  ...jest.requireActual('@edx/frontend-platform'),
-  getConfig: () => jest.requireActual('../config').configuration,
-}));
-
-jest.mock('@edx/frontend-platform/analytics', () => ({
+jest.mock('@openedx/frontend-base', () => ({
+  ...jest.requireActual('@edx/frontend-base'),
   sendTrackEvent: jest.fn(),
-}));
-
-jest.mock('@edx/frontend-platform/auth', () => ({
   getAuthenticatedHttpClient: jest.fn(),
   getLoginRedirectUrl: jest.fn(),
-}));
-
-jest.mock('@edx/frontend-enterprise-hotjar', () => ({
-  initializeHotjar: jest.fn(),
-}));
-
-jest.mock('@edx/frontend-platform/i18n', () => ({
-  ...jest.requireActual('@edx/frontend-platform/i18n'),
   useIntl: () => ({
     formatMessage: jest.requireActual('testUtils').formatMessage,
     formatDate: (date) => `Date-${date}`,
   }),
-}));
-
-jest.mock('@edx/frontend-platform/logging', () => ({
   logError: jest.fn(),
 }));
 

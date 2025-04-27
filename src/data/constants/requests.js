@@ -1,4 +1,4 @@
-import { StrictDict } from 'utils';
+import { StrictDict } from '../../utils';
 
 export const RequestStates = StrictDict({
   inactive: 'inactive',
@@ -17,7 +17,6 @@ export const RequestKeys = StrictDict({
   updateEmailSettings: 'updateEmailSettings',
   enrollEntitlementSession: 'enrollEntitlementSession',
   leaveEntitlementSession: 'leaveEntitlementSession',
-  masquerade: 'masquerade',
   recommendedCourses: 'recommendedCourses',
 });
 

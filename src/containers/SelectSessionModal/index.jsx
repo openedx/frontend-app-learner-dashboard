@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useIntl } from '@edx/frontend-platform/i18n';
+import { useIntl } from '@openedx/frontend-base';
 import {
   ActionRow,
   Button,
@@ -8,8 +8,8 @@ import {
   ModalDialog,
 } from '@openedx/paragon';
 
-import { utilHooks } from 'hooks';
-import { nullMethod, dateFormatter } from 'utils';
+import { utilHooks } from '../../hooks';
+import { nullMethod, dateFormatter } from '../../utils';
 
 import useSelectSessionModalData from './hooks';
 import { LEAVE_OPTION } from './constants';
