@@ -6,43 +6,56 @@
     "type": "git",
     "url": "git+https://github.com/edx/frontend-app-learner-dashboard.git"
   },
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "config": {
+    "name": "openedxLearnerDashboard",
+    "exposes": {
+      "./leanerDashboard": "./src/moduleConfig"
+    }
+  },
   "browserslist": [
     "extends @edx/browserslist-config"
   ],
+  "sideEffects": [
+    "*.css",
+    "*.scss"
+  ],
   "scripts": {
-    "build": "fedx-scripts webpack",
-    "i18n_extract": "fedx-scripts formatjs extract",
-    "lint": "fedx-scripts eslint --ext .jsx,.js src/",
-    "lint-fix": "fedx-scripts eslint --fix --ext .jsx,.js src/",
-    "semantic-release": "semantic-release",
-    "start": "fedx-scripts webpack-dev-server --progress",
-    "dev": "PUBLIC_PATH=/learner-dashboard/ MFE_CONFIG_API_URL='http://localhost:8000/api/mfe_config/v1' fedx-scripts webpack-dev-server --progress --host apps.local.openedx.io",
-    "test": "TZ=GMT fedx-scripts jest --coverage --passWithNoTests",
-    "quality": "npm run lint-fix && npm run test",
-    "watch-tests": "jest --watch",
-    "snapshot": "fedx-scripts jest --updateSnapshot"
+    "build": "openedx build",
+    "build:module": "openedx build:module",
+    "dev": "openedx dev",
+    "dev:module": "PORT=8083 openedx dev:module",
+    "dev:legacy": "openedx dev:legacy",
+    "i18n_extract": "openedx formatjs extract",
+    "lint": "openedx lint .",
+    "lint:fix": "openedx lint --fix .",
+    "pack": "openedx pack",
+    "release": "openedx release",
+    "serve": "PORT=YOUR_PORT openedx serve",
+    "snapshot": "openedx test --updateSnapshot",
+    "test": "openedx test --coverage --passWithNoTests"
   },
-  "author": "edX",
+  "author": "Open edX",
   "license": "AGPL-3.0",
   "homepage": "",
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
-    "@edx/brand": "npm:@openedx/brand-openedx@^1.2.2",
-    "@edx/frontend-component-footer": "^14.3.0",
-    "@edx/frontend-component-header": "^6.2.0",
+    "@edx/brand": "npm:@openedx/brand-openedx@^1.5.0",
     "@edx/frontend-enterprise-hotjar": "7.2.0",
-    "@edx/frontend-platform": "^8.3.1",
     "@edx/openedx-atlas": "^0.6.0",
     "@edx/react-unit-test-utils": "^4.0.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@openedx/frontend-plugin-framework": "^1.6.0",
     "@openedx/frontend-slot-footer": "^1.0.2",
-    "@openedx/paragon": "^22.16.0",
     "@redux-devtools/extension": "3.3.0",
     "@reduxjs/toolkit": "^2.0.0",
     "classnames": "^2.3.1",
@@ -54,14 +67,9 @@
     "moment": "^2.29.4",
     "prop-types": "15.8.1",
     "query-string": "7.1.3",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
     "react-helmet": "^6.1.0",
     "react-intl": "6.8.9",
-    "react-redux": "^7.2.4",
-    "react-router-dom": "6.29.0",
     "react-share": "^4.4.0",
-    "redux": "4.2.1",
     "redux-logger": "3.0.6",
     "redux-thunk": "2.4.2",
     "regenerator-runtime": "^0.14.0",
@@ -69,10 +77,18 @@
     "universal-cookie": "^4.0.4",
     "util": "^0.12.4"
   },
+  "peerDependencies": {
+    "@openedx/frontend-base": "file:../frontend-base/openedx-frontend-base-1.0.0.tgz",
+    "@openedx/paragon": "^22.17.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-redux": "^8.1.3",
+    "react-router-dom": "^6.26.1",
+    "redux": "^4.2.1"
+  },
   "devDependencies": {
     "@edx/browserslist-config": "^1.3.0",
     "@edx/reactifex": "^2.1.1",
-    "@openedx/frontend-build": "^14.3.3",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
     "copy-webpack-plugin": "^12.0.0",

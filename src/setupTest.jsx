@@ -1,5 +1,9 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import '@testing-library/jest-dom';
+
+import siteConfig from 'site.config';
+import { mergeConfig } from '@openedx/frontend-base';
+
+mergeConfig(siteConfig);
 
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
