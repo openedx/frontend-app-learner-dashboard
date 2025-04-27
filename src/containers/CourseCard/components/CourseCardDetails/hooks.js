@@ -1,4 +1,4 @@
-import { useIntl } from '@edx/frontend-platform/i18n';
+import { useIntl } from '@openedx/frontend-base';
 import { utilHooks, reduxHooks } from 'hooks';
 
 import * as hooks from './hooks';
@@ -10,7 +10,9 @@ export const useAccessMessage = ({ cardId }) => {
   const courseRun = reduxHooks.useCardCourseRunData(cardId);
   const formatDate = utilHooks.useFormatDate();
   if (!courseRun.isStarted) {
-    if (!courseRun.startDate) { return null; }
+    if (!courseRun.startDate) {
+      return null;
+    }
     const startDate = formatDate(courseRun.startDate);
     return formatMessage(messages.courseStarts, { startDate });
   }
@@ -27,7 +29,9 @@ export const useAccessMessage = ({ cardId }) => {
         { accessExpirationDate: formatDate(accessExpirationDate) },
       );
     }
-    if (!endDate) { return null; }
+    if (!endDate) {
+      return null;
+    }
     return formatMessage(
       isArchived ? messages.courseEnded : messages.courseEnds,
       { endDate: formatDate(endDate) },

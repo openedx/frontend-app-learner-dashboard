@@ -4,7 +4,7 @@ import {
   initialize,
   mergeConfig,
   subscribe,
-} from '@edx/frontend-platform';
+} from '@openedx/frontend-base';
 
 import { configuration } from './config';
 import * as app from '.';
@@ -24,7 +24,8 @@ jest.mock('react-dom/client', () => {
   });
 });
 
-jest.mock('@edx/frontend-platform', () => ({
+jest.mock('@openedx/frontend-base', () => ({
+  ...jest.requireActual('@openedx/frontend-base'),
   mergeConfig: jest.fn(),
   ensureConfig: jest.fn(),
   APP_READY: 'app-is-ready-key',

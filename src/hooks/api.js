@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { AppContext } from '@edx/frontend-platform/react';
+import { AppContext } from '@openedx/frontend-base';
 
 import { RequestKeys } from 'data/constants/requests';
 import { post } from 'data/services/lms/utils';

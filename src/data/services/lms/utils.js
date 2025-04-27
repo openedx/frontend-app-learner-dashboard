@@ -1,5 +1,5 @@
 import queryString from 'query-string';
-import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
+import { getAuthenticatedHttpClient } from '@openedx/frontend-base';
 
 /**
  * get(url)

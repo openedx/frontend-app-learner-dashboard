@@ -6,18 +6,7 @@ module.exports = createLintConfig(
   {
     files: [
       'src/**/*',
-      'site.config.*',
-    ],
-  },
-  {
-    ignores: [
-      'coverage/*',
-      'dist/*',
-      'docs/*',
-      'node_modules/*',
-      '**/__mocks__/*',
-      '**/__snapshots__/*',
-    ],
-  },
+      'site.config.*'
+    ]
+  }
 );
-

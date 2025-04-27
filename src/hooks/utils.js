@@ -1,5 +1,5 @@
 import React from 'react';
-import { useIntl } from '@edx/frontend-platform/i18n';
+import { useIntl } from '@openedx/frontend-base';
 import dateFormatter from 'utils/dateFormatter';
 
 export const useValueCallback = (cb, prereqs = []) => (

@@ -1,10 +1,9 @@
 import React from 'react';
 
-import { useIntl } from '@edx/frontend-platform/i18n';
+import { getConfig, useIntl } from '@openedx/frontend-base';
 
 import { reduxHooks } from 'hooks';
 
-import { getConfig } from '@edx/frontend-platform';
 import messages from './messages';
 
 export const BrandLogo = () => {

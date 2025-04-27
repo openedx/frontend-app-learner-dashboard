@@ -1,20 +1,19 @@
-import { getAuthenticatedHttpClient, getAuthenticatedUser } from '@edx/frontend-platform/auth';
-import { logError, logInfo } from '@edx/frontend-platform/logging';
+import {
+  getAuthenticatedHttpClient,
+  getAuthenticatedUser,
+  logError,
+  logInfo
+} from '@openedx/frontend-base';
 
 import * as api from './api';
 
-jest.mock('@edx/frontend-platform', () => ({
+jest.mock('@openedx/frontend-base', () => ({
+  ...jest.requireActual('@openedx/frontend-base'),
   getConfig: jest.fn(() => ({
     LMS_BASE_URL: 'test-lms-url',
   })),
-}));
-
-jest.mock('@edx/frontend-platform/auth', () => ({
   getAuthenticatedHttpClient: jest.fn(),
   getAuthenticatedUser: jest.fn(),
-}));
-
-jest.mock('@edx/frontend-platform/logging', () => ({
   logError: jest.fn(),
   logInfo: jest.fn(),
 }));

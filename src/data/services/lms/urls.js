@@ -1,6 +1,6 @@
 import { StrictDict } from 'utils';
 
-import { getConfig } from '@edx/frontend-platform';
+import { getConfig } from '@openedx/frontend-base';
 
 export const getEcommerceUrl = () => getConfig().ECOMMERCE_BASE_URL;
 

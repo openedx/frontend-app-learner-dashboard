@@ -2,7 +2,7 @@ import { when } from 'jest-when';
 
 import { Dropdown } from '@openedx/paragon';
 import { shallow } from '@edx/react-unit-test-utils';
-import { useIntl } from '@edx/frontend-platform/i18n';
+import { useIntl } from '@openedx/frontend-base';
 
 import EmailSettingsModal from 'containers/EmailSettingsModal';
 import UnenrollConfirmModal from 'containers/UnenrollConfirmModal';
@@ -11,8 +11,8 @@ import SocialShareMenu from './SocialShareMenu';
 import * as hooks from './hooks';
 import CourseCardMenu, { testIds } from '.';
 
-jest.mock('@edx/frontend-platform/i18n', () => ({
-  ...jest.requireActual('@edx/frontend-platform/i18n'),
+jest.mock('@openedx/frontend-base', () => ({
+  ...jest.requireActual('@openedx/frontend-base'),
   useIntl: jest.fn().mockReturnValue({
     formatMessage: jest.requireActual('@edx/react-unit-test-utils').formatMessage,
   }),

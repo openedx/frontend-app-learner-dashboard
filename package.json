@@ -38,7 +38,8 @@
     "release": "openedx release",
     "serve": "PORT=YOUR_PORT openedx serve",
     "snapshot": "openedx test --updateSnapshot",
-    "test": "openedx test --coverage --passWithNoTests"
+    "test": "openedx test --coverage --passWithNoTests",
+    "test:nocoverage": "openedx test --passWithNoTests"
   },
   "author": "Open edX",
   "license": "AGPL-3.0",

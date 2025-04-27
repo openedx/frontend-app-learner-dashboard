@@ -1,5 +1,5 @@
 import React from 'react';
-import { getConfig } from '@edx/frontend-platform';
+import { getConfig } from '@openedx/frontend-base';
 
 import { StrictDict } from 'utils';
 import { getNotices } from './api';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppContext } from '@edx/frontend-platform/react';
+import { AppContext } from '@openedx/frontend-base';
 
 import {
   Chip,

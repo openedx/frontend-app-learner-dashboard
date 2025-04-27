@@ -1,11 +1,8 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 
-import { useIntl } from '@edx/frontend-platform/i18n';
-import { logError } from '@edx/frontend-platform/logging';
+import { useIntl, logError, ErrorPage, AppContext } from '@openedx/frontend-base';
 import { initializeHotjar } from '@edx/frontend-enterprise-hotjar';
-
-import { ErrorPage, AppContext } from '@edx/frontend-platform/react';
 import FooterSlot from '@openedx/frontend-slot-footer';
 import { Alert } from '@openedx/paragon';
 
@@ -25,7 +22,7 @@ import fakeData from 'data/services/lms/fakeData/courses';
 import AppWrapper from 'containers/WidgetContainers/AppWrapper';
 import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
 
-import { getConfig } from '@edx/frontend-platform';
+import { getConfig } from '@openedx/frontend-base';
 import messages from './messages';
 import './App.scss';
 

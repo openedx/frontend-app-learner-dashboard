@@ -12,15 +12,13 @@ import {
   AppProvider,
   ErrorPage,
   PageWrap,
-} from '@edx/frontend-platform/react';
-import store from 'data/store';
-import {
   APP_READY,
   APP_INIT_ERROR,
   initialize,
   subscribe,
   mergeConfig,
-} from '@edx/frontend-platform';
+} from '@openedx/frontend-base';
+import store from 'data/store';
 
 import { configuration } from './config';
 
