@@ -1,12 +1,14 @@
-import { StrictDict } from 'utils';
-import { FilterKeys, SortKeys } from 'data/constants/app';
+import { StrictDict } from '../../../../utils';
+import { FilterKeys, SortKeys } from '../../../../data/constants/app';
 
 import simpleSelectors from './simpleSelectors';
 import * as module from './currentList';
 
 export const sortFn = (transform, { reverse }) => (v1, v2) => {
   const [a, b] = [v1, v2].map(transform);
-  if (a === b) { return 0; }
+  if (a === b) {
+    return 0;
+  }
   return ((a > b) ? 1 : -1) * (reverse ? -1 : 1);
 };
 

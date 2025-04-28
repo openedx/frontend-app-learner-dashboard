@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { StrictDict } from 'utils';
+import { StrictDict } from '../../utils';
 
 import * as app from './app';
 import * as requests from './requests';

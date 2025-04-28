@@ -1,4 +1,4 @@
-import { reduxHooks } from 'hooks';
+import { reduxHooks } from '../../../hooks';
 
 export const useActionDisabledState = (cardId) => {
   const { isMasquerading } = reduxHooks.useMasqueradeData();

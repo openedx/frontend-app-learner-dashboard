@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { StrictDict } from 'utils';
-import { apiHooks } from 'hooks';
+import { StrictDict } from '../../../utils';
+import { apiHooks } from '../../../hooks';
 
 import { useUnenrollReasons } from './reasons';
 import * as module from '.';

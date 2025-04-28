@@ -1,4 +1,4 @@
-import { createEventTracker } from 'data/services/segment/utils';
+import { createEventTracker } from '../../data/services/segment/utils';
 import { categories, eventNames } from '../constants';
 
 export const filterClicked = () => createEventTracker(

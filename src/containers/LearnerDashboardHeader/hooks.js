@@ -1,9 +1,10 @@
 import React from 'react';
 import { useWindowSize, breakpoints } from '@openedx/paragon';
 import { useIntl } from '@openedx/frontend-base';
-import track from 'tracking';
-import { StrictDict } from 'utils';
-import { linkNames } from 'tracking/constants';
+
+import track from '../../tracking';
+import { linkNames } from '../../tracking/constants';
+import { StrictDict } from '../../utils';
 
 import getLearnerHeaderMenu from './LearnerDashboardMenu';
 

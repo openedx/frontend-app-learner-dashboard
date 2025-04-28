@@ -1,5 +1,5 @@
 import { sendTrackEvent } from '@openedx/frontend-base';
-import { appName } from 'tracking/constants';
+import { appName } from '../../../tracking/constants';
 
 export const LINK_TIMEOUT = 300;
 

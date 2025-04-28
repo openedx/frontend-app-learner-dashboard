@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 
 import { useIntl } from '@openedx/frontend-base';
 
-import track from 'tracking';
-import { reduxHooks } from 'hooks';
+import track from '../../../../tracking';
+import { reduxHooks } from '../../../../hooks';
+
 import useActionDisabledState from '../hooks';
 import ActionButton from './ActionButton';
 import messages from './messages';

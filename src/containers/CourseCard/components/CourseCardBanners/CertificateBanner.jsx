@@ -6,8 +6,8 @@ import { MailtoLink, Hyperlink } from '@openedx/paragon';
 import { CheckCircle } from '@openedx/paragon/icons';
 import { useIntl } from '@openedx/frontend-base';
 
-import { utilHooks, reduxHooks } from 'hooks';
-import Banner from 'components/Banner';
+import { utilHooks, reduxHooks } from '../../../../hooks';
+import Banner from '../../../../components/Banner';
 
 import messages from './messages';
 

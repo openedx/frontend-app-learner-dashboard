@@ -2,8 +2,8 @@
 import {
   ErrorStatuses,
   // RequestKeys,
-} from 'data/constants/requests';
-import { actions } from 'data/redux';
+} from '../../../../data/constants/requests';
+import { actions } from '../../../../data/redux';
 
 export const errorData = (status, data = '') => ({
   response: {

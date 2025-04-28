@@ -6,21 +6,21 @@ import { initializeHotjar } from '@edx/frontend-enterprise-hotjar';
 import FooterSlot from '@openedx/frontend-slot-footer';
 import { Alert } from '@openedx/paragon';
 
-import { RequestKeys } from 'data/constants/requests';
-import store from 'data/store';
+import { RequestKeys } from './data/constants/requests';
+import store from './data/store';
 import {
   selectors,
   actions,
-} from 'data/redux';
-import { reduxHooks } from 'hooks';
-import Dashboard from 'containers/Dashboard';
+} from './data/redux';
+import { reduxHooks } from './hooks';
+import Dashboard from './containers/Dashboard';
 
-import track from 'tracking';
+import track from './tracking';
 
-import fakeData from 'data/services/lms/fakeData/courses';
+import fakeData from './data/services/lms/fakeData/courses';
 
-import AppWrapper from 'containers/WidgetContainers/AppWrapper';
-import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
+import AppWrapper from './containers/WidgetContainers/AppWrapper';
+import LearnerDashboardHeader from './containers/LearnerDashboardHeader';
 
 import { getAppConfig, getConfig } from '@openedx/frontend-base';
 import messages from './messages';

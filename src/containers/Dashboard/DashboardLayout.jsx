@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Container, Col, Row } from '@openedx/paragon';
 
-import WidgetSidebarSlot from 'plugin-slots/WidgetSidebarSlot';
+import WidgetSidebarSlot from '../../plugin-slots/WidgetSidebarSlot';
 
 import hooks from './hooks';
 

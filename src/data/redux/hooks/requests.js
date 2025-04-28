@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 
-import * as redux from 'data/redux';
+import * as redux from '../../../data/redux';
 import * as module from './requests';
 
 const selectors = redux.selectors.requests;
@@ -28,10 +28,14 @@ export const useMakeNetworkRequest = () => {
   }) => {
     dispatch(actions.startRequest({ requestKey }));
     return promise.then((response) => {
-      if (onSuccess) { onSuccess(response); }
+      if (onSuccess) {
+        onSuccess(response);
+      }
       dispatch(actions.completeRequest({ requestKey, response }));
     }).catch((error) => {
-      if (onFailure) { onFailure(error); }
+      if (onFailure) {
+        onFailure(error);
+      }
       dispatch(actions.failRequest({ requestKey, error }));
     });
   };

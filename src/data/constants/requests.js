@@ -1,4 +1,4 @@
-import { StrictDict } from 'utils';
+import { StrictDict } from '../../utils';
 
 export const RequestStates = StrictDict({
   inactive: 'inactive',

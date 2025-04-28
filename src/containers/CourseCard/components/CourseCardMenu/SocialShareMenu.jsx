@@ -6,8 +6,8 @@ import { StrictDict } from '@edx/react-unit-test-utils';
 import { useIntl } from '@openedx/frontend-base';
 import { Dropdown } from '@openedx/paragon';
 
-import track from 'tracking';
-import { reduxHooks } from 'hooks';
+import track from '../../../../tracking';
+import { reduxHooks } from '../../../../hooks';
 
 import messages from './messages';
 

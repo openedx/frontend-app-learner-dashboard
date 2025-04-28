@@ -2,17 +2,15 @@ import React from 'react';
 
 import { useIntl } from '@openedx/frontend-base';
 
-import { reduxHooks } from 'hooks';
+import { reduxHooks } from '../../hooks';
 import {
   CourseFilterControls,
-} from 'containers/CourseFilterControls';
-import CourseListSlot from 'plugin-slots/CourseListSlot';
-import NoCoursesViewSlot from 'plugin-slots/NoCoursesViewSlot';
+} from '../../containers/CourseFilterControls';
+import CourseListSlot from '../../plugin-slots/CourseListSlot';
+import NoCoursesViewSlot from '../../plugin-slots/NoCoursesViewSlot';
 
 import { useCourseListData } from './hooks';
-
 import messages from './messages';
-
 import './index.scss';
 
 /**

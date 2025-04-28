@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { StrictDict } from 'utils';
+import { StrictDict } from '../../../utils';
 
-import { RequestStates, RequestKeys } from 'data/constants/requests';
+import { RequestStates, RequestKeys } from '../../../data/constants/requests';
 
 const initialState = {
   [RequestKeys.initialize]: { status: RequestStates.inactive },
@@ -12,7 +12,6 @@ const initialState = {
   [RequestKeys.masquerade]: { status: RequestStates.inactive },
 };
 
-// eslint-disable-next-line no-unused-vars
 const requests = createSlice({
   name: 'requests',
   initialState,

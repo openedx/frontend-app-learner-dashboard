@@ -4,9 +4,9 @@ import {
   apiHooks,
   reduxHooks,
   utilHooks,
-} from 'hooks';
-import { StrictDict } from 'utils';
-import track from 'tracking';
+} from '../../../hooks';
+import { StrictDict } from '../../../utils';
+import track from '../../../tracking';
 
 import * as module from './reasons';
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import { useToggle } from '@openedx/paragon';
 
-import { StrictDict } from 'utils';
-import track from 'tracking';
-import { reduxHooks } from 'hooks';
+import { StrictDict } from '../../utils';
+import track from '../../tracking';
+import { reduxHooks } from '../../hooks';
 
 import * as module from './hooks';
 

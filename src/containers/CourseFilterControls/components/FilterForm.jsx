@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from '@openedx/frontend-base';
 
-import { FilterKeys } from 'data/constants/app';
+import { FilterKeys } from '../../../data/constants/app';
 
 import { Form } from '@openedx/paragon';
 

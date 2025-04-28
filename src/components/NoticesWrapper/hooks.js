@@ -1,7 +1,7 @@
 import React from 'react';
 import { getAppConfig } from '@openedx/frontend-base';
 
-import { StrictDict } from 'utils';
+import { StrictDict } from '../../utils';
 import { getNotices } from './api';
 import * as module from './hooks';
 

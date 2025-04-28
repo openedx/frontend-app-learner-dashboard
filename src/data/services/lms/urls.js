@@ -1,4 +1,4 @@
-import { StrictDict } from 'utils';
+import { StrictDict } from '../../../utils';
 
 import { getAppConfig, getConfig } from '@openedx/frontend-base';
 

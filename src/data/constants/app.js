@@ -1,5 +1,5 @@
 import { getConfig } from '@openedx/frontend-base';
-import { StrictDict } from 'utils';
+import { StrictDict } from '../../utils';
 
 export const routePath = `${getConfig().publicPath}:courseId`;
 export const locationId = window.location.pathname.slice(1);

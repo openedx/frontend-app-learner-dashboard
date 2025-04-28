@@ -1,5 +1,5 @@
 import { useIntl } from '@openedx/frontend-base';
-import { utilHooks, reduxHooks } from 'hooks';
+import { utilHooks, reduxHooks } from '../../../../hooks';
 
 import * as hooks from './hooks';
 import messages from './messages';

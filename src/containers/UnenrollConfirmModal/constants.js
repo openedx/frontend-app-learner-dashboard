@@ -1,4 +1,4 @@
-import { StrictDict } from 'utils';
+import { StrictDict } from '../../utils';
 import { defineMessages } from '@openedx/frontend-base';
 
 export const reasonKeys = StrictDict({

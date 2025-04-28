@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import { useIntl } from '@openedx/frontend-base';
 
-import { reduxHooks } from 'hooks';
-import track from 'tracking';
+import { reduxHooks } from '../../../../../../hooks';
+import track from '../../../../../../tracking';
 
 import CreditContent from './components/CreditContent';
 import messages from './messages';

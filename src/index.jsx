@@ -14,7 +14,7 @@ import {
   subscribe,
   mergeConfig,
 } from '@openedx/frontend-base';
-import store from 'data/store';
+import store from './data/store';
 
 import { configuration } from './config';
 
