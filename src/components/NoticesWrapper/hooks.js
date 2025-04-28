@@ -1,5 +1,5 @@
 import React from 'react';
-import { getConfig } from '@openedx/frontend-base';
+import { getAppConfig } from '@openedx/frontend-base';
 
 import { StrictDict } from 'utils';
 import { getNotices } from './api';
@@ -18,7 +18,7 @@ export const state = StrictDict({
 export const useNoticesWrapperData = () => {
   const [isRedirected, setIsRedirected] = module.state.isRedirected();
   React.useEffect(() => {
-    if (getConfig().ENABLE_NOTICES) {
+    if (getAppConfig('openedxLearnerDashboard').ENABLE_NOTICES) {
       getNotices({
         onLoad: (data) => {
           if (data?.data?.results?.length > 0) {

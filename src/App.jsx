@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 
-import { useIntl, logError, ErrorPage, AppContext } from '@openedx/frontend-base';
+import { useIntl, logError, ErrorPage, AppContext, EnvironmentTypes } from '@openedx/frontend-base';
 import { initializeHotjar } from '@edx/frontend-enterprise-hotjar';
 import FooterSlot from '@openedx/frontend-slot-footer';
 import { Alert } from '@openedx/paragon';
@@ -22,7 +22,7 @@ import fakeData from 'data/services/lms/fakeData/courses';
 import AppWrapper from 'containers/WidgetContainers/AppWrapper';
 import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
 
-import { getConfig } from '@openedx/frontend-base';
+import { getAppConfig, getConfig } from '@openedx/frontend-base';
 import messages from './messages';
 import './App.scss';
 
@@ -38,7 +38,7 @@ export const App = () => {
   const loadData = reduxHooks.useLoadData();
 
   React.useEffect(() => {
-    if (authenticatedUser?.administrator || getConfig().NODE_ENV === 'development') {
+    if (authenticatedUser?.administrator || getConfig().environment === EnvironmentTypes.DEVELOPMENT) {
       window.loadEmptyData = () => {
         loadData({ ...fakeData.globalData, courses: [] });
       };
@@ -56,12 +56,12 @@ export const App = () => {
       window.actions = actions;
       window.track = track;
     }
-    if (getConfig().HOTJAR_APP_ID) {
+    if (getAppConfig('openedxLearnerDashboard').HOTJAR_APP_ID) {
       try {
         initializeHotjar({
-          hotjarId: getConfig().HOTJAR_APP_ID,
-          hotjarVersion: getConfig().HOTJAR_VERSION,
-          hotjarDebug: !!getConfig().HOTJAR_DEBUG,
+          hotjarId: getAppConfig('openedxLearnerDashboard').HOTJAR_APP_ID,
+          hotjarVersion: getAppConfig('openedxLearnerDashboard').HOTJAR_VERSION,
+          hotjarDebug: !!getAppConfig('openedxLearnerDashboard').HOTJAR_DEBUG,
         });
       } catch (error) {
         logError(error);
@@ -72,7 +72,7 @@ export const App = () => {
     <>
       <Helmet>
         <title>{formatMessage(messages.pageTitle)}</title>
-        <link rel="shortcut icon" href={getConfig().FAVICON_URL} type="image/x-icon" />
+        <link rel="shortcut icon" href={getAppConfig('openedxLearnerDashboard').FAVICON_URL} type="image/x-icon" />
       </Helmet>
       <div>
         <AppWrapper>

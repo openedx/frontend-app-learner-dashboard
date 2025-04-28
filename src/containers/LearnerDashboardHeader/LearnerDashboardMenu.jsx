@@ -1,4 +1,4 @@
-import { getConfig } from '@openedx/frontend-base';
+import { getAppConfig, getConfig } from '@openedx/frontend-base';
 
 import urls from 'data/services/lms/urls';
 
@@ -17,7 +17,7 @@ const getLearnerHeaderMenu = (
       content: formatMessage(messages.course),
       isActive: true,
     },
-    ...(getConfig().ENABLE_PROGRAMS ? [{
+    ...(getAppConfig('openedxLearnerDashboard').ENABLE_PROGRAMS ? [{
       type: 'item',
       href: `${urls.programsUrl()}`,
       content: formatMessage(messages.program),
@@ -32,9 +32,9 @@ const getLearnerHeaderMenu = (
     },
   ],
   secondaryMenu: [
-    ...(getConfig().SUPPORT_URL ? [{
+    ...(getAppConfig('openedxLearnerDashboard').SUPPORT_URL ? [{
       type: 'item',
-      href: `${getConfig().SUPPORT_URL}`,
+      href: `${getAppConfig('openedxLearnerDashboard').SUPPORT_URL}`,
       content: formatMessage(messages.help),
     }] : []),
   ],
@@ -44,17 +44,17 @@ const getLearnerHeaderMenu = (
       items: [
         {
           type: 'item',
-          href: `${getConfig().ACCOUNT_PROFILE_URL}/u/${authenticatedUser?.username}`,
+          href: `${getAppConfig('openedxLearnerDashboard').ACCOUNT_PROFILE_URL}/u/${authenticatedUser?.username}`,
           content: formatMessage(messages.profile),
         },
         {
           type: 'item',
-          href: `${getConfig().ACCOUNT_SETTINGS_URL}`,
+          href: `${getAppConfig('openedxLearnerDashboard').ACCOUNT_SETTINGS_URL}`,
           content: formatMessage(messages.account),
         },
-        ...(getConfig().ORDER_HISTORY_URL ? [{
+        ...(getAppConfig('openedxLearnerDashboard').ORDER_HISTORY_URL ? [{
           type: 'item',
-          href: getConfig().ORDER_HISTORY_URL,
+          href: getAppConfig('openedxLearnerDashboard').ORDER_HISTORY_URL,
           content: formatMessage(messages.orderHistory),
         }] : []),
       ],
@@ -64,7 +64,7 @@ const getLearnerHeaderMenu = (
       items: [
         {
           type: 'item',
-          href: `${getConfig().LOGOUT_URL}`,
+          href: `${getConfig().logoutUrl}`,
           content: formatMessage(messages.signOut),
         },
       ],

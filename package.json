@@ -6,37 +6,15 @@
     "type": "git",
     "url": "git+https://github.com/edx/frontend-app-learner-dashboard.git"
   },
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "files": [
-    "/dist"
-  ],
-  "config": {
-    "name": "openedxLearnerDashboard",
-    "exposes": {
-      "./leanerDashboard": "./src/moduleConfig"
-    }
-  },
   "browserslist": [
     "extends @edx/browserslist-config"
   ],
-  "sideEffects": [
-    "*.css",
-    "*.scss"
-  ],
   "scripts": {
-    "build": "openedx build",
-    "build:module": "openedx build:module",
-    "dev": "openedx dev",
-    "dev:module": "PORT=8083 openedx dev:module",
-    "dev:legacy": "openedx dev:legacy",
+    "build": "openedx build:legacy",
+    "dev": "openedx dev:legacy",
     "i18n_extract": "openedx formatjs extract",
     "lint": "openedx lint .",
     "lint:fix": "openedx lint --fix .",
-    "pack": "openedx pack",
-    "release": "openedx release",
-    "serve": "PORT=YOUR_PORT openedx serve",
     "snapshot": "openedx test --updateSnapshot",
     "test": "openedx test --coverage --passWithNoTests",
     "test:nocoverage": "openedx test --passWithNoTests"
@@ -60,7 +38,6 @@
     "@redux-devtools/extension": "3.3.0",
     "@reduxjs/toolkit": "^2.0.0",
     "classnames": "^2.3.1",
-    "core-js": "3.40.0",
     "filesize": "^10.0.0",
     "font-awesome": "4.7.0",
     "history": "5.3.0",
@@ -73,7 +50,6 @@
     "react-share": "^4.4.0",
     "redux-logger": "3.0.6",
     "redux-thunk": "2.4.2",
-    "regenerator-runtime": "^0.14.0",
     "reselect": "^4.0.0",
     "universal-cookie": "^4.0.4",
     "util": "^0.12.4"

@@ -1,6 +1,4 @@
-import React from 'react';
-
-import { getConfig, useIntl } from '@openedx/frontend-base';
+import { getAppConfig, useIntl } from '@openedx/frontend-base';
 
 import { reduxHooks } from 'hooks';
 
@@ -14,7 +12,7 @@ export const BrandLogo = () => {
     <a href={dashboard?.url || '/'} className="mx-auto">
       <img
         className="logo py-3"
-        src={getConfig().LOGO_URL}
+        src={getAppConfig('openedxLearnerDashboard').LOGO_URL}
         alt={formatMessage(messages.logoAltText)}
       />
     </a>

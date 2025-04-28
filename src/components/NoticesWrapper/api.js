@@ -6,7 +6,7 @@ import {
   logInfo
 } from '@openedx/frontend-base';
 
-export const noticesUrl = `${getConfig().LMS_BASE_URL}/notices/api/v1/unacknowledged`;
+export const noticesUrl = `${getConfig().lmsBaseUrl}/notices/api/v1/unacknowledged`;
 export const error404Message = 'This probably happened because the notices plugin is not installed on platform.';
 
 export const getNotices = ({ onLoad }) => {

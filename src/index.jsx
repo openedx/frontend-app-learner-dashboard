@@ -1,8 +1,4 @@
-/* eslint-disable import/prefer-default-export */
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
-
-import React, { StrictMode } from 'react';
+import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   Route, Navigate, Routes,
@@ -54,14 +50,7 @@ subscribe(APP_INIT_ERROR, (error) => {
   );
 });
 
-export const appName = 'LearnerHomeAppConfig';
-
 initialize({
-  handlers: {
-    config: () => {
-      mergeConfig(configuration, appName);
-    },
-  },
   messages,
   requireAuthenticatedUser: true,
 });
