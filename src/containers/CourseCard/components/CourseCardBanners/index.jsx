@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { reduxHooks } from 'hooks';
+import { reduxHooks } from '@src/hooks';
 
-import CourseBannerSlot from 'plugin-slots/CourseBannerSlot';
+import CourseBannerSlot from '@src/plugin-slots/CourseBannerSlot';
 import CertificateBanner from './CertificateBanner';
 import CreditBanner from './CreditBanner';
 import EntitlementBanner from './EntitlementBanner';

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { StrictDict } from 'utils';
+import { StrictDict } from '@src/utils';
 
 const initialState = {
   pageNumber: 1,

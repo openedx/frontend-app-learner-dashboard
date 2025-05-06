@@ -1,4 +1,4 @@
-import api from 'data/services/lms/api';
+import api from '@src/data/services/lms/api';
 
 /**
  * Track Social Share event click.

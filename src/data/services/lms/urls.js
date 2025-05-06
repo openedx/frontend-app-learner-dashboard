@@ -1,4 +1,4 @@
-import { StrictDict } from 'utils';
+import { StrictDict } from '@src/utils';
 
 import { getConfig } from '@edx/frontend-platform';
 

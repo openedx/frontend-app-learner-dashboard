@@ -1,4 +1,4 @@
-import { keyStore } from 'utils';
+import { keyStore } from '@src/utils';
 import * as module from './simpleSelectors';
 
 const {

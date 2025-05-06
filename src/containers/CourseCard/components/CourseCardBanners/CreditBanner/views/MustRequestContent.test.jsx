@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from '@edx/react-unit-test-utils';
 
-import { formatMessage } from 'testUtils';
+import { formatMessage } from '@src/testUtils';
 
-import { reduxHooks } from 'hooks';
+import { reduxHooks } from '@src/hooks';
 import messages from './messages';
 import hooks from './hooks';
 import ProviderLink from './components/ProviderLink';

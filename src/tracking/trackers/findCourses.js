@@ -1,4 +1,4 @@
-import { createLinkTracker, createEventTracker } from 'data/services/segment/utils';
+import { createLinkTracker, createEventTracker } from '@src/data/services/segment/utils';
 import { categories, eventNames } from '../constants';
 
 export const findCoursesClicked = (href, args = {}) => createLinkTracker(

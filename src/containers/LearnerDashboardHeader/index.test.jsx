@@ -2,7 +2,7 @@ import { mergeConfig } from '@edx/frontend-platform';
 import { shallow } from '@edx/react-unit-test-utils';
 import Header from '@edx/frontend-component-header';
 
-import urls from 'data/services/lms/urls';
+import urls from '@src/data/services/lms/urls';
 import LearnerDashboardHeader from '.';
 import { findCoursesNavClicked } from './hooks';
 

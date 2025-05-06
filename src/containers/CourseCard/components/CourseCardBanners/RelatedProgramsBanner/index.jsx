@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { Program } from '@openedx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { reduxHooks } from 'hooks';
-import Banner from 'components/Banner';
+import { reduxHooks } from '@src/hooks';
+import Banner from '@src/components/Banner';
 
 import ProgramList from './ProgramsList';
 import messages from './messages';

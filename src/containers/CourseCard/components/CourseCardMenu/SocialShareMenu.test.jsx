@@ -4,8 +4,8 @@ import * as ReactShare from 'react-share';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { formatMessage, shallow } from '@edx/react-unit-test-utils';
 
-import track from 'tracking';
-import { reduxHooks } from 'hooks';
+import track from '@src/tracking';
+import { reduxHooks } from '@src/hooks';
 
 import { useEmailSettings } from './hooks';
 import SocialShareMenu, { testIds } from './SocialShareMenu';

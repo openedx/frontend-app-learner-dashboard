@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { MockUseState } from 'testUtils';
+import { MockUseState } from '@src/testUtils';
 
 import { getConfig } from '@edx/frontend-platform';
 import { getNotices } from './api';

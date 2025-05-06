@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import track from 'tracking';
-import { reduxHooks } from 'hooks';
+import track from '@src/tracking';
+import { reduxHooks } from '@src/hooks';
 import useActionDisabledState from '../hooks';
 import ActionButton from './ActionButton';
 import messages from './messages';

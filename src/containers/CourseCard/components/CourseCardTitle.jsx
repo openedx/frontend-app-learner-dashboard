@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import track from 'tracking';
-import { reduxHooks } from 'hooks';
+import track from '@src/tracking';
+import { reduxHooks } from '@src/hooks';
 import useActionDisabledState from './hooks';
 
 const { courseTitleClicked } = track.course;

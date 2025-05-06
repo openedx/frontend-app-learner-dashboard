@@ -1,5 +1,5 @@
-import { StrictDict } from 'utils';
-import creditVals from 'data/constants/credit';
+import { StrictDict } from '@src/utils';
+import creditVals from '@src/data/constants/credit';
 
 export const providers = StrictDict({
   edx: { name: 'edX Course Provider' },

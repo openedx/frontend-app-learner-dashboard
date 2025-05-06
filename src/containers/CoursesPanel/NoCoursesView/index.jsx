@@ -2,10 +2,10 @@ import React from 'react';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { Button, Image } from '@openedx/paragon';
 import { Search } from '@openedx/paragon/icons';
-import { baseAppUrl } from 'data/services/lms/urls';
+import { baseAppUrl } from '@src/data/services/lms/urls';
 
-import emptyCourseSVG from 'assets/empty-course.svg';
-import { reduxHooks } from 'hooks';
+import emptyCourseSVG from '@src/assets/empty-course.svg';
+import { reduxHooks } from '@src/hooks';
 
 import messages from './messages';
 import './index.scss';

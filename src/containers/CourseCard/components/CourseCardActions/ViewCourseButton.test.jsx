@@ -1,7 +1,7 @@
 import { shallow } from '@edx/react-unit-test-utils';
 
-import track from 'tracking';
-import { reduxHooks } from 'hooks';
+import track from '@src/tracking';
+import { reduxHooks } from '@src/hooks';
 import useActionDisabledState from '../hooks';
 import ViewCourseButton from './ViewCourseButton';
 

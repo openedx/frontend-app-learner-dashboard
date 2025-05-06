@@ -1,6 +1,6 @@
 import { shallow } from '@edx/react-unit-test-utils';
 
-import { reduxHooks } from 'hooks';
+import { reduxHooks } from '@src/hooks';
 
 import CourseCardBanners from '.';
 
