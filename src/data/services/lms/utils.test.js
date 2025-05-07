@@ -15,17 +15,18 @@ describe('lms service utils', () => {
     });
   });
   describe('post', () => {
-    it('forwards arguments to authenticatedHttpClient().post', () => {
+    it('forwards arguments to authenticatedHttpClient().post, removes undefined attributes and appends array values', () => {
       const post = jest.fn((...args) => ({ post: args }));
       getAuthenticatedHttpClient.mockReturnValue({ post });
       const url = 'some url';
       const body = {
         some: 'body',
-        for: 'the',
+        for: undefined,
         test: 'yay',
+        array: ['one', 'two', undefined],
       };
       const expectedUrl = utils.post(url, body);
-      expect(expectedUrl).toEqual(post(url, 'some=body&for=the&test=yay'));
+      expect(expectedUrl).toEqual(post(url, 'some=body&test=yay&array=one&array=two'));
     });
   });
   describe('stringifyUrl', () => {
