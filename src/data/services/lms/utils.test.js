@@ -1,11 +1,6 @@
-import queryString from 'query-string';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import * as utils from './utils';
 
-jest.mock('query-string', () => ({
-  stringifyUrl: jest.fn((url, options) => ({ url, options })),
-  stringify: jest.fn((data) => data),
-}));
 jest.mock('@edx/frontend-platform/auth', () => ({
   getAuthenticatedHttpClient: jest.fn(),
 }));
@@ -30,18 +25,14 @@ describe('lms service utils', () => {
         test: 'yay',
       };
       const expectedUrl = utils.post(url, body);
-      expect(queryString.stringify).toHaveBeenCalledWith(body);
-      expect(expectedUrl).toEqual(post(url, body));
+      expect(expectedUrl).toEqual(post(url, 'some=body&for=the&test=yay'));
     });
   });
   describe('stringifyUrl', () => {
-    it('forwards url and query to stringifyUrl with options to skip null and ""', () => {
+    it('forwards url and query to stringifyUrl skipping null and ""', () => {
       const url = 'here.com';
       const query = { some: 'set', of: 'queryParams' };
-      const options = { skipNull: true, skipEmptyString: true };
-      expect(utils.stringifyUrl(url, query)).toEqual(
-        queryString.stringifyUrl({ url, query }, options),
-      );
+      expect(utils.stringifyUrl(url, query)).toEqual('here.com?some=set&of=queryParams');
     });
   });
 });
