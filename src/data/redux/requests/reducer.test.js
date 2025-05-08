@@ -47,5 +47,16 @@ describe('requests reducer', () => {
         });
       });
     });
+    describe('clearRequest', () => {
+      it('cleanup status and error', () => {
+        expect(reducer(
+          testingState,
+          actions.clearRequest({ requestKey: testKey, error: testValue }),
+        )).toEqual({
+          ...testingState,
+          [testKey]: {},
+        });
+      });
+    });
   });
 });
