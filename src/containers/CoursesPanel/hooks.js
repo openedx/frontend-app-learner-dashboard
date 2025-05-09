@@ -31,7 +31,7 @@ export const useCourseListData = () => {
   const { numPages, visibleList } = reduxHooks.useCurrentCourseList({
     sortBy,
     filters,
-    pageSize: disablePagination === 1 ? 0 : ListPageSize,
+    pageSize: Number(disablePagination) === 1 ? 0 : ListPageSize,
   });
 
   const handleRemoveFilter = (filter) => () => removeFilter(filter);
