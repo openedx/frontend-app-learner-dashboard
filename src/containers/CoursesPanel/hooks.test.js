@@ -67,7 +67,7 @@ describe('CourseList hooks', () => {
       it('loads current course list with page size 0 if/when there is query param disable_pagination=1', () => {
         state.mock();
         state.mockVal(state.keys.sortBy, testSortBy);
-        mockGet.mockReturnValueOnce(1);
+        mockGet.mockReturnValueOnce('1');
         out = hooks.useCourseListData();
         expect(reduxHooks.useCurrentCourseList).toHaveBeenCalledWith({
           sortBy: testSortBy,
