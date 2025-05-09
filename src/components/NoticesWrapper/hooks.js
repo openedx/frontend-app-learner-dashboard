@@ -1,9 +1,11 @@
 import React from 'react';
 import { getConfig } from '@edx/frontend-platform';
+import { useIntl } from 'react-intl';
 
 import { StrictDict } from 'utils';
 import { getNotices } from './api';
 import * as module from './hooks';
+import messages from './messages';
 
 /**
  * This component uses the platform-plugin-notices plugin to function.
@@ -17,6 +19,8 @@ export const state = StrictDict({
 
 export const useNoticesWrapperData = () => {
   const [isRedirected, setIsRedirected] = module.state.isRedirected();
+  const { formatMessage } = useIntl();
+
   React.useEffect(() => {
     if (getConfig().ENABLE_NOTICES) {
       getNotices({
@@ -26,9 +30,10 @@ export const useNoticesWrapperData = () => {
             window.location.replace(`${data.data.results[0]}?next=${window.location.href}`);
           }
         },
+        notFoundMessage: formatMessage(messages.error404Message),
       });
     }
-  }, [setIsRedirected]);
+  }, [setIsRedirected, formatMessage]);
   return { isRedirected };
 };
 
