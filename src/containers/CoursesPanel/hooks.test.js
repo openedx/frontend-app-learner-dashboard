@@ -1,5 +1,3 @@
-import queryString from 'query-string';
-
 import { MockUseState } from 'testUtils';
 import { reduxHooks } from 'hooks';
 import { ListPageSize, SortKeys } from 'data/constants/app';
@@ -15,8 +13,10 @@ jest.mock('hooks', () => ({
   },
 }));
 
-jest.mock('query-string', () => ({
-  parse: jest.fn(() => ({})),
+const mockGet = jest.fn(() => ({}));
+
+global.URLSearchParams = jest.fn().mockImplementation(() => ({
+  get: mockGet,
 }));
 
 const state = new MockUseState(hooks);
@@ -67,7 +67,7 @@ describe('CourseList hooks', () => {
       it('loads current course list with page size 0 if/when there is query param disable_pagination=1', () => {
         state.mock();
         state.mockVal(state.keys.sortBy, testSortBy);
-        queryString.parse.mockReturnValueOnce({ disable_pagination: 1 });
+        mockGet.mockReturnValueOnce('1');
         out = hooks.useCourseListData();
         expect(reduxHooks.useCurrentCourseList).toHaveBeenCalledWith({
           sortBy: testSortBy,

@@ -1,7 +1,5 @@
 import React from 'react';
 
-import queryString from 'query-string';
-
 import { ListPageSize, SortKeys } from 'data/constants/app';
 import { reduxHooks } from 'hooks';
 import { StrictDict } from 'utils';
@@ -27,12 +25,13 @@ export const useCourseListData = () => {
 
   const [sortBy, setSortBy] = module.state.sortBy(SortKeys.enrolled);
 
-  const querySearch = queryString.parse(window.location.search, { parseNumbers: true });
+  const querySearch = new URLSearchParams(window.location.search);
+  const disablePagination = querySearch.get('disable_pagination');
 
   const { numPages, visibleList } = reduxHooks.useCurrentCourseList({
     sortBy,
     filters,
-    pageSize: querySearch?.disable_pagination === 1 ? 0 : ListPageSize,
+    pageSize: Number(disablePagination) === 1 ? 0 : ListPageSize,
   });
 
   const handleRemoveFilter = (filter) => () => removeFilter(filter);
