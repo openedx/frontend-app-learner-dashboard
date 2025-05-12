@@ -64,7 +64,7 @@ export const ConfirmEmailBanner = () => {
           </Button>
         )}
       >
-        <h1 className="text-center p-3">{formatMessage(messages.confirmEmailModalHeader)}</h1>
+        <h4 className="text-center p-3 h1">{formatMessage(messages.confirmEmailModalHeader)}</h4>
         <p className="text-center">{formatMessage(messages.confirmEmailModalBody)}</p>
       </MarketingModal>
     </>
