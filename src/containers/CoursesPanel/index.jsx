@@ -27,7 +27,7 @@ export const CoursesPanel = () => {
   return (
     <div className="course-list-container">
       <div className="course-list-heading-container">
-        <h2 className="course-list-title">{formatMessage(messages.myCourses)}</h2>
+        <h1 className="course-list-title">{formatMessage(messages.myCourses)}</h1>
         <div className="course-filter-controls-container">
           <CourseFilterControls {...courseListData.filterOptions} />
         </div>

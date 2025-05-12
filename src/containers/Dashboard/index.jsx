@@ -21,7 +21,7 @@ export const Dashboard = () => {
 
   return (
     <div id="dashboard-container" className="d-flex flex-column p-2 pt-0">
-      <h1 className="sr-only">{pageTitle}</h1>
+      <strong className="sr-only">{pageTitle}</strong>
       {!initIsPending && (
         <>
           {hasAvailableDashboards && <EnterpriseDashboardModal />}
