@@ -84,10 +84,9 @@ describe('DashboardLayout', () => {
 
   describe('not collapsed', () => {
     const testWidgetSpacing = () => {
-      it('shows a blank (nbsp) h2 spacer component above widget sidebar', () => {
+      it('shows not-collapsed class on widget sidebar', () => {
         const columns = el.instance.findByType(Col);
-        // nonbreaking space equivalent
-        expect(columns[1].findByType('h2')[0].children[0].el).toEqual('\xA0');
+        expect(columns[1].props.className).toContain('not-collapsed');
       });
     };
     describe('sidebar showing', () => {

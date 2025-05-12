@@ -55,11 +55,11 @@ exports[`ConfirmEmailBanner snapshot Show on unverified 1`] = `
     onClose={[MockFunction closeConfirmModal]}
     title=""
   >
-    <h1
-      className="text-center p-3"
+    <h4
+      className="text-center p-3 h1"
     >
       Confirm your email
-    </h1>
+    </h4>
     <p
       className="text-center"
     >
