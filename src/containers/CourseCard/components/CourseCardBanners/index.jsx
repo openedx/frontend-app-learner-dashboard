@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { reduxHooks } from 'hooks';
 
-import CourseBanner from './CourseBanner';
+import CourseBannerSlot from 'plugin-slots/CourseBannerSlot';
 import CertificateBanner from './CertificateBanner';
 import CreditBanner from './CreditBanner';
 import EntitlementBanner from './EntitlementBanner';
@@ -14,7 +14,7 @@ export const CourseCardBanners = ({ cardId }) => {
   return (
     <div className="course-card-banners" data-testid="CourseCardBanners">
       <RelatedProgramsBanner cardId={cardId} />
-      <CourseBanner cardId={cardId} />
+      <CourseBannerSlot cardId={cardId} />
       <EntitlementBanner cardId={cardId} />
       {isEnrolled && <CertificateBanner cardId={cardId} />}
       {isEnrolled && <CreditBanner cardId={cardId} />}

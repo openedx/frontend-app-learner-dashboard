@@ -130,13 +130,6 @@ describe('lms api methods', () => {
       beforeEach(() => {
         jest.spyOn(api, moduleKeys.logEvent).mockImplementation(logEvent);
       });
-      test('logUpgrade sends enrollment upgrade click event with learner dashboard location', () => {
-        expect(api.logUpgrade({ courseId })).toEqual(logEvent({
-          eventName: eventNames.upgradeButtonClickedEnrollment,
-          courseId,
-          data: { location: 'learner-dashboard' },
-        }));
-      });
       test('logShare sends share clicke vent with course id, side and location', () => {
         const site = 'test-site';
         expect(api.logShare({ courseId, site })).toEqual(logEvent({

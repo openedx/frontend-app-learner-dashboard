@@ -1,7 +1,8 @@
 # `frontend-app-learner-dashboard` Plugin Slots
 
-* [`course_card_action_slot`](./CourseCardActionSlot/)
-* [`footer_slot`](./FooterSlot/)
-* [`widget_sidebar_slot`](./WidgetSidebarSlot/)
-* [`course_list_slot`](./CourseListSlot/)
-* [`no_courses_view_slot`](./NoCoursesViewSlot/)
+* [`org.openedx.frontend.learner_dashboard.course_card_action.v1`](./CourseCardActionSlot/)
+* [`org.openedx.frontend.layout.footer.v1`](./FooterSlot/)
+* [`org.openedx.frontend.learner_dashboard.widget_sidebar.v1`](./WidgetSidebarSlot/)
+* [`org.openedx.frontend.learner_dashboard.course_list.v1`](./CourseListSlot/)
+* [`org.openedx.frontend.learner_dashboard.no_courses_view.v1`](./NoCoursesViewSlot/)
+* [`org.openedx.frontend.learner_dashboard.dashboard_modal.v1`](./DashboardModalSlot)

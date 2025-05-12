@@ -13,11 +13,10 @@ import AppWrapper from 'containers/WidgetContainers/AppWrapper';
 import { App } from './App';
 import messages from './messages';
 
-jest.mock('@edx/frontend-component-footer', () => ({ FooterSlot: 'Footer' }));
+jest.mock('@edx/frontend-component-footer', () => ({ FooterSlot: 'FooterSlot' }));
 
 jest.mock('containers/Dashboard', () => 'Dashboard');
 jest.mock('containers/LearnerDashboardHeader', () => 'LearnerDashboardHeader');
-jest.mock('components/ZendeskFab', () => 'ZendeskFab');
 jest.mock('containers/WidgetContainers/AppWrapper', () => 'AppWrapper');
 jest.mock('data/redux', () => ({
   selectors: 'redux.selectors',

@@ -1,40 +1,43 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`app registry subscribe: APP_INIT_ERROR.  snapshot: displays an ErrorPage to root element 1`] = `
-<ErrorPage
-  message="test-error-message"
-/>
+<UNDEFINED>
+  <ErrorPage
+    message="test-error-message"
+  />
+</UNDEFINED>
 `;
 
 exports[`app registry subscribe: APP_READY.  links App to root element 1`] = `
-<AppProvider
-  store={
-    {
-      "redux": "store",
+<UNDEFINED>
+  <AppProvider
+    store={
+      {
+        "redux": "store",
+      }
     }
-  }
-  wrapWithRouter={true}
->
-  <NoticesWrapper>
-    <Routes>
-      <Route
-        element={
-          <PageWrap>
-            <App />
-          </PageWrap>
-        }
-        path="/"
-      />
-      <Route
-        element={
-          <Navigate
-            replace={true}
-            to="/"
-          />
-        }
-        path="*"
-      />
-    </Routes>
-  </NoticesWrapper>
-</AppProvider>
+  >
+    <NoticesWrapper>
+      <Routes>
+        <Route
+          element={
+            <PageWrap>
+              <App />
+            </PageWrap>
+          }
+          path="/"
+        />
+        <Route
+          element={
+            <Navigate
+              replace={true}
+              to="/"
+            />
+          }
+          path="*"
+        />
+      </Routes>
+    </NoticesWrapper>
+  </AppProvider>
+</UNDEFINED>
 `;

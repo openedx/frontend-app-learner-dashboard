@@ -1,6 +1,9 @@
 # Widget Sidebar Slot
 
-### Slot ID: `widget_sidebar_slot`
+### Slot ID: `org.openedx.frontend.learner_dashboard.widget_sidebar.v1`
+
+### Slot ID Aliases
+* `widget_sidebar_slot`
 
 ## Description
 
@@ -21,7 +24,7 @@ import { DIRECT_PLUGIN, PLUGIN_OPERATIONS } from '@openedx/frontend-plugin-frame
 
 const config = {
   pluginSlots: {
-     widget_sidebar_slot: {
+     'org.openedx.frontend.learner_dashboard.widget_sidebar.v1': {
       // Hide the default LookingForChallenge component
       keepDefault: false,
       plugins: [

@@ -4,7 +4,11 @@ import { PluginSlot } from '@openedx/frontend-plugin-framework';
 import { CourseList, courseListDataShape } from 'containers/CoursesPanel/CourseList';
 
 export const CourseListSlot = ({ courseListData }) => (
-  <PluginSlot id="course_list_slot" pluginProps={{ courseListData }}>
+  <PluginSlot
+    id="org.openedx.frontend.learner_dashboard.course_list.v1"
+    idAliases={['course_list_slot']}
+    pluginProps={{ courseListData }}
+  >
     <CourseList courseListData={courseListData} />
   </PluginSlot>
 );

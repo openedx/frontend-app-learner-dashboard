@@ -11,9 +11,6 @@ on:
 jobs:
   tests:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: [18, 20]
 
     steps:
     - name: Checkout
@@ -22,7 +19,7 @@ jobs:
     - name: Setup Nodejs
       uses: actions/setup-node@v4
       with:
-        node-version: ${{ matrix.node }}
+        node-version-file: '.nvmrc'
 
     - name: Install dependencies
       run: npm ci
@@ -40,24 +37,7 @@ jobs:
       run: npm run build
 
     - name: Run Coverage
-      uses: codecov/codecov-action@v4
+      uses: codecov/codecov-action@v5
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
         fail_ci_if_error: true
-
-    - name: Send failure notification
-      if: ${{ failure() }}
-      uses: dawidd6/action-send-mail@v3
-      with:
-        server_address: email-smtp.us-east-1.amazonaws.com
-        server_port: 465
-        username: ${{ secrets.EDX_SMTP_USERNAME }}
-        password: ${{ secrets.EDX_SMTP_PASSWORD }}
-        subject: CI workflow failed in ${{github.repository}}
-        to: masters-grades@edx.org,aperture@2u-internal.opsgenie.net
-        from: github-actions <github-actions@edx.org>
-        nodemailerlog: true
-        nodemailerdebug: true
-        body: CI workflow in ${{github.repository}} failed!
-          For details see "github.com/${{ github.repository }}/actions/runs/${{ github.run_id
-          }}"
