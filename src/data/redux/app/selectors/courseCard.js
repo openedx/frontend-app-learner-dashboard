@@ -43,6 +43,7 @@ export const courseCard = StrictDict({
     (courseRun) => (courseRun === null ? {} : {
       endDate: module.loadDateVal(courseRun.endDate),
       startDate: module.loadDateVal(courseRun.startDate),
+      advertisedStart: courseRun.advertisedStart,
 
       courseId: courseRun.courseId,
       isArchived: courseRun.isArchived,
