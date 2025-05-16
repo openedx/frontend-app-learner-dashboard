@@ -147,6 +147,7 @@ describe('courseCard selectors module', () => {
         loadSelector(courseCard.courseRun, {
           endDate: '3000-10-20',
           startDate: '2000-10-20',
+          advertisedStart: 'Mid June',
 
           courseId: 'test-course-id',
           isArchived: 'test-is-archived',
@@ -171,6 +172,9 @@ describe('courseCard selectors module', () => {
       it('passes [endDate, startDate], converted to dates', () => {
         expect(selected.endDate).toEqual(new Date(testData.endDate));
         expect(selected.startDate).toEqual(new Date(testData.startDate));
+      });
+      it('passes advertised start date', () => {
+        expect(selected.advertisedStart).toEqual(testData.advertisedStart);
       });
       it('passes [courseId, isArchived, isStarted]', () => {
         expect(selected.courseId).toEqual(testData.courseId);
