@@ -1,5 +1,6 @@
 import track from 'tracking';
 import { linkNames } from 'tracking/constants';
+import { mergeConfig } from '@edx/frontend-platform';
 
 import { MockUseState } from 'testUtils';
 
@@ -36,6 +37,7 @@ describe('LearnerDashboardHeader hooks', () => {
 
   describe('getLearnerDashboardHeaderMenu', () => {
     test('calls header menu data hook', () => {
+      mergeConfig({ COURSES_ARE_BROWSABLE: true });
       const courseSearchUrl = '/courses';
       const authenticatedUser = {
         username: 'test',
