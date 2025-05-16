@@ -23,7 +23,7 @@ jest.mock('@edx/frontend-component-header', () => 'Header');
 
 describe('LearnerDashboardHeader', () => {
   test('render', () => {
-    mergeConfig({ ORDER_HISTORY_URL: 'test-url' });
+    mergeConfig({ ORDER_HISTORY_URL: 'test-url', COURSES_ARE_BROWSABLE: true });
     const wrapper = shallow(<LearnerDashboardHeader />);
     expect(wrapper.snapshot).toMatchSnapshot();
     expect(wrapper.instance.findByType('ConfirmEmailBanner')).toHaveLength(1);
