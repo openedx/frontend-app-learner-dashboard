@@ -9,9 +9,11 @@ exports[`NoCoursesView snapshot 1`] = `
     alt="No Courses view banner"
     src="icon/mock/path"
   />
-  <h1>
+  <h3
+    className="h1"
+  >
     Looking for a new challenge?
-  </h1>
+  </h3>
   <p>
     Explore our courses to add them to your dashboard.
   </p>
