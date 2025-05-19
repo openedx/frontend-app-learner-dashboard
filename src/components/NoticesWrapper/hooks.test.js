@@ -8,6 +8,12 @@ import * as hooks from './hooks';
 
 jest.mock('@edx/frontend-platform', () => ({ getConfig: jest.fn() }));
 jest.mock('./api', () => ({ getNotices: jest.fn() }));
+const mockFormatMessage = jest.fn(message => message.defaultMessage || 'translated-string');
+jest.mock('react-intl', () => ({
+  useIntl: () => ({
+    formatMessage: mockFormatMessage,
+  }),
+}));
 
 getConfig.mockReturnValue({ ENABLE_NOTICES: true });
 const state = new MockUseState(hooks);
@@ -34,7 +40,7 @@ describe('NoticesWrapper hooks', () => {
           getConfig.mockReturnValueOnce({ ENABLE_NOTICES: false });
           hooks.useNoticesWrapperData();
           const [cb, prereqs] = React.useEffect.mock.calls[0];
-          expect(prereqs).toEqual([state.setState.isRedirected]);
+          expect(prereqs).toEqual([state.setState.isRedirected, mockFormatMessage]);
           cb();
           expect(getNotices).not.toHaveBeenCalled();
         });
@@ -43,7 +49,7 @@ describe('NoticesWrapper hooks', () => {
             hooks.useNoticesWrapperData();
             expect(React.useEffect).toHaveBeenCalled();
             const [cb, prereqs] = React.useEffect.mock.calls[0];
-            expect(prereqs).toEqual([state.setState.isRedirected]);
+            expect(prereqs).toEqual([state.setState.isRedirected, mockFormatMessage]);
             cb();
             expect(getNotices).toHaveBeenCalled();
             const { onLoad } = getNotices.mock.calls[0][0];
@@ -59,7 +65,7 @@ describe('NoticesWrapper hooks', () => {
             window.location = { replace: jest.fn(), href: 'test-old-href' };
             hooks.useNoticesWrapperData();
             const [cb, prereqs] = React.useEffect.mock.calls[0];
-            expect(prereqs).toEqual([state.setState.isRedirected]);
+            expect(prereqs).toEqual([state.setState.isRedirected, mockFormatMessage]);
             cb();
             expect(getNotices).toHaveBeenCalled();
             const { onLoad } = getNotices.mock.calls[0][0];
