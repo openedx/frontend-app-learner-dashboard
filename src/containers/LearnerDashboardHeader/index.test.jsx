@@ -23,7 +23,7 @@ jest.mock('@edx/frontend-component-header', () => 'Header');
 
 describe('LearnerDashboardHeader', () => {
   test('render', () => {
-    mergeConfig({ ORDER_HISTORY_URL: 'test-url', COURSES_ARE_BROWSABLE: true });
+    mergeConfig({ ORDER_HISTORY_URL: 'test-url' });
     const wrapper = shallow(<LearnerDashboardHeader />);
     expect(wrapper.snapshot).toMatchSnapshot();
     expect(wrapper.instance.findByType('ConfirmEmailBanner')).toHaveLength(1);
@@ -45,7 +45,7 @@ describe('LearnerDashboardHeader', () => {
     expect(wrapper.instance.findByType(Header)[0].props.mainMenuItems.length).toBe(3);
   });
   test('should not display Discover New tab if it is disabled by configuration', () => {
-    mergeConfig({ COURSES_ARE_BROWSABLE: false });
+    mergeConfig({ NON_BROWSABLE_COURSES: true });
     const wrapper = shallow(<LearnerDashboardHeader />);
     expect(wrapper.instance.findByType(Header)[0].props.mainMenuItems.length).toBe(2);
   });
