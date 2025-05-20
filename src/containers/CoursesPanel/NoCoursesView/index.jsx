@@ -19,9 +19,9 @@ export const NoCoursesView = () => {
       className="d-flex align-items-center justify-content-center mb-4.5"
     >
       <Image src={emptyCourseSVG} alt={formatMessage(messages.bannerAlt)} />
-      <h1>
+      <h3 className="h1">
         {formatMessage(messages.lookingForChallengePrompt)}
-      </h1>
+      </h3>
       <p>
         {formatMessage(messages.exploreCoursesPrompt)}
       </p>

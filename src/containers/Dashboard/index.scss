@@ -4,6 +4,14 @@
 
 .sidebar-column {
   padding: 0 var(--pgn-spacing-spacer-3) 0 var(--pgn-spacing-spacer-1);
+
+  &.not-collapsed {
+    padding-top: var(--pgn-spacing-spacer-2);
+
+    & >:first-child {
+      margin-top: var(--pgn-spacing-spacer-5-5);
+    }
+  }
 }
 
 @media (--pgn-size-breakpoint-max-width-lg) {
