@@ -44,4 +44,9 @@ describe('LearnerDashboardHeader', () => {
     const wrapper = shallow(<LearnerDashboardHeader />);
     expect(wrapper.instance.findByType(Header)[0].props.mainMenuItems.length).toBe(3);
   });
+  test('should not display Discover New tab if it is disabled by configuration', () => {
+    mergeConfig({ NON_BROWSABLE_COURSES: true });
+    const wrapper = shallow(<LearnerDashboardHeader />);
+    expect(wrapper.instance.findByType(Header)[0].props.mainMenuItems.length).toBe(2);
+  });
 });

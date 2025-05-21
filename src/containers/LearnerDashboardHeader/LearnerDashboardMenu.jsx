@@ -22,14 +22,15 @@ const getLearnerHeaderMenu = (
       href: `${urls.programsUrl()}`,
       content: formatMessage(messages.program),
     }] : []),
-    {
+    ...(!getConfig().NON_BROWSABLE_COURSES ? [{
       type: 'item',
       href: `${urls.baseAppUrl(courseSearchUrl)}`,
       content: formatMessage(messages.discoverNew),
       onClick: (e) => {
         exploreCoursesClick(e);
       },
-    },
+    }]
+      : []),
   ],
   secondaryMenu: [
     ...(getConfig().SUPPORT_URL ? [{
