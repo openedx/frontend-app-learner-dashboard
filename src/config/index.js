@@ -19,6 +19,7 @@ const configuration = {
   ENABLE_EDX_PERSONAL_DASHBOARD: process.env.ENABLE_EDX_PERSONAL_DASHBOARD === 'true',
   SEARCH_CATALOG_URL: process.env.SEARCH_CATALOG_URL || null,
   ENABLE_PROGRAMS: process.env.ENABLE_PROGRAMS === 'true',
+  NON_BROWSABLE_COURSES: process.env.NON_BROWSABLE_COURSES === 'true',
 };
 
 const features = {};

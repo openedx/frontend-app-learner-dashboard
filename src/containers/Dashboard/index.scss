@@ -6,6 +6,14 @@
 
 .sidebar-column {
   padding: 0 map-get($spacers, 3) 0 map-get($spacers, 1);
+
+  &.not-collapsed {
+    padding-top: map-get($spacers, 2);
+
+    & >:first-child {
+      margin-top: map-get($spacers, 5\.5);
+    }
+  }
 }
 
 @include media-breakpoint-down(lg) {

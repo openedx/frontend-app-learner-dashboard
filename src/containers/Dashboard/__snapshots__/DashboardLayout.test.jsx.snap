@@ -24,7 +24,12 @@ exports[`DashboardLayout collapsed sidebar not showing snapshot 1`] = `
       test-children
     </Col>
     <Col
-      className="sidebar-column"
+      className={
+        [
+          "sidebar-column",
+          false,
+        ]
+      }
       lg={
         {
           "offset": 0,
@@ -68,7 +73,12 @@ exports[`DashboardLayout collapsed sidebar showing snapshot 1`] = `
       test-children
     </Col>
     <Col
-      className="sidebar-column"
+      className={
+        [
+          "sidebar-column",
+          false,
+        ]
+      }
       lg={
         {
           "offset": 0,
@@ -112,7 +122,12 @@ exports[`DashboardLayout not collapsed sidebar not showing snapshot 1`] = `
       test-children
     </Col>
     <Col
-      className="sidebar-column"
+      className={
+        [
+          "sidebar-column",
+          "not-collapsed",
+        ]
+      }
       lg={
         {
           "offset": 0,
@@ -126,11 +141,6 @@ exports[`DashboardLayout not collapsed sidebar not showing snapshot 1`] = `
         }
       }
     >
-      <h2
-        className="course-list-title"
-      >
-         
-      </h2>
       <WidgetSidebarSlot />
     </Col>
   </Row>
@@ -161,7 +171,12 @@ exports[`DashboardLayout not collapsed sidebar showing snapshot 1`] = `
       test-children
     </Col>
     <Col
-      className="sidebar-column"
+      className={
+        [
+          "sidebar-column",
+          "not-collapsed",
+        ]
+      }
       lg={
         {
           "offset": 0,
@@ -175,11 +190,6 @@ exports[`DashboardLayout not collapsed sidebar showing snapshot 1`] = `
         }
       }
     >
-      <h2
-        className="course-list-title"
-      >
-         
-      </h2>
       <WidgetSidebarSlot />
     </Col>
   </Row>
