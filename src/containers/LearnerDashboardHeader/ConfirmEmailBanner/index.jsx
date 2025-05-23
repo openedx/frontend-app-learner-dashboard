@@ -26,7 +26,7 @@ export const ConfirmEmailBanner = () => {
   } = useConfirmEmailBannerData();
   const { formatMessage } = useIntl();
 
-  if (!isNeeded) { return null; }
+  // if (!isNeeded) { return null; }
 
   return (
     <>
