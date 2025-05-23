@@ -2,7 +2,6 @@
 import React from 'react';
 import {
   Button,
-  Hyperlink,
   Image,
   MarketingModal,
   ModalDialog,
