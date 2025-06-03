@@ -3,59 +3,7 @@
 exports[`LearnerDashboardHeader render 1`] = `
 <Fragment>
   <ConfirmEmailBanner />
-  <Header
-    mainMenuItems={
-      [
-        {
-          "content": "Courses",
-          "href": "/",
-          "isActive": true,
-          "type": "item",
-        },
-        {
-          "content": "Discover New",
-          "href": "http://localhost:18000/course-search-url",
-          "onClick": [Function],
-          "type": "item",
-        },
-      ]
-    }
-    secondaryMenuItems={[]}
-    userMenuItems={
-      [
-        {
-          "heading": "",
-          "items": [
-            {
-              "content": "Profile",
-              "href": "http://account-profile-url.test/u/undefined",
-              "type": "item",
-            },
-            {
-              "content": "Account",
-              "href": "http://account-settings-url.test",
-              "type": "item",
-            },
-            {
-              "content": "Order History",
-              "href": "test-url",
-              "type": "item",
-            },
-          ],
-        },
-        {
-          "heading": "",
-          "items": [
-            {
-              "content": "Sign Out",
-              "href": "http://localhost:18000/logout",
-              "type": "item",
-            },
-          ],
-        },
-      ]
-    }
-  />
+  <Header />
   <MasqueradeBar />
 </Fragment>
 `;
