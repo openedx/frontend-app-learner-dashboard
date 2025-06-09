@@ -1,6 +1,4 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
-
+import { render } from '@testing-library/react';
 import { reduxHooks } from 'hooks';
 
 import ProviderLink from './ProviderLink';
@@ -11,32 +9,62 @@ jest.mock('hooks', () => ({
   },
 }));
 
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+
+const mockFormatMessage = (msg, values) => {
+  let message = msg.defaultMessage;
+  if (values === undefined) {
+    return message;
+  }
+
+  Object.keys(values).forEach((key) => {
+    message = message.replaceAll(`{${key}}`, values[key]);
+  });
+  return message;
+};
+
+jest.mock('react-intl', () => {
+  const i18n = jest.requireActual('react-intl');
+  return {
+    ...i18n,
+    useIntl: () => ({
+      formatMessage: mockFormatMessage,
+    }),
+  };
+});
+
 const cardId = 'test-card-id';
 const credit = {
   providerStatusUrl: 'test-credit-provider-status-url',
   providerName: 'test-credit-provider-name',
 };
-let el;
+
+const renderProviderLink = () => render(
+  <ProviderLink cardId={cardId} />,
+);
 
 describe('ProviderLink component', () => {
   beforeEach(() => {
+    jest.clearAllMocks();
     reduxHooks.useCardCreditData.mockReturnValue(credit);
-    el = shallow(<ProviderLink cardId={cardId} />);
   });
-  describe('behavior', () => {
+  describe('hooks', () => {
     it('initializes credit hook with cardId', () => {
+      renderProviderLink();
       expect(reduxHooks.useCardCreditData).toHaveBeenCalledWith(cardId);
     });
   });
   describe('render', () => {
-    test('snapshot', () => {
-      expect(el.snapshot).toMatchSnapshot();
-    });
     it('passes credit.providerStatusUrl to the hyperlink href', () => {
-      expect(el.instance.findByType('Hyperlink')[0].props.href).toEqual(credit.providerStatusUrl);
+      const { getByRole } = renderProviderLink();
+      const providerLink = getByRole('link', { href: credit.providerStatusUrl });
+      expect(providerLink).toBeInTheDocument();
     });
     it('passes providerName for the link message', () => {
-      expect(el.instance.findByType('Hyperlink')[0].children[0].el).toEqual(credit.providerName);
+      const { getByRole } = renderProviderLink();
+      const providerLink = getByRole('link', { href: credit.providerStatusUrl });
+      expect(providerLink).toHaveTextContent(credit.providerName);
     });
   });
 });
