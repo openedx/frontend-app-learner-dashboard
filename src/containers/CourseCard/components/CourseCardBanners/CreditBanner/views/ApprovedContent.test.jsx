@@ -1,10 +1,8 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
+import { render } from '@testing-library/react';
 
 import { formatMessage } from 'testUtils';
 import { reduxHooks } from 'hooks';
 import messages from './messages';
-import ProviderLink from './components/ProviderLink';
 import ApprovedContent from './ApprovedContent';
 
 jest.mock('hooks', () => ({
@@ -13,10 +11,32 @@ jest.mock('hooks', () => ({
     useMasqueradeData: jest.fn(),
   },
 }));
-jest.mock('./components/CreditContent', () => 'CreditContent');
-jest.mock('./components/ProviderLink', () => 'ProviderLink');
 
-let el;
+const mockFormatMessage = (msg, values) => {
+  let message = msg.defaultMessage;
+  if (values === undefined) {
+    return message;
+  }
+
+  Object.keys(values).forEach((key) => {
+    message = message.replaceAll(`{${key}}`, values[key]);
+  });
+  return message;
+};
+
+jest.mock('@edx/frontend-platform/i18n', () => {
+  const i18n = jest.requireActual('@edx/frontend-platform/i18n');
+  return {
+    ...i18n,
+    useIntl: () => ({
+      formatMessage: mockFormatMessage,
+    }),
+  };
+});
+
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+
 const cardId = 'test-card-id';
 const credit = {
   providerStatusUrl: 'test-credit-provider-status-url',
@@ -26,38 +46,55 @@ reduxHooks.useCardCreditData.mockReturnValue(credit);
 reduxHooks.useMasqueradeData.mockReturnValue({ isMasquerading: false });
 
 describe('ApprovedContent component', () => {
-  beforeEach(() => {
-    el = shallow(<ApprovedContent cardId={cardId} />);
-  });
-  describe('behavior', () => {
+  describe('hooks', () => {
     it('initializes credit data with cardId', () => {
+      render(<ApprovedContent cardId={cardId} />);
       expect(reduxHooks.useCardCreditData).toHaveBeenCalledWith(cardId);
     });
   });
   describe('render', () => {
     describe('rendered CreditContent component', () => {
-      let component;
-      beforeAll(() => {
-        component = el.instance.findByType('CreditContent');
+      it('action.message is formatted viewCredit message', () => {
+        const { getByRole } = render(<ApprovedContent cardId={cardId} />);
+        const actionButton = getByRole('link', { name: messages.viewCredit.defaultMessage });
+        expect(actionButton).toBeInTheDocument();
+        expect(actionButton).toHaveTextContent(formatMessage(messages.viewCredit));
       });
-      test('action.href from credit.providerStatusUrl', () => {
-        expect(component[0].props.action.href).toEqual(credit.providerStatusUrl);
+      it('action.href from credit.providerStatusUrl', () => {
+        const { getByRole } = render(<ApprovedContent cardId={cardId} />);
+        const actionButton = getByRole('link', { name: messages.viewCredit.defaultMessage });
+        expect(actionButton).toHaveAttribute('href', credit.providerStatusUrl);
       });
-      test('action.message is formatted viewCredit message', () => {
-        expect(component[0].props.action.message).toEqual(formatMessage(messages.viewCredit));
+      it('action.disabled is false', () => {
+        const { getByRole } = render(<ApprovedContent cardId={cardId} />);
+        const actionButton = getByRole('link', { name: messages.viewCredit.defaultMessage });
+        expect(actionButton).not.toHaveAttribute('aria-disabled', 'true');
+        expect(actionButton).not.toHaveClass('disabled');
+        expect(actionButton).toBeEnabled();
       });
-      test('action.disabled is false', () => {
-        expect(component[0].props.action.disabled).toEqual(false);
+      it('message is formatted approved message', () => {
+        const { getByTestId } = render(<ApprovedContent cardId={cardId} />);
+        const creditMsg = getByTestId('credit-msg');
+        expect(creditMsg).toBeInTheDocument();
+        expect(creditMsg.textContent).toContain(`${credit.providerName} has approved your request for course credit`);
       });
-      test('message is formatted approved message', () => {
-        expect(component[0].props.message).toEqual(formatMessage(
-          messages.approved,
-          {
-            congratulations: (<b>{formatMessage(messages.congratulations)}</b>),
-            linkToProviderSite: <ProviderLink cardId={cardId} />,
-            providerName: credit.providerName,
-          },
-        ));
+    });
+    describe('when masquerading', () => {
+      beforeEach(() => {
+        reduxHooks.useMasqueradeData.mockReturnValue({ isMasquerading: true });
+      });
+
+      it('disables the action button', () => {
+        const { getByRole } = render(<ApprovedContent cardId={cardId} />);
+        const actionButton = getByRole('link', { name: messages.viewCredit.defaultMessage });
+        expect(actionButton).toHaveAttribute('aria-disabled', 'true');
+        expect(actionButton).toHaveClass('disabled');
+      });
+
+      it('still renders provider name and link correctly', () => {
+        const { getByTestId } = render(<ApprovedContent cardId={cardId} />);
+        const creditMsg = getByTestId('credit-msg');
+        expect(creditMsg.textContent).toContain(credit.providerName);
       });
     });
   });

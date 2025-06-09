@@ -1,9 +1,10 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
+import { render } from '@testing-library/react';
 
 import CreditContent from './CreditContent';
 
-let el;
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+
 const action = {
   href: 'test-action-href',
   onClick: jest.fn().mockName('test-action-onClick'),
@@ -15,45 +16,57 @@ const message = 'test-message';
 const requestData = { url: 'test-request-data-url', parameters: { key1: 'val1' } };
 const props = { action, message, requestData };
 
+const renderCreditContent = (data) => render(
+  <CreditContent {...data} />,
+);
+
 describe('CreditContent component', () => {
   describe('render', () => {
     describe('with action', () => {
-      beforeEach(() => {
-        el = shallow(<CreditContent {...props} />);
-      });
-      test('snapshot', () => {
-        expect(el.snapshot).toMatchSnapshot();
-      });
-      it('loads href, onClick, and message into action row button', () => {
-        const buttonEl = el.instance.findByTestId('action-row-btn')[0];
-        expect(buttonEl.props.href).toEqual(action.href);
-        expect(buttonEl.props.onClick).toEqual(action.onClick);
-        expect(buttonEl.props.disabled).toEqual(action.disabled);
-        expect(buttonEl.children[0].el).toEqual(action.message);
+      it('loads href and message into action row button', () => {
+        const { getByRole } = renderCreditContent(props);
+        const button = getByRole('link', { name: action.message });
+        expect(button).toBeInTheDocument();
+        expect(button).toHaveAttribute('href', action.href);
+        expect(button).not.toHaveAttribute('disabled');
       });
       it('loads message into credit-msg div', () => {
-        expect(el.instance.findByTestId('credit-msg')[0].children[0].el).toEqual(message);
+        const { getByTestId } = renderCreditContent(props);
+        const creditMsg = getByTestId('credit-msg');
+        expect(creditMsg).toBeInTheDocument();
+        expect(creditMsg.innerHTML).toEqual(message);
       });
       it('loads CreditRequestForm with passed requestData', () => {
-        expect(el.instance.findByType('CreditRequestForm')[0].props.requestData).toEqual(requestData);
+        const { container } = renderCreditContent(props);
+        const creditForm = container.querySelector('form');
+        expect(creditForm).toBeInTheDocument();
+        expect(creditForm).toHaveAttribute('action', requestData.url);
       });
-      test('disables action button when action.disabled is true', () => {
-        el = shallow(<CreditContent {...props} action={{ ...action, disabled: true }} />);
-        expect(el.instance.findByTestId('action-row-btn')[0].props.disabled).toEqual(true);
+      it('disables action button when action.disabled is true', () => {
+        const { getByRole } = renderCreditContent({ ...props, action: { ...action, disabled: true } });
+        const button = getByRole('link', { name: action.message });
+        expect(button).toBeInTheDocument();
+        expect(button).toHaveClass('disabled');
+        expect(button).toHaveAttribute('aria-disabled', 'true');
       });
     });
     describe('without action', () => {
-      test('snapshot', () => {
-        el = shallow(<CreditContent {...{ message, requestData }} />);
-      });
-      test('snapshot', () => {
-        expect(el.snapshot).toMatchSnapshot();
-      });
       it('loads message into credit-msg div', () => {
-        expect(el.instance.findByTestId('credit-msg')[0].children[0].el).toEqual(message);
+        const { getByTestId } = renderCreditContent({ message, requestData });
+        const creditMsg = getByTestId('credit-msg');
+        expect(creditMsg).toBeInTheDocument();
+        expect(creditMsg.innerHTML).toEqual(message);
       });
       it('loads CreditRequestForm with passed requestData', () => {
-        expect(el.instance.findByType('CreditRequestForm')[0].props.requestData).toEqual(requestData);
+        const { container } = renderCreditContent({ message, requestData });
+        const creditForm = container.querySelector('form');
+        expect(creditForm).toBeInTheDocument();
+        expect(creditForm).toHaveAttribute('action', requestData.url);
+      });
+      it('does not render action row button', () => {
+        const { queryByRole } = renderCreditContent({ message, requestData });
+        const button = queryByRole('link', { name: action.message });
+        expect(button).not.toBeInTheDocument();
       });
     });
   });
