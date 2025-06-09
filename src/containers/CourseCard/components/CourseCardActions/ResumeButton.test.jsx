@@ -1,4 +1,5 @@
-import { shallow } from '@edx/react-unit-test-utils';
+import { act, render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import { reduxHooks } from 'hooks';
 import track from 'tracking';
@@ -19,7 +20,8 @@ jest.mock('hooks', () => ({
   },
 }));
 jest.mock('../hooks', () => jest.fn(() => ({ disableResumeCourse: false })));
-jest.mock('./ActionButton', () => 'ActionButton');
+jest.unmock('@openedx/paragon');
+jest.mock('./ActionButton/hooks', () => jest.fn(() => false));
 
 const resumeUrl = 'resume-url';
 reduxHooks.useCardCourseRunData.mockReturnValue({ resumeUrl });
@@ -29,55 +31,55 @@ reduxHooks.useTrackCourseEvent.mockImplementation(
   (eventName, cardId, url) => ({ trackCourseEvent: { eventName, cardId, url } }),
 );
 
-let wrapper;
-
 describe('ResumeButton', () => {
   const props = {
     cardId: 'cardId',
   };
-  describe('behavior', () => {
+  describe('initialize hooks', () => {
     it('initializes course run data with cardId', () => {
-      wrapper = shallow(<ResumeButton {...props} />);
+      render(<ResumeButton {...props} />);
       expect(reduxHooks.useCardCourseRunData).toHaveBeenCalledWith(props.cardId);
     });
     it('loads exec education path param', () => {
-      wrapper = shallow(<ResumeButton {...props} />);
+      render(<ResumeButton {...props} />);
       expect(reduxHooks.useCardExecEdTrackingParam).toHaveBeenCalledWith(props.cardId);
     });
     it('loads disabled states for resume action from action hooks', () => {
-      wrapper = shallow(<ResumeButton {...props} />);
+      render(<ResumeButton {...props} />);
       expect(useActionDisabledState).toHaveBeenCalledWith(props.cardId);
     });
   });
-  describe('snapshot', () => {
+  describe('behavior', () => {
     describe('disabled', () => {
       beforeEach(() => {
         useActionDisabledState.mockReturnValueOnce({ disableResumeCourse: true });
-        wrapper = shallow(<ResumeButton {...props} />);
-      });
-      test('snapshot', () => {
-        expect(wrapper.snapshot).toMatchSnapshot();
       });
       it('should be disabled', () => {
-        expect(wrapper.instance.props.disabled).toEqual(true);
+        const { getByRole } = render(<ResumeButton {...props} />);
+        const button = getByRole('button', { name: 'Resume' });
+        expect(button).toHaveClass('disabled');
+        expect(button).toHaveAttribute('aria-disabled', 'true');
       });
     });
     describe('enabled', () => {
-      beforeEach(() => {
-        wrapper = shallow(<ResumeButton {...props} />);
-      });
-      test('snapshot', () => {
-        expect(wrapper.snapshot).toMatchSnapshot();
-      });
       it('should be enabled', () => {
-        expect(wrapper.instance.props.disabled).toEqual(false);
+        const { getByRole } = render(<ResumeButton {...props} />);
+        const button = getByRole('button', { name: 'Resume' });
+        expect(button).toBeInTheDocument();
+        expect(button).not.toHaveClass('disabled');
+        expect(button).not.toHaveAttribute('aria-disabled', 'true');
       });
-      it('should track enter course clicked event on click, with exec ed param', () => {
-        expect(wrapper.instance.props.onClick).toEqual(reduxHooks.useTrackCourseEvent(
+      it('should track enter course clicked event on click, with exec ed param', async () => {
+        const { getByRole } = render(<ResumeButton {...props} />);
+        const button = getByRole('button', { name: 'Resume' });
+        await act(async () => {
+          userEvent.click(button);
+        });
+        expect(reduxHooks.useTrackCourseEvent).toHaveBeenCalledWith(
           track.course.enterCourseClicked,
           props.cardId,
           resumeUrl + execEdPath(props.cardId),
-        ));
+        );
       });
     });
   });
