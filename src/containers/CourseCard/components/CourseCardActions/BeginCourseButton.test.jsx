@@ -1,4 +1,4 @@
-import { act, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { reduxHooks } from 'hooks';
 import track from 'tracking';
@@ -58,25 +58,24 @@ describe('BeginCourseButton', () => {
     describe('disabled', () => {
       it('should be disabled', () => {
         useActionDisabledState.mockReturnValueOnce({ disableBeginCourse: true });
-        const { getByRole } = render(<BeginCourseButton {...props} />);
-        const button = getByRole('button', { name: 'Begin Course' });
+        render(<BeginCourseButton {...props} />);
+        const button = screen.getByRole('button', { name: 'Begin Course' });
         expect(button).toHaveClass('disabled');
         expect(button).toHaveAttribute('aria-disabled', 'true');
       });
     });
     describe('enabled', () => {
       it('should be enabled', () => {
-        const { getByRole } = render(<BeginCourseButton {...props} />);
-        const button = getByRole('button', { name: 'Begin Course' });
+        render(<BeginCourseButton {...props} />);
+        const button = screen.getByRole('button', { name: 'Begin Course' });
         expect(button).not.toHaveClass('disabled');
         expect(button).not.toHaveAttribute('aria-disabled', 'true');
       });
       it('should track enter course clicked event on click, with exec ed param', async () => {
-        const { getByRole } = render(<BeginCourseButton {...props} />);
-        const button = getByRole('button', { name: 'Begin Course' });
-        await act(async () => {
-          userEvent.click(button);
-        });
+        render(<BeginCourseButton {...props} />);
+        const user = userEvent.setup();
+        const button = screen.getByRole('button', { name: 'Begin Course' });
+        user.click(button);
         expect(reduxHooks.useTrackCourseEvent).toHaveBeenCalledWith(
           track.course.enterCourseClicked,
           props.cardId,

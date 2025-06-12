@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 import useNoticesWrapperData from './hooks';
 import NoticesWrapper from '.';
@@ -22,15 +22,15 @@ describe('NoticesWrapper component', () => {
   describe('output', () => {
     it('does not show children if redirected', () => {
       useNoticesWrapperData.mockReturnValueOnce({ isRedirected: true });
-      const { queryByText } = render(<NoticesWrapper>{children}</NoticesWrapper>);
-      expect(queryByText('some')).not.toBeInTheDocument();
-      expect(queryByText('children')).not.toBeInTheDocument();
+      render(<NoticesWrapper>{children}</NoticesWrapper>);
+      expect(screen.queryByText('some')).not.toBeInTheDocument();
+      expect(screen.queryByText('children')).not.toBeInTheDocument();
     });
     it('shows children if not redirected', () => {
       useNoticesWrapperData.mockReturnValue(hookProps);
-      const { getByText } = render(<NoticesWrapper>{children}</NoticesWrapper>);
-      expect(getByText('some')).toBeInTheDocument();
-      expect(getByText('children')).toBeInTheDocument();
+      render(<NoticesWrapper>{children}</NoticesWrapper>);
+      expect(screen.getByText('some')).toBeInTheDocument();
+      expect(screen.getByText('children')).toBeInTheDocument();
     });
   });
 });

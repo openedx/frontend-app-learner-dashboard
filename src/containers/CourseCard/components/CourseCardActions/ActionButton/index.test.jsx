@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import ActionButton from '.';
 
 import useIsCollapsed from './hooks';
@@ -15,15 +15,15 @@ describe('ActionButton', () => {
 
   it('is collapsed', async () => {
     useIsCollapsed.mockReturnValue(true);
-    const { getByRole } = render(<ActionButton {...props} />);
-    const button = getByRole('button', { name: 'Test' });
+    render(<ActionButton {...props} />);
+    const button = screen.getByRole('button', { name: 'Test' });
     expect(button).toHaveClass('btn-sm', 'custom-class');
   });
 
   it('is not collapsed', () => {
     useIsCollapsed.mockReturnValue(false);
-    const { getByRole } = render(<ActionButton {...props} />);
-    const button = getByRole('button', { name: 'Test' });
+    render(<ActionButton {...props} />);
+    const button = screen.getByRole('button', { name: 'Test' });
     expect(button).toBeInTheDocument();
     expect(button).not.toHaveClass('size', 'sm');
   });

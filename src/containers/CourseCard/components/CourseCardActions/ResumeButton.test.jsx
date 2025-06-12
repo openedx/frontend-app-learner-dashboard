@@ -1,4 +1,4 @@
-import { act, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { reduxHooks } from 'hooks';
@@ -36,16 +36,14 @@ describe('ResumeButton', () => {
     cardId: 'cardId',
   };
   describe('initialize hooks', () => {
+    beforeEach(() => render(<ResumeButton {...props} />));
     it('initializes course run data with cardId', () => {
-      render(<ResumeButton {...props} />);
       expect(reduxHooks.useCardCourseRunData).toHaveBeenCalledWith(props.cardId);
     });
     it('loads exec education path param', () => {
-      render(<ResumeButton {...props} />);
       expect(reduxHooks.useCardExecEdTrackingParam).toHaveBeenCalledWith(props.cardId);
     });
     it('loads disabled states for resume action from action hooks', () => {
-      render(<ResumeButton {...props} />);
       expect(useActionDisabledState).toHaveBeenCalledWith(props.cardId);
     });
   });
@@ -55,26 +53,25 @@ describe('ResumeButton', () => {
         useActionDisabledState.mockReturnValueOnce({ disableResumeCourse: true });
       });
       it('should be disabled', () => {
-        const { getByRole } = render(<ResumeButton {...props} />);
-        const button = getByRole('button', { name: 'Resume' });
+        render(<ResumeButton {...props} />);
+        const button = screen.getByRole('button', { name: 'Resume' });
         expect(button).toHaveClass('disabled');
         expect(button).toHaveAttribute('aria-disabled', 'true');
       });
     });
     describe('enabled', () => {
       it('should be enabled', () => {
-        const { getByRole } = render(<ResumeButton {...props} />);
-        const button = getByRole('button', { name: 'Resume' });
+        render(<ResumeButton {...props} />);
+        const button = screen.getByRole('button', { name: 'Resume' });
         expect(button).toBeInTheDocument();
         expect(button).not.toHaveClass('disabled');
         expect(button).not.toHaveAttribute('aria-disabled', 'true');
       });
       it('should track enter course clicked event on click, with exec ed param', async () => {
-        const { getByRole } = render(<ResumeButton {...props} />);
-        const button = getByRole('button', { name: 'Resume' });
-        await act(async () => {
-          userEvent.click(button);
-        });
+        render(<ResumeButton {...props} />);
+        const user = userEvent.setup();
+        const button = screen.getByRole('button', { name: 'Resume' });
+        user.click(button);
         expect(reduxHooks.useTrackCourseEvent).toHaveBeenCalledWith(
           track.course.enterCourseClicked,
           props.cardId,
