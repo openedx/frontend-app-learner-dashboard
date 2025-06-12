@@ -1,27 +1,30 @@
-import { shallow } from '@edx/react-unit-test-utils';
-
-import { Alert } from '@openedx/paragon';
-
+import { render, screen } from '@testing-library/react';
 import Banner from './Banner';
 
-describe('Banner', () => {
-  const props = {
-    children: 'Hello, world!',
-  };
-  describe('snapshot', () => {
-    test('renders default banner', () => {
-      const wrapper = shallow(<Banner {...props} />);
-      expect(wrapper.snapshot).toMatchSnapshot();
-    });
-    test('renders with variants', () => {
-      const wrapper = shallow(<Banner {...props} variant="success" />);
-      expect(wrapper.snapshot).toMatchSnapshot();
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
 
-      expect(wrapper.instance.findByType(Alert)[0].props.variant).toEqual('success');
-    });
-    test('renders with custom class', () => {
-      const wrapper = shallow(<Banner {...props} className="custom-class" />);
-      expect(wrapper.snapshot).toMatchSnapshot();
-    });
+describe('Banner component', () => {
+  it('renders children content', () => {
+    render(<Banner>Test content</Banner>);
+    expect(screen.getByText('Test content')).toBeInTheDocument();
+  });
+
+  it('uses default props correctly', () => {
+    render(<Banner>Test content</Banner>);
+    const banner = screen.getByRole('alert');
+    expect(banner).toHaveClass('mb-0');
+  });
+
+  it('accepts custom variant prop', () => {
+    render(<Banner variant="success">Test content</Banner>);
+    const banner = screen.getByRole('alert');
+    expect(banner).toHaveClass('alert-success');
+  });
+
+  it('accepts custom className prop', () => {
+    render(<Banner className="custom-class">Test content</Banner>);
+    const banner = screen.getByRole('alert');
+    expect(banner).toHaveClass('custom-class');
   });
 });
