@@ -1,4 +1,4 @@
-import { act, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { reduxHooks } from 'hooks';
@@ -19,25 +19,24 @@ jest.mock('./ActionButton/hooks', () => jest.fn(() => false));
 describe('SelectSessionButton', () => {
   const props = { cardId: 'cardId' };
   it('default render', () => {
-    const { getByRole } = render(<SelectSessionButton {...props} />);
-    const button = getByRole('button', { name: 'Select Session' });
+    render(<SelectSessionButton {...props} />);
+    const button = screen.getByRole('button', { name: 'Select Session' });
     expect(button).toBeInTheDocument();
   });
   describe('if useActionDisabledState is false', () => {
     it('should disabled Select Session', () => {
       useActionDisabledState.mockReturnValueOnce({ disableSelectSession: true });
-      const { getByRole } = render(<SelectSessionButton {...props} />);
-      const button = getByRole('button', { name: 'Select Session' });
+      render(<SelectSessionButton {...props} />);
+      const button = screen.getByRole('button', { name: 'Select Session' });
       expect(button).toBeDisabled();
     });
   });
   describe('on click', () => {
     it('should call openSessionModal', async () => {
-      const { getByRole } = render(<SelectSessionButton {...props} />);
-      const button = getByRole('button', { name: 'Select Session' });
-      await act(async () => {
-        userEvent.click(button);
-      });
+      render(<SelectSessionButton {...props} />);
+      const user = userEvent.setup();
+      const button = screen.getByRole('button', { name: 'Select Session' });
+      await user.click(button);
       expect(reduxHooks.useUpdateSelectSessionModalCallback).toHaveBeenCalledWith(props.cardId);
     });
   });

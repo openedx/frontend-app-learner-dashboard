@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { reduxHooks } from 'hooks';
 
 import ProviderLink from './ProviderLink';
@@ -48,22 +48,20 @@ describe('ProviderLink component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     reduxHooks.useCardCreditData.mockReturnValue(credit);
+    renderProviderLink();
   });
   describe('hooks', () => {
     it('initializes credit hook with cardId', () => {
-      renderProviderLink();
       expect(reduxHooks.useCardCreditData).toHaveBeenCalledWith(cardId);
     });
   });
   describe('render', () => {
     it('passes credit.providerStatusUrl to the hyperlink href', () => {
-      const { getByRole } = renderProviderLink();
-      const providerLink = getByRole('link', { href: credit.providerStatusUrl });
+      const providerLink = screen.getByRole('link', { href: credit.providerStatusUrl });
       expect(providerLink).toBeInTheDocument();
     });
     it('passes providerName for the link message', () => {
-      const { getByRole } = renderProviderLink();
-      const providerLink = getByRole('link', { href: credit.providerStatusUrl });
+      const providerLink = screen.getByRole('link', { href: credit.providerStatusUrl });
       expect(providerLink).toHaveTextContent(credit.providerName);
     });
   });
