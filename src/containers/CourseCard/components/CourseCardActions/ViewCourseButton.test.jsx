@@ -1,4 +1,4 @@
-import { act, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import track from 'tracking';
@@ -15,9 +15,7 @@ jest.mock('tracking', () => ({
 jest.mock('hooks', () => ({
   reduxHooks: {
     useCardCourseRunData: jest.fn(() => ({ homeUrl: 'homeUrl' })),
-    useTrackCourseEvent: jest.fn(
-      (eventName, cardId, url) => ({ trackCourseEvent: { eventName, cardId, url } }),
-    ),
+    useTrackCourseEvent: jest.fn(),
   },
 }));
 jest.mock('../hooks', () => jest.fn(() => ({ disableViewCourse: false })));
@@ -30,18 +28,17 @@ const homeUrl = 'homeUrl';
 
 describe('ViewCourseButton', () => {
   it('learner can view course', async () => {
-    const { getByRole } = render(<ViewCourseButton {...defaultProps} />);
-    const button = getByRole('button', { name: 'View Course' });
+    render(<ViewCourseButton {...defaultProps} />);
+    const button = screen.getByRole('button', { name: 'View Course' });
     expect(button).toBeInTheDocument();
     expect(button).not.toHaveClass('disabled');
     expect(button).not.toHaveAttribute('aria-disabled', 'true');
   });
   it('calls trackCourseEvent on click', async () => {
-    const { getByRole } = render(<ViewCourseButton {...defaultProps} />);
-    const button = getByRole('button', { name: 'View Course' });
-    await act(async () => {
-      userEvent.click(button);
-    });
+    render(<ViewCourseButton {...defaultProps} />);
+    const user = userEvent.setup();
+    const button = screen.getByRole('button', { name: 'View Course' });
+    await user.click(button);
     expect(reduxHooks.useTrackCourseEvent).toHaveBeenCalledWith(
       track.course.enterCourseClicked,
       defaultProps.cardId,
@@ -50,8 +47,8 @@ describe('ViewCourseButton', () => {
   });
   it('learner cannot view course', () => {
     useActionDisabledState.mockReturnValueOnce({ disableViewCourse: true });
-    const { getByRole } = render(<ViewCourseButton {...defaultProps} />);
-    const button = getByRole('button', { name: 'View Course' });
+    render(<ViewCourseButton {...defaultProps} />);
+    const button = screen.getByRole('button', { name: 'View Course' });
     expect(button).toHaveClass('disabled');
     expect(button).toHaveAttribute('aria-disabled', 'true');
   });

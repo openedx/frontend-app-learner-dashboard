@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 import CreditContent from './CreditContent';
 
@@ -24,15 +24,15 @@ describe('CreditContent component', () => {
   describe('render', () => {
     describe('with action', () => {
       it('loads href and message into action row button', () => {
-        const { getByRole } = renderCreditContent(props);
-        const button = getByRole('link', { name: action.message });
+        renderCreditContent(props);
+        const button = screen.getByRole('link', { name: action.message });
         expect(button).toBeInTheDocument();
         expect(button).toHaveAttribute('href', action.href);
         expect(button).not.toHaveAttribute('disabled');
       });
       it('loads message into credit-msg div', () => {
-        const { getByTestId } = renderCreditContent(props);
-        const creditMsg = getByTestId('credit-msg');
+        renderCreditContent(props);
+        const creditMsg = screen.getByTestId('credit-msg');
         expect(creditMsg).toBeInTheDocument();
         expect(creditMsg.innerHTML).toEqual(message);
       });
@@ -43,8 +43,8 @@ describe('CreditContent component', () => {
         expect(creditForm).toHaveAttribute('action', requestData.url);
       });
       it('disables action button when action.disabled is true', () => {
-        const { getByRole } = renderCreditContent({ ...props, action: { ...action, disabled: true } });
-        const button = getByRole('link', { name: action.message });
+        renderCreditContent({ ...props, action: { ...action, disabled: true } });
+        const button = screen.getByRole('link', { name: action.message });
         expect(button).toBeInTheDocument();
         expect(button).toHaveClass('disabled');
         expect(button).toHaveAttribute('aria-disabled', 'true');
@@ -52,8 +52,8 @@ describe('CreditContent component', () => {
     });
     describe('without action', () => {
       it('loads message into credit-msg div', () => {
-        const { getByTestId } = renderCreditContent({ message, requestData });
-        const creditMsg = getByTestId('credit-msg');
+        renderCreditContent({ message, requestData });
+        const creditMsg = screen.getByTestId('credit-msg');
         expect(creditMsg).toBeInTheDocument();
         expect(creditMsg.innerHTML).toEqual(message);
       });
@@ -64,8 +64,8 @@ describe('CreditContent component', () => {
         expect(creditForm).toHaveAttribute('action', requestData.url);
       });
       it('does not render action row button', () => {
-        const { queryByRole } = renderCreditContent({ message, requestData });
-        const button = queryByRole('link', { name: action.message });
+        renderCreditContent({ message, requestData });
+        const button = screen.queryByRole('link', { name: action.message });
         expect(button).not.toBeInTheDocument();
       });
     });
