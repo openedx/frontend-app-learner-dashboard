@@ -1,19 +1,21 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
+import { render, screen } from '@testing-library/react';
+import { formatMessage } from 'testUtils';
 
+import { IntlProvider } from 'react-intl';
 import { UnenrollConfirmModal } from '.';
 
 import * as hooks from './hooks';
-
-jest.mock('./components/ConfirmPane', () => 'ConfirmPane');
-jest.mock('./components/ReasonPane', () => 'ReasonPane');
-jest.mock('./components/FinishedPane', () => 'FinishedPane');
+import messages from './components/messages';
 
 jest.mock('./hooks', () => ({
   __esModule: true,
   modalStates: jest.requireActual('./hooks').modalStates,
   useUnenrollData: jest.fn(),
 }));
+
+jest.unmock('@edx/frontend-platform/i18n');
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
 
 describe('UnenrollConfirmModal component', () => {
   const hookProps = {
@@ -33,29 +35,48 @@ describe('UnenrollConfirmModal component', () => {
     show: true,
     cardId,
   };
-  test('hooks called with closeModal and cardId', () => {
+  it('hooks called with closeModal and cardId', () => {
     hooks.useUnenrollData.mockReturnValueOnce(hookProps);
-    shallow(<UnenrollConfirmModal {...props} />);
+    render(<IntlProvider><UnenrollConfirmModal {...props} /></IntlProvider>);
     expect(hooks.useUnenrollData).toHaveBeenCalledWith({ closeModal, cardId });
   });
-  test('snapshot: modalStates.confirm', () => {
+  it('modalStates.confirm display correct component and to have class shadow', () => {
     hooks.useUnenrollData.mockReturnValueOnce(hookProps);
-    expect(shallow(<UnenrollConfirmModal {...props} />).snapshot).toMatchSnapshot();
+    render(<IntlProvider><UnenrollConfirmModal {...props} /></IntlProvider>);
+    const confirmHeader = screen.getByText(formatMessage(messages.confirmHeader));
+    expect(confirmHeader).toBeInTheDocument();
+    const dialogContainer = screen.getByRole('dialog').firstElementChild;
+    expect(dialogContainer).toHaveClass('shadow');
   });
-  test('snapshot: modalStates.finished, reason given', () => {
+  it('modalStates.finished, reason given, display correct component', () => {
     hooks.useUnenrollData.mockReturnValueOnce({ ...hookProps, modalState: hooks.modalStates.finished });
-    expect(shallow(<UnenrollConfirmModal {...props} />).snapshot).toMatchSnapshot();
+    render(<IntlProvider><UnenrollConfirmModal {...props} /></IntlProvider>);
+    const finishHeading = screen.getByText(formatMessage(messages.finishHeading));
+    expect(finishHeading).toBeInTheDocument();
+    const thanksMsg = screen.getByText((text) => text.includes('Thank you'));
+    expect(thanksMsg).toBeInTheDocument();
+    expect(thanksMsg.innerHTML).toContain(formatMessage(messages.finishThanksText));
   });
-  test('snapshot: modalStates.finished, reason skipped', () => {
+  it('modalStates.finished, reason skipped', () => {
     hooks.useUnenrollData.mockReturnValueOnce({
       ...hookProps,
       modalState: hooks.modalStates.finished,
-      isSkipped: true,
+      reason: { isSkipped: true },
     });
-    expect(shallow(<UnenrollConfirmModal {...props} />).snapshot).toMatchSnapshot();
+    render(<IntlProvider><UnenrollConfirmModal {...props} /></IntlProvider>);
+    const finishHeading = screen.getByText(formatMessage(messages.finishHeading));
+    expect(finishHeading).toBeInTheDocument();
+    const thanksMsg = screen.queryByText((text) => text.includes('Thank you'));
+    expect(thanksMsg).toBeNull();
+    const finishMsg = screen.getByText(formatMessage(messages.finishText));
+    expect(finishMsg).toBeInTheDocument();
   });
-  test('snapshot: modalStates.reason, should be fullscreen with no shadow', () => {
+  it('modalStates.reason, should display correct component with no shadow', () => {
     hooks.useUnenrollData.mockReturnValueOnce({ ...hookProps, modalState: hooks.modalStates.reason });
-    expect(shallow(<UnenrollConfirmModal {...props} />).snapshot).toMatchSnapshot();
+    render(<IntlProvider><UnenrollConfirmModal {...props} /></IntlProvider>);
+    const reasonHeading = screen.getByText(formatMessage(messages.reasonHeading));
+    expect(reasonHeading).toBeInTheDocument();
+    const dialogContainer = screen.getByRole('dialog').firstElementChild;
+    expect(dialogContainer).not.toHaveClass('shadow');
   });
 });
