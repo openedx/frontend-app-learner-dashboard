@@ -1,10 +1,8 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { Dropdown, Icon, IconButton } from '@openedx/paragon';
 import { MoreVert } from '@openedx/paragon/icons';
-import { StrictDict } from '@edx/react-unit-test-utils';
 
 import EmailSettingsModal from 'containers/EmailSettingsModal';
 import UnenrollConfirmModal from 'containers/UnenrollConfirmModal';
@@ -19,9 +17,9 @@ import {
 
 import messages from './messages';
 
-export const testIds = StrictDict({
+export const testIds = {
   unenrollModalToggle: 'unenrollModalToggle',
-});
+};
 
 export const CourseCardMenu = ({ cardId }) => {
   const { formatMessage } = useIntl();
