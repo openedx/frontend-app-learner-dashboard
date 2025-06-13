@@ -1,11 +1,15 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
+import { render, screen } from '@testing-library/react';
+import { IntlProvider } from 'react-intl';
 
 import useRelatedProgramsBadge from './hooks';
 import RelatedProgramsBadge from '.';
 
 jest.mock('containers/RelatedProgramsModal', () => 'RelatedProgramsModal');
 jest.mock('./hooks', () => jest.fn());
+
+jest.unmock('@edx/frontend-platform/i18n');
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
 
 const hookProps = {
   isOpen: true,
@@ -18,13 +22,18 @@ const hookProps = {
 const cardId = 'test-course-number';
 
 describe('RelatedProgramsBadge component', () => {
-  test('empty render: no programs', () => {
+  it('should not render if no programs', () => {
     useRelatedProgramsBadge.mockReturnValueOnce({ ...hookProps, numPrograms: 0 });
-    const el = shallow(<RelatedProgramsBadge cardId={cardId} />);
-    expect(el.isEmptyRender()).toEqual(true);
+    render(<IntlProvider locale="en"><RelatedProgramsBadge cardId={cardId} /></IntlProvider>);
+    const button = screen.queryByRole('button', { name: hookProps.programsMessage });
+    expect(button).toBeNull();
+    const dialog = screen.queryByRole('dialog');
+    expect(dialog).toBeNull();
   });
-  test('snapshot: 3 programs', () => {
-    useRelatedProgramsBadge.mockReturnValueOnce(hookProps);
-    expect(shallow(<RelatedProgramsBadge cardId={cardId} />).snapshot).toMatchSnapshot();
+  it('3 programs closed', () => {
+    useRelatedProgramsBadge.mockReturnValue({ ...hookProps, isOpen: false });
+    render(<IntlProvider locale="en"><RelatedProgramsBadge cardId={cardId} /></IntlProvider>);
+    const button = screen.getByRole('button', { name: hookProps.programsMessage });
+    expect(button).toBeInTheDocument();
   });
 });

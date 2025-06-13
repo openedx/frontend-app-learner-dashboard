@@ -1,4 +1,5 @@
-import { shallow } from '@edx/react-unit-test-utils';
+import { render, screen } from '@testing-library/react';
+import { IntlProvider } from 'react-intl';
 
 import { reduxHooks } from 'hooks';
 
@@ -20,13 +21,15 @@ describe('CourseCardBanners', () => {
   const props = {
     cardId: 'test-card-id',
   };
-  test('renders default CourseCardBanners', () => {
-    const wrapper = shallow(<CourseCardBanners {...props} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+  it('renders default CourseCardBanners', () => {
+    render(<IntlProvider locale="en"><CourseCardBanners {...props} /></IntlProvider>);
+    const banners = screen.getByTestId('CourseCardBanners');
+    expect(banners.children.length).toBe(5);
   });
-  test('render with isEnrolled false', () => {
+  it('render with isEnrolled false', () => {
     reduxHooks.useCardEnrollmentData.mockReturnValueOnce({ isEnrolled: false });
-    const wrapper = shallow(<CourseCardBanners {...props} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+    render(<IntlProvider locale="en"><CourseCardBanners {...props} /></IntlProvider>);
+    const banners = screen.getByTestId('CourseCardBanners');
+    expect(banners.children.length).toBe(3);
   });
 });
