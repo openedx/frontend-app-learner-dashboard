@@ -74,11 +74,9 @@ describe('App router component', () => {
       it('loads dashboard', () => {
         const main = el.instance.findByType('main')[0];
         expect(main.children.length).toEqual(1);
-        const dashboard = main.children[0];
+        const dashboard = main.children[0].el;
         expect(dashboard.type).toEqual('Dashboard');
-        expect(
-          dashboard.matches(shallow(<Dashboard />)),
-        ).toEqual(true);
+        expect(dashboard).toEqual(shallow(<Dashboard />));
       });
     });
     describe('no network failure with optimizely url', () => {
@@ -91,11 +89,9 @@ describe('App router component', () => {
       it('loads dashboard', () => {
         const main = el.instance.findByType('main')[0];
         expect(main.children.length).toEqual(1);
-        const dashboard = main.children[0];
+        const dashboard = main.children[0].el;
         expect(dashboard.type).toEqual('Dashboard');
-        expect(
-          dashboard.matches(shallow(<Dashboard />)),
-        ).toEqual(true);
+        expect(dashboard).toEqual(shallow(<Dashboard />));
       });
     });
     describe('no network failure with optimizely project id', () => {
@@ -108,11 +104,9 @@ describe('App router component', () => {
       it('loads dashboard', () => {
         const main = el.instance.findByType('main')[0];
         expect(main.children.length).toEqual(1);
-        const dashboard = main.children[0];
+        const dashboard = main.children[0].el;
         expect(dashboard.type).toEqual('Dashboard');
-        expect(
-          dashboard.matches(shallow(<Dashboard />)),
-        ).toEqual(true);
+        expect(dashboard).toEqual(shallow(<Dashboard />));
       });
     });
     describe('initialize failure', () => {
