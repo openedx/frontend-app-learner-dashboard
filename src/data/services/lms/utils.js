@@ -42,7 +42,7 @@ export const get = (...args) => getAuthenticatedHttpClient().get(...args);
  * @param {string} url - target url
  * @param {object|string} body - post payload
  */
-export const post = (url, body) => getAuthenticatedHttpClient().post(url, stringify(body));
+export const post = (url, body = {}) => getAuthenticatedHttpClient().post(url, stringify(body));
 
 export const client = getAuthenticatedHttpClient;
 
