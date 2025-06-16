@@ -10,8 +10,8 @@ export const useAccessMessage = ({ cardId }) => {
   const courseRun = reduxHooks.useCardCourseRunData(cardId);
   const formatDate = utilHooks.useFormatDate();
   if (!courseRun.isStarted) {
-    if (!courseRun.startDate) { return null; }
-    const startDate = formatDate(courseRun.startDate);
+    if (!courseRun.startDate && !courseRun.advertisedStart) { return null; }
+    const startDate = courseRun.advertisedStart ? courseRun.advertisedStart : formatDate(courseRun.startDate);
     return formatMessage(messages.courseStarts, { startDate });
   }
   if (enrollment.isEnrolled) {
