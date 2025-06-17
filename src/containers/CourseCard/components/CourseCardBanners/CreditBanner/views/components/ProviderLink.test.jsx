@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { reduxHooks } from 'hooks';
+import { IntlProvider } from 'react-intl';
 
 import ProviderLink from './ProviderLink';
 
@@ -10,29 +11,8 @@ jest.mock('hooks', () => ({
 }));
 
 jest.unmock('@openedx/paragon');
+jest.unmock('@edx/frontend-platform/i18n');
 jest.unmock('react');
-
-const mockFormatMessage = (msg, values) => {
-  let message = msg.defaultMessage;
-  if (values === undefined) {
-    return message;
-  }
-
-  Object.keys(values).forEach((key) => {
-    message = message.replaceAll(`{${key}}`, values[key]);
-  });
-  return message;
-};
-
-jest.mock('react-intl', () => {
-  const i18n = jest.requireActual('react-intl');
-  return {
-    ...i18n,
-    useIntl: () => ({
-      formatMessage: mockFormatMessage,
-    }),
-  };
-});
 
 const cardId = 'test-card-id';
 const credit = {
@@ -41,7 +21,7 @@ const credit = {
 };
 
 const renderProviderLink = () => render(
-  <ProviderLink cardId={cardId} />,
+  <IntlProvider locale="en"><ProviderLink cardId={cardId} /></IntlProvider>,
 );
 
 describe('ProviderLink component', () => {
