@@ -5,7 +5,6 @@ import { reduxHooks } from 'hooks';
 import WidgetSidebarSlot from '.';
 
 jest.unmock('react');
-jest.unmock('@openedx/frontend-plugin-framework');
 jest.unmock('@edx/frontend-platform/i18n');
 jest.unmock('@openedx/paragon');
 
