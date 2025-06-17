@@ -1,6 +1,5 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
-import { Hyperlink } from '@openedx/paragon';
+import { render, screen } from '@testing-library/react';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import { reduxHooks } from 'hooks';
 import { formatMessage } from 'testUtils';
@@ -8,7 +7,6 @@ import { CourseBanner } from './CourseBanner';
 
 import messages from './messages';
 
-jest.mock('components/Banner', () => 'Banner');
 jest.mock('hooks', () => ({
   utilHooks: {
     useFormatDate: () => date => date,
@@ -19,9 +17,7 @@ jest.mock('hooks', () => ({
   },
 }));
 
-const cardId = 'my-test-course-number';
-
-let el;
+const cardId = 'test-card-id';
 
 const enrollmentData = {
   isVerified: false,
@@ -38,7 +34,7 @@ const courseRunData = {
   marketingUrl: 'marketing-url',
 };
 
-const render = (overrides = {}) => {
+const renderCourseBanner = (overrides = {}) => {
   const {
     courseRun = {},
     enrollment = {},
@@ -51,81 +47,58 @@ const render = (overrides = {}) => {
     ...enrollmentData,
     ...enrollment,
   });
-  el = shallow(<CourseBanner cardId={cardId} />);
+  return render(<IntlProvider locale="en"><CourseBanner cardId={cardId} /></IntlProvider>);
 };
 
 describe('CourseBanner', () => {
-  test('initializes data with course number from enrollment, course and course run data', () => {
-    render();
+  it('initializes data with course number from enrollment, course and course run data', () => {
+    renderCourseBanner();
     expect(reduxHooks.useCardCourseRunData).toHaveBeenCalledWith(cardId);
     expect(reduxHooks.useCardEnrollmentData).toHaveBeenCalledWith(cardId);
   });
-  test('no display if learner is verified', () => {
-    render({ enrollment: { isVerified: true } });
-    expect(el.isEmptyRender()).toEqual(true);
+  it('no display if learner is verified', () => {
+    renderCourseBanner({ enrollment: { isVerified: true } });
+    expect(screen.queryByRole('alert')).toBeNull();
   });
   describe('audit access expired', () => {
-    beforeEach(() => {
-      render({ enrollment: { isAuditAccessExpired: true } });
-    });
-    test('snapshot: (auditAccessExpired, findAnotherCourse hyperlink)', () => {
-      expect(el.snapshot).toMatchSnapshot();
-    });
-    test('messages: auditAccessExpired', () => {
-      expect(el.instance.children[0].children[0].el).toContain(messages.auditAccessExpired.defaultMessage);
-      expect(el.instance.findByType(Hyperlink)[0].children[0].el).toEqual(messages.findAnotherCourse.defaultMessage);
+    it('should display correct message and link', () => {
+      renderCourseBanner({ enrollment: { isAuditAccessExpired: true } });
+      const auditAccessText = screen.getByText(formatMessage(messages.auditAccessExpired));
+      expect(auditAccessText).toBeInTheDocument();
+      const auditAccessLink = screen.getByText(formatMessage(messages.findAnotherCourse));
+      expect(auditAccessLink).toBeInTheDocument();
     });
   });
   describe('unmet prerequisites', () => {
-    beforeEach(() => {
-      render({ enrollment: { coursewareAccess: { hasUnmetPrerequisites: true } } });
-    });
-    test('snapshot: unmetPrerequisites', () => {
-      expect(el.snapshot).toMatchSnapshot();
-    });
-    test('messages: prerequisitesNotMet', () => {
-      expect(el.instance.children[0].children[0].el).toContain(messages.prerequisitesNotMet.defaultMessage);
+    it('should display correct message', () => {
+      renderCourseBanner({ enrollment: { coursewareAccess: { hasUnmetPrerequisites: true } } });
+      const preReqText = screen.getByText(formatMessage(messages.prerequisitesNotMet));
+      expect(preReqText).toBeInTheDocument();
     });
   });
   describe('too early', () => {
     describe('no start date', () => {
-      beforeEach(() => {
-        render({ enrollment: { coursewareAccess: { isTooEarly: true } }, courseRun: { startDate: null } });
+      it('should not display banner', () => {
+        renderCourseBanner({ enrollment: { coursewareAccess: { isTooEarly: true } }, courseRun: { startDate: null } });
+        const banner = screen.queryByRole('alert');
+        expect(banner).toBeNull();
       });
-      test('snapshot', () => expect(el.snapshot).toMatchSnapshot());
-      test('messages', () => expect(el.instance.children).toEqual([]));
     });
     describe('has start date', () => {
-      beforeEach(() => {
-        render({ enrollment: { coursewareAccess: { isTooEarly: true } } });
-      });
-      test('snapshot', () => expect(el.snapshot).toMatchSnapshot());
-
-      test('messages: courseHasNotStarted', () => {
-        expect(el.instance.children[0].children[0].el).toContain(
+      it('should display messages courseHasNotStarted', () => {
+        renderCourseBanner({ enrollment: { coursewareAccess: { isTooEarly: true } } });
+        const earlyMsg = screen.getByText(
           formatMessage(messages.courseHasNotStarted, { startDate: courseRunData.startDate }),
         );
+        expect(earlyMsg).toBeInTheDocument();
       });
     });
   });
   describe('staff', () => {
-    beforeEach(() => {
-      render({ enrollment: { coursewareAccess: { isStaff: true } } });
+    it('should not display banner', () => {
+      renderCourseBanner({ enrollment: { coursewareAccess: { isStaff: true } } });
+      const banner = screen.queryByRole('alert');
+      expect(banner).toBeNull();
     });
-    test('snapshot: isStaff', () => {
-      expect(el.snapshot).toMatchSnapshot();
-    });
-  });
-  test('snapshot: stacking banners', () => {
-    render({
-      enrollment: {
-        coursewareAccess: {
-          isStaff: true,
-          isTooEarly: true,
-          hasUnmetPrerequisites: true,
-        },
-      },
-    });
-    expect(el.snapshot).toMatchSnapshot();
   });
 });

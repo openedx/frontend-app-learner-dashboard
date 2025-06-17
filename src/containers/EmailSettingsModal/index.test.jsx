@@ -1,8 +1,9 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
+import { render, screen } from '@testing-library/react';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import hooks from './hooks';
 import EmailSettingsModal from '.';
+import messages from './messages';
 
 jest.mock('./hooks', () => ({
   __esModule: true,
@@ -28,7 +29,7 @@ describe('EmailSettingsModal', () => {
   describe('behavior', () => {
     beforeEach(() => {
       hooks.mockReturnValueOnce(hookProps);
-      shallow(<EmailSettingsModal {...props} />);
+      render(<IntlProvider locale="en"><EmailSettingsModal {...props} /></IntlProvider>);
     });
     it('calls hook w/ closeModal and cardId from props', () => {
       expect(hooks).toHaveBeenCalledWith({
@@ -38,20 +39,36 @@ describe('EmailSettingsModal', () => {
     });
   });
   describe('render', () => {
-    test('snapshot: emails disabled, show: false', () => {
-      hooks.mockReturnValueOnce(hookProps);
-      expect(shallow(<EmailSettingsModal {...props} show={false} />).snapshot).toMatchSnapshot();
+    it('emails disabled, show: false', () => {
+      hooks.mockReturnValue(hookProps);
+      render(<IntlProvider locale="en"><EmailSettingsModal {...props} show={false} /></IntlProvider>);
+      const modal = screen.queryByRole('dialog');
+      expect(modal).toBeNull();
     });
-    test('snapshot: emails disabled, show: true', () => {
+    it('emails disabled, show: true', () => {
       hooks.mockReturnValueOnce(hookProps);
-      expect(shallow(<EmailSettingsModal {...props} />).snapshot).toMatchSnapshot();
+      render(<IntlProvider locale="en"><EmailSettingsModal {...props} /></IntlProvider>);
+      const modal = screen.getByRole('dialog');
+      const heading = screen.getByText(messages.header.defaultMessage);
+      const emailsMsg = screen.getByText(messages.emailsOff.defaultMessage);
+      expect(modal).toBeInTheDocument();
+      expect(heading).toBeInTheDocument();
+      expect(emailsMsg).toBeInTheDocument();
     });
-    test('snapshot: emails enabled, show: true', () => {
+    it('emails enabled, show: true', () => {
       hooks.mockReturnValueOnce({
         ...hookProps,
         isOptedOut: false,
       });
-      expect(shallow(<EmailSettingsModal {...props} />).snapshot).toMatchSnapshot();
+      render(<IntlProvider locale="en"><EmailSettingsModal {...props} /></IntlProvider>);
+      const emailsMsg = screen.getByText(messages.emailsOn.defaultMessage);
+      const description = screen.getByText(messages.description.defaultMessage);
+      const buttonNeverMind = screen.getByRole('button', { name: messages.nevermind.defaultMessage });
+      const buttonSave = screen.getByRole('button', { name: messages.save.defaultMessage });
+      expect(emailsMsg).toBeInTheDocument();
+      expect(description).toBeInTheDocument();
+      expect(buttonNeverMind).toBeInTheDocument();
+      expect(buttonSave).toBeInTheDocument();
     });
   });
 });

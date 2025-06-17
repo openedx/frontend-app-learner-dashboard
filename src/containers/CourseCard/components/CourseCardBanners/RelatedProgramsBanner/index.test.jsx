@@ -1,9 +1,8 @@
-import { shallow } from '@edx/react-unit-test-utils';
+import { render, screen } from '@testing-library/react';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import { reduxHooks } from '../../../../../hooks';
 import RelatedProgramsBanner from '.';
-
-jest.mock('./ProgramsList', () => 'ProgramsList');
 
 jest.mock('hooks', () => ({
   reduxHooks: {
@@ -12,31 +11,39 @@ jest.mock('hooks', () => ({
 }));
 
 const cardId = 'test-card-id';
+const programData = {
+  list: [
+    {
+      title: 'Program 1',
+      url: 'http://example.com/program1',
+    },
+    {
+      title: 'Program 2',
+      url: 'http://example.com/program2',
+    },
+  ],
+  length: 2,
+};
 
 describe('RelatedProgramsBanner', () => {
-  test('render empty', () => {
-    reduxHooks.useCardRelatedProgramsData.mockReturnValue({
-      length: 0,
-    });
-    const el = shallow(<RelatedProgramsBanner cardId={cardId} />);
-    expect(el.isEmptyRender()).toEqual(true);
+  it('render empty', () => {
+    reduxHooks.useCardRelatedProgramsData.mockReturnValue({});
+    render(<IntlProvider locale="en"><RelatedProgramsBanner cardId={cardId} /></IntlProvider>);
+    const banner = screen.queryByRole('alert');
+    expect(banner).toBeNull();
   });
 
-  test('render with programs', () => {
-    reduxHooks.useCardRelatedProgramsData.mockReturnValue({
-      list: [
-        {
-          title: 'Program 1',
-          url: 'http://example.com/program1',
-        },
-        {
-          title: 'Program 2',
-          url: 'http://example.com/program2',
-        },
-      ],
-      length: 2,
-    });
-    const el = shallow(<RelatedProgramsBanner cardId={cardId} />);
-    expect(el.snapshot).toMatchSnapshot();
+  it('render with programs', () => {
+    reduxHooks.useCardRelatedProgramsData.mockReturnValue(programData);
+    render(<IntlProvider locale="en"><RelatedProgramsBanner cardId={cardId} /></IntlProvider>);
+    const list = screen.getByRole('list');
+    expect(list.childElementCount).toBe(programData.list.length);
+  });
+
+  it('render related programs title', () => {
+    reduxHooks.useCardRelatedProgramsData.mockReturnValue(programData);
+    render(<IntlProvider locale="en"><RelatedProgramsBanner cardId={cardId} /></IntlProvider>);
+    const title = screen.getByText('Related Programs:');
+    expect(title).toBeInTheDocument();
   });
 });

@@ -1,15 +1,16 @@
-import { useKeyedState, StrictDict } from '@edx/react-unit-test-utils';
+import { useState } from 'react';
 
-import track from '../../../../tracking';
 import { reduxHooks } from '../../../../hooks';
+import track from '../../../../tracking';
+import { StrictDict } from '../../../../utils';
 
-export const stateKeys = StrictDict({
-  isUnenrollConfirmVisible: 'isUnenrollConfirmVisible',
-  isEmailSettingsVisible: 'isEmailSettingsVisible',
+export const state = StrictDict({
+  isUnenrollConfirmVisible: (val) => useState(val), // eslint-disable-line
+  isEmailSettingsVisible: (val) => useState(val), // eslint-disable-line
 });
 
 export const useUnenrollData = () => {
-  const [isVisible, setIsVisible] = useKeyedState(stateKeys.isUnenrollConfirmVisible, false);
+  const [isVisible, setIsVisible] = state.isUnenrollConfirmVisible(false);
   return {
     show: () => setIsVisible(true),
     hide: () => setIsVisible(false),
@@ -18,7 +19,7 @@ export const useUnenrollData = () => {
 };
 
 export const useEmailSettings = () => {
-  const [isVisible, setIsVisible] = useKeyedState(stateKeys.isEmailSettingsVisible, false);
+  const [isVisible, setIsVisible] = state.isEmailSettingsVisible(false);
   return {
     show: () => setIsVisible(true),
     hide: () => setIsVisible(false),

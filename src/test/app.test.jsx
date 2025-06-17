@@ -1,5 +1,4 @@
 /* eslint-disable */
-import React from 'react';
 import * as redux from 'redux';
 import { Provider } from 'react-redux';
 import {
@@ -24,10 +23,6 @@ import App from 'App';
 import Inspector from './inspector';
 import appMessages from './messages';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('@openedx/paragon/icons');
-jest.unmock('@openedx/frontend-base');
-jest.unmock('react');
 jest.unmock('react-redux');
 jest.unmock('reselect');
 jest.unmock('hooks');
