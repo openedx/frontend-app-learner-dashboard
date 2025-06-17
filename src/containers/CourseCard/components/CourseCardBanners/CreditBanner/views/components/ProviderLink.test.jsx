@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { reduxHooks } from 'hooks';
-import { IntlProvider } from 'react-intl';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import ProviderLink from './ProviderLink';
 
