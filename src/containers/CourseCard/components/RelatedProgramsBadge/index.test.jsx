@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { IntlProvider } from 'react-intl';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import useRelatedProgramsBadge from './hooks';
 import RelatedProgramsBadge from '.';
@@ -19,7 +19,7 @@ const hookProps = {
   programsMessage: 'useRelatedProgramsBadge.programsMessage',
 };
 
-const cardId = 'test-course-number';
+const cardId = 'test-card-id';
 
 describe('RelatedProgramsBadge component', () => {
   it('should not render if no programs', () => {

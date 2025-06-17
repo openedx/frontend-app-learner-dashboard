@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { IntlProvider } from 'react-intl';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { formatMessage } from 'testUtils';
 
 import { reduxHooks } from 'hooks';
@@ -23,7 +23,7 @@ jest.unmock('@edx/frontend-platform/i18n');
 jest.unmock('@openedx/paragon');
 jest.unmock('react');
 
-const cardId = 'my-test-course-number';
+const cardId = 'test-card-id';
 
 const entitlementData = {
   isEntitlement: true,
