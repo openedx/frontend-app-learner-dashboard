@@ -1,29 +1,54 @@
-import { shallow } from '@edx/react-unit-test-utils';
-
+import { render, screen, fireEvent } from '@testing-library/react';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { formatMessage } from 'testUtils';
 import { FilterKeys } from 'data/constants/app';
-import FilterForm, { filterOrder } from './FilterForm';
+import { FilterForm, filterOrder } from './FilterForm';
+import messages from '../messages';
 
-jest.mock('./Checkbox', () => 'Checkbox');
+const mockHandleFilterChange = jest.fn();
+
+const defaultProps = {
+  filters: [FilterKeys.inProgress],
+  handleFilterChange: mockHandleFilterChange,
+};
+
+const renderComponent = (props = defaultProps) => render(
+  <IntlProvider messages={{}}>
+    <FilterForm {...props} />
+  </IntlProvider>,
+);
 
 describe('FilterForm', () => {
-  const props = {
-    filters: ['test-filter'],
-    handleFilterChange: jest.fn().mockName('handleFilterChange'),
-  };
-  describe('snapshot', () => {
-    test('renders', () => {
-      const wrapper = shallow(<FilterForm {...props} />);
-      expect(wrapper.snapshot).toMatchSnapshot();
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('renders all filter checkboxes in correct order', () => {
+    renderComponent();
+    const checkboxes = screen.getAllByRole('checkbox');
+    expect(checkboxes).toHaveLength(filterOrder.length);
+    checkboxes.forEach((checkbox, index) => {
+      expect(checkbox).toHaveAttribute('value', filterOrder[index]);
     });
   });
 
-  test('filterOrder', () => {
-    expect(filterOrder).toEqual([
-      FilterKeys.inProgress,
-      FilterKeys.notStarted,
-      FilterKeys.done,
-      FilterKeys.notEnrolled,
-      FilterKeys.upgraded,
-    ]);
+  it('checks boxes based on filters prop', () => {
+    const filters = [FilterKeys.inProgress, FilterKeys.done];
+    renderComponent({ ...defaultProps, filters });
+    filters.forEach(filter => {
+      expect(screen.getByRole('checkbox', { name: formatMessage(messages[filter]) })).toBeChecked();
+    });
+  });
+
+  it('calls handleFilterChange when checkbox is clicked', () => {
+    renderComponent();
+    const checkbox = screen.getByRole('checkbox', { name: formatMessage(messages.notStarted) });
+    fireEvent.click(checkbox);
+    expect(mockHandleFilterChange).toHaveBeenCalled();
+  });
+
+  it('displays course status heading', () => {
+    renderComponent();
+    expect(screen.getByText(/course status/i)).toBeInTheDocument();
   });
 });

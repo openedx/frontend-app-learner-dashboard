@@ -1,61 +1,68 @@
-import { shallow } from '@edx/react-unit-test-utils';
-
+import { render, screen } from '@testing-library/react';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { formatMessage } from 'testUtils';
 import { reduxHooks } from 'hooks';
-import track from 'tracking';
 import useActionDisabledState from './hooks';
-import CourseCardImage from './CourseCardImage';
+import { CourseCardImage } from './CourseCardImage';
+import messages from '../messages';
 
-const homeUrl = 'home-url';
-
-jest.mock('tracking', () => ({
-  course: {
-    courseImageClicked: jest.fn().mockName('segment.courseImageClicked'),
-  },
-}));
+const homeUrl = 'https://example.com';
+const bannerImgSrc = 'banner-img-src.jpg';
 
 jest.mock('hooks', () => ({
   reduxHooks: {
-    useCardCourseData: jest.fn(() => ({ bannerImgSrc: 'banner-img-src' })),
+    useCardCourseData: jest.fn(() => ({ bannerImgSrc })),
     useCardCourseRunData: jest.fn(() => ({ homeUrl })),
-    useCardEnrollmentData: jest.fn(() => ({ isVerified: true })),
+    useCardEnrollmentData: jest.fn(),
     useTrackCourseEvent: jest.fn((eventName, cardId, url) => ({
       trackCourseEvent: { eventName, cardId, url },
     })),
   },
 }));
-jest.mock('./hooks', () => jest.fn(() => ({ disableCourseTitle: false })));
+
+jest.mock('./hooks', () => jest.fn());
 
 describe('CourseCardImage', () => {
   const props = {
-    cardId: 'cardId',
-    orientation: 'orientation',
+    cardId: 'test-card-id',
+    orientation: 'horizontal',
   };
-  beforeEach(() => {
-    jest.clearAllMocks();
+
+  it('renders course image with correct attributes', () => {
+    useActionDisabledState.mockReturnValue({ disableCourseTitle: true });
+    reduxHooks.useCardEnrollmentData.mockReturnValue({ isVerified: true });
+    render(<IntlProvider locale="en"><CourseCardImage {...props} /></IntlProvider>);
+
+    const image = screen.getByRole('img', { name: formatMessage(messages.bannerAlt) });
+    expect(image).toBeInTheDocument();
+    expect(image.src).toContain(bannerImgSrc);
+    expect(image.parentElement).toHaveClass('horizontal');
   });
-  describe('snapshot', () => {
-    test('renders clickable link course Image', () => {
-      const wrapper = shallow(<CourseCardImage {...props} />);
-      expect(wrapper.snapshot).toMatchSnapshot();
-      expect(wrapper.instance.type).toBe('a');
-      expect(wrapper.instance.props.onClick).toEqual(
-        reduxHooks.useTrackCourseEvent(
-          track.course.courseImageClicked,
-          props.cardId,
-          homeUrl,
-        ),
-      );
-    });
-    test('renders disabled link', () => {
-      useActionDisabledState.mockReturnValueOnce({ disableCourseTitle: true });
-      const wrapper = shallow(<CourseCardImage {...props} />);
-      expect(wrapper.snapshot).toMatchSnapshot();
-      expect(wrapper.instance.type).toBe('div');
-    });
+
+  it('isVerified, should render badge', () => {
+    useActionDisabledState.mockReturnValue({ disableCourseTitle: false });
+    reduxHooks.useCardEnrollmentData.mockReturnValue({ isVerified: true });
+    render(<IntlProvider locale="en"><CourseCardImage {...props} /></IntlProvider>);
+
+    const badge = screen.getByText(formatMessage(messages.verifiedBanner));
+    expect(badge).toBeInTheDocument();
+    const badgeImg = screen.getByRole('img', { name: formatMessage(messages.verifiedBannerRibbonAlt) });
+    expect(badgeImg).toBeInTheDocument();
   });
-  describe('behavior', () => {
+
+  it('renders link with correct href if disableCourseTitle is false', () => {
+    useActionDisabledState.mockReturnValue({ disableCourseTitle: false });
+    reduxHooks.useCardEnrollmentData.mockReturnValue({ isVerified: false });
+    render(<IntlProvider locale="en"><CourseCardImage {...props} /></IntlProvider>);
+
+    const link = screen.getByRole('link');
+    expect(link).toHaveAttribute('href', homeUrl);
+  });
+  describe('hooks', () => {
     it('initializes', () => {
-      shallow(<CourseCardImage {...props} />);
+      useActionDisabledState.mockReturnValue({ disableCourseTitle: false });
+      reduxHooks.useCardEnrollmentData.mockReturnValue({ isVerified: true });
+      render(<IntlProvider locale="en"><CourseCardImage {...props} /></IntlProvider>);
       expect(reduxHooks.useCardCourseData).toHaveBeenCalledWith(props.cardId);
       expect(reduxHooks.useCardCourseRunData).toHaveBeenCalledWith(
         props.cardId,

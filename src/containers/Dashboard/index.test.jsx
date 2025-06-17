@@ -1,12 +1,7 @@
-import { shallow } from '@edx/react-unit-test-utils';
+import { render, screen } from '@testing-library/react';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import { reduxHooks } from 'hooks';
-
-import SelectSessionModal from 'containers/SelectSessionModal';
-import CoursesPanel from 'containers/CoursesPanel';
-
-import DashboardLayout from './DashboardLayout';
-import LoadingView from './LoadingView';
 import hooks from './hooks';
 import Dashboard from '.';
 
@@ -18,104 +13,63 @@ jest.mock('hooks', () => ({
   },
 }));
 
-jest.mock('slots/DashboardModalSlot', () => 'DashboardModalSlot');
-jest.mock('containers/CoursesPanel', () => 'CoursesPanel');
-jest.mock('./LoadingView', () => 'LoadingView');
-jest.mock('./DashboardLayout', () => 'DashboardLayout');
-
 jest.mock('./hooks', () => ({
   useInitializeDashboard: jest.fn(),
   useDashboardMessages: jest.fn(),
 }));
 
+jest.mock('slots/DashboardModalSlot', () => jest.fn(() => <div>DashboardModalSlot</div>));
+jest.mock('containers/CoursesPanel', () => jest.fn(() => <div>CoursesPanel</div>));
+jest.mock('./LoadingView', () => jest.fn(() => <div>LoadingView</div>));
+jest.mock('containers/SelectSessionModal', () => jest.fn(() => <div>SelectSessionModal</div>));
+jest.mock('./DashboardLayout', () => jest.fn(() => <div>DashboardLayout</div>));
+
 const pageTitle = 'test-page-title';
 
 describe('Dashboard', () => {
-  beforeEach(() => {
+  const createWrapper = (props = {}) => {
+    const {
+      hasCourses = true,
+      initIsPending = true,
+      showSelectSessionModal = true,
+    } = props;
     hooks.useDashboardMessages.mockReturnValue({ pageTitle });
-  });
-  const createWrapper = ({
-    hasCourses,
-    initIsPending,
-    showSelectSessionModal,
-  }) => {
-    reduxHooks.useHasCourses.mockReturnValueOnce(hasCourses);
-    reduxHooks.useRequestIsPending.mockReturnValueOnce(initIsPending);
-    reduxHooks.useShowSelectSessionModal.mockReturnValueOnce(showSelectSessionModal);
-    return shallow(<Dashboard />);
+    reduxHooks.useHasCourses.mockReturnValue(hasCourses);
+    reduxHooks.useRequestIsPending.mockReturnValue(initIsPending);
+    reduxHooks.useShowSelectSessionModal.mockReturnValue(showSelectSessionModal);
+    return render(<IntlProvider locale="en"><Dashboard /></IntlProvider>);
   };
 
-  let wrapper;
-  describe('snapshots', () => {
-    const testTitle = () => {
-      test('page title is displayed in sr-only h1 tag', () => {
-        const heading = wrapper.instance.findByType('h1')[0];
-        expect(heading.props.className).toEqual('sr-only');
-        expect(heading.children[0].el).toEqual(pageTitle);
+  describe('render', () => {
+    it('page title is displayed in sr-only h1 tag', () => {
+      createWrapper();
+      const heading = screen.getByText(pageTitle);
+      expect(heading).toHaveClass('sr-only');
+    });
+    describe('initIsPending false', () => {
+      it('should render DashboardModalSlot', () => {
+        createWrapper({ initIsPending: false });
+        const dashboardModalSlot = screen.getByText('DashboardModalSlot');
+        expect(dashboardModalSlot).toBeInTheDocument();
       });
-    };
-    const testSnapshot = () => {
-      test('snapshot', () => {
-        expect(wrapper.snapshot).toMatchSnapshot();
+      it('should render SelectSessionModal', () => {
+        createWrapper({ initIsPending: false });
+        const selectSessionModal = screen.getByText('SelectSessionModal');
+        expect(selectSessionModal).toBeInTheDocument();
       });
-    };
-    const testContent = (el) => {
-      expect(wrapper.instance.findByTestId('dashboard-content')[0].children[0]).toMatchObject(shallow(el));
-    };
-
-    const renderString = (show) => (show ? 'renders' : 'does not render');
-    const testView = ({
-      props,
-      content: [contentName, contentEl],
-      showSelectSessionModal,
-    }) => {
-      beforeEach(() => { wrapper = createWrapper(props); });
-      testTitle();
-      testSnapshot();
-      it(`renders ${contentName}`, () => {
-        testContent(contentEl);
-      });
-      it(`${renderString(showSelectSessionModal)} select session modal`, () => {
-        expect(wrapper.instance.findByType(SelectSessionModal).length).toEqual(showSelectSessionModal ? 1 : 0);
-      });
-    };
+    });
     describe('courses still loading', () => {
-      testView({
-        props: {
-          hasCourses: false,
-          initIsPending: true,
-          showSelectSessionModal: false,
-        },
-        content: ['LoadingView', <LoadingView />],
-        showSelectSessionModal: false,
+      it('should render LoadingView', () => {
+        createWrapper({ hasCourses: false });
+        const loadingView = screen.getByText('LoadingView');
+        expect(loadingView).toBeInTheDocument();
       });
     });
-
-    describe('courses loaded, show select session modal', () => {
-      testView({
-        props: {
-          hasCourses: true,
-          initIsPending: false,
-          showSelectSessionModal: true,
-        },
-        content: ['LoadedView', (
-          <DashboardLayout><CoursesPanel /></DashboardLayout>
-        )],
-        showSelectSessionModal: true,
-      });
-    });
-
-    describe('there are no courses', () => {
-      testView({
-        props: {
-          hasCourses: false,
-          initIsPending: false,
-          showSelectSessionModal: false,
-        },
-        content: ['Dashboard layout with no courses sidebar and content', (
-          <DashboardLayout><CoursesPanel /></DashboardLayout>
-        )],
-        showSelectSessionModal: false,
+    describe('courses loaded', () => {
+      it('should show dashboard layout', () => {
+        createWrapper({ initIsPending: false });
+        const dashboardLayout = screen.getByText('DashboardLayout');
+        expect(dashboardLayout).toBeInTheDocument();
       });
     });
   });

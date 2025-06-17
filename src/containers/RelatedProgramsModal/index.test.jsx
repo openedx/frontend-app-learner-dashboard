@@ -1,10 +1,11 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
+import { render, screen } from '@testing-library/react';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import { reduxHooks } from 'hooks';
 import RelatedProgramsModal from '.';
+import messages from './messages';
 
-jest.mock('./components/ProgramCard', () => 'ProgramCard');
+jest.mock('./components/ProgramCard', () => jest.fn(() => <div>ProgramCard</div>));
 jest.mock('hooks', () => ({
   reduxHooks: {
     useCardCourseData: jest.fn(),
@@ -12,9 +13,9 @@ jest.mock('hooks', () => ({
   },
 }));
 
-const cardId = 'test-course-number';
+const cardId = 'test-card-id';
 const courseData = {
-  courseTitle: 'hookProps.courseTitle',
+  courseName: 'test course',
 };
 const programData = {
   list: [
@@ -45,16 +46,27 @@ describe('RelatedProgramsModal', () => {
     reduxHooks.useCardRelatedProgramsData.mockReturnValueOnce(programData);
   });
   it('initializes hooks with cardId', () => {
-    shallow(<RelatedProgramsModal {...props} />);
+    render(<IntlProvider locale="en"><RelatedProgramsModal {...props} /></IntlProvider>);
     expect(reduxHooks.useCardCourseData).toHaveBeenCalledWith(cardId);
     expect(reduxHooks.useCardRelatedProgramsData).toHaveBeenCalledWith(cardId);
   });
-  test('snapshot: open', () => {
-    expect(shallow(<RelatedProgramsModal {...props} />).snapshot).toMatchSnapshot();
-  });
-  test('snapshot: closed', () => {
-    expect(
-      shallow(<RelatedProgramsModal {...props} isOpen={false} />).snapshot,
-    ).toMatchSnapshot();
+  describe('renders', () => {
+    beforeEach(() => render(<IntlProvider locale="en"><RelatedProgramsModal {...props} /></IntlProvider>));
+    it('display header', () => {
+      const header = screen.getByRole('heading', { name: messages.header.defaultMessage });
+      expect(header).toBeInTheDocument();
+    });
+    it('displays course name', () => {
+      const courseName = screen.getByText(courseData.courseName);
+      expect(courseName).toBeInTheDocument();
+    });
+    it('displays description', () => {
+      const description = screen.getByText((text) => text.includes('Are you looking to expand your knowledge?'));
+      expect(description).toBeInTheDocument();
+    });
+    it('displays program cards', () => {
+      const programCards = screen.getAllByText('ProgramCard');
+      expect(programCards.length).toEqual(programData.list.length);
+    });
   });
 });

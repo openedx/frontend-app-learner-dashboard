@@ -1,8 +1,9 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
-
+import { render, screen } from '@testing-library/react';
+import { formatMessage } from 'testUtils';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 import hooks from './hooks';
 import SelectSessionModal from '.';
+import messages from './messages';
 
 jest.mock('./hooks', () => ({
   __esModule: true,
@@ -25,29 +26,41 @@ const availableSessions = [
 ];
 
 describe('SelectSessionModal', () => {
-  describe('snapshot', () => {
-    test('empty modal with leave option ', () => {
+  describe('renders', () => {
+    it('empty modal with leave option ', () => {
       hooks.mockReturnValueOnce({
         ...hookReturn,
       });
-      expect(shallow(<SelectSessionModal />).snapshot).toMatchSnapshot();
+      render(<IntlProvider locale="en"><SelectSessionModal /></IntlProvider>);
+      const sessionOption = screen.queryByDisplayValue(availableSessions[0].courseId);
+      expect(sessionOption).toBeNull();
+      const leaveOption = screen.getByRole('radio', { name: formatMessage(messages.leaveSessionOption) });
+      expect(leaveOption).toBeInTheDocument();
     });
 
-    test('modal with leave option ', () => {
+    it('modal with leave option ', () => {
       hooks.mockReturnValueOnce({
         ...hookReturn,
-        availableSessions: [...availableSessions],
+        availableSessions,
       });
-      expect(shallow(<SelectSessionModal />).snapshot).toMatchSnapshot();
+      render(<IntlProvider locale="en"><SelectSessionModal /></IntlProvider>);
+      const sessionOption = screen.getByDisplayValue(availableSessions[0].courseId);
+      expect(sessionOption).toBeInTheDocument();
+      const leaveOption = screen.getByRole('radio', { name: formatMessage(messages.leaveSessionOption) });
+      expect(leaveOption).toBeInTheDocument();
     });
 
-    test('modal without leave option ', () => {
+    it('modal without leave option ', () => {
       hooks.mockReturnValueOnce({
         ...hookReturn,
         availableSessions,
         showLeaveOption: false,
       });
-      expect(shallow(<SelectSessionModal />).snapshot).toMatchSnapshot();
+      render(<IntlProvider locale="en"><SelectSessionModal /></IntlProvider>);
+      const sessionOption = screen.getByDisplayValue(availableSessions[0].courseId);
+      expect(sessionOption).toBeInTheDocument();
+      const leaveOption = screen.queryByRole('radio', { name: formatMessage(messages.leaveSessionOption) });
+      expect(leaveOption).toBeNull();
     });
   });
 });

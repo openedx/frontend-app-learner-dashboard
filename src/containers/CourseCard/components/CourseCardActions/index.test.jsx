@@ -1,12 +1,5 @@
-import { shallow } from '@edx/react-unit-test-utils';
-
+import { render, screen } from '@testing-library/react';
 import { reduxHooks } from 'hooks';
-
-import CourseCardActionSlot from 'slots/CourseCardActionSlot';
-import SelectSessionButton from './SelectSessionButton';
-import BeginCourseButton from './BeginCourseButton';
-import ResumeButton from './ResumeButton';
-import ViewCourseButton from './ViewCourseButton';
 
 import CourseCardActions from '.';
 
@@ -19,16 +12,15 @@ jest.mock('hooks', () => ({
   },
 }));
 
-jest.mock('slots/CourseCardActionSlot', () => 'CustomActionButton');
-jest.mock('./SelectSessionButton', () => 'SelectSessionButton');
-jest.mock('./ViewCourseButton', () => 'ViewCourseButton');
-jest.mock('./BeginCourseButton', () => 'BeginCourseButton');
-jest.mock('./ResumeButton', () => 'ResumeButton');
+jest.mock('slots/CourseCardActionSlot', () => jest.fn(() => <div>CourseCardActionSlot</div>));
+jest.mock('./SelectSessionButton', () => jest.fn(() => <div>SelectSessionButton</div>));
+jest.mock('./ViewCourseButton', () => jest.fn(() => <div>ViewCourseButton</div>));
+jest.mock('./BeginCourseButton', () => jest.fn(() => <div>BeginCourseButton</div>));
+jest.mock('./ResumeButton', () => jest.fn(() => <div>ResumeButton</div>));
 
 const cardId = 'test-card-id';
 const props = { cardId };
 
-let el;
 describe('CourseCardActions', () => {
   const mockHooks = ({
     isEntitlement = false,
@@ -44,13 +36,11 @@ describe('CourseCardActions', () => {
     reduxHooks.useCardEnrollmentData.mockReturnValueOnce({ isExecEd2UCourse, isVerified, hasStarted });
     reduxHooks.useMasqueradeData.mockReturnValueOnce({ isMasquerading });
   };
-  const render = () => {
-    el = shallow(<CourseCardActions {...props} />);
-  };
-  describe('behavior', () => {
+  const renderComponent = () => render(<CourseCardActions {...props} />);
+  describe('hooks', () => {
     it('initializes redux hooks', () => {
       mockHooks();
-      render();
+      renderComponent();
       expect(reduxHooks.useCardEntitlementData).toHaveBeenCalledWith(cardId);
       expect(reduxHooks.useCardEnrollmentData).toHaveBeenCalledWith(cardId);
       expect(reduxHooks.useCardCourseRunData).toHaveBeenCalledWith(cardId);
@@ -60,36 +50,44 @@ describe('CourseCardActions', () => {
     describe('entitlement course', () => {
       it('renders ViewCourseButton if fulfilled', () => {
         mockHooks({ isEntitlement: true, isFulfilled: true });
-        render();
-        expect(el.instance.findByType(ViewCourseButton)[0].props.cardId).toEqual(cardId);
+        renderComponent();
+        const ViewCourseButton = screen.getByText('ViewCourseButton');
+        expect(ViewCourseButton).toBeInTheDocument();
       });
       it('renders SelectSessionButton if not fulfilled', () => {
         mockHooks({ isEntitlement: true });
-        render();
-        expect(el.instance.findByType(SelectSessionButton)[0].props.cardId).toEqual(cardId);
+        renderComponent();
+        const SelectSessionButton = screen.getByText('SelectSessionButton');
+        expect(SelectSessionButton).toBeInTheDocument();
       });
     });
     describe('not entitlement, verified, or exec ed', () => {
       it('renders CourseCardActionSlot and ViewCourseButton for archived courses', () => {
         mockHooks({ isArchived: true });
-        render();
-        expect(el.instance.findByType(CourseCardActionSlot)[0].props.cardId).toEqual(cardId);
-        expect(el.instance.findByType(ViewCourseButton)[0].props.cardId).toEqual(cardId);
+        renderComponent();
+        const CourseCardActionSlot = screen.getByText('CourseCardActionSlot');
+        expect(CourseCardActionSlot).toBeInTheDocument();
+        const ViewCourseButton = screen.getByText('ViewCourseButton');
+        expect(ViewCourseButton).toBeInTheDocument();
       });
       describe('unstarted courses', () => {
         it('renders CourseCardActionSlot and BeginCourseButton', () => {
           mockHooks();
-          render();
-          expect(el.instance.findByType(CourseCardActionSlot)[0].props.cardId).toEqual(cardId);
-          expect(el.instance.findByType(BeginCourseButton)[0].props.cardId).toEqual(cardId);
+          renderComponent();
+          const CourseCardActionSlot = screen.getByText('CourseCardActionSlot');
+          expect(CourseCardActionSlot).toBeInTheDocument();
+          const BeginCourseButton = screen.getByText('BeginCourseButton');
+          expect(BeginCourseButton).toBeInTheDocument();
         });
       });
       describe('active courses (started, and not archived)', () => {
         it('renders CourseCardActionSlot and ResumeButton', () => {
           mockHooks({ hasStarted: true });
-          render();
-          expect(el.instance.findByType(CourseCardActionSlot)[0].props.cardId).toEqual(cardId);
-          expect(el.instance.findByType(ResumeButton)[0].props.cardId).toEqual(cardId);
+          renderComponent();
+          const CourseCardActionSlot = screen.getByText('CourseCardActionSlot');
+          expect(CourseCardActionSlot).toBeInTheDocument();
+          const ResumeButton = screen.getByText('ResumeButton');
+          expect(ResumeButton).toBeInTheDocument();
         });
       });
     });

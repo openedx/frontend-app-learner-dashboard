@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as ReactShare from 'react-share';
 
-import { StrictDict } from '@edx/react-unit-test-utils';
 import { useIntl } from '@openedx/frontend-base';
 import { Dropdown } from '@openedx/paragon';
 
@@ -12,9 +11,9 @@ import { reduxHooks } from '../../../../hooks';
 
 import messages from './messages';
 
-export const testIds = StrictDict({
+export const testIds = {
   emailSettingsModalToggle: 'emailSettingsModalToggle',
-});
+};
 
 export const SocialShareMenu = ({ cardId, emailSettings }) => {
   const { formatMessage } = useIntl();
