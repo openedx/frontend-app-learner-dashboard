@@ -1,5 +1,4 @@
-import { shallow } from '@edx/react-unit-test-utils';
-import { Spinner } from '@openedx/paragon';
+import { render, screen } from '@testing-library/react';
 
 import hooks from './hooks';
 import LoadingView from './LoadingView';
@@ -8,16 +7,16 @@ jest.mock('./hooks', () => ({
   useDashboardMessages: jest.fn(),
 }));
 
+jest.unmock('@edx/frontend-platform/i18n');
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+
 const spinnerScreenReaderText = 'test-sr-text';
 describe('LoadingView', () => {
-  beforeEach(() => {
-    hooks.useDashboardMessages.mockReturnValueOnce({ spinnerScreenReaderText });
-  });
-  test('snapshot', () => {
-    expect(shallow(<LoadingView />).snapshot).toMatchSnapshot();
-  });
   it('renders spinner component with associated screen reader text', () => {
-    const wrapper = shallow(<LoadingView />);
-    expect(wrapper.instance.findByType(Spinner)[0].props.screenReaderText).toEqual(spinnerScreenReaderText);
+    hooks.useDashboardMessages.mockReturnValueOnce({ spinnerScreenReaderText });
+    render(<LoadingView />);
+    const loader = screen.getByRole('status');
+    expect(loader.children[0].innerHTML).toBe(spinnerScreenReaderText);
   });
 });
