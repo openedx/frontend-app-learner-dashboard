@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { IntlProvider } from 'react-intl';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import { reduxHooks } from 'hooks';
 import { formatMessage } from 'testUtils';
@@ -21,7 +21,7 @@ jest.unmock('@openedx/paragon');
 jest.unmock('@edx/frontend-platform/i18n');
 jest.unmock('react');
 
-const cardId = 'test-course-number';
+const cardId = 'test-card-id';
 
 const enrollmentData = {
   isVerified: false,
