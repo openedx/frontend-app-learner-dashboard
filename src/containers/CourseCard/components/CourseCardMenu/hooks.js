@@ -1,12 +1,12 @@
-import { useKeyedState, StrictDict } from '@edx/react-unit-test-utils';
+import { useKeyedState } from '@edx/react-unit-test-utils';
 
 import track from 'tracking';
 import { reduxHooks } from 'hooks';
 
-export const stateKeys = StrictDict({
+export const stateKeys = {
   isUnenrollConfirmVisible: 'isUnenrollConfirmVisible',
   isEmailSettingsVisible: 'isEmailSettingsVisible',
-});
+};
 
 export const useUnenrollData = () => {
   const [isVisible, setIsVisible] = useKeyedState(stateKeys.isUnenrollConfirmVisible, false);
