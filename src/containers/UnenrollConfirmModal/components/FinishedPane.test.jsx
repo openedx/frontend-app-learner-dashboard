@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { formatMessage } from 'testUtils';
-import { IntlProvider } from 'react-intl';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import { FinishedPane } from './FinishedPane';
 import messages from './messages';

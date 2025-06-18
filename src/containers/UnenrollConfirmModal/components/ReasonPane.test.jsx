@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { formatMessage } from 'testUtils';
-import { IntlProvider } from 'react-intl';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import { ReasonPane } from './ReasonPane';
 import messages from './messages';
