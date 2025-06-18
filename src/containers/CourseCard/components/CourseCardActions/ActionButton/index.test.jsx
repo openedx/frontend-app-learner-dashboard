@@ -1,25 +1,30 @@
-import { shallow } from '@edx/react-unit-test-utils';
-
+import { render, screen } from '@testing-library/react';
 import ActionButton from '.';
 
 import useIsCollapsed from './hooks';
 
 jest.mock('./hooks', () => jest.fn());
 
+jest.unmock('@openedx/paragon');
+
 describe('ActionButton', () => {
   const props = {
-    arbitary: 'props',
+    className: 'custom-class',
+    children: 'Test',
   };
-  describe('snapshot', () => {
-    test('is collapsed', () => {
-      useIsCollapsed.mockReturnValueOnce(true);
-      const wrapper = shallow(<ActionButton {...props} />);
-      expect(wrapper.snapshot).toMatchSnapshot();
-    });
-    test('is not collapsed', () => {
-      useIsCollapsed.mockReturnValueOnce(false);
-      const wrapper = shallow(<ActionButton {...props} />);
-      expect(wrapper.snapshot).toMatchSnapshot();
-    });
+
+  it('is collapsed', async () => {
+    useIsCollapsed.mockReturnValue(true);
+    render(<ActionButton {...props} />);
+    const button = screen.getByRole('button', { name: 'Test' });
+    expect(button).toHaveClass('btn-sm', 'custom-class');
+  });
+
+  it('is not collapsed', () => {
+    useIsCollapsed.mockReturnValue(false);
+    render(<ActionButton {...props} />);
+    const button = screen.getByRole('button', { name: 'Test' });
+    expect(button).toBeInTheDocument();
+    expect(button).not.toHaveClass('size', 'sm');
   });
 });
