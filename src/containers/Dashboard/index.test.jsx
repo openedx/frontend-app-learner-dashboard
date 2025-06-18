@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { IntlProvider } from 'react-intl';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import { reduxHooks } from 'hooks';
 import hooks from './hooks';
