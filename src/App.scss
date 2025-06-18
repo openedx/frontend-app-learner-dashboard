@@ -1,13 +1,10 @@
 // frontend-app-*/src/index.scss
-@import "~@edx/brand/paragon/fonts";
-@import "~@edx/brand/paragon/variables";
-@import "~@openedx/paragon/scss/core/core";
-@import "~@edx/brand/paragon/overrides";
+@use "@openedx/paragon/styles/css/core/custom-media-breakpoints" as paragonCustomMediaBreakpoints;
 
 $fa-font-path: "~font-awesome/fonts";
 @import "~font-awesome/scss/font-awesome";
 
-$input-focus-box-shadow: $input-box-shadow; // hack to get upgrade to paragon 4.0.0 to work
+$input-focus-box-shadow: var(--pgn-elevation-form-input-base); // hack to get upgrade to paragon 4.0.0 to work
 
 @import "~@edx/frontend-component-header/dist/index";
 @import "~@edx/frontend-component-footer/dist/_footer";
