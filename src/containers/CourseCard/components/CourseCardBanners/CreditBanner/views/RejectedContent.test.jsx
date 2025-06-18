@@ -1,10 +1,7 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
+import { render, screen } from '@testing-library/react';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
-import { formatMessage } from 'testUtils';
 import { reduxHooks } from 'hooks';
-import messages from './messages';
-import ProviderLink from './components/ProviderLink';
 import RejectedContent from './RejectedContent';
 
 jest.mock('hooks', () => ({
@@ -12,8 +9,10 @@ jest.mock('hooks', () => ({
     useCardCreditData: jest.fn(),
   },
 }));
-jest.mock('./components/CreditContent', () => 'CreditContent');
-jest.mock('./components/ProviderLink', () => 'ProviderLink');
+
+jest.unmock('@openedx/paragon');
+jest.unmock('@edx/frontend-platform/i18n');
+jest.unmock('react');
 
 const cardId = 'test-card-id';
 const credit = {
@@ -22,32 +21,27 @@ const credit = {
 };
 reduxHooks.useCardCreditData.mockReturnValue(credit);
 
-let el;
-let component;
-const render = () => { el = shallow(<RejectedContent cardId={cardId} />); };
-const loadComponent = () => { component = el.instance.findByType('CreditContent'); };
+const renderRejectedContent = () => render(<IntlProvider><RejectedContent cardId={cardId} /></IntlProvider>);
 
 describe('RejectedContent component', () => {
-  beforeEach(render);
-  describe('behavior', () => {
+  describe('hooks', () => {
     it('initializes credit data with cardId', () => {
+      renderRejectedContent();
       expect(reduxHooks.useCardCreditData).toHaveBeenCalledWith(cardId);
     });
   });
   describe('render', () => {
     describe('rendered CreditContent component', () => {
-      beforeAll(loadComponent);
-      test('no action is passed', () => {
-        expect(component[0].props.action).toEqual(undefined);
+      it('no action is passed', () => {
+        renderRejectedContent();
+        const action = screen.queryByTestId('action-row-btn');
+        expect(action).not.toBeInTheDocument();
       });
-      test('message is formatted rejected message', () => {
-        expect(component[0].props.message).toEqual(formatMessage(
-          messages.rejected,
-          {
-            linkToProviderSite: <ProviderLink cardId={cardId} />,
-            providerName: credit.providerName,
-          },
-        ));
+      it('message is formatted rejected message', () => {
+        renderRejectedContent();
+        const message = screen.getByTestId('credit-msg');
+        expect(message).toBeInTheDocument();
+        expect(message).toHaveTextContent(`${credit.providerName} did not approve your request for course credit.`);
       });
     });
   });
