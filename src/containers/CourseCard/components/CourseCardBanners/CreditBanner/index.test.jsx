@@ -1,95 +1,69 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
-
-import { formatMessage } from 'testUtils';
-import { MailtoLink } from '@openedx/paragon';
-
+import { screen, render } from '@testing-library/react';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 import hooks from './hooks';
-import messages from './messages';
-import CreditBanner from '.';
-
-jest.mock('components/Banner', () => 'Banner');
+import { CreditBanner } from '.';
 
 jest.mock('./hooks', () => ({
   useCreditBannerData: jest.fn(),
 }));
 
-let el;
-const cardId = 'test-card-id';
+jest.unmock('@openedx/paragon');
+jest.unmock('@edx/frontend-platform/i18n');
+jest.unmock('react');
 
-const ContentComponent = () => 'ContentComponent';
-const supportEmail = 'test-support-email';
+describe('CreditBanner', () => {
+  const mockCardId = 'test-card-id';
+  const mockContentComponent = () => <div data-testid="mock-content">Test Content</div>;
+  const mockSupportEmail = 'support@test.com';
 
-describe('CreditBanner component', () => {
-  describe('behavior', () => {
-    beforeEach(() => {
-      hooks.useCreditBannerData.mockReturnValue(null);
-      el = shallow(<CreditBanner cardId={cardId} />);
-    });
-    it('initializes hooks with cardId', () => {
-      expect(hooks.useCreditBannerData).toHaveBeenCalledWith(cardId);
-    });
-    it('returns null if hookData is null', () => {
-      expect(el.isEmptyRender()).toEqual(true);
-    });
+  const renderCreditBanner = () => render(
+    <IntlProvider locale="en">
+      <CreditBanner cardId={mockCardId} />
+    </IntlProvider>,
+  );
+
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
-  describe('render', () => {
-    describe('with error state', () => {
-      beforeEach(() => {
-        hooks.useCreditBannerData.mockReturnValue({
-          error: true,
-          ContentComponent,
-          supportEmail,
-        });
-        el = shallow(<CreditBanner cardId={cardId} />);
-      });
-      test('snapshot', () => {
-        expect(el.snapshot).toMatchSnapshot();
-      });
-      it('passes danger variant to Banner parent', () => {
-        expect(el.instance.findByType('Banner')[0].props.variant).toEqual('danger');
-      });
-      it('includes credit-error-msg with support email link', () => {
-        expect(el.instance.findByTestId('credit-error-msg')[0].children[0].el).toEqual(shallow(formatMessage(messages.error, {
-          supportEmailLink: (<MailtoLink to={supportEmail}>{supportEmail}</MailtoLink>),
-        })));
-      });
-      it('loads ContentComponent with cardId', () => {
-        expect(el.instance.findByType('ContentComponent')[0].props.cardId).toEqual(cardId);
-      });
-    });
 
-    describe('with error state with no email', () => {
-      beforeEach(() => {
-        hooks.useCreditBannerData.mockReturnValue({
-          error: true,
-          ContentComponent,
-        });
-        el = shallow(<CreditBanner cardId={cardId} />);
-      });
-      test('snapshot', () => {
-        expect(el.snapshot).toMatchSnapshot();
-      });
-      it('includes credit-error-msg without support email link', () => {
-        expect(el.instance.findByTestId('credit-error-msg')[0].children[0].el).toEqual(formatMessage(messages.errorNoEmail));
-      });
-    });
+  it('should return null if hook returns null', () => {
+    hooks.useCreditBannerData.mockReturnValue(null);
+    renderCreditBanner();
+    const banner = screen.queryByRole('alert');
+    expect(banner).toBeNull();
+  });
 
-    describe('with no error state', () => {
-      beforeEach(() => {
-        hooks.useCreditBannerData.mockReturnValue({
-          error: false,
-          ContentComponent,
-          supportEmail,
-        });
-        el = shallow(<CreditBanner cardId={cardId} />);
-      });
-      test('snapshot', () => {
-        expect(el.snapshot).toMatchSnapshot();
-      });
-      it('loads ContentComponent with cardId', () => {
-        expect(el.instance.findByType('ContentComponent')[0].props.cardId).toEqual(cardId);
-      });
+  it('should render content component without error', () => {
+    hooks.useCreditBannerData.mockReturnValue({
+      ContentComponent: mockContentComponent,
+      error: false,
     });
+    renderCreditBanner();
+
+    expect(screen.getByTestId('mock-content')).toBeInTheDocument();
+    expect(screen.queryByTestId('credit-error-msg')).not.toBeInTheDocument();
+  });
+
+  it('should render error message with support email', () => {
+    hooks.useCreditBannerData.mockReturnValue({
+      ContentComponent: mockContentComponent,
+      error: true,
+      supportEmail: mockSupportEmail,
+    });
+    renderCreditBanner();
+
+    expect(screen.getByTestId('credit-error-msg')).toBeInTheDocument();
+    expect(screen.getByText(mockSupportEmail)).toBeInTheDocument();
+  });
+
+  it('should render error message without support email', () => {
+    hooks.useCreditBannerData.mockReturnValue({
+      ContentComponent: mockContentComponent,
+      error: true,
+    });
+    renderCreditBanner();
+
+    expect(screen.getByTestId('credit-error-msg')).toBeInTheDocument();
+    expect(screen.queryByText(mockSupportEmail)).not.toBeInTheDocument();
   });
 });
