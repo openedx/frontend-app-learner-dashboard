@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { IntlProvider } from 'react-intl';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { formatMessage } from 'testUtils';
 import { reduxHooks } from 'hooks';
 import useActionDisabledState from './hooks';
@@ -28,7 +28,7 @@ jest.mock('./hooks', () => jest.fn());
 
 describe('CourseCardImage', () => {
   const props = {
-    cardId: 'test-card',
+    cardId: 'test-card-id',
     orientation: 'horizontal',
   };
 
