@@ -64,3 +64,87 @@ $input-focus-box-shadow: var(--pgn-elevation-form-input-base); // hack to get up
     overflow: hidden;
   }
 }
+
+// BLUE VENOM INJECTION: Apply #0092c2 to interactive elements
+
+// Buttons
+.btn, .pgn__button {
+  // Exclude buttons that typically have their own semantic colors (danger, warning, success, info)
+  // Also exclude known non-themed buttons like 'close' or icon buttons if they exist and shouldn't be blue.
+  &:not(.btn-danger):not(.pgn__button--danger):not(.btn-warning):not(.pgn__button--warning):not(.btn-success):not(.pgn__button--success):not(.btn-info):not(.pgn__button--info):not(.close):not([class*="btn-icon"]) {
+    background-color: #0092c2 !important;
+    border-color: #0092c2 !important;
+    color: #ffffff !important;
+
+    &:hover, &:focus, &:active {
+      background-color: darken(#0092c2, 10%) !important;
+      border-color: darken(#0092c2, 12%) !important;
+      color: #ffffff !important;
+    }
+
+    // For link-styled buttons that should also be blue text
+    &.btn-link, &.pgn__button--link {
+      background-color: transparent !important;
+      border-color: transparent !important;
+      color: #0092c2 !important;
+
+      &:hover, &:focus, &:active {
+        background-color: transparent !important;
+        border-color: transparent !important;
+        color: darken(#0092c2, 10%) !important;
+        text-decoration: underline !important;
+      }
+    }
+  }
+
+  // Ensure primary buttons are explicitly styled if they were missed by the general rule,
+  // or to override any more specific default styles.
+  &.btn-primary, &.pgn__button--primary {
+    background-color: #0092c2 !important;
+    border-color: #0092c2 !important;
+    color: #ffffff !important;
+
+    &:hover, &:focus, &:active {
+      background-color: darken(#0092c2, 10%) !important;
+      border-color: darken(#0092c2, 12%) !important;
+      color: #ffffff !important;
+    }
+  }
+}
+
+// Tabs
+// Paragon specific tab selectors might be needed if these general ones don't catch them.
+.nav-tabs {
+  .nav-link.active, .nav-item.show .nav-link {
+    color: #0092c2 !important;
+    border-color: #dee2e6 #dee2e6 #0092c2 !important; // Active tab bottom border
+  }
+  .nav-link:hover {
+    border-color: #e9ecef #e9ecef #0092c2 !important;
+  }
+}
+
+// Links - more subtle application for general links, or could be more aggressive.
+// For now, focusing on buttons and tabs as primary interactive elements.
+// a {
+//   color: #0092c2;
+//   &:hover {
+//     color: darken(#0092c2, 10%);
+//   }
+// }
+
+// Silence Peripheral Widgets - ensure widget cards don't have conflicting backgrounds
+.sidebar-column {
+  .pgn__card {
+    background-color: transparent !important; // Bleach their backgrounds
+    border: none !important; // Remove borders if they exist, to blend more
+    box-shadow: none !important; // Remove shadows if they exist
+  }
+
+  // If widgets are not using .pgn__card but a generic .card
+  .card {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+}

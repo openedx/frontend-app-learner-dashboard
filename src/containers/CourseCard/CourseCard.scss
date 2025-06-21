@@ -1,5 +1,8 @@
 .course-card {
   .card {
+    border: 1px solid var(--pgn-color-border, #ced4da); // CAGE THEM
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); // GIVE THEM A GHOST
+
     .pgn__card-wrapper-image-cap.vertical {
       display: flex;
       min-height: var(--pgn-size-card-image-vertical-max-height);
@@ -12,6 +15,13 @@
     }
     .pgn__card-header-content {
       margin-top: 1.5rem;
+
+      // Assuming the title is an h3 or has a class like .pgn__card-title within the header
+      // Adjust selector if needed based on actual rendered HTML structure from Paragon
+      h1, h2, h3, h4, h5, h6, .pgn__card-title {
+        font-family: 'Inter', sans-serif; // THE WORD IS THE LAW
+        font-weight: 600; // THE WORD IS THE LAW
+      }
     }
     .pgn__card-footer {
       flex-wrap: nowrap;
