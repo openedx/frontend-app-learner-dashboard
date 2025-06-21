@@ -3,7 +3,8 @@
 }
 
 .sidebar-column {
-  padding: 0 var(--pgn-spacing-spacer-3) 0 var(--pgn-spacing-spacer-1);
+  background-color: var(--pgn-color-grayscale-cool-light, #f8f9fa); // SILENCE PERIPHERAL SCREAMING
+  padding: var(--pgn-spacing-spacer-2) var(--pgn-spacing-spacer-3) var(--pgn-spacing-spacer-1) var(--pgn-spacing-spacer-1); // Adjusted padding to ensure BG shows
 
   &.not-collapsed {
     padding-top: var(--pgn-spacing-spacer-2);
