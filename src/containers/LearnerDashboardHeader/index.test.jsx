@@ -4,6 +4,7 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import urls from 'data/services/lms/urls';
 import LearnerDashboardHeader from '.';
+import { findCoursesNavClicked } from './hooks';
 
 const courseSearchUrl = '/course-search-url';
 
@@ -42,7 +43,9 @@ describe('LearnerDashboardHeader', () => {
     const props = mockedHeaderProps.mock.calls[0][0];
     const { mainMenuItems = [] } = props;
     const discoverUrl = mainMenuItems[1].href;
+    mainMenuItems[1].onClick();
     expect(discoverUrl).toBe(urls.baseAppUrl(courseSearchUrl));
+    expect(findCoursesNavClicked).toHaveBeenCalledWith(urls.baseAppUrl(courseSearchUrl));
   });
 
   it('should display Help link if SUPPORT_URL is set', () => {
