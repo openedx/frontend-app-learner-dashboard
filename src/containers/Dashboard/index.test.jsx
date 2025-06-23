@@ -27,7 +27,7 @@ jest.mock('./DashboardLayout', () => jest.fn(() => <div>DashboardLayout</div>));
 const pageTitle = 'test-page-title';
 
 describe('Dashboard', () => {
-  const createWrapper = (props) => {
+  const createWrapper = (props = {}) => {
     const {
       hasCourses = true,
       initIsPending = true,
@@ -42,7 +42,7 @@ describe('Dashboard', () => {
 
   describe('render', () => {
     it('page title is displayed in sr-only h1 tag', () => {
-      createWrapper({});
+      createWrapper();
       const heading = screen.getByText(pageTitle);
       expect(heading).toHaveClass('sr-only');
     });

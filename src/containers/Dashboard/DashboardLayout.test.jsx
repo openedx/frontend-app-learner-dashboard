@@ -52,7 +52,7 @@ describe('DashboardLayout', () => {
       expect(sidebarCol.children[0]).toHaveAttribute('id', 'org.openedx.frontend.learner_dashboard.widget_sidebar.v1');
     });
   };
-  const testSidebarLayout = ({ isCollapsed = true }) => {
+  const testSidebarLayout = ({ isCollapsed }) => {
     it('displays withSidebar width for course list column', () => {
       const courseListCol = screen.getByText('test children').parentElement;
       expect(courseListCol).toHaveClass('col-xl-8');
@@ -60,7 +60,7 @@ describe('DashboardLayout', () => {
       expect(sidebarCol).toHaveClass('sidebar-column', !isCollapsed && 'not-collapsed');
     });
   };
-  const testNoSidebarLayout = ({ isCollapsed = true }) => {
+  const testNoSidebarLayout = ({ isCollapsed }) => {
     it('displays noSidebar width for course list column', () => {
       const courseListCol = screen.getByText('test children').parentElement;
       expect(courseListCol).toHaveClass('col-xl-12');
@@ -74,14 +74,14 @@ describe('DashboardLayout', () => {
         hooks.useDashboardLayoutData.mockReturnValueOnce({ ...hookProps, sidebarShowing: true });
       });
       testColumns();
-      testSidebarLayout({});
+      testSidebarLayout({ isCollapsed: true });
     });
     describe('sidebar not showing', () => {
       beforeEach(() => {
         hooks.useDashboardLayoutData.mockReturnValueOnce({ ...hookProps });
       });
       testColumns();
-      testNoSidebarLayout({});
+      testNoSidebarLayout({ isCollapsed: true });
     });
   });
 
