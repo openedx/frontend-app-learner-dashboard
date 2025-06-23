@@ -1,13 +1,17 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
+import { render, screen } from '@testing-library/react';
 import { formatMessage } from 'testUtils';
 
 import MasqueradeBar from '.';
 import hooks from './hooks';
+import messages from './messages';
 
 jest.mock('./hooks', () => ({
   useMasqueradeBarData: jest.fn(),
 }));
+
+jest.unmock('@openedx/paragon');
+jest.unmock('@edx/frontend-platform/i18n');
+jest.unmock('react');
 
 describe('MasqueradeBar', () => {
   const masqueradeMockData = {
@@ -23,47 +27,67 @@ describe('MasqueradeBar', () => {
     formatMessage,
   };
 
-  describe('snapshot', () => {
-    test('can masquerade', () => {
+  describe('render', () => {
+    it('can masquerade', () => {
       hooks.useMasqueradeBarData.mockReturnValueOnce(masqueradeMockData);
-      expect(shallow(<MasqueradeBar />).snapshot).toMatchSnapshot();
+      render(<MasqueradeBar />);
+      const labelStudentName = screen.getByText(messages.StudentNameInput.defaultMessage);
+      expect(labelStudentName).toBeInTheDocument();
+      const submitButton = screen.getByRole('button', { name: messages.SubmitButton.defaultMessage });
+      expect(submitButton).toBeInTheDocument();
     });
-    test('can masquerade with input', () => {
+    it('can masquerade with input', () => {
+      const masqueradeInput = 'test';
       hooks.useMasqueradeBarData.mockReturnValueOnce({
         ...masqueradeMockData,
-        masqueradeInput: 'test',
+        masqueradeInput,
       });
-      expect(shallow(<MasqueradeBar />).snapshot).toMatchSnapshot();
+      render(<MasqueradeBar />);
+      const valueMasqueradeInput = screen.getByRole('textbox', { value: masqueradeInput });
+      expect(valueMasqueradeInput).toBeInTheDocument();
     });
-    test('cannot masquerade', () => {
+    it('cannot masquerade', () => {
       hooks.useMasqueradeBarData.mockReturnValueOnce({
         ...masqueradeMockData,
         canMasquerade: false,
       });
-      expect(shallow(<MasqueradeBar />).snapshot).toMatchSnapshot();
+      render(<MasqueradeBar />);
+      const labelStudentName = screen.queryByText(messages.StudentNameInput.defaultMessage);
+      expect(labelStudentName).toBeNull();
     });
-    test('is masquerading with input', () => {
+    it('is masquerading with input', () => {
+      const masqueradeInput = 'test';
       hooks.useMasqueradeBarData.mockReturnValueOnce({
         ...masqueradeMockData,
         isMasquerading: true,
-        masqueradeInput: 'test',
+        masqueradeInput,
       });
-      expect(shallow(<MasqueradeBar />).snapshot).toMatchSnapshot();
+      render(<MasqueradeBar />);
+      const chipMasqueradeInput = screen.getByText(masqueradeInput);
+      expect(chipMasqueradeInput).toBeInTheDocument();
+      expect(chipMasqueradeInput.parentElement).toHaveClass('masquerade-chip');
     });
-    test('is masquerading failed with error', () => {
+    it('is masquerading failed with error', () => {
+      const masqueradeErrorMessage = 'test-error';
+      const masqueradeInput = 'test';
       hooks.useMasqueradeBarData.mockReturnValueOnce({
         ...masqueradeMockData,
         isMasqueradingFailed: true,
-        masqueradeErrorMessage: 'test-error',
+        masqueradeErrorMessage,
       });
-      expect(shallow(<MasqueradeBar />).snapshot).toMatchSnapshot();
+      render(<MasqueradeBar />);
+      const valueMasqueradeInput = screen.getByRole('textbox', { value: masqueradeInput });
+      expect(valueMasqueradeInput).toHaveClass('is-invalid');
     });
-    test('is masquerading pending', () => {
+    it('is masquerading pending', () => {
       hooks.useMasqueradeBarData.mockReturnValueOnce({
         ...masqueradeMockData,
         isMasqueradingPending: true,
       });
-      expect(shallow(<MasqueradeBar />).snapshot).toMatchSnapshot();
+      render(<MasqueradeBar />);
+      const pendingButton = screen.getByRole('button', { name: messages.SubmitButton.defaultMessage });
+      expect(pendingButton).toBeInTheDocument();
+      expect(pendingButton).toHaveAttribute('aria-disabled', 'true');
     });
   });
 });
