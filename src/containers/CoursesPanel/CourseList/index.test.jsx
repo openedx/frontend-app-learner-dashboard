@@ -8,7 +8,9 @@ jest.mock('./hooks', () => ({
 }));
 
 jest.mock('containers/CourseCard', () => jest.fn(() => <div>CourseCard</div>));
-jest.mock('containers/CourseFilterControls', () => ({ ActiveCourseFilters: jest.fn(() => <div>CourseFilterControls</div>) }));
+jest.mock('containers/CourseFilterControls', () => ({
+  ActiveCourseFilters: jest.fn(() => <div>ActiveCourseFilters</div>),
+}));
 
 jest.unmock('@edx/frontend-platform/i18n');
 jest.unmock('@openedx/paragon');
@@ -31,7 +33,7 @@ describe('CourseList', () => {
   describe('no courses or filters', () => {
     it('should not render related components', () => {
       renderList();
-      const filterControls = screen.queryByText('CourseFilterControls');
+      const filterControls = screen.queryByText('ActiveCourseFilters');
       const courseCard = screen.queryByText('CourseCard');
       const prevButton = screen.queryByRole('button', { name: 'Previous' });
       expect(filterControls).toBeNull();
@@ -45,7 +47,7 @@ describe('CourseList', () => {
         ...defaultCourseListData,
         showFilters: true,
       });
-      const filterControls = screen.getByText('CourseFilterControls');
+      const filterControls = screen.getByText('ActiveCourseFilters');
       expect(filterControls).toBeInTheDocument();
     });
   });
