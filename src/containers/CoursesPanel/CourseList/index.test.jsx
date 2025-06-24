@@ -1,4 +1,4 @@
-import { shallow } from '@edx/react-unit-test-utils';
+import { render, screen } from '@testing-library/react';
 
 import { useIsCollapsed } from './hooks';
 import CourseList from '.';
@@ -7,10 +7,14 @@ jest.mock('./hooks', () => ({
   useIsCollapsed: jest.fn(),
 }));
 
-jest.mock('containers/CourseCard', () => 'CourseCard');
+jest.mock('containers/CourseCard', () => jest.fn(() => <div>CourseCard</div>));
 jest.mock('containers/CourseFilterControls', () => ({
-  ActiveCourseFilters: 'ActiveCourseFilters',
+  ActiveCourseFilters: jest.fn(() => <div>ActiveCourseFilters</div>),
 }));
+
+jest.unmock('@edx/frontend-platform/i18n');
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
 
 describe('CourseList', () => {
   const defaultCourseListData = {
@@ -22,43 +26,60 @@ describe('CourseList', () => {
   };
   useIsCollapsed.mockReturnValue(false);
 
-  const createWrapper = (courseListData = defaultCourseListData) => (
-    shallow(<CourseList courseListData={courseListData} />)
+  const renderList = (courseListData = defaultCourseListData) => (
+    render(<CourseList courseListData={courseListData} />)
   );
 
   describe('no courses or filters', () => {
-    test('snapshot', () => {
-      const wrapper = createWrapper();
-      expect(wrapper.snapshot).toMatchSnapshot();
+    it('should not render related components', () => {
+      renderList();
+      const filterControls = screen.queryByText('ActiveCourseFilters');
+      const courseCard = screen.queryByText('CourseCard');
+      const prevButton = screen.queryByRole('button', { name: 'Previous' });
+      expect(filterControls).toBeNull();
+      expect(courseCard).toBeNull();
+      expect(prevButton).toBeNull();
     });
   });
   describe('with filters', () => {
-    test('snapshot', () => {
-      const wrapper = createWrapper({
-        filterOptions: { abitary: 'filter' },
+    it('should render filter component', () => {
+      renderList({
+        ...defaultCourseListData,
         showFilters: true,
       });
-      expect(wrapper.snapshot).toMatchSnapshot();
+      const filterControls = screen.getByText('ActiveCourseFilters');
+      expect(filterControls).toBeInTheDocument();
     });
   });
   describe('with multiple courses and pages', () => {
-    test('snapshot', () => {
-      const wrapper = createWrapper({
-        visibleList: [{ cardId: 'foo' }, { cardId: 'bar' }, { cardId: 'baz' }],
-        numPages: 3,
+    it('render Course Cards and pagination', () => {
+      const visibleList = [{ cardId: 'foo' }, { cardId: 'bar' }, { cardId: 'baz' }];
+      const numPages = 3;
+      renderList({
+        ...defaultCourseListData,
+        visibleList,
+        numPages,
       });
-      expect(wrapper.snapshot).toMatchSnapshot();
+      const courseCards = screen.getAllByText('CourseCard');
+      expect(courseCards.length).toEqual(visibleList.length);
+      const pageButtons = screen.getAllByRole('button', { name: /^Page/i });
+      expect(pageButtons.length).toBe(numPages);
     });
   });
   describe('collapsed with multiple courses and pages', () => {
-    test('snapshot', () => {
+    it('should render correct components', () => {
+      const visibleList = [{ cardId: 'foo' }, { cardId: 'bar' }, { cardId: 'baz' }];
       useIsCollapsed.mockReturnValueOnce(true);
-      const wrapper = createWrapper({
-        visibleList: [{ cardId: 'foo' }, { cardId: 'bar' }, { cardId: 'baz' }],
+      renderList({
+        ...defaultCourseListData,
+        visibleList,
         numPages: 3,
         showFilters: true,
       });
-      expect(wrapper.snapshot).toMatchSnapshot();
+      const courseCards = screen.getAllByText('CourseCard');
+      expect(courseCards.length).toEqual(visibleList.length);
+      const reducedPagination = screen.getByRole('button', { name: '1 of 3' });
+      expect(reducedPagination).toBeInTheDocument();
     });
   });
 });
