@@ -1,13 +1,20 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
-import { Col, Row } from '@openedx/paragon';
+import { render, screen } from '@testing-library/react';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import hooks from './hooks';
-import DashboardLayout, { columnConfig } from './DashboardLayout';
+import DashboardLayout from './DashboardLayout';
 
 jest.mock('./hooks', () => ({
   useDashboardLayoutData: jest.fn(),
 }));
+
+jest.mock('@openedx/frontend-plugin-framework', () => ({
+  PluginSlot: 'PluginSlot',
+}));
+
+jest.unmock('@edx/frontend-platform/i18n');
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
 
 const hookProps = {
   isCollapsed: true,
@@ -16,50 +23,49 @@ const hookProps = {
 };
 hooks.useDashboardLayoutData.mockReturnValue(hookProps);
 
-const children = 'test-children';
+const children = <div>test children</div>;
 
-let el;
 describe('DashboardLayout', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    el = shallow(<DashboardLayout>{children}</DashboardLayout>);
+    render(<IntlProvider locale="en"><DashboardLayout>{children}</DashboardLayout></IntlProvider>);
   });
 
   const testColumns = () => {
-    it('loads courseList and sidebar column layout', () => {
-      const columns = el.instance.findByType(Row)[0].findByType(Col);
-      Object.keys(columnConfig.sidebar).forEach(size => {
-        expect(columns[1].props[size]).toEqual(columnConfig.sidebar[size]);
-      });
+    it('loads courseList and sidebar column layout with corresponding children', () => {
+      const courseChildren = screen.getByText('test children');
+      const courseListCol = courseChildren.parentElement;
+      const sidebarCol = courseListCol.nextSibling;
+      expect(courseListCol).toHaveClass('course-list-column');
+      expect(sidebarCol).toHaveClass('sidebar-column');
     });
     it('displays children in first column', () => {
-      const columns = el.instance.findByType(Row)[0].findByType(Col);
-      expect(columns[0].children).not.toHaveLength(0);
+      const courseChildren = screen.getByText('test children');
+      const courseListCol = courseChildren.parentElement;
+      expect(courseChildren).toBeInTheDocument();
+      expect(courseListCol).toHaveClass('course-list-column');
     });
     it('displays WidgetSidebarSlot in second column', () => {
-      const columns = el.instance.findByType(Row)[0].findByType(Col);
-      expect(columns[1].findByType('WidgetSidebarSlot')).toHaveLength(1);
+      const courseListCol = screen.getByText('test children').parentElement;
+      const sidebarCol = courseListCol.nextSibling;
+      expect(sidebarCol).toHaveClass('sidebar-column');
+      expect(sidebarCol.children[0]).toHaveAttribute('id', 'org.openedx.frontend.learner_dashboard.widget_sidebar.v1');
     });
   };
-  const testSidebarLayout = () => {
+  const testSidebarLayout = ({ isCollapsed }) => {
     it('displays withSidebar width for course list column', () => {
-      const columns = el.instance.findByType(Row)[0].findByType(Col);
-      Object.keys(columnConfig.courseList.withSidebar).forEach(size => {
-        expect(columns[0].props[size]).toEqual(columnConfig.courseList.withSidebar[size]);
-      });
+      const courseListCol = screen.getByText('test children').parentElement;
+      expect(courseListCol).toHaveClass('col-xl-8');
+      const sidebarCol = courseListCol.nextSibling;
+      expect(sidebarCol).toHaveClass('sidebar-column', !isCollapsed && 'not-collapsed');
     });
   };
-  const testNoSidebarLayout = () => {
+  const testNoSidebarLayout = ({ isCollapsed }) => {
     it('displays noSidebar width for course list column', () => {
-      const columns = el.instance.findByType(Row)[0].findByType(Col);
-      Object.keys(columnConfig.courseList.noSidebar).forEach(size => {
-        expect(columns[0].props[size]).toEqual(columnConfig.courseList.noSidebar[size]);
-      });
-    });
-  };
-  const testSnapshot = () => {
-    test('snapshot', () => {
-      expect(el.snapshot).toMatchSnapshot();
+      const courseListCol = screen.getByText('test children').parentElement;
+      expect(courseListCol).toHaveClass('col-xl-12');
+      const sidebarCol = courseListCol.nextSibling;
+      expect(sidebarCol).toHaveClass('sidebar-column', !isCollapsed && 'not-collapsed');
     });
   };
   describe('collapsed', () => {
@@ -68,27 +74,18 @@ describe('DashboardLayout', () => {
         hooks.useDashboardLayoutData.mockReturnValueOnce({ ...hookProps, sidebarShowing: true });
       });
       testColumns();
-      testSnapshot();
-      testSidebarLayout();
+      testSidebarLayout({ isCollapsed: true });
     });
     describe('sidebar not showing', () => {
+      beforeEach(() => {
+        hooks.useDashboardLayoutData.mockReturnValueOnce({ ...hookProps });
+      });
       testColumns();
-      testSnapshot();
-      testNoSidebarLayout();
-    });
-    it('does not show spacer component above widget sidebar', () => {
-      const columns = el.instance.findByType(Col);
-      expect(columns[1].findByType('h2').length).toEqual(0);
+      testNoSidebarLayout({ isCollapsed: true });
     });
   });
 
   describe('not collapsed', () => {
-    const testWidgetSpacing = () => {
-      it('shows not-collapsed class on widget sidebar', () => {
-        const columns = el.instance.findByType(Col);
-        expect(columns[1].props.className).toContain('not-collapsed');
-      });
-    };
     describe('sidebar showing', () => {
       beforeEach(() => {
         hooks.useDashboardLayoutData.mockReturnValueOnce({
@@ -98,18 +95,14 @@ describe('DashboardLayout', () => {
         });
       });
       testColumns();
-      testSnapshot();
-      testSidebarLayout();
-      testWidgetSpacing();
+      testSidebarLayout({ isCollapsed: false });
     });
     describe('sidebar not showing', () => {
       beforeEach(() => {
         hooks.useDashboardLayoutData.mockReturnValueOnce({ ...hookProps, isCollapsed: false });
       });
       testColumns();
-      testSnapshot();
-      testNoSidebarLayout();
-      testWidgetSpacing();
+      testNoSidebarLayout({ isCollapsed: false });
     });
   });
 });
