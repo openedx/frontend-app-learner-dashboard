@@ -33,41 +33,33 @@ describe('ConfirmEmailBanner', () => {
       expect(banner).toBeNull();
     });
     describe('On unverified', () => {
-      it('show banner', () => {
+      beforeEach(() => {
         hooks.mockReturnValueOnce({ ...hookProps });
         render(<IntlProvider locale="en"><ConfirmEmailBanner /></IntlProvider>);
+      });
+      it('show banner', () => {
         const banner = screen.getByRole('alert');
         expect(banner).toContainHTML('Remember to confirm');
       });
       it('show confirm now button', () => {
-        hooks.mockReturnValueOnce({ ...hookProps });
-        render(<IntlProvider locale="en"><ConfirmEmailBanner /></IntlProvider>);
         const confirmButton = screen.getByRole('button', { name: messages.confirmNowButton.defaultMessage });
         expect(confirmButton).toBeInTheDocument();
       });
       it('show modal', () => {
-        hooks.mockReturnValueOnce({ ...hookProps });
-        render(<IntlProvider locale="en"><ConfirmEmailBanner /></IntlProvider>);
         const modal = screen.getByRole('dialog');
         expect(modal).toBeInTheDocument();
       });
       it('show modal header and body', () => {
-        hooks.mockReturnValueOnce({ ...hookProps });
-        render(<IntlProvider locale="en"><ConfirmEmailBanner /></IntlProvider>);
         const modalHeader = screen.getByText(messages.confirmEmailModalHeader.defaultMessage);
         expect(modalHeader).toBeInTheDocument();
         const modalBody = screen.getByText(messages.confirmEmailModalBody.defaultMessage);
         expect(modalBody).toBeInTheDocument();
       });
       it('show confirm image', () => {
-        hooks.mockReturnValueOnce({ ...hookProps });
-        render(<IntlProvider locale="en"><ConfirmEmailBanner /></IntlProvider>);
         const confirmButton = screen.getByRole('img', { name: messages.confirmEmailImageAlt.defaultMessage });
         expect(confirmButton).toBeInTheDocument();
       });
       it('show confirm email button', () => {
-        hooks.mockReturnValueOnce({ ...hookProps });
-        render(<IntlProvider locale="en"><ConfirmEmailBanner /></IntlProvider>);
         const confirmButton = screen.getByRole('button', { name: messages.verifiedConfirmEmailButton.defaultMessage });
         expect(confirmButton).toBeInTheDocument();
       });
