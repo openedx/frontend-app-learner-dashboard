@@ -1,15 +1,17 @@
 import { mergeConfig } from '@edx/frontend-platform';
-import { shallow } from '@edx/react-unit-test-utils';
-import Header from '@edx/frontend-component-header';
+import { render, screen } from '@testing-library/react';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import urls from 'data/services/lms/urls';
 import LearnerDashboardHeader from '.';
 import { findCoursesNavClicked } from './hooks';
 
+const courseSearchUrl = '/course-search-url';
+
 jest.mock('hooks', () => ({
   reduxHooks: {
     usePlatformSettingsData: jest.fn(() => ({
-      courseSearchUrl: '/course-search-url',
+      courseSearchUrl,
     })),
   },
 }));
@@ -17,36 +19,54 @@ jest.mock('./hooks', () => ({
   ...jest.requireActual('./hooks'),
   findCoursesNavClicked: jest.fn(),
 }));
-jest.mock('containers/MasqueradeBar', () => 'MasqueradeBar');
-jest.mock('./ConfirmEmailBanner', () => 'ConfirmEmailBanner');
-jest.mock('@edx/frontend-component-header', () => 'Header');
+
+jest.unmock('@openedx/paragon');
+jest.unmock('@edx/frontend-platform/i18n');
+jest.unmock('react');
+
+const mockedHeaderProps = jest.fn();
+jest.mock('containers/MasqueradeBar', () => jest.fn(() => <div>MasqueradeBar</div>));
+jest.mock('./ConfirmEmailBanner', () => jest.fn(() => <div>ConfirmEmailBanner</div>));
+jest.mock('@edx/frontend-component-header', () => jest.fn((props) => {
+  mockedHeaderProps(props);
+  return <div>Header</div>;
+}));
 
 describe('LearnerDashboardHeader', () => {
-  test('render', () => {
+  beforeEach(() => jest.clearAllMocks());
+  it('renders and discover url is correct', () => {
     mergeConfig({ ORDER_HISTORY_URL: 'test-url' });
-    const wrapper = shallow(<LearnerDashboardHeader />);
-    expect(wrapper.snapshot).toMatchSnapshot();
-    expect(wrapper.instance.findByType('ConfirmEmailBanner')).toHaveLength(1);
-    expect(wrapper.instance.findByType('MasqueradeBar')).toHaveLength(1);
-    expect(wrapper.instance.findByType(Header)).toHaveLength(1);
-    wrapper.instance.findByType(Header)[0].props.mainMenuItems[1].onClick();
-    expect(findCoursesNavClicked).toHaveBeenCalledWith(urls.baseAppUrl('/course-search-url'));
-    expect(wrapper.instance.findByType(Header)[0].props.secondaryMenuItems.length).toBe(0);
+    render(<IntlProvider locale="en"><LearnerDashboardHeader /></IntlProvider>);
+    expect(screen.getByText('ConfirmEmailBanner')).toBeInTheDocument();
+    expect(screen.getByText('MasqueradeBar')).toBeInTheDocument();
+    expect(screen.getByText('Header')).toBeInTheDocument();
+    const props = mockedHeaderProps.mock.calls[0][0];
+    const { mainMenuItems } = props;
+    const discoverUrl = mainMenuItems[1].href;
+    mainMenuItems[1].onClick();
+    expect(discoverUrl).toBe(urls.baseAppUrl(courseSearchUrl));
+    expect(findCoursesNavClicked).toHaveBeenCalledWith(urls.baseAppUrl(courseSearchUrl));
   });
 
-  test('should display Help link if SUPPORT_URL is set', () => {
+  it('should display Help link if SUPPORT_URL is set', () => {
     mergeConfig({ SUPPORT_URL: 'http://localhost:18000/support' });
-    const wrapper = shallow(<LearnerDashboardHeader />);
-    expect(wrapper.instance.findByType(Header)[0].props.secondaryMenuItems.length).toBe(1);
+    render(<IntlProvider locale="en"><LearnerDashboardHeader /></IntlProvider>);
+    const props = mockedHeaderProps.mock.calls[0][0];
+    const { secondaryMenuItems } = props;
+    expect(secondaryMenuItems.length).toBe(1);
   });
-  test('should display Programs link if it is enabled by configuration', () => {
+  it('should display Programs link if it is enabled by configuration', () => {
     mergeConfig({ ENABLE_PROGRAMS: true });
-    const wrapper = shallow(<LearnerDashboardHeader />);
-    expect(wrapper.instance.findByType(Header)[0].props.mainMenuItems.length).toBe(3);
+    render(<IntlProvider locale="en"><LearnerDashboardHeader /></IntlProvider>);
+    const props = mockedHeaderProps.mock.calls[0][0];
+    const { mainMenuItems } = props;
+    expect(mainMenuItems.length).toBe(3);
   });
-  test('should not display Discover New tab if it is disabled by configuration', () => {
+  it('should not display Discover New tab if it is disabled by configuration', () => {
     mergeConfig({ NON_BROWSABLE_COURSES: true });
-    const wrapper = shallow(<LearnerDashboardHeader />);
-    expect(wrapper.instance.findByType(Header)[0].props.mainMenuItems.length).toBe(2);
+    render(<IntlProvider locale="en"><LearnerDashboardHeader /></IntlProvider>);
+    const props = mockedHeaderProps.mock.calls[0][0];
+    const { mainMenuItems } = props;
+    expect(mainMenuItems.length).toBe(2);
   });
 });

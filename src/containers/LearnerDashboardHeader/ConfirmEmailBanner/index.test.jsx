@@ -1,13 +1,18 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
+import { render, screen } from '@testing-library/react';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import hooks from './hooks';
 import ConfirmEmailBanner from '.';
+import messages from './messages';
 
 jest.mock('./hooks', () => ({
   __esModule: true,
   default: jest.fn(),
 }));
+
+jest.unmock('@openedx/paragon');
+jest.unmock('@edx/frontend-platform/i18n');
+jest.unmock('react');
 
 const hookProps = {
   isNeeded: true,
@@ -20,16 +25,44 @@ const hookProps = {
 };
 
 describe('ConfirmEmailBanner', () => {
-  describe('snapshot', () => {
-    test('do not show on already verified', () => {
+  describe('render', () => {
+    it('do not show on already verified', () => {
       hooks.mockReturnValueOnce({ ...hookProps, isNeeded: false });
-      const el = shallow(<ConfirmEmailBanner />);
-      expect(el.snapshot).toMatchSnapshot();
+      render(<IntlProvider locale="en"><ConfirmEmailBanner /></IntlProvider>);
+      const banner = screen.queryByRole('alert');
+      expect(banner).toBeNull();
     });
-    test('Show on unverified', () => {
-      hooks.mockReturnValueOnce({ ...hookProps });
-      const el = shallow(<ConfirmEmailBanner />);
-      expect(el.snapshot).toMatchSnapshot();
+    describe('On unverified', () => {
+      beforeEach(() => {
+        hooks.mockReturnValueOnce({ ...hookProps });
+        render(<IntlProvider locale="en"><ConfirmEmailBanner /></IntlProvider>);
+      });
+      it('show banner', () => {
+        const banner = screen.getByRole('alert');
+        expect(banner).toContainHTML('Remember to confirm');
+      });
+      it('show confirm now button', () => {
+        const confirmButton = screen.getByRole('button', { name: messages.confirmNowButton.defaultMessage });
+        expect(confirmButton).toBeInTheDocument();
+      });
+      it('show modal', () => {
+        const modal = screen.getByRole('dialog');
+        expect(modal).toBeInTheDocument();
+      });
+      it('show modal header and body', () => {
+        const modalHeader = screen.getByText(messages.confirmEmailModalHeader.defaultMessage);
+        expect(modalHeader).toBeInTheDocument();
+        const modalBody = screen.getByText(messages.confirmEmailModalBody.defaultMessage);
+        expect(modalBody).toBeInTheDocument();
+      });
+      it('show confirm image', () => {
+        const confirmButton = screen.getByRole('img', { name: messages.confirmEmailImageAlt.defaultMessage });
+        expect(confirmButton).toBeInTheDocument();
+      });
+      it('show confirm email button', () => {
+        const confirmButton = screen.getByRole('button', { name: messages.verifiedConfirmEmailButton.defaultMessage });
+        expect(confirmButton).toBeInTheDocument();
+      });
     });
   });
 });
