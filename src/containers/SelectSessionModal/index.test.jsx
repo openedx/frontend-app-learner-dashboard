@@ -45,7 +45,7 @@ describe('SelectSessionModal', () => {
     it('modal with leave option ', () => {
       hooks.mockReturnValueOnce({
         ...hookReturn,
-        availableSessions: [...availableSessions],
+        availableSessions,
       });
       render(<IntlProvider locale="en"><SelectSessionModal /></IntlProvider>);
       const sessionOption = screen.getByDisplayValue(availableSessions[0].courseId);
@@ -61,6 +61,8 @@ describe('SelectSessionModal', () => {
         showLeaveOption: false,
       });
       render(<IntlProvider locale="en"><SelectSessionModal /></IntlProvider>);
+      const sessionOption = screen.getByDisplayValue(availableSessions[0].courseId);
+      expect(sessionOption).toBeInTheDocument();
       const leaveOption = screen.queryByRole('radio', { name: formatMessage(messages.leaveSessionOption) });
       expect(leaveOption).toBeNull();
     });

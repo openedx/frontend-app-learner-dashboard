@@ -35,7 +35,7 @@ describe('UnenrollConfirmModal FinishedPane', () => {
     });
   });
   describe('Did not give reason', () => {
-    it('So not display thanks message', () => {
+    it('Does not display thanks message', () => {
       const customProps = {
         gaveReason: false,
         handleClose: jest.fn().mockName('props.handleClose'),
