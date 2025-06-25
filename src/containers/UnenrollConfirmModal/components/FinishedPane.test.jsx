@@ -1,21 +1,50 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
+import { render, screen } from '@testing-library/react';
+import { formatMessage } from 'testUtils';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import { FinishedPane } from './FinishedPane';
+import messages from './messages';
+
+jest.unmock('@edx/frontend-platform/i18n');
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+
+const props = {
+  gaveReason: true,
+  handleClose: jest.fn().mockName('props.handleClose'),
+};
 
 describe('UnenrollConfirmModal FinishedPane', () => {
-  test('snapshot: gave reason', () => {
-    const props = {
-      gaveReason: true,
-      handleClose: jest.fn().mockName('props.handleClose'),
-    };
-    expect(shallow(<FinishedPane {...props} />).snapshot).toMatchSnapshot();
+  describe('gave reason', () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+      render(<IntlProvider locale="en"><FinishedPane {...props} /></IntlProvider>);
+    });
+    it('renders heading', () => {
+      const heading = screen.getByText(formatMessage(messages.finishHeading));
+      expect(heading).toBeInTheDocument();
+    });
+    it('renders return button', () => {
+      const returnButton = screen.getByRole('button', { name: formatMessage(messages.finishReturn) });
+      expect(returnButton).toBeInTheDocument();
+    });
+    it('Gave reason, display thanks message', () => {
+      const thanksMsg = screen.getByText((text) => text.includes('Thank you'));
+      expect(thanksMsg).toBeInTheDocument();
+      expect(thanksMsg.innerHTML).toContain(formatMessage(messages.finishThanksText));
+    });
   });
-  test('snapshot: did not give reason', () => {
-    const props = {
-      gaveReason: false,
-      handleClose: jest.fn().mockName('props.handleClose'),
-    };
-    expect(shallow(<FinishedPane {...props} />).snapshot).toMatchSnapshot();
+  describe('Did not give reason', () => {
+    it('Does not display thanks message', () => {
+      const customProps = {
+        gaveReason: false,
+        handleClose: jest.fn().mockName('props.handleClose'),
+      };
+      render(<IntlProvider locale="en"><FinishedPane {...customProps} /></IntlProvider>);
+      const thanksMsg = screen.queryByText((text) => text.includes('Thank you'));
+      expect(thanksMsg).toBeNull();
+      const finishMsg = screen.getByText(formatMessage(messages.finishText));
+      expect(finishMsg).toBeInTheDocument();
+    });
   });
 });
