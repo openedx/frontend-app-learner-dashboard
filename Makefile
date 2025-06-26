@@ -45,11 +45,11 @@ pull_translations:
 	mkdir src/i18n/messages
 	cd src/i18n/messages \
       && atlas pull $(ATLAS_OPTIONS) \
-               translations/frontend-platform/src/i18n/messages:frontend-platform \
+               translations/frontend-base/src/i18n/messages:frontend-base \
                translations/paragon/src/i18n/messages:paragon \
                translations/frontend-app-learner-dashboard/src/i18n/messages:frontend-app-learner-dashboard
 
-	$(intl_imports) frontend-platform paragon frontend-app-learner-dashboard
+	$(intl_imports) frontend-base paragon frontend-app-learner-dashboard
 
 # This target is used by CI.
 validate-no-uncommitted-package-lock-changes:
