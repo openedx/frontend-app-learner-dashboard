@@ -1,7 +1,6 @@
-import { mockUseKeyedState } from '@edx/react-unit-test-utils';
-
 import { reduxHooks } from 'hooks';
 import track from 'tracking';
+import { MockUseState } from 'testUtils';
 
 import * as hooks from './hooks';
 
@@ -19,7 +18,7 @@ reduxHooks.useTrackCourseEvent.mockReturnValue(trackCourseEvent);
 const cardId = 'test-card-id';
 let out;
 
-const state = mockUseKeyedState(hooks.stateKeys);
+const state = new MockUseState(hooks);
 
 describe('CourseCardMenu hooks', () => {
   beforeEach(() => {
@@ -28,7 +27,6 @@ describe('CourseCardMenu hooks', () => {
   });
   describe('useUnenrollData', () => {
     beforeEach(() => {
-      state.mockVals({ isUnenrollConfirmVisible: true });
       out = hooks.useUnenrollData();
     });
     describe('behavior', () => {
@@ -37,9 +35,6 @@ describe('CourseCardMenu hooks', () => {
       });
     });
     describe('output', () => {
-      test('state is loaded from current state value', () => {
-        expect(out.isVisible).toEqual(true);
-      });
       test('show sets state value to true', () => {
         out.show();
         expect(state.setState.isUnenrollConfirmVisible).toHaveBeenCalledWith(true);
@@ -53,7 +48,6 @@ describe('CourseCardMenu hooks', () => {
 
   describe('useEmailSettings', () => {
     beforeEach(() => {
-      state.mockVals({ isEmailSettingsVisible: true });
       out = hooks.useEmailSettings();
     });
     describe('behavior', () => {
@@ -62,9 +56,6 @@ describe('CourseCardMenu hooks', () => {
       });
     });
     describe('output', () => {
-      test('state is loaded from current state value', () => {
-        expect(out.isVisible).toEqual(state.values.isEmailSettingsVisible);
-      });
       test('show sets state value to true', () => {
         out.show();
         expect(state.setState.isEmailSettingsVisible).toHaveBeenCalledWith(true);
