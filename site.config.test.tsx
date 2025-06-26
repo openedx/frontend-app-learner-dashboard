@@ -8,7 +8,7 @@ const siteConfig: SiteConfig = {
   loginUrl: 'http://localhost:8000/login',
   logoutUrl: 'http://localhost:8000/logout',
 
-  environment: EnvironmentTypes.DEVELOPMENT,
+  environment: EnvironmentTypes.TEST,
   basename: '/learner-dashboard',
   apps: [{
     appId: 'org.openedx.frontend.app.learnerDashboard',
