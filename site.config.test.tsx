@@ -1,5 +1,7 @@
 import { EnvironmentTypes, SiteConfig } from '@openedx/frontend-base';
 
+import { appId } from './src/constants';
+
 const siteConfig: SiteConfig = {
   siteId: 'learner-dashboard-test-site',
   siteName: 'Learner Dashboard Test Site',
@@ -11,7 +13,7 @@ const siteConfig: SiteConfig = {
   environment: EnvironmentTypes.TEST,
   basename: '/learner-dashboard',
   apps: [{
-    appId: 'org.openedx.frontend.app.learnerDashboard',
+    appId,
     config: {
       ECOMMERCE_BASE_URL: 'http://localhost:18130',
       FAVICON_URL: 'https://edx-cdn.org/v3/default/favicon.ico',
