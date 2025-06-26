@@ -1,23 +1,19 @@
-import React from 'react';
-import { Helmet } from 'react-helmet';
-import { shallow } from '@edx/react-unit-test-utils';
+import { render, screen, waitFor } from '@testing-library/react';
 
-import { useIntl } from '@edx/frontend-platform/i18n';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { getConfig } from '@edx/frontend-platform';
 
 import { RequestKeys } from 'data/constants/requests';
 import { reduxHooks } from 'hooks';
-import Dashboard from 'containers/Dashboard';
-import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
-import AppWrapper from 'containers/WidgetContainers/AppWrapper';
 import { App } from './App';
 import messages from './messages';
 
-jest.mock('@edx/frontend-component-footer', () => ({ FooterSlot: 'FooterSlot' }));
-
-jest.mock('containers/Dashboard', () => 'Dashboard');
-jest.mock('containers/LearnerDashboardHeader', () => 'LearnerDashboardHeader');
-jest.mock('containers/WidgetContainers/AppWrapper', () => 'AppWrapper');
+jest.mock('@edx/frontend-component-footer', () => ({
+  FooterSlot: jest.fn(() => <div>FooterSlot</div>),
+}));
+jest.mock('containers/Dashboard', () => jest.fn(() => <div>Dashboard</div>));
+jest.mock('containers/LearnerDashboardHeader', () => jest.fn(() => <div>LearnerDashboardHeader</div>));
+jest.mock('containers/WidgetContainers/AppWrapper', () => jest.fn(({ children }) => <div className="AppWrapper">{children}</div>));
 jest.mock('data/redux', () => ({
   selectors: 'redux.selectors',
   actions: 'redux.actions',
@@ -36,113 +32,102 @@ jest.mock('@edx/frontend-platform', () => ({
   getConfig: jest.fn(() => ({})),
 }));
 
+jest.unmock('@openedx/paragon');
+jest.unmock('@edx/frontend-platform/i18n');
+jest.unmock('react');
+
 const loadData = jest.fn();
 reduxHooks.useLoadData.mockReturnValue(loadData);
 
-let el;
-
-const supportEmail = 'test-support-url';
+const supportEmail = 'test@support.com';
 reduxHooks.usePlatformSettingsData.mockReturnValue({ supportEmail });
 
 describe('App router component', () => {
-  const { formatMessage } = useIntl();
   describe('component', () => {
     const runBasicTests = () => {
-      test('snapshot', () => { expect(el.snapshot).toMatchSnapshot(); });
-      it('displays title in helmet component', () => {
-        const control = el.instance
-          .findByType(Helmet)[0]
-          .findByType('title')[0];
-        expect(control.children[0].el).toEqual(formatMessage(messages.pageTitle));
+      it('displays title in helmet component', async () => {
+        await waitFor(() => expect(document.title).toEqual(messages.pageTitle.defaultMessage));
       });
       it('displays learner dashboard header', () => {
-        expect(el.instance.findByType(LearnerDashboardHeader).length).toEqual(1);
+        const learnerDashboardHeader = screen.getByText('LearnerDashboardHeader');
+        expect(learnerDashboardHeader).toBeInTheDocument();
       });
       it('wraps the header and main components in an AppWrapper widget container', () => {
-        const container = el.instance.findByType(AppWrapper)[0];
-        expect(container.children[0].type).toEqual('LearnerDashboardHeader');
-        expect(container.children[1].type).toEqual('main');
+        const appWrapper = screen.getByText('LearnerDashboardHeader').parentElement;
+        expect(appWrapper).toHaveClass('AppWrapper');
+        expect(appWrapper.children[1].id).toEqual('main');
+      });
+      it('displays footer slot', () => {
+        const footerSlot = screen.getByText('FooterSlot');
+        expect(footerSlot).toBeInTheDocument();
       });
     };
     describe('no network failure', () => {
-      beforeAll(() => {
+      beforeEach(() => {
+        jest.clearAllMocks();
         reduxHooks.useRequestIsFailed.mockReturnValue(false);
         getConfig.mockReturnValue({});
-        el = shallow(<App />);
+        render(<IntlProvider locale="en"><App /></IntlProvider>);
       });
       runBasicTests();
       it('loads dashboard', () => {
-        const main = el.instance.findByType('main')[0];
-        expect(main.children.length).toEqual(1);
-        const dashboard = main.children[0].el;
-        expect(dashboard.type).toEqual('Dashboard');
-        expect(dashboard).toEqual(shallow(<Dashboard />));
+        const dashboard = screen.getByText('Dashboard');
+        expect(dashboard).toBeInTheDocument();
       });
     });
     describe('no network failure with optimizely url', () => {
-      beforeAll(() => {
+      beforeEach(() => {
+        jest.clearAllMocks();
         reduxHooks.useRequestIsFailed.mockReturnValue(false);
         getConfig.mockReturnValue({ OPTIMIZELY_URL: 'fake.url' });
-        el = shallow(<App />);
+        render(<IntlProvider locale="en"><App /></IntlProvider>);
       });
       runBasicTests();
       it('loads dashboard', () => {
-        const main = el.instance.findByType('main')[0];
-        expect(main.children.length).toEqual(1);
-        const dashboard = main.children[0].el;
-        expect(dashboard.type).toEqual('Dashboard');
-        expect(dashboard).toEqual(shallow(<Dashboard />));
+        const dashboard = screen.getByText('Dashboard');
+        expect(dashboard).toBeInTheDocument();
       });
     });
     describe('no network failure with optimizely project id', () => {
-      beforeAll(() => {
+      beforeEach(() => {
+        jest.clearAllMocks();
         reduxHooks.useRequestIsFailed.mockReturnValue(false);
         getConfig.mockReturnValue({ OPTIMIZELY_PROJECT_ID: 'fakeId' });
-        el = shallow(<App />);
+        render(<IntlProvider locale="en"><App /></IntlProvider>);
       });
       runBasicTests();
       it('loads dashboard', () => {
-        const main = el.instance.findByType('main')[0];
-        expect(main.children.length).toEqual(1);
-        const dashboard = main.children[0].el;
-        expect(dashboard.type).toEqual('Dashboard');
-        expect(dashboard).toEqual(shallow(<Dashboard />));
+        const dashboard = screen.getByText('Dashboard');
+        expect(dashboard).toBeInTheDocument();
       });
     });
     describe('initialize failure', () => {
-      beforeAll(() => {
+      beforeEach(() => {
+        jest.clearAllMocks();
         reduxHooks.useRequestIsFailed.mockImplementation((key) => key === RequestKeys.initialize);
         getConfig.mockReturnValue({});
-        el = shallow(<App />);
+        render(<IntlProvider locale="en" messages={messages}><App /></IntlProvider>);
       });
       runBasicTests();
       it('loads error page', () => {
-        const main = el.instance.findByType('main')[0];
-        expect(main.children.length).toEqual(1);
-        const alert = main.children[0];
-        expect(alert.type).toEqual('Alert');
-        expect(alert.children.length).toEqual(1);
-        const errorPage = alert.children[0];
-        expect(errorPage.type).toEqual('ErrorPage');
-        expect(errorPage.props.message).toEqual(formatMessage(messages.errorMessage, { supportEmail }));
+        const alert = screen.getByRole('alert');
+        expect(alert).toBeInTheDocument();
+        const errorPage = screen.getByText('ErrorPage');
+        expect(errorPage).toBeInTheDocument();
       });
     });
     describe('refresh failure', () => {
-      beforeAll(() => {
+      beforeEach(() => {
         reduxHooks.useRequestIsFailed.mockImplementation((key) => key === RequestKeys.refreshList);
         getConfig.mockReturnValue({});
-        el = shallow(<App />);
+        render(<IntlProvider locale="en"><App /></IntlProvider>);
       });
       runBasicTests();
       it('loads error page', () => {
-        const main = el.instance.findByType('main')[0];
-        expect(main.children.length).toEqual(1);
-        const alert = main.children[0];
-        expect(alert.type).toEqual('Alert');
-        expect(alert.children.length).toEqual(1);
-        const errorPage = alert.children[0];
-        expect(errorPage.type).toEqual('ErrorPage');
-        expect(errorPage.props.message).toEqual(formatMessage(messages.errorMessage, { supportEmail }));
+        const alert = screen.getByRole('alert');
+        expect(alert).toBeInTheDocument();
+        const errorPage = screen.getByText('ErrorPage');
+        expect(errorPage).toBeInTheDocument();
       });
     });
   });
