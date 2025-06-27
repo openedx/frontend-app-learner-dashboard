@@ -1,6 +1,6 @@
-.gitignore
-Makefile
-npm-debug.log
-coverage
+__mocks__
 node_modules
-public
+*.test.js
+*.test.jsx
+*.test.ts
+*.test.tsx
