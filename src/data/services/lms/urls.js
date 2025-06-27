@@ -25,7 +25,7 @@ const programsUrl = () => baseAppUrl('/dashboard/programs');
 export const creditPurchaseUrl = (courseId) => {
   const config = getConfig();
   return config.CREDIT_PURCHASE_URL
-    ? `${config.CREDIT_PURCHASE_URL}/credit/checkout/${courseId}/`
+    ? `${config.CREDIT_PURCHASE_URL}/${courseId}/`
     : `${config.ECOMMERCE_BASE_URL}/credit/checkout/${courseId}/`;
 };
 export const creditRequestUrl = (providerId) => `${getApiUrl()}/credit/v1/providers/${providerId}/request/`;
