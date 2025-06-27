@@ -1,5 +1,5 @@
 {
-  "name": "@edx/frontend-app-learner-dashboard",
+  "name": "@openedx/frontend-app-learner-dashboard",
   "version": "1.0.0",
   "description": "",
   "repository": {
@@ -7,6 +7,9 @@
     "url": "git+https://github.com/edx/frontend-app-learner-dashboard.git"
   },
   "main": "src/index.ts",
+  "files": [
+    "/src"
+  ],
   "browserslist": [
     "extends @edx/browserslist-config"
   ],
@@ -22,7 +25,7 @@
     "snapshot": "openedx test --updateSnapshot",
     "test": "openedx test --coverage --passWithNoTests"
   },
-  "author": "edX",
+  "author": "Open edX",
   "license": "AGPL-3.0",
   "homepage": "https://github.com/openedx/frontend-app-learner-dashboard#readme",
   "publishConfig": {
