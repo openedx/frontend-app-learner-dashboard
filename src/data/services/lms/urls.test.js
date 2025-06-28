@@ -1,4 +1,5 @@
 import { getAppConfig, getSiteConfig } from '@openedx/frontend-base';
+import { appId } from '../../../constants';
 import * as urls from './urls';
 
 describe('urls', () => {
@@ -25,7 +26,7 @@ describe('urls', () => {
     it('returns the url if it is relative', () => {
       const url = '/edx.org';
       expect(urls.learningMfeUrl(url)).toEqual(
-        `${getAppConfig('org.openedx.frontend.app.learnerDashboard').LEARNING_BASE_URL}${url}`,
+        `${getAppConfig(appId).LEARNING_BASE_URL}${url}`,
       );
     });
     it('return null if url is null', () => {
