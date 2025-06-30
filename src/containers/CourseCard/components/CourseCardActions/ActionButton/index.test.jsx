@@ -5,8 +5,6 @@ import useIsCollapsed from './hooks';
 
 jest.mock('./hooks', () => jest.fn());
 
-jest.unmock('@openedx/paragon');
-
 describe('ActionButton', () => {
   const props = {
     className: 'custom-class',

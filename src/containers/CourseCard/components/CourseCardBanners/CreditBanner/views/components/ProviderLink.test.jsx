@@ -10,10 +10,6 @@ jest.mock('hooks', () => ({
   },
 }));
 
-jest.unmock('@openedx/paragon');
-jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('react');
-
 const cardId = 'test-card-id';
 const credit = {
   providerStatusUrl: 'test-credit-provider-status-url',

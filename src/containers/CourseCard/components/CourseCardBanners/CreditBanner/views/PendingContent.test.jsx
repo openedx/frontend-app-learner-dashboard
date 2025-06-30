@@ -10,10 +10,6 @@ jest.mock('hooks', () => ({
   reduxHooks: { useCardCreditData: jest.fn(), useMasqueradeData: jest.fn() },
 }));
 
-jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
 const cardId = 'test-card-id';
 const providerName = 'test-credit-provider-name';
 const providerStatusUrl = 'test-credit-provider-status-url';

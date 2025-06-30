@@ -5,10 +5,6 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { FinishedPane } from './FinishedPane';
 import messages from './messages';
 
-jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
 const props = {
   gaveReason: true,
   handleClose: jest.fn().mockName('props.handleClose'),

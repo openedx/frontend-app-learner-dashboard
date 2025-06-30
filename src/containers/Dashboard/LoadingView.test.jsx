@@ -7,10 +7,6 @@ jest.mock('./hooks', () => ({
   useDashboardMessages: jest.fn(),
 }));
 
-jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
 const spinnerScreenReaderText = 'test-sr-text';
 describe('LoadingView', () => {
   it('renders spinner component with associated screen reader text', () => {

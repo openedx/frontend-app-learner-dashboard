@@ -10,10 +10,6 @@ jest.mock('./hooks', () => ({
   default: jest.fn(),
 }));
 
-jest.unmock('@openedx/paragon');
-jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('react');
-
 const hookProps = {
   isNeeded: true,
   showPageBanner: jest.fn().mockName('showPageBanner'),

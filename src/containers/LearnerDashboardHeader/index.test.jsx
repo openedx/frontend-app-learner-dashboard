@@ -20,10 +20,6 @@ jest.mock('./hooks', () => ({
   findCoursesNavClicked: jest.fn(),
 }));
 
-jest.unmock('@openedx/paragon');
-jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('react');
-
 const mockedHeaderProps = jest.fn();
 jest.mock('containers/MasqueradeBar', () => jest.fn(() => <div>MasqueradeBar</div>));
 jest.mock('./ConfirmEmailBanner', () => jest.fn(() => <div>ConfirmEmailBanner</div>));

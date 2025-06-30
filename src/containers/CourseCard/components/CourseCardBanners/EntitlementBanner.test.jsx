@@ -19,10 +19,6 @@ jest.mock('hooks', () => ({
   },
 }));
 
-jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
 const cardId = 'test-card-id';
 
 const entitlementData = {

@@ -27,10 +27,6 @@ jest.mock('./hooks', () => ({
   useEmailSettings: jest.fn(),
 }));
 
-jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
 const props = {
   cardId: 'test-card-id',
   emailSettings: { show: jest.fn() },

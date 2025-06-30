@@ -13,10 +13,6 @@ jest.mock('./hooks', () => ({
   useUnenrollData: jest.fn(),
 }));
 
-jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
 describe('UnenrollConfirmModal component', () => {
   const hookProps = {
     confirm: jest.fn().mockName('hooks.confirm'),

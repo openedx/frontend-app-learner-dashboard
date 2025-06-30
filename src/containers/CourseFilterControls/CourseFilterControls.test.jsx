@@ -15,10 +15,6 @@ jest.mock('hooks', () => ({
 
 jest.mock('./hooks', () => jest.fn());
 
-jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
 jest.mock('@openedx/paragon', () => ({
   ...jest.requireActual('@openedx/paragon'),
   useWindowSize: jest.fn(),

@@ -2,9 +2,6 @@ import { render, screen } from '@testing-library/react';
 
 import CreditContent from './CreditContent';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
 const action = {
   href: 'test-action-href',
   onClick: jest.fn().mockName('test-action-onClick'),

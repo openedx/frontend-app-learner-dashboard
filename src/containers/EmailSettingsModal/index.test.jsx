@@ -10,10 +10,6 @@ jest.mock('./hooks', () => ({
   default: jest.fn(),
 }));
 
-jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
 const hookProps = {
   isOptedOut: true,
   onToggle: jest.fn().mockName('hooks.onToggle'),

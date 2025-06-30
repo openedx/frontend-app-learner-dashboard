@@ -5,10 +5,6 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { ConfirmPane } from './ConfirmPane';
 import messages from './messages';
 
-jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
 const props = {
   handleClose: jest.fn().mockName('props.handleClose'),
   handleConfirm: jest.fn().mockName('props.handleConfirm'),

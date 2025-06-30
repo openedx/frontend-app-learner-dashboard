@@ -16,10 +16,6 @@ const props = {
   },
 };
 
-jest.unmock('@openedx/paragon');
-jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('react');
-
 describe('RelatedProgramsModal ProgramCard', () => {
   describe('renders', () => {
     beforeEach(() => render(<IntlProvider locale="en"><ProgramCard {...props} /></IntlProvider>));

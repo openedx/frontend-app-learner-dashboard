@@ -10,9 +10,6 @@ jest.mock('./hooks', () => ({
   default: jest.fn(),
 }));
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
 const ref = { current: { click: jest.fn() }, useRef: jest.fn() };
 
 const requestData = {

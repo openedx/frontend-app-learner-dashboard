@@ -5,10 +5,6 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { ReasonPane } from './ReasonPane';
 import messages from './messages';
 
-jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
 describe('UnenrollConfirmModal ReasonPane', () => {
   const props = {
     reason: {

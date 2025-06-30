@@ -7,10 +7,6 @@ jest.mock('./hooks', () => ({
   useCreditBannerData: jest.fn(),
 }));
 
-jest.unmock('@openedx/paragon');
-jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('react');
-
 describe('CreditBanner', () => {
   const mockCardId = 'test-card-id';
   const mockContentComponent = () => <div data-testid="mock-content">Test Content</div>;

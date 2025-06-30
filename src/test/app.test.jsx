@@ -32,11 +32,8 @@ import App from 'App';
 import Inspector from './inspector';
 import appMessages from './messages';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('@openedx/paragon/icons');
-jest.unmock('@edx/frontend-platform/i18n');
 jest.unmock('@edx/frontend-component-footer');
-jest.unmock('react');
+
 jest.unmock('react-redux');
 jest.unmock('reselect');
 jest.unmock('hooks');
