@@ -3,8 +3,6 @@ import { StrictDict } from '../../../utils';
 
 import { getAppConfig, getSiteConfig } from '@openedx/frontend-base';
 
-export const getEcommerceUrl = () => getAppConfig(appId).ECOMMERCE_BASE_URL;
-
 const getBaseUrl = () => getSiteConfig().lmsBaseUrl;
 
 export const getApiUrl = () => (`${getSiteConfig().lmsBaseUrl}/api`);
@@ -25,7 +23,12 @@ export const learningMfeUrl = (url) => updateUrl(getAppConfig(appId).LEARNING_BA
 // static view url
 const programsUrl = () => baseAppUrl('/dashboard/programs');
 
-export const creditPurchaseUrl = (courseId) => `${getEcommerceUrl()}/credit/checkout/${courseId}/`;
+export const creditPurchaseUrl = (courseId) => {
+  const config = getAppConfig(appId);
+  return config.CREDIT_PURCHASE_URL
+    ? `${config.CREDIT_PURCHASE_URL}/${courseId}/`
+    : `${config.ECOMMERCE_BASE_URL}/credit/checkout/${courseId}/`;
+};
 export const creditRequestUrl = (providerId) => `${getApiUrl()}/credit/v1/providers/${providerId}/request/`;
 
 export default StrictDict({
