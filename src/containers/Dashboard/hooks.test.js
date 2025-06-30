@@ -10,14 +10,30 @@ import appMessages from 'messages';
 import * as hooks from './hooks';
 
 jest.mock('@openedx/paragon', () => ({
+  ...jest.requireActual('@openedx/paragon'),
   useWindowSize: jest.fn(),
   breakpoints: {},
 }));
+
+jest.mock('@edx/frontend-platform/i18n', () => {
+  const { formatMessage } = jest.requireActual('testUtils');
+  return {
+    ...jest.requireActual('@edx/frontend-platform/i18n'),
+    useIntl: () => ({
+      formatMessage,
+    }),
+  };
+});
 
 jest.mock('hooks', () => ({
   apiHooks: {
     useInitializeApp: jest.fn(),
   },
+}));
+
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useEffect: jest.fn((cb, prereqs) => ({ useEffect: { cb, prereqs } })),
 }));
 
 const state = new MockUseState(hooks);
