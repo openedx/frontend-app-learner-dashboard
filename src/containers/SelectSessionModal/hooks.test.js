@@ -8,6 +8,16 @@ import { LEAVE_OPTION } from './constants';
 import messages from './messages';
 import * as hooks from './hooks';
 
+jest.mock('@edx/frontend-platform/i18n', () => {
+  const { formatMessage } = jest.requireActual('testUtils');
+  return {
+    ...jest.requireActual('@edx/frontend-platform/i18n'),
+    useIntl: () => ({
+      formatMessage,
+    }),
+  };
+});
+
 jest.mock('tracking', () => ({
   entitlements: {
     newSession: jest.fn(),

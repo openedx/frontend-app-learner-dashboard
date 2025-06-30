@@ -1,11 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { reduxHooks } from 'hooks';
 import track from 'tracking';
 import useActionDisabledState from '../hooks';
 import BeginCourseButton from './BeginCourseButton';
-
-jest.unmock('@openedx/paragon');
 
 jest.mock('tracking', () => ({
   course: {
@@ -33,24 +32,27 @@ reduxHooks.useTrackCourseEvent.mockImplementation(
   (eventName, cardId, url) => ({ trackCourseEvent: { eventName, cardId, url } }),
 );
 
+const props = {
+  cardId: 'cardId',
+};
+
+const renderComponent = () => render(<IntlProvider locale="en"><BeginCourseButton {...props} /></IntlProvider>);
+
 describe('BeginCourseButton', () => {
-  const props = {
-    cardId: 'cardId',
-  };
   beforeEach(() => {
     jest.clearAllMocks();
   });
   describe('initiliaze hooks', () => {
     it('initializes course run data with cardId', () => {
-      render(<BeginCourseButton {...props} />);
+      renderComponent();
       expect(reduxHooks.useCardCourseRunData).toHaveBeenCalledWith(props.cardId);
     });
     it('loads exec education path param', () => {
-      render(<BeginCourseButton {...props} />);
+      renderComponent();
       expect(reduxHooks.useCardExecEdTrackingParam).toHaveBeenCalledWith(props.cardId);
     });
     it('loads disabled states for begin action from action hooks', () => {
-      render(<BeginCourseButton {...props} />);
+      renderComponent();
       expect(useActionDisabledState).toHaveBeenCalledWith(props.cardId);
     });
   });
@@ -58,7 +60,7 @@ describe('BeginCourseButton', () => {
     describe('disabled', () => {
       it('should be disabled', () => {
         useActionDisabledState.mockReturnValueOnce({ disableBeginCourse: true });
-        render(<BeginCourseButton {...props} />);
+        renderComponent();
         const button = screen.getByRole('button', { name: 'Begin Course' });
         expect(button).toHaveClass('disabled');
         expect(button).toHaveAttribute('aria-disabled', 'true');
@@ -66,13 +68,13 @@ describe('BeginCourseButton', () => {
     });
     describe('enabled', () => {
       it('should be enabled', () => {
-        render(<BeginCourseButton {...props} />);
+        renderComponent();
         const button = screen.getByRole('button', { name: 'Begin Course' });
         expect(button).not.toHaveClass('disabled');
         expect(button).not.toHaveAttribute('aria-disabled', 'true');
       });
       it('should track enter course clicked event on click, with exec ed param', async () => {
-        render(<BeginCourseButton {...props} />);
+        renderComponent();
         const user = userEvent.setup();
         const button = screen.getByRole('button', { name: 'Begin Course' });
         user.click(button);

@@ -32,9 +32,10 @@ jest.mock('@edx/frontend-platform', () => ({
   getConfig: jest.fn(() => ({})),
 }));
 
-jest.unmock('@openedx/paragon');
-jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('react');
+jest.mock('@edx/frontend-platform/react', () => ({
+  ...jest.requireActual('@edx/frontend-platform/react'),
+  ErrorPage: () => 'ErrorPage',
+}));
 
 const loadData = jest.fn();
 reduxHooks.useLoadData.mockReturnValue(loadData);
