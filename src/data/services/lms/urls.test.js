@@ -38,6 +38,13 @@ describe('urls', () => {
       const url = urls.creditPurchaseUrl(courseId);
       expect(url).toEqual(expect.stringContaining(courseId));
     });
+    it('returns CREDIT_PURCHASE_URL if set, with courseId', () => {
+      const courseId = 'test-course-id';
+      const config = getConfig();
+      config.CREDIT_PURCHASE_URL = 'http://credit-purchase.example.com';
+      const url = urls.creditPurchaseUrl(courseId);
+      expect(url).toBe(`http://credit-purchase.example.com/${courseId}/`);
+    });
   });
   describe('creditRequestUrl', () => {
     it('builds from api url and loads providerId', () => {

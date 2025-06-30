@@ -2,6 +2,7 @@ const configuration = {
   // BASE_URL: process.env.BASE_URL,
   LMS_BASE_URL: process.env.LMS_BASE_URL,
   ECOMMERCE_BASE_URL: process.env.ECOMMERCE_BASE_URL,
+  CREDIT_PURCHASE_URL: process.env.CREDIT_PURCHASE_URL,
   // LOGIN_URL: process.env.LOGIN_URL,
   // LOGOUT_URL: process.env.LOGOUT_URL,
   // CSRF_TOKEN_API_PATH: process.env.CSRF_TOKEN_API_PATH,
