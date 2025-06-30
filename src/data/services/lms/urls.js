@@ -2,8 +2,6 @@ import { StrictDict } from 'utils';
 
 import { getConfig } from '@edx/frontend-platform';
 
-export const getEcommerceUrl = () => getConfig().ECOMMERCE_BASE_URL;
-
 const getBaseUrl = () => getConfig().LMS_BASE_URL;
 
 export const getApiUrl = () => (`${getConfig().LMS_BASE_URL}/api`);
@@ -24,7 +22,12 @@ export const learningMfeUrl = (url) => updateUrl(getConfig().LEARNING_BASE_URL, 
 // static view url
 const programsUrl = () => baseAppUrl('/dashboard/programs');
 
-export const creditPurchaseUrl = (courseId) => `${getEcommerceUrl()}/credit/checkout/${courseId}/`;
+export const creditPurchaseUrl = (courseId) => {
+  const config = getConfig();
+  return config.CREDIT_PURCHASE_URL
+    ? `${config.CREDIT_PURCHASE_URL}/${courseId}/`
+    : `${config.ECOMMERCE_BASE_URL}/credit/checkout/${courseId}/`;
+};
 export const creditRequestUrl = (providerId) => `${getApiUrl()}/credit/v1/providers/${providerId}/request/`;
 
 export default StrictDict({

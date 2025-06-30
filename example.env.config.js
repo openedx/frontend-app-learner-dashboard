@@ -24,6 +24,7 @@ module.exports = {
   BASE_URL: 'localhost:1996',
   LMS_BASE_URL: 'http://localhost:18000',
   ECOMMERCE_BASE_URL: 'http://localhost:18130',
+  CREDIT_PURCHASE_URL: 'http://localhost:8140',
   LOGIN_URL: 'http://localhost:18000/login',
   LOGOUT_URL: 'http://localhost:18000/logout',
   LOGO_URL: 'https://edx-cdn.org/v3/default/logo.svg',
