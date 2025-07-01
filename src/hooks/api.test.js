@@ -30,10 +30,10 @@ jest.mock('data/redux/hooks', () => ({
   useClearRequest: jest.fn(),
   useEmailConfirmationData: jest.fn(),
 }));
-jest.mock('react', () => ({
-  ...jest.requireActual('react'),
-  useContext: jest.fn(context => context),
-}));
+// jest.mock('react', () => ({
+//   ...jest.requireActual('react'),
+//   useContext: jest.fn(context => context),
+// }));
 
 const moduleKeys = keyStore(apiHooks);
 const testString = 'TEST-string';

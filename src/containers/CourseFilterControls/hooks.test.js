@@ -7,14 +7,14 @@ import track from 'tracking';
 
 import * as hooks from './hooks';
 
-jest.mock('@openedx/paragon', () => ({
-  ...jest.requireActual('@openedx/paragon'),
-  useToggle: jest.fn().mockImplementation((val) => [
-    val,
-    jest.fn().mockName('useToggle.setTrue'),
-    jest.fn().mockName('useToggle.setFalse'),
-  ]),
-}));
+// jest.mock('@openedx/paragon', () => ({
+//   ...jest.requireActual('@openedx/paragon'),
+//   useToggle: jest.fn().mockImplementation((val) => [
+//     val,
+//     jest.fn().mockName('useToggle.setTrue'),
+//     jest.fn().mockName('useToggle.setFalse'),
+//   ]),
+// }));
 
 jest.mock('tracking', () => ({
   filter: {

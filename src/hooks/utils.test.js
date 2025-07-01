@@ -1,10 +1,10 @@
 import * as utils from './utils';
 
 jest.unmock('./utils');
-jest.mock('react', () => ({
-  ...jest.requireActual('react'),
-  useCallback: jest.fn((cb, prereqs) => ({ useCallback: { cb, prereqs } })),
-}));
+// jest.mock('react', () => ({
+//   ...jest.requireActual('react'),
+//   useCallback: jest.fn((cb, prereqs) => ({ useCallback: { cb, prereqs } })),
+// }));
 
 describe('app-level hooks', () => {
   describe('useValuecallback', () => {

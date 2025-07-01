@@ -9,21 +9,21 @@ import * as hooks from './hooks';
 jest.mock('@edx/frontend-platform', () => ({ getConfig: jest.fn() }));
 jest.mock('./api', () => ({ getNotices: jest.fn() }));
 
-jest.mock('react', () => ({
-  ...jest.requireActual('react'),
-  useEffect: jest.fn((cb, prereqs) => ({ useEffect: { cb, prereqs } })),
-  useContext: jest.fn(context => context),
-}));
+// jest.mock('react', () => ({
+//   ...jest.requireActual('react'),
+//   useEffect: jest.fn((cb, prereqs) => ({ useEffect: { cb, prereqs } })),
+//   useContext: jest.fn(context => context),
+// }));
 
-jest.mock('@edx/frontend-platform/i18n', () => {
-  const { formatMessage: fn } = jest.requireActual('testUtils');
-  return {
-    ...jest.requireActual('@edx/frontend-platform/i18n'),
-    useIntl: () => ({
-      formatMessage: fn,
-    }),
-  };
-});
+// jest.mock('@edx/frontend-platform/i18n', () => {
+//   const { formatMessage: fn } = jest.requireActual('testUtils');
+//   return {
+//     ...jest.requireActual('@edx/frontend-platform/i18n'),
+//     useIntl: () => ({
+//       formatMessage: fn,
+//     }),
+//   };
+// });
 
 getConfig.mockReturnValue({ ENABLE_NOTICES: true });
 const state = new MockUseState(hooks);

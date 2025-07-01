@@ -1,32 +1,32 @@
 import { useWindowSize, breakpoints } from '@openedx/paragon';
 import useIsCollapsed from './hooks';
 
-jest.mock('@openedx/paragon', () => ({
-  ...jest.requireActual('@openedx/paragon'),
-  useWindowSize: jest.fn(),
-  breakpoints: {
-    extraSmall: {
-      minWidth: 0,
-      maxWidth: 575,
-    },
-    small: {
-      minWidth: 576,
-      maxWidth: 767,
-    },
-    medium: {
-      minWidth: 768,
-      maxWidth: 991,
-    },
-    large: {
-      minWidth: 992,
-      maxWidth: 1199,
-    },
-    extraLarge: {
-      minWidth: 1200,
-      maxWidth: 100000,
-    },
-  },
-}));
+// jest.mock('@openedx/paragon', () => ({
+//   ...jest.requireActual('@openedx/paragon'),
+//   useWindowSize: jest.fn(),
+//   breakpoints: {
+//     extraSmall: {
+//       minWidth: 0,
+//       maxWidth: 575,
+//     },
+//     small: {
+//       minWidth: 576,
+//       maxWidth: 767,
+//     },
+//     medium: {
+//       minWidth: 768,
+//       maxWidth: 991,
+//     },
+//     large: {
+//       minWidth: 992,
+//       maxWidth: 1199,
+//     },
+//     extraLarge: {
+//       minWidth: 1200,
+//       maxWidth: 100000,
+//     },
+//   },
+// }));
 
 describe('useIsCollapsed', () => {
   it('returns true only when it is between medium and small', () => {

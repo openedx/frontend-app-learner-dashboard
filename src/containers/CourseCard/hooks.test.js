@@ -11,15 +11,15 @@ jest.mock('hooks', () => ({
   },
 }));
 
-jest.mock('@edx/frontend-platform/i18n', () => {
-  const { formatMessage } = jest.requireActual('testUtils');
-  return {
-    ...jest.requireActual('@edx/frontend-platform/i18n'),
-    useIntl: () => ({
-      formatMessage,
-    }),
-  };
-});
+// jest.mock('@edx/frontend-platform/i18n', () => {
+//   const { formatMessage } = jest.requireActual('testUtils');
+//   return {
+//     ...jest.requireActual('@edx/frontend-platform/i18n'),
+//     useIntl: () => ({
+//       formatMessage,
+//     }),
+//   };
+// });
 
 const cardId = 'my-test-course-number';
 
