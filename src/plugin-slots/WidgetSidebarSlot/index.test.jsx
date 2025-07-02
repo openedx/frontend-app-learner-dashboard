@@ -4,10 +4,6 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { reduxHooks } from 'hooks';
 import WidgetSidebarSlot from '.';
 
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('@openedx/paragon');
-
 jest.mock('hooks', () => ({
   reduxHooks: {
     usePlatformSettingsData: jest.fn(),

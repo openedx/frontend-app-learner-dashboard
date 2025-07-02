@@ -6,10 +6,6 @@ import { SortKeys } from 'data/constants/app';
 import SortForm from './SortForm';
 import messages from '../messages';
 
-jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
 describe('SortForm', () => {
   const props = {
     handleSortChange: jest.fn().mockName('handleSortChange'),

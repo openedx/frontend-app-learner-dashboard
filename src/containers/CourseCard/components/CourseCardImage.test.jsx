@@ -6,10 +6,6 @@ import useActionDisabledState from './hooks';
 import { CourseCardImage } from './CourseCardImage';
 import messages from '../messages';
 
-jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
 const homeUrl = 'https://example.com';
 const bannerImgSrc = 'banner-img-src.jpg';
 

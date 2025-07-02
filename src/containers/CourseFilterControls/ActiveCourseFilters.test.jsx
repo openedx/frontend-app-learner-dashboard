@@ -6,10 +6,6 @@ import { FilterKeys } from 'data/constants/app';
 import ActiveCourseFilters from './ActiveCourseFilters';
 import messages from './messages';
 
-jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
 const filters = Object.values(FilterKeys);
 
 describe('ActiveCourseFilters', () => {

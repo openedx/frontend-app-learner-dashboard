@@ -7,10 +7,6 @@ import RelatedProgramsBadge from '.';
 jest.mock('containers/RelatedProgramsModal', () => 'RelatedProgramsModal');
 jest.mock('./hooks', () => jest.fn());
 
-jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
 const hookProps = {
   isOpen: true,
   openModal: jest.fn().mockName('useRelatedProgramsBadge.openModal'),

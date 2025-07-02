@@ -5,10 +5,6 @@ import { FilterKeys } from 'data/constants/app';
 import { FilterForm, filterOrder } from './FilterForm';
 import messages from '../messages';
 
-jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
 const mockHandleFilterChange = jest.fn();
 
 const defaultProps = {

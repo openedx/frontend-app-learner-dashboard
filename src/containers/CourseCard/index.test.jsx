@@ -24,10 +24,6 @@ jest.mock('./components/CourseCardActions', () => jest.fn(() => <div>CourseCardA
 jest.mock('./components/CourseCardDetails', () => jest.fn(() => <div>CourseCardDetails</div>));
 jest.mock('./components/CourseCardTitle', () => jest.fn(() => <div>CourseCardTitle</div>));
 
-jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
 const cardId = 'test-card-id';
 
 describe('CourseCard component', () => {

@@ -4,11 +4,6 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { reduxHooks } from 'hooks';
 import RelatedProgramsBanner from '.';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('@openedx/paragon/icons');
-jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('react');
-
 jest.mock('hooks', () => ({
   reduxHooks: {
     useCardRelatedProgramsData: jest.fn(),

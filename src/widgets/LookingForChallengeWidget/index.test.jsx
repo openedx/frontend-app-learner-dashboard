@@ -17,11 +17,6 @@ jest.mock('./track', () => ({
   findCoursesWidgetClicked: (href) => jest.fn().mockName(`track.findCoursesWidgetClicked('${href}')`),
 }));
 
-jest.unmock('@openedx/paragon');
-jest.unmock('@openedx/paragon/icons');
-jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('react');
-
 describe('LookingForChallengeWidget', () => {
   describe('render', () => {
     it('card image', () => {

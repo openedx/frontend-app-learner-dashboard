@@ -18,8 +18,6 @@ jest.mock('./ViewCourseButton', () => jest.fn(() => <div>ViewCourseButton</div>)
 jest.mock('./BeginCourseButton', () => jest.fn(() => <div>BeginCourseButton</div>));
 jest.mock('./ResumeButton', () => jest.fn(() => <div>ResumeButton</div>));
 
-jest.unmock('@openedx/paragon');
-
 const cardId = 'test-card-id';
 const props = { cardId };
 

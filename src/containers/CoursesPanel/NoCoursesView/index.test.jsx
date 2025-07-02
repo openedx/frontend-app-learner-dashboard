@@ -16,10 +16,6 @@ jest.mock('hooks', () => ({
   },
 }));
 
-jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
 describe('NoCoursesView', () => {
   it('should display image, heading and button', () => {
     render(<IntlProvider locale="en"><EmptyCourse /></IntlProvider>);

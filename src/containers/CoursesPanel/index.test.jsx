@@ -33,10 +33,6 @@ jest.mock('@openedx/frontend-plugin-framework', () => ({
   PluginSlot: 'PluginSlot',
 }));
 
-jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
 const filters = Object.values(FilterKeys);
 
 reduxHooks.useHasCourses.mockReturnValue(true);

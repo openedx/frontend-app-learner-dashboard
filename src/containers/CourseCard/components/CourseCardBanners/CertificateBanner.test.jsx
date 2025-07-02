@@ -17,11 +17,6 @@ jest.mock('hooks', () => ({
   },
 }));
 
-jest.unmock('@openedx/paragon');
-jest.unmock('@openedx/paragon/icons');
-jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('react');
-
 const defaultCertificate = {
   availableDate: '10/20/3030',
   isRestricted: false,

@@ -9,10 +9,6 @@ jest.mock('./hooks', () => ({
   useMasqueradeBarData: jest.fn(),
 }));
 
-jest.unmock('@openedx/paragon');
-jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('react');
-
 describe('MasqueradeBar', () => {
   const masqueradeMockData = {
     canMasquerade: true,

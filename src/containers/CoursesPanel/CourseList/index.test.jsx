@@ -12,10 +12,6 @@ jest.mock('containers/CourseFilterControls', () => ({
   ActiveCourseFilters: jest.fn(() => <div>ActiveCourseFilters</div>),
 }));
 
-jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
 describe('CourseList', () => {
   const defaultCourseListData = {
     filterOptions: {},

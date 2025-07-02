@@ -21,10 +21,6 @@ jest.mock('hooks', () => ({
 
 jest.mock('./hooks', () => jest.fn(() => ({ disableCourseTitle: false })));
 
-jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
 describe('CourseCardTitle', () => {
   const props = {
     cardId: 'test-card-id',

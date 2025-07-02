@@ -6,10 +6,6 @@ import { FilterKeys } from 'data/constants/app';
 import Checkbox from './Checkbox';
 import messages from '../messages';
 
-jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
 describe('Checkbox', () => {
   describe('renders correctly', () => {
     Object.keys(FilterKeys).forEach((filterKey) => {

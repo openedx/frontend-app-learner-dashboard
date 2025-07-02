@@ -1,9 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import Banner from './Banner';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
 describe('Banner component', () => {
   it('renders children content', () => {
     render(<Banner>Test content</Banner>);
