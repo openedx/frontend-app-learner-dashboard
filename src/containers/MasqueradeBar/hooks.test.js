@@ -4,6 +4,16 @@ import { apiHooks, reduxHooks } from 'hooks';
 import * as hooks from './hooks';
 import messages from './messages';
 
+jest.mock('@edx/frontend-platform/i18n', () => {
+  const { formatMessage } = jest.requireActual('testUtils');
+  return {
+    ...jest.requireActual('@edx/frontend-platform/i18n'),
+    useIntl: () => ({
+      formatMessage,
+    }),
+  };
+});
+
 jest.mock('hooks', () => ({
   apiHooks: {
     useMasqueradeAs: jest.fn(),

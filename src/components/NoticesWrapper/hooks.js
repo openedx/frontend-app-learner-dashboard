@@ -1,6 +1,6 @@
 import React from 'react';
 import { getConfig } from '@edx/frontend-platform';
-import { useIntl } from 'react-intl';
+import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { StrictDict } from 'utils';
 import { getNotices } from './api';

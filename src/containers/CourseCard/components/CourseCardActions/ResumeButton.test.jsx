@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import { reduxHooks } from 'hooks';
 import track from 'tracking';
@@ -20,7 +21,7 @@ jest.mock('hooks', () => ({
   },
 }));
 jest.mock('../hooks', () => jest.fn(() => ({ disableResumeCourse: false })));
-jest.unmock('@openedx/paragon');
+
 jest.mock('./ActionButton/hooks', () => jest.fn(() => false));
 
 const resumeUrl = 'resume-url';
@@ -36,7 +37,7 @@ describe('ResumeButton', () => {
     cardId: 'cardId',
   };
   describe('initialize hooks', () => {
-    beforeEach(() => render(<ResumeButton {...props} />));
+    beforeEach(() => render(<IntlProvider locale="en"><ResumeButton {...props} /></IntlProvider>));
     it('initializes course run data with cardId', () => {
       expect(reduxHooks.useCardCourseRunData).toHaveBeenCalledWith(props.cardId);
     });
@@ -53,7 +54,7 @@ describe('ResumeButton', () => {
         useActionDisabledState.mockReturnValueOnce({ disableResumeCourse: true });
       });
       it('should be disabled', () => {
-        render(<ResumeButton {...props} />);
+        render(<IntlProvider locale="en"><ResumeButton {...props} /></IntlProvider>);
         const button = screen.getByRole('button', { name: 'Resume' });
         expect(button).toHaveClass('disabled');
         expect(button).toHaveAttribute('aria-disabled', 'true');
@@ -61,14 +62,14 @@ describe('ResumeButton', () => {
     });
     describe('enabled', () => {
       it('should be enabled', () => {
-        render(<ResumeButton {...props} />);
+        render(<IntlProvider locale="en"><ResumeButton {...props} /></IntlProvider>);
         const button = screen.getByRole('button', { name: 'Resume' });
         expect(button).toBeInTheDocument();
         expect(button).not.toHaveClass('disabled');
         expect(button).not.toHaveAttribute('aria-disabled', 'true');
       });
       it('should track enter course clicked event on click, with exec ed param', async () => {
-        render(<ResumeButton {...props} />);
+        render(<IntlProvider locale="en"><ResumeButton {...props} /></IntlProvider>);
         const user = userEvent.setup();
         const button = screen.getByRole('button', { name: 'Resume' });
         user.click(button);
