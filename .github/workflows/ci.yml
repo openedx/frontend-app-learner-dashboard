@@ -11,9 +11,6 @@ on:
 jobs:
   tests:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: [20, 24]
 
     steps:
     - name: Checkout
