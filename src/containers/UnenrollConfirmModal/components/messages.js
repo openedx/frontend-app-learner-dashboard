@@ -5,12 +5,17 @@ const messages = defineMessages({
   confirmHeader: {
     id: 'learner-dash.unenrollConfirm.confirm.header',
     description: 'Header for confirm unenroll modal',
-    defaultMessage: 'Unenroll from course?',
+    defaultMessage: 'Confirm Unenrollment',
+  },
+  confirmText: {
+    id: 'learner-dash.unenrollConfirm.confirm.text',
+    description: 'Text for confirm unenroll modal',
+    defaultMessage: 'Are you sure you want to unenroll from the course {courseTitle} ?',
   },
   confirmCancel: {
     id: 'learner-dash.unenrollConfirm.confirm.cancel',
     description: 'Cancel action for confirm unenroll modal',
-    defaultMessage: 'Never mind',
+    defaultMessage: 'Cancel',
   },
   confirmUnenroll: {
     id: 'learner-dash.unenrollConfirm.confirm.unenroll',
@@ -20,7 +25,7 @@ const messages = defineMessages({
   reasonHeading: {
     id: 'learner-dash.unenrollConfirm.confirm.reason.heading',
     description: 'Heading for unenroll reason modal',
-    defaultMessage: 'What\'s your main reason for unenrolling?',
+    defaultMessage: 'Why are you unenrolling?',
   },
   reasonSkip: {
     id: 'learner-dash.unenrollConfirm.confirm.reason.skip',
@@ -30,27 +35,22 @@ const messages = defineMessages({
   reasonSubmit: {
     id: 'learner-dash.unenrollConfirm.confirm.reason.submit',
     description: 'Submit action for unenroll reason modal',
-    defaultMessage: 'Submit reason',
+    defaultMessage: 'Unenroll',
   },
   finishHeading: {
     id: 'learner-dash.unenrollConfirm.confirm.finish.heading',
     description: 'Heading for unenroll finish modal',
-    defaultMessage: 'You are unenrolled',
-  },
-  finishThanksText: {
-    id: 'learner-dash.unenrollConfirm.confirm.finish.thanks-text',
-    description: 'Thank you message on unenroll modal for providing a reason',
-    defaultMessage: 'Thank you for sharing your reason for unenrolling.  ',
+    defaultMessage: 'Unenrollment Successful',
   },
   finishText: {
     id: 'learner-dash.unenrollConfirm.confirm.finish.text',
     description: 'Text for unenroll finish modal',
-    defaultMessage: 'This course will be removed from your dashboard.',
+    defaultMessage: 'You have been unenrolled from the course {courseTitle}',
   },
   finishReturn: {
     id: 'learner-dash.unenrollConfirm.confirm.finish.return',
     description: 'Return action for unenroll finish modal',
-    defaultMessage: 'Return to dashboard',
+    defaultMessage: 'Ok',
   },
 });
 
