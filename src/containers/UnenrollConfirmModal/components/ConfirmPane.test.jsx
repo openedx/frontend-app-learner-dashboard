@@ -6,6 +6,7 @@ import { ConfirmPane } from './ConfirmPane';
 import messages from './messages';
 
 const props = {
+  cardId: 'cardId',
   handleClose: jest.fn().mockName('props.handleClose'),
   handleConfirm: jest.fn().mockName('props.handleConfirm'),
 };

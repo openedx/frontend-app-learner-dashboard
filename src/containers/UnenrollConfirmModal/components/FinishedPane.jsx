@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { reduxHooks } from 'hooks';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 import {
@@ -10,16 +11,18 @@ import {
 import messages from './messages';
 
 export const FinishedPane = ({
-  gaveReason,
+  cardId,
   handleClose,
 }) => {
   const { formatMessage } = useIntl();
+  const { courseName } = reduxHooks.useCardCourseData(cardId);
+  const courseTitle = <span className="font-italic">“{courseName}”</span>;
+
   return (
     <>
       <h4>{formatMessage(messages.finishHeading)}</h4>
       <p>
-        {gaveReason && formatMessage(messages.finishThanksText)}
-        {formatMessage(messages.finishText)}
+        {formatMessage(messages.finishText, { courseTitle })}
       </p>
       <ActionRow>
         <Button onClick={handleClose}>{formatMessage(messages.finishReturn)}</Button>
@@ -29,7 +32,7 @@ export const FinishedPane = ({
 };
 FinishedPane.propTypes = {
   handleClose: PropTypes.func.isRequired,
-  gaveReason: PropTypes.bool.isRequired,
+  cardId: PropTypes.string.isRequired,
 };
 
 export default FinishedPane;

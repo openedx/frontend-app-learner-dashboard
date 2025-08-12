@@ -6,7 +6,7 @@ import { FinishedPane } from './FinishedPane';
 import messages from './messages';
 
 const props = {
-  gaveReason: true,
+  cardId: 'cardId',
   handleClose: jest.fn().mockName('props.handleClose'),
 };
 
@@ -25,22 +25,8 @@ describe('UnenrollConfirmModal FinishedPane', () => {
       expect(returnButton).toBeInTheDocument();
     });
     it('Gave reason, display thanks message', () => {
-      const thanksMsg = screen.getByText((text) => text.includes('Thank you'));
-      expect(thanksMsg).toBeInTheDocument();
-      expect(thanksMsg.innerHTML).toContain(formatMessage(messages.finishThanksText));
-    });
-  });
-  describe('Did not give reason', () => {
-    it('Does not display thanks message', () => {
-      const customProps = {
-        gaveReason: false,
-        handleClose: jest.fn().mockName('props.handleClose'),
-      };
-      render(<IntlProvider locale="en"><FinishedPane {...customProps} /></IntlProvider>);
-      const thanksMsg = screen.queryByText((text) => text.includes('Thank you'));
-      expect(thanksMsg).toBeNull();
-      const finishMsg = screen.getByText(formatMessage(messages.finishText));
-      expect(finishMsg).toBeInTheDocument();
+      const finishSuccessMessage = screen.getByText((text) => text.includes('Unenrollment Successful'));
+      expect(finishSuccessMessage).toBeInTheDocument();
     });
   });
 });
