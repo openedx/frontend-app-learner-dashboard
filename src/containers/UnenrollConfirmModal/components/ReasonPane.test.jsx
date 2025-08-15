@@ -28,11 +28,11 @@ describe('UnenrollConfirmModal ReasonPane', () => {
     render(<IntlProvider locale="en"><ReasonPane {...props} /></IntlProvider>);
     const radioButtons = screen.getAllByRole('radio');
     expect(radioButtons).toBeDefined();
-    expect(radioButtons.length).toBe(10);
+    expect(radioButtons.length).toBe(11);
   });
-  it('render skip button', () => {
+  it('render cancel button', () => {
     render(<IntlProvider locale="en"><ReasonPane {...props} hasReason={false} /></IntlProvider>);
-    const skipButton = screen.getByRole('button', { name: formatMessage(messages.reasonSkip) });
+    const skipButton = screen.getByRole('button', { name: formatMessage(messages.confirmCancel) });
     expect(skipButton).toBeInTheDocument();
   });
   it('render submit button', () => {
