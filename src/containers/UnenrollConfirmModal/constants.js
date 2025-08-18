@@ -31,7 +31,7 @@ const messages = defineMessages({
   [reasonKeys.prereqs]: {
     id: 'learner-dash.unenrollConfirm.reasons.prereqs',
     description: 'Unenroll reason option - missing prerequisites',
-    defaultMessage: `I don't have the academic or language prerequisites`,
+    defaultMessage: 'I don\'t have the academic or language prerequisites',
   },
   [reasonKeys.difficulty]: {
     id: 'learner-dash.unenrollConfirm.reasons.difficulty',
@@ -41,7 +41,7 @@ const messages = defineMessages({
   [reasonKeys.goals]: {
     id: 'learner-dash.unenrollConfirm.reasons.goals',
     description: 'Unenroll reason option - goals-related',
-    defaultMessage: `This won't help me reach my goals`,
+    defaultMessage: 'This won\'t help me reach my goals',
   },
   [reasonKeys.broken]: {
     id: 'learner-dash.unenrollConfirm.reasons.broken',
@@ -51,7 +51,7 @@ const messages = defineMessages({
   [reasonKeys.time]: {
     id: 'learner-dash.unenrollConfirm.reasons.time',
     description: 'Unenroll reason option - time-related',
-    defaultMessage: `I don't have the time`,
+    defaultMessage: 'I don\'t have the time',
   },
   [reasonKeys.browse]: {
     id: 'learner-dash.unenrollConfirm.reasons.browse',
@@ -61,7 +61,7 @@ const messages = defineMessages({
   [reasonKeys.support]: {
     id: 'learner-dash.unenrollConfirm.reasons.support',
     description: 'Unenroll reason option - lacking support',
-    defaultMessage: `I don't have enough support`,
+    defaultMessage: 'I don\'t have enough support',
   },
   [reasonKeys.quality]: {
     id: 'learner-dash.unenrollConfirm.reasons.quality',
