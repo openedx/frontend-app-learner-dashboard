@@ -1,0 +1,9 @@
+{
+  "extends": "@edx/typescript-config",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "dist"
+  },
+  "include": ["*.js", ".eslintrc.js", "src/**/*"],
+  "exclude": ["dist", "node_modules"]
+}
