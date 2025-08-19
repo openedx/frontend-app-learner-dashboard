@@ -17,7 +17,6 @@ describe('UnenrollConfirmModal component', () => {
   const hookProps = {
     confirm: jest.fn().mockName('hooks.confirm'),
     reason: {
-      isSkipped: false,
       reasonProps: 'other',
     },
     close: jest.fn().mockName('hooks.close'),
@@ -49,22 +48,20 @@ describe('UnenrollConfirmModal component', () => {
     render(<IntlProvider><UnenrollConfirmModal {...props} /></IntlProvider>);
     const finishHeading = screen.getByText(formatMessage(messages.finishHeading));
     expect(finishHeading).toBeInTheDocument();
-    const thanksMsg = screen.getByText((text) => text.includes('Thank you'));
-    expect(thanksMsg).toBeInTheDocument();
-    expect(thanksMsg.innerHTML).toContain(formatMessage(messages.finishThanksText));
+    const finishMsg = screen.getByText((text) => text.includes('You have been unenrolled from the course'));
+    expect(finishMsg).toBeInTheDocument();
   });
-  it('modalStates.finished, reason skipped', () => {
+  it('modalStates.finished, cancel unenrollment', () => {
     hooks.useUnenrollData.mockReturnValueOnce({
       ...hookProps,
       modalState: hooks.modalStates.finished,
-      reason: { isSkipped: true },
     });
     render(<IntlProvider><UnenrollConfirmModal {...props} /></IntlProvider>);
     const finishHeading = screen.getByText(formatMessage(messages.finishHeading));
     expect(finishHeading).toBeInTheDocument();
-    const thanksMsg = screen.queryByText((text) => text.includes('Thank you'));
-    expect(thanksMsg).toBeNull();
-    const finishMsg = screen.getByText(formatMessage(messages.finishText));
+    const okButton = screen.queryByText((text) => text.includes('Ok'));
+    expect(okButton).toBeInTheDocument();
+    const finishMsg = screen.queryByText('You have been unenrolled from the course');
     expect(finishMsg).toBeInTheDocument();
   });
   it('modalStates.reason, should display correct component with no shadow', () => {
