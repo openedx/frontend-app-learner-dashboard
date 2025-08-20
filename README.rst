@@ -39,22 +39,12 @@ The parts of this MFE that can be customized in that manner are documented `here
 Contributing
 ------------
 
-A core goal of this app is to provide a clean experimentation interface.  To promote this end, we have provided a
-silo'ed code directory at ``src/widgets`` in which contributors should add their custom widget components.  In order to
-ensure our ability to maintain the code stability of the app, the code for these widgets should be strictly contained
-within the bounds of that directory.
+Contributions are very welcome. Please read `So you want to contribute to Open edX <https://docs.openedx.org/en/latest/developers/quickstarts/so_you_want_to_contribute.html>`_ for details on how to get started as an Open edX contributor.
 
-Once written, the widgets can be configured into one of our widget containers at ``src/containers/WidgetContainers``.
-This can include conditional logic, as well as Optimizely triggers. It is important to note that our integration tests
-will isolate and ignore these containers, and thus testing your widget is the response of the creator/maintainer of the
-widget itself.
+This project is currently accepting all types of contributions — bug fixes, security fixes, maintenance work, or new features.
+However, if you intend to add a new feature, make sure it has gone through the `Product Review process <https://openedx.atlassian.net/wiki/spaces/COMM/pages/3875962884/How+to+submit+an+open+source+contribution+for+Product+Review>`_.
 
-Some guidelines for writing widgets:
-
-* Code for the widget should be strictly confined to the ``src/widgets`` directory.
-* You can load data from the redux store, but should not add or modify fields in that structure.
-* Network events should be managed in component hooks, though can use our ``data/constants/requests:requestStates`` for
-  ease of tracking the request states.
+When proposing a change, create an issue in this repo to get the discussion started.
 
 License
 -------

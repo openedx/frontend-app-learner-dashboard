@@ -13,7 +13,7 @@ jest.mock('@edx/frontend-component-footer', () => ({
 }));
 jest.mock('containers/Dashboard', () => jest.fn(() => <div>Dashboard</div>));
 jest.mock('containers/LearnerDashboardHeader', () => jest.fn(() => <div>LearnerDashboardHeader</div>));
-jest.mock('containers/WidgetContainers/AppWrapper', () => jest.fn(({ children }) => <div className="AppWrapper">{children}</div>));
+jest.mock('containers/AppWrapper', () => jest.fn(({ children }) => <div className="AppWrapper">{children}</div>));
 jest.mock('data/redux', () => ({
   selectors: 'redux.selectors',
   actions: 'redux.actions',
