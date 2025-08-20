@@ -39,7 +39,7 @@ The parts of this MFE that can be customized in that manner are documented `here
 Contributing
 ------------
 
-Contributions are very welcome. Please read `So you want to contribute? <https://docs.openedx.org/en/latest/developers/quickstarts/so_you_want_to_contribute.html>`_ for details on how to get started as an Open edX contributor.
+Contributions are very welcome. Please read `So you want to contribute to Open edX <https://docs.openedx.org/en/latest/developers/quickstarts/so_you_want_to_contribute.html>`_ for details on how to get started as an Open edX contributor.
 
 This project is currently accepting all types of contributions — bug fixes, security fixes, maintenance work, or new features.
 However, if you intend to add a new feature, make sure it has gone through the `Product Review process <https://openedx.atlassian.net/wiki/spaces/COMM/pages/3875962884/How+to+submit+an+open+source+contribution+for+Product+Review>`_.
