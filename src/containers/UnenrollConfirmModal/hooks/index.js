@@ -26,7 +26,7 @@ export const useUnenrollData = ({ closeModal, cardId }) => {
 
   let modalState;
   if (isConfirmed) {
-    modalState = (reason.isSubmitted || reason.isSkipped)
+    modalState = (reason.isSubmitted)
       ? modalStates.finished : modalStates.reason;
   } else {
     modalState = modalStates.confirm;

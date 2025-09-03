@@ -38,13 +38,13 @@ export const UnenrollConfirmModal = ({
         style={{ textAlign: 'start' }}
       >
         {(modalState === modalStates.confirm) && (
-          <ConfirmPane handleClose={close} handleConfirm={confirm} />
+          <ConfirmPane handleClose={close} handleConfirm={confirm} cardId={cardId} />
         )}
         {(modalState === modalStates.finished) && (
-          <FinishedPane handleClose={closeAndRefresh} gaveReason={!reason.isSkipped} />
+          <FinishedPane handleClose={closeAndRefresh} cardId={cardId} />
         )}
         {(modalState === modalStates.reason) && (
-          <ReasonPane reason={reason} />
+          <ReasonPane reason={reason} handleClose={close} />
         )}
       </div>
     </ModalDialog>
