@@ -7,6 +7,7 @@ import {
 } from 'hooks';
 
 import * as hooks from './reasons';
+import constants from '../constants';
 
 jest.mock('hooks', () => ({
   apiHooks: {
@@ -39,7 +40,6 @@ const loadHook = (isEntitlement = false) => {
 describe('UnenrollConfirmModal reasons hooks', () => {
   describe('state fields', () => {
     state.testGetter(state.keys.customOption);
-    state.testGetter(state.keys.isSkipped);
     state.testGetter(state.keys.isSubmitted);
     state.testGetter(state.keys.selectedReason);
   });
@@ -55,13 +55,10 @@ describe('UnenrollConfirmModal reasons hooks', () => {
     describe('behavior', () => {
       describe('state fields', () => {
         it('initializes selectedReason with null', () => {
-          state.expectInitializedWith(state.keys.selectedReason, null);
+          state.expectInitializedWith(state.keys.selectedReason, constants.reasonKeys.preferNotToSay);
         });
         it('initializes customOption with empty string', () => {
           state.expectInitializedWith(state.keys.customOption, '');
-        });
-        it('initializes isSkipped with false', () => {
-          state.expectInitializedWith(state.keys.isSkipped, false);
         });
         it('initializes isSubmitted with false', () => {
           state.expectInitializedWith(state.keys.isSubmitted, false);
@@ -140,14 +137,8 @@ describe('UnenrollConfirmModal reasons hooks', () => {
           out.handleClear();
           expect(state.setState.selectedReason).toHaveBeenCalledWith(null);
           expect(state.setState.customOption).toHaveBeenCalledWith('');
-          expect(state.setState.isSkipped).toHaveBeenCalledWith(false);
           expect(state.setState.isSubmitted).toHaveBeenCalledWith(false);
         });
-      });
-      test('handleSkip sets isSkipped and isSubmitted, and unenrolls w/out a reason', () => {
-        out.handleSkip();
-        expect(state.setState.isSkipped).toHaveBeenCalledWith(true);
-        expect(unenrollFromCourse).toHaveBeenCalledWith();
       });
       describe('handleSubmit', () => {
         it('tracks reason event and calls unenroll action', () => {
@@ -159,11 +150,6 @@ describe('UnenrollConfirmModal reasons hooks', () => {
           expect(trackCourseEvent).toHaveBeenCalledWith(event);
           expect(unenrollFromCourse).toHaveBeenCalledWith();
         });
-      });
-      test('isSkipped returns state value', () => {
-        state.mockVal(state.keys.isSkipped, testValue);
-        loadHook();
-        expect(out.isSkipped).toEqual(testValue);
       });
       test('isSubmitted returns state value', () => {
         state.mockVal(state.keys.isSubmitted, testValue);

@@ -13,6 +13,7 @@ import messages from './messages';
 
 export const ReasonPane = ({
   reason,
+  handleClose,
 }) => {
   const { formatMessage } = useIntl();
   const option = (key) => (
@@ -27,6 +28,7 @@ export const ReasonPane = ({
         name="unenrollReason"
         onChange={reason.selectOption}
         value={reason.selected}
+        defaultValue={constants.reasonKeys.preferNotToSay}
       >
         {constants.order.map(option)}
         <Form.Radio value={constants.reasonKeys.custom}>
@@ -35,12 +37,13 @@ export const ReasonPane = ({
             placeholder={formatMessage(constants.messages.customPlaceholder)}
           />
         </Form.Radio>
+        {option(constants.reasonKeys.preferNotToSay)}
       </Form.RadioSet>
       <ActionRow>
-        <Button variant="tertiary" onClick={reason.handleSkip}>
-          {formatMessage(messages.reasonSkip)}
+        <Button variant="tertiary" onClick={handleClose}>
+          {formatMessage(messages.confirmCancel)}
         </Button>
-        <Button disabled={!reason.hasReason} onClick={reason.handleSubmit}>
+        <Button onClick={reason.handleSubmit}>
           {formatMessage(messages.reasonSubmit)}
         </Button>
       </ActionRow>
@@ -50,7 +53,6 @@ export const ReasonPane = ({
 ReasonPane.propTypes = {
   reason: PropTypes.shape({
     value: PropTypes.string,
-    handleSkip: PropTypes.func,
     hasReason: PropTypes.bool,
     selectOption: PropTypes.func,
     customOption: PropTypes.shape({
@@ -60,6 +62,7 @@ ReasonPane.propTypes = {
     selected: PropTypes.string,
     handleSubmit: PropTypes.func.isRequired,
   }).isRequired,
+  handleClose: PropTypes.func.isRequired,
 };
 
 export default ReasonPane;

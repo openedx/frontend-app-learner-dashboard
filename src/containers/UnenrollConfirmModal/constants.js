@@ -13,18 +13,19 @@ export const reasonKeys = StrictDict({
   quality: 'quality',
   easy: 'easy',
   custom: 'custom',
+  preferNotToSay: 'prefer-not-to-say',
 });
 
 export const order = [
   reasonKeys.prereqs,
   reasonKeys.difficulty,
+  reasonKeys.easy,
   reasonKeys.goals,
   reasonKeys.broken,
   reasonKeys.time,
   reasonKeys.browse,
   reasonKeys.support,
   reasonKeys.quality,
-  reasonKeys.easy,
 ];
 
 const messages = defineMessages({
@@ -77,6 +78,11 @@ const messages = defineMessages({
     id: 'learner-dash.unenrollConfirm.reasons.custom-placeholder',
     description: 'Unenroll custom reason option placeholder text',
     defaultMessage: 'Other',
+  },
+  [reasonKeys.preferNotToSay]: {
+    id: 'learner-dash.unenrollConfirm.reasons.prefer-not-to-say',
+    description: 'Unenroll reason option - prefer not to say',
+    defaultMessage: 'I prefer not to say',
   },
 });
 
