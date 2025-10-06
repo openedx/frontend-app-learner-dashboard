@@ -9,15 +9,18 @@ export const CourseCardProgress = ({ cardId }) => {
   const {
     shouldRender,
     progress,
+    completeCount,
+    totalCount,
     loading,
     variant,
-    progressLabel,
     loadingLabel,
   } = useCardProgressData({ cardId });
 
   if (!shouldRender) {
     return null;
   }
+
+  const progressLabel = `${completeCount} out of ${totalCount} Units completed (${progress}%)`;
 
   return (
     <Card.Section className="pt-0 pb-2" data-testid="CourseCardProgress">
@@ -27,7 +30,6 @@ export const CourseCardProgress = ({ cardId }) => {
             {progressLabel}
             {loading && <span className="loading-indicator">({loadingLabel})</span>}
           </span>
-          <span className="progress-percentage">{progress}%</span>
         </div>
         <ProgressBar
           now={progress}

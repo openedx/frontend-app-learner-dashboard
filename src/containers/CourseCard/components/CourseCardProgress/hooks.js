@@ -8,6 +8,8 @@ import messages from './messages';
 
 export const useCourseProgress = ({ cardId }) => {
   const [progress, setProgress] = useState(0);
+  const [completeCount, setCompleteCount] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const { isEnrolled, hasStarted } = reduxHooks.useCardEnrollmentData(cardId);
   const { courseId } = reduxHooks.useCardCourseRunData(cardId);
@@ -16,6 +18,8 @@ export const useCourseProgress = ({ cardId }) => {
     const fetchProgress = async () => {
       if (!isEnrolled || !hasStarted || !courseId) {
         setProgress(0);
+        setCompleteCount(0);
+        setTotalCount(0);
         return;
       }
 
@@ -27,13 +31,16 @@ export const useCourseProgress = ({ cardId }) => {
         const progressData = response.data;
 
         let progressPercent = 0;
+        let complete = 0;
+        let total = 0;
 
         // Check for completion_summary from course_home API
         if (progressData.completion_summary) {
           const { complete_count, incomplete_count, locked_count } = progressData.completion_summary;
-          const totalCount = complete_count + incomplete_count + locked_count;
-          if (totalCount > 0) {
-            progressPercent = Math.round((complete_count / totalCount) * 100);
+          complete = complete_count;
+          total = complete_count + incomplete_count + locked_count;
+          if (total > 0) {
+            progressPercent = Math.round((complete_count / total) * 100);
           }
         } else if (progressData.completion_percentage !== undefined) {
           progressPercent = progressData.completion_percentage;
@@ -46,9 +53,13 @@ export const useCourseProgress = ({ cardId }) => {
         }
 
         setProgress(Math.max(0, Math.min(100, progressPercent)));
+        setCompleteCount(complete);
+        setTotalCount(total);
       } catch (error) {
         console.warn('Failed to fetch course progress:', error);
         setProgress(0);
+        setCompleteCount(0);
+        setTotalCount(0);
       } finally {
         setLoading(false);
       }
@@ -57,7 +68,7 @@ export const useCourseProgress = ({ cardId }) => {
     fetchProgress();
   }, [cardId, isEnrolled, hasStarted, courseId]);
 
-  return { progress, loading };
+  return { progress, completeCount, totalCount, loading };
 };
 
 export const useProgressVariant = ({ progress }) => {
@@ -71,12 +82,16 @@ export const useCardProgressData = ({ cardId }) => {
   const { isEnrolled } = reduxHooks.useCardEnrollmentData(cardId);
   const configValue = getConfig().SHOW_PROGRESS_BAR;
   const showProgressBar = configValue === true || configValue === 'true';
-  const { progress, loading } = useCourseProgress({ cardId });
+  const {
+    progress, completeCount, totalCount, loading,
+  } = useCourseProgress({ cardId });
   const variant = useProgressVariant({ progress });
 
   return {
     shouldRender: showProgressBar && isEnrolled,
     progress,
+    completeCount,
+    totalCount,
     loading,
     variant,
     progressLabel: formatMessage(messages.courseProgress),
