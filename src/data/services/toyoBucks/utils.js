@@ -29,8 +29,12 @@ export function calculateClaimedForCourse(claims, courseKey) {
     return 0;
   }
 
+  // Extract org, course, run from courseKey (e.g., "course-v1:Toyo+test+1")
+  // and match against unit_key (e.g., "block-v1:Toyo+test+1+type@problem+block@...")
+  const courseIdPattern = courseKey.replace('course-v1:', '');
+
   return claims
-    .filter(claim => claim.unit_key && claim.unit_key.includes(courseKey))
+    .filter(claim => claim.unit_key && claim.unit_key.includes(courseIdPattern))
     .reduce((total, claim) => total + parseFloat(claim.reward_amount || 0), 0);
 }
 
