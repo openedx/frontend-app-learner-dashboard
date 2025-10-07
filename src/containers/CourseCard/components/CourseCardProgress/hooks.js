@@ -80,15 +80,13 @@ export const useProgressVariant = ({ progress }) => {
 export const useCardProgressData = ({ cardId }) => {
   const { formatMessage } = useIntl();
   const { isEnrolled } = reduxHooks.useCardEnrollmentData(cardId);
-  const configValue = getConfig().SHOW_PROGRESS_BAR;
-  const showProgressBar = configValue === true || configValue === 'true';
   const {
     progress, completeCount, totalCount, loading,
   } = useCourseProgress({ cardId });
   const variant = useProgressVariant({ progress });
 
   return {
-    shouldRender: showProgressBar && isEnrolled,
+    shouldRender: isEnrolled,
     progress,
     completeCount,
     totalCount,
