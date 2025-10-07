@@ -11,12 +11,12 @@ export const useCourseProgress = ({ cardId }) => {
   const [completeCount, setCompleteCount] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(false);
-  const { isEnrolled, hasStarted } = reduxHooks.useCardEnrollmentData(cardId);
+  const { isEnrolled } = reduxHooks.useCardEnrollmentData(cardId);
   const { courseId } = reduxHooks.useCardCourseRunData(cardId);
 
   useEffect(() => {
     const fetchProgress = async () => {
-      if (!isEnrolled || !hasStarted || !courseId) {
+      if (!isEnrolled || !courseId) {
         setProgress(0);
         setCompleteCount(0);
         setTotalCount(0);
@@ -66,7 +66,7 @@ export const useCourseProgress = ({ cardId }) => {
     };
 
     fetchProgress();
-  }, [cardId, isEnrolled, hasStarted, courseId]);
+  }, [cardId, isEnrolled, courseId]);
 
   return { progress, completeCount, totalCount, loading };
 };
