@@ -39,7 +39,6 @@ jest.unmock('reselect');
 jest.unmock('hooks');
 
 jest.mock('plugin-slots/WidgetSidebarSlot', () => jest.fn(() => 'widget-sidebar'));
-jest.mock('components/', () => 'notices-wrapper');
 
 jest.mock('@edx/frontend-platform', () => ({
   ...jest.requireActual('@edx/frontend-platform'),
