@@ -27,7 +27,6 @@ import { configuration } from './config';
 import messages from './i18n';
 
 import App from './App';
-import NoticesWrapper from './components/NoticesWrapper';
 
 subscribe(APP_READY, () => {
   const root = createRoot(document.getElementById('root'));
@@ -35,12 +34,10 @@ subscribe(APP_READY, () => {
   root.render(
     <StrictMode>
       <AppProvider store={store}>
-        <NoticesWrapper>
-          <Routes>
-            <Route path="/" element={<PageWrap><App /></PageWrap>} />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </NoticesWrapper>
+        <Routes>
+          <Route path="/" element={<PageWrap><App /></PageWrap>} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </AppProvider>
     </StrictMode>,
   );
