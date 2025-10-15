@@ -25,7 +25,7 @@ import {
 import { FooterSlot } from '@edx/frontend-component-footer';
 
 import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
-import { ProgramsList } from 'containers/ProgramDashboard';
+import ProgramsList from './containers/ProgramDashboard';
 
 import { configuration } from './config';
 
