@@ -1,4 +1,3 @@
-// TODO: write tests
 import { render, screen } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 
