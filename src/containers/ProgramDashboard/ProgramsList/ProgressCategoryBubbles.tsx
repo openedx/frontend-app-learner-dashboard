@@ -10,11 +10,11 @@ const ProgressCategoryBubbles: React.FC<Progress> = ({ notStarted, inProgress, c
   return (
     <Stack direction="horizontal" gap={2} className="flex-wrap">
       <Stack direction="vertical" className="align-items-center" gap={1}>
-        <Bubble className="bg-gray-500" data-testid="remaining-count">
-          {notStarted}
+        <Bubble variant="success" data-testid="completed-count">
+          {completed}
         </Bubble>
         <div>
-          {formatMessage(messages.progressCategoryBubblesRemaining)}
+          {formatMessage(messages.progressCategoryBubblesSuccess)}
         </div>
       </Stack>
 
@@ -28,11 +28,11 @@ const ProgressCategoryBubbles: React.FC<Progress> = ({ notStarted, inProgress, c
       </Stack>
 
       <Stack direction="vertical" className="align-items-center" gap={1}>
-        <Bubble className="bg-success-500" data-testid="completed-count">
-          {completed}
+        <Bubble className="text-gray-900" variant="warning" data-testid="remaining-count">
+          {notStarted}
         </Bubble>
         <div>
-          {formatMessage(messages.progressCategoryBubblesSuccess)}
+          {formatMessage(messages.progressCategoryBubblesRemaining)}
         </div>
       </Stack>
     </Stack>

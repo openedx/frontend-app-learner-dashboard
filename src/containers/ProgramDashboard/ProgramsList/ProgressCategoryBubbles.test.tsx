@@ -12,8 +12,8 @@ describe('ProgressCategoryBubbles', () => {
       </IntlProvider>,
     );
 
-    expect(screen.getByText(1)).toBeInTheDocument();
-    expect(screen.getByText(2)).toBeInTheDocument();
-    expect(screen.getByText(0)).toBeInTheDocument();
+    expect(screen.getByTestId('completed-count')).toHaveTextContent('0');
+    expect(screen.getByTestId('in-progress-count')).toHaveTextContent('1');
+    expect(screen.getByTestId('remaining-count')).toHaveTextContent('2');
   });
 });

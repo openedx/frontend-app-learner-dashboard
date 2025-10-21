@@ -5,7 +5,7 @@ import 'regenerator-runtime/runtime';
 import React, { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
-  Route, Routes,
+  Navigate, Route, Routes,
 } from 'react-router-dom';
 
 import {
@@ -48,7 +48,7 @@ subscribe(APP_READY, () => {
               <Route path="programs/:uuid" element={<div>program details page</div>} />
             </>
           )}
-          {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
         <FooterSlot />
       </AppProvider>
