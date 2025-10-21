@@ -24,9 +24,9 @@ export interface AuthoringOrganization {
 }
 
 export interface Progress {
-  inProgress: string,
-  notStarted: string,
-  completed: string,
+  inProgress: number,
+  notStarted: number,
+  completed: number,
 }
 
 export interface ProgramCardProps {

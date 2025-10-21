@@ -42,10 +42,12 @@ const ProgramListCard: React.FC<ProgramCardProps> = ({
     return imageURL;
   };
 
+  // Set key and logoImageUrl to empty strings for fallback image or instances where there are multiple organizations
   let authoringOrganization : AuthoringOrganization = {
     key: '',
     logoImageUrl: '',
   };
+  // Otherwise use the logoImageUrl and key for the organization
   if (program.authoringOrganizations?.length === 1 && program.authoringOrganizations[0].logoImageUrl) {
     authoringOrganization = {
       logoImageUrl: program.authoringOrganizations[0].logoImageUrl,
@@ -53,34 +55,36 @@ const ProgramListCard: React.FC<ProgramCardProps> = ({
     };
   }
 
-  // TODO: cards should link to details page
   return (
     <Card
       className="program-list-card"
       isClickable
       as={Link}
+      to={program.uuid}
+      data-testid="program-list-card"
     >
       <Card.ImageCap
         src={getBannerImageURL() || cardFallbackImg}
-        srcAlt=""
+        srcAlt={`program card image for ${program.title}`}
         fallbackSrc={cardFallbackImg}
         logoSrc={authoringOrganization?.logoImageUrl}
         logoAlt={authoringOrganization?.key}
         className="banner-image"
-        data-testid="program-banner-image"
       />
       <Card.Section className="pb-0 small">
         <Row className="justify-content-between px-2.5">
           {program.authoringOrganizations && (
-            <p className="truncate-text-1" data-truncate-lines="1">
-              {program.authoringOrganizations.map(org => org).join(', ')}
+            <p className="truncate-text-1">
+              {program.authoringOrganizations.map(org => org.key).join(', ')}
             </p>
           )}
-          {program.type}
+          <p>
+            {program.type}
+          </p>
         </Row>
       </Card.Section>
       <Card.Section>
-        <h3 className="truncate-text-2" data-truncate-lines={2}>{program.title}</h3>
+        <h3 className="truncate-text-2">{program.title}</h3>
       </Card.Section>
       <Card.Section>
         <ProgressCategoryBubbles

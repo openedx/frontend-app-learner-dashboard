@@ -48,7 +48,7 @@ subscribe(APP_READY, () => {
               <Route path="programs/:uuid" element={<div>program details page</div>} />
             </>
           )}
-          <Route path="*" element={<Navigate to="/" replace />} />
+          {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
         </Routes>
         <FooterSlot />
       </AppProvider>
