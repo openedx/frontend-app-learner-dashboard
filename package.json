@@ -29,7 +29,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@edx/brand": "npm:@edx/elm-theme@^1.11.1",
+    "@edx/brand": "npm:@openedx/brand-openedx@^1.2.3",
     "@edx/frontend-component-footer": "^14.6.0",
     "@edx/frontend-component-header": "^6.6.0",
     "@edx/frontend-enterprise-hotjar": "7.2.0",

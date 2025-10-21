@@ -5,7 +5,7 @@ import 'regenerator-runtime/runtime';
 import React, { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
-  Route, Navigate, Routes,
+  Route, Routes,
 } from 'react-router-dom';
 
 import {
