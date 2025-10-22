@@ -1,3 +1,5 @@
+import { getConfig } from '@edx/frontend-platform';
+
 import React from 'react';
 
 import { StrictDict } from 'utils';
@@ -5,6 +7,7 @@ import { apiHooks } from 'hooks';
 
 import { useUnenrollReasons } from './reasons';
 import * as module from '.';
+import { configuration } from 'config';
 
 export const state = StrictDict({
   confirmed: (val) => React.useState(val), // eslint-disable-line
@@ -24,7 +27,7 @@ export const useUnenrollData = ({ closeModal, cardId }) => {
 
   let modalState;
   if (isConfirmed) {
-    modalState = (reason.isSubmitted)
+    modalState = (reason.isSubmitted || !configuration.SHOW_UNENROLL_SURVEY)
       ? modalStates.finished : modalStates.reason;
   } else {
     modalState = modalStates.confirm;
