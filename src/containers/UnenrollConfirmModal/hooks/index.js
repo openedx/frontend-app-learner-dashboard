@@ -21,9 +21,17 @@ export const modalStates = StrictDict({
 
 export const useUnenrollData = ({ closeModal, cardId }) => {
   const [isConfirmed, setIsConfirmed] = module.state.confirmed(false);
-  const confirm = () => setIsConfirmed(true);
   const reason = useUnenrollReasons({ cardId });
   const refreshList = apiHooks.useInitializeApp();
+
+  const unenrollFromCourse = apiHooks.useUnenrollFromCourse(cardId);
+
+  const confirm = () => {
+    if (!configuration.SHOW_UNENROLL_SURVEY) {
+      unenrollFromCourse();
+    }
+    setIsConfirmed(true);
+  };
 
   let modalState;
   if (isConfirmed) {
