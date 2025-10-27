@@ -63,7 +63,7 @@ export const CertificateBanner = ({ cardId }) => {
         {certificate.certPreviewUrl && (
           <>
             {'  '}
-            <Hyperlink isInline destination={certificate.certPreviewUrl}>
+            <Hyperlink isInline destination={baseAppUrl(certificate.certPreviewUrl)}>
               {formatMessage(messages.viewCertificate)}
             </Hyperlink>
           </>
