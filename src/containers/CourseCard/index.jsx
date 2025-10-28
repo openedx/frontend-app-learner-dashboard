@@ -10,6 +10,8 @@ import CourseCardMenu from './components/CourseCardMenu';
 import CourseCardActions from './components/CourseCardActions';
 import CourseCardDetails from './components/CourseCardDetails';
 import CourseCardTitle from './components/CourseCardTitle';
+import CourseCardProgress from './components/CourseCardProgress';
+import ToyoBucksRewardInfo from './components/ToyoBucksRewardInfo';
 
 import './CourseCard.scss';
 
@@ -32,6 +34,8 @@ export const CourseCard = ({
               <Card.Section className="pt-0">
                 <CourseCardDetails cardId={cardId} />
               </Card.Section>
+              <CourseCardProgress cardId={cardId} />
+              <ToyoBucksRewardInfo cardId={cardId} />
               <Card.Footer orientation={orientation}>
                 <CourseCardActions cardId={cardId} />
               </Card.Footer>
