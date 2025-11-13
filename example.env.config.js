@@ -67,7 +67,6 @@ module.exports = {
   NEW_RELIC_LICENSE_KEY: '',
   ACCOUNT_SETTINGS_URL: 'http://localhost:1997',
   ACCOUNT_PROFILE_URL: 'http://localhost:1995',
-  ENABLE_NOTICES: '',
   CAREER_LINK_URL: '',
   EXPERIMENT_08_23_VAN_PAINTED_DOOR: true,
 };
