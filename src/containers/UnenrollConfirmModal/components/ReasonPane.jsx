@@ -50,8 +50,8 @@ export const ReasonPane = ({
     </>
   );
 };
-ReasonPane.propTypes = {
-  reason: PropTypes.shape({
+
+export const reasonShape = PropTypes.shape({
     value: PropTypes.string,
     hasReason: PropTypes.bool,
     selectOption: PropTypes.func,
@@ -61,7 +61,10 @@ ReasonPane.propTypes = {
     }),
     selected: PropTypes.string,
     handleSubmit: PropTypes.func.isRequired,
-  }).isRequired,
+})
+
+ReasonPane.propTypes = {
+  reason: reasonShape.isRequired,
   handleClose: PropTypes.func.isRequired,
 };
 

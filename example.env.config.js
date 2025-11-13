@@ -70,4 +70,5 @@ module.exports = {
   ENABLE_NOTICES: '',
   CAREER_LINK_URL: '',
   EXPERIMENT_08_23_VAN_PAINTED_DOOR: true,
+  SHOW_UNENROLL_SURVEY: true
 };
