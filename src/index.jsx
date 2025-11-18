@@ -43,10 +43,7 @@ subscribe(APP_READY, () => {
         <Routes>
           <Route path="/" element={<PageWrap><App /></PageWrap>} />
           {getConfig().ENABLE_PROGRAM_DASHBOARD && (
-            <>
-              <Route path="programs" element={<PageWrap><ProgramsList /></PageWrap>} />
-              <Route path="programs/:uuid" element={<div>program details page</div>} />
-            </>
+            <Route path="programs" element={<PageWrap><ProgramsList /></PageWrap>} />
           )}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

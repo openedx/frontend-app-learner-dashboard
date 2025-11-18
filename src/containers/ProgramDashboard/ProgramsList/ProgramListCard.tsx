@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { getConfig } from '@edx/frontend-platform';
 import cardFallbackImg from '@edx/brand/paragon/images/card-imagecap-fallback.png';
 import {
   breakpoints,
@@ -60,7 +61,7 @@ const ProgramListCard: React.FC<ProgramCardProps> = ({
       className="program-list-card"
       isClickable
       as={Link}
-      to={program.uuid}
+      to={`${getConfig().LMS_BASE_URL}/dashboard/programs/${program.uuid}`}
       data-testid="program-list-card"
     >
       <Card.ImageCap
