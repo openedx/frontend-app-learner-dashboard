@@ -50,7 +50,15 @@ pull_translations:
                translations/frontend-component-footer/src/i18n/messages:frontend-component-footer \
                translations/frontend-app-learner-dashboard/src/i18n/messages:frontend-app-learner-dashboard
 
-	$(intl_imports) frontend-platform paragon frontend-component-footer frontend-app-learner-dashboard
+	# Copy local plugin translations since they don't exist in remote translations repo
+	@echo "Copying local frontend-plugin-learner-dashboard translations..."
+	@if [ -d "src/i18n/local-overrides/frontend-plugin-learner-dashboard" ]; then \
+		mkdir -p src/i18n/messages/frontend-plugin-learner-dashboard; \
+		cp -r src/i18n/local-overrides/frontend-plugin-learner-dashboard/* src/i18n/messages/frontend-plugin-learner-dashboard/; \
+		echo "Local plugin translations copied to messages folder!"; \
+	fi
+
+	$(intl_imports) frontend-platform paragon frontend-component-footer frontend-app-learner-dashboard frontend-plugin-learner-dashboard
 
 # This target is used by CI.
 validate-no-uncommitted-package-lock-changes:

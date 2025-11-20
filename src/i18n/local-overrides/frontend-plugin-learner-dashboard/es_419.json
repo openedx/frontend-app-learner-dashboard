@@ -1,0 +1,20 @@
+{
+  "leanerDashboard.menu.career.label": "Carrera",
+  "header.menu.new.label": "Nuevo",
+  "learner-dash.courseCard.banners.auditAccessExpired": "Tu acceso de auditoría a este curso ha caducado.",
+  "learner-dash.courseCard.banners.upgradeToAccess": "Actualiza ahora para volver a acceder al curso.",
+  "learner-dash.courseCard.banners.findAnotherCourse": "Busca otro curso",
+  "learner-dash.courseCard.banners.upgradeDeadlinePassed": "La fecha límite para actualizar este curso ha pasado. Para actualizar, inscríbete en una sesión que sea más adelante en el futuro.",
+  "learner-dash.courseCard.banners.exploreCourseDetails": "Explora los detalles del curso.",
+  "learner-dash.courseCard.banners.prerequisitesNotMet": "Aún no puede acceder a este curso porque no cumple los requisitos previos.",
+  "learner-dash.courseCard.banners.courseHasNotStarted": "Aún no puede acceder a este curso porque aún no ha comenzado. El curso comenzará el {startDate}.",
+  "learnerVariantDashboard.menu.dashboard.label": "Panel de control",
+  "learnerVariantDashboard.menu.dashboardPersonal.label": "Personal",
+  "learnerVariantDashboard.menu.dashboardSwitch.label": "CAMBIAR PANEL DE CONTROL",
+  "leanerDashboard.enterpriseDialogHeader": "Comience a explorar los cursos gratuitos disponibles a través del panel de control {label}.",
+  "leanerDashboard.enterpriseDialogBody": "Tienes acceso a una amplia gama de cursos gratuitos. Para explorar y empezar a aprender, solo tienes que hacer clic en «Ir al panel de control» ahora.",
+  "leanerDashboard.enterpriseDialogDismissButton": "Descartar",
+  "leanerDashboard.enterpriseDialogConfirmButton": "Ir al panel de control",
+  "learner-dash.notices.error404Message": "Probablemente esto haya ocurrido porque el complemento de avisos no está instalado en la plataforma.",
+  "learner-dash.courseCard.actions.upgrade": "Actualizar"
+}
