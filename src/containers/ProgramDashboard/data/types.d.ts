@@ -19,8 +19,11 @@ export interface ImageData {
 }
 
 export interface AuthoringOrganization {
+  uuid: string,
   key: string,
+  name: string,
   logoImageUrl: string,
+  certificateLogoImageUrl: string | null,
 }
 
 export interface Progress {
@@ -31,4 +34,8 @@ export interface Progress {
 
 export interface ProgramCardProps {
   program: ProgramData,
+}
+
+export interface ExploreProgramsCTAProps {
+  hasEnrollments?: boolean,
 }

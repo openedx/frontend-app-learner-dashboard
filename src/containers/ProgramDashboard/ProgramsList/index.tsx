@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import {
-  CardGrid, Col, Container, Row,
+  Alert, CardGrid, Col, Container, Row, Spinner,
 } from '@openedx/paragon';
+import { getConfig } from '@edx/frontend-platform';
 import { logError } from '@edx/frontend-platform/logging';
 import { camelCaseObject } from '@edx/frontend-platform/utils';
 import { useIntl } from '@edx/frontend-platform/i18n';
@@ -17,30 +18,33 @@ import './index.scss';
 
 const ProgramsList: React.FC = () => {
   const { formatMessage } = useIntl();
-
   const [programsData, setProgramsData] = useState<ProgramData[]>([]);
+  const [isLoading, setIsLoading] = useState<Boolean>(true);
+  const [errorState, setErrorState] = useState<Boolean>(false);
 
   useEffect(() => {
     getProgramsListData()
       .then(responseData => {
         setProgramsData(camelCaseObject(responseData.data));
+        setIsLoading(false);
       })
-      .catch(err => logError(err));
-    // TODO: error handling Alert component should render on error with API
+      .catch(err => {
+        logError(err);
+        setErrorState(true);
+      });
   }, []);
 
-  return (
-    <>
-      <Helmet>
-        <title>
-          {formatMessage(messages.programDashboardPageTitle)}
-        </title>
-      </Helmet>
-      <Container className="p-4.5">
-        <div className="h2">
-          {formatMessage(messages.programsListHeaderText)}
-        </div>
-        <Row className="py-3 gap-2">
+  const renderPrograms = () => {
+    if (isLoading) {
+      return (
+        <Row className="justify-content-center py-4">
+          <Spinner animation="border" screenReaderText="loading" />
+        </Row>
+      );
+    }
+    if (programsData.length > 0) {
+      return (
+        <>
           <Col sm={12} md={9}>
             <CardGrid columnSizes={{ xs: 12, lg: 6 }}>
               {programsData.map(program => (
@@ -51,6 +55,48 @@ const ProgramsList: React.FC = () => {
           <Col sm={12} md={3}>
             <ExploreProgramsCTA />
           </Col>
+        </>
+      );
+    }
+    return (
+      <Col md={9}>
+        <ExploreProgramsCTA hasEnrollments={false} />
+      </Col>
+    );
+  };
+
+  const renderFailureAlert = () => {
+    const contactUrl = getConfig().CONTACT_URL;
+    return (
+      <Alert className="mx-auto container-mw-md" variant="danger">
+        {formatMessage(messages.errorLoadingProgramEnrollments, {
+          contactSupportUrl: (
+            <Alert.Link href={contactUrl}>
+              {contactUrl}
+            </Alert.Link>
+          ),
+        })}
+      </Alert>
+    );
+  };
+
+  return (
+    <>
+      <Helmet>
+        <title>
+          {formatMessage(messages.programDashboardPageTitle)}
+        </title>
+      </Helmet>
+      <Container size="lg" className="p-4.5">
+        <h2>
+          {formatMessage(messages.programsListHeaderText)}
+        </h2>
+        <Row className="py-3">
+          {errorState ? (
+            renderFailureAlert()
+          ) : (
+            renderPrograms()
+          )}
         </Row>
       </Container>
     </>

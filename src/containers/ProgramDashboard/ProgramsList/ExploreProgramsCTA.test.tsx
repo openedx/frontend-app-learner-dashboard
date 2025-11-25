@@ -8,7 +8,7 @@ import messages from './messages';
 jest.mock('@edx/frontend-platform', () => ({
   getConfig: jest.fn(() => ({
     LMS_BASE_URL: 'https://courses.example.com',
-    EXPLORE_PROGRAMS_URL: null, // Default to null for testing fallbacks
+    EXPLORE_PROGRAMS_URL: null,
   })),
 }));
 
@@ -17,22 +17,28 @@ describe('ExploreProgramsCTA', () => {
     jest.clearAllMocks();
   });
 
-  const renderComponent = () => render(
-    <IntlProvider>
-      <ExploreProgramsCTA />
+  const renderComponent = (props = {}) => render(
+    <IntlProvider locale="en">
+      <ExploreProgramsCTA {...props} />
     </IntlProvider>,
   );
 
-  it('renders the expected CTA text using i18n', () => {
+  it('renders the expected CTA text when there are enrollments', () => {
     renderComponent();
 
-    expect(screen.getByText(messages.exploreCoursesCTAText.defaultMessage)).toBeInTheDocument();
+    expect(screen.getByText(messages.exploreProgramsCTAText.defaultMessage)).toBeInTheDocument();
   });
 
-  it('renders the button with the expected text using i18n', () => {
+  it('renders the expected CTA when there are no enrollments', () => {
+    renderComponent({ hasEnrollments: false });
+
+    expect(screen.getByText(messages.hasNoEnrollmentsText.defaultMessage)).toBeInTheDocument();
+  });
+
+  it('renders the button with the expected text', () => {
     renderComponent();
 
-    expect(screen.getByRole('link', { name: messages.exploreCoursesCTAButtonText.defaultMessage })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: messages.exploreProgramsCTAButtonText.defaultMessage })).toBeInTheDocument();
   });
 
   it('uses EXPLORE_PROGRAMS_URL when it is defined', () => {
@@ -44,14 +50,14 @@ describe('ExploreProgramsCTA', () => {
 
     renderComponent();
 
-    const button = screen.getByRole('link', { name: messages.exploreCoursesCTAButtonText.defaultMessage });
+    const button = screen.getByRole('link', { name: messages.exploreProgramsCTAButtonText.defaultMessage });
     expect(button).toHaveAttribute('href', customUrl);
   });
 
   it('falls back to LMS_BASE_URL/courses when EXPLORE_PROGRAMS_URL is not defined', () => {
     renderComponent();
 
-    const button = screen.getByRole('link', { name: messages.exploreCoursesCTAButtonText.defaultMessage });
+    const button = screen.getByRole('link', { name: messages.exploreProgramsCTAButtonText.defaultMessage });
     const expectedFallbackUrl = `${getConfig().LMS_BASE_URL}/courses`;
     expect(button).toHaveAttribute('href', expectedFallbackUrl);
   });

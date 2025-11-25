@@ -1,10 +1,16 @@
-import { render, screen } from '@testing-library/react';
+import { render, RenderResult, screen } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import ProgramListCard from './ProgramListCard';
 import { ProgramData } from '../data/types';
 
 jest.mock('react-router-dom', () => ({
   Link: jest.fn(({ children, ...props }) => <a {...props}>{children}</a>),
+}));
+
+jest.mock('@edx/frontend-platform', () => ({
+  getConfig: jest.fn(() => ({
+    LMS_BASE_URL: 'test-base-url',
+  })),
 }));
 
 const mockBaseProgram = {
@@ -18,7 +24,13 @@ const mockBaseProgram = {
     large: { url: 'banner-large.jpg', width: 1440, height: 480 },
   },
   authoringOrganizations: [
-    { key: 'test-key', logoImageUrl: 'test-logo.png' },
+    {
+      uuid: 'org-uuid-1',
+      key: 'test-key',
+      name: 'test-org-1',
+      logoImageUrl: 'test-logo.png',
+      certificateLogoImageUrl: 'test-cert-logo.png',
+    },
   ],
   progress: {
     inProgress: 1,
@@ -30,14 +42,26 @@ const mockBaseProgram = {
 const mockMultipleOrgProgram = {
   ...mockBaseProgram,
   authoringOrganizations: [
-    { key: 'MIT', logoImageUrl: 'mit-logo.png' },
-    { key: 'HU', logoImageUrl: 'harvard-logo.png' },
+    {
+      uuid: 'org-uuid-1',
+      name: 'MIT',
+      key: 'MITx',
+      logoImageUrl: 'mit-logo.png',
+      certificateLogoImageUrl: 'mit-cert-logo-1.png',
+    },
+    {
+      uuid: 'org-uuid-2',
+      name: 'Harvard',
+      key: 'Harvardx',
+      logoImageUrl: 'harvard-logo.png',
+      certificateLogoImageUrl: 'harvard-cert-logo-2.png',
+    },
   ],
 };
 
 describe('ProgramListCard', () => {
-  const renderComponent = (programData: ProgramData = mockBaseProgram) => render(
-    <IntlProvider>
+  const renderComponent = (programData: ProgramData = mockBaseProgram): RenderResult => render(
+    <IntlProvider locale="en">
       <ProgramListCard program={programData} />
     </IntlProvider>,
   );
@@ -72,7 +96,7 @@ describe('ProgramListCard', () => {
   it('each card links to a progress page using the program uuid', async () => {
     const { getByTestId } = renderComponent();
     const programCard = getByTestId('program-list-card');
-    expect(programCard).toHaveAttribute('to', 'test-uuid');
+    expect(programCard).toHaveAttribute('to', 'test-base-url/dashboard/programs/test-uuid');
   });
 
   it.each([{

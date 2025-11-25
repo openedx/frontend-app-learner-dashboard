@@ -1,4 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react';
+import { getConfig } from '@edx/frontend-platform';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { logError } from '@edx/frontend-platform/logging';
 
@@ -13,6 +14,11 @@ jest.mock('../data/api', () => ({
 }));
 jest.mock('@edx/frontend-platform/logging', () => ({
   logError: jest.fn(),
+}));
+jest.mock('@edx/frontend-platform', () => ({
+  getConfig: jest.fn(() => ({
+    CONTACT_URL: 'test-contact-url',
+  })),
 }));
 
 // Mock Child Components
@@ -43,7 +49,7 @@ describe('ProgramsList', () => {
   });
 
   const renderComponent = () => render(
-    <IntlProvider>
+    <IntlProvider locale="en">
       <ProgramsList />
     </IntlProvider>,
   );
@@ -56,11 +62,12 @@ describe('ProgramsList', () => {
     });
   });
 
-  it('renders header text and ExploreProgramsCTA', () => {
+  it('renders header text and ExploreProgramsCTA', async () => {
     renderComponent();
-
-    expect(screen.getByText(messages.programsListHeaderText.defaultMessage)).toBeInTheDocument();
-    expect(screen.getByTestId('explore-programs-cta')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText(messages.programsListHeaderText.defaultMessage)).toBeInTheDocument();
+      expect(screen.getByTestId('explore-programs-cta')).toBeInTheDocument();
+    });
   });
 
   it('fetches program data on mount', async () => {
@@ -99,6 +106,12 @@ describe('ProgramsList', () => {
     const mockError = new Error('Network failed');
     (getProgramsListData as jest.Mock).mockRejectedValue(mockError);
 
+    const mockContactUrl = 'mock-contact-url';
+
+    getConfig.mockReturnValueOnce({
+      CONTACT_URL: mockContactUrl,
+    });
+
     renderComponent();
 
     // Wait for the asynchronous error handling path to execute
@@ -108,5 +121,6 @@ describe('ProgramsList', () => {
 
     // Ensure no cards are rendered on failure
     expect(screen.queryAllByTestId('program-list-card')).toHaveLength(0);
+    expect(screen.getByRole('link', { name: mockContactUrl })).toBeInTheDocument();
   });
 });

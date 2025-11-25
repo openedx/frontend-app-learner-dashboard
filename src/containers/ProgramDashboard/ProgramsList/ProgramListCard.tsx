@@ -7,7 +7,7 @@ import {
   Card,
   Row,
 } from '@openedx/paragon';
-import { ProgramCardProps, AuthoringOrganization } from '../data/types';
+import { ProgramCardProps } from '../data/types';
 import ProgressCategoryBubbles from './ProgressCategoryBubbles';
 
 const ProgramListCard: React.FC<ProgramCardProps> = ({
@@ -27,7 +27,7 @@ const ProgramListCard: React.FC<ProgramCardProps> = ({
     };
   }, []);
 
-  const getBannerImageURL = () => {
+  const getBannerImageURL = (): string => {
     let imageURL = '';
     // We need to check that the breakpoint value exists before using it
     // Otherwise TypeScript will flag it as it can potentially be undefined in Paragon
@@ -43,18 +43,13 @@ const ProgramListCard: React.FC<ProgramCardProps> = ({
     return imageURL;
   };
 
-  // Set key and logoImageUrl to empty strings for fallback image or instances where there are multiple organizations
-  let authoringOrganization : AuthoringOrganization = {
-    key: '',
-    logoImageUrl: '',
+  const getOrgImageUrl = (): string => {
+    // Otherwise use the logoImageUrl and key for the organization
+    if (program.authoringOrganizations?.length === 1 && program.authoringOrganizations[0].logoImageUrl) {
+      return program.authoringOrganizations[0].logoImageUrl;
+    }
+    return '';
   };
-  // Otherwise use the logoImageUrl and key for the organization
-  if (program.authoringOrganizations?.length === 1 && program.authoringOrganizations[0].logoImageUrl) {
-    authoringOrganization = {
-      logoImageUrl: program.authoringOrganizations[0].logoImageUrl,
-      key: program.authoringOrganizations[0].key,
-    };
-  }
 
   return (
     <Card
@@ -68,8 +63,8 @@ const ProgramListCard: React.FC<ProgramCardProps> = ({
         src={getBannerImageURL() || cardFallbackImg}
         srcAlt={`program card image for ${program.title}`}
         fallbackSrc={cardFallbackImg}
-        logoSrc={authoringOrganization?.logoImageUrl}
-        logoAlt={authoringOrganization?.key}
+        logoSrc={getOrgImageUrl()}
+        logoAlt={program.authoringOrganizations && program.authoringOrganizations[0]?.key}
         className="banner-image"
       />
       <Card.Section className="pb-0 small">
