@@ -13,7 +13,7 @@ const ExploreProgramsCTA: React.FC<ExploreProgramsCTAProps> = ({
 
   const href = getConfig().EXPLORE_PROGRAMS_URL || `${getConfig().LMS_BASE_URL}/courses`;
   return (
-    <Card>
+    <Card data-testid="explore-programs-cta">
       <Card.Section>
         {hasEnrollments ? (
           formatMessage(messages.exploreProgramsCTAText)

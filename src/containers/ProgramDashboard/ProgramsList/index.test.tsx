@@ -6,6 +6,7 @@ import { logError } from '@edx/frontend-platform/logging';
 import ProgramsList from '.';
 import { getProgramsListData } from '../data/api';
 import ProgramListCard from './ProgramListCard';
+import ExploreProgramsCTA from './ExploreProgramsCTA';
 import messages from './messages';
 
 // Mock API and external utilities
@@ -97,6 +98,22 @@ describe('ProgramsList', () => {
         expect.objectContaining({
           program: mockExtractedData[1],
         }),
+        {},
+      );
+    });
+  });
+
+  it('renders the ExploreProgramsCTA with "hasEnrollments" set to false if there are no program enrollments', async () => {
+    (getProgramsListData as jest.Mock).mockResolvedValueOnce({ data: [] });
+    renderComponent();
+
+    await waitFor(() => {
+      expect(ExploreProgramsCTA).toHaveBeenCalledWith(
+        expect.objectContaining(
+          {
+            hasEnrollments: false,
+          },
+        ),
         {},
       );
     });
