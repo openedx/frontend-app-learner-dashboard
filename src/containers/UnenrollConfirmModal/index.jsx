@@ -7,10 +7,10 @@ import { ModalDialog } from '@openedx/paragon';
 import { nullMethod } from 'utils';
 
 import ConfirmPane from './components/ConfirmPane';
-import ReasonPane from './components/ReasonPane';
 import FinishedPane from './components/FinishedPane';
 
 import { useUnenrollData, modalStates } from './hooks';
+import CourseUnenrollReasonSlot from 'plugin-slots/CourseUnenrollReasonSlot';
 
 export const UnenrollConfirmModal = ({
   closeModal,
@@ -44,7 +44,7 @@ export const UnenrollConfirmModal = ({
           <FinishedPane handleClose={closeAndRefresh} cardId={cardId} />
         )}
         {(modalState === modalStates.reason) && (
-          <ReasonPane reason={reason} handleClose={close} />
+          <CourseUnenrollReasonSlot reason={reason} close={close} />
         )}
       </div>
     </ModalDialog>

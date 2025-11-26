@@ -15,7 +15,7 @@ This slot is used for replacing or adding content around the `CourseList` compon
 
 ## Example
 
-The space will show the `CourseList` component by default. This can be disabled in the configuration with the `keepDefault` boolean. 
+The space will show the `CourseList` component by default. This can be disabled in the configuration with the `keepDefault` boolean.
 
 ![Screenshot of the CourseListSlot](./images/course_list_slot.png)
 
