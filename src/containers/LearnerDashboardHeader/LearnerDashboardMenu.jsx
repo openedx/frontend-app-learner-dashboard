@@ -9,18 +9,20 @@ const getLearnerHeaderMenu = (
   courseSearchUrl,
   authenticatedUser,
   exploreCoursesClick,
+  pathname,
 ) => ({
   mainMenu: [
     {
       type: 'item',
       href: '/',
       content: formatMessage(messages.course),
-      isActive: true,
+      isActive: pathname === '/',
     },
     ...(getConfig().ENABLE_PROGRAMS ? [{
       type: 'item',
-      href: `${urls.programsUrl()}`,
+      href: getConfig().ENABLE_PROGRAM_DASHBOARD ? '/programs' : `${urls.programsUrl()}`,
       content: formatMessage(messages.program),
+      isActive: pathname === '/programs',
     }] : []),
     ...(!getConfig().NON_BROWSABLE_COURSES ? [{
       type: 'item',
