@@ -3,9 +3,9 @@ import React from 'react';
 import { StrictDict } from 'utils';
 import { apiHooks } from 'hooks';
 
+import { configuration } from 'config';
 import { useUnenrollReasons } from './reasons';
 import * as module from '.';
-import { configuration } from 'config';
 
 export const state = StrictDict({
   confirmed: (val) => React.useState(val), // eslint-disable-line
