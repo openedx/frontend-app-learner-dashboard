@@ -5,6 +5,7 @@ import { apiHooks } from 'hooks';
 
 import { useUnenrollReasons } from './reasons';
 import * as module from '.';
+import { configuration } from 'config';
 
 export const state = StrictDict({
   confirmed: (val) => React.useState(val), // eslint-disable-line
@@ -18,13 +19,21 @@ export const modalStates = StrictDict({
 
 export const useUnenrollData = ({ closeModal, cardId }) => {
   const [isConfirmed, setIsConfirmed] = module.state.confirmed(false);
-  const confirm = () => setIsConfirmed(true);
   const reason = useUnenrollReasons({ cardId });
   const refreshList = apiHooks.useInitializeApp();
 
+  const unenrollFromCourse = apiHooks.useUnenrollFromCourse(cardId);
+
+  const confirm = () => {
+    if (!configuration.SHOW_UNENROLL_SURVEY) {
+      unenrollFromCourse();
+    }
+    setIsConfirmed(true);
+  };
+
   let modalState;
   if (isConfirmed) {
-    modalState = (reason.isSubmitted)
+    modalState = (reason.isSubmitted || !configuration.SHOW_UNENROLL_SURVEY)
       ? modalStates.finished : modalStates.reason;
   } else {
     modalState = modalStates.confirm;
