@@ -12,6 +12,11 @@ transifex_temp = ./temp/babel-plugin-formatjs
 
 NPM_TESTS=build i18n_extract lint test
 
+# Variables for additional translation sources and imports (define in edx-internal if needed)
+ATLAS_EXTRA_SOURCES ?=
+ATLAS_EXTRA_INTL_IMPORTS ?=
+ATLAS_OPTIONS ?=
+
 .PHONY: test
 test: $(addprefix test.npm.,$(NPM_TESTS))  ## validate ci suite
 
@@ -60,9 +65,10 @@ pull_translations:
       && atlas pull $(ATLAS_OPTIONS) \
                translations/frontend-base/src/i18n/messages:frontend-base \
                translations/paragon/src/i18n/messages:paragon \
-               translations/frontend-app-learner-dashboard/src/i18n/messages:frontend-app-learner-dashboard
+               translations/frontend-app-learner-dashboard/src/i18n/messages:frontend-app-learner-dashboard \
+               $(ATLAS_EXTRA_SOURCES)
 
-	$(intl_imports) frontend-base paragon frontend-app-learner-dashboard
+	$(intl_imports) frontend-base paragon frontend-app-learner-dashboard $(ATLAS_EXTRA_INTL_IMPORTS)
 
 # This target is used by CI.
 validate-no-uncommitted-package-lock-changes:
