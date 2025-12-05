@@ -31,7 +31,7 @@
   "dependencies": {
     "@edx/brand": "npm:@openedx/brand-openedx@^1.2.2",
     "@edx/frontend-component-footer": "^14.6.0",
-    "@edx/frontend-component-header": "^6.6.0",
+    "@edx/frontend-component-header": "^8.0.0",
     "@edx/frontend-enterprise-hotjar": "7.2.0",
     "@edx/frontend-platform": "^8.3.1",
     "@edx/openedx-atlas": "^0.7.0",
@@ -56,7 +56,7 @@
     "react-helmet": "^6.1.0",
     "react-intl": "6.8.9",
     "react-redux": "^7.2.4",
-    "react-router-dom": "6.30.1",
+    "react-router-dom": "6.30.2",
     "react-share": "^4.4.0",
     "redux": "4.2.1",
     "redux-logger": "3.0.6",
