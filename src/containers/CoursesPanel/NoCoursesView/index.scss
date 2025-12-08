@@ -1,15 +1,13 @@
-@import "@openedx/paragon/scss/core/core";
-
 #no-courses-content-view {
-  border: 2px solid $light-400;
+  border: 2px solid var(--pgn-color-light-400);
   flex-direction: column;
-  padding-bottom: map-get($spacers, 5);
-  padding-top: map-get($spacers, 5);
+  padding-bottom: var(--pgn-spacing-spacer-5);
+  padding-top: var(--pgn-spacing-spacer-5);
   height: 100%;
 
   & > * {
-    margin-top: map-get($spacers, 3);
-    margin-bottom: map-get($spacers, 3);
+    margin-top: var(--pgn-spacing-spacer-3);
+    margin-bottom: var(--pgn-spacing-spacer-3);
   }
 }
 
