@@ -13,9 +13,9 @@ transifex_temp = ./temp/babel-plugin-formatjs
 NPM_TESTS=build i18n_extract lint test
 
 # Variables for additional translation sources and imports (define in edx-internal if needed)
-ATLAS_EXTRA_SOURCES =
-ATLAS_EXTRA_INTL_IMPORTS =
-ATLAS_OPTIONS =
+ATLAS_EXTRA_SOURCES ?=
+ATLAS_EXTRA_INTL_IMPORTS ?=
+ATLAS_OPTIONS ?=
 
 .PHONY: test
 test: $(addprefix test.npm.,$(NPM_TESTS))  ## validate ci suite
