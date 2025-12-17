@@ -54,10 +54,6 @@ jest.mock('@edx/frontend-platform/auth', () => ({
   getLoginRedirectUrl: jest.fn(),
 }));
 
-jest.mock('@edx/frontend-enterprise-hotjar', () => ({
-  initializeHotjar: jest.fn(),
-}));
-
 jest.mock('@edx/frontend-platform/i18n', () => ({
   ...jest.requireActual('@edx/frontend-platform/i18n'),
   useIntl: () => ({
