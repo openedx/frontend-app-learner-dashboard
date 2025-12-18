@@ -54,7 +54,7 @@
     "react-dom": "^18.3.1",
     "react-helmet": "^6.1.0",
     "react-intl": "6.8.9",
-    "react-redux": "^7.2.4",
+    "react-redux": "^9.0.0",
     "react-router-dom": "6.30.2",
     "react-share": "^4.4.0",
     "redux": "4.2.1",
