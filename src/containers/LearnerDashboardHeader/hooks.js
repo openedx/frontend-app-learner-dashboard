@@ -15,10 +15,10 @@ export const findCoursesNavClicked = (href) => track.findCourses.findCoursesClic
 });
 
 export const useLearnerDashboardHeaderMenu = ({
-  courseSearchUrl, authenticatedUser, exploreCoursesClick,
+  courseSearchUrl, authenticatedUser, exploreCoursesClick, pathname,
 }) => {
   const { formatMessage } = useIntl();
-  return getLearnerHeaderMenu(formatMessage, courseSearchUrl, authenticatedUser, exploreCoursesClick);
+  return getLearnerHeaderMenu(formatMessage, courseSearchUrl, authenticatedUser, exploreCoursesClick, pathname);
 };
 
 export default {

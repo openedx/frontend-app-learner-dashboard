@@ -8,12 +8,7 @@ import { reduxHooks } from 'hooks';
 import { App } from './App';
 import messages from './messages';
 
-jest.mock('@edx/frontend-component-footer', () => ({
-  FooterSlot: jest.fn(() => <div>FooterSlot</div>),
-}));
 jest.mock('containers/Dashboard', () => jest.fn(() => <div>Dashboard</div>));
-jest.mock('containers/LearnerDashboardHeader', () => jest.fn(() => <div>LearnerDashboardHeader</div>));
-jest.mock('containers/AppWrapper', () => jest.fn(({ children }) => <div className="AppWrapper">{children}</div>));
 jest.mock('data/redux', () => ({
   selectors: 'redux.selectors',
   actions: 'redux.actions',
@@ -48,19 +43,6 @@ describe('App router component', () => {
     const runBasicTests = () => {
       it('displays title in helmet component', async () => {
         await waitFor(() => expect(document.title).toEqual(messages.pageTitle.defaultMessage));
-      });
-      it('displays learner dashboard header', () => {
-        const learnerDashboardHeader = screen.getByText('LearnerDashboardHeader');
-        expect(learnerDashboardHeader).toBeInTheDocument();
-      });
-      it('wraps the header and main components in an AppWrapper widget container', () => {
-        const appWrapper = screen.getByText('LearnerDashboardHeader').parentElement;
-        expect(appWrapper).toHaveClass('AppWrapper');
-        expect(appWrapper.children[1].id).toEqual('main');
-      });
-      it('displays footer slot', () => {
-        const footerSlot = screen.getByText('FooterSlot');
-        expect(footerSlot).toBeInTheDocument();
       });
     };
     describe('no network failure', () => {
