@@ -18,7 +18,12 @@ export const CourseBanner = ({ cardId }) => {
   const { formatMessage } = useIntl();
   const formatDate = utilHooks.useFormatDate();
 
-  const { hasUnmetPrerequisites, isStaff, isTooEarly } = coursewareAccess;
+  const {
+    hasUnmetPrerequisites,
+    isStaff,
+    isTooEarly,
+    hasUnmetPrerequisitesList,
+  } = coursewareAccess;
 
   if (isVerified) { return null; }
 
@@ -44,7 +49,15 @@ export const CourseBanner = ({ cardId }) => {
       )}
 
       {(!isStaff && hasUnmetPrerequisites) && (
-        <Banner>{formatMessage(messages.prerequisitesNotMet)}</Banner>
+        <Banner>
+          {formatMessage(messages.prerequisitesNotMet)}
+          {hasUnmetPrerequisitesList.length > 0 && hasUnmetPrerequisitesList.map((prerequisite, index) => (
+            <>
+              <span>{index > 0 ? ', ' : ' '}</span>
+              <a href={prerequisite.about_url}>{prerequisite.display}</a>
+            </>
+          ))}
+        </Banner>
       )}
     </>
   );
