@@ -59,7 +59,7 @@
     "react-share": "^4.4.0",
     "redux": "4.2.1",
     "redux-logger": "3.0.6",
-    "redux-thunk": "2.4.2",
+    "redux-thunk": "3.1.0",
     "regenerator-runtime": "^0.14.0",
     "reselect": "^4.0.0",
     "universal-cookie": "^4.0.4",
