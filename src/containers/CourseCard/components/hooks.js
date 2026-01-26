@@ -3,7 +3,7 @@ import { reduxHooks } from 'hooks';
 export const useActionDisabledState = (cardId) => {
   const { isMasquerading } = reduxHooks.useMasqueradeData();
   const {
-    hasAccess, isAudit, isAuditAccessExpired,
+    hasAccess, isAudit, isAuditAccessExpired, coursewareAccess,
   } = reduxHooks.useCardEnrollmentData(cardId);
   const {
     isEntitlement, isFulfilled, canChange, hasSessions,
@@ -11,12 +11,43 @@ export const useActionDisabledState = (cardId) => {
 
   const { resumeUrl, homeUrl } = reduxHooks.useCardCourseRunData(cardId);
 
-  const disableBeginCourse = !homeUrl || (isMasquerading || !hasAccess || (isAudit && isAuditAccessExpired));
-  const disableResumeCourse = !resumeUrl || (isMasquerading || !hasAccess || (isAudit && isAuditAccessExpired));
-  const disableViewCourse = !hasAccess || (isAudit && isAuditAccessExpired);
-  const disableSelectSession = !isEntitlement || isMasquerading || !hasAccess || (!canChange || !hasSessions);
+  const isStaff = Boolean(coursewareAccess?.isStaff) || false;
+  const blockedByPrereqs = Boolean(coursewareAccess?.hasUnmetPrerequisites);
 
-  const disableCourseTitle = (isEntitlement && !isFulfilled) || disableViewCourse;
+  const disableBeginCourse = !isStaff && (
+    !homeUrl
+    || isMasquerading
+    || !hasAccess
+    || (isAudit && isAuditAccessExpired)
+    || blockedByPrereqs
+  );
+
+  const disableResumeCourse = !isStaff && (
+    !resumeUrl
+    || (isMasquerading
+    || !hasAccess
+    || (isAudit && isAuditAccessExpired))
+    || blockedByPrereqs
+  );
+
+  const disableViewCourse = !isStaff && (
+    !hasAccess
+    || (isAudit && isAuditAccessExpired)
+    || blockedByPrereqs
+  );
+
+  const disableSelectSession = !isStaff && (
+    !isEntitlement
+    || isMasquerading
+    || !hasAccess
+    || (!canChange || !hasSessions)
+    || blockedByPrereqs
+  );
+
+  const disableCourseTitle = !isStaff && (
+    (isEntitlement && !isFulfilled)
+    || disableViewCourse
+  );
 
   return {
     disableBeginCourse,
@@ -24,6 +55,7 @@ export const useActionDisabledState = (cardId) => {
     disableViewCourse,
     disableSelectSession,
     disableCourseTitle,
+    blockedByPrereqs,
   };
 };
 

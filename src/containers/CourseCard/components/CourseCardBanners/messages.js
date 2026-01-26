@@ -94,7 +94,7 @@ const messages = defineMessages({
   prerequisitesNotMet: {
     id: 'learner-dash.courseCard.banners.prerequisitesNotMet',
     description: 'Message to learners with unmet prerequisites',
-    defaultMessage: 'You can\'t access this course just yet because you have not met the pre-requisites.',
+    defaultMessage: 'You can\'t access this course just yet because you have not met the following pre-requisites:',
   },
   courseHasNotStarted: {
     id: 'learner-dash.courseCard.banners.courseHasNotStarted',

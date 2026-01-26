@@ -71,9 +71,31 @@ describe('CourseBanner', () => {
   });
   describe('unmet prerequisites', () => {
     it('should display correct message', () => {
-      renderCourseBanner({ enrollment: { coursewareAccess: { hasUnmetPrerequisites: true } } });
+      renderCourseBanner({
+        enrollment: {
+          coursewareAccess: {
+            hasUnmetPrerequisites: true,
+            hasUnmetPrerequisitesList: [
+              {
+                display: 'Prereq Course 1',
+                about_url: 'https://example.com/about-1',
+              },
+              {
+                display: 'Prereq Course 2',
+                about_url: 'https://example.com/about-2',
+              },
+            ],
+          },
+        },
+      });
       const preReqText = screen.getByText(formatMessage(messages.prerequisitesNotMet));
       expect(preReqText).toBeInTheDocument();
+      const preReqList1 = screen.getByText('Prereq Course 1');
+      const preReqList2 = screen.getByText('Prereq Course 2');
+      expect(preReqList1).toBeInTheDocument();
+      expect(preReqList2).toBeInTheDocument();
+      expect(preReqList1).toHaveAttribute('href', 'https://example.com/about-1');
+      expect(preReqList2).toHaveAttribute('href', 'https://example.com/about-2');
     });
   });
   describe('too early', () => {
