@@ -57,7 +57,7 @@
     "react-redux": "^7.2.4",
     "react-router-dom": "6.30.3",
     "react-share": "^4.4.0",
-    "redux": "4.2.1",
+    "redux": "5.0.1",
     "redux-logger": "3.0.6",
     "redux-thunk": "2.4.2",
     "regenerator-runtime": "^0.14.0",
