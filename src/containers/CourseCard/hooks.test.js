@@ -1,15 +1,25 @@
 import { useIntl } from '@openedx/frontend-base';
 
-import { reduxHooks } from 'hooks';
+import { reduxHooks } from '@src/hooks';
 
 import * as hooks from './hooks';
 
-jest.mock('hooks', () => ({
+jest.mock('@src/hooks', () => ({
   reduxHooks: {
     useCardCourseData: jest.fn(),
     useCardEnrollmentData: jest.fn(),
   },
 }));
+
+jest.mock('@openedx/frontend-base', () => {
+  const { formatMessage } = jest.requireActual('@src/testUtils');
+  return {
+    ...jest.requireActual('@openedx/frontend-base'),
+    useIntl: () => ({
+      formatMessage,
+    }),
+  };
+});
 
 const cardId = 'my-test-course-number';
 

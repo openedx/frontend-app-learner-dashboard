@@ -1,8 +1,8 @@
 import React from 'react';
 import { useIntl } from '@openedx/frontend-base';
 
-import { StrictDict } from 'utils';
-import { reduxHooks } from 'hooks';
+import { StrictDict } from '@src/utils';
+import { reduxHooks } from '@src/hooks';
 
 import messages from './messages';
 import * as module from './hooks';

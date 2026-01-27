@@ -1,8 +1,8 @@
-import { createLinkTracker, createEventTracker } from 'data/services/segment/utils';
+import { createLinkTracker, createEventTracker } from '@src/data/services/segment/utils';
 import { findCoursesClicked } from './findCourses';
-import { categories, eventNames } from '../constants';
+import { categories, eventNames } from '@src/tracking/constants';
 
-jest.mock('data/services/segment/utils', () => ({
+jest.mock('@src/data/services/segment/utils', () => ({
   createEventTracker: jest.fn((args) => ({ createEventTracker: args })),
   createLinkTracker: jest.fn((args) => ({ createLinkTracker: args })),
 }));

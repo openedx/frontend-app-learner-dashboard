@@ -4,6 +4,12 @@ import useCreditRequestFormData from './hooks';
 
 const requestData = 'test-request-data';
 
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useRef: jest.fn((val) => ({ current: val, useRef: true })),
+  useEffect: jest.fn((cb, prereqs) => ({ useEffect: { cb, prereqs } })),
+}));
+
 let out;
 const ref = {
   current: { click: jest.fn() },

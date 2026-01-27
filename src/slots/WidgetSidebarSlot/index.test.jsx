@@ -1,18 +1,28 @@
-import { shallow } from '@edx/react-unit-test-utils';
-
+import { render, screen } from '@testing-library/react';
+import { IntlProvider } from '@openedx/frontend-base';
+import { MemoryRouter } from 'react-router-dom';
+import { reduxHooks } from '@src/hooks';
 import WidgetSidebarSlot from '.';
 
-jest.mock('widgets/LookingForChallengeWidget', () => 'LookingForChallengeWidget');
-
-jest.mock('@openedx/frontend-plugin-framework', () => ({
-  PluginSlot: 'PluginSlot',
+jest.mock('@src/hooks', () => ({
+  reduxHooks: {
+    usePlatformSettingsData: jest.fn(),
+  },
 }));
 
-describe('WidgetSidebar', () => {
-  beforeEach(() => jest.resetAllMocks());
+const courseSearchUrl = 'mock-url';
 
-  test('snapshots', () => {
-    const wrapper = shallow(<WidgetSidebarSlot />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+describe('WidgetSidebar', () => {
+  it('renders PluginSlot with correct children', () => {
+    reduxHooks.usePlatformSettingsData.mockReturnValueOnce({ courseSearchUrl });
+    render(
+      <MemoryRouter>
+        <IntlProvider locale="en">
+          <WidgetSidebarSlot />
+        </IntlProvider>
+      </MemoryRouter>
+    );
+    const pluginSlot = screen.getByText('Looking for a new challenge?');
+    expect(pluginSlot).toBeDefined();
   });
 });

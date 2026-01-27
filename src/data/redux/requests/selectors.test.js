@@ -1,4 +1,4 @@
-import { RequestStates, RequestKeys } from 'data/constants/requests';
+import { RequestStates } from '@src/data/constants/requests';
 
 import selectors from './selectors';
 
@@ -78,33 +78,5 @@ describe('requests selectors unit tests', () => {
   });
   test('data reurns the request data', () => {
     expect(select(selectors.data, { data: testValue })).toEqual(testValue);
-  });
-  test('masquerade returns the masquerade data', () => {
-    const mockResponse = (response) => ({
-      requests: {
-        [RequestKeys.masquerade]: response,
-      },
-    });
-    expect(selectors.masquerade(mockResponse(completedRequest))).toEqual({
-      isMasquerading: true,
-      isMasqueradingFailed: false,
-      isMasqueradingPending: false,
-      masqueradeErrorStatus: undefined,
-    });
-    expect(selectors.masquerade(mockResponse(pendingRequest))).toEqual({
-      isMasquerading: false,
-      isMasqueradingFailed: false,
-      isMasqueradingPending: true,
-      masqueradeErrorStatus: undefined,
-    });
-    expect(selectors.masquerade(mockResponse({
-      ...failedRequest,
-      error: testErrorValue,
-    }))).toEqual({
-      isMasquerading: false,
-      isMasqueradingFailed: true,
-      isMasqueradingPending: false,
-      masqueradeErrorStatus: testErrorValue.response.status,
-    });
   });
 });

@@ -1,45 +1,55 @@
-import { shallow } from '@edx/react-unit-test-utils';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { IntlProvider } from '@openedx/frontend-base';
 
-import track from 'tracking';
-import { reduxHooks } from 'hooks';
+import track from '@src/tracking';
+import { reduxHooks } from '@src/hooks';
 import useActionDisabledState from '../hooks';
 import ViewCourseButton from './ViewCourseButton';
 
-jest.mock('tracking', () => ({
+jest.mock('@src/tracking', () => ({
   course: {
     enterCourseClicked: jest.fn().mockName('segment.enterCourseClicked'),
   },
 }));
 
-jest.mock('hooks', () => ({
+jest.mock('@src/hooks', () => ({
   reduxHooks: {
     useCardCourseRunData: jest.fn(() => ({ homeUrl: 'homeUrl' })),
-    useTrackCourseEvent: jest.fn(
-      (eventName, cardId, url) => ({ trackCourseEvent: { eventName, cardId, url } }),
-    ),
+    useTrackCourseEvent: jest.fn(),
   },
 }));
 jest.mock('../hooks', () => jest.fn(() => ({ disableViewCourse: false })));
-jest.mock('./ActionButton', () => 'ActionButton');
+
+jest.mock('./ActionButton/hooks', () => jest.fn(() => false));
 
 const defaultProps = { cardId: 'cardId' };
 const homeUrl = 'homeUrl';
 
 describe('ViewCourseButton', () => {
-  test('learner can view course', () => {
-    const wrapper = shallow(<ViewCourseButton {...defaultProps} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
-    expect(wrapper.instance.props.onClick).toEqual(reduxHooks.useTrackCourseEvent(
+  it('learner can view course', async () => {
+    render(<IntlProvider locale="en"><ViewCourseButton {...defaultProps} /></IntlProvider>);
+    const button = screen.getByRole('button', { name: 'View Course' });
+    expect(button).toBeInTheDocument();
+    expect(button).not.toHaveClass('disabled');
+    expect(button).not.toHaveAttribute('aria-disabled', 'true');
+  });
+  it('calls trackCourseEvent on click', async () => {
+    render(<IntlProvider locale="en"><ViewCourseButton {...defaultProps} /></IntlProvider>);
+    const user = userEvent.setup();
+    const button = screen.getByRole('button', { name: 'View Course' });
+    await user.click(button);
+    expect(reduxHooks.useTrackCourseEvent).toHaveBeenCalledWith(
       track.course.enterCourseClicked,
       defaultProps.cardId,
       homeUrl,
-    ));
-    expect(wrapper.instance.props.disabled).toEqual(false);
+    );
   });
-  test('learner cannot view course', () => {
+  it('learner cannot view course', () => {
     useActionDisabledState.mockReturnValueOnce({ disableViewCourse: true });
-    const wrapper = shallow(<ViewCourseButton {...defaultProps} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
-    expect(wrapper.instance.props.disabled).toEqual(true);
+    render(<IntlProvider locale="en"><ViewCourseButton {...defaultProps} /></IntlProvider>);
+    const button = screen.getByRole('button', { name: 'View Course' });
+    expect(button).toHaveClass('disabled');
+    expect(button).toHaveAttribute('aria-disabled', 'true');
   });
 });

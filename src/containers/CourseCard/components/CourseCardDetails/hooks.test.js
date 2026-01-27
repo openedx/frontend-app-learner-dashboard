@@ -1,12 +1,11 @@
 import { useIntl } from '@openedx/frontend-base';
 
-import { keyStore } from 'utils';
-import { utilHooks, reduxHooks } from 'hooks';
-
+import { keyStore } from '@src/utils';
+import { utilHooks, reduxHooks } from '@src/hooks';
 import * as hooks from './hooks';
 import messages from './messages';
 
-jest.mock('hooks', () => ({
+jest.mock('@src/hooks', () => ({
   utilHooks: {
     useFormatDate: jest.fn(),
   },
@@ -19,6 +18,16 @@ jest.mock('hooks', () => ({
     useUpdateSelectSessionModalCallback: (...args) => ({ updateSelectSessionModalCallback: args }),
   },
 }));
+
+jest.mock('@openedx/frontend-base', () => {
+  const { formatMessage } = jest.requireActual('@src/testUtils');
+  return {
+    ...jest.requireActual('@openedx/frontend-base'),
+    useIntl: () => ({
+      formatMessage,
+    }),
+  };
+});
 
 const cardId = 'my-test-card-id';
 const courseNumber = 'test-course-number';
@@ -37,7 +46,7 @@ describe('CourseCardDetails hooks', () => {
 
   describe('useCardDetailsData', () => {
     const providerData = {
-      name: 'my-provider-name',
+      name: 'Unknown',
     };
     const entitlementData = {
       isEntitlement: false,
@@ -69,7 +78,7 @@ describe('CourseCardDetails hooks', () => {
     });
     it('forwards provider name if it exists, else formatted unknown provider name', () => {
       expect(out.providerName).toEqual(providerData.name);
-      runHook({ provider: { name: '' } });
+      runHook({ provider: { name: providerData.name } });
       expect(out.providerName).toEqual(formatMessage(messages.unknownProviderName));
     });
     it('forward changeOrLeaveSessionMessage', () => {

@@ -5,11 +5,11 @@ import {
 } from '@redux-devtools/extension';
 import { createLogger } from 'redux-logger';
 
-import rootReducer from 'data/redux';
+import rootReducer from './redux';
 
 import exportedStore, { createStore } from './store';
 
-jest.mock('data/redux', () => ({
+jest.mock('./redux', () => ({
   __esModule: true,
   default: 'REDUCER',
   actions: 'ACTIONS',

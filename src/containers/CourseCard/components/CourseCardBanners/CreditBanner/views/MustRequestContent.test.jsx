@@ -1,73 +1,103 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
+import { render, screen } from '@testing-library/react';
+import { IntlProvider } from '@openedx/frontend-base';
+import userEvent from '@testing-library/user-event';
 
-import { formatMessage } from 'testUtils';
-
-import { reduxHooks } from 'hooks';
+import { reduxHooks } from '@src/hooks';
+import MasqueradeUserContext from '@src/data/contexts/MasqueradeUserContext';
 import messages from './messages';
 import hooks from './hooks';
-import ProviderLink from './components/ProviderLink';
 import MustRequestContent from './MustRequestContent';
 
 jest.mock('./hooks', () => ({
   useCreditRequestData: jest.fn(),
 }));
-jest.mock('hooks', () => ({
-  reduxHooks: { useMasqueradeData: jest.fn() },
-}));
-jest.mock('./components/CreditContent', () => 'CreditContent');
-jest.mock('./components/ProviderLink', () => 'ProviderLink');
 
-let el;
-let component;
+jest.mock('@src/hooks', () => ({
+  reduxHooks: {
+    useCardCreditData: jest.fn(),
+  },
+}));
 
 const cardId = 'test-card-id';
-const requestData = { test: 'requestData' };
-const createCreditRequest = jest.fn().mockName('createCreditRequest');
-hooks.useCreditRequestData.mockReturnValue({
-  requestData,
-  createCreditRequest,
-});
-reduxHooks.useMasqueradeData.mockReturnValue({ isMasquerading: false });
-
-const render = () => {
-  el = shallow(<MustRequestContent cardId={cardId} />);
+const requestData = {
+  url: 'test-request-data-url',
+  parameters: {
+    key1: 'val1',
+    key2: 'val2',
+    key3: 'val3',
+  },
 };
+const providerName = 'test-credit-provider-name';
+const providerStatusUrl = 'test-credit-provider-status-url';
+const createCreditRequest = jest.fn().mockName('createCreditRequest');
+
+const renderMustRequestContent = (isMasquerading = false) => render(
+  <IntlProvider locale="en" messages={messages}>
+    <MasqueradeUserContext.Provider value={{ isMasquerading }}>
+      <MustRequestContent cardId={cardId} />
+    </MasqueradeUserContext.Provider>
+  </IntlProvider>,
+);
+
 describe('MustRequestContent component', () => {
   beforeEach(() => {
-    render();
+    jest.clearAllMocks();
+    hooks.useCreditRequestData.mockReturnValue({
+      requestData,
+      createCreditRequest,
+    });
+    reduxHooks.useCardCreditData.mockReturnValue({
+      providerName,
+      providerStatusUrl,
+    });
   });
-  describe('behavior', () => {
+
+  describe('hooks', () => {
     it('initializes credit request data with cardId', () => {
+      renderMustRequestContent();
       expect(hooks.useCreditRequestData).toHaveBeenCalledWith(cardId);
     });
   });
-  describe('render', () => {
-    describe('rendered CreditContent component', () => {
+
+  describe('behavior', () => {
+    describe('rendered content', () => {
       beforeEach(() => {
-        component = el.instance.findByType('CreditContent');
+        renderMustRequestContent();
       });
-      test('action.onClick calls createCreditRequest from useCreditRequestData hook', () => {
-        expect(component[0].props.action.onClick).toEqual(createCreditRequest);
+
+      it('calls createCreditRequest when request credit button is clicked', async () => {
+        const user = userEvent.setup();
+        const button = screen.getByRole('button', { name: /request credit/i });
+        await user.click(button);
+        expect(createCreditRequest).toHaveBeenCalled();
       });
-      test('action.message is formatted requestCredit message', () => {
-        expect(component[0].props.action.message).toEqual(
-          formatMessage(messages.requestCredit),
-        );
+
+      it('shows request credit button that is enabled', () => {
+        const button = screen.getByRole('button', { name: /request credit/i });
+        expect(button).toBeEnabled();
       });
-      test('action.disabled is false', () => {
-        expect(component[0].props.action.disabled).toEqual(false);
+
+      it('displays must request message with provider link', () => {
+        expect(screen.getByTestId('credit-msg')).toHaveTextContent(/request credit/i);
       });
-      test('message is formatted mustRequest message', () => {
-        expect(component[0].props.message).toEqual(
-          formatMessage(messages.mustRequest, {
-            linkToProviderSite: <ProviderLink cardId={cardId} />,
-            requestCredit: <b>{formatMessage(messages.requestCredit)}</b>,
-          }),
-        );
+
+      it('renders credit request form with correct data', () => {
+        const { container } = renderMustRequestContent();
+        const form = container.querySelector('form');
+        expect(form).toBeInTheDocument();
+        expect(form).toHaveAttribute('action', requestData.url);
       });
-      test('requestData drawn from useCreditRequestData hook', () => {
-        expect(component[0].props.requestData).toEqual(requestData);
+    });
+
+    describe('when masquerading', () => {
+      beforeEach(() => {
+        renderMustRequestContent(true);
+      });
+
+      it('disables the request credit button', () => {
+        const button = screen.getByRole('button', { name: /request credit/i });
+        expect(button).toHaveAttribute('aria-disabled', 'true');
+        expect(button).toHaveClass('disabled');
       });
     });
   });

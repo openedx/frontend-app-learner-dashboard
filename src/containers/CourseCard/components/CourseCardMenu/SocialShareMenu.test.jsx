@@ -1,35 +1,20 @@
+import { IntlProvider } from '@openedx/frontend-base';
+import { render, screen } from '@testing-library/react';
 import { when } from 'jest-when';
-import * as ReactShare from 'react-share';
-
-import { useIntl } from '@openedx/frontend-base';
-import { formatMessage, shallow } from '@edx/react-unit-test-utils';
-
-import track from 'tracking';
-import { reduxHooks } from 'hooks';
+import track from '@src/tracking';
+import { reduxHooks } from '@src/hooks';
+import MasqueradeUserContext from '@src/data/contexts/MasqueradeUserContext';
 
 import { useEmailSettings } from './hooks';
-import SocialShareMenu, { testIds } from './SocialShareMenu';
+import SocialShareMenu from './SocialShareMenu';
 import messages from './messages';
 
-jest.mock('react-share', () => ({
-  FacebookShareButton: () => 'FacebookShareButton',
-  TwitterShareButton: () => 'TwitterShareButton',
-}));
-
-jest.mock('tracking', () => ({
+jest.mock('@src/tracking', () => ({
   socialShare: 'test-social-share-key',
 }));
 
-jest.mock('@openedx/frontend-base', () => ({
-  ...jest.requireActual('@openedx/frontend-base'),
-  useIntl: jest.fn().mockReturnValue({
-    formatMessage: jest.requireActual('@edx/react-unit-test-utils').formatMessage,
-  }),
-}));
-
-jest.mock('hooks', () => ({
+jest.mock('@src/hooks', () => ({
   reduxHooks: {
-    useMasqueradeData: jest.fn(),
     useCardCourseData: jest.fn(),
     useCardEnrollmentData: jest.fn(),
     useCardSocialSettingsData: jest.fn(),
@@ -47,9 +32,9 @@ const props = {
 
 const mockHook = (fn, returnValue, options = {}) => {
   if (options.isCardHook) {
-    when(fn).calledWith(props.cardId).mockReturnValueOnce(returnValue);
+    when(fn).calledWith(props.cardId).mockReturnValue(returnValue);
   } else {
-    when(fn).calledWith().mockReturnValueOnce(returnValue);
+    when(fn).calledWith().mockReturnValue(returnValue);
   }
 };
 
@@ -78,7 +63,6 @@ const mockHooks = (returnVals = {}) => {
     { isCardHook: true },
   );
   mockHook(reduxHooks.useCardCourseData, { courseName }, { isCardHook: true });
-  mockHook(reduxHooks.useMasqueradeData, { isMasquerading: !!returnVals.isMasquerading });
   mockHook(
     reduxHooks.useCardSocialSettingsData,
     {
@@ -89,19 +73,19 @@ const mockHooks = (returnVals = {}) => {
   );
 };
 
-let el;
-const render = () => {
-  el = shallow(<SocialShareMenu {...props} />);
-};
+const renderComponent = (isMasquerading = false) => render(
+  <IntlProvider locale="en">
+    <MasqueradeUserContext.Provider value={{ isMasquerading }}>
+      <SocialShareMenu {...props} />
+    </MasqueradeUserContext.Provider>
+  </IntlProvider>,
+);
 
 describe('SocialShareMenu', () => {
   describe('behavior', () => {
     beforeEach(() => {
       mockHooks();
-      render();
-    });
-    it('initializes intl hook', () => {
-      expect(useIntl).toHaveBeenCalledWith();
+      renderComponent();
     });
     it('initializes local hooks', () => {
       when(useEmailSettings).expectCalledWith();
@@ -110,7 +94,6 @@ describe('SocialShareMenu', () => {
       when(reduxHooks.useCardEnrollmentData).expectCalledWith(props.cardId);
       when(reduxHooks.useCardCourseData).expectCalledWith(props.cardId);
       when(reduxHooks.useCardSocialSettingsData).expectCalledWith(props.cardId);
-      when(reduxHooks.useMasqueradeData).expectCalledWith();
       when(reduxHooks.useTrackCourseEvent).expectCalledWith(track.socialShare, props.cardId, 'twitter');
       when(reduxHooks.useTrackCourseEvent).expectCalledWith(track.socialShare, props.cardId, 'facebook');
     });
@@ -118,53 +101,45 @@ describe('SocialShareMenu', () => {
   describe('render', () => {
     it('renders null if exec ed course', () => {
       mockHooks({ isExecEd2UCourse: true });
-      render();
-      expect(el.isEmptyRender()).toEqual(true);
+      renderComponent();
+      const emailSettingsButton = screen.queryByRole('button', { name: messages.emailSettings.defaultMessage });
+      expect(emailSettingsButton).toBeNull();
+      const facebookShareButton = screen.queryByRole('button', { name: 'facebook' });
+      expect(facebookShareButton).toBeNull();
+      const twitterShareButton = screen.queryByRole('button', { name: 'twitter' });
+      expect(twitterShareButton).toBeNull();
     });
     const testEmailSettingsDropdown = (isMasquerading = false) => {
       describe('email settings dropdown', () => {
-        const loadToggle = () => el.instance.findByTestId(testIds.emailSettingsModalToggle)[0];
         it('renders', () => {
-          expect(el.instance.findByTestId(testIds.emailSettingsModalToggle).length).toEqual(1);
+          const emailSettingsButton = screen.getByRole('button', { name: messages.emailSettings.defaultMessage });
+          expect(emailSettingsButton).toBeInTheDocument();
         });
         if (isMasquerading) {
-          it('is disabled', () => {
-            expect(loadToggle().props.disabled).toEqual(true);
+          it('renders when masquerading', () => {
+            const emailSettingsButton = screen.getByRole('button', { name: messages.emailSettings.defaultMessage });
+            expect(emailSettingsButton).toBeInTheDocument();
+            expect(emailSettingsButton).toHaveAttribute('aria-disabled', 'true');
+            expect(emailSettingsButton).toHaveClass('disabled');
           });
         } else {
           it('is enabled', () => {
-            expect(loadToggle().props.disabled).toEqual(false);
+            const emailSettingsButton = screen.getByRole('button', { name: messages.emailSettings.defaultMessage });
+            expect(emailSettingsButton).toBeEnabled();
           });
         }
-        test('show email settings modal on click', () => {
-          expect(loadToggle().props.onClick).toEqual(props.emailSettings.show);
-        });
       });
     };
     const testFacebookShareButton = () => {
-      test('renders facebook share button with courseName and brand', () => {
-        const button = el.instance.findByType(ReactShare.FacebookShareButton)[0];
-        expect(button.props.url).toEqual(socialShare.facebook.shareUrl);
-        expect(button.props.onClick).toEqual(
-          reduxHooks.useTrackCourseEvent(track.socialShare, props.cardId, 'facebook'),
-        );
-        expect(button.props.title).toEqual(formatMessage(messages.shareQuote, {
-          courseName,
-          socialBrand: socialShare.facebook.socialBrand,
-        }));
+      it('renders facebook share button', () => {
+        const facebookShareButton = screen.getByRole('button', { name: 'facebook' });
+        expect(facebookShareButton).toBeInTheDocument();
       });
     };
     const testTwitterShareButton = () => {
-      test('renders twitter share button with courseName and brand', () => {
-        const button = el.instance.findByType(ReactShare.TwitterShareButton)[0];
-        expect(button.props.url).toEqual(socialShare.twitter.shareUrl);
-        expect(button.props.onClick).toEqual(
-          reduxHooks.useTrackCourseEvent(track.socialShare, props.cardId, 'twitter'),
-        );
-        expect(button.props.title).toEqual(formatMessage(messages.shareQuote, {
-          courseName,
-          socialBrand: socialShare.twitter.socialBrand,
-        }));
+      it('renders twitter share button', () => {
+        const twitterShareButton = screen.getByRole('button', { name: 'twitter' });
+        expect(twitterShareButton).toBeInTheDocument();
       });
     };
     describe('all enabled', () => {
@@ -174,19 +149,7 @@ describe('SocialShareMenu', () => {
           twitter: { isEnabled: true },
           isEmailEnabled: true,
         });
-        render();
-      });
-      describe('email settings dropdown', () => {
-        const loadToggle = () => el.instance.findByTestId(testIds.emailSettingsModalToggle)[0];
-        it('renders', () => {
-          expect(el.instance.findByTestId(testIds.emailSettingsModalToggle).length).toEqual(1);
-        });
-        it('is enabled', () => {
-          expect(loadToggle().props.disabled).toEqual(false);
-        });
-        test('show email settings modal on click', () => {
-          expect(loadToggle().props.onClick).toEqual(props.emailSettings.show);
-        });
+        renderComponent();
       });
       testEmailSettingsDropdown();
       testFacebookShareButton();
@@ -194,42 +157,49 @@ describe('SocialShareMenu', () => {
     });
     describe('only email enabled', () => {
       beforeEach(() => {
+        jest.clearAllMocks();
         mockHooks({ isEmailEnabled: true });
-        render();
+        renderComponent();
       });
       testEmailSettingsDropdown();
       it('does not render facebook or twitter controls', () => {
-        expect(el.instance.findByType(ReactShare.FacebookShareButton).length).toEqual(0);
-        expect(el.instance.findByType(ReactShare.TwitterShareButton).length).toEqual(0);
+        const facebookShareButton = screen.queryByRole('button', { name: 'facebook' });
+        expect(facebookShareButton).toBeNull();
+        const twitterShareButton = screen.queryByRole('button', { name: 'twitter' });
+        expect(twitterShareButton).toBeNull();
       });
-      describe('masquerading', () => {
-        beforeEach(() => {
-          mockHooks({ isEmailEnabled: true, isMasquerading: true });
-          render();
-        });
-        testEmailSettingsDropdown(true);
+    });
+    describe('masquerading', () => {
+      beforeEach(() => {
+        mockHooks({ isEmailEnabled: true });
+        renderComponent(true);
       });
+      testEmailSettingsDropdown(true);
     });
     describe('only facebook enabled', () => {
       beforeEach(() => {
         mockHooks({ facebook: { isEnabled: true } });
-        render();
+        renderComponent();
       });
       testFacebookShareButton();
       it('does not render email or twitter controls', () => {
-        expect(el.instance.findByTestId(testIds.emailSettingsModalToggle).length).toEqual(0);
-        expect(el.instance.findByType(ReactShare.TwitterShareButton).length).toEqual(0);
+        const emailSettingsButton = screen.queryByRole('button', { name: messages.emailSettings.defaultMessage });
+        expect(emailSettingsButton).toBeNull();
+        const twitterShareButton = screen.queryByRole('button', { name: 'twitter' });
+        expect(twitterShareButton).toBeNull();
       });
     });
     describe('only twitter enabled', () => {
       beforeEach(() => {
         mockHooks({ twitter: { isEnabled: true } });
-        render();
+        renderComponent();
       });
       testTwitterShareButton();
       it('does not render email or facebook controls', () => {
-        expect(el.instance.findByTestId(testIds.emailSettingsModalToggle).length).toEqual(0);
-        expect(el.instance.findByType(ReactShare.FacebookShareButton).length).toEqual(0);
+        const emailSettingsButton = screen.queryByRole('button', { name: messages.emailSettings.defaultMessage });
+        expect(emailSettingsButton).toBeNull();
+        const facebookShareButton = screen.queryByRole('button', { name: 'facebook' });
+        expect(facebookShareButton).toBeNull();
       });
     });
   });

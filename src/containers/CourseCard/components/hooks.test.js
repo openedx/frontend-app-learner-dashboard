@@ -1,8 +1,10 @@
-import { reduxHooks } from 'hooks';
+import { reduxHooks } from '@src/hooks';
 
 import * as hooks from './hooks';
+import { renderHook } from '@testing-library/react';
+import MasqueradeUserContext from '@src/data/contexts/MasqueradeUserContext';
 
-jest.mock('hooks', () => ({
+jest.mock('@src/hooks', () => ({
   reduxHooks: {
     useMasqueradeData: jest.fn(),
     useCardEnrollmentData: jest.fn(),
@@ -57,11 +59,20 @@ describe('useActionDisabledState', () => {
     });
   };
 
-  const runHook = () => hooks.useActionDisabledState(cardId);
+  const runHook = (masqueradeValue = { isMasquerading: false }) => {
+    const { result } = renderHook(() => hooks.useActionDisabledState(cardId), {
+      wrapper: ({ children }) => (
+        <MasqueradeUserContext.Provider value={masqueradeValue}>
+          {children}
+        </MasqueradeUserContext.Provider>
+      ),
+    });
+    return result.current;
+  };
   describe('disableBeginCourse', () => {
     const testDisabled = (data, expected) => {
       mockHooksData(data);
-      expect(runHook().disableBeginCourse).toBe(expected);
+      expect(runHook({ isMasquerading: data.isMasquerading ?? false }).disableBeginCourse).toBe(expected);
     };
     it('disable when homeUrl is invalid', () => {
       testDisabled({ homeUrl: null }, true);
@@ -82,7 +93,7 @@ describe('useActionDisabledState', () => {
   describe('disableResumeCourse', () => {
     const testDisabled = (data, expected) => {
       mockHooksData(data);
-      expect(runHook().disableResumeCourse).toBe(expected);
+      expect(runHook({ isMasquerading: data.isMasquerading ?? false }).disableResumeCourse).toBe(expected);
     };
     it('disable when resumeUrl is invalid', () => {
       testDisabled({ resumeUrl: null }, true);
@@ -103,7 +114,7 @@ describe('useActionDisabledState', () => {
   describe('disableViewCourse', () => {
     const testDisabled = (data, expected) => {
       mockHooksData(data);
-      expect(runHook().disableViewCourse).toBe(expected);
+      expect(runHook({ isMasquerading: data.isMasquerading ?? false }).disableViewCourse).toBe(expected);
     };
     it('disable when hasAccess is false', () => {
       testDisabled({ hasAccess: false }, true);
@@ -118,7 +129,7 @@ describe('useActionDisabledState', () => {
   describe('disableSelectSession', () => {
     const testDisabled = (data, expected) => {
       mockHooksData(data);
-      expect(runHook().disableSelectSession).toBe(expected);
+      expect(runHook({ isMasquerading: data.isMasquerading ?? false }).disableSelectSession).toBe(expected);
     };
     it('disable when isEntitlement is false', () => {
       testDisabled({ isEntitlement: false }, true);
@@ -150,7 +161,7 @@ describe('useActionDisabledState', () => {
   describe('disableCourseTitle', () => {
     const testDisabled = (data, expected) => {
       mockHooksData(data);
-      expect(runHook().disableCourseTitle).toBe(expected);
+      expect(runHook({ isMasquerading: data.isMasquerading ?? false }).disableCourseTitle).toBe(expected);
     };
     it('disable when isEntitlement is true and isFulfilled is false', () => {
       testDisabled({ isEntitlement: true, isFulfilled: false }, true);

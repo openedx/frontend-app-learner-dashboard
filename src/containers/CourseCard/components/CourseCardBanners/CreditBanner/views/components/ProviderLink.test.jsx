@@ -1,11 +1,10 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
-
-import { reduxHooks } from 'hooks';
+import { render, screen } from '@testing-library/react';
+import { reduxHooks } from '@src/hooks';
+import { IntlProvider } from '@openedx/frontend-base';
 
 import ProviderLink from './ProviderLink';
 
-jest.mock('hooks', () => ({
+jest.mock('@src/hooks', () => ({
   reduxHooks: {
     useCardCreditData: jest.fn(),
   },
@@ -16,27 +15,30 @@ const credit = {
   providerStatusUrl: 'test-credit-provider-status-url',
   providerName: 'test-credit-provider-name',
 };
-let el;
+
+const renderProviderLink = () => render(
+  <IntlProvider locale="en"><ProviderLink cardId={cardId} /></IntlProvider>,
+);
 
 describe('ProviderLink component', () => {
   beforeEach(() => {
+    jest.clearAllMocks();
     reduxHooks.useCardCreditData.mockReturnValue(credit);
-    el = shallow(<ProviderLink cardId={cardId} />);
+    renderProviderLink();
   });
-  describe('behavior', () => {
+  describe('hooks', () => {
     it('initializes credit hook with cardId', () => {
       expect(reduxHooks.useCardCreditData).toHaveBeenCalledWith(cardId);
     });
   });
   describe('render', () => {
-    test('snapshot', () => {
-      expect(el.snapshot).toMatchSnapshot();
-    });
     it('passes credit.providerStatusUrl to the hyperlink href', () => {
-      expect(el.instance.findByType('Hyperlink')[0].props.href).toEqual(credit.providerStatusUrl);
+      const providerLink = screen.getByRole('link', { href: credit.providerStatusUrl });
+      expect(providerLink).toBeInTheDocument();
     });
     it('passes providerName for the link message', () => {
-      expect(el.instance.findByType('Hyperlink')[0].children[0].el).toEqual(credit.providerName);
+      const providerLink = screen.getByRole('link', { href: credit.providerStatusUrl });
+      expect(providerLink).toHaveTextContent(credit.providerName);
     });
   });
 });

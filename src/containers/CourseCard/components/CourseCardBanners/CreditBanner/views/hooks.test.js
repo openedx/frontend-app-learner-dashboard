@@ -1,8 +1,8 @@
-import { MockUseState } from 'testUtils';
-import { apiHooks } from 'hooks';
+import { MockUseState } from '@src/testUtils';
+import { apiHooks } from '@src/hooks';
 import * as hooks from './hooks';
 
-jest.mock('hooks', () => ({
+jest.mock('@src/hooks', () => ({
   apiHooks: {
     useCreateCreditRequest: jest.fn(),
   },

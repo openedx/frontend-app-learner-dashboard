@@ -1,20 +1,15 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
+import { render, screen } from '@testing-library/react';
+import { IntlProvider } from '@openedx/frontend-base';
 
-import { formatMessage } from 'testUtils';
-import { reduxHooks } from 'hooks';
+import { reduxHooks } from '@src/hooks';
+import MasqueradeUserContext from '@src/data/contexts/MasqueradeUserContext';
 
 import messages from './messages';
 import PendingContent from './PendingContent';
 
-jest.mock('hooks', () => ({
-  reduxHooks: { useCardCreditData: jest.fn(), useMasqueradeData: jest.fn() },
+jest.mock('@src/hooks', () => ({
+  reduxHooks: { useCardCreditData: jest.fn() },
 }));
-jest.mock('./components/CreditContent', () => 'CreditContent');
-jest.mock('./components/ProviderLink', () => 'ProviderLink');
-
-let el;
-let component;
 
 const cardId = 'test-card-id';
 const providerName = 'test-credit-provider-name';
@@ -23,40 +18,51 @@ reduxHooks.useCardCreditData.mockReturnValue({
   providerName,
   providerStatusUrl,
 });
-reduxHooks.useMasqueradeData.mockReturnValue({ isMasquerading: false });
 
-const render = () => {
-  el = shallow(<PendingContent cardId={cardId} />);
-};
+const renderPendingContent = (isMasquerading = false) => render(
+  <IntlProvider messages={{}} locale="en">
+    <MasqueradeUserContext.Provider value={{ isMasquerading }}>
+      <PendingContent cardId={cardId} />
+    </MasqueradeUserContext.Provider>
+  </IntlProvider>,
+);
 describe('PendingContent component', () => {
-  beforeEach(() => {
-    render();
-  });
-  describe('behavior', () => {
+  describe('hooks', () => {
     it('initializes card credit data with cardId', () => {
+      renderPendingContent();
       expect(reduxHooks.useCardCreditData).toHaveBeenCalledWith(cardId);
     });
   });
-  describe('render', () => {
+  describe('behavior', () => {
     describe('rendered CreditContent component', () => {
-      beforeEach(() => {
-        component = el.instance.findByType('CreditContent');
+      it('action message is formatted requestCredit message', () => {
+        renderPendingContent();
+        const button = screen.getByRole('link', { name: messages.viewDetails.defaultMessage });
+        expect(button).toBeInTheDocument();
       });
-      test('action.href will go to provider status site', () => {
-        expect(component[0].props.action.href).toEqual(providerStatusUrl);
+      it('action href will go to provider status site', () => {
+        renderPendingContent();
+        const button = screen.getByRole('link', { name: messages.viewDetails.defaultMessage });
+        expect(button).toHaveAttribute('href', providerStatusUrl);
       });
-      test('action.message is formatted requestCredit message', () => {
-        expect(component[0].props.action.message).toEqual(
-          formatMessage(messages.viewDetails),
-        );
+      it('action.disabled is false', () => {
+        renderPendingContent();
+        const button = screen.getByRole('link', { name: messages.viewDetails.defaultMessage });
+        expect(button).not.toHaveClass('disabled');
       });
-      test('action.disabled is false', () => {
-        expect(component[0].props.action.disabled).toEqual(false);
+      it('message is formatted pending message with provider name', () => {
+        renderPendingContent();
+        const component = screen.getByTestId('credit-msg');
+        expect(component).toBeInTheDocument();
+        expect(component).toHaveTextContent(`${providerName} has received`);
       });
-      test('message is formatted pending message', () => {
-        expect(component[0].props.message).toEqual(
-          formatMessage(messages.received, { providerName }),
-        );
+      describe('when masqueradeData is true', () => {
+        it('disables the view details button', () => {
+          renderPendingContent(true);
+          const button = screen.getByRole('link', { name: messages.viewDetails.defaultMessage });
+          expect(button).toHaveAttribute('aria-disabled', 'true');
+          expect(button).toHaveClass('disabled');
+        });
       });
     });
   });

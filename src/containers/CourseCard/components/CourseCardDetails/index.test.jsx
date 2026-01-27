@@ -1,5 +1,4 @@
-import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 import CourseCardDetails from '.';
 
@@ -48,23 +47,36 @@ describe('CourseCard Details component', () => {
     return separatorsCount;
   };
 
-  test('has change session button on entitlement course', () => {
+  it('has change session button on entitlement course', () => {
     const wrapper = createWrapper();
-    expect(wrapper.container).toMatchSnapshot();
+    const sessionButton = screen.getByRole('button', { name: defaultHooks.changeOrLeaveSessionMessage });
+    expect(sessionButton).toBeInTheDocument();
+
+    const accessMessage = screen.getByText((text) => text.includes(defaultHooks.accessMessage));
+    expect(accessMessage).toBeInTheDocument();
     // it has 3 separator, 4 column
     expect(fetchSeparators(wrapper)).toBe(3);
   });
 
-  test('has change session button on entitlement course but no access message', () => {
+  it('has change session button on entitlement course but no access message', () => {
     const wrapper = createWrapper({ accessMessage: null });
-    expect(wrapper.container).toMatchSnapshot();
+    const sessionButton = screen.getByRole('button', { name: defaultHooks.changeOrLeaveSessionMessage });
+    expect(sessionButton).toBeInTheDocument();
+
+    const accessMessage = screen.queryByText((text) => text.includes(defaultHooks.accessMessage));
+    expect(accessMessage).toBeNull();
+
     // it has 2 separator, 3 column
     expect(fetchSeparators(wrapper)).toBe(2);
   });
 
-  test('does not have change session button on regular course', () => {
+  it('does not have change session button on regular course', () => {
     const wrapper = createWrapper({ isEntitlement: false });
-    expect(wrapper.container).toMatchSnapshot();
+    const sessionButton = screen.queryByRole('button', { name: defaultHooks.changeOrLeaveSessionMessage });
+    expect(sessionButton).toBeNull();
+
+    const accessMessage = screen.getByText((text) => text.includes(defaultHooks.accessMessage));
+    expect(accessMessage).toBeInTheDocument();
     // it has 2 separator, 3 column
     expect(fetchSeparators(wrapper)).toBe(2);
   });
