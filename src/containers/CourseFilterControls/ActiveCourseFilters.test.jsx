@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
-import { formatMessage } from 'testUtils';
+import { IntlProvider } from '@openedx/frontend-base';
+import { formatMessage } from '@src/testUtils';
 
-import { FilterKeys } from 'data/constants/app';
+import { FilterKeys } from '@src/data/constants/app';
 import ActiveCourseFilters from './ActiveCourseFilters';
 import messages from './messages';
 

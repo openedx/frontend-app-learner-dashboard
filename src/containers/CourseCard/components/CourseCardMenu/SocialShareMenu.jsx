@@ -1,4 +1,4 @@
-import React from 'react';
+import { useContext } from 'react';
 import PropTypes from 'prop-types';
 import * as ReactShare from 'react-share';
 

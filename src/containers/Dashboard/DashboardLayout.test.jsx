@@ -1,15 +1,11 @@
 import { render, screen } from '@testing-library/react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
-
+import { IntlProvider } from '@openedx/frontend-base';
+import { MemoryRouter } from 'react-router-dom';
 import hooks from './hooks';
 import DashboardLayout from './DashboardLayout';
 
 jest.mock('./hooks', () => ({
   useDashboardLayoutData: jest.fn(),
-}));
-
-jest.mock('@openedx/frontend-plugin-framework', () => ({
-  PluginSlot: 'PluginSlot',
 }));
 
 const hookProps = {
@@ -24,7 +20,13 @@ const children = <div>test children</div>;
 describe('DashboardLayout', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    render(<IntlProvider locale="en"><DashboardLayout>{children}</DashboardLayout></IntlProvider>);
+    render(
+      <MemoryRouter>
+        <IntlProvider locale="en">
+          <DashboardLayout>{children}</DashboardLayout>
+        </IntlProvider>
+      </MemoryRouter>
+    );
   });
 
   const testColumns = () => {
@@ -45,7 +47,7 @@ describe('DashboardLayout', () => {
       const courseListCol = screen.getByText('test children').parentElement;
       const sidebarCol = courseListCol.nextSibling;
       expect(sidebarCol).toHaveClass('sidebar-column');
-      expect(sidebarCol.children[0]).toHaveAttribute('id', 'org.openedx.frontend.learner_dashboard.widget_sidebar.v1');
+      expect(sidebarCol.children[0]).toHaveAttribute('id', 'looking-for-challenge-widget');
     });
   };
   const testSidebarLayout = ({ isCollapsed }) => {

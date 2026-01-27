@@ -7,8 +7,8 @@ jest.mock('./hooks', () => ({
   useIsCollapsed: jest.fn(),
 }));
 
-jest.mock('containers/CourseCard', () => jest.fn(() => <div>CourseCard</div>));
-jest.mock('containers/CourseFilterControls', () => ({
+jest.mock('../../CourseCard', () => jest.fn(() => <div>CourseCard</div>));
+jest.mock('../../CourseFilterControls', () => ({
   ActiveCourseFilters: jest.fn(() => <div>ActiveCourseFilters</div>),
 }));
 

@@ -1,16 +1,17 @@
 import { render, screen } from '@testing-library/react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
-import { FilterKeys } from 'data/constants/app';
-import { reduxHooks } from 'hooks';
+import { IntlProvider } from '@openedx/frontend-base';
+import { MemoryRouter } from 'react-router-dom';
+import { FilterKeys } from '@src/data/constants/app';
+import { reduxHooks } from '@src/hooks';
 
-import messagesNoCourses from 'containers/CoursesPanel/NoCoursesView/messages';
+import messagesNoCourses from '@src/containers/CoursesPanel/NoCoursesView/messages';
 import { useCourseListData } from './hooks';
 import CoursesPanel from '.';
 import messages from './messages';
 
 const courseSearchUrl = '/course-search-url';
 
-jest.mock('hooks', () => ({
+jest.mock('@src/hooks', () => ({
   reduxHooks: {
     useHasCourses: jest.fn(),
     usePlatformSettingsData: jest.fn(() => ({
@@ -23,14 +24,10 @@ jest.mock('./hooks', () => ({
   useCourseListData: jest.fn(),
 }));
 
-jest.mock('containers/CourseCard', () => jest.fn(() => <div>CourseCard</div>));
-jest.mock('containers/CourseFilterControls', () => ({
+jest.mock('@src/containers/CourseCard', () => jest.fn(() => <div>CourseCard</div>));
+jest.mock('@src/containers/CourseFilterControls', () => ({
   ActiveCourseFilters: jest.fn(() => <div>ActiveCourseFilters</div>),
   CourseFilterControls: jest.fn(() => <div>CourseFilterControls</div>),
-}));
-
-jest.mock('@openedx/frontend-plugin-framework', () => ({
-  PluginSlot: 'PluginSlot',
 }));
 
 const filters = Object.values(FilterKeys);
@@ -51,7 +48,13 @@ describe('CoursesPanel', () => {
       ...defaultCourseListData,
       ...courseListData,
     });
-    return render(<IntlProvider locale="en"><CoursesPanel /></IntlProvider>);
+    return render(
+      <MemoryRouter>
+        <IntlProvider locale="en">
+          <CoursesPanel />
+        </IntlProvider>
+      </MemoryRouter>
+    );
   };
 
   describe('no courses', () => {

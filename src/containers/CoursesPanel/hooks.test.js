@@ -1,9 +1,9 @@
-import { MockUseState } from 'testUtils';
-import { reduxHooks } from 'hooks';
-import { ListPageSize, SortKeys } from 'data/constants/app';
+import { MockUseState } from '@src/testUtils';
+import { reduxHooks } from '@src/hooks';
+import { ListPageSize, SortKeys } from '@src/data/constants/app';
 import * as hooks from './hooks';
 
-jest.mock('hooks', () => ({
+jest.mock('@src/hooks', () => ({
   reduxHooks: {
     useCurrentCourseList: jest.fn(),
     usePageNumber: jest.fn(() => 23),

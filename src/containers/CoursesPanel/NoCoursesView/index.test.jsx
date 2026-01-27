@@ -1,14 +1,14 @@
 import { render, screen } from '@testing-library/react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
-import { formatMessage } from 'testUtils';
-import { baseAppUrl } from 'data/services/lms/urls';
+import { IntlProvider } from '@openedx/frontend-base';
+import { formatMessage } from '@src/testUtils';
+import { baseAppUrl } from '@src/data/services/lms/urls';
 
 import EmptyCourse from '.';
 import messages from './messages';
 
 const courseSearchUrl = '/course-search-url';
 
-jest.mock('hooks', () => ({
+jest.mock('@src/hooks', () => ({
   reduxHooks: {
     usePlatformSettingsData: jest.fn(() => ({
       courseSearchUrl,

@@ -1,22 +1,20 @@
-import { when } from 'jest-when';
-
 import { IntlProvider } from '@openedx/frontend-base';
 import { render, screen } from '@testing-library/react';
-
-import track from 'tracking';
-import { reduxHooks } from 'hooks';
+import { when } from 'jest-when';
+import track from '@src/tracking';
+import { reduxHooks } from '@src/hooks';
+import MasqueradeUserContext from '@src/data/contexts/MasqueradeUserContext';
 
 import { useEmailSettings } from './hooks';
 import SocialShareMenu from './SocialShareMenu';
 import messages from './messages';
 
-jest.mock('tracking', () => ({
+jest.mock('@src/tracking', () => ({
   socialShare: 'test-social-share-key',
 }));
 
-jest.mock('hooks', () => ({
+jest.mock('@src/hooks', () => ({
   reduxHooks: {
-    useMasqueradeData: jest.fn(),
     useCardCourseData: jest.fn(),
     useCardEnrollmentData: jest.fn(),
     useCardSocialSettingsData: jest.fn(),
@@ -65,7 +63,6 @@ const mockHooks = (returnVals = {}) => {
     { isCardHook: true },
   );
   mockHook(reduxHooks.useCardCourseData, { courseName }, { isCardHook: true });
-  mockHook(reduxHooks.useMasqueradeData, { isMasquerading: !!returnVals.isMasquerading });
   mockHook(
     reduxHooks.useCardSocialSettingsData,
     {
@@ -76,7 +73,13 @@ const mockHooks = (returnVals = {}) => {
   );
 };
 
-const renderComponent = () => render(<IntlProvider locale="en"><SocialShareMenu {...props} /></IntlProvider>);
+const renderComponent = (isMasquerading = false) => render(
+  <IntlProvider locale="en">
+    <MasqueradeUserContext.Provider value={{ isMasquerading }}>
+      <SocialShareMenu {...props} />
+    </MasqueradeUserContext.Provider>
+  </IntlProvider>,
+);
 
 describe('SocialShareMenu', () => {
   describe('behavior', () => {
@@ -91,7 +94,6 @@ describe('SocialShareMenu', () => {
       when(reduxHooks.useCardEnrollmentData).expectCalledWith(props.cardId);
       when(reduxHooks.useCardCourseData).expectCalledWith(props.cardId);
       when(reduxHooks.useCardSocialSettingsData).expectCalledWith(props.cardId);
-      when(reduxHooks.useMasqueradeData).expectCalledWith();
       when(reduxHooks.useTrackCourseEvent).expectCalledWith(track.socialShare, props.cardId, 'twitter');
       when(reduxHooks.useTrackCourseEvent).expectCalledWith(track.socialShare, props.cardId, 'facebook');
     });
@@ -114,9 +116,11 @@ describe('SocialShareMenu', () => {
           expect(emailSettingsButton).toBeInTheDocument();
         });
         if (isMasquerading) {
-          it('is disabled', () => {
+          it('renders when masquerading', () => {
             const emailSettingsButton = screen.getByRole('button', { name: messages.emailSettings.defaultMessage });
+            expect(emailSettingsButton).toBeInTheDocument();
             expect(emailSettingsButton).toHaveAttribute('aria-disabled', 'true');
+            expect(emailSettingsButton).toHaveClass('disabled');
           });
         } else {
           it('is enabled', () => {
@@ -167,8 +171,8 @@ describe('SocialShareMenu', () => {
     });
     describe('masquerading', () => {
       beforeEach(() => {
-        mockHooks({ isEmailEnabled: true, isMasquerading: true });
-        renderComponent();
+        mockHooks({ isEmailEnabled: true });
+        renderComponent(true);
       });
       testEmailSettingsDropdown(true);
     });

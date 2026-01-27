@@ -1,11 +1,11 @@
 import { render, screen } from '@testing-library/react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { IntlProvider } from '@openedx/frontend-base';
 import LookingForChallengeWidget from '.';
 import messages from './messages';
 
 const courseSearchUrl = 'http://localhost:18000/course-search-url';
 
-jest.mock('hooks', () => ({
+jest.mock('@src/hooks', () => ({
   reduxHooks: {
     usePlatformSettingsData: () => ({
       courseSearchUrl,

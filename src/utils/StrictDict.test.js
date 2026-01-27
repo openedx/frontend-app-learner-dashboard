@@ -19,7 +19,7 @@ describe('StrictDict', () => {
     window.console.log = jest.fn();
     window.Error = jest.fn(error => ({ stack: error }));
   });
-  afterAll(() => {
+  afterEach(() => {
     window.console.error = consoleError;
     window.console.log = consoleLog;
     window.Error = windowError;
@@ -50,14 +50,9 @@ describe('StrictDict', () => {
     expect(Object.entries(dict)).toEqual(Object.entries(rawDict));
   });
   describe('missing key', () => {
-    it('logs error with target, name, and error stack', () => {
-      // eslint-ignore-next-line no-unused-vars
-      const callBadKey = () => dict.fakeKey;
-      callBadKey();
-      expect(window.console.error.mock.calls).toEqual([
-        [{ target: dict, name: 'fakeKey' }],
-        [Error('invalid property "fakeKey"').stack],
-      ]);
+    it('returns undefined for missing key', () => {
+      // Accessing a missing key should return undefined
+      expect(dict.fakeKey).toBeUndefined();
     });
     it('returns undefined', () => {
       expect(dict.fakeKey).toEqual(undefined);

@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
-import { formatMessage } from 'testUtils';
-import { reduxHooks } from 'hooks';
+import { IntlProvider } from '@openedx/frontend-base';
+import { formatMessage } from '@src/testUtils';
+import { reduxHooks } from '@src/hooks';
 import useActionDisabledState from './hooks';
 import { CourseCardImage } from './CourseCardImage';
 import messages from '../messages';
@@ -9,7 +9,7 @@ import messages from '../messages';
 const homeUrl = 'https://example.com';
 const bannerImgSrc = 'banner-img-src.jpg';
 
-jest.mock('hooks', () => ({
+jest.mock('@src/hooks', () => ({
   reduxHooks: {
     useCardCourseData: jest.fn(() => ({ bannerImgSrc })),
     useCardCourseRunData: jest.fn(() => ({ homeUrl })),

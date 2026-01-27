@@ -1,15 +1,15 @@
-import { createEventTracker, createLinkTracker } from 'data/services/segment/utils';
-import { creditPurchaseUrl } from 'data/services/lms/urls';
+import { createEventTracker, createLinkTracker } from '@src/data/services/segment/utils';
+import { creditPurchaseUrl } from '@src/data/services/lms/urls';
 
-import { eventNames, categories } from '../constants';
+import { eventNames, categories } from '@src/tracking/constants';
 import * as trackers from './credit';
 
-jest.mock('data/services/segment/utils', () => ({
+jest.mock('@src/data/services/segment/utils', () => ({
   createEventTracker: jest.fn(args => ({ createEventTracker: args })),
   createLinkTracker: jest.fn((cb, href) => ({ createLinkTracker: { cb, href } })),
 }));
 
-jest.mock('data/services/lms/urls', () => ({
+jest.mock('@src/data/services/lms/urls', () => ({
   creditPurchaseUrl: jest.fn(courseId => `credit-purchase-url/${courseId}`),
 }));
 

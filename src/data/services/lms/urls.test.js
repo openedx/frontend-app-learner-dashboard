@@ -1,5 +1,5 @@
 import { getAppConfig, getSiteConfig } from '@openedx/frontend-base';
-import { appId } from '../../../constants';
+import { appId } from '@src/constants';
 import * as urls from './urls';
 
 describe('urls', () => {

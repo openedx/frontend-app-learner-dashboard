@@ -1,10 +1,9 @@
 import { render, screen } from '@testing-library/react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
-
+import { IntlProvider } from '@openedx/frontend-base';
+import RelatedProgramsBadge from '../RelatedProgramsBadge';
 import useRelatedProgramsBadge from './hooks';
-import RelatedProgramsBadge from '.';
 
-jest.mock('containers/RelatedProgramsModal', () => 'RelatedProgramsModal');
+jest.mock('@src/containers/RelatedProgramsModal', () => 'RelatedProgramsModal');
 jest.mock('./hooks', () => jest.fn());
 
 const hookProps = {
@@ -13,7 +12,7 @@ const hookProps = {
   closeModal: jest.fn().mockName('useRelatedProgramsBadge.closeModal'),
   numPrograms: 3,
   programsMessage: 'useRelatedProgramsBadge.programsMessage',
-};
+}
 
 const cardId = 'test-card-id';
 

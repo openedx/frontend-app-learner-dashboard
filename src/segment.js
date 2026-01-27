@@ -55,8 +55,7 @@ import { configuration } from './config';
   };
 
   // For each of our methods, generate a queueing stub.
-  for (let i = 0; i < analytics.methods.length; i++) {
-    const key = analytics.methods[i];
+  for (const key of analytics.methods) {
     analytics[key] = analytics.factory(key);
   }
 

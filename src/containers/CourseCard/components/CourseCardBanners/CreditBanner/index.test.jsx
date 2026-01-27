@@ -1,5 +1,5 @@
 import { screen, render } from '@testing-library/react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { IntlProvider } from '@openedx/frontend-base';
 import hooks from './hooks';
 import { CreditBanner } from '.';
 

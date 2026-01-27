@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
-import { formatMessage } from 'testUtils';
+import { formatMessage } from '@src/testUtils';
 
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { IntlProvider } from '@openedx/frontend-base';
 import { UnenrollConfirmModal } from '.';
 
 import * as hooks from './hooks';

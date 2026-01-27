@@ -1,13 +1,14 @@
 import { render, screen } from '@testing-library/react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { IntlProvider } from '@openedx/frontend-base';
 
-import { reduxHooks } from 'hooks';
+import { reduxHooks } from '@src/hooks';
+import MasqueradeUserContext from '@src/data/contexts/MasqueradeUserContext';
 
 import messages from './messages';
 import PendingContent from './PendingContent';
 
-jest.mock('hooks', () => ({
-  reduxHooks: { useCardCreditData: jest.fn(), useMasqueradeData: jest.fn() },
+jest.mock('@src/hooks', () => ({
+  reduxHooks: { useCardCreditData: jest.fn() },
 }));
 
 const cardId = 'test-card-id';
@@ -17,11 +18,12 @@ reduxHooks.useCardCreditData.mockReturnValue({
   providerName,
   providerStatusUrl,
 });
-reduxHooks.useMasqueradeData.mockReturnValue({ isMasquerading: false });
 
-const renderPendingContent = () => render(
+const renderPendingContent = (isMasquerading = false) => render(
   <IntlProvider messages={{}} locale="en">
-    <PendingContent cardId={cardId} />
+    <MasqueradeUserContext.Provider value={{ isMasquerading }}>
+      <PendingContent cardId={cardId} />
+    </MasqueradeUserContext.Provider>
   </IntlProvider>,
 );
 describe('PendingContent component', () => {
@@ -56,9 +58,9 @@ describe('PendingContent component', () => {
       });
       describe('when masqueradeData is true', () => {
         it('disables the view details button', () => {
-          reduxHooks.useMasqueradeData.mockReturnValue({ isMasquerading: true });
-          renderPendingContent();
+          renderPendingContent(true);
           const button = screen.getByRole('link', { name: messages.viewDetails.defaultMessage });
+          expect(button).toHaveAttribute('aria-disabled', 'true');
           expect(button).toHaveClass('disabled');
         });
       });
