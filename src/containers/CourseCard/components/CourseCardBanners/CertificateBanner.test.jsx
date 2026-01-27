@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { IntlProvider } from '@openedx/frontend-base';
 
-import { reduxHooks } from 'hooks';
+import { reduxHooks } from '@src/hooks';
 import CertificateBanner from './CertificateBanner';
 
-jest.mock('hooks', () => ({
+jest.mock('@src/hooks', () => ({
   utilHooks: {
     useFormatDate: jest.fn(() => date => date),
   },

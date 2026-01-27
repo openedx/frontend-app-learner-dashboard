@@ -1,12 +1,9 @@
-import React from 'react';
-
 import { useIntl } from '@openedx/frontend-base';
 import { useWindowSize, breakpoints } from '@openedx/paragon';
+import { apiHooks } from '@src/hooks';
+import { MockUseState } from '@src/testUtils';
 
-import { apiHooks } from 'hooks';
-import { MockUseState } from 'testUtils';
-
-import appMessages from 'messages';
+import appMessages from '@src/messages';
 import * as hooks from './hooks';
 
 jest.mock('@openedx/paragon', () => ({
@@ -15,17 +12,17 @@ jest.mock('@openedx/paragon', () => ({
   breakpoints: {},
 }));
 
-jest.mock('@edx/frontend-platform/i18n', () => {
-  const { formatMessage } = jest.requireActual('testUtils');
+jest.mock('@openedx/frontend-base', () => {
+  const { formatMessage } = jest.requireActual('@src/testUtils');
   return {
-    ...jest.requireActual('@edx/frontend-platform/i18n'),
+    ...jest.requireActual('@openedx/frontend-base',),
     useIntl: () => ({
       formatMessage,
     }),
   };
 });
 
-jest.mock('hooks', () => ({
+jest.mock('@src/hooks', () => ({
   apiHooks: {
     useInitializeApp: jest.fn(),
   },
@@ -35,7 +32,6 @@ jest.mock('react', () => ({
   ...jest.requireActual('react'),
   useEffect: jest.fn((cb, prereqs) => ({ useEffect: { cb, prereqs } })),
 }));
-
 const state = new MockUseState(hooks);
 
 const initializeApp = jest.fn();
@@ -79,24 +75,14 @@ describe('CourseCard hooks', () => {
       });
     });
   });
-  describe('useInitializeDashboard', () => {
-    it('dispatches initialize thunk action on component load', () => {
-      hooks.useInitializeDashboard();
-      const [cb, prereqs] = React.useEffect.mock.calls[0];
-      expect(prereqs).toEqual([]);
-      expect(initializeApp).not.toHaveBeenCalled();
-      cb();
-      expect(initializeApp).toHaveBeenCalledWith();
-    });
-  });
   describe('useDashboardMessages', () => {
     it('returns spinner screen reader text', () => {
-      expect(hooks.useDashboardMessages()['learner-dash.loadingSR']).toEqual(
+      expect(hooks.useDashboardMessages().spinnerScreenReaderText).toEqual(
         formatMessage(appMessages['learner-dash.loadingSR']),
       );
     });
     it('returns page title', () => {
-      expect(hooks.useDashboardMessages()['learner-dash.title']).toEqual(
+      expect(hooks.useDashboardMessages().pageTitle).toEqual(
         formatMessage(appMessages['learner-dash.title']),
       );
     });

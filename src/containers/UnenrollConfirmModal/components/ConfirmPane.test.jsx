@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import { formatMessage } from 'testUtils';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { formatMessage } from '@src/testUtils';
+import { IntlProvider } from '@openedx/frontend-base';
 
 import { ConfirmPane } from './ConfirmPane';
 import messages from './messages';

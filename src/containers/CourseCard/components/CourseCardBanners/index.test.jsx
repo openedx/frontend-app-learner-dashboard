@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { IntlProvider } from '@openedx/frontend-base';
+import { MemoryRouter } from 'react-router-dom';
 
-import { reduxHooks } from 'hooks';
-
+import { reduxHooks } from '@src/hooks';
 import CourseCardBanners from '.';
 
 jest.mock('./CourseBanner', () => jest.fn(() => <div>CourseBanner</div>));
@@ -19,7 +19,7 @@ const mockedComponents = [
   'RelatedProgramsBanner',
 ];
 
-jest.mock('hooks', () => ({
+jest.mock('@src/hooks', () => ({
   reduxHooks: {
     useCardEnrollmentData: jest.fn(() => ({ isEnrolled: true })),
   },
@@ -30,7 +30,14 @@ describe('CourseCardBanners', () => {
     cardId: 'test-card-id',
   };
   it('renders default CourseCardBanners', () => {
-    render(<IntlProvider locale="en"><CourseCardBanners {...props} /></IntlProvider>);
+    reduxHooks.useCardEnrollmentData.mockReturnValueOnce({ isEnrolled: true });
+    render(
+      <MemoryRouter>
+        <IntlProvider locale="en">
+          <CourseCardBanners {...props} />
+        </IntlProvider>
+      </MemoryRouter>
+    );
     mockedComponents.map((componentName) => {
       const mockedComponent = screen.getByText(componentName);
       return expect(mockedComponent).toBeInTheDocument();
@@ -38,7 +45,13 @@ describe('CourseCardBanners', () => {
   });
   it('render with isEnrolled false', () => {
     reduxHooks.useCardEnrollmentData.mockReturnValueOnce({ isEnrolled: false });
-    render(<IntlProvider locale="en"><CourseCardBanners {...props} /></IntlProvider>);
+    render(
+      <MemoryRouter>
+        <IntlProvider locale="en">
+          <CourseCardBanners {...props} />
+        </IntlProvider>
+      </MemoryRouter>
+    );
     const mockedComponentsIfNotEnrolled = mockedComponents.slice(-2);
     mockedComponentsIfNotEnrolled.map((componentName) => {
       const mockedComponent = screen.getByText(componentName);

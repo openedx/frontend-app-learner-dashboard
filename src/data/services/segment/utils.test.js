@@ -1,6 +1,6 @@
 import { sendTrackEvent } from '@openedx/frontend-base';
 
-import { appName } from 'tracking/constants';
+import { appName } from '@src/tracking/constants';
 
 import { createEventTracker, createLinkTracker, LINK_TIMEOUT } from './utils';
 

@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
-import { formatMessage } from 'testUtils';
+import { IntlProvider } from '@openedx/frontend-base';
+import { formatMessage } from '@src/testUtils';
 
-import { SortKeys } from 'data/constants/app';
+import { SortKeys } from '@src/data/constants/app';
 import SortForm from './SortForm';
 import messages from '../messages';
 

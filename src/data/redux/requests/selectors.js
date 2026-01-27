@@ -1,6 +1,5 @@
 import { StrictDict } from '../../../utils';
-import { RequestStates, RequestKeys } from '../../../data/constants/requests';
-// import * as module from './selectors';
+import { RequestStates } from '../../../data/constants/requests';
 
 export const requestStatus = (state, { requestKey }) => state.requests[requestKey];
 

@@ -1,21 +1,20 @@
 import { useIntl } from '@openedx/frontend-base';
 
-import { MockUseState } from 'testUtils';
-import { reduxHooks } from 'hooks';
+import { MockUseState } from '@src/testUtils';
+import { reduxHooks } from '@src/hooks';
 
 import * as hooks from './hooks';
 import messages from './messages';
 
-jest.mock('hooks', () => ({
+jest.mock('@src/hooks', () => ({
   reduxHooks: {
     useCardRelatedProgramsData: jest.fn(),
   },
 }));
-
-jest.mock('@edx/frontend-platform/i18n', () => {
-  const { formatMessage } = jest.requireActual('testUtils');
+jest.mock('@openedx/frontend-base', () => {
+  const { formatMessage } = jest.requireActual('@src/testUtils');
   return {
-    ...jest.requireActual('@edx/frontend-platform/i18n'),
+    ...jest.requireActual('@openedx/frontend-base'),
     useIntl: () => ({
       formatMessage,
     }),
@@ -25,7 +24,7 @@ jest.mock('@edx/frontend-platform/i18n', () => {
 const cardId = 'test-card-id';
 
 const state = new MockUseState(hooks);
-const numPrograms = 27;
+let numPrograms = 27;
 
 describe('RelatedProgramsBadge hooks', () => {
   const { formatMessage } = useIntl();
@@ -35,6 +34,9 @@ describe('RelatedProgramsBadge hooks', () => {
   });
   beforeEach(() => {
     jest.clearAllMocks();
+    reduxHooks.useCardRelatedProgramsData.mockReturnValueOnce({
+      length: numPrograms,
+    });
   });
   describe('useRelatedProgramsBadgeData', () => {
     beforeEach(() => {
@@ -64,11 +66,13 @@ describe('RelatedProgramsBadge hooks', () => {
       expect(out.numPrograms).toEqual(numPrograms);
     });
     test('returns empty programsMessage if no programs', () => {
+      reduxHooks.useCardRelatedProgramsData.mockReset();
       reduxHooks.useCardRelatedProgramsData.mockReturnValueOnce({ length: 0 });
       out = hooks.useRelatedProgramsBadgeData({ cardId });
       expect(out.programsMessage).toEqual('');
     });
     test('returns badgeLabelSingular programsMessage if 1 programs', () => {
+      reduxHooks.useCardRelatedProgramsData.mockReset();
       reduxHooks.useCardRelatedProgramsData.mockReturnValueOnce({ length: 1 });
       out = hooks.useRelatedProgramsBadgeData({ cardId });
       expect(out.programsMessage).toEqual(formatMessage(

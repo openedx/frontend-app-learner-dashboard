@@ -1,11 +1,11 @@
-import { keyStore } from 'utils';
-import { baseAppUrl } from 'data/services/lms/urls';
-import { EXECUTIVE_EDUCATION_COURSE_MODES } from 'data/constants/course';
+import { keyStore } from '@src/utils';
+import { baseAppUrl } from '@src/data/services/lms/urls';
+import { EXECUTIVE_EDUCATION_COURSE_MODES } from '@src/data/constants/course';
 
 import simpleSelectors from './simpleSelectors';
 import * as module from './courseCard';
 
-jest.mock('data/services/lms/urls', () => ({
+jest.mock('@src/data/services/lms/urls', () => ({
   baseAppUrl: url => ({ baseAppUrl: url }),
 }));
 

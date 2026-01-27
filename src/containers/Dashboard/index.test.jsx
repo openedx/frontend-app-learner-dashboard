@@ -1,15 +1,18 @@
 import { render, screen } from '@testing-library/react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { IntlProvider } from '@openedx/frontend-base';
 
-import { reduxHooks } from 'hooks';
+import { reduxHooks, apiHooks } from '@src/hooks';
 import hooks from './hooks';
-import Dashboard from '.';
+import Dashboard from './';
 
-jest.mock('hooks', () => ({
+jest.mock('@src/hooks', () => ({
   reduxHooks: {
     useHasCourses: jest.fn(),
     useShowSelectSessionModal: jest.fn(),
     useRequestIsPending: jest.fn(),
+  },
+  apiHooks: {
+    useInitializeApp: jest.fn(),
   },
 }));
 
@@ -18,11 +21,11 @@ jest.mock('./hooks', () => ({
   useDashboardMessages: jest.fn(),
 }));
 
-jest.mock('slots/DashboardModalSlot', () => jest.fn(() => <div>DashboardModalSlot</div>));
-jest.mock('containers/CoursesPanel', () => jest.fn(() => <div>CoursesPanel</div>));
-jest.mock('./LoadingView', () => jest.fn(() => <div>LoadingView</div>));
-jest.mock('containers/SelectSessionModal', () => jest.fn(() => <div>SelectSessionModal</div>));
+jest.mock('../../slots/DashboardModalSlot', () => jest.fn(() => <div>DashboardModalSlot</div>));
+jest.mock('@src/containers/CoursesPanel', () => jest.fn(() => <div>CoursesPanel</div>));
+jest.mock('@src/containers/SelectSessionModal', () => jest.fn(() => <div>SelectSessionModal</div>));
 jest.mock('./DashboardLayout', () => jest.fn(() => <div>DashboardLayout</div>));
+jest.mock('./LoadingView', () => jest.fn(() => <div>LoadingView</div>));
 
 const pageTitle = 'test-page-title';
 
@@ -34,6 +37,7 @@ describe('Dashboard', () => {
       showSelectSessionModal = true,
     } = props;
     hooks.useDashboardMessages.mockReturnValue({ pageTitle });
+    apiHooks.useInitializeApp.mockReturnValue({ isPending: initIsPending });
     reduxHooks.useHasCourses.mockReturnValue(hasCourses);
     reduxHooks.useRequestIsPending.mockReturnValue(initIsPending);
     reduxHooks.useShowSelectSessionModal.mockReturnValue(showSelectSessionModal);
@@ -58,9 +62,10 @@ describe('Dashboard', () => {
         expect(selectSessionModal).toBeInTheDocument();
       });
     });
+    
     describe('courses still loading', () => {
       it('should render LoadingView', () => {
-        createWrapper({ hasCourses: false });
+        createWrapper({ initIsPending: true });
         const loadingView = screen.getByText('LoadingView');
         expect(loadingView).toBeInTheDocument();
       });

@@ -1,13 +1,13 @@
 import { render, screen } from '@testing-library/react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { IntlProvider } from '@openedx/frontend-base';
 
-import { reduxHooks } from 'hooks';
-import { formatMessage } from 'testUtils';
+import { reduxHooks } from '@src/hooks';
+import { formatMessage } from '@src/testUtils';
 import { CourseBanner } from './CourseBanner';
 
 import messages from './messages';
 
-jest.mock('hooks', () => ({
+jest.mock('@src/hooks', () => ({
   utilHooks: {
     useFormatDate: () => date => date,
   },

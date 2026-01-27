@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
-import { formatMessage } from 'testUtils';
-import { FilterKeys } from 'data/constants/app';
+import { IntlProvider } from '@openedx/frontend-base';
+import { formatMessage } from '@src/testUtils';
+import { FilterKeys } from '@src/data/constants/app';
 import { FilterForm, filterOrder } from './FilterForm';
 import messages from '../messages';
 

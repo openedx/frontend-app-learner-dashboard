@@ -1,5 +1,5 @@
-import { keyStore } from 'utils';
-import { reduxHooks } from 'hooks';
+import { keyStore } from '@src/utils';
+import { reduxHooks } from '@src/hooks';
 
 import ApprovedContent from './views/ApprovedContent';
 import EligibleContent from './views/EligibleContent';
@@ -9,7 +9,7 @@ import RejectedContent from './views/RejectedContent';
 
 import * as hooks from './hooks';
 
-jest.mock('hooks', () => ({
+jest.mock('@src/hooks', () => ({
   reduxHooks: {
     useCardCreditData: jest.fn(),
     usePlatformSettingsData: jest.fn(),

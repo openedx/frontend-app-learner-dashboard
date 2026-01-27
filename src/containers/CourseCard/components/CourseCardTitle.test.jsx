@@ -1,17 +1,17 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { reduxHooks } from 'hooks';
-import track from 'tracking';
+import { reduxHooks } from '@src/hooks';
 import useActionDisabledState from './hooks';
 import CourseCardTitle from './CourseCardTitle';
+import track from '@src/tracking';
 
-jest.mock('tracking', () => ({
+jest.mock('@src/tracking', () => ({
   course: {
     courseTitleClicked: jest.fn().mockName('segment.courseTitleClicked'),
   },
 }));
 
-jest.mock('hooks', () => ({
+jest.mock('@src/hooks', () => ({
   reduxHooks: {
     useCardCourseData: jest.fn(),
     useCardCourseRunData: jest.fn(),

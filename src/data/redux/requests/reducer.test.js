@@ -1,4 +1,4 @@
-import { RequestStates } from 'data/constants/requests';
+import { RequestStates } from '@src/data/constants/requests';
 import { initialState, actions, reducer } from './reducer';
 
 const testingState = {

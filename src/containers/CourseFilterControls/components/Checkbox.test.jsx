@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
-import { formatMessage } from 'testUtils';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { formatMessage } from '@src/testUtils';
+import { IntlProvider } from '@openedx/frontend-base';
 
-import { FilterKeys } from 'data/constants/app';
+import { FilterKeys } from '@src/data/constants/app';
 import Checkbox from './Checkbox';
 import messages from '../messages';
 

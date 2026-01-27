@@ -1,13 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { IntlProvider } from '@openedx/frontend-base';
 
-import { reduxHooks } from 'hooks';
+import { reduxHooks } from '@src/hooks';
 import useActionDisabledState from '../hooks';
 
 import SelectSessionButton from './SelectSessionButton';
 
-jest.mock('hooks', () => ({
+jest.mock('@src/hooks', () => ({
   reduxHooks: {
     useUpdateSelectSessionModalCallback: jest.fn(),
   },

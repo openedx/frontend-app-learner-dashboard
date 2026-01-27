@@ -1,15 +1,15 @@
 import { render, screen } from '@testing-library/react';
-import { formatMessage } from 'testUtils';
+import { formatMessage } from '@src/testUtils';
 import { breakpoints, useWindowSize } from '@openedx/paragon';
-import { reduxHooks } from 'hooks';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
-import { FilterKeys, SortKeys } from 'data/constants/app';
+import { reduxHooks } from '@src/hooks';
+import { IntlProvider } from '@openedx/frontend-base';
+import { FilterKeys, SortKeys } from '@src/data/constants/app';
 
 import messages from './messages';
 import CourseFilterControls from './CourseFilterControls';
 import useCourseFilterControlsData from './hooks';
 
-jest.mock('hooks', () => ({
+jest.mock('@src/hooks', () => ({
   reduxHooks: { useHasCourses: jest.fn() },
 }));
 

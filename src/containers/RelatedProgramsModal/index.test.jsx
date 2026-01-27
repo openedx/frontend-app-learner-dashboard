@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { IntlProvider } from '@openedx/frontend-base';
 
-import { reduxHooks } from 'hooks';
+import { reduxHooks } from '@src/hooks';
 import RelatedProgramsModal from '.';
 import messages from './messages';
 
 jest.mock('./components/ProgramCard', () => jest.fn(() => <div>ProgramCard</div>));
-jest.mock('hooks', () => ({
+jest.mock('@src/hooks', () => ({
   reduxHooks: {
     useCardCourseData: jest.fn(),
     useCardRelatedProgramsData: jest.fn(),
