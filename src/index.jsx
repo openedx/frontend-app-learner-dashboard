@@ -5,7 +5,7 @@ import 'regenerator-runtime/runtime';
 import React, { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
-  Route, Navigate, Routes,
+  Navigate, Route, Routes,
 } from 'react-router-dom';
 
 import {
@@ -19,8 +19,13 @@ import {
   APP_INIT_ERROR,
   initialize,
   subscribe,
+  getConfig,
   mergeConfig,
 } from '@edx/frontend-platform';
+import { FooterSlot } from '@edx/frontend-component-footer';
+
+import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
+import { ProgramsList } from 'containers/ProgramDashboard';
 
 import { configuration } from './config';
 
@@ -34,10 +39,15 @@ subscribe(APP_READY, () => {
   root.render(
     <StrictMode>
       <AppProvider store={store}>
+        <LearnerDashboardHeader />
         <Routes>
           <Route path="/" element={<PageWrap><App /></PageWrap>} />
+          {getConfig().ENABLE_PROGRAM_DASHBOARD && (
+            <Route path="programs" element={<PageWrap><ProgramsList /></PageWrap>} />
+          )}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
+        <FooterSlot />
       </AppProvider>
     </StrictMode>,
   );

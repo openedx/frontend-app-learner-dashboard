@@ -1,8 +1,10 @@
 import { mergeConfig } from '@edx/frontend-platform';
 import { render, screen } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { useLocation } from 'react-router-dom';
 
 import urls from 'data/services/lms/urls';
+import { useDashboardMessages } from 'containers/Dashboard/hooks';
 import LearnerDashboardHeader from '.';
 import { findCoursesNavClicked } from './hooks';
 
@@ -20,6 +22,12 @@ jest.mock('./hooks', () => ({
   findCoursesNavClicked: jest.fn(),
 }));
 
+jest.mock('react-router-dom', () => ({
+  useLocation: jest.fn(() => ({
+    pathname: '/',
+  })),
+}));
+
 const mockedHeaderProps = jest.fn();
 jest.mock('containers/MasqueradeBar', () => jest.fn(() => <div>MasqueradeBar</div>));
 jest.mock('./ConfirmEmailBanner', () => jest.fn(() => <div>ConfirmEmailBanner</div>));
@@ -27,9 +35,21 @@ jest.mock('@edx/frontend-component-header', () => jest.fn((props) => {
   mockedHeaderProps(props);
   return <div>Header</div>;
 }));
+jest.mock('containers/Dashboard/hooks', () => ({
+  useDashboardMessages: jest.fn(),
+}));
+
+const pageTitle = 'test-page-title';
 
 describe('LearnerDashboardHeader', () => {
   beforeEach(() => jest.clearAllMocks());
+
+  it('page title is displayed in sr-only h1 tag', () => {
+    useDashboardMessages.mockReturnValue({ pageTitle });
+    render(<IntlProvider locale="en"><LearnerDashboardHeader /></IntlProvider>);
+    const heading = screen.getByText(pageTitle);
+    expect(heading).toHaveClass('sr-only');
+  });
   it('renders and discover url is correct', () => {
     mergeConfig({ ORDER_HISTORY_URL: 'test-url' });
     render(<IntlProvider locale="en"><LearnerDashboardHeader /></IntlProvider>);
@@ -58,6 +78,26 @@ describe('LearnerDashboardHeader', () => {
     const { mainMenuItems } = props;
     expect(mainMenuItems.length).toBe(3);
   });
+
+  it('should highlight the active tab depending on the pathname', () => {
+    render(<IntlProvider locale="en"><LearnerDashboardHeader /></IntlProvider>);
+    const props = mockedHeaderProps.mock.calls[0][0];
+    const { mainMenuItems } = props;
+    expect(mainMenuItems[0].isActive).toBe(true);
+  });
+
+  it('should highlight the active tab depending on the pathname', () => {
+    mergeConfig({ ENABLE_PROGRAMS: true, ENABLE_PROGRAM_DASHBOARD: true });
+    useLocation.mockReturnValueOnce({
+      pathname: '/programs',
+    });
+    render(<IntlProvider locale="en"><LearnerDashboardHeader /></IntlProvider>);
+    const props = mockedHeaderProps.mock.calls[0][0];
+    const { mainMenuItems } = props;
+    expect(mainMenuItems[0].isActive).toBe(false);
+    expect(mainMenuItems[1].isActive).toBe(true);
+  });
+
   it('should not display Discover New tab if it is disabled by configuration', () => {
     mergeConfig({ NON_BROWSABLE_COURSES: true });
     render(<IntlProvider locale="en"><LearnerDashboardHeader /></IntlProvider>);

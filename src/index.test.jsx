@@ -25,6 +25,9 @@ jest.mock('react-dom/client', () => {
 });
 
 jest.mock('@edx/frontend-platform', () => ({
+  getConfig: jest.fn(() => ({
+    ENABLE_PROGRAM_DASHBOARD: true,
+  })),
   mergeConfig: jest.fn(),
   ensureConfig: jest.fn(),
   APP_READY: 'app-is-ready-key',
@@ -35,6 +38,12 @@ jest.mock('@edx/frontend-platform', () => ({
 
 jest.mock('data/store', () => ({ redux: 'store' }));
 jest.mock('./App', () => 'App');
+jest.mock('@edx/frontend-component-footer', () => ({
+  FooterSlot: jest.fn(() => <div>FooterSlot</div>),
+}));
+
+jest.mock('containers/LearnerDashboardHeader', () => 'LearnerDashboardHeader');
+jest.mock('containers/ProgramDashboard', () => 'ProgramDashboard');
 
 describe('app registry', () => {
   let getElement;
