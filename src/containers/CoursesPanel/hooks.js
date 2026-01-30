@@ -1,4 +1,5 @@
-import React from 'react';
+// TODO: Not being used anymore
+/* import React from 'react';
 
 import { ListPageSize, SortKeys } from 'data/constants/app';
 import { reduxHooks } from 'hooks';
@@ -17,6 +18,7 @@ export const state = StrictDict({
  *
  * @returns data for the CoursesPanel component
  */
+/*
 export const useCourseListData = () => {
   const filters = reduxHooks.useFilters();
   const removeFilter = reduxHooks.useRemoveFilter();
@@ -51,4 +53,4 @@ export const useCourseListData = () => {
   };
 };
 
-export default useCourseListData;
+export default useCourseListData; */

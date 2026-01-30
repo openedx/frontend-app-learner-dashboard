@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { StrictDict } from 'utils';
-import { apiHooks } from 'hooks';
 
+import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
 import { useUnenrollReasons } from './reasons';
 import * as module from '.';
 
@@ -20,7 +20,7 @@ export const useUnenrollData = ({ closeModal, cardId }) => {
   const [isConfirmed, setIsConfirmed] = module.state.confirmed(false);
   const confirm = () => setIsConfirmed(true);
   const reason = useUnenrollReasons({ cardId });
-  const refreshList = apiHooks.useInitializeApp();
+  const { refetch: refreshList } = useInitializeLearnerHome();
 
   let modalState;
   if (isConfirmed) {

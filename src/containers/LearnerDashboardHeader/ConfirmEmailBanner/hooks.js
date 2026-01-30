@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { StrictDict } from 'utils';
-import { apiHooks, reduxHooks } from 'hooks';
+import { useInitializeLearnerHome, useSendConfirmEmail } from 'data/react-query/apiHooks';
 
 import * as module from './hooks';
 
@@ -11,13 +11,15 @@ export const state = StrictDict({
 });
 
 export const useConfirmEmailBannerData = () => {
-  const { isNeeded } = reduxHooks.useEmailConfirmationData();
+  const { data: learnerData } = useInitializeLearnerHome();
+  const isNeeded = learnerData?.emailConfirmation?.isNeeded || false;
+  const sendEmailUrl = learnerData?.emailConfirmation?.sendEmailUrl || '';
+  const { mutate: sendConfirmEmail } = useSendConfirmEmail(sendEmailUrl);
   const [showPageBanner, setShowPageBanner] = module.state.showPageBanner(isNeeded);
   const [showConfirmModal, setShowConfirmModal] = module.state.showConfirmModal(false);
   const closePageBanner = () => setShowPageBanner(false);
   const closeConfirmModal = () => setShowConfirmModal(false);
   const openConfirmModal = () => setShowConfirmModal(true);
-  const sendConfirmEmail = apiHooks.useSendConfirmEmail();
 
   const openConfirmModalButtonClick = () => {
     sendConfirmEmail();

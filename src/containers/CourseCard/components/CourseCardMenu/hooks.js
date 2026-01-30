@@ -1,7 +1,8 @@
 import track from 'tracking';
-import { reduxHooks } from 'hooks';
+import { useCourseData, useCourseTrackingEvent } from 'hooks';
 import { useState } from 'react';
 import { StrictDict } from 'utils';
+import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
 
 export const state = StrictDict({
   isUnenrollConfirmVisible: (val) => useState(val), // eslint-disable-line
@@ -27,7 +28,7 @@ export const useEmailSettings = () => {
 };
 
 export const useHandleToggleDropdown = (cardId) => {
-  const trackCourseEvent = reduxHooks.useTrackCourseEvent(
+  const trackCourseEvent = useCourseTrackingEvent(
     track.course.courseOptionsDropdownClicked,
     cardId,
   );
@@ -36,10 +37,30 @@ export const useHandleToggleDropdown = (cardId) => {
   };
 };
 
+export const useCardSocialSettingsData = (cardId) => {
+  const { data: learnerHomeData } = useInitializeLearnerHome();
+  const { data: courseData } = useCourseData(cardId);
+  const socialShareSettings = learnerHomeData?.socialShareSettings;
+  const { socialShareUrl } = courseData?.course || {};
+  const defaultSettings = { isEnabled: false, shareUrl: '' };
+
+  if (!socialShareSettings) {
+    return { facebook: defaultSettings, twitter: defaultSettings };
+  }
+  const { facebook, twitter } = socialShareSettings;
+  const loadSettings = (target) => ({
+    isEnabled: target.isEnabled,
+    shareUrl: `${socialShareUrl}?${target.utmParams}`,
+  });
+  return { facebook: loadSettings(facebook), twitter: loadSettings(twitter) };
+};
+
 export const useOptionVisibility = (cardId) => {
-  const { isEnrolled, isEmailEnabled } = reduxHooks.useCardEnrollmentData(cardId);
-  const { twitter, facebook } = reduxHooks.useCardSocialSettingsData(cardId);
-  const { isEarned } = reduxHooks.useCardCertificateData(cardId);
+  const courseData = useCourseData(cardId);
+  const isEmailEnabled = courseData?.enrollment?.isEmailEnabled ?? false;
+  const isEnrolled = courseData?.enrollment?.isEnrolled ?? false;
+  const { twitter, facebook } = useCardSocialSettingsData(cardId);
+  const isEarned = courseData?.certificate?.isEarned ?? false;
 
   const shouldShowUnenrollItem = isEnrolled && !isEarned;
   const shouldShowDropdown = (

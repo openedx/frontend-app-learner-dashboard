@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { reduxHooks } from 'hooks';
+import { useCourseData } from 'hooks';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 import {
@@ -16,7 +16,8 @@ export const ConfirmPane = ({
   handleConfirm,
 }) => {
   const { formatMessage } = useIntl();
-  const { courseName } = reduxHooks.useCardCourseData(cardId);
+  const courseData = useCourseData(cardId);
+  const courseName = courseData?.course?.courseName || '';
   const courseTitle = <span className="font-italic">“{courseName}”</span>;
   return (
     <>

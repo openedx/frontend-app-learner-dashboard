@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as ReactShare from 'react-share';
-
+import { EXECUTIVE_EDUCATION_COURSE_MODES } from 'data/constants/course';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { Dropdown } from '@openedx/paragon';
 
 import track from 'tracking';
-import { reduxHooks } from 'hooks';
-
+import { useCourseTrackingEvent, useCourseData } from 'hooks';
+import { useIsMasquerading } from 'hooks/useIsMasquerading';
+import { useCardSocialSettingsData } from './hooks';
 import messages from './messages';
 
 export const testIds = {
@@ -16,14 +17,15 @@ export const testIds = {
 
 export const SocialShareMenu = ({ cardId, emailSettings }) => {
   const { formatMessage } = useIntl();
+  const courseData = useCourseData(cardId);
+  const courseName = courseData?.course?.courseName;
+  const isExecEd2UCourse = EXECUTIVE_EDUCATION_COURSE_MODES.includes(courseData.enrollment.mode);
+  const isEmailEnabled = courseData?.enrollment?.isEmailEnabled ?? false;
+  const { twitter, facebook } = useCardSocialSettingsData(cardId);
+  const isMasquerading = useIsMasquerading();
 
-  const { courseName } = reduxHooks.useCardCourseData(cardId);
-  const { isEmailEnabled, isExecEd2UCourse } = reduxHooks.useCardEnrollmentData(cardId);
-  const { twitter, facebook } = reduxHooks.useCardSocialSettingsData(cardId);
-  const { isMasquerading } = reduxHooks.useMasqueradeData();
-
-  const handleTwitterShare = reduxHooks.useTrackCourseEvent(track.socialShare, cardId, 'twitter');
-  const handleFacebookShare = reduxHooks.useTrackCourseEvent(track.socialShare, cardId, 'facebook');
+  const handleTwitterShare = useCourseTrackingEvent(track.socialShare, cardId, 'twitter');
+  const handleFacebookShare = useCourseTrackingEvent(track.socialShare, cardId, 'facebook');
 
   if (isExecEd2UCourse) {
     return null;

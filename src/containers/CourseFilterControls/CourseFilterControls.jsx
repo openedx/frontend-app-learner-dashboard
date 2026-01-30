@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import {
@@ -14,44 +13,45 @@ import {
 } from '@openedx/paragon';
 import { Close, Tune } from '@openedx/paragon/icons';
 
-import { reduxHooks } from 'hooks';
-
+import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
+import { useFilters } from 'data/context/FiltersProvider';
 import FilterForm from './components/FilterForm';
 import SortForm from './components/SortForm';
-import useCourseFilterControlsData from './hooks';
 import messages from './messages';
 
 import './index.scss';
 
-export const CourseFilterControls = ({
-  sortBy,
-  setSortBy,
-  filters,
-}) => {
+export const CourseFilterControls = () => {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [targetRef, setTargetRef] = React.useState(null);
   const { formatMessage } = useIntl();
-  const hasCourses = reduxHooks.useHasCourses();
+  const { data } = useInitializeLearnerHome();
+  const hasCourses = React.useMemo(() => data?.courses?.length > 0, [data]);
   const {
-    isOpen,
-    open,
-    close,
-    target,
-    setTarget,
-    handleFilterChange,
-    handleSortChange,
-  } = useCourseFilterControlsData({
-    filters,
-    setSortBy,
-  });
+    filters, sortBy, setSortBy, addFilter, removeFilter,
+  } = useFilters();
+
+  const openFiltersOptions = () => setIsOpen(true);
+  const closeFiltersOptions = () => setIsOpen(false);
+
+  const handleSortChange = (event) => {
+    setSortBy(event.target.value);
+  };
+
+  const handleFilterChange = ({ target: { checked, value } }) => {
+    const update = checked ? addFilter : removeFilter;
+    update(value);
+  };
   const { width } = useWindowSize();
   const isMobile = width < breakpoints.small.minWidth;
 
   return (
     <div id="course-filter-controls">
       <Button
-        ref={setTarget}
+        ref={setTargetRef}
         variant="outline-primary"
         iconBefore={Tune}
-        onClick={open}
+        onClick={openFiltersOptions}
         disabled={!hasCourses}
       >
         {formatMessage(messages.refine)}
@@ -63,7 +63,7 @@ export const CourseFilterControls = ({
               className="w-75"
               position="left"
               show={isOpen}
-              onClose={close}
+              onClose={closeFiltersOptions}
             >
               <div className="p-1 mr-3">
                 <b>{formatMessage(messages.refine)}</b>
@@ -76,16 +76,16 @@ export const CourseFilterControls = ({
                 <SortForm {...{ sortBy, handleSortChange }} />
               </div>
               <div className="pgn__modal-close-container">
-                <ModalCloseButton variant="tertiary" onClick={close}>
+                <ModalCloseButton variant="tertiary" onClick={closeFiltersOptions}>
                   <Icon src={Close} />
                 </ModalCloseButton>
               </div>
             </Sheet>
           ) : (
             <ModalPopup
-              positionRef={target}
+              positionRef={targetRef}
               isOpen={isOpen}
-              onClose={close}
+              onClose={closeFiltersOptions}
               placement="bottom-end"
             >
               <div
@@ -105,11 +105,6 @@ export const CourseFilterControls = ({
       </Form>
     </div>
   );
-};
-CourseFilterControls.propTypes = {
-  sortBy: PropTypes.string.isRequired,
-  setSortBy: PropTypes.func.isRequired,
-  filters: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default CourseFilterControls;
