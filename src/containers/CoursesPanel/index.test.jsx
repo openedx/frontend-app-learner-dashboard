@@ -23,10 +23,6 @@ jest.mock('data/context/FiltersProvider', () => ({
   })),
 }));
 
-jest.mock('./hooks', () => ({
-  useCourseListData: jest.fn(),
-}));
-
 jest.mock('containers/CourseCard', () => jest.fn(() => <div>CourseCard</div>));
 jest.mock('containers/CourseFilterControls', () => ({
   ActiveCourseFilters: jest.fn(() => <div>ActiveCourseFilters</div>),
