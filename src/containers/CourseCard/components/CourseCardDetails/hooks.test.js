@@ -1,12 +1,21 @@
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { keyStore } from 'utils';
-import { utilHooks, reduxHooks } from 'hooks';
+import { utilHooks, useCourseData } from 'hooks';
 
 import * as hooks from './hooks';
 import messages from './messages';
 
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useMemo: (fn) => fn(),
+}));
+
+jest.mock('data/context/SelectSessionProvider', () => ({
+  useSelectSessionModal: jest.fn(() => jest.fn()),
+}));
 jest.mock('hooks', () => ({
+  useCourseData: jest.fn(),
   utilHooks: {
     useFormatDate: jest.fn(),
   },
@@ -60,15 +69,12 @@ describe('CourseCardDetails hooks', () => {
     const runHook = ({ provider = {}, entitlement = {} }) => {
       jest.spyOn(hooks, hookKeys.useAccessMessage)
         .mockImplementationOnce(mockAccessMessage);
-      reduxHooks.useCardProviderData.mockReturnValueOnce({
-        ...providerData,
-        ...provider,
+      useCourseData.mockReturnValue({
+        courseProvider: { ...providerData, ...provider },
+        course: { courseNumber },
+        courseRun: {},
+        entitlement: { ...entitlementData, ...entitlement },
       });
-      reduxHooks.useCardEntitlementData.mockReturnValueOnce({
-        ...entitlementData,
-        ...entitlement,
-      });
-      reduxHooks.useCardCourseData.mockReturnValueOnce({ courseNumber });
       out = hooks.useCardDetailsData({ cardId });
     };
     beforeEach(() => {
@@ -101,21 +107,16 @@ describe('CourseCardDetails hooks', () => {
       endDate: '10/20/2000',
     };
     const runHook = ({ enrollment = {}, courseRun = {} }) => {
-      reduxHooks.useCardCourseRunData.mockReturnValueOnce({
-        ...courseRunData,
-        ...courseRun,
-      });
-      reduxHooks.useCardEnrollmentData.mockReturnValueOnce({
-        ...enrollmentData,
-        ...enrollment,
+      useCourseData.mockReturnValue({
+        courseRun: { ...courseRunData, ...courseRun },
+        enrollment: { ...enrollmentData, ...enrollment },
       });
       out = hooks.useAccessMessage({ cardId });
     };
 
     it('loads data from enrollment and course run data based on course number', () => {
       runHook({});
-      expect(reduxHooks.useCardCourseRunData).toHaveBeenCalledWith(cardId);
-      expect(reduxHooks.useCardEnrollmentData).toHaveBeenCalledWith(cardId);
+      expect(useCourseData).toHaveBeenCalledWith(cardId);
     });
 
     describe('if not started yet', () => {

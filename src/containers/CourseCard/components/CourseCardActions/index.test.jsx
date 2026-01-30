@@ -1,15 +1,9 @@
 import { render, screen } from '@testing-library/react';
-import { reduxHooks } from 'hooks';
-
+import { useCourseData } from 'hooks';
 import CourseCardActions from '.';
 
 jest.mock('hooks', () => ({
-  reduxHooks: {
-    useCardCourseRunData: jest.fn(),
-    useCardEnrollmentData: jest.fn(),
-    useCardEntitlementData: jest.fn(),
-    useMasqueradeData: jest.fn(),
-  },
+  useCourseData: jest.fn(),
 }));
 
 jest.mock('plugin-slots/CourseCardActionSlot', () => jest.fn(() => <div>CourseCardActionSlot</div>));
@@ -24,26 +18,22 @@ const props = { cardId };
 describe('CourseCardActions', () => {
   const mockHooks = ({
     isEntitlement = false,
-    isExecEd2UCourse = false,
     isFulfilled = false,
     isArchived = false,
-    isVerified = false,
     hasStarted = false,
-    isMasquerading = false,
   } = {}) => {
-    reduxHooks.useCardEntitlementData.mockReturnValueOnce({ isEntitlement, isFulfilled });
-    reduxHooks.useCardCourseRunData.mockReturnValueOnce({ isArchived });
-    reduxHooks.useCardEnrollmentData.mockReturnValueOnce({ isExecEd2UCourse, isVerified, hasStarted });
-    reduxHooks.useMasqueradeData.mockReturnValueOnce({ isMasquerading });
+    useCourseData.mockReturnValueOnce({
+      enrollment: { hasStarted },
+      courseRun: { isArchived },
+      entitlement: isEntitlement !== null ? { isEntitlement, isFulfilled } : null,
+    });
   };
   const renderComponent = () => render(<CourseCardActions {...props} />);
   describe('hooks', () => {
     it('initializes redux hooks', () => {
       mockHooks();
       renderComponent();
-      expect(reduxHooks.useCardEntitlementData).toHaveBeenCalledWith(cardId);
-      expect(reduxHooks.useCardEnrollmentData).toHaveBeenCalledWith(cardId);
-      expect(reduxHooks.useCardCourseRunData).toHaveBeenCalledWith(cardId);
+      expect(useCourseData).toHaveBeenCalledWith(cardId);
     });
   });
   describe('output', () => {
@@ -63,7 +53,7 @@ describe('CourseCardActions', () => {
     });
     describe('not entitlement, verified, or exec ed', () => {
       it('renders CourseCardActionSlot and ViewCourseButton for archived courses', () => {
-        mockHooks({ isArchived: true });
+        mockHooks({ isArchived: true, isEntitlement: null });
         renderComponent();
         const CourseCardActionSlot = screen.getByText('CourseCardActionSlot');
         expect(CourseCardActionSlot).toBeInTheDocument();
@@ -72,7 +62,7 @@ describe('CourseCardActions', () => {
       });
       describe('unstarted courses', () => {
         it('renders CourseCardActionSlot and BeginCourseButton', () => {
-          mockHooks();
+          mockHooks({ isEntitlement: null });
           renderComponent();
           const CourseCardActionSlot = screen.getByText('CourseCardActionSlot');
           expect(CourseCardActionSlot).toBeInTheDocument();
@@ -82,7 +72,7 @@ describe('CourseCardActions', () => {
       });
       describe('active courses (started, and not archived)', () => {
         it('renders CourseCardActionSlot and ResumeButton', () => {
-          mockHooks({ hasStarted: true });
+          mockHooks({ hasStarted: true, isEntitlement: null });
           renderComponent();
           const CourseCardActionSlot = screen.getByText('CourseCardActionSlot');
           expect(CourseCardActionSlot).toBeInTheDocument();

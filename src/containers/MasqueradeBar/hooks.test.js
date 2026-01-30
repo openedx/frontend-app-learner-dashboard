@@ -1,8 +1,17 @@
 import { MockUseState } from 'testUtils';
-import { apiHooks, reduxHooks } from 'hooks';
+import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
+import { useMasquerade } from 'data/context/MasqueradeProvider';
 
 import * as hooks from './hooks';
 import messages from './messages';
+
+jest.mock('data/react-query/apiHooks', () => ({
+  useInitializeLearnerHome: jest.fn(),
+}));
+
+jest.mock('data/context/MasqueradeProvider', () => ({
+  useMasquerade: jest.fn(),
+}));
 
 jest.mock('@edx/frontend-platform/i18n', () => {
   const { formatMessage } = jest.requireActual('testUtils');
@@ -14,20 +23,7 @@ jest.mock('@edx/frontend-platform/i18n', () => {
   };
 });
 
-jest.mock('hooks', () => ({
-  apiHooks: {
-    useMasqueradeAs: jest.fn(),
-    useClearMasquerade: jest.fn(),
-  },
-  reduxHooks: {
-    useMasqueradeData: jest.fn(),
-  },
-}));
-
 const masqueradeAs = jest.fn();
-const clearMasquerade = jest.fn();
-apiHooks.useMasqueradeAs.mockReturnValue(masqueradeAs);
-apiHooks.useClearMasquerade.mockReturnValue(clearMasquerade);
 const state = new MockUseState(hooks);
 const testValue = 'test-value';
 
@@ -35,18 +31,17 @@ describe('MasqueradeBar hooks', () => {
   const authenticatedUser = {
     administrator: true,
   };
-  const defaultMasqueradeData = {
-    isMasquerading: false,
-    isMasqueradingFailed: false,
-    isMasqueradingPending: false,
-    masqueradeErrorStatus: null,
-  };
-  const createHook = (masqueradeData = {}, user = undefined) => {
-    reduxHooks.useMasqueradeData.mockReturnValueOnce({
-      ...defaultMasqueradeData,
-      ...masqueradeData,
+  const createHook = (masqueradeData = {}, user = authenticatedUser) => {
+    useInitializeLearnerHome.mockReturnValue({
+      isPending: masqueradeData.isMasqueradingPending || false,
+      isError: masqueradeData.isMasqueradingFailed || false,
+      error: masqueradeData.masqueradeErrorStatus || null,
     });
-    return hooks.useMasqueradeBarData({ authenticatedUser: user || authenticatedUser });
+    useMasquerade.mockReturnValue({
+      isMasquerading: masqueradeData.isMasquerading || false,
+      setMasqueradeUser: masqueradeAs,
+    });
+    return hooks.useMasqueradeBarData({ authenticatedUser: user });
   };
 
   describe('state values', () => {
@@ -66,13 +61,13 @@ describe('MasqueradeBar hooks', () => {
     test('masqueradeErrorStatus', () => {
       let out = createHook();
       expect(out.masqueradeErrorMessage).toBeNull();
-      out = createHook({ masqueradeErrorStatus: 0 });
+      out = createHook({ masqueradeErrorStatus: 500, isMasqueradingFailed: true, isMasquerading: true });
       expect(out.masqueradeErrorMessage).not.toBeNull();
     });
     test('isMasqueradePending', () => {
       let out = createHook();
       expect(out.isMasqueradingPending).toEqual(false);
-      out = createHook({ isMasqueradingPending: true });
+      out = createHook({ isMasqueradingPending: true, isMasquerading: true });
       expect(out.isMasqueradingPending).toEqual(true);
     });
     test('handleMasqueradeInputChange', () => {
@@ -94,7 +89,8 @@ describe('MasqueradeBar hooks', () => {
     test('handleClearMasquerade', () => {
       const out = createHook();
       out.handleClearMasquerade();
-      expect(clearMasquerade).toHaveBeenCalled();
+      expect(masqueradeAs).toHaveBeenCalledWith(undefined);
+      expect(state.setState.masqueradeInput).toHaveBeenCalledWith('');
     });
   });
 

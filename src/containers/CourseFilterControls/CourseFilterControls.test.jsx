@@ -1,13 +1,18 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { formatMessage } from 'testUtils';
 import { breakpoints, useWindowSize } from '@openedx/paragon';
-import { reduxHooks } from 'hooks';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { FilterKeys, SortKeys } from 'data/constants/app';
+import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
+import { useFilters } from 'data/context/FiltersProvider';
 
+import userEvent from '@testing-library/user-event';
 import messages from './messages';
 import CourseFilterControls from './CourseFilterControls';
-import useCourseFilterControlsData from './hooks';
+
+jest.mock('data/react-query/apiHooks', () => ({
+  useInitializeLearnerHome: jest.fn().mockReturnValue({ data: { courses: [1, 2, 3] } }),
+}));
 
 jest.mock('hooks', () => ({
   reduxHooks: { useHasCourses: jest.fn() },
@@ -22,15 +27,16 @@ jest.mock('@openedx/paragon', () => ({
 
 const filters = Object.values(FilterKeys);
 
-const mockControlsData = {
-  isOpen: false,
-  open: jest.fn().mockName('open'),
-  close: jest.fn().mockName('close'),
-  target: 'target-test',
-  setTarget: jest.fn(),
-  handleFilterChange: jest.fn().mockName('handleFilterChange'),
-  handleSortChange: jest.fn().mockName('handleSortChange'),
-};
+jest.mock('data/context/FiltersProvider', () => ({
+  useFilters: jest.fn(),
+}));
+
+useFilters.mockReturnValue({
+  filters,
+  removeFilter: jest.fn().mockName('removeFilter'),
+  clearFilters: jest.fn().mockName('clearFilters'),
+});
+
 
 describe('CourseFilterControls', () => {
   const props = {
@@ -40,31 +46,36 @@ describe('CourseFilterControls', () => {
   };
 
   describe('mobile and open', () => {
-    it('should render sheet', () => {
-      reduxHooks.useHasCourses.mockReturnValue(true);
-      useCourseFilterControlsData.mockReturnValue({ ...mockControlsData, isOpen: true });
-      useWindowSize.mockReturnValueOnce({ width: breakpoints.small.minWidth - 1 });
+    it('should render sheet', async () => {
+      const user = userEvent.setup();
+      useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth - 1 });
       render(<IntlProvider locale="en"><CourseFilterControls {...props} /></IntlProvider>);
-      const sheet = screen.getByRole('presentation', { hidden: true });
-      expect(sheet).toBeInTheDocument();
-      expect(sheet.parentElement).toHaveClass('sheet-container');
+      const filtersButton = screen.getByRole('button', { name: 'Refine' });
+      await user.click(filtersButton);
+      await waitFor(() => {
+        const sheet = screen.getByRole('presentation', { hidden: true });
+        expect(sheet).toBeInTheDocument();
+        expect(sheet.parentElement).toHaveClass('sheet-container');
+      });
     });
   });
   describe('is not mobile', () => {
-    it('should have button disabled', () => {
-      reduxHooks.useHasCourses.mockReturnValue(true);
-      useCourseFilterControlsData.mockReturnValue({ ...mockControlsData, isOpen: true });
-      useWindowSize.mockReturnValueOnce({ width: breakpoints.small.minWidth });
+    it('should have button disabled', async () => {
+      const user = userEvent.setup();
+      useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
       render(<IntlProvider locale="en"><CourseFilterControls {...props} /></IntlProvider>);
-      const filterForm = screen.getByText(messages.courseStatus.defaultMessage);
-      const modal = filterForm.closest('div.pgn__modal-popup__tooltip');
-      expect(modal).toBeInTheDocument();
+      const filtersButton = screen.getByRole('button', { name: 'Refine' });
+      await user.click(filtersButton);
+      await waitFor(() => {
+        const filterForm = screen.getByText(messages.courseStatus.defaultMessage);
+        const modal = filterForm.closest('div.pgn__modal-popup__tooltip');
+        expect(modal).toBeInTheDocument();
+      });
     });
   });
   describe('no courses', () => {
     it('should have button disabled', () => {
-      reduxHooks.useHasCourses.mockReturnValue(false);
-      useCourseFilterControlsData.mockReturnValue(mockControlsData);
+      useInitializeLearnerHome.mockReturnValue({ data: { courses: [] } });
       useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
       render(<IntlProvider locale="en"><CourseFilterControls {...props} /></IntlProvider>);
       const button = screen.getByRole('button', { name: formatMessage(messages.refine) });

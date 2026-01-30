@@ -4,16 +4,18 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 
-import { reduxHooks } from 'hooks';
+import { useCourseData } from 'hooks';
+import { useIsMasquerading } from 'hooks/useIsMasquerading';
 import * as hooks from './hooks';
 import CourseCardMenu from '.';
 import messages from './messages';
 
+jest.mock('hooks/useIsMasquerading', () => ({
+  useIsMasquerading: jest.fn(),
+}));
+
 jest.mock('hooks', () => ({
-  reduxHooks: {
-    useMasqueradeData: jest.fn(),
-    useCardEnrollmentData: jest.fn(),
-  },
+  useCourseData: jest.fn(),
 }));
 jest.mock('./SocialShareMenu', () => jest.fn(() => <div>SocialShareMenu</div>));
 jest.mock('containers/EmailSettingsModal', () => jest.fn(() => <div>EmailSettingsModal</div>));
@@ -69,10 +71,14 @@ const mockHooks = (returnVals = {}) => {
     },
     { isCardHook: true },
   );
-  mockHook(reduxHooks.useMasqueradeData, { isMasquerading: !!returnVals.isMasquerading });
+  mockHook(useIsMasquerading, !!returnVals.isMasquerading);
   mockHook(
-    reduxHooks.useCardEnrollmentData,
-    { isEmailEnabled: !!returnVals.isEmailEnabled },
+    useCourseData,
+    {
+      enrollment: {
+        isEmailEnabled: !!returnVals.isEmailEnabled,
+      },
+    },
     { isCardHook: true },
   );
 };
@@ -87,13 +93,10 @@ describe('CourseCardMenu', () => {
     });
     it('initializes local hooks', () => {
       when(hooks.useEmailSettings).expectCalledWith();
-      when(hooks.useUnenrollData).expectCalledWith();
-      when(hooks.useHandleToggleDropdown).expectCalledWith(props.cardId);
-      when(hooks.useOptionVisibility).expectCalledWith(props.cardId);
     });
     it('initializes redux hook data ', () => {
-      when(reduxHooks.useMasqueradeData).expectCalledWith();
-      when(reduxHooks.useCardEnrollmentData).expectCalledWith(props.cardId);
+      when(useIsMasquerading).expectCalledWith();
+      when(useCourseData).expectCalledWith(props.cardId);
     });
   });
   describe('render', () => {

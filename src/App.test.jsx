@@ -3,10 +3,17 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { getConfig } from '@edx/frontend-platform';
 
-import { RequestKeys } from 'data/constants/requests';
-import { reduxHooks } from 'hooks';
+import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
 import { App } from './App';
 import messages from './messages';
+
+jest.mock('data/react-query/apiHooks', () => ({
+  useInitializeLearnerHome: jest.fn(),
+}));
+
+jest.mock('data/context/MasqueradeProvider', () => ({
+  useMasquerade: jest.fn(() => ({ masqueradeUser: null })),
+}));
 
 jest.mock('@edx/frontend-component-footer', () => ({
   FooterSlot: jest.fn(() => <div>FooterSlot</div>),
@@ -19,14 +26,6 @@ jest.mock('data/redux', () => ({
   actions: 'redux.actions',
   thunkActions: 'redux.thunkActions',
 }));
-jest.mock('hooks', () => ({
-  reduxHooks: {
-    useRequestIsFailed: jest.fn(),
-    usePlatformSettingsData: jest.fn(),
-    useLoadData: jest.fn(),
-  },
-}));
-jest.mock('data/store', () => 'data/store');
 
 jest.mock('@edx/frontend-platform', () => ({
   getConfig: jest.fn(() => ({})),
@@ -37,11 +36,15 @@ jest.mock('@edx/frontend-platform/react', () => ({
   ErrorPage: () => 'ErrorPage',
 }));
 
-const loadData = jest.fn();
-reduxHooks.useLoadData.mockReturnValue(loadData);
-
 const supportEmail = 'test@support.com';
-reduxHooks.usePlatformSettingsData.mockReturnValue({ supportEmail });
+useInitializeLearnerHome.mockReturnValue({
+  data: {
+    platformSettings: {
+      supportEmail,
+    },
+  },
+  isError: false,
+});
 
 describe('App router component', () => {
   describe('component', () => {
@@ -66,7 +69,6 @@ describe('App router component', () => {
     describe('no network failure', () => {
       beforeEach(() => {
         jest.clearAllMocks();
-        reduxHooks.useRequestIsFailed.mockReturnValue(false);
         getConfig.mockReturnValue({});
         render(<IntlProvider locale="en"><App /></IntlProvider>);
       });
@@ -79,7 +81,6 @@ describe('App router component', () => {
     describe('no network failure with optimizely url', () => {
       beforeEach(() => {
         jest.clearAllMocks();
-        reduxHooks.useRequestIsFailed.mockReturnValue(false);
         getConfig.mockReturnValue({ OPTIMIZELY_URL: 'fake.url' });
         render(<IntlProvider locale="en"><App /></IntlProvider>);
       });
@@ -92,7 +93,6 @@ describe('App router component', () => {
     describe('no network failure with optimizely project id', () => {
       beforeEach(() => {
         jest.clearAllMocks();
-        reduxHooks.useRequestIsFailed.mockReturnValue(false);
         getConfig.mockReturnValue({ OPTIMIZELY_PROJECT_ID: 'fakeId' });
         render(<IntlProvider locale="en"><App /></IntlProvider>);
       });
@@ -105,7 +105,10 @@ describe('App router component', () => {
     describe('initialize failure', () => {
       beforeEach(() => {
         jest.clearAllMocks();
-        reduxHooks.useRequestIsFailed.mockImplementation((key) => key === RequestKeys.initialize);
+        useInitializeLearnerHome.mockReturnValue({
+          data: null,
+          isError: true,
+        });
         getConfig.mockReturnValue({});
         render(<IntlProvider locale="en" messages={messages}><App /></IntlProvider>);
       });
@@ -119,7 +122,6 @@ describe('App router component', () => {
     });
     describe('refresh failure', () => {
       beforeEach(() => {
-        reduxHooks.useRequestIsFailed.mockImplementation((key) => key === RequestKeys.refreshList);
         getConfig.mockReturnValue({});
         render(<IntlProvider locale="en"><App /></IntlProvider>);
       });

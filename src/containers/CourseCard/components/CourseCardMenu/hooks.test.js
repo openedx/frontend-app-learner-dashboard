@@ -1,20 +1,21 @@
-import { reduxHooks } from 'hooks';
+import { useCourseData, useCourseTrackingEvent } from 'hooks';
+import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
 import track from 'tracking';
 import { MockUseState } from 'testUtils';
 
 import * as hooks from './hooks';
 
+jest.mock('data/react-query/apiHooks', () => ({
+  useInitializeLearnerHome: jest.fn(),
+}));
+
 jest.mock('hooks', () => ({
-  reduxHooks: {
-    useCardCertificateData: jest.fn(),
-    useCardEnrollmentData: jest.fn(),
-    useCardSocialSettingsData: jest.fn(),
-    useTrackCourseEvent: jest.fn(),
-  },
+  useCourseData: jest.fn(),
+  useCourseTrackingEvent: jest.fn(),
 }));
 
 const trackCourseEvent = jest.fn();
-reduxHooks.useTrackCourseEvent.mockReturnValue(trackCourseEvent);
+useCourseTrackingEvent.mockReturnValue(trackCourseEvent);
 const cardId = 'test-card-id';
 let out;
 
@@ -71,7 +72,7 @@ describe('CourseCardMenu hooks', () => {
     beforeEach(() => { out = hooks.useHandleToggleDropdown(cardId); });
     describe('behavior', () => {
       it('initializes course event tracker with event name and card ID', () => {
-        expect(reduxHooks.useTrackCourseEvent).toHaveBeenCalledWith(
+        expect(useCourseTrackingEvent).toHaveBeenCalledWith(
           track.course.courseOptionsDropdownClicked,
           cardId,
         );
@@ -89,16 +90,22 @@ describe('CourseCardMenu hooks', () => {
 
   describe('useOptionVisibility', () => {
     const mockReduxHooks = (returnVals = {}) => {
-      reduxHooks.useCardSocialSettingsData.mockReturnValueOnce({
-        facebook: { isEnabled: !!returnVals.facebook?.isEnabled },
-        twitter: { isEnabled: !!returnVals.twitter?.isEnabled },
+      useInitializeLearnerHome.mockReturnValue({
+        data: {
+          socialShareSettings: {
+            facebook: { isEnabled: !!returnVals.facebook?.isEnabled },
+            twitter: { isEnabled: !!returnVals.twitter?.isEnabled },
+          },
+        },
       });
-      reduxHooks.useCardEnrollmentData.mockReturnValueOnce({
-        isEnrolled: !!returnVals.isEnrolled,
-        isEmailEnabled: !!returnVals.isEmailEnabled,
-      });
-      reduxHooks.useCardCertificateData.mockReturnValueOnce({
-        isEarned: !!returnVals.isEarned,
+      useCourseData.mockReturnValue({
+        enrollment: {
+          isEnrolled: !!returnVals.isEnrolled,
+          isEmailEnabled: !!returnVals.isEmailEnabled,
+        },
+        certificate: {
+          isEarned: !!returnVals.isEarned,
+        },
       });
     };
     describe('shouldShowUnenrollItem', () => {

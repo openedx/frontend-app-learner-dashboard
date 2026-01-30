@@ -1,22 +1,27 @@
 import { MockUseState } from 'testUtils';
 import track from 'tracking';
 import {
-  apiHooks,
-  reduxHooks,
   utilHooks,
+  useCourseTrackingEvent,
+  useCourseData,
 } from 'hooks';
 
+import { useUnenrollFromCourse } from 'data/react-query/apiHooks';
+import { useEntitlementInfo } from '../../CourseCard/components/hooks';
 import * as hooks from './reasons';
 import constants from '../constants';
 
+jest.mock('data/react-query/apiHooks', () => ({
+  useUnenrollFromCourse: jest.fn(),
+}));
+
+jest.mock('../../CourseCard/components/hooks', () => ({
+  useEntitlementInfo: jest.fn(),
+}));
+
 jest.mock('hooks', () => ({
-  apiHooks: {
-    useUnenrollFromCourse: jest.fn((...args) => ({ unenrollFromCourse: args })),
-  },
-  reduxHooks: {
-    useCardEntitlementData: jest.fn(),
-    useTrackCourseEvent: jest.fn(),
-  },
+  useCourseTrackingEvent: jest.fn(),
+  useCourseData: jest.fn(),
   utilHooks: {
     useValueCallback: jest.fn((cb, prereqs) => ({ useValueCallback: { cb, prereqs } })),
   },
@@ -26,14 +31,16 @@ const state = new MockUseState(hooks);
 const testValue = 'test-value';
 const testValue2 = 'test-value2';
 const unenrollFromCourse = jest.fn((...args) => ({ unenrollFromCourse: args }));
+useUnenrollFromCourse.mockReturnValue({ mutate: unenrollFromCourse });
 const trackCourseEvent = jest.fn((e) => ({ courseEvent: e }));
-apiHooks.useUnenrollFromCourse.mockReturnValue(unenrollFromCourse);
-reduxHooks.useTrackCourseEvent.mockReturnValue(trackCourseEvent);
+useCourseTrackingEvent.mockReturnValue(trackCourseEvent);
 let out;
 
 const cardId = 'test-card-id';
+const courseData = { courseRun: { courseId: cardId } };
+useCourseData.mockReturnValue(courseData);
 const loadHook = (isEntitlement = false) => {
-  reduxHooks.useCardEntitlementData.mockReturnValue({ isEntitlement });
+  useEntitlementInfo.mockReturnValue({ isEntitlement });
   out = hooks.useUnenrollReasons({ cardId });
 };
 
@@ -69,7 +76,7 @@ describe('UnenrollConfirmModal reasons hooks', () => {
           state.mockVal(state.keys.selectedReason, 'custom');
           state.mockVal(state.keys.customOption, testValue);
           loadHook();
-          expect(reduxHooks.useTrackCourseEvent).toHaveBeenCalledWith(
+          expect(useCourseTrackingEvent).toHaveBeenCalledWith(
             track.engagement.unenrollReason,
             cardId,
             testValue,
@@ -80,7 +87,7 @@ describe('UnenrollConfirmModal reasons hooks', () => {
           state.mockVal(state.keys.selectedReason, testValue2);
           state.mockVal(state.keys.customOption, testValue);
           loadHook(true);
-          expect(reduxHooks.useTrackCourseEvent).toHaveBeenCalledWith(
+          expect(useCourseTrackingEvent).toHaveBeenCalledWith(
             track.engagement.unenrollReason,
             cardId,
             testValue2,
@@ -89,10 +96,10 @@ describe('UnenrollConfirmModal reasons hooks', () => {
         });
       });
       it('initializes card entitlement data with cardId', () => {
-        expect(reduxHooks.useCardEntitlementData).toHaveBeenCalledWith(cardId);
+        expect(useEntitlementInfo).toHaveBeenCalledWith(courseData);
       });
-      it('initializes unenerollFromCourse event with cardId', () => {
-        expect(apiHooks.useUnenrollFromCourse).toHaveBeenCalledWith(cardId);
+      it('initializes unenerollFromCourse event', () => {
+        expect(useUnenrollFromCourse).toHaveBeenCalledWith();
       });
     });
     describe('output', () => {
@@ -148,7 +155,7 @@ describe('UnenrollConfirmModal reasons hooks', () => {
           const event = { test: 'event' };
           out.handleSubmit(event);
           expect(trackCourseEvent).toHaveBeenCalledWith(event);
-          expect(unenrollFromCourse).toHaveBeenCalledWith();
+          expect(unenrollFromCourse).toHaveBeenCalledWith({ courseId: cardId });
         });
       });
       test('isSubmitted returns state value', () => {

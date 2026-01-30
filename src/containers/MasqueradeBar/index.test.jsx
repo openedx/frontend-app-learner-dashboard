@@ -1,32 +1,56 @@
+import { useContext, useState } from 'react';
 import { render, screen } from '@testing-library/react';
-import { formatMessage } from 'testUtils';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
+import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
+import { useMasquerade } from 'data/context/MasqueradeProvider';
 import MasqueradeBar from '.';
-import hooks from './hooks';
+// import hooks from './hooks';
 import messages from './messages';
 
-jest.mock('./hooks', () => ({
-  useMasqueradeBarData: jest.fn(),
+jest.mock('data/context/MasqueradeProvider', () => ({
+  useMasquerade: jest.fn(),
 }));
 
-describe('MasqueradeBar', () => {
-  const masqueradeMockData = {
-    canMasquerade: true,
-    isMasquerading: false,
-    isMasqueradingFailed: false,
-    isMasqueradingPending: false,
-    masqueradeInput: '',
-    masqueradeErrorMessage: '',
-    handleMasqueradeInputChange: jest.fn().mockName('handleMasqueradeInputChange'),
-    handleClearMasquerade: jest.fn().mockName('handleClearMasquerade'),
-    handleMasqueradeSubmit: jest.fn().mockName('handleMasqueradeSubmit'),
-    formatMessage,
+jest.mock('react', () => {
+  const ActualReact = jest.requireActual('react');
+  return {
+    ...ActualReact,
+    useState: jest.fn(ActualReact.useState),
+    useContext: jest.fn((context) => {
+      // eslint-disable-next-line global-require
+      if (context === require('@edx/frontend-platform/react').AppContext) {
+        return {
+          authenticatedUser: { administrator: true },
+        };
+      }
+      return ActualReact.useContext(context);
+    }),
   };
+});
+
+jest.mock('data/react-query/apiHooks', () => ({
+  useInitializeLearnerHome: jest.fn(),
+}));
+
+const mockDefaults = () => {
+  useMasquerade.mockReturnValue({
+    masqueradeUser: null,
+    setMasqueradeUser: jest.fn(),
+  });
+  useInitializeLearnerHome.mockReturnValue({
+    isError: false,
+    error: null,
+    isPending: false,
+  });
+};
+
+describe('MasqueradeBar', () => {
 
   describe('render', () => {
     it('can masquerade', () => {
-      hooks.useMasqueradeBarData.mockReturnValueOnce(masqueradeMockData);
-      render(<MasqueradeBar />);
+      mockDefaults();
+      render(<IntlProvider lang="en"><MasqueradeBar /></IntlProvider>);
       const labelStudentName = screen.getByText(messages.StudentNameInput.defaultMessage);
       expect(labelStudentName).toBeInTheDocument();
       const submitButton = screen.getByRole('button', { name: messages.SubmitButton.defaultMessage });
@@ -34,56 +58,68 @@ describe('MasqueradeBar', () => {
     });
     it('can masquerade with input', () => {
       const masqueradeInput = 'test';
-      hooks.useMasqueradeBarData.mockReturnValueOnce({
-        ...masqueradeMockData,
-        masqueradeInput,
-      });
-      render(<MasqueradeBar />);
+      mockDefaults();
+      useState.mockReturnValue([masqueradeInput, jest.fn()]);
+      render(<IntlProvider lang="en"><MasqueradeBar /></IntlProvider>);
       const valueMasqueradeInput = screen.getByRole('textbox', { value: masqueradeInput });
       expect(valueMasqueradeInput).toBeInTheDocument();
     });
-    it('cannot masquerade', () => {
-      hooks.useMasqueradeBarData.mockReturnValueOnce({
-        ...masqueradeMockData,
-        canMasquerade: false,
-      });
-      render(<MasqueradeBar />);
-      const labelStudentName = screen.queryByText(messages.StudentNameInput.defaultMessage);
-      expect(labelStudentName).toBeNull();
-    });
     it('is masquerading with input', () => {
       const masqueradeInput = 'test';
-      hooks.useMasqueradeBarData.mockReturnValueOnce({
-        ...masqueradeMockData,
-        isMasquerading: true,
-        masqueradeInput,
+      useInitializeLearnerHome.mockReturnValue({
+        isError: false,
+        error: null,
+        isPending: false,
       });
-      render(<MasqueradeBar />);
+      useMasquerade.mockReturnValue({
+        masqueradeUser: masqueradeInput,
+        setMasqueradeUser: jest.fn(),
+      });
+      useState.mockReturnValue([masqueradeInput, jest.fn()]);
+      render(<IntlProvider lang="en"><MasqueradeBar /></IntlProvider>);
       const chipMasqueradeInput = screen.getByText(masqueradeInput);
       expect(chipMasqueradeInput).toBeInTheDocument();
       expect(chipMasqueradeInput.parentElement).toHaveClass('masquerade-chip');
     });
     it('is masquerading failed with error', () => {
-      const masqueradeErrorMessage = 'test-error';
       const masqueradeInput = 'test';
-      hooks.useMasqueradeBarData.mockReturnValueOnce({
-        ...masqueradeMockData,
-        isMasqueradingFailed: true,
-        masqueradeErrorMessage,
+      useInitializeLearnerHome.mockReturnValue({
+        isError: true,
+        error: { customAttributes: { httpErrorStatus: 404 } },
+        isPending: false,
       });
-      render(<MasqueradeBar />);
+      useMasquerade.mockReturnValue({
+        masqueradeUser: masqueradeInput,
+        setMasqueradeUser: jest.fn(),
+      });
+      useState.mockReturnValue([masqueradeInput, jest.fn()]);
+      render(<IntlProvider lang="en"><MasqueradeBar /></IntlProvider>);
       const valueMasqueradeInput = screen.getByRole('textbox', { value: masqueradeInput });
       expect(valueMasqueradeInput).toHaveClass('is-invalid');
     });
     it('is masquerading pending', () => {
-      hooks.useMasqueradeBarData.mockReturnValueOnce({
-        ...masqueradeMockData,
-        isMasqueradingPending: true,
+      useInitializeLearnerHome.mockReturnValue({
+        isError: false,
+        error: null,
+        isPending: true,
       });
-      render(<MasqueradeBar />);
+      useMasquerade.mockReturnValue({
+        masqueradeUser: 'test',
+        setMasqueradeUser: jest.fn(),
+      });
+      render(<IntlProvider lang="en"><MasqueradeBar /></IntlProvider>);
       const pendingButton = screen.getByRole('button', { name: messages.SubmitButton.defaultMessage });
       expect(pendingButton).toBeInTheDocument();
       expect(pendingButton).toHaveAttribute('aria-disabled', 'true');
+    });
+    it('cannot masquerade', () => {
+      mockDefaults();
+      useContext.mockReturnValue({
+        authenticatedUser: { administrator: false },
+      });
+      render(<IntlProvider lang="en"><MasqueradeBar /></IntlProvider>);
+      const labelStudentName = screen.queryByText(messages.StudentNameInput.defaultMessage);
+      expect(labelStudentName).toBeNull();
     });
   });
 });

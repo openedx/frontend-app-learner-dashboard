@@ -8,12 +8,14 @@ import { findCoursesNavClicked } from './hooks';
 
 const courseSearchUrl = '/course-search-url';
 
-jest.mock('hooks', () => ({
-  reduxHooks: {
-    usePlatformSettingsData: jest.fn(() => ({
-      courseSearchUrl,
-    })),
-  },
+jest.mock('data/react-query/apiHooks', () => ({
+  useInitializeLearnerHome: jest.fn().mockReturnValue({
+    data: {
+      platformSettings: {
+        courseSearchUrl,
+      },
+    },
+  }),
 }));
 jest.mock('./hooks', () => ({
   ...jest.requireActual('./hooks'),

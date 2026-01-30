@@ -8,12 +8,14 @@ import messages from './messages';
 
 const courseSearchUrl = '/course-search-url';
 
-jest.mock('hooks', () => ({
-  reduxHooks: {
-    usePlatformSettingsData: jest.fn(() => ({
-      courseSearchUrl,
-    })),
-  },
+jest.mock('data/react-query/apiHooks', () => ({
+  useInitializeLearnerHome: jest.fn(() => ({
+    data: {
+      platformSettings: {
+        courseSearchUrl,
+      },
+    },
+  })),
 }));
 
 describe('NoCoursesView', () => {
