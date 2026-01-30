@@ -2,21 +2,37 @@ import { render, screen } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { formatMessage } from 'testUtils';
 
-import { reduxHooks } from 'hooks';
+import { useCourseData } from 'hooks';
 import EntitlementBanner from './EntitlementBanner';
 import messages from './messages';
 
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useMemo: (fn) => fn(),
+}));
+
+jest.mock('data/react-query/apiHooks', () => ({
+  useInitializeLearnerHome: jest.fn().mockReturnValue({
+    data: {
+      platformSettings: {
+        supportEmail: 'test-support-email',
+      },
+    },
+  }),
+}));
+
+jest.mock('data/context/SelectSessionProvider', () => ({
+  useSelectSessionModal: () => ({
+    updateSelectSessionModal: jest.fn().mockName('updateSelectSessionModal'),
+  }),
+}));
+
 jest.mock('hooks', () => ({
+  useCourseData: jest.fn(),
   utilHooks: {
-    useFormatDate: () => date => date,
+    useFormatDate: () => date => date?.toDateString(),
   },
-  reduxHooks: {
-    usePlatformSettingsData: jest.fn(),
-    useCardEntitlementData: jest.fn(),
-    useUpdateSelectSessionModalCallback: jest.fn(
-      (cardId) => jest.fn().mockName(`updateSelectSessionModalCallback(${cardId})`),
-    ),
-  },
+
 }));
 
 const cardId = 'test-card-id';
@@ -32,16 +48,20 @@ const platformData = { supportEmail: 'test-support-email' };
 
 const renderComponent = (overrides = {}) => {
   const { entitlement = {} } = overrides;
-  reduxHooks.useCardEntitlementData.mockReturnValueOnce({ ...entitlementData, ...entitlement });
-  reduxHooks.usePlatformSettingsData.mockReturnValueOnce(platformData);
+  useCourseData.mockReturnValue({
+    entitlement: { ...entitlementData, ...entitlement },
+    platformSettings: platformData,
+  });
   return render(<IntlProvider locale="en"><EntitlementBanner cardId={cardId} /></IntlProvider>);
 };
 
 describe('EntitlementBanner', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
   it('initializes data with course number from entitlement', () => {
     renderComponent();
-    expect(reduxHooks.useCardEntitlementData).toHaveBeenCalledWith(cardId);
-    expect(reduxHooks.useUpdateSelectSessionModalCallback).toHaveBeenCalledWith(cardId);
+    expect(useCourseData).toHaveBeenCalledWith(cardId);
   });
   it('no display if not an entitlement', () => {
     renderComponent({ entitlement: { isEntitlement: false } });
@@ -56,7 +76,10 @@ describe('EntitlementBanner', () => {
     expect(banner.innerHTML).toContain(platformData.supportEmail);
   });
   it('renders when expiration warning', () => {
-    renderComponent({ entitlement: { showExpirationWarning: true } });
+    const deadline = new Date();
+    deadline.setDate(deadline.getDate() + 4);
+    const deadlineStr = `${deadline.getMonth() + 1}/${deadline.getDate()}/${deadline.getFullYear()}`;
+    renderComponent({ entitlement: { changeDeadline: deadlineStr, isFulfilled: false, availableSessions: [1, 2, 3] } });
     const banner = screen.getByRole('alert');
     expect(banner).toBeInTheDocument();
     expect(banner).toHaveClass('alert-info');
@@ -64,7 +87,7 @@ describe('EntitlementBanner', () => {
     expect(button).toBeInTheDocument();
   });
   it('renders expired banner', () => {
-    renderComponent({ entitlement: { isExpired: true } });
+    renderComponent({ entitlement: { isExpired: true, availableSessions: [1, 2, 3] } });
     const banner = screen.getByRole('alert');
     expect(banner).toBeInTheDocument();
     expect(banner.innerHTML).toContain(formatMessage(messages.entitlementExpired));

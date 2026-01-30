@@ -4,9 +4,10 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { render, screen } from '@testing-library/react';
 
 import track from 'tracking';
-import { reduxHooks } from 'hooks';
+import { useCourseTrackingEvent, useCourseData } from 'hooks';
+import { useIsMasquerading } from 'hooks/useIsMasquerading';
 
-import { useEmailSettings } from './hooks';
+import { useEmailSettings, useCardSocialSettingsData } from './hooks';
 import SocialShareMenu from './SocialShareMenu';
 import messages from './messages';
 
@@ -15,16 +16,15 @@ jest.mock('tracking', () => ({
 }));
 
 jest.mock('hooks', () => ({
-  reduxHooks: {
-    useMasqueradeData: jest.fn(),
-    useCardCourseData: jest.fn(),
-    useCardEnrollmentData: jest.fn(),
-    useCardSocialSettingsData: jest.fn(),
-    useTrackCourseEvent: jest.fn((...args) => ({ trackCourseEvent: args })),
-  },
+  useCourseData: jest.fn(),
+  useCourseTrackingEvent: jest.fn((...args) => ({ trackCourseEvent: args })),
 }));
 jest.mock('./hooks', () => ({
   useEmailSettings: jest.fn(),
+  useCardSocialSettingsData: jest.fn(),
+}));
+jest.mock('hooks/useIsMasquerading', () => ({
+  useIsMasquerading: jest.fn(),
 }));
 
 const props = {
@@ -57,23 +57,25 @@ const socialShare = {
 
 const mockHooks = (returnVals = {}) => {
   mockHook(
-    reduxHooks.useCardEnrollmentData,
+    useCourseData,
     {
-      isEmailEnabled: !!returnVals.isEmailEnabled,
-      isExecEd2UCourse: !!returnVals.isExecEd2UCourse,
+      enrollment: {
+        isEmailEnabled: !!returnVals.isEmailEnabled,
+        mode: returnVals.isExecEd2UCourse ? 'exec-ed-2u' : 'standard',
+      },
+      course: { courseName },
     },
     { isCardHook: true },
   );
-  mockHook(reduxHooks.useCardCourseData, { courseName }, { isCardHook: true });
-  mockHook(reduxHooks.useMasqueradeData, { isMasquerading: !!returnVals.isMasquerading });
   mockHook(
-    reduxHooks.useCardSocialSettingsData,
+    useCardSocialSettingsData,
     {
       facebook: { ...socialShare.facebook, isEnabled: !!returnVals.facebook?.isEnabled },
       twitter: { ...socialShare.twitter, isEnabled: !!returnVals.twitter?.isEnabled },
     },
     { isCardHook: true },
   );
+  mockHook(useIsMasquerading, !!returnVals.isMasquerading);
 };
 
 const renderComponent = () => render(<IntlProvider locale="en"><SocialShareMenu {...props} /></IntlProvider>);
@@ -88,12 +90,11 @@ describe('SocialShareMenu', () => {
       when(useEmailSettings).expectCalledWith();
     });
     it('initializes redux hook data ', () => {
-      when(reduxHooks.useCardEnrollmentData).expectCalledWith(props.cardId);
-      when(reduxHooks.useCardCourseData).expectCalledWith(props.cardId);
-      when(reduxHooks.useCardSocialSettingsData).expectCalledWith(props.cardId);
-      when(reduxHooks.useMasqueradeData).expectCalledWith();
-      when(reduxHooks.useTrackCourseEvent).expectCalledWith(track.socialShare, props.cardId, 'twitter');
-      when(reduxHooks.useTrackCourseEvent).expectCalledWith(track.socialShare, props.cardId, 'facebook');
+      when(useCourseData).expectCalledWith(props.cardId);
+      when(useCardSocialSettingsData).expectCalledWith(props.cardId);
+      when(useIsMasquerading).expectCalledWith();
+      when(useCourseTrackingEvent).expectCalledWith(track.socialShare, props.cardId, 'twitter');
+      when(useCourseTrackingEvent).expectCalledWith(track.socialShare, props.cardId, 'facebook');
     });
   });
   describe('render', () => {

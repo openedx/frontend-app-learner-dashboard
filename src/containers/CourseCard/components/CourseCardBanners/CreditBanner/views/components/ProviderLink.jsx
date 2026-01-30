@@ -2,11 +2,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { reduxHooks } from 'hooks';
+import { useCourseData } from 'hooks';
 import { Hyperlink } from '@openedx/paragon';
 
 export const ProviderLink = ({ cardId }) => {
-  const credit = reduxHooks.useCardCreditData(cardId);
+  const courseData = useCourseData(cardId);
+  const credit = courseData?.credit || {};
   return (
     <Hyperlink
       href={credit.providerStatusUrl}

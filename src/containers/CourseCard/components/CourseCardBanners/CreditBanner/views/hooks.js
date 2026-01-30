@@ -1,7 +1,8 @@
 import React from 'react';
-
+import { AppContext } from '@edx/frontend-platform/react';
 import { StrictDict } from 'utils';
-import { apiHooks } from 'hooks';
+import { useCourseData } from 'hooks';
+import { useCreateCreditRequest } from 'data/react-query/apiHooks';
 
 import * as module from './hooks';
 
@@ -11,13 +12,19 @@ export const state = StrictDict({
 
 export const useCreditRequestData = (cardId) => {
   const [requestData, setRequestData] = module.state.creditRequestData(null);
-  const createCreditApiRequest = apiHooks.useCreateCreditRequest(cardId);
+  const courseData = useCourseData(cardId);
+  const providerId = courseData?.credit?.providerId;
+  const { authenticatedUser: { username } } = React.useContext(AppContext);
+  const courseId = courseData?.courseRun?.courseId;
+  const { mutate: createCreditMutation } = useCreateCreditRequest();
+
   const createCreditRequest = (e) => {
     e.preventDefault();
-    createCreditApiRequest()
-      .then((request) => {
-        setRequestData(request.data);
-      });
+    createCreditMutation({ providerId, courseId, username }, {
+      onSuccess: (data) => {
+        setRequestData(data);
+      },
+    });
   };
   return { requestData, createCreditRequest };
 };

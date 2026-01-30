@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { reduxHooks } from 'hooks';
+import { useCourseData } from 'hooks';
+import { useIsMasquerading } from 'hooks/useIsMasquerading';
 import CreditContent from './components/CreditContent';
 import messages from './messages';
 
 export const PendingContent = ({ cardId }) => {
-  const { providerStatusUrl: href, providerName } = reduxHooks.useCardCreditData(cardId);
-  const { isMasquerading } = reduxHooks.useMasqueradeData();
+  const courseData = useCourseData(cardId);
+  const { providerStatusUrl: href, providerName } = courseData?.credit || {};
+  const isMasquerading = useIsMasquerading();
   const { formatMessage } = useIntl();
   return (
     <CreditContent

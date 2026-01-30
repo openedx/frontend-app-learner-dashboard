@@ -1,9 +1,14 @@
 import { render, screen } from '@testing-library/react';
 import { formatMessage } from 'testUtils';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { useCourseData } from 'hooks';
 
 import { FinishedPane } from './FinishedPane';
 import messages from './messages';
+
+jest.mock('hooks', () => ({
+  useCourseData: jest.fn(),
+}));
 
 const props = {
   cardId: 'cardId',
@@ -14,6 +19,11 @@ describe('UnenrollConfirmModal FinishedPane', () => {
   describe('gave reason', () => {
     beforeEach(() => {
       jest.clearAllMocks();
+      useCourseData.mockReturnValue({
+        course: {
+          courseName: 'Test Course',
+        },
+      });
       render(<IntlProvider locale="en"><FinishedPane {...props} /></IntlProvider>);
     });
     it('renders heading', () => {

@@ -1,19 +1,16 @@
 import { render, screen } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 
-import { reduxHooks } from 'hooks';
+import { useCourseData } from 'hooks';
 import { formatMessage } from 'testUtils';
 import { CourseBanner } from './CourseBanner';
 
 import messages from './messages';
 
 jest.mock('hooks', () => ({
+  useCourseData: jest.fn(),
   utilHooks: {
     useFormatDate: () => date => date,
-  },
-  reduxHooks: {
-    useCardCourseRunData: jest.fn(),
-    useCardEnrollmentData: jest.fn(),
   },
 }));
 
@@ -39,13 +36,15 @@ const renderCourseBanner = (overrides = {}) => {
     courseRun = {},
     enrollment = {},
   } = overrides;
-  reduxHooks.useCardCourseRunData.mockReturnValueOnce({
-    ...courseRunData,
-    ...courseRun,
-  });
-  reduxHooks.useCardEnrollmentData.mockReturnValueOnce({
-    ...enrollmentData,
-    ...enrollment,
+  useCourseData.mockReturnValue({
+    courseRun: {
+      ...courseRunData,
+      ...courseRun,
+    },
+    enrollment: {
+      ...enrollmentData,
+      ...enrollment,
+    },
   });
   return render(<IntlProvider locale="en"><CourseBanner cardId={cardId} /></IntlProvider>);
 };
@@ -53,8 +52,7 @@ const renderCourseBanner = (overrides = {}) => {
 describe('CourseBanner', () => {
   it('initializes data with course number from enrollment, course and course run data', () => {
     renderCourseBanner();
-    expect(reduxHooks.useCardCourseRunData).toHaveBeenCalledWith(cardId);
-    expect(reduxHooks.useCardEnrollmentData).toHaveBeenCalledWith(cardId);
+    expect(useCourseData).toHaveBeenCalledWith(cardId);
   });
   it('no display if learner is verified', () => {
     renderCourseBanner({ enrollment: { isVerified: true } });

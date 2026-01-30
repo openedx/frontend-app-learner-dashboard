@@ -2,7 +2,7 @@ import React from 'react';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { StrictDict } from 'utils';
-import { reduxHooks } from 'hooks';
+import { useCourseData } from 'hooks';
 
 import messages from './messages';
 import * as module from './hooks';
@@ -14,7 +14,8 @@ export const state = StrictDict({
 export const useRelatedProgramsBadgeData = ({ cardId }) => {
   const [isOpen, setIsOpen] = module.state.isOpen(false);
   const { formatMessage } = useIntl();
-  const numPrograms = reduxHooks.useCardRelatedProgramsData(cardId).length;
+  const courseData = useCourseData(cardId);
+  const numPrograms = courseData?.programs?.relatedPrograms?.length || 0;
   let programsMessage = '';
   if (numPrograms) {
     programsMessage = formatMessage(

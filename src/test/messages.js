@@ -1,4 +1,5 @@
-import CourseCardDetails from 'containers/CourseCard/components/CourseCardDetails/messages';
+// TODO: redux cleanup
+/* import CourseCardDetails from 'containers/CourseCard/components/CourseCardDetails/messages';
 
 const mapMessages = (messages) => Object.keys(messages).reduce(
   (acc, key) => ({ ...acc, [key]: messages[key].defaultMessage }),
@@ -27,3 +28,4 @@ export default {
     CourseCardDetails: mapMessagesWithValues(CourseCardDetails),
   },
 };
+*/

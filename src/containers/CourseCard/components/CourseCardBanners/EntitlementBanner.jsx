@@ -1,16 +1,22 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { Button, MailtoLink } from '@openedx/paragon';
 
-import { utilHooks, reduxHooks } from 'hooks';
-
+import { utilHooks, useCourseData } from 'hooks';
+import { useSelectSessionModal } from 'data/context/SelectSessionProvider';
 import Banner from 'components/Banner';
+import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
+import { useEntitlementInfo } from '../hooks';
+
 import messages from './messages';
 
 export const EntitlementBanner = ({ cardId }) => {
   const { formatMessage } = useIntl();
+  const { data: learnerHomeData } = useInitializeLearnerHome();
+  const courseData = useCourseData(cardId);
+
   const {
     isEntitlement,
     hasSessions,
@@ -18,9 +24,12 @@ export const EntitlementBanner = ({ cardId }) => {
     changeDeadline,
     showExpirationWarning,
     isExpired,
-  } = reduxHooks.useCardEntitlementData(cardId);
-  const { supportEmail } = reduxHooks.usePlatformSettingsData();
-  const openSessionModal = reduxHooks.useUpdateSelectSessionModalCallback(cardId);
+  } = useEntitlementInfo(courseData);
+  const supportEmail = useMemo(
+    () => learnerHomeData?.platformSettings?.supportEmail,
+    [learnerHomeData],
+  );
+  const { updateSelectSessionModal } = useSelectSessionModal();
   const formatDate = utilHooks.useFormatDate();
 
   if (!isEntitlement) {
@@ -42,7 +51,7 @@ export const EntitlementBanner = ({ cardId }) => {
         {formatMessage(messages.entitlementExpiringSoon, {
           changeDeadline: formatDate(changeDeadline),
           selectSessionButton: (
-            <Button variant="link" size="inline" className="m-0 p-0" onClick={openSessionModal}>
+            <Button variant="link" size="inline" className="m-0 p-0" onClick={() => updateSelectSessionModal(cardId)}>
               {formatMessage(messages.selectSession)}
             </Button>
           ),

@@ -6,7 +6,8 @@ import { MoreVert } from '@openedx/paragon/icons';
 
 import EmailSettingsModal from 'containers/EmailSettingsModal';
 import UnenrollConfirmModal from 'containers/UnenrollConfirmModal';
-import { reduxHooks } from 'hooks';
+import { useIsMasquerading } from 'hooks/useIsMasquerading';
+import { useCourseData } from 'hooks';
 import SocialShareMenu from './SocialShareMenu';
 import {
   useEmailSettings,
@@ -23,13 +24,15 @@ export const testIds = {
 
 export const CourseCardMenu = ({ cardId }) => {
   const { formatMessage } = useIntl();
+  const courseData = useCourseData(cardId);
+
+  const isEmailEnabled = courseData?.enrollment?.isEmailEnabled ?? false;
 
   const emailSettings = useEmailSettings();
   const unenrollModal = useUnenrollData();
   const handleToggleDropdown = useHandleToggleDropdown(cardId);
   const { shouldShowUnenrollItem, shouldShowDropdown } = useOptionVisibility(cardId);
-  const { isMasquerading } = reduxHooks.useMasqueradeData();
-  const { isEmailEnabled } = reduxHooks.useCardEnrollmentData(cardId);
+  const isMasquerading = useIsMasquerading();
 
   if (!shouldShowDropdown) {
     return null;

@@ -1,19 +1,16 @@
 import { MockUseState } from 'testUtils';
-import { reduxHooks, apiHooks } from 'hooks';
+import { useInitializeLearnerHome, useSendConfirmEmail } from 'data/react-query/apiHooks';
 
 import * as hooks from './hooks';
 
-jest.mock('hooks', () => ({
-  reduxHooks: {
-    useEmailConfirmationData: jest.fn(),
-  },
-  apiHooks: {
-    useSendConfirmEmail: jest.fn(),
-  },
+jest.mock('data/react-query/apiHooks', () => ({
+  ...jest.requireActual('data/react-query/apiHooks'),
+  useInitializeLearnerHome: jest.fn(),
+  useSendConfirmEmail: jest.fn(),
 }));
 
 const sendConfirmEmail = jest.fn();
-apiHooks.useSendConfirmEmail.mockReturnValue(sendConfirmEmail);
+useSendConfirmEmail.mockReturnValue({ mutate: sendConfirmEmail });
 
 const emailConfirmation = {
   isNeeded: true,
@@ -35,14 +32,13 @@ describe('ConfirmEmailBanner hooks', () => {
     afterEach(state.restore);
 
     test('show page banner on unverified email', () => {
-      reduxHooks.useEmailConfirmationData.mockReturnValueOnce({ ...emailConfirmation });
+      useInitializeLearnerHome.mockReturnValueOnce({ data: { emailConfirmation: { ...emailConfirmation } } });
       out = hooks.useConfirmEmailBannerData();
       expect(out.isNeeded).toEqual(emailConfirmation.isNeeded);
-      reduxHooks.useEmailConfirmationData.mockReturnValueOnce({ isNeeded: false });
     });
 
     test('hide page banner on verified email', () => {
-      reduxHooks.useEmailConfirmationData.mockReturnValueOnce({ isNeeded: false });
+      useInitializeLearnerHome.mockReturnValueOnce({ data: { emailConfirmation: { isNeeded: false } } });
       out = hooks.useConfirmEmailBannerData();
       expect(out.isNeeded).toEqual(false);
     });
@@ -51,7 +47,7 @@ describe('ConfirmEmailBanner hooks', () => {
   describe('behavior', () => {
     beforeEach(() => {
       state.mock();
-      reduxHooks.useEmailConfirmationData.mockReturnValueOnce({ ...emailConfirmation });
+      useInitializeLearnerHome.mockReturnValueOnce({ data: { emailConfirmation: { ...emailConfirmation } } });
       out = hooks.useConfirmEmailBannerData();
     });
     afterEach(state.restore);

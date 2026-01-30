@@ -1,20 +1,19 @@
 import { render, screen } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 
-import { reduxHooks } from 'hooks';
+import { useCourseData } from 'hooks';
+import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
 import CertificateBanner from './CertificateBanner';
 
 jest.mock('hooks', () => ({
   utilHooks: {
     useFormatDate: jest.fn(() => date => date),
   },
-  reduxHooks: {
-    useCardCertificateData: jest.fn(),
-    useCardCourseRunData: jest.fn(),
-    useCardEnrollmentData: jest.fn(),
-    useCardGradeData: jest.fn(),
-    usePlatformSettingsData: jest.fn(),
-  },
+  useCourseData: jest.fn(),
+}));
+
+jest.mock('data/react-query/apiHooks', () => ({
+  useInitializeLearnerHome: jest.fn(),
 }));
 
 const defaultCertificate = {
@@ -35,9 +34,14 @@ const supportEmail = 'suport@email.com';
 const billingEmail = 'billing@email.com';
 
 describe('CertificateBanner', () => {
-  reduxHooks.useCardCourseRunData.mockReturnValue({
-    minPassingGrade: 0.8,
-    progressUrl: 'progressUrl',
+  useCourseData.mockReturnValue({
+    enrollment: {},
+    certificate: {},
+    gradeData: {},
+    courseRun: {
+      minPassingGrade: 0.8,
+      progressUrl: 'progressUrl',
+    },
   });
   const createWrapper = ({
     certificate = {},
@@ -46,11 +50,17 @@ describe('CertificateBanner', () => {
     courseRun = {},
     platformSettings = {},
   }) => {
-    reduxHooks.useCardGradeData.mockReturnValueOnce({ ...defaultGrade, ...grade });
-    reduxHooks.useCardCertificateData.mockReturnValueOnce({ ...defaultCertificate, ...certificate });
-    reduxHooks.useCardEnrollmentData.mockReturnValueOnce({ ...defaultEnrollment, ...enrollment });
-    reduxHooks.useCardCourseRunData.mockReturnValueOnce({ ...defaultCourseRun, ...courseRun });
-    reduxHooks.usePlatformSettingsData.mockReturnValueOnce({ ...defaultPlatformSettings, ...platformSettings });
+    useCourseData.mockReturnValue({
+      enrollment: { ...defaultEnrollment, ...enrollment },
+      certificate: { ...defaultCertificate, ...certificate },
+      gradeData: { ...defaultGrade, ...grade },
+      courseRun: {
+        ...defaultCourseRun,
+        ...courseRun,
+      },
+    });
+    const lernearData = { data: { platformSettings: { ...defaultPlatformSettings, ...platformSettings } } };
+    useInitializeLearnerHome.mockReturnValue(lernearData);
     return render(<IntlProvider locale="en"><CertificateBanner {...props} /></IntlProvider>);
   };
   beforeEach(() => {
@@ -222,7 +232,8 @@ describe('CertificateBanner', () => {
         isPassing: true,
       },
       certificate: {
-        isEarnedButUnavailable: true,
+        isEarned: true,
+        availableDate: '10/20/3030',
       },
     });
     const banner = screen.getByRole('alert');

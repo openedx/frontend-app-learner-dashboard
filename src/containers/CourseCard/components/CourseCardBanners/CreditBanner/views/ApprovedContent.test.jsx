@@ -1,15 +1,17 @@
 import { render, screen } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { formatMessage } from 'testUtils';
-import { reduxHooks } from 'hooks';
+import { useCourseData } from 'hooks';
+import { useIsMasquerading } from 'hooks/useIsMasquerading';
 import messages from './messages';
 import ApprovedContent from './ApprovedContent';
 
+jest.mock('hooks/useIsMasquerading', () => ({
+  useIsMasquerading: jest.fn(),
+}));
+
 jest.mock('hooks', () => ({
-  reduxHooks: {
-    useCardCreditData: jest.fn(),
-    useMasqueradeData: jest.fn(),
-  },
+  useCourseData: jest.fn(),
 }));
 
 const cardId = 'test-card-id';
@@ -17,14 +19,14 @@ const credit = {
   providerStatusUrl: 'test-credit-provider-status-url',
   providerName: 'test-credit-provider-name',
 };
-reduxHooks.useCardCreditData.mockReturnValue(credit);
-reduxHooks.useMasqueradeData.mockReturnValue({ isMasquerading: false });
+useCourseData.mockReturnValue({ credit });
+useIsMasquerading.mockReturnValue(false);
 
 describe('ApprovedContent component', () => {
   describe('hooks', () => {
     it('initializes credit data with cardId', () => {
       render(<IntlProvider locale="en"><ApprovedContent cardId={cardId} /></IntlProvider>);
-      expect(reduxHooks.useCardCreditData).toHaveBeenCalledWith(cardId);
+      expect(useCourseData).toHaveBeenCalledWith(cardId);
     });
   });
   describe('render', () => {
@@ -56,7 +58,7 @@ describe('ApprovedContent component', () => {
     });
     describe('when masquerading', () => {
       beforeEach(() => {
-        reduxHooks.useMasqueradeData.mockReturnValue({ isMasquerading: true });
+        useIsMasquerading.mockReturnValue(true);
         render(<IntlProvider locale="en"><ApprovedContent cardId={cardId} /></IntlProvider>);
       });
 

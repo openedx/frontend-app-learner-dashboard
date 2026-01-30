@@ -4,6 +4,16 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 import hooks from './hooks';
 import DashboardLayout from './DashboardLayout';
 
+jest.mock('data/react-query/apiHooks', () => ({
+  useInitializeLearnerHome: jest.fn().mockReturnValue({
+    data: {
+      platformSettings: {
+        courseSearchUrl: '/courses',
+      },
+    },
+  }),
+}));
+
 jest.mock('./hooks', () => ({
   useDashboardLayoutData: jest.fn(),
 }));

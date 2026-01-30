@@ -1,7 +1,9 @@
+// TODO: not being used
 import React from 'react';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { apiHooks, reduxHooks } from 'hooks';
+import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
+import { useMasquerade } from 'data/context/MasqueradeProvider';
 import { StrictDict } from 'utils';
 import * as module from './hooks';
 
@@ -35,21 +37,28 @@ export const useMasqueradeBarData = ({
   authenticatedUser,
 }) => {
   const { formatMessage } = useIntl();
-  const handleMasqueradeAs = apiHooks.useMasqueradeAs();
-  const handleClearMasquerade = apiHooks.useClearMasquerade();
+  const query = useInitializeLearnerHome();
 
   const {
     isMasquerading,
-    isMasqueradingFailed,
-    isMasqueradingPending,
-    masqueradeErrorStatus,
-  } = reduxHooks.useMasqueradeData();
+    setMasqueradeUser,
+  } = useMasquerade();
+
+  const isMasqueradingPending = isMasquerading && query?.isPending;
+  const isMasqueradingFailed = isMasquerading && query?.isError;
+  const masqueradeErrorStatus = isMasquerading && query?.isError ? query?.error : null;
   const { masqueradeInput, handleMasqueradeInputChange } = module.useMasqueradeInput();
 
   const masqueradeErrorMessage = getMasqueradeErrorMessage(masqueradeErrorStatus);
+
   const handleMasqueradeSubmit = (user) => (e) => {
-    handleMasqueradeAs(user);
+    setMasqueradeUser(user);
     e.preventDefault();
+  };
+
+  const handleClearMasquerade = () => {
+    setMasqueradeUser(undefined);
+    handleMasqueradeInputChange({ target: { value: '' } });
   };
 
   return {
