@@ -46,7 +46,6 @@ const mockDefaults = () => {
 };
 
 describe('MasqueradeBar', () => {
-
   describe('render', () => {
     it('can masquerade', () => {
       mockDefaults();

@@ -79,7 +79,6 @@
 //   };
 // });
 
-
 // const configureStore = () => redux.createStore(
 //   reducers,
 // );
@@ -114,7 +113,6 @@
 // const mockForbiddenError = (reject) => () => reject(new Error({
 //   response: { status: ErrorStatuses.forbidden },
 // }));
-
 
 // const allCourses = [
 //   ...fakeData.courseRunData,

@@ -37,7 +37,6 @@ useFilters.mockReturnValue({
   clearFilters: jest.fn().mockName('clearFilters'),
 });
 
-
 describe('CourseFilterControls', () => {
   const props = {
     sortBy: SortKeys.enrolled,
