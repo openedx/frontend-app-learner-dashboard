@@ -79,7 +79,7 @@ export const App = () => {
       </Helmet>
       <div>
         <AppWrapper>
-          <LearnerDashboardHeader />
+          {/* <LearnerDashboardHeader /> */}
           <main id="main">
             {hasNetworkFailure
               ? (
