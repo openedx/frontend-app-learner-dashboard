@@ -24,16 +24,16 @@ export const CertificateBanner = ({ cardId }) => {
     isAudit = false,
     isPassing = false,
     isArchived = false,
-    minPassingGrade,
-    progressUrl,
+    minPassingGrade = 0,
+    progressUrl = '',
   } = useMemo(() => ({
     isVerified: courseData?.enrollment?.isVerified,
     isAudit: courseData?.enrollment?.isAudit,
     certificate: courseData?.certificate || {},
     isPassing: courseData?.gradeData?.isPassing,
     isArchived: courseData?.courseRun?.isArchived,
-    minPassingGrade: Math.floor(courseData?.courseRun.minPassingGrade || 0 * 100),
-    progressUrl: baseAppUrl(courseData?.courseRun.progressUrl),
+    minPassingGrade: Math.floor(courseData?.courseRun?.minPassingGrade || 0 * 100),
+    progressUrl: baseAppUrl(courseData?.courseRun?.progressUrl || ''),
   }), [courseData]);
   const { supportEmail, billingEmail } = useMemo(
     () => ({

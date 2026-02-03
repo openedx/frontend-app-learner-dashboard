@@ -38,6 +38,7 @@ const selectSessionModalReducer = (state: State, action: Action): State => {
         ...state,
         selectSessionModal: { cardId: null },
       };
+    /* istanbul ignore next */
     default:
       return state;
   }

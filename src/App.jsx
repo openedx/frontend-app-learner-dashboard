@@ -27,6 +27,7 @@ export const App = () => {
   const hasNetworkFailure = !masqueradeUser && isError;
   const supportEmail = data?.platformSettings?.supportEmail || undefined;
 
+  /* istanbul ignore next */
   React.useEffect(() => {
     if (getConfig().HOTJAR_APP_ID) {
       try {

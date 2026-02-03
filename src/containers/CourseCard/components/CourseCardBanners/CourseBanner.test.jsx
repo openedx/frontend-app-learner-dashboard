@@ -58,6 +58,14 @@ describe('CourseBanner', () => {
     renderCourseBanner({ enrollment: { isVerified: true } });
     expect(screen.queryByRole('alert')).toBeNull();
   });
+  it('should use default values when enrollment data is undefined', () => {
+    renderCourseBanner({
+      enrollment: undefined,
+      courseRun: {},
+    });
+
+    expect(useCourseData).toHaveBeenCalledWith('test-card-id');
+  });
   describe('audit access expired', () => {
     it('should display correct message and link', () => {
       renderCourseBanner({ enrollment: { isAuditAccessExpired: true } });

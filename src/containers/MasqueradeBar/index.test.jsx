@@ -111,6 +111,44 @@ describe('MasqueradeBar', () => {
       expect(pendingButton).toBeInTheDocument();
       expect(pendingButton).toHaveAttribute('aria-disabled', 'true');
     });
+    it('handle clear masquerade', () => {
+      const setMasqueradeUser = jest.fn();
+      const masqueradeInput = 'test';
+      useInitializeLearnerHome.mockReturnValue({
+        isError: false,
+        error: null,
+        isPending: false,
+      });
+      useMasquerade.mockReturnValue({
+        masqueradeUser: masqueradeInput,
+        setMasqueradeUser,
+      });
+      useState.mockReturnValue([masqueradeInput, jest.fn()]);
+      render(<IntlProvider lang="en"><MasqueradeBar /></IntlProvider>);
+      const chipMasqueradeInput = screen.getByText(masqueradeInput);
+      expect(chipMasqueradeInput).toBeInTheDocument();
+      chipMasqueradeInput.click();
+      expect(setMasqueradeUser).toHaveBeenCalledWith(undefined);
+    });
+    it('handle masquerade submit', () => {
+      const setMasqueradeUser = jest.fn();
+      const masqueradeInput = 'test';
+      useInitializeLearnerHome.mockReturnValue({
+        isError: false,
+        error: null,
+        isPending: false,
+      });
+      useMasquerade.mockReturnValue({
+        masqueradeUser: null,
+        setMasqueradeUser,
+      });
+      useState.mockReturnValue([masqueradeInput, jest.fn()]);
+      render(<IntlProvider lang="en"><MasqueradeBar /></IntlProvider>);
+      const submitButton = screen.getByRole('button', { name: messages.SubmitButton.defaultMessage });
+      expect(submitButton).toBeInTheDocument();
+      submitButton.click();
+      expect(setMasqueradeUser).toHaveBeenCalledWith(masqueradeInput);
+    });
     it('cannot masquerade', () => {
       mockDefaults();
       useContext.mockReturnValue({

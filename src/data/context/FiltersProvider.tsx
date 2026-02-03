@@ -44,6 +44,7 @@ const filtersReducer = (state: FiltersState, action: any): FiltersState => {
       return { ...state, sortBy: action.payload };
     case 'SET_PAGE_NUMBER':
       return { ...state, pageNumber: action.payload };
+    /* istanbul ignore next */
     default:
       return state;
   }

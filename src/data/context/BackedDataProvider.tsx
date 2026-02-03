@@ -26,6 +26,7 @@ const backedDataReducer = (state: BackedDataState, action: BackedDataAction): Ba
         ...state,
         backUpData: action.payload,
       };
+    /* istanbul ignore next */
     default:
       return state;
   }

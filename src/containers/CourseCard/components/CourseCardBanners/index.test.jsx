@@ -38,6 +38,11 @@ describe('CourseCardBanners', () => {
       return expect(mockedComponent).toBeInTheDocument();
     });
   });
+  it('render null with no courseData', () => {
+    useCourseData.mockReturnValue(null);
+    const { container } = render(<IntlProvider locale="en"><CourseCardBanners {...props} /></IntlProvider>);
+    expect(container.firstChild).toBeNull();
+  });
   it('render with isEnrolled false', () => {
     useCourseData.mockReturnValue({ enrollment: { isEnrolled: false } });
     render(<IntlProvider locale="en"><CourseCardBanners {...props} /></IntlProvider>);

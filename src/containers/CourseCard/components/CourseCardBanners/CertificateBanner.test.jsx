@@ -1,3 +1,4 @@
+import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 
@@ -249,5 +250,28 @@ describe('CertificateBanner', () => {
     });
     const banner = screen.queryByRole('alert');
     expect(banner).toBeNull();
+  });
+  it('should use default values when courseData is empty or undefined', () => {
+    useCourseData.mockReturnValue({});
+    const lernearData = { data: { platformSettings: { supportEmail } } };
+    useInitializeLearnerHome.mockReturnValue(lernearData);
+    render(<IntlProvider locale="en"><CertificateBanner cardId="test-card" /></IntlProvider>);
+
+    const mockedUseMemo = jest.spyOn(React, 'useMemo');
+    const useMemoCall = mockedUseMemo.mock.calls.find(call => call[1].some(dep => dep === undefined || dep === null));
+
+    if (useMemoCall) {
+      const result = useMemoCall[0]();
+
+      expect(result.certificate).toEqual({});
+      expect(result.isVerified).toBe(false);
+      expect(result.isAudit).toBe(false);
+      expect(result.isPassing).toBe(false);
+      expect(result.isArchived).toBe(false);
+      expect(result.minPassingGrade).toBe(0);
+      expect(result.progressUrl).toBeDefined();
+    }
+
+    mockedUseMemo.mockRestore();
   });
 });

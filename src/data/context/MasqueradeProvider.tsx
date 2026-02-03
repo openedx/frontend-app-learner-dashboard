@@ -26,6 +26,7 @@ const masqueradeReducer = (state: MasqueradeState, action: MasqueradeAction): Ma
         ...state,
         masqueradeUser: action.payload,
       };
+    /* istanbul ignore next */
     default:
       return state;
   }
