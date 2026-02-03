@@ -4,10 +4,10 @@ import {
   utilHooks,
   useCourseTrackingEvent,
   useCourseData,
+  useEntitlementInfo,
 } from 'hooks';
 
 import { useUnenrollFromCourse } from 'data/react-query/apiHooks';
-import { useEntitlementInfo } from '../../CourseCard/components/hooks';
 import * as hooks from './reasons';
 import constants from '../constants';
 
@@ -15,13 +15,10 @@ jest.mock('data/react-query/apiHooks', () => ({
   useUnenrollFromCourse: jest.fn(),
 }));
 
-jest.mock('../../CourseCard/components/hooks', () => ({
-  useEntitlementInfo: jest.fn(),
-}));
-
 jest.mock('hooks', () => ({
   useCourseTrackingEvent: jest.fn(),
   useCourseData: jest.fn(),
+  useEntitlementInfo: jest.fn(),
   utilHooks: {
     useValueCallback: jest.fn((cb, prereqs) => ({ useValueCallback: { cb, prereqs } })),
   },

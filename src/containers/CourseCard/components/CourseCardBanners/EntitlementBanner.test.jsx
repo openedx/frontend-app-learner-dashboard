@@ -28,6 +28,7 @@ jest.mock('data/context/SelectSessionProvider', () => ({
 }));
 
 jest.mock('hooks', () => ({
+  ...jest.requireActual('hooks'),
   useCourseData: jest.fn(),
   utilHooks: {
     useFormatDate: () => date => date?.toDateString(),

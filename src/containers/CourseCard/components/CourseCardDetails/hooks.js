@@ -1,7 +1,6 @@
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { utilHooks, useCourseData } from 'hooks';
+import { utilHooks, useCourseData, useEntitlementInfo } from 'hooks';
 import { useSelectSessionModal } from 'data/context/SelectSessionProvider';
-import { useEntitlementInfo } from '../hooks';
 
 import * as hooks from './hooks';
 import messages from './messages';

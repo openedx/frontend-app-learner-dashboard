@@ -3,6 +3,7 @@ import { useCourseData } from 'hooks';
 import CourseCardActions from '.';
 
 jest.mock('hooks', () => ({
+  ...jest.requireActual('hooks'),
   useCourseData: jest.fn(),
 }));
 

@@ -53,14 +53,15 @@ const getVisibleList = (courses: any[], filters: string[], sortBy: string, pageN
 
   if (pageSize === 0) {
     return {
-      visible: list,
+      visibleList: list,
       numPages: 1,
     };
   }
-  return {
+  const result = {
     visibleList: list.slice((pageNumber - 1) * pageSize, pageNumber * pageSize),
     numPages: Math.ceil(list.length / pageSize),
   };
+  return result;
 };
 
 export { getVisibleList, getTransformedCourseDataList, getTransformedCourseDataObject };

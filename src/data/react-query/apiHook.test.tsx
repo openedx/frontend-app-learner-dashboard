@@ -2,7 +2,7 @@ import { renderHook, waitFor } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { logError } from '@edx/frontend-platform/logging';
 import { useMasquerade } from 'data/context/MasqueradeProvider';
-import { useBackedData } from 'data/context/BackedData';
+import { useBackedData } from 'data/context/BackedDataProvider';
 import {
   useInitializeLearnerHome,
   useUnenrollFromCourse,
@@ -18,7 +18,7 @@ import * as api from './api';
 // Mock external dependencies
 jest.mock('@edx/frontend-platform/logging');
 jest.mock('data/context/MasqueradeProvider');
-jest.mock('data/context/BackedData');
+jest.mock('data/context/BackedDataProvider');
 jest.mock('./api');
 
 const mockUseMasquerade = useMasquerade as jest.MockedFunction<typeof useMasquerade>;

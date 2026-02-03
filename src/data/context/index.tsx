@@ -1,4 +1,4 @@
-import { BackedDataProvider } from './BackedData';
+import { BackedDataProvider } from './BackedDataProvider';
 import { MasqueradeProvider } from './MasqueradeProvider';
 import { FiltersProvider } from './FiltersProvider';
 import { SelectSessionModalProvider } from './SelectSessionProvider';

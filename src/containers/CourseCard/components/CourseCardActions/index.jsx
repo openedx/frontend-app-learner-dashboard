@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 
 import { ActionRow } from '@openedx/paragon';
 
-import { useCourseData } from 'hooks';
+import { useCourseData, useEntitlementInfo } from 'hooks';
 
 import CourseCardActionSlot from 'plugin-slots/CourseCardActionSlot';
 import SelectSessionButton from './SelectSessionButton';
 import BeginCourseButton from './BeginCourseButton';
 import ResumeButton from './ResumeButton';
 import ViewCourseButton from './ViewCourseButton';
-import { useEntitlementInfo } from '../hooks';
 
 export const CourseCardActions = ({ cardId }) => {
   const cardData = useCourseData(cardId);

@@ -4,7 +4,7 @@ import {
 import { logError } from '@edx/frontend-platform/logging';
 import { useEffect } from 'react';
 import { useMasquerade } from 'data/context/MasqueradeProvider';
-import { useBackedData } from 'data/context/BackedData';
+import { useBackedData } from 'data/context/BackedDataProvider';
 import { lernerDashboardQueryKeys } from './queryKeys';
 import {
   createCreditRequest,

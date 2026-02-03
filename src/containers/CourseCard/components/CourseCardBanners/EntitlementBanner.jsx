@@ -4,11 +4,10 @@ import PropTypes from 'prop-types';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { Button, MailtoLink } from '@openedx/paragon';
 
-import { utilHooks, useCourseData } from 'hooks';
+import { utilHooks, useCourseData, useEntitlementInfo } from 'hooks';
 import { useSelectSessionModal } from 'data/context/SelectSessionProvider';
 import Banner from 'components/Banner';
 import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
-import { useEntitlementInfo } from '../hooks';
 
 import messages from './messages';
 

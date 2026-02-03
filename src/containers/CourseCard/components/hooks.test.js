@@ -8,6 +8,7 @@ jest.mock('react', () => ({
 }));
 
 jest.mock('hooks', () => ({
+  ...jest.requireActual('hooks'),
   useCourseData: jest.fn(),
 }));
 
