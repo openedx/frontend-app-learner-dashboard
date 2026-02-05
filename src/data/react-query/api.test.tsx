@@ -95,17 +95,12 @@ describe('API functions', () => {
   });
 
   describe('unenrollFromCourse', () => {
-    it('should make POST request to unenroll from course', async () => {
+    it('should make POST request to unenroll from course with FormData', async () => {
       const mockResponse = { status: 200 };
       mockHttpClient.post.mockResolvedValue(mockResponse);
-
       const result = await unenrollFromCourse({ courseId: 'course-123' });
-
       expect(urls.courseUnenroll).toHaveBeenCalled();
-      expect(mockHttpClient.post).toHaveBeenCalledWith('/api/unenroll', {
-        course_id: 'course-123',
-        action: 'unenroll',
-      });
+      expect(mockHttpClient.post).toHaveBeenCalledWith('/api/unenroll', expect.any(FormData));
       expect(result).toEqual(mockResponse);
     });
   });

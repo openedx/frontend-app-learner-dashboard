@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from '@edx/frontend-platform/i18n';
+import { baseAppUrl } from 'data/services/lms/urls';
 
 import { Badge } from '@openedx/paragon';
 
@@ -26,7 +27,7 @@ export const CourseCardImage = ({ cardId, orientation }) => {
         // w-100 is necessary for images on Safari, otherwise stretches full height of the image
         // https://stackoverflow.com/a/44250830
         className="pgn__card-image-cap w-100 show"
-        src={courseData?.course?.bannerImgSrc}
+        src={courseData?.course?.bannerImgSrc && baseAppUrl(courseData.course.bannerImgSrc)}
         alt={formatMessage(messages.bannerAlt)}
       />
       {

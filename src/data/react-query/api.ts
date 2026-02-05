@@ -13,8 +13,12 @@ const initializeList = async (user) => {
 
 const unenrollFromCourse = async ({ courseId }) => {
   const url = urls.courseUnenroll();
-  const content = { [apiKeys.courseId]: courseId, ...unenrollmentAction };
-  const response = await getAuthenticatedHttpClient().post(url, content);
+  const formData = new FormData();
+  formData.append(apiKeys.courseId, courseId);
+  Object.entries(unenrollmentAction).forEach(([key, value]) => {
+    formData.append(key, value);
+  });
+  const response = await getAuthenticatedHttpClient().post(url, formData);
   return response;
 };
 
