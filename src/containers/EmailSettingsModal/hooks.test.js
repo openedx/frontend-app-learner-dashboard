@@ -12,9 +12,6 @@ jest.mock('hooks', () => ({
   useCourseData: jest.fn(() => ({
     enrollment: {},
   })),
-  reduxHooks: {
-    useCardEnrollmentData: jest.fn(),
-  },
 }));
 
 const cardId = 'my-test-course-number';

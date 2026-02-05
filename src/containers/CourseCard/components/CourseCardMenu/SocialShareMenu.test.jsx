@@ -4,8 +4,7 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { render, screen } from '@testing-library/react';
 
 import track from 'tracking';
-import { useCourseTrackingEvent, useCourseData } from 'hooks';
-import { useIsMasquerading } from 'hooks/useIsMasquerading';
+import { useCourseTrackingEvent, useCourseData, useIsMasquerading } from 'hooks';
 
 import { useEmailSettings, useCardSocialSettingsData } from './hooks';
 import SocialShareMenu from './SocialShareMenu';
@@ -18,13 +17,11 @@ jest.mock('tracking', () => ({
 jest.mock('hooks', () => ({
   useCourseData: jest.fn(),
   useCourseTrackingEvent: jest.fn((...args) => ({ trackCourseEvent: args })),
+  useIsMasquerading: jest.fn(),
 }));
 jest.mock('./hooks', () => ({
   useEmailSettings: jest.fn(),
   useCardSocialSettingsData: jest.fn(),
-}));
-jest.mock('hooks/useIsMasquerading', () => ({
-  useIsMasquerading: jest.fn(),
 }));
 
 const props = {
@@ -89,7 +86,7 @@ describe('SocialShareMenu', () => {
     it('initializes local hooks', () => {
       when(useEmailSettings).expectCalledWith();
     });
-    it('initializes redux hook data ', () => {
+    it('initializes hook data ', () => {
       when(useCourseData).expectCalledWith(props.cardId);
       when(useCardSocialSettingsData).expectCalledWith(props.cardId);
       when(useIsMasquerading).expectCalledWith();

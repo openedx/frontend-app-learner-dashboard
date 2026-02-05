@@ -14,12 +14,6 @@ jest.mock('data/react-query/apiHooks', () => ({
   useInitializeLearnerHome: jest.fn().mockReturnValue({ data: { courses: [1, 2, 3] } }),
 }));
 
-jest.mock('hooks', () => ({
-  reduxHooks: { useHasCourses: jest.fn() },
-}));
-
-jest.mock('./hooks', () => jest.fn());
-
 jest.mock('@openedx/paragon', () => ({
   ...jest.requireActual('@openedx/paragon'),
   useWindowSize: jest.fn(),

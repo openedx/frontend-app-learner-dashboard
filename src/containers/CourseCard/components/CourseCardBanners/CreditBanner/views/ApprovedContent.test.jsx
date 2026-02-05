@@ -1,17 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { formatMessage } from 'testUtils';
-import { useCourseData } from 'hooks';
-import { useIsMasquerading } from 'hooks/useIsMasquerading';
+import { useCourseData, useIsMasquerading } from 'hooks';
 import messages from './messages';
 import ApprovedContent from './ApprovedContent';
 
-jest.mock('hooks/useIsMasquerading', () => ({
-  useIsMasquerading: jest.fn(),
-}));
-
 jest.mock('hooks', () => ({
   useCourseData: jest.fn(),
+  useIsMasquerading: jest.fn(),
 }));
 
 const cardId = 'test-card-id';

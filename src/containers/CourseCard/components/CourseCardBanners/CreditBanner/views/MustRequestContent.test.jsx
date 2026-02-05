@@ -1,16 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import userEvent from '@testing-library/user-event';
-import { useIsMasquerading } from 'hooks/useIsMasquerading';
-
-import { useCourseData } from 'hooks';
+import { useCourseData, useIsMasquerading } from 'hooks';
 import messages from './messages';
 import hooks from './hooks';
 import MustRequestContent from './MustRequestContent';
-
-jest.mock('hooks/useIsMasquerading', () => ({
-  useIsMasquerading: jest.fn(),
-}));
 
 jest.mock('./hooks', () => ({
   useCreditRequestData: jest.fn(),
@@ -18,10 +12,7 @@ jest.mock('./hooks', () => ({
 
 jest.mock('hooks', () => ({
   useCourseData: jest.fn(),
-  reduxHooks: {
-    useMasqueradeData: jest.fn(),
-    useCardCreditData: jest.fn(),
-  },
+  useIsMasquerading: jest.fn(),
 }));
 
 const cardId = 'test-card-id';

@@ -12,7 +12,6 @@ module.exports = createConfig('jest', {
     'testUtils', // don't unit test jest mocking tools
     'src/data/services/lms/fakeData', // don't unit test mock data
     'src/test', // don't unit test integration test utils
-    'src/data/redux', // TODO: remove after redux cleanup
   ],
   testTimeout: 120000,
   testEnvironment: 'jsdom',

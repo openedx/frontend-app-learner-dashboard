@@ -20,14 +20,6 @@ jest.mock('hooks', () => ({
   utilHooks: {
     useFormatDate: jest.fn(),
   },
-  reduxHooks: {
-    useCardCourseData: jest.fn(),
-    useCardCourseRunData: jest.fn(),
-    useCardEnrollmentData: jest.fn(),
-    useCardEntitlementData: jest.fn(),
-    useCardProviderData: jest.fn(),
-    useUpdateSelectSessionModalCallback: (...args) => ({ updateSelectSessionModalCallback: args }),
-  },
 }));
 
 jest.mock('@edx/frontend-platform/i18n', () => {
