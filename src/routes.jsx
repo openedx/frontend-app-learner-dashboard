@@ -1,5 +1,3 @@
-import Main from './Main';
-
 const routes = [
   {
     id: 'org.openedx.frontend.route.learnerDashboard.main',
@@ -7,7 +5,10 @@ const routes = [
     handle: {
       role: 'org.openedx.frontend.role.dashboard'
     },
-    Component: Main
+    async lazy () {
+      const module = await import('./Main');
+      return { Component: module.default };
+    },
   }
 ];
 
