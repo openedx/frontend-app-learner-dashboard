@@ -114,7 +114,7 @@ describe('SelectSessionModal hooks', () => {
       runHook({});
     });
     describe('initialization', () => {
-      it('loads redux data based on selected card id', () => {
+      it('loads data based on selected card id', () => {
         expect(useCourseData).toHaveBeenCalledWith(selectedCardId);
       });
       it('initializes selected session with courseId if available', () => {

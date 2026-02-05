@@ -4,18 +4,14 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 
-import { useCourseData } from 'hooks';
-import { useIsMasquerading } from 'hooks/useIsMasquerading';
+import { useCourseData, useIsMasquerading } from 'hooks';
 import * as hooks from './hooks';
 import CourseCardMenu from '.';
 import messages from './messages';
 
-jest.mock('hooks/useIsMasquerading', () => ({
-  useIsMasquerading: jest.fn(),
-}));
-
 jest.mock('hooks', () => ({
   useCourseData: jest.fn(),
+  useIsMasquerading: jest.fn(),
 }));
 jest.mock('./SocialShareMenu', () => jest.fn(() => <div>SocialShareMenu</div>));
 jest.mock('containers/EmailSettingsModal', () => jest.fn(() => <div>EmailSettingsModal</div>));
@@ -94,7 +90,7 @@ describe('CourseCardMenu', () => {
     it('initializes local hooks', () => {
       when(hooks.useEmailSettings).expectCalledWith();
     });
-    it('initializes redux hook data ', () => {
+    it('initializes hook data ', () => {
       when(useIsMasquerading).expectCalledWith();
       when(useCourseData).expectCalledWith(props.cardId);
     });

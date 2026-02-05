@@ -1,5 +1,4 @@
-import { useCourseData } from 'hooks';
-import { useIsMasquerading } from 'hooks/useIsMasquerading';
+import { useCourseData, useIsMasquerading } from 'hooks';
 import * as hooks from './hooks';
 
 jest.mock('react', () => ({
@@ -10,9 +9,6 @@ jest.mock('react', () => ({
 jest.mock('hooks', () => ({
   ...jest.requireActual('hooks'),
   useCourseData: jest.fn(),
-}));
-
-jest.mock('hooks/useIsMasquerading', () => ({
   useIsMasquerading: jest.fn(),
 }));
 

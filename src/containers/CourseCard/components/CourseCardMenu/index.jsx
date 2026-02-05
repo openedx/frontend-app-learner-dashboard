@@ -6,8 +6,7 @@ import { MoreVert } from '@openedx/paragon/icons';
 
 import EmailSettingsModal from 'containers/EmailSettingsModal';
 import UnenrollConfirmModal from 'containers/UnenrollConfirmModal';
-import { useIsMasquerading } from 'hooks/useIsMasquerading';
-import { useCourseData } from 'hooks';
+import { useCourseData, useIsMasquerading } from 'hooks';
 import SocialShareMenu from './SocialShareMenu';
 import {
   useEmailSettings,

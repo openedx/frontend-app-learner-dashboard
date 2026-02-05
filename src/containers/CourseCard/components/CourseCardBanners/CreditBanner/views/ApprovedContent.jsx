@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { useIsMasquerading } from 'hooks/useIsMasquerading';
-import { useCourseData } from 'hooks';
+import { useCourseData, useIsMasquerading } from 'hooks';
 import CreditContent from './components/CreditContent';
 import ProviderLink from './components/ProviderLink';
 

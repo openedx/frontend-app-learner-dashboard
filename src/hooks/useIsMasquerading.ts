@@ -7,4 +7,4 @@ const useIsMasquerading = () => {
   return !!masqueradeUser && !isError;
 };
 
-export { useIsMasquerading };
+export default useIsMasquerading;

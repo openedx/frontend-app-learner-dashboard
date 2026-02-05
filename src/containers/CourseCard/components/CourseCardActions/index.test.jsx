@@ -31,7 +31,7 @@ describe('CourseCardActions', () => {
   };
   const renderComponent = () => render(<CourseCardActions {...props} />);
   describe('hooks', () => {
-    it('initializes redux hooks', () => {
+    it('initializes hooks', () => {
       mockHooks();
       renderComponent();
       expect(useCourseData).toHaveBeenCalledWith(cardId);

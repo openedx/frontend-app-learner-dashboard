@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react';
 import { useMasquerade } from 'data/context/MasqueradeProvider';
 import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
-import { useIsMasquerading } from './useIsMasquerading';
+import { useIsMasquerading } from 'hooks';
 
 jest.mock('data/context/MasqueradeProvider');
 jest.mock('data/react-query/apiHooks');

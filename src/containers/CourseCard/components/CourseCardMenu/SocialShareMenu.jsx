@@ -6,8 +6,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { Dropdown } from '@openedx/paragon';
 
 import track from 'tracking';
-import { useCourseTrackingEvent, useCourseData } from 'hooks';
-import { useIsMasquerading } from 'hooks/useIsMasquerading';
+import { useCourseTrackingEvent, useCourseData, useIsMasquerading } from 'hooks';
 import { useCardSocialSettingsData } from './hooks';
 import messages from './messages';
 
