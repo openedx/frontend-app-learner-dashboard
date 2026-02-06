@@ -52,6 +52,7 @@ pull_translations:
       && atlas pull $(ATLAS_OPTIONS) \
                translations/frontend-platform/src/i18n/messages:frontend-platform \
                translations/paragon/src/i18n/messages:paragon \
+               translations/frontend-component-header/src/i18n/messages:frontend-component-header \
                translations/frontend-component-footer/src/i18n/messages:frontend-component-footer \
                translations/frontend-app-learner-dashboard/src/i18n/messages:frontend-app-learner-dashboard \
                $(ATLAS_EXTRA_SOURCES)
