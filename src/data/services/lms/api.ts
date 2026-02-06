@@ -57,7 +57,7 @@ const logEvent = async ({ eventName, data, courseId }) => {
   return response;
 };
 
-const logShare = async ({ courseId, site }) => {
+const logShare = ({ courseId, site }) => {
   const eventData = {
     eventName: eventNames.shareClicked,
     courseId,
