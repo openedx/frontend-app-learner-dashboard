@@ -54,8 +54,5 @@ describe('StrictDict', () => {
       // Accessing a missing key should return undefined
       expect(dict.fakeKey).toBeUndefined();
     });
-    it('returns undefined', () => {
-      expect(dict.fakeKey).toEqual(undefined);
-    });
   });
 });

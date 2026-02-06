@@ -45,9 +45,8 @@ describe('CourseCardDetails hooks', () => {
   });
 
   describe('useCardDetailsData', () => {
-    const providerData = {
-      name: 'Unknown',
-    };
+    const providerName = 'my-provider-name';
+    const providerData = {};
     const entitlementData = {
       isEntitlement: false,
       disableViewCourse: false,
@@ -77,8 +76,10 @@ describe('CourseCardDetails hooks', () => {
       expect(out.accessMessage).toEqual(mockAccessMessage({ cardId }));
     });
     it('forwards provider name if it exists, else formatted unknown provider name', () => {
-      expect(out.providerName).toEqual(providerData.name);
-      runHook({ provider: { name: providerData.name } });
+      runHook({ provider: { name: providerName } });
+      expect(out.providerName).toEqual(providerName);
+
+      runHook({ provider: {} });
       expect(out.providerName).toEqual(formatMessage(messages.unknownProviderName));
     });
     it('forward changeOrLeaveSessionMessage', () => {
