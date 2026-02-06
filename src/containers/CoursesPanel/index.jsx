@@ -1,13 +1,13 @@
 import React, { useMemo } from 'react';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
+import { useInitializeLearnerHome } from 'data/hooks';
 import {
   CourseFilterControls,
 } from 'containers/CourseFilterControls';
 import CourseListSlot from 'plugin-slots/CourseListSlot';
 import NoCoursesViewSlot from 'plugin-slots/NoCoursesViewSlot';
-import { useFilters } from 'data/context/FiltersProvider';
+import { useFilters } from 'data/context';
 
 import { getVisibleList, getTransformedCourseDataList } from 'utils/dataTransformers';
 

@@ -1,4 +1,4 @@
-import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
+import { useInitializeLearnerHome } from 'data/hooks';
 import { useMemo } from 'react';
 import { getTransformedCourseDataList } from 'utils/dataTransformers';
 

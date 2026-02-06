@@ -4,7 +4,7 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 import hooks from './hooks';
 import DashboardLayout from './DashboardLayout';
 
-jest.mock('data/react-query/apiHooks', () => ({
+jest.mock('data/hooks', () => ({
   useInitializeLearnerHome: jest.fn().mockReturnValue({
     data: {
       platformSettings: {

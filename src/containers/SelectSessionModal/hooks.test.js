@@ -3,8 +3,8 @@ import track from 'tracking';
 
 import { MockUseState } from 'testUtils';
 import { useCourseData } from 'hooks';
-import { useDeleteEntitlementEnrollment, useUpdateEntitlementEnrollment } from 'data/react-query/apiHooks';
-import { useSelectSessionModal } from 'data/context/SelectSessionProvider';
+import { useDeleteEntitlementEnrollment, useUpdateEntitlementEnrollment } from 'data/hooks';
+import { useSelectSessionModal } from 'data/context';
 
 import { LEAVE_OPTION } from './constants';
 import messages from './messages';
@@ -40,12 +40,12 @@ jest.mock('hooks', () => ({
   useCourseData: jest.fn(),
 }));
 
-jest.mock('data/react-query/apiHooks', () => ({
+jest.mock('data/hooks', () => ({
   useUpdateEntitlementEnrollment: jest.fn(),
   useDeleteEntitlementEnrollment: jest.fn(),
 }));
 
-jest.mock('data/context/SelectSessionProvider', () => ({
+jest.mock('data/context', () => ({
   useSelectSessionModal: jest.fn(),
 }));
 

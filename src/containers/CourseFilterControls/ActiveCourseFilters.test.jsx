@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { formatMessage } from 'testUtils';
-import { useFilters } from 'data/context/FiltersProvider';
+import { useFilters } from 'data/context';
 
 import { FilterKeys } from 'data/constants/app';
 import userEvent from '@testing-library/user-event';
@@ -10,7 +10,7 @@ import messages from './messages';
 
 const filters = Object.values(FilterKeys);
 
-jest.mock('data/context/FiltersProvider', () => ({
+jest.mock('data/context', () => ({
   useFilters: jest.fn(),
 }));
 

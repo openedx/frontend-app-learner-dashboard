@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { StrictDict } from 'utils';
-import { useInitializeLearnerHome, useSendConfirmEmail } from 'data/react-query/apiHooks';
+import { useInitializeLearnerHome, useSendConfirmEmail } from 'data/hooks';
 
 import * as module from './hooks';
 

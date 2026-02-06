@@ -3,7 +3,7 @@ import React from 'react';
 import MasqueradeBar from 'containers/MasqueradeBar';
 import { AppContext } from '@edx/frontend-platform/react';
 import Header from '@edx/frontend-component-header';
-import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
+import { useInitializeLearnerHome } from 'data/hooks';
 import urls from 'data/services/lms/urls';
 
 import ConfirmEmailBanner from './ConfirmEmailBanner';

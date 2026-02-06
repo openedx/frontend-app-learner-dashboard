@@ -3,7 +3,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { Button, Chip } from '@openedx/paragon';
 import { CloseSmall } from '@openedx/paragon/icons';
-import { useFilters } from 'data/context/FiltersProvider';
+import { useFilters } from 'data/context';
 
 import messages from './messages';
 import './index.scss';

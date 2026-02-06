@@ -5,7 +5,7 @@ import messages from './messages';
 
 const courseSearchUrl = 'http://localhost:18000/course-search-url';
 
-jest.mock('data/react-query/apiHooks', () => ({
+jest.mock('data/hooks', () => ({
   useInitializeLearnerHome: () => ({
     data: {
       platformSettings: {

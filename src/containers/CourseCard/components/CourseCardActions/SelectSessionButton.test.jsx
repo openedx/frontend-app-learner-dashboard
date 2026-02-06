@@ -1,13 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
-import { useSelectSessionModal } from 'data/context/SelectSessionProvider';
+import { useSelectSessionModal } from 'data/context';
 
 import useActionDisabledState from '../hooks';
 
 import SelectSessionButton from './SelectSessionButton';
 
-jest.mock('data/context/SelectSessionProvider', () => ({
+jest.mock('data/context', () => ({
   useSelectSessionModal: jest.fn().mockReturnValue({
     updateSelectSessionModal: jest.fn(),
   }),

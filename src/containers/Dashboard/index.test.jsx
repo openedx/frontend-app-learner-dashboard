@@ -1,16 +1,16 @@
 import { render, screen } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
-import { useSelectSessionModal } from 'data/context/SelectSessionProvider';
-import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
+import { useSelectSessionModal } from 'data/context';
+import { useInitializeLearnerHome } from 'data/hooks';
 
 import hooks from './hooks';
 import Dashboard from '.';
 
-jest.mock('data/context/SelectSessionProvider', () => ({
+jest.mock('data/context', () => ({
   useSelectSessionModal: jest.fn(),
 }));
 
-jest.mock('data/react-query/apiHooks', () => ({
+jest.mock('data/hooks', () => ({
   useInitializeLearnerHome: jest.fn(),
 }));
 

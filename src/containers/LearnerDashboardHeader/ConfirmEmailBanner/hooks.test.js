@@ -1,10 +1,10 @@
 import { MockUseState } from 'testUtils';
-import { useInitializeLearnerHome, useSendConfirmEmail } from 'data/react-query/apiHooks';
+import { useInitializeLearnerHome, useSendConfirmEmail } from 'data/hooks';
 
 import * as hooks from './hooks';
 
-jest.mock('data/react-query/apiHooks', () => ({
-  ...jest.requireActual('data/react-query/apiHooks'),
+jest.mock('data/hooks', () => ({
+  ...jest.requireActual('data/hooks'),
   useInitializeLearnerHome: jest.fn(),
   useSendConfirmEmail: jest.fn(),
 }));

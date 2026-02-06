@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
+import { useInitializeLearnerHome } from 'data/hooks';
 import { StrictDict } from 'utils';
 
 import { useCourseData } from 'hooks';

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { StrictDict } from 'utils';
-import { useUpdateEmailSettings } from 'data/react-query/apiHooks';
+import { useUpdateEmailSettings } from 'data/hooks';
 import { useCourseData } from 'hooks';
 
 import * as module from './hooks';

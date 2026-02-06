@@ -5,9 +5,9 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { Button, MailtoLink } from '@openedx/paragon';
 
 import { utilHooks, useCourseData, useEntitlementInfo } from 'hooks';
-import { useSelectSessionModal } from 'data/context/SelectSessionProvider';
+import { useSelectSessionModal } from 'data/context';
 import Banner from 'components/Banner';
-import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
+import { useInitializeLearnerHome } from 'data/hooks';
 
 import messages from './messages';
 

@@ -1,6 +1,6 @@
 import { MockUseState } from 'testUtils';
 
-import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
+import { useInitializeLearnerHome } from 'data/hooks';
 
 import * as reasons from './reasons';
 import * as hooks from '.';
@@ -9,7 +9,7 @@ jest.mock('./reasons', () => ({
   useUnenrollReasons: jest.fn(),
 }));
 
-jest.mock('data/react-query/apiHooks', () => ({
+jest.mock('data/hooks', () => ({
   useInitializeLearnerHome: jest.fn(),
 }));
 

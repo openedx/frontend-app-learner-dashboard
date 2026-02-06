@@ -13,8 +13,8 @@ import {
 } from '@openedx/paragon';
 import { Close, Tune } from '@openedx/paragon/icons';
 
-import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
-import { useFilters } from 'data/context/FiltersProvider';
+import { useInitializeLearnerHome } from 'data/hooks';
+import { useFilters } from 'data/context';
 import FilterForm from './components/FilterForm';
 import SortForm from './components/SortForm';
 import messages from './messages';

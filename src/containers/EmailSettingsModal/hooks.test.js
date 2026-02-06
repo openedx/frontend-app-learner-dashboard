@@ -1,10 +1,10 @@
 import { MockUseState } from 'testUtils';
 import { useCourseData } from 'hooks';
-import { useUpdateEmailSettings } from 'data/react-query/apiHooks';
+import { useUpdateEmailSettings } from 'data/hooks';
 
 import * as hooks from './hooks';
 
-jest.mock('data/react-query/apiHooks', () => ({
+jest.mock('data/hooks', () => ({
   useUpdateEmailSettings: jest.fn(),
 }));
 

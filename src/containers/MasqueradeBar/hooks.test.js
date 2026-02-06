@@ -1,11 +1,11 @@
 import { MockUseState } from 'testUtils';
-import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
-import { useMasquerade } from 'data/context/MasqueradeProvider';
+import { useInitializeLearnerHome } from 'data/hooks';
+import { useMasquerade } from 'data/context';
 
 import * as hooks from './hooks';
 import messages from './messages';
 
-jest.mock('data/react-query/apiHooks', () => ({
+jest.mock('data/hooks', () => ({
   useInitializeLearnerHome: jest.fn(),
 }));
 

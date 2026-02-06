@@ -4,7 +4,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { Card, Hyperlink, Icon } from '@openedx/paragon';
 import { ArrowForward } from '@openedx/paragon/icons';
 
-import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
+import { useInitializeLearnerHome } from 'data/hooks';
 import moreCoursesSVG from 'assets/more-courses-sidewidget.svg';
 import { baseAppUrl } from 'data/services/lms/urls';
 

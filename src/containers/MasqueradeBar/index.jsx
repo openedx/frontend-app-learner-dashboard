@@ -14,8 +14,8 @@ import {
 } from '@openedx/paragon';
 import { Close, PersonSearch } from '@openedx/paragon/icons';
 
-import { useMasquerade } from 'data/context/MasqueradeProvider';
-import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
+import { useMasquerade } from 'data/context';
+import { useInitializeLearnerHome } from 'data/hooks';
 import messages from './messages';
 import './index.scss';
 

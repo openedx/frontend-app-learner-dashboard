@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
-import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
+import { useInitializeLearnerHome } from 'data/hooks';
 
 import messagesNoCourses from 'containers/CoursesPanel/NoCoursesView/messages';
 import CoursesPanel from '.';
 import messages from './messages';
 
-jest.mock('data/react-query/apiHooks', () => ({
+jest.mock('data/hooks', () => ({
   useInitializeLearnerHome: jest.fn(() => ({
     data: {
       courses: [{ id: 1 }, { id: 2 }],

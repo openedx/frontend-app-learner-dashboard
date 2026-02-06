@@ -2,8 +2,8 @@
 import React from 'react';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
-import { useMasquerade } from 'data/context/MasqueradeProvider';
+import { useInitializeLearnerHome } from 'data/hooks';
+import { useMasquerade } from 'data/context';
 import { StrictDict } from 'utils';
 import * as module from './hooks';
 
