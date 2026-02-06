@@ -13,13 +13,13 @@ import {
   useCreateCreditRequest,
   useSendConfirmEmail,
 } from './apiHooks';
-import * as api from './api';
+import * as api from '../services/lms/api';
 
 // Mock external dependencies
 jest.mock('@edx/frontend-platform/logging');
 jest.mock('data/context/MasqueradeProvider');
 jest.mock('data/context/BackedDataProvider');
-jest.mock('./api');
+jest.mock('data/services/lms/api');
 
 const mockUseMasquerade = useMasquerade as jest.MockedFunction<typeof useMasquerade>;
 const mockUseBackedData = useBackedData as jest.MockedFunction<typeof useBackedData>;

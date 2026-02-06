@@ -15,7 +15,7 @@ import {
   unenrollFromCourse,
   updateEmailSettings,
   updateEntitlementEnrollment,
-} from './api';
+} from 'data/services/lms/api';
 
 const useInitializeLearnerHome = () => {
   const { masqueradeUser } = useMasquerade();
