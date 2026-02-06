@@ -1,6 +1,6 @@
 // @ts-check
 
-const { createLintConfig } = require('@openedx/frontend-base/config');
+const { createLintConfig } = require('@openedx/frontend-base/tools');
 
 module.exports = createLintConfig(
   {
