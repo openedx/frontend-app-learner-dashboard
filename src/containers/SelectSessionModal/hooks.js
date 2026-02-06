@@ -7,8 +7,8 @@ import { StrictDict } from 'utils';
 import track from 'tracking';
 
 import { useCourseData } from 'hooks';
-import { useDeleteEntitlementEnrollment, useUpdateEntitlementEnrollment } from 'data/react-query/apiHooks';
-import { useSelectSessionModal } from 'data/context/SelectSessionProvider';
+import { useDeleteEntitlementEnrollment, useUpdateEntitlementEnrollment } from 'data/hooks';
+import { useSelectSessionModal } from 'data/context';
 import { LEAVE_OPTION } from './constants';
 import messages from './messages';
 import * as module from './hooks';

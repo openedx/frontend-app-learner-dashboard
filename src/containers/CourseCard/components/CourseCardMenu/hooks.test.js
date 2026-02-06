@@ -1,11 +1,11 @@
 import { useCourseData, useCourseTrackingEvent } from 'hooks';
-import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
+import { useInitializeLearnerHome } from 'data/hooks';
 import track from 'tracking';
 import { MockUseState } from 'testUtils';
 
 import * as hooks from './hooks';
 
-jest.mock('data/react-query/apiHooks', () => ({
+jest.mock('data/hooks', () => ({
   useInitializeLearnerHome: jest.fn(),
 }));
 

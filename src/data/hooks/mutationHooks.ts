@@ -1,43 +1,19 @@
-import {
-  useQuery, useQueryClient, useMutation,
-} from '@tanstack/react-query';
+import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { logError } from '@edx/frontend-platform/logging';
-import { useEffect } from 'react';
-import { useMasquerade } from 'data/context/MasqueradeProvider';
-import { useBackedData } from 'data/context/BackedDataProvider';
-import { learnerDashboardQueryKeys } from './queryKeys';
 import {
   createCreditRequest,
   deleteEntitlementEnrollment,
-  initializeList,
   logShare,
   sendConfirmEmail,
   unenrollFromCourse,
   updateEmailSettings,
   updateEntitlementEnrollment,
 } from 'data/services/lms/api';
+import { learnerDashboardQueryKeys } from './queryKeys';
 
-const useInitializeLearnerHome = () => {
-  const { masqueradeUser } = useMasquerade();
-  const { backUpData, setBackUpData } = useBackedData();
-
-  const query = useQuery({
-    queryKey: learnerDashboardQueryKeys.initialize(masqueradeUser),
-    queryFn: async () => initializeList(masqueradeUser),
-    retry: false,
-    retryOnMount: !masqueradeUser,
-    refetchOnMount: !masqueradeUser,
-  });
-
-  useEffect(() => {
-    if (!masqueradeUser && query.data) {
-      setBackUpData(query.data);
-    }
-  }, [masqueradeUser, query.data, setBackUpData]);
-
-  const data = masqueradeUser && !query.isError ? query.data : backUpData;
-
-  return { ...query, data };
+type LogShareParams = {
+  courseId: string;
+  site: string;
 };
 
 const useUnenrollFromCourse = () => {
@@ -114,11 +90,6 @@ const useUpdateEmailSettings = () => {
   });
 };
 
-type LogShareParams = {
-  courseId: string;
-  site: string;
-};
-
 const useLogShare = () => useMutation({
   mutationKey: learnerDashboardQueryKeys.logShare(),
   mutationFn: ({ courseId, site }: LogShareParams) => logShare({ courseId, site }),
@@ -162,7 +133,6 @@ const useSendConfirmEmail = (sendEmailUrl: string) => {
 };
 
 export {
-  useInitializeLearnerHome,
   useUnenrollFromCourse,
   useUpdateEntitlementEnrollment,
   useDeleteEntitlementEnrollment,

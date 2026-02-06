@@ -3,14 +3,14 @@ import { formatMessage } from 'testUtils';
 import { breakpoints, useWindowSize } from '@openedx/paragon';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { FilterKeys, SortKeys } from 'data/constants/app';
-import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
-import { useFilters } from 'data/context/FiltersProvider';
+import { useInitializeLearnerHome } from 'data/hooks';
+import { useFilters } from 'data/context';
 
 import userEvent from '@testing-library/user-event';
 import messages from './messages';
 import CourseFilterControls from './CourseFilterControls';
 
-jest.mock('data/react-query/apiHooks', () => ({
+jest.mock('data/hooks', () => ({
   useInitializeLearnerHome: jest.fn().mockReturnValue({ data: { courses: [1, 2, 3] } }),
 }));
 
@@ -21,7 +21,7 @@ jest.mock('@openedx/paragon', () => ({
 
 const filters = Object.values(FilterKeys);
 
-jest.mock('data/context/FiltersProvider', () => ({
+jest.mock('data/context', () => ({
   useFilters: jest.fn(),
 }));
 

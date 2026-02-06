@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 
-import { useSelectSessionModal } from 'data/context/SelectSessionProvider';
-import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
+import { useSelectSessionModal } from 'data/context';
+import { useInitializeLearnerHome } from 'data/hooks';
 import SelectSessionModal from 'containers/SelectSessionModal';
 import CoursesPanel from 'containers/CoursesPanel';
 import DashboardModalSlot from 'plugin-slots/DashboardModalSlot';

@@ -5,7 +5,7 @@ import { Search } from '@openedx/paragon/icons';
 import { baseAppUrl } from 'data/services/lms/urls';
 
 import emptyCourseSVG from 'assets/empty-course.svg';
-import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
+import { useInitializeLearnerHome } from 'data/hooks';
 
 import messages from './messages';
 import './index.scss';

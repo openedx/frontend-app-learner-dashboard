@@ -8,7 +8,7 @@ import {
 } from 'hooks';
 import { StrictDict } from 'utils';
 import track from 'tracking';
-import { useUnenrollFromCourse } from 'data/react-query/apiHooks';
+import { useUnenrollFromCourse } from 'data/hooks';
 import * as module from './reasons';
 import constants from '../constants';
 

@@ -2,7 +2,7 @@ import track from 'tracking';
 import { useCourseData, useCourseTrackingEvent } from 'hooks';
 import { useState } from 'react';
 import { StrictDict } from 'utils';
-import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
+import { useInitializeLearnerHome } from 'data/hooks';
 
 export const state = StrictDict({
   isUnenrollConfirmVisible: (val) => useState(val), // eslint-disable-line

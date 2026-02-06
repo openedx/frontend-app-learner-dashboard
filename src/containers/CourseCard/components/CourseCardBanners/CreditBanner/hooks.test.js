@@ -1,6 +1,6 @@
 import { keyStore } from 'utils';
 import { useCourseData } from 'hooks';
-import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
+import { useInitializeLearnerHome } from 'data/hooks';
 
 import ApprovedContent from './views/ApprovedContent';
 import EligibleContent from './views/EligibleContent';
@@ -19,7 +19,7 @@ jest.mock('hooks', () => ({
   useCourseData: jest.fn(),
 }));
 
-jest.mock('data/react-query/apiHooks', () => ({
+jest.mock('data/hooks', () => ({
   useInitializeLearnerHome: jest.fn(),
 }));
 

@@ -7,7 +7,7 @@ import { CheckCircle } from '@openedx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { baseAppUrl } from 'data/services/lms/urls';
 
-import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
+import { useInitializeLearnerHome } from 'data/hooks';
 import { utilHooks, useCourseData } from 'hooks';
 import Banner from 'components/Banner';
 

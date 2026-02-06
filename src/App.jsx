@@ -15,8 +15,8 @@ import AppWrapper from 'containers/AppWrapper';
 import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
 
 import { getConfig } from '@edx/frontend-platform';
-import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
-import { useMasquerade } from 'data/context/MasqueradeProvider';
+import { useInitializeLearnerHome } from 'data/hooks';
+import { useMasquerade } from 'data/context';
 import messages from './messages';
 import './App.scss';
 

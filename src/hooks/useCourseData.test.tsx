@@ -1,9 +1,9 @@
 import { renderHook } from '@testing-library/react';
-import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
+import { useInitializeLearnerHome } from 'data/hooks';
 import { getTransformedCourseDataList } from 'utils/dataTransformers';
 import useCourseData from './useCourseData';
 
-jest.mock('data/react-query/apiHooks');
+jest.mock('data/hooks');
 jest.mock('utils/dataTransformers');
 
 const mockUseInitializeLearnerHome = useInitializeLearnerHome as jest.MockedFunction<typeof useInitializeLearnerHome>;

@@ -16,7 +16,7 @@ jest.mock('hooks', () => ({
   }),
 }));
 
-jest.mock('data/react-query/apiHooks', () => ({
+jest.mock('data/hooks', () => ({
   useInitializeLearnerHome: jest.fn().mockReturnValue({
     data: {
       enterpriseDashboard: {

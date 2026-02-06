@@ -2,7 +2,7 @@ import React from 'react';
 
 import { StrictDict } from 'utils';
 
-import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
+import { useInitializeLearnerHome } from 'data/hooks';
 import { useUnenrollReasons } from './reasons';
 import * as module from '.';
 

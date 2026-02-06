@@ -8,7 +8,7 @@ import { findCoursesNavClicked } from './hooks';
 
 const courseSearchUrl = '/course-search-url';
 
-jest.mock('data/react-query/apiHooks', () => ({
+jest.mock('data/hooks', () => ({
   useInitializeLearnerHome: jest.fn().mockReturnValue({
     data: {
       platformSettings: {

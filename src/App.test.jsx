@@ -3,11 +3,11 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { getConfig } from '@edx/frontend-platform';
 
-import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
+import { useInitializeLearnerHome } from 'data/hooks';
 import { App } from './App';
 import messages from './messages';
 
-jest.mock('data/react-query/apiHooks', () => ({
+jest.mock('data/hooks', () => ({
   useInitializeLearnerHome: jest.fn(),
 }));
 

@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import { useCourseData } from 'hooks';
-import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
+import { useInitializeLearnerHome } from 'data/hooks';
 import CertificateBanner from './CertificateBanner';
 
 jest.mock('hooks', () => ({
@@ -13,7 +13,7 @@ jest.mock('hooks', () => ({
   useCourseData: jest.fn(),
 }));
 
-jest.mock('data/react-query/apiHooks', () => ({
+jest.mock('data/hooks', () => ({
   useInitializeLearnerHome: jest.fn(),
 }));
 

@@ -1,5 +1,5 @@
 import { MockUseState } from 'testUtils';
-import { useCreateCreditRequest } from 'data/react-query/apiHooks';
+import { useCreateCreditRequest } from 'data/hooks';
 import * as hooks from './hooks';
 
 jest.mock('hooks', () => ({
@@ -9,7 +9,7 @@ jest.mock('hooks', () => ({
   }),
 }));
 
-jest.mock('data/react-query/apiHooks', () => ({
+jest.mock('data/hooks', () => ({
   useCreateCreditRequest: jest.fn(),
 }));
 

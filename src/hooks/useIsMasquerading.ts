@@ -1,5 +1,5 @@
-import { useMasquerade } from 'data/context/MasqueradeProvider';
-import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
+import { useMasquerade } from 'data/context';
+import { useInitializeLearnerHome } from 'data/hooks';
 
 const useIsMasquerading = () => {
   const { masqueradeUser } = useMasquerade();

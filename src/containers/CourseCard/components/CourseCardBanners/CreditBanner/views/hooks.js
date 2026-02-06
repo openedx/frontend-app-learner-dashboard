@@ -2,7 +2,7 @@ import React from 'react';
 import { AppContext } from '@edx/frontend-platform/react';
 import { StrictDict } from 'utils';
 import { useCourseData } from 'hooks';
-import { useCreateCreditRequest } from 'data/react-query/apiHooks';
+import { useCreateCreditRequest } from 'data/hooks';
 
 import * as module from './hooks';
 

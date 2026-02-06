@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
 
 import { IntlProvider } from '@edx/frontend-platform/i18n';
-import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
+import { useInitializeLearnerHome } from 'data/hooks';
 import WidgetSidebarSlot from '.';
 
-jest.mock('data/react-query/apiHooks', () => ({
+jest.mock('data/hooks', () => ({
   useInitializeLearnerHome: jest.fn(),
 }));
 

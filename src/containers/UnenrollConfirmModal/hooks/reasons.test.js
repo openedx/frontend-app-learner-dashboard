@@ -7,11 +7,11 @@ import {
   useEntitlementInfo,
 } from 'hooks';
 
-import { useUnenrollFromCourse } from 'data/react-query/apiHooks';
+import { useUnenrollFromCourse } from 'data/hooks';
 import * as hooks from './reasons';
 import constants from '../constants';
 
-jest.mock('data/react-query/apiHooks', () => ({
+jest.mock('data/hooks', () => ({
   useUnenrollFromCourse: jest.fn(),
 }));
 

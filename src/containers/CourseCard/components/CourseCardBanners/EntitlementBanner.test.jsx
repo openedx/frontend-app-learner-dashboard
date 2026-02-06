@@ -12,7 +12,7 @@ jest.mock('react', () => ({
   useMemo: (fn) => fn(),
 }));
 
-jest.mock('data/react-query/apiHooks', () => ({
+jest.mock('data/hooks', () => ({
   useInitializeLearnerHome: jest.fn().mockReturnValue({
     data: {
       platformSettings: {

@@ -6,7 +6,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { EXECUTIVE_EDUCATION_COURSE_MODES } from 'data/constants/course';
 import track from 'tracking';
 import { useCourseTrackingEvent, useCourseData } from 'hooks';
-import { useInitializeLearnerHome } from 'data/react-query/apiHooks';
+import { useInitializeLearnerHome } from 'data/hooks';
 import useActionDisabledState from '../hooks';
 import ActionButton from './ActionButton';
 import messages from './messages';
