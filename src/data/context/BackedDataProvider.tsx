@@ -1,5 +1,6 @@
 import React, {
   createContext, useContext, useMemo, useReducer, ReactNode,
+  useCallback,
 } from 'react';
 
 interface BackedDataContextType {
@@ -39,12 +40,14 @@ interface BackedDataProviderProps {
 export const BackedDataProvider: React.FC<BackedDataProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(backedDataReducer, initialState);
 
+  const setBackUpData = useCallback((backUpData: any) => {
+    dispatch({ type: 'SET_DATA', payload: backUpData });
+  }, []);
+
   const contextValue = useMemo(() => ({
     backUpData: state.backUpData,
-    setBackUpData: (backUpData: any) => {
-      dispatch({ type: 'SET_DATA', payload: backUpData });
-    },
-  }), [state]);
+    setBackUpData,
+  }), [setBackUpData, state.backUpData]);
 
   return (
     <BackedDataContext.Provider value={contextValue}>
