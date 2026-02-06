@@ -116,7 +116,7 @@ describe('SocialShareMenu', () => {
           expect(emailSettingsButton).toBeInTheDocument();
         });
         if (isMasquerading) {
-          it('renders when masquerading', () => {
+          it('is disabled', () => {
             const emailSettingsButton = screen.getByRole('button', { name: messages.emailSettings.defaultMessage });
             expect(emailSettingsButton).toBeInTheDocument();
             expect(emailSettingsButton).toHaveAttribute('aria-disabled', 'true');

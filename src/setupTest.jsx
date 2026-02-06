@@ -43,22 +43,3 @@ jest.mock('react-redux', () => {
     useSelector: jest.fn((selector) => ({ useSelector: selector })),
   };
 });
-
-jest.mock('./data/constants/app', () => ({
-  ...jest.requireActual('./data/constants/app'),
-  locationId: 'fake-location-id',
-}));
-
-jest.mock('./utils', () => ({
-  ...jest.requireActual('./utils'),
-  nullMethod: jest.fn().mockName('utils.nullMethod'),
-}));
-
-jest.mock('./utils/hooks', () => {
-  const formatDate = jest.fn(date => new Date(date).toLocaleDateString())
-    .mockName('utils.formatDate');
-  return {
-    formatDate,
-    useFormatDate: () => formatDate,
-  };
-});

@@ -10,7 +10,6 @@ import messages from './messages';
 
 jest.mock('@src/hooks', () => ({
   reduxHooks: {
-
     useCardEnrollmentData: jest.fn(),
   },
 }));
