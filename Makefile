@@ -24,6 +24,19 @@ test.npm.%: validate-no-uncommitted-package-lock-changes
 requirements:  ## install ci requirements
 	npm ci
 
+clean:
+	rm -rf dist
+
+build: clean
+	tsc --project tsconfig.build.json
+	tsc-alias -p tsconfig.build.json
+	find src -type f \( -name '*.scss' -o -name '*.png' -o -name '*.svg' \) -exec sh -c '\
+	  for f in "$$@"; do \
+	    d="dist/$${f#src/}"; \
+	    mkdir -p "$$(dirname "$$d")"; \
+	    cp "$$f" "$$d"; \
+	  done' sh {} +
+
 i18n.extract:
 	# Pulling display strings from .jsx files into .json files...
 	rm -rf $(transifex_temp)

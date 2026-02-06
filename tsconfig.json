@@ -1,8 +1,11 @@
 {
-  "extends": "@openedx/frontend-base/config/tsconfig.json",
+  "extends": "@openedx/frontend-base/tools/tsconfig.json",
   "compilerOptions": {
     "rootDir": ".",
-    "outDir": "dist"
+    "outDir": "dist",
+    "paths": {
+      "@src/*": ["./src/*"]
+    },
   },
   "include": [
     "src/**/*",
