@@ -57,7 +57,7 @@ pull_translations:
                translations/frontend-app-learner-dashboard/src/i18n/messages:frontend-app-learner-dashboard \
                $(ATLAS_EXTRA_SOURCES)
 
-	$(intl_imports) frontend-platform paragon frontend-component-footer frontend-app-learner-dashboard $(ATLAS_EXTRA_INTL_IMPORTS)
+	$(intl_imports) frontend-platform paragon frontend-component-header frontend-component-footer frontend-app-learner-dashboard $(ATLAS_EXTRA_INTL_IMPORTS)
 
 # This target is used by CI.
 validate-no-uncommitted-package-lock-changes:
