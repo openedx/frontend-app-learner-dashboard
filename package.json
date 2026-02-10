@@ -62,7 +62,6 @@
     "redux-thunk": "2.4.2",
     "regenerator-runtime": "^0.14.0",
     "reselect": "^4.0.0",
-    "universal-cookie": "^4.0.4",
     "util": "^0.12.4"
   },
   "devDependencies": {
