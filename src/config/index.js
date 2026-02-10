@@ -1,5 +1,6 @@
 const configuration = {
   // BASE_URL: process.env.BASE_URL,
+  APP_ID: process.env.APP_ID,
   LMS_BASE_URL: process.env.LMS_BASE_URL,
   ECOMMERCE_BASE_URL: process.env.ECOMMERCE_BASE_URL,
   CREDIT_PURCHASE_URL: process.env.CREDIT_PURCHASE_URL,
