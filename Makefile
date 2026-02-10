@@ -52,11 +52,12 @@ pull_translations:
       && atlas pull $(ATLAS_OPTIONS) \
                translations/frontend-platform/src/i18n/messages:frontend-platform \
                translations/paragon/src/i18n/messages:paragon \
+               translations/frontend-component-header/src/i18n/messages:frontend-component-header \
                translations/frontend-component-footer/src/i18n/messages:frontend-component-footer \
                translations/frontend-app-learner-dashboard/src/i18n/messages:frontend-app-learner-dashboard \
                $(ATLAS_EXTRA_SOURCES)
 
-	$(intl_imports) frontend-platform paragon frontend-component-footer frontend-app-learner-dashboard $(ATLAS_EXTRA_INTL_IMPORTS)
+	$(intl_imports) frontend-platform paragon frontend-component-header frontend-component-footer frontend-app-learner-dashboard $(ATLAS_EXTRA_INTL_IMPORTS)
 
 # This target is used by CI.
 validate-no-uncommitted-package-lock-changes:
