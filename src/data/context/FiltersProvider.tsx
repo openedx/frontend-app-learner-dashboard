@@ -1,5 +1,6 @@
 import React, {
   createContext, useContext, useReducer, useMemo,
+  useCallback,
 } from 'react';
 
 type SortOption = 'enrolled' | 'title';
@@ -30,7 +31,15 @@ const initialState: FiltersState = {
   pageNumber: 1,
 };
 
-const filtersReducer = (state: FiltersState, action: any): FiltersState => {
+type FiltersAction = 
+  | { type: 'SET_FILTERS'; payload: string[] }
+  | { type: 'ADD_FILTER'; payload: string }
+  | { type: 'REMOVE_FILTER'; payload: string }
+  | { type: 'CLEAR_FILTERS' }
+  | { type: 'SET_SORT_BY'; payload: SortOption }
+  | { type: 'SET_PAGE_NUMBER'; payload: number };
+
+const filtersReducer = (state: FiltersState, action: FiltersAction): FiltersState => {
   switch (action.type) {
     case 'SET_FILTERS':
       return { ...state, filters: action.payload };
@@ -53,29 +62,29 @@ const filtersReducer = (state: FiltersState, action: any): FiltersState => {
 export const FiltersProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(filtersReducer, initialState);
 
-  const setFilters = (newFilters: string[]) => {
+  const setFilters = useCallback((newFilters: string[]) => {
     dispatch({ type: 'SET_FILTERS', payload: newFilters });
-  };
+  }, []);
 
-  const addFilter = (filter: string) => {
+  const addFilter = useCallback((filter: string) => {
     dispatch({ type: 'ADD_FILTER', payload: filter });
-  };
+  }, []);
 
-  const removeFilter = (filter: string) => {
+  const removeFilter = useCallback((filter: string) => {
     dispatch({ type: 'REMOVE_FILTER', payload: filter });
-  };
+  }, []);
 
-  const clearFilters = () => {
+  const clearFilters = useCallback(() => {
     dispatch({ type: 'CLEAR_FILTERS' });
-  };
+  }, []);
 
-  const setSortBy = (sortOption?: SortOption) => {
+  const setSortBy = useCallback((sortOption: SortOption) => {
     dispatch({ type: 'SET_SORT_BY', payload: sortOption });
-  };
+  }, []);
 
-  const setPageNumber = (pageNumber: number) => {
+  const setPageNumber = useCallback((pageNumber: number) => {
     dispatch({ type: 'SET_PAGE_NUMBER', payload: pageNumber });
-  };
+  }, []);
 
   const contextValue = useMemo(() => ({
     filters: state.filters,
@@ -87,7 +96,7 @@ export const FiltersProvider = ({ children }: { children: React.ReactNode }) => 
     clearFilters,
     setSortBy,
     setPageNumber,
-  }), [state.filters, state.sortBy, state.pageNumber]);
+  }), [state.filters, state.sortBy, state.pageNumber, setFilters, addFilter, removeFilter, clearFilters, setSortBy, setPageNumber]);
 
   return (
     <FiltersContext.Provider value={contextValue}>

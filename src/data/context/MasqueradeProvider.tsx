@@ -1,5 +1,6 @@
 import React, {
   createContext, useContext, useMemo, useReducer, ReactNode,
+  useCallback,
 } from 'react';
 
 interface MasqueradeContextType {
@@ -39,12 +40,14 @@ interface MasqueradeProviderProps {
 export const MasqueradeProvider: React.FC<MasqueradeProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(masqueradeReducer, initialState);
 
+  const setMasqueradeUser = useCallback((user: string | undefined) => {
+    dispatch({ type: 'SET_MASQUERADE_USER', payload: user });
+  }, []);
+
   const contextValue = useMemo(() => ({
     masqueradeUser: state.masqueradeUser,
-    setMasqueradeUser: (user: string | undefined) => {
-      dispatch({ type: 'SET_MASQUERADE_USER', payload: user });
-    },
-  }), [state]);
+    setMasqueradeUser,
+  }), [state.masqueradeUser, setMasqueradeUser]);
 
   return (
     <MasqueradeContext.Provider value={contextValue}>

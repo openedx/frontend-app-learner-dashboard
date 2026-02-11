@@ -1,5 +1,6 @@
 import React, {
   createContext, useContext, useReducer, useMemo, ReactNode,
+  useCallback,
 } from 'react';
 
 interface SelectSessionModalState {
@@ -51,19 +52,19 @@ interface SelectSessionModalProviderProps {
 export const SelectSessionModalProvider: React.FC<SelectSessionModalProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(selectSessionModalReducer, initialState);
 
-  const updateSelectSessionModal = (cardId: string | null) => {
+  const updateSelectSessionModal = useCallback((cardId: string | null) => {
     dispatch({ type: 'UPDATE_SELECT_SESSION_MODAL', payload: cardId });
-  };
+  }, []);
 
-  const closeSelectSessionModal = () => {
+  const closeSelectSessionModal = useCallback(() => {
     dispatch({ type: 'CLOSE_SELECT_SESSION_MODAL' });
-  };
+  }, []);
 
   const contextValue = useMemo(() => ({
     selectSessionModal: state.selectSessionModal,
     updateSelectSessionModal,
     closeSelectSessionModal,
-  }), [state.selectSessionModal]);
+  }), [state.selectSessionModal, updateSelectSessionModal, closeSelectSessionModal]);
 
   return (
     <SelectSessionModalContext.Provider value={contextValue}>
