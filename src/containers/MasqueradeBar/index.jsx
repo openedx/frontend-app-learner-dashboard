@@ -43,7 +43,7 @@ export const MasqueradeBar = () => {
   const isMasquerading = !!masqueradeUser && !isError && !isPending;
   const masqueradeErrorMessage = useMemo(() => {
     if (masqueradeUser && error) {
-      return (error.customAttributes.httpErrorStatus === 404 ? messages.NoStudentFound : messages.UnknownError);
+      return (error.customAttributes?.httpErrorStatus === 404 ? messages.NoStudentFound : messages.UnknownError);
     }
     return null;
   }, [error, masqueradeUser]);

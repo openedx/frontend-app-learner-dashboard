@@ -32,7 +32,7 @@ import App from './App';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 60 * 60_000,
+      staleTime: 5 * 60_000,
     },
   },
 });
