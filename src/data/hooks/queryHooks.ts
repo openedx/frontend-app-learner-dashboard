@@ -4,14 +4,14 @@ import { useBackedData, useMasquerade } from 'data/context';
 import {
   initializeList,
 } from 'data/services/lms/api';
-import { lernerDashboardQueryKeys } from './queryKeys';
+import { learnerDashboardQueryKeys } from './queryKeys';
 
 const useInitializeLearnerHome = () => {
   const { masqueradeUser } = useMasquerade();
   const { backUpData, setBackUpData } = useBackedData();
 
   const query = useQuery({
-    queryKey: lernerDashboardQueryKeys.initialize(masqueradeUser),
+    queryKey: learnerDashboardQueryKeys.initialize(masqueradeUser),
     queryFn: async () => initializeList(masqueradeUser),
     retry: false,
     retryOnMount: !masqueradeUser,
