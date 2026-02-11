@@ -64,7 +64,7 @@ export const SelectSessionModalProvider: React.FC<SelectSessionModalProviderProp
     selectSessionModal: state.selectSessionModal,
     updateSelectSessionModal,
     closeSelectSessionModal,
-  }), [state.selectSessionModal]);
+  }), [state.selectSessionModal]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <SelectSessionModalContext.Provider value={contextValue}>

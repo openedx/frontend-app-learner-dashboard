@@ -47,7 +47,7 @@ export const BackedDataProvider: React.FC<BackedDataProviderProps> = ({ children
   const contextValue = useMemo(() => ({
     backUpData: state.backUpData,
     setBackUpData,
-  }), [state.backUpData]);
+  }), [state.backUpData]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <BackedDataContext.Provider value={contextValue}>

@@ -96,7 +96,7 @@ export const FiltersProvider = ({ children }: { children: React.ReactNode }) => 
     clearFilters,
     setSortBy,
     setPageNumber,
-  }), [state.filters, state.sortBy, state.pageNumber]);
+  }), [state.filters, state.sortBy, state.pageNumber]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <FiltersContext.Provider value={contextValue}>
