@@ -47,7 +47,7 @@ export const BackedDataProvider: React.FC<BackedDataProviderProps> = ({ children
   const contextValue = useMemo(() => ({
     backUpData: state.backUpData,
     setBackUpData,
-  }), [setBackUpData, state.backUpData]);
+  }), [state.backUpData]);
 
   return (
     <BackedDataContext.Provider value={contextValue}>

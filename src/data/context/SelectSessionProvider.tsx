@@ -64,7 +64,7 @@ export const SelectSessionModalProvider: React.FC<SelectSessionModalProviderProp
     selectSessionModal: state.selectSessionModal,
     updateSelectSessionModal,
     closeSelectSessionModal,
-  }), [state.selectSessionModal, updateSelectSessionModal, closeSelectSessionModal]);
+  }), [state.selectSessionModal]);
 
   return (
     <SelectSessionModalContext.Provider value={contextValue}>

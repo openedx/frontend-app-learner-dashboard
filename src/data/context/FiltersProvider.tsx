@@ -96,7 +96,7 @@ export const FiltersProvider = ({ children }: { children: React.ReactNode }) => 
     clearFilters,
     setSortBy,
     setPageNumber,
-  }), [state.filters, state.sortBy, state.pageNumber, setFilters, addFilter, removeFilter, clearFilters, setSortBy, setPageNumber]);
+  }), [state.filters, state.sortBy, state.pageNumber]);
 
   return (
     <FiltersContext.Provider value={contextValue}>

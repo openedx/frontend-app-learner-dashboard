@@ -1,6 +1,9 @@
 {
   "extends": "@edx/typescript-config",
   "compilerOptions": {
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
     "baseUrl": "./src",
     "paths": {
       "*": ["*"]

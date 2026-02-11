@@ -47,7 +47,7 @@ export const MasqueradeProvider: React.FC<MasqueradeProviderProps> = ({ children
   const contextValue = useMemo(() => ({
     masqueradeUser: state.masqueradeUser,
     setMasqueradeUser,
-  }), [state.masqueradeUser, setMasqueradeUser]);
+  }), [state.masqueradeUser]);
 
   return (
     <MasqueradeContext.Provider value={contextValue}>
