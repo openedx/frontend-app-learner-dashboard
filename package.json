@@ -56,7 +56,6 @@
     "react-router-dom": "6.30.3",
     "react-share": "^4.4.0",
     "regenerator-runtime": "^0.14.0",
-    "universal-cookie": "^4.0.4",
     "util": "^0.12.4"
   },
   "devDependencies": {
