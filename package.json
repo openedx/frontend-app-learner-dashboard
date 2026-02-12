@@ -54,7 +54,7 @@
     "react-helmet": "^6.1.0",
     "react-intl": "6.8.9",
     "react-router-dom": "6.30.3",
-    "react-share": "^4.4.0",
+    "react-share": "^5.2.2",
     "regenerator-runtime": "^0.14.0",
     "util": "^0.12.4"
   },

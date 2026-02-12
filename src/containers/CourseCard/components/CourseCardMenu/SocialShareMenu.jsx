@@ -51,6 +51,7 @@ export const SocialShareMenu = ({ cardId, emailSettings }) => {
           })}
           resetButtonStyle={false}
           className="pgn__dropdown-item dropdown-item"
+          aria-label="facebook"
         >
           {formatMessage(messages.shareToFacebook)}
         </ReactShare.FacebookShareButton>
@@ -65,6 +66,7 @@ export const SocialShareMenu = ({ cardId, emailSettings }) => {
           })}
           resetButtonStyle={false}
           className="pgn__dropdown-item dropdown-item"
+          aria-label="twitter"
         >
           {formatMessage(messages.shareToTwitter)}
         </ReactShare.TwitterShareButton>
