@@ -47,7 +47,7 @@ export const MasqueradeProvider: React.FC<MasqueradeProviderProps> = ({ children
   const contextValue = useMemo(() => ({
     masqueradeUser: state.masqueradeUser,
     setMasqueradeUser,
-  }), [state.masqueradeUser]); // eslint-disable-line react-hooks/exhaustive-deps
+  }), [state.masqueradeUser, setMasqueradeUser]);
 
   return (
     <MasqueradeContext.Provider value={contextValue}>

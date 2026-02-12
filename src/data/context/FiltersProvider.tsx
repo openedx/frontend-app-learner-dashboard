@@ -31,7 +31,7 @@ const initialState: FiltersState = {
   pageNumber: 1,
 };
 
-type FiltersAction = 
+type FiltersAction =
   | { type: 'SET_FILTERS'; payload: string[] }
   | { type: 'ADD_FILTER'; payload: string }
   | { type: 'REMOVE_FILTER'; payload: string }
@@ -86,17 +86,30 @@ export const FiltersProvider = ({ children }: { children: React.ReactNode }) => 
     dispatch({ type: 'SET_PAGE_NUMBER', payload: pageNumber });
   }, []);
 
-  const contextValue = useMemo(() => ({
-    filters: state.filters,
-    sortBy: state.sortBy,
-    pageNumber: state.pageNumber,
-    setFilters,
-    addFilter,
-    removeFilter,
-    clearFilters,
-    setSortBy,
-    setPageNumber,
-  }), [state.filters, state.sortBy, state.pageNumber]); // eslint-disable-line react-hooks/exhaustive-deps
+  const contextValue = useMemo(
+    () => ({
+      filters: state.filters,
+      sortBy: state.sortBy,
+      pageNumber: state.pageNumber,
+      setFilters,
+      addFilter,
+      removeFilter,
+      clearFilters,
+      setSortBy,
+      setPageNumber,
+    }),
+    [
+      state.filters,
+      state.sortBy,
+      state.pageNumber,
+      setFilters,
+      addFilter,
+      removeFilter,
+      clearFilters,
+      setSortBy,
+      setPageNumber,
+    ],
+  );
 
   return (
     <FiltersContext.Provider value={contextValue}>

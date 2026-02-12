@@ -16,6 +16,27 @@ type LogShareParams = {
   site: string;
 };
 
+type UpdateEntitlementProps = {
+  uuid: string;
+  courseId: string;
+};
+
+type DeleteEntitlementParams = {
+  uuid: string;
+  isRefundable: boolean;
+};
+
+type UpdateEmailSettingsParams = {
+  courseId: string;
+  enable: boolean;
+};
+
+type CreditParams = {
+  providerId: string;
+  courseId: string;
+  username: string;
+};
+
 const useUnenrollFromCourse = () => {
   const queryClient = useQueryClient();
 
@@ -34,11 +55,6 @@ const useUnenrollFromCourse = () => {
 const useUpdateEntitlementEnrollment = () => {
   const queryClient = useQueryClient();
 
-  type UpdateEntitlementProps = {
-    uuid: string;
-    courseId: string;
-  };
-
   return useMutation({
     mutationKey: learnerDashboardQueryKeys.updateEntitlementEnrollment(),
     mutationFn: ({ uuid, courseId }: UpdateEntitlementProps) => updateEntitlementEnrollment({ uuid, courseId }),
@@ -54,14 +70,9 @@ const useUpdateEntitlementEnrollment = () => {
 const useDeleteEntitlementEnrollment = () => {
   const queryClient = useQueryClient();
 
-  type DeleteEntitlParams = {
-    uuid: string;
-    isRefundable: boolean;
-  };
-
   return useMutation({
     mutationKey: learnerDashboardQueryKeys.deleteEntitlementEnrollment(),
-    mutationFn: ({ uuid, isRefundable }: DeleteEntitlParams) => deleteEntitlementEnrollment({ uuid, isRefundable }),
+    mutationFn: (params: DeleteEntitlementParams) => deleteEntitlementEnrollment(params),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: learnerDashboardQueryKeys.initialize() });
     },
@@ -73,10 +84,6 @@ const useDeleteEntitlementEnrollment = () => {
 
 const useUpdateEmailSettings = () => {
   const queryClient = useQueryClient();
-  type UpdateEmailSettingsParams = {
-    courseId: string;
-    enable: boolean;
-  };
 
   return useMutation({
     mutationKey: learnerDashboardQueryKeys.updateEmailSettings(),
@@ -100,11 +107,7 @@ const useLogShare = () => useMutation({
 
 const useCreateCreditRequest = () => {
   const queryClient = useQueryClient();
-  type CreditParams = {
-    providerId: string;
-    courseId: string;
-    username: string;
-  };
+
   return useMutation({
     mutationKey: learnerDashboardQueryKeys.createCreditRequest(),
     mutationFn: (props: CreditParams) => createCreditRequest(props),

@@ -60,11 +60,14 @@ export const SelectSessionModalProvider: React.FC<SelectSessionModalProviderProp
     dispatch({ type: 'CLOSE_SELECT_SESSION_MODAL' });
   }, []);
 
-  const contextValue = useMemo(() => ({
-    selectSessionModal: state.selectSessionModal,
-    updateSelectSessionModal,
-    closeSelectSessionModal,
-  }), [state.selectSessionModal]); // eslint-disable-line react-hooks/exhaustive-deps
+  const contextValue = useMemo(
+    () => ({
+      selectSessionModal: state.selectSessionModal,
+      updateSelectSessionModal,
+      closeSelectSessionModal,
+    }),
+    [closeSelectSessionModal, state.selectSessionModal, updateSelectSessionModal],
+  );
 
   return (
     <SelectSessionModalContext.Provider value={contextValue}>

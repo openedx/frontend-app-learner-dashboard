@@ -24,6 +24,7 @@ const useInitializeLearnerHome = () => {
     }
   }, [masqueradeUser, query.data, setBackUpData]);
 
+  // When masquerading fails, show the original user's dashboard rather than an error
   const data = masqueradeUser && !query.isError ? query.data : backUpData;
 
   return { ...query, data };
