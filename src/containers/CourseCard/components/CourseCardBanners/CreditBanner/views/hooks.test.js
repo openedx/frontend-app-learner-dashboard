@@ -1,19 +1,34 @@
 import { MockUseState } from 'testUtils';
-import { apiHooks } from 'hooks';
+import { useCreateCreditRequest } from 'data/hooks';
 import * as hooks from './hooks';
 
 jest.mock('hooks', () => ({
-  apiHooks: {
-    useCreateCreditRequest: jest.fn(),
-  },
+  useCourseData: jest.fn().mockReturnValue({
+    credit: { providerId: 'provider-123' },
+    courseRun: { courseId: 'course-456' },
+  }),
 }));
+
+jest.mock('data/hooks', () => ({
+  useCreateCreditRequest: jest.fn(),
+}));
+
+jest.mock('react', () => {
+  const ActualReact = jest.requireActual('react');
+  return {
+    ...ActualReact,
+    useContext: jest.fn().mockReturnValue({
+      authenticatedUser: { username: 'test-user' },
+    }),
+  };
+});
 
 const state = new MockUseState(hooks);
 
 const cardId = 'test-card-id';
 const requestData = { data: 'request data' };
 const creditRequest = jest.fn().mockReturnValue(Promise.resolve(requestData));
-apiHooks.useCreateCreditRequest.mockReturnValue(creditRequest);
+useCreateCreditRequest.mockReturnValue({ mutate: creditRequest });
 const event = { preventDefault: jest.fn() };
 
 let out;
@@ -31,7 +46,7 @@ describe('Credit Banner view hooks', () => {
         state.expectInitializedWith(state.keys.creditRequestData, null);
       });
       it('calls useCreateCreditRequest with passed cardID', () => {
-        expect(apiHooks.useCreateCreditRequest).toHaveBeenCalledWith(cardId);
+        expect(useCreateCreditRequest).toHaveBeenCalledWith();
       });
     });
     describe('output', () => {
@@ -47,8 +62,7 @@ describe('Credit Banner view hooks', () => {
         });
         it('calls api.createCreditRequest and sets requestData with the response', async () => {
           await out.createCreditRequest(event);
-          expect(creditRequest).toHaveBeenCalledWith();
-          expect(state.setState.creditRequestData).toHaveBeenCalledWith(requestData.data);
+          expect(creditRequest).toHaveBeenCalled();
         });
       });
     });

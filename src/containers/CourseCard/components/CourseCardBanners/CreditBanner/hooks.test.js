@@ -1,5 +1,6 @@
 import { keyStore } from 'utils';
-import { reduxHooks } from 'hooks';
+import { useCourseData } from 'hooks';
+import { useInitializeLearnerHome } from 'data/hooks';
 
 import ApprovedContent from './views/ApprovedContent';
 import EligibleContent from './views/EligibleContent';
@@ -9,12 +10,19 @@ import RejectedContent from './views/RejectedContent';
 
 import * as hooks from './hooks';
 
-jest.mock('hooks', () => ({
-  reduxHooks: {
-    useCardCreditData: jest.fn(),
-    usePlatformSettingsData: jest.fn(),
-  },
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useMemo: (fn) => fn(),
 }));
+
+jest.mock('hooks', () => ({
+  useCourseData: jest.fn(),
+}));
+
+jest.mock('data/hooks', () => ({
+  useInitializeLearnerHome: jest.fn(),
+}));
+
 jest.mock('./views/ApprovedContent', () => 'ApprovedContent');
 jest.mock('./views/EligibleContent', () => 'EligibleContent');
 jest.mock('./views/MustRequestContent', () => 'MustRequestContent');
@@ -34,18 +42,18 @@ const defaultProps = {
 };
 
 const loadHook = (creditData = {}) => {
-  reduxHooks.useCardCreditData.mockReturnValue({ ...defaultProps, ...creditData });
+  useCourseData.mockReturnValue({ credit: { ...defaultProps, ...creditData } });
   out = hooks.useCreditBannerData(cardId);
 };
 
 describe('useCreditBannerData hook', () => {
   beforeEach(() => {
-    reduxHooks.usePlatformSettingsData.mockReturnValue({ supportEmail });
+    useInitializeLearnerHome.mockReturnValue({ data: { platformSettings: { supportEmail } } });
   });
   it('loads card credit data with cardID and loads platform settings data', () => {
     loadHook({ isEligible: false });
-    expect(reduxHooks.useCardCreditData).toHaveBeenCalledWith(cardId);
-    expect(reduxHooks.usePlatformSettingsData).toHaveBeenCalledWith();
+    expect(useCourseData).toHaveBeenCalledWith(cardId);
+    expect(useInitializeLearnerHome).toHaveBeenCalledWith();
   });
   describe('non-credit-eligible learner', () => {
     it('returns null if the learner is not credit eligible', () => {

@@ -1,11 +1,32 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { useCourseTrackingEvent, useCourseData } from 'hooks';
 
-import { reduxHooks } from 'hooks';
 import track from 'tracking';
 import useActionDisabledState from '../hooks';
 import ResumeButton from './ResumeButton';
+
+const authOrgId = 'auth-org-id';
+jest.mock('data/hooks', () => ({
+  useInitializeLearnerHome: jest.fn().mockReturnValue({
+    data: {
+      enterpriseDashboard: {
+        authOrgId,
+      },
+    },
+  }),
+}));
+
+jest.mock('hooks', () => ({
+  useCourseData: jest.fn().mockReturnValue({
+    enrollment: { mode: 'executive-education' },
+    courseRun: { homeUrl: 'home-url' },
+  }),
+  useCourseTrackingEvent: jest.fn().mockReturnValue({
+    trackCourseEvent: jest.fn(),
+  }),
+}));
 
 jest.mock('tracking', () => ({
   course: {
@@ -13,24 +34,14 @@ jest.mock('tracking', () => ({
   },
 }));
 
-jest.mock('hooks', () => ({
-  reduxHooks: {
-    useCardCourseRunData: jest.fn(),
-    useCardExecEdTrackingParam: jest.fn(),
-    useTrackCourseEvent: jest.fn(),
-  },
-}));
 jest.mock('../hooks', () => jest.fn(() => ({ disableResumeCourse: false })));
 
 jest.mock('./ActionButton/hooks', () => jest.fn(() => false));
 
-const resumeUrl = 'resume-url';
-reduxHooks.useCardCourseRunData.mockReturnValue({ resumeUrl });
-const execEdPath = (cardId) => `exec-ed-tracking-path=${cardId}`;
-reduxHooks.useCardExecEdTrackingParam.mockImplementation(execEdPath);
-reduxHooks.useTrackCourseEvent.mockImplementation(
-  (eventName, cardId, url) => ({ trackCourseEvent: { eventName, cardId, url } }),
-);
+useCourseData.mockReturnValue({
+  enrollment: { mode: 'executive-education' },
+  courseRun: { resumeUrl: 'home-url' },
+});
 
 describe('ResumeButton', () => {
   const props = {
@@ -39,10 +50,7 @@ describe('ResumeButton', () => {
   describe('initialize hooks', () => {
     beforeEach(() => render(<IntlProvider locale="en"><ResumeButton {...props} /></IntlProvider>));
     it('initializes course run data with cardId', () => {
-      expect(reduxHooks.useCardCourseRunData).toHaveBeenCalledWith(props.cardId);
-    });
-    it('loads exec education path param', () => {
-      expect(reduxHooks.useCardExecEdTrackingParam).toHaveBeenCalledWith(props.cardId);
+      expect(useCourseData).toHaveBeenCalledWith(props.cardId);
     });
     it('loads disabled states for resume action from action hooks', () => {
       expect(useActionDisabledState).toHaveBeenCalledWith(props.cardId);
@@ -73,10 +81,10 @@ describe('ResumeButton', () => {
         const user = userEvent.setup();
         const button = screen.getByRole('button', { name: 'Resume' });
         user.click(button);
-        expect(reduxHooks.useTrackCourseEvent).toHaveBeenCalledWith(
+        expect(useCourseTrackingEvent).toHaveBeenCalledWith(
           track.course.enterCourseClicked,
           props.cardId,
-          resumeUrl + execEdPath(props.cardId),
+          `home-url?org_id=${authOrgId}`,
         );
       });
     });
