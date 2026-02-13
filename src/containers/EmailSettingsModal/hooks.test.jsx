@@ -95,7 +95,8 @@ describe('EmailSettingsModal hooks', () => {
     });
 
     it('calls updateEmailSettings api and closeModal when save is called', async () => {
-      useCourseData.mockReturnValue({ enrollment: { hasOptedOutOfEmail: true } });
+      const courseId = 'test-course-id';
+      useCourseData.mockReturnValue({ enrollment: { hasOptedOutOfEmail: true }, courseRun: { courseId } });
       api.updateEmailSettings.mockResolvedValue({});
 
       const { result } = renderHook(() => useEmailData({ closeModal, cardId }), {
@@ -106,13 +107,14 @@ describe('EmailSettingsModal hooks', () => {
         result.current.save();
       });
 
-      const expectedArg = { courseId: cardId, enable: !result.current.isOptedOut };
+      const expectedArg = { courseId, enable: !result.current.isOptedOut };
       expect(api.updateEmailSettings).toHaveBeenCalledWith(expectedArg);
       expect(closeModal).toHaveBeenCalled();
     });
 
     it('calls updateEmailSettings with enable:true when isOptedOut is false', async () => {
-      useCourseData.mockReturnValue({ enrollment: { hasOptedOutOfEmail: false } });
+      const courseId = 'test-course-id';
+      useCourseData.mockReturnValue({ enrollment: { hasOptedOutOfEmail: false }, courseRun: { courseId } });
       api.updateEmailSettings.mockResolvedValue({});
 
       const { result } = renderHook(() => useEmailData({ closeModal, cardId }), {
@@ -124,7 +126,7 @@ describe('EmailSettingsModal hooks', () => {
       });
 
       expect(api.updateEmailSettings).toHaveBeenCalledWith({
-        courseId: cardId,
+        courseId,
         enable: true,
       });
     });

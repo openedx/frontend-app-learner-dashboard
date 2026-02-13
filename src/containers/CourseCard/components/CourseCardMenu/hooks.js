@@ -39,7 +39,7 @@ export const useHandleToggleDropdown = (cardId) => {
 
 export const useCardSocialSettingsData = (cardId) => {
   const { data: learnerHomeData } = useInitializeLearnerHome();
-  const { data: courseData } = useCourseData(cardId);
+  const courseData = useCourseData(cardId);
   const socialShareSettings = learnerHomeData?.socialShareSettings;
   const { socialShareUrl } = courseData?.course || {};
   const defaultSettings = { isEnabled: false, shareUrl: '' };

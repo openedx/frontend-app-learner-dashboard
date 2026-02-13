@@ -16,11 +16,12 @@ export const useEmailData = ({
 }) => {
   const courseData = useCourseData(cardId);
   const hasOptedOutOfEmail = courseData?.enrollment?.hasOptedOutOfEmail || false;
+  const courseId = courseData?.courseRun?.courseId;
   const [isOptedOut, setIsOptedOut] = module.state.toggle(hasOptedOutOfEmail);
   const { mutate: updateEmailSettings } = useUpdateEmailSettings();
   const onToggle = () => setIsOptedOut(!isOptedOut);
   const save = () => {
-    updateEmailSettings({ courseId: cardId, enable: !isOptedOut });
+    updateEmailSettings({ courseId, enable: !isOptedOut });
     closeModal();
   };
 
