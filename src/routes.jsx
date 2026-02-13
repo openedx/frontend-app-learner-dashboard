@@ -1,7 +1,7 @@
 const routes = [
   {
     id: 'org.openedx.frontend.route.learnerDashboard.main',
-    path: '/',
+    path: '/learner-dashboard',
     handle: {
       role: 'org.openedx.frontend.role.dashboard'
     },
