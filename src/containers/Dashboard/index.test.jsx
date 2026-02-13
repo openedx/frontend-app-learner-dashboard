@@ -2,7 +2,6 @@ import { render, screen } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import { reduxHooks } from 'hooks';
-import hooks from './hooks';
 import Dashboard from '.';
 
 jest.mock('hooks', () => ({
@@ -24,8 +23,6 @@ jest.mock('./LoadingView', () => jest.fn(() => <div>LoadingView</div>));
 jest.mock('containers/SelectSessionModal', () => jest.fn(() => <div>SelectSessionModal</div>));
 jest.mock('./DashboardLayout', () => jest.fn(() => <div>DashboardLayout</div>));
 
-const pageTitle = 'test-page-title';
-
 describe('Dashboard', () => {
   const createWrapper = (props = {}) => {
     const {
@@ -33,7 +30,6 @@ describe('Dashboard', () => {
       initIsPending = true,
       showSelectSessionModal = true,
     } = props;
-    hooks.useDashboardMessages.mockReturnValue({ pageTitle });
     reduxHooks.useHasCourses.mockReturnValue(hasCourses);
     reduxHooks.useRequestIsPending.mockReturnValue(initIsPending);
     reduxHooks.useShowSelectSessionModal.mockReturnValue(showSelectSessionModal);
@@ -41,11 +37,6 @@ describe('Dashboard', () => {
   };
 
   describe('render', () => {
-    it('page title is displayed in sr-only h1 tag', () => {
-      createWrapper();
-      const heading = screen.getByText(pageTitle);
-      expect(heading).toHaveClass('sr-only');
-    });
     describe('initIsPending false', () => {
       it('should render DashboardModalSlot', () => {
         createWrapper({ initIsPending: false });
