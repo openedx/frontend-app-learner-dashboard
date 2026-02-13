@@ -86,7 +86,7 @@ describe('LearnerDashboardHeader', () => {
     expect(mainMenuItems[0].isActive).toBe(true);
   });
 
-  it('should highlight the active tab depending on the pathname', () => {
+  it('should highlight the programs tab if dashboard is enabled and on the programs page', () => {
     mergeConfig({ ENABLE_PROGRAMS: true, ENABLE_PROGRAM_DASHBOARD: true });
     useLocation.mockReturnValueOnce({
       pathname: '/programs',

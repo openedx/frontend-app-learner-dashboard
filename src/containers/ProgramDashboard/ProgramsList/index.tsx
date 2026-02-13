@@ -8,6 +8,7 @@ import { logError } from '@edx/frontend-platform/logging';
 import { camelCaseObject } from '@edx/frontend-platform/utils';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
+import appMessages from 'messages';
 import { getProgramsListData } from '../data/api';
 import { ProgramData } from '../data/types';
 import ProgramListCard from './ProgramListCard';
@@ -19,17 +20,18 @@ import './index.scss';
 const ProgramsList: React.FC = () => {
   const { formatMessage } = useIntl();
   const [programsData, setProgramsData] = useState<ProgramData[]>([]);
-  const [isLoading, setIsLoading] = useState<Boolean>(true);
-  const [errorState, setErrorState] = useState<Boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [errorState, setErrorState] = useState<boolean>(false);
 
   useEffect(() => {
     getProgramsListData()
       .then(responseData => {
-        setProgramsData(camelCaseObject(responseData.data));
+        setProgramsData(camelCaseObject(responseData));
         setIsLoading(false);
       })
       .catch(err => {
         logError(err);
+        setIsLoading(false);
         setErrorState(true);
       });
   }, []);
@@ -38,7 +40,7 @@ const ProgramsList: React.FC = () => {
     if (isLoading) {
       return (
         <Row className="justify-content-center py-4">
-          <Spinner animation="border" screenReaderText="loading" />
+          <Spinner animation="border" screenReaderText={formatMessage(appMessages.loadingSR)} />
         </Row>
       );
     }

@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { getConfig } from '@edx/frontend-platform';
 import cardFallbackImg from '@edx/brand/paragon/images/card-imagecap-fallback.png';
 import {
   breakpoints,
+  useWindowSize,
   Card,
   Row,
 } from '@openedx/paragon';
@@ -13,24 +14,16 @@ import ProgressCategoryBubbles from './ProgressCategoryBubbles';
 const ProgramListCard: React.FC<ProgramCardProps> = ({
   program,
 }) => {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-  useEffect(() => {
-    const handleWindowResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener('resize', handleWindowResize);
-
-    return () => {
-      window.removeEventListener('resize', handleWindowResize);
-    };
-  }, []);
+  const { width: windowWidth } = useWindowSize();
 
   const getBannerImageURL = (): string => {
     let imageURL = '';
     // We need to check that the breakpoint value exists before using it
     // Otherwise TypeScript will flag it as it can potentially be undefined in Paragon
+    if (!windowWidth) {
+      return program.bannerImage.medium.url;
+    }
+
     if (typeof breakpoints.large.minWidth === 'number' && windowWidth >= breakpoints.large.minWidth) {
       imageURL = program.bannerImage.large.url;
     } else if (typeof breakpoints.medium.minWidth === 'number' && windowWidth >= breakpoints.medium.minWidth) {
