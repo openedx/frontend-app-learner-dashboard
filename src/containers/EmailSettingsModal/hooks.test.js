@@ -62,7 +62,8 @@ describe('EmailSettingsModal hooks', () => {
     describe('save', () => {
       it('calls updateEmailSettings', () => {
         out.save();
-        expect(updateEmailSettings).toHaveBeenCalledWith(cardId, !out.isOptedOut);
+        const expectedArg = { courseId: cardId, enable: !out.isOptedOut };
+        expect(updateEmailSettings).toHaveBeenCalledWith(expectedArg);
       });
       it('calls closeModal', () => {
         out.save();

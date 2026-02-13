@@ -15,9 +15,12 @@ Object.defineProperty(window, 'location', {
 });
 
 // Mock URLSearchParams constructor
-global.URLSearchParams = jest.fn().mockImplementation(() => ({
-  get: mockGet,
-}));
+Object.defineProperty(globalThis, 'URLSearchParams', {
+  value: jest.fn().mockImplementation(() => ({
+    get: mockGet,
+  })),
+  writable: true,
+});
 
 type VisibleListResult = {
   visibleList: Array<{

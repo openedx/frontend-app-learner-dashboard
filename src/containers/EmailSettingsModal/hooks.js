@@ -20,7 +20,7 @@ export const useEmailData = ({
   const { mutate: updateEmailSettings } = useUpdateEmailSettings();
   const onToggle = () => setIsOptedOut(!isOptedOut);
   const save = () => {
-    updateEmailSettings(cardId, !isOptedOut);
+    updateEmailSettings({ courseId: cardId, enable: !isOptedOut });
     closeModal();
   };
 
