@@ -13,14 +13,12 @@ import './index.scss';
 
 export const Dashboard = () => {
   hooks.useInitializeDashboard();
-  const { pageTitle } = hooks.useDashboardMessages();
   const hasCourses = reduxHooks.useHasCourses();
   const initIsPending = reduxHooks.useRequestIsPending(RequestKeys.initialize);
   const showSelectSessionModal = reduxHooks.useShowSelectSessionModal();
 
   return (
     <div id="dashboard-container" className="d-flex flex-column p-2 pt-0">
-      <h1 className="sr-only">{pageTitle}</h1>
       {!initIsPending && (
         <>
           <DashboardModalSlot />

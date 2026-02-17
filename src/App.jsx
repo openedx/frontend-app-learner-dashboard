@@ -6,7 +6,6 @@ import { logError } from '@edx/frontend-platform/logging';
 import { initializeHotjar } from '@edx/frontend-enterprise-hotjar';
 
 import { ErrorPage, AppContext } from '@edx/frontend-platform/react';
-import { FooterSlot } from '@edx/frontend-component-footer';
 import { Alert } from '@openedx/paragon';
 
 import { RequestKeys } from 'data/constants/requests';
@@ -21,9 +20,6 @@ import Dashboard from 'containers/Dashboard';
 import track from 'tracking';
 
 import fakeData from 'data/services/lms/fakeData/courses';
-
-import AppWrapper from 'containers/AppWrapper';
-import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
 
 import { getConfig } from '@edx/frontend-platform';
 import messages from './messages';
@@ -77,22 +73,16 @@ export const App = () => {
         <title>{formatMessage(messages.pageTitle)}</title>
         <link rel="shortcut icon" href={getConfig().FAVICON_URL} type="image/x-icon" />
       </Helmet>
-      <div>
-        <AppWrapper>
-          <LearnerDashboardHeader />
-          <main id="main">
-            {hasNetworkFailure
-              ? (
-                <Alert variant="danger">
-                  <ErrorPage message={formatMessage(messages.errorMessage, { supportEmail })} />
-                </Alert>
-              ) : (
-                <Dashboard />
-              )}
-          </main>
-        </AppWrapper>
-        <FooterSlot />
-      </div>
+      <main id="main">
+        {hasNetworkFailure
+          ? (
+            <Alert variant="danger">
+              <ErrorPage message={formatMessage(messages.errorMessage, { supportEmail })} />
+            </Alert>
+          ) : (
+            <Dashboard />
+          )}
+      </main>
     </>
   );
 };
