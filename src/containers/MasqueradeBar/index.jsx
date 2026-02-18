@@ -25,13 +25,13 @@ export const MasqueradeBar = () => {
     isError, error, isPending,
   } = useInitializeLearnerHome();
   const { authenticatedUser } = React.useContext(AppContext);
-  const [masqueradeInput, setMasqueradeInput] = React.useState(undefined);
+  const [masqueradeInput, setMasqueradeInput] = React.useState('');
   const canMasquerade = authenticatedUser?.administrator;
   const { masqueradeUser, setMasqueradeUser } = useMasquerade();
   const handleMasqueradeInputChange = (e) => setMasqueradeInput(e.target.value);
   const handleClearMasquerade = () => {
     setMasqueradeUser(undefined);
-    setMasqueradeInput(undefined);
+    setMasqueradeInput('');
   };
   const handleMasqueradeSubmit = (user) => (e) => {
     setMasqueradeUser(user);

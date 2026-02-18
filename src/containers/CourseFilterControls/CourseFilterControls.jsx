@@ -1,6 +1,6 @@
 import React from 'react';
 import { useIntl } from '@edx/frontend-platform/i18n';
-
+import track from 'tracking';
 import {
   Button,
   Form,
@@ -31,8 +31,14 @@ export const CourseFilterControls = () => {
     filters, sortBy, setSortBy, addFilter, removeFilter,
   } = useFilters();
 
-  const openFiltersOptions = () => setIsOpen(true);
-  const closeFiltersOptions = () => setIsOpen(false);
+  const openFiltersOptions = () => {
+    track.filter.filterClicked();
+    setIsOpen(true);
+  };
+  const closeFiltersOptions = () => {
+    track.filter.filterOptionSelected(filters);
+    setIsOpen(false);
+  };
 
   const handleSortChange = (event) => {
     setSortBy(event.target.value);

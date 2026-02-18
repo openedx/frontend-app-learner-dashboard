@@ -32,7 +32,7 @@ export const CertificateBanner = ({ cardId }) => {
     certificate: courseData?.certificate || {},
     isPassing: courseData?.gradeData?.isPassing,
     isArchived: courseData?.courseRun?.isArchived,
-    minPassingGrade: Math.floor(courseData?.courseRun?.minPassingGrade || 0 * 100),
+    minPassingGrade: Math.floor((courseData?.courseRun?.minPassingGrade ?? 0) * 100),
     progressUrl: baseAppUrl(courseData?.courseRun?.progressUrl || ''),
   }), [courseData]);
   const { supportEmail, billingEmail } = useMemo(
