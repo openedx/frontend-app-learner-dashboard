@@ -2,7 +2,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { keyStore } from 'utils';
 import { utilHooks, useCourseData } from 'hooks';
-
+import { useSelectSessionModal } from 'data/context';
 import * as hooks from './hooks';
 import messages from './messages';
 
@@ -11,8 +11,9 @@ jest.mock('react', () => ({
   useMemo: (fn) => fn(),
 }));
 
-jest.mock('data/context/SelectSessionProvider', () => ({
-  useSelectSessionModal: jest.fn(() => jest.fn()),
+const updateSelectSessionModalMock = jest.fn().mockName('updateSelectSessionModal');
+jest.mock('data/context', () => ({
+  useSelectSessionModal: jest.fn(),
 }));
 jest.mock('hooks', () => ({
   ...jest.requireActual('hooks'),
@@ -68,6 +69,7 @@ describe('CourseCardDetails hooks', () => {
         courseRun: {},
         entitlement: { ...entitlementData, ...entitlement },
       });
+      useSelectSessionModal.mockReturnValue({ updateSelectSessionModal: updateSelectSessionModalMock });
       out = hooks.useCardDetailsData({ cardId });
     };
     beforeEach(() => {
@@ -83,6 +85,10 @@ describe('CourseCardDetails hooks', () => {
     });
     it('forward changeOrLeaveSessionMessage', () => {
       expect(out.changeOrLeaveSessionMessage).toEqual(formatMessage(messages.changeOrLeaveSessionButton));
+    });
+    it('calls updateSelectSessionModal when openSessionModal is called', () => {
+      out.openSessionModal();
+      expect(updateSelectSessionModalMock).toHaveBeenCalledWith(cardId);
     });
   });
 

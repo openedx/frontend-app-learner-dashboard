@@ -47,7 +47,7 @@ export const useCardDetailsData = ({ cardId }) => {
     isFulfilled,
     canChange,
   } = useEntitlementInfo(courseData);
-  const updateSelectSessionModal = useSelectSessionModal();
+  const { updateSelectSessionModal } = useSelectSessionModal();
 
   return {
     providerName: providerName || formatMessage(messages.unknownProviderName),
