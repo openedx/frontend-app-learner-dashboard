@@ -19,6 +19,13 @@ jest.mock('@openedx/paragon', () => ({
   useWindowSize: jest.fn(),
 }));
 
+jest.mock('tracking', () => ({
+  filter: {
+    filterClicked: jest.fn().mockName('segment.filterClicked'),
+    filterOptionSelected: jest.fn().mockName('segment.filterOptionSelected'),
+  },
+}));
+
 const filters = Object.values(FilterKeys);
 
 jest.mock('data/context', () => ({
