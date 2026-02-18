@@ -3,7 +3,7 @@ import { useMasquerade } from 'data/context';
 import { useInitializeLearnerHome } from 'data/hooks';
 import { useIsMasquerading } from 'hooks';
 
-jest.mock('data/context/MasqueradeProvider');
+jest.mock('data/context');
 jest.mock('data/hooks');
 
 const mockUseMasquerade = useMasquerade as jest.MockedFunction<typeof useMasquerade>;

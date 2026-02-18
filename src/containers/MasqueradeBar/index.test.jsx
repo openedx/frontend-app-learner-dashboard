@@ -8,7 +8,7 @@ import MasqueradeBar from '.';
 // import hooks from './hooks';
 import messages from './messages';
 
-jest.mock('data/context/MasqueradeProvider', () => ({
+jest.mock('data/context', () => ({
   useMasquerade: jest.fn(),
 }));
 

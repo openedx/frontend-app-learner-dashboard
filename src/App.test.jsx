@@ -11,7 +11,7 @@ jest.mock('data/hooks', () => ({
   useInitializeLearnerHome: jest.fn(),
 }));
 
-jest.mock('data/context/MasqueradeProvider', () => ({
+jest.mock('data/context', () => ({
   useMasquerade: jest.fn(() => ({ masqueradeUser: null })),
 }));
 

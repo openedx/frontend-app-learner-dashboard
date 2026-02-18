@@ -14,7 +14,7 @@ jest.mock('data/hooks', () => ({
   })),
 }));
 
-jest.mock('data/context/FiltersProvider', () => ({
+jest.mock('data/context', () => ({
   useFilters: jest.fn(() => ({
     filters: [],
     sortBy: 'enrolled',

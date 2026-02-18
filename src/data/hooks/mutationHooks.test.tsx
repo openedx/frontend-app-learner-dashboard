@@ -14,8 +14,7 @@ import * as api from '../services/lms/api';
 
 // Mock external dependencies
 jest.mock('@edx/frontend-platform/logging');
-jest.mock('data/context/MasqueradeProvider');
-jest.mock('data/context/BackedDataProvider');
+jest.mock('data/context');
 jest.mock('data/services/lms/api');
 
 const mockLogError = logError as jest.MockedFunction<typeof logError>;
