@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from '@edx/frontend-platform/i18n';
+import { baseAppUrl } from 'data/services/lms/urls';
 
 import { Badge } from '@openedx/paragon';
 
 import track from 'tracking';
-import { reduxHooks } from 'hooks';
+import { useCourseData, useCourseTrackingEvent } from 'hooks';
 import verifiedRibbon from 'assets/verified-ribbon.png';
 import useActionDisabledState from './hooks';
 
@@ -15,11 +16,10 @@ const { courseImageClicked } = track.course;
 
 export const CourseCardImage = ({ cardId, orientation }) => {
   const { formatMessage } = useIntl();
-  const { bannerImgSrc } = reduxHooks.useCardCourseData(cardId);
-  const { homeUrl } = reduxHooks.useCardCourseRunData(cardId);
-  const { isVerified } = reduxHooks.useCardEnrollmentData(cardId);
+  const courseData = useCourseData(cardId);
+  const { homeUrl } = courseData?.courseRun || {};
   const { disableCourseTitle } = useActionDisabledState(cardId);
-  const handleImageClicked = reduxHooks.useTrackCourseEvent(courseImageClicked, cardId, homeUrl);
+  const handleImageClicked = useCourseTrackingEvent(courseImageClicked, cardId, homeUrl);
   const wrapperClassName = `pgn__card-wrapper-image-cap d-inline-block overflow-visible ${orientation}`;
   const image = (
     <>
@@ -27,11 +27,11 @@ export const CourseCardImage = ({ cardId, orientation }) => {
         // w-100 is necessary for images on Safari, otherwise stretches full height of the image
         // https://stackoverflow.com/a/44250830
         className="pgn__card-image-cap w-100 show"
-        src={bannerImgSrc}
+        src={courseData?.course?.bannerImgSrc && baseAppUrl(courseData.course.bannerImgSrc)}
         alt={formatMessage(messages.bannerAlt)}
       />
       {
-        isVerified && (
+        courseData?.enrollment?.isVerified && (
           <span
             className="course-card-verify-ribbon-container"
             title={formatMessage(messages.verifiedHoverDescription)}

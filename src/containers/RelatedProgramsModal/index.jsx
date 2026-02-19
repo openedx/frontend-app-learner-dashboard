@@ -7,7 +7,7 @@ import {
   Container, Row, Col, ModalDialog,
 } from '@openedx/paragon';
 
-import { reduxHooks } from 'hooks';
+import { useCourseData } from 'hooks';
 import ProgramCard from './components/ProgramCard';
 import messages from './messages';
 import './index.scss';
@@ -18,8 +18,9 @@ export const RelatedProgramsModal = ({
   cardId,
 }) => {
   const { formatMessage } = useIntl();
-  const { courseName } = reduxHooks.useCardCourseData(cardId);
-  const relatedPrograms = reduxHooks.useCardRelatedProgramsData(cardId).list;
+  const courseData = useCourseData(cardId);
+  const courseName = courseData?.course?.courseName;
+  const relatedPrograms = courseData?.programs?.relatedPrograms || [];
   return (
     <ModalDialog
       title={formatMessage(messages.header)}

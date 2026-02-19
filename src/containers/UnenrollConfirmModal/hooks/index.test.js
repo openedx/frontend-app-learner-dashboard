@@ -1,5 +1,6 @@
-import { apiHooks } from 'hooks';
 import { MockUseState } from 'testUtils';
+
+import { useInitializeLearnerHome } from 'data/hooks';
 
 import * as reasons from './reasons';
 import * as hooks from '.';
@@ -8,16 +9,14 @@ jest.mock('./reasons', () => ({
   useUnenrollReasons: jest.fn(),
 }));
 
-jest.mock('hooks', () => ({
-  apiHooks: {
-    useInitializeApp: jest.fn(),
-  },
+jest.mock('data/hooks', () => ({
+  useInitializeLearnerHome: jest.fn(),
 }));
 
 const state = new MockUseState(hooks);
 const testValue = 'test-value';
-const initializeApp = jest.fn();
-apiHooks.useInitializeApp.mockReturnValue(initializeApp);
+const mockRefreshList = jest.fn();
+useInitializeLearnerHome.mockReturnValue({ refetch: mockRefreshList });
 let out;
 
 const mockReason = {
@@ -76,7 +75,7 @@ describe('UnenrollConfirmModal hooks', () => {
       });
       it('calls initializeApp api method', () => {
         out.closeAndRefresh();
-        expect(initializeApp).toHaveBeenCalled();
+        expect(mockRefreshList).toHaveBeenCalled();
       });
     });
     describe('modalState', () => {

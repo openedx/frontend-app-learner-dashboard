@@ -1,6 +1,10 @@
 {
   "extends": "@edx/typescript-config",
   "compilerOptions": {
+    "types": ["jest", "@testing-library/jest-dom"],
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
     "baseUrl": "./src",
     "paths": {
       "*": ["*"]

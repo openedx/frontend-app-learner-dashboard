@@ -1,8 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import userEvent from '@testing-library/user-event';
-
-import { reduxHooks } from 'hooks';
+import { useCourseData, useIsMasquerading } from 'hooks';
 import messages from './messages';
 import hooks from './hooks';
 import MustRequestContent from './MustRequestContent';
@@ -12,10 +11,8 @@ jest.mock('./hooks', () => ({
 }));
 
 jest.mock('hooks', () => ({
-  reduxHooks: {
-    useMasqueradeData: jest.fn(),
-    useCardCreditData: jest.fn(),
-  },
+  useCourseData: jest.fn(),
+  useIsMasquerading: jest.fn(),
 }));
 
 const cardId = 'test-card-id';
@@ -44,10 +41,12 @@ describe('MustRequestContent component', () => {
       requestData,
       createCreditRequest,
     });
-    reduxHooks.useMasqueradeData.mockReturnValue({ isMasquerading: false });
-    reduxHooks.useCardCreditData.mockReturnValue({
-      providerName,
-      providerStatusUrl,
+    useIsMasquerading.mockReturnValue(false);
+    useCourseData.mockReturnValue({
+      credit: {
+        providerName,
+        providerStatusUrl,
+      },
     });
   });
 
@@ -90,7 +89,7 @@ describe('MustRequestContent component', () => {
 
     describe('when masquerading', () => {
       beforeEach(() => {
-        reduxHooks.useMasqueradeData.mockReturnValue({ isMasquerading: true });
+        useIsMasquerading.mockReturnValue(true);
         renderMustRequestContent();
       });
 

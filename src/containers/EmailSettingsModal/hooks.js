@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { StrictDict } from 'utils';
-import { reduxHooks, apiHooks } from 'hooks';
+import { useUpdateEmailSettings } from 'data/hooks';
+import { useCourseData } from 'hooks';
 
 import * as module from './hooks';
 
@@ -13,12 +14,14 @@ export const useEmailData = ({
   closeModal,
   cardId,
 }) => {
-  const { hasOptedOutOfEmail } = reduxHooks.useCardEnrollmentData(cardId);
+  const courseData = useCourseData(cardId);
+  const hasOptedOutOfEmail = courseData?.enrollment?.hasOptedOutOfEmail || false;
+  const courseId = courseData?.courseRun?.courseId;
   const [isOptedOut, setIsOptedOut] = module.state.toggle(hasOptedOutOfEmail);
-  const updateEmailSettings = apiHooks.useUpdateEmailSettings(cardId);
+  const { mutate: updateEmailSettings } = useUpdateEmailSettings();
   const onToggle = () => setIsOptedOut(!isOptedOut);
   const save = () => {
-    updateEmailSettings(!isOptedOut);
+    updateEmailSettings({ courseId, enable: !isOptedOut });
     closeModal();
   };
 

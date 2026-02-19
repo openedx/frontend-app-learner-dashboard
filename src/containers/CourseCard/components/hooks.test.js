@@ -1,14 +1,15 @@
-import { reduxHooks } from 'hooks';
-
+import { useCourseData, useIsMasquerading } from 'hooks';
 import * as hooks from './hooks';
 
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useMemo: jest.fn((fn) => fn()),
+}));
+
 jest.mock('hooks', () => ({
-  reduxHooks: {
-    useMasqueradeData: jest.fn(),
-    useCardEnrollmentData: jest.fn(),
-    useCardEntitlementData: jest.fn(),
-    useCardCourseRunData: jest.fn(),
-  },
+  ...jest.requireActual('hooks'),
+  useCourseData: jest.fn(),
+  useIsMasquerading: jest.fn(),
 }));
 
 const cardId = 'my-test-course-number';
@@ -38,24 +39,37 @@ describe('useActionDisabledState', () => {
       isAuditAccessExpired,
       resumeUrl,
       homeUrl,
+      availableSessions,
     } = { ...defaultData, ...args };
-    reduxHooks.useMasqueradeData.mockReturnValueOnce({ isMasquerading });
-    reduxHooks.useCardEnrollmentData.mockReturnValueOnce({
-      hasAccess,
-      isAudit,
-      isAuditAccessExpired,
-    });
-    reduxHooks.useCardEntitlementData.mockReturnValueOnce({
-      isEntitlement,
-      isFulfilled,
-      canChange,
-      hasSessions,
-    });
-    reduxHooks.useCardCourseRunData.mockReturnValueOnce({
-      resumeUrl,
-      homeUrl,
+    useIsMasquerading.mockReturnValue(isMasquerading);
+    useCourseData.mockReturnValue({
+      enrollment: {
+        hasAccess,
+        isAudit,
+        isAuditAccessExpired,
+        coursewareAccess: {
+          isStaff: false,
+          hasUnmetPrereqs: !hasAccess,
+          isTooEarly: !hasAccess,
+        },
+      },
+      entitlement: isEntitlement ? {
+        isEntitlement: true,
+        isFulfilled,
+        canChange,
+        hasSessions,
+        availableSessions,
+      } : {},
+      courseRun: {
+        resumeUrl,
+        homeUrl,
+      },
     });
   };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
   const runHook = () => hooks.useActionDisabledState(cardId);
   describe('disableBeginCourse', () => {
@@ -142,6 +156,7 @@ describe('useActionDisabledState', () => {
           hasAccess: true,
           canChange: true,
           hasSessions: true,
+          availableSessions: ['session1'],
         },
         false,
       );
