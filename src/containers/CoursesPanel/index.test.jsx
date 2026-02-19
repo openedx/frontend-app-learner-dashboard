@@ -1,7 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { useInitializeLearnerHome } from 'data/hooks';
-
+import { useFilters } from 'data/context';
+import * as dataTransformers from 'utils/dataTransformers';
 import messagesNoCourses from 'containers/CoursesPanel/NoCoursesView/messages';
 import CoursesPanel from '.';
 import messages from './messages';
@@ -65,6 +66,92 @@ describe('CoursesPanel', () => {
       createWrapper({ visibleList });
       const heading = screen.getByText(messages.myCourses.defaultMessage);
       expect(heading).toBeInTheDocument();
+    });
+  });
+
+  describe('page number clamping', () => {
+    const mockSetPageNumber = jest.fn();
+
+    beforeEach(() => {
+      jest.clearAllMocks();
+      jest.spyOn(dataTransformers, 'getTransformedCourseDataList');
+      jest.spyOn(dataTransformers, 'getVisibleList');
+    });
+
+    it('clamps page number to 1 when current page exceeds total pages', () => {
+      useFilters.mockReturnValue({
+        filters: [],
+        sortBy: 'enrolled',
+        pageNumber: 5, // User is on page 5
+        setPageNumber: mockSetPageNumber,
+      });
+
+      dataTransformers.getTransformedCourseDataList.mockReturnValue([{ id: 1 }, { id: 2 }]);
+      dataTransformers.getVisibleList.mockReturnValue({
+        visibleList: [{ id: 1 }],
+        numPages: 2,
+      });
+
+      createWrapper({ visibleList: [{ id: 1 }] });
+
+      expect(mockSetPageNumber).toHaveBeenCalledWith(1);
+    });
+
+    it('does not clamp page number when current page is valid', () => {
+      useFilters.mockReturnValue({
+        filters: [],
+        sortBy: 'enrolled',
+        pageNumber: 2,
+        setPageNumber: mockSetPageNumber,
+      });
+
+      dataTransformers.getTransformedCourseDataList.mockReturnValue([{ id: 1 }, { id: 2 }]);
+      dataTransformers.getVisibleList.mockReturnValue({
+        visibleList: [{ id: 1 }],
+        numPages: 3,
+      });
+
+      createWrapper({ visibleList: [{ id: 1 }] });
+
+      expect(mockSetPageNumber).not.toHaveBeenCalled();
+    });
+
+    it('does not clamp when numPages is 0', () => {
+      useFilters.mockReturnValue({
+        filters: [],
+        sortBy: 'enrolled',
+        pageNumber: 2,
+        setPageNumber: mockSetPageNumber,
+      });
+
+      dataTransformers.getTransformedCourseDataList.mockReturnValue([]);
+      dataTransformers.getVisibleList.mockReturnValue({
+        visibleList: [],
+        numPages: 0,
+      });
+
+      createWrapper({ visibleList: [] });
+
+      expect(mockSetPageNumber).not.toHaveBeenCalled();
+    });
+
+    it('handles edge case when pageNumber equals numPages', () => {
+      useFilters.mockReturnValue({
+        filters: [],
+        sortBy: 'enrolled',
+        pageNumber: 2,
+        setPageNumber: mockSetPageNumber,
+      });
+
+      dataTransformers.getTransformedCourseDataList.mockReturnValue([{ id: 1 }, { id: 2 }]);
+      dataTransformers.getVisibleList.mockReturnValue({
+        visibleList: [{ id: 1 }],
+        numPages: 2,
+      });
+
+      createWrapper({ visibleList: [{ id: 1 }] });
+
+      expect(mockSetPageNumber).not.toHaveBeenCalled();
     });
   });
 });

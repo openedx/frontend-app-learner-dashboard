@@ -4,7 +4,6 @@ import {
   useUpdateEntitlementEnrollment,
   useDeleteEntitlementEnrollment,
   useUpdateEmailSettings,
-  useLogShare,
   useCreateCreditRequest,
   useSendConfirmEmail,
 } from './mutationHooks';
@@ -15,7 +14,6 @@ export {
   useUpdateEntitlementEnrollment,
   useDeleteEntitlementEnrollment,
   useUpdateEmailSettings,
-  useLogShare,
   useCreateCreditRequest,
   useSendConfirmEmail,
 };

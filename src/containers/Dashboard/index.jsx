@@ -12,7 +12,7 @@ import hooks from './hooks';
 import './index.scss';
 
 export const Dashboard = () => {
-  const { data, isFetching } = useInitializeLearnerHome();
+  const { data, isPending } = useInitializeLearnerHome();
   const { pageTitle } = hooks.useDashboardMessages();
   const { selectSessionModal } = useSelectSessionModal();
   const showSelectSessionModal = selectSessionModal.cardId !== null;
@@ -22,14 +22,14 @@ export const Dashboard = () => {
   return (
     <div id="dashboard-container" className="d-flex flex-column p-2 pt-0">
       <h1 className="sr-only">{pageTitle}</h1>
-      {!isFetching && (
+      {!isPending && (
         <>
           <DashboardModalSlot />
           {(hasCourses && showSelectSessionModal) && <SelectSessionModal />}
         </>
       )}
       <div id="dashboard-content" data-testid="dashboard-content">
-        {isFetching
+        {isPending
           ? (<LoadingView />)
           : (
             <DashboardLayout>

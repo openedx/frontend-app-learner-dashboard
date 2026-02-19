@@ -3,18 +3,12 @@ import { logError } from '@edx/frontend-platform/logging';
 import {
   createCreditRequest,
   deleteEntitlementEnrollment,
-  logShare,
   sendConfirmEmail,
   unenrollFromCourse,
   updateEmailSettings,
   updateEntitlementEnrollment,
 } from 'data/services/lms/api';
 import { learnerDashboardQueryKeys } from './queryKeys';
-
-type LogShareParams = {
-  courseId: string;
-  site: string;
-};
 
 type UpdateEntitlementProps = {
   uuid: string;
@@ -97,14 +91,6 @@ const useUpdateEmailSettings = () => {
   });
 };
 
-const useLogShare = () => useMutation({
-  mutationKey: learnerDashboardQueryKeys.logShare(),
-  mutationFn: ({ courseId, site }: LogShareParams) => logShare({ courseId, site }),
-  onError: (error, variables) => {
-    logError(`Failed to log share event for course ${variables.courseId} on ${variables.site}:`, error);
-  },
-});
-
 const useCreateCreditRequest = () => {
   const queryClient = useQueryClient();
 
@@ -140,7 +126,6 @@ export {
   useUpdateEntitlementEnrollment,
   useDeleteEntitlementEnrollment,
   useUpdateEmailSettings,
-  useLogShare,
   useCreateCreditRequest,
   useSendConfirmEmail,
 };

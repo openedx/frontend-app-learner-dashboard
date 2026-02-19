@@ -35,7 +35,7 @@ describe('Dashboard', () => {
       showSelectSessionModal = true,
     } = props;
     hooks.useDashboardMessages.mockReturnValue({ pageTitle });
-    const dataMocked = { data: hasCourses ? { courses: [1, 2] } : { courses: [] }, isFetching: initIsPending };
+    const dataMocked = { data: hasCourses ? { courses: [1, 2] } : { courses: [] }, isPending: initIsPending };
     useInitializeLearnerHome.mockReturnValue(dataMocked);
     useSelectSessionModal.mockReturnValue({ selectSessionModal: showSelectSessionModal ? { cardId: 1 } : null });
     return render(<IntlProvider locale="en"><Dashboard /></IntlProvider>);

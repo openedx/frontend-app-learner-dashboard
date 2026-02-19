@@ -41,6 +41,13 @@ export const CoursesPanel = () => {
     );
   }, [data, filters, sortBy, pageNumber]);
 
+  // Clamp page number when filtered/mutated list shrinks
+  React.useEffect(() => {
+    if (numPages > 0 && pageNumber > numPages) {
+      setPageNumber(1);
+    }
+  }, [numPages, pageNumber, setPageNumber]);
+
   const courseListData = {
     filterOptions: filters,
     setPageNumber,

@@ -6,7 +6,6 @@ import {
   useUpdateEntitlementEnrollment,
   useDeleteEntitlementEnrollment,
   useUpdateEmailSettings,
-  useLogShare,
   useCreateCreditRequest,
   useSendConfirmEmail,
 } from './mutationHooks';
@@ -206,40 +205,6 @@ describe('mutationHooks', () => {
 
       expect(mockLogError).toHaveBeenCalledWith(
         'Failed to update email settings for course test-course:',
-        error,
-      );
-    });
-  });
-
-  describe('useLogShare', () => {
-    it('should log share event successfully', async () => {
-      (api.logShare as jest.Mock).mockResolvedValue({});
-
-      const { result } = renderHook(() => useLogShare(), {
-        wrapper: createWrapper(),
-      });
-
-      await result.current.mutateAsync({ courseId: 'test-course', site: 'facebook' });
-
-      expect(api.logShare).toHaveBeenCalledWith({
-        courseId: 'test-course',
-        site: 'facebook',
-      });
-    });
-
-    it('should log error when share logging fails', async () => {
-      const error = new Error('Share logging failed');
-      (api.logShare as jest.Mock).mockRejectedValue(error);
-
-      const { result } = renderHook(() => useLogShare(), {
-        wrapper: createWrapper(),
-      });
-
-      await expect(result.current.mutateAsync({ courseId: 'test-course', site: 'twitter' }))
-        .rejects.toThrow('Share logging failed');
-
-      expect(mockLogError).toHaveBeenCalledWith(
-        'Failed to log share event for course test-course on twitter:',
         error,
       );
     });
