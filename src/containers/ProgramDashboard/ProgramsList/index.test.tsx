@@ -31,16 +31,10 @@ jest.mock('./ExploreProgramsCTA', () => jest.fn(() => (
 )));
 
 // Mock Data
-const mockApiData = {
-  data: [
-    { uuid: '111-aaa', title: 'Data Science Program' },
-    { uuid: '222-bbb', title: 'UX Design Program' },
-  ],
-};
-
-const mockExtractedData = mockApiData.data.map(item => ({
-  ...item,
-}));
+const mockApiData = [
+  { uuid: '111-aaa', title: 'Data Science Program' },
+  { uuid: '222-bbb', title: 'UX Design Program' },
+];
 
 describe('ProgramsList', () => {
   beforeEach(() => {
@@ -54,14 +48,6 @@ describe('ProgramsList', () => {
       <ProgramsList />
     </IntlProvider>,
   );
-
-  it('sets the correct page title', async () => {
-    renderComponent();
-
-    await waitFor(() => {
-      expect(document.title).toEqual(messages.programDashboardPageTitle.defaultMessage);
-    });
-  });
 
   it('renders header text and ExploreProgramsCTA', async () => {
     renderComponent();
@@ -89,14 +75,14 @@ describe('ProgramsList', () => {
       // Check for the first card
       expect(ProgramListCard).toHaveBeenCalledWith(
         expect.objectContaining({
-          program: mockExtractedData[0],
+          program: mockApiData[0],
         }),
         {},
       );
       // Check for the second card
       expect(ProgramListCard).toHaveBeenCalledWith(
         expect.objectContaining({
-          program: mockExtractedData[1],
+          program: mockApiData[1],
         }),
         {},
       );

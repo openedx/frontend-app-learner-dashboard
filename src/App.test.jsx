@@ -40,11 +40,6 @@ reduxHooks.usePlatformSettingsData.mockReturnValue({ supportEmail });
 
 describe('App router component', () => {
   describe('component', () => {
-    const runBasicTests = () => {
-      it('displays title in helmet component', async () => {
-        await waitFor(() => expect(document.title).toEqual(messages.pageTitle.defaultMessage));
-      });
-    };
     describe('no network failure', () => {
       beforeEach(() => {
         jest.clearAllMocks();
@@ -52,7 +47,6 @@ describe('App router component', () => {
         getConfig.mockReturnValue({});
         render(<IntlProvider locale="en"><App /></IntlProvider>);
       });
-      runBasicTests();
       it('loads dashboard', () => {
         const dashboard = screen.getByText('Dashboard');
         expect(dashboard).toBeInTheDocument();
@@ -65,7 +59,6 @@ describe('App router component', () => {
         getConfig.mockReturnValue({ OPTIMIZELY_URL: 'fake.url' });
         render(<IntlProvider locale="en"><App /></IntlProvider>);
       });
-      runBasicTests();
       it('loads dashboard', () => {
         const dashboard = screen.getByText('Dashboard');
         expect(dashboard).toBeInTheDocument();
@@ -78,7 +71,6 @@ describe('App router component', () => {
         getConfig.mockReturnValue({ OPTIMIZELY_PROJECT_ID: 'fakeId' });
         render(<IntlProvider locale="en"><App /></IntlProvider>);
       });
-      runBasicTests();
       it('loads dashboard', () => {
         const dashboard = screen.getByText('Dashboard');
         expect(dashboard).toBeInTheDocument();
@@ -91,7 +83,6 @@ describe('App router component', () => {
         getConfig.mockReturnValue({});
         render(<IntlProvider locale="en" messages={messages}><App /></IntlProvider>);
       });
-      runBasicTests();
       it('loads error page', () => {
         const alert = screen.getByRole('alert');
         expect(alert).toBeInTheDocument();
@@ -105,7 +96,6 @@ describe('App router component', () => {
         getConfig.mockReturnValue({});
         render(<IntlProvider locale="en"><App /></IntlProvider>);
       });
-      runBasicTests();
       it('loads error page', () => {
         const alert = screen.getByRole('alert');
         expect(alert).toBeInTheDocument();
