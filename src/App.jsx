@@ -1,5 +1,4 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { logError } from '@edx/frontend-platform/logging';
@@ -68,22 +67,16 @@ export const App = () => {
     }
   }, [authenticatedUser, loadData]);
   return (
-    <>
-      <Helmet>
-        <title>{formatMessage(messages.pageTitle)}</title>
-        <link rel="shortcut icon" href={getConfig().FAVICON_URL} type="image/x-icon" />
-      </Helmet>
-      <main id="main">
-        {hasNetworkFailure
-          ? (
-            <Alert variant="danger">
-              <ErrorPage message={formatMessage(messages.errorMessage, { supportEmail })} />
-            </Alert>
-          ) : (
-            <Dashboard />
-          )}
-      </main>
-    </>
+    <main id="main">
+      {hasNetworkFailure
+        ? (
+          <Alert variant="danger">
+            <ErrorPage message={formatMessage(messages.errorMessage, { supportEmail })} />
+          </Alert>
+        ) : (
+          <Dashboard />
+        )}
+    </main>
   );
 };
 

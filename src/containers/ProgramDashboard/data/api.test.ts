@@ -1,7 +1,9 @@
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import { getProgramsListData } from './api';
 
-const mockGet = jest.fn();
+const mockGet = jest.fn(() => ({
+  data: {},
+}));
 const mockLMSBaseUrl = 'http://test-lms-base-url';
 
 jest.mock('@edx/frontend-platform/auth', () => ({

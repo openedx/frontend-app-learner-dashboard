@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
 import {
   Alert, CardGrid, Col, Container, Row, Spinner,
 } from '@openedx/paragon';
@@ -83,25 +82,18 @@ const ProgramsList: React.FC = () => {
   };
 
   return (
-    <>
-      <Helmet>
-        <title>
-          {formatMessage(messages.programDashboardPageTitle)}
-        </title>
-      </Helmet>
-      <Container size="lg" className="p-4.5">
-        <h2>
-          {formatMessage(messages.programsListHeaderText)}
-        </h2>
-        <Row className="py-3">
-          {errorState ? (
-            renderFailureAlert()
-          ) : (
-            renderPrograms()
-          )}
-        </Row>
-      </Container>
-    </>
+    <Container size="lg" className="p-4.5">
+      <h2>
+        {formatMessage(messages.programsListHeaderText)}
+      </h2>
+      <Row className="py-3">
+        {errorState ? (
+          renderFailureAlert()
+        ) : (
+          renderPrograms()
+        )}
+      </Row>
+    </Container>
   );
 };
 
