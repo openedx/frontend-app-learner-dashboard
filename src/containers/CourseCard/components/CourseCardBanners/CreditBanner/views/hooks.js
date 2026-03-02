@@ -21,8 +21,8 @@ export const useCreditRequestData = (cardId) => {
   const createCreditRequest = (e) => {
     e.preventDefault();
     createCreditMutation({ providerId, courseId, username }, {
-      onSuccess: (data) => {
-        setRequestData(data);
+      onSuccess: (response) => {
+        setRequestData(response.data);
       },
     });
   };
