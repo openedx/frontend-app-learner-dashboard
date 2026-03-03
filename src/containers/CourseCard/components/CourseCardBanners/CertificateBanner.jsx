@@ -1,12 +1,14 @@
 /* eslint-disable max-len */
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import { MailtoLink, Hyperlink } from '@openedx/paragon';
 import { CheckCircle } from '@openedx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
+import { baseAppUrl } from 'data/services/lms/urls';
 
-import { utilHooks, reduxHooks } from 'hooks';
+import { useInitializeLearnerHome } from 'data/hooks';
+import { utilHooks, useCourseData } from 'hooks';
 import Banner from 'components/Banner';
 
 import messages from './messages';
@@ -14,15 +16,32 @@ import messages from './messages';
 const { useFormatDate } = utilHooks;
 
 export const CertificateBanner = ({ cardId }) => {
-  const certificate = reduxHooks.useCardCertificateData(cardId);
+  const { data: learnerHomeData } = useInitializeLearnerHome();
+  const courseData = useCourseData(cardId);
   const {
-    isAudit,
-    isVerified,
-  } = reduxHooks.useCardEnrollmentData(cardId);
-  const { isPassing } = reduxHooks.useCardGradeData(cardId);
-  const { isArchived } = reduxHooks.useCardCourseRunData(cardId);
-  const { minPassingGrade, progressUrl } = reduxHooks.useCardCourseRunData(cardId);
-  const { supportEmail, billingEmail } = reduxHooks.usePlatformSettingsData();
+    certificate = {},
+    isVerified = false,
+    isAudit = false,
+    isPassing = false,
+    isArchived = false,
+    minPassingGrade = 0,
+    progressUrl = '',
+  } = useMemo(() => ({
+    isVerified: courseData?.enrollment?.isVerified,
+    isAudit: courseData?.enrollment?.isAudit,
+    certificate: courseData?.certificate || {},
+    isPassing: courseData?.gradeData?.isPassing,
+    isArchived: courseData?.courseRun?.isArchived,
+    minPassingGrade: Math.floor((courseData?.courseRun?.minPassingGrade ?? 0) * 100),
+    progressUrl: baseAppUrl(courseData?.courseRun?.progressUrl || ''),
+  }), [courseData]);
+  const { supportEmail, billingEmail } = useMemo(
+    () => ({
+      supportEmail: learnerHomeData?.platformSettings?.supportEmail,
+      billingEmail: learnerHomeData?.platformSettings?.billingEmail,
+    }),
+    [learnerHomeData],
+  );
   const { formatMessage } = useIntl();
   const formatDate = useFormatDate();
 
@@ -75,7 +94,7 @@ export const CertificateBanner = ({ cardId }) => {
       </Banner>
     );
   }
-  if (certificate.isEarnedButUnavailable) {
+  if (certificate.isEarned && new Date(certificate.availableDate) > new Date()) {
     return (
       <Banner>
         {formatMessage(

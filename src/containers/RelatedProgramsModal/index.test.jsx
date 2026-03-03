@@ -1,16 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 
-import { reduxHooks } from 'hooks';
+import { useCourseData } from 'hooks';
 import RelatedProgramsModal from '.';
 import messages from './messages';
 
 jest.mock('./components/ProgramCard', () => jest.fn(() => <div>ProgramCard</div>));
 jest.mock('hooks', () => ({
-  reduxHooks: {
-    useCardCourseData: jest.fn(),
-    useCardRelatedProgramsData: jest.fn(),
-  },
+  useCourseData: jest.fn(),
 }));
 
 const cardId = 'test-card-id';
@@ -42,13 +39,19 @@ const props = {
 
 describe('RelatedProgramsModal', () => {
   beforeEach(() => {
-    reduxHooks.useCardCourseData.mockReturnValueOnce(courseData);
-    reduxHooks.useCardRelatedProgramsData.mockReturnValueOnce(programData);
+    const mockedData = {
+      course: {
+        courseName: courseData.courseName,
+      },
+      programs: {
+        relatedPrograms: programData.list,
+      },
+    };
+    useCourseData.mockReturnValueOnce(mockedData);
   });
   it('initializes hooks with cardId', () => {
     render(<IntlProvider locale="en"><RelatedProgramsModal {...props} /></IntlProvider>);
-    expect(reduxHooks.useCardCourseData).toHaveBeenCalledWith(cardId);
-    expect(reduxHooks.useCardRelatedProgramsData).toHaveBeenCalledWith(cardId);
+    expect(useCourseData).toHaveBeenCalledWith(cardId);
   });
   describe('renders', () => {
     beforeEach(() => render(<IntlProvider locale="en"><RelatedProgramsModal {...props} /></IntlProvider>));

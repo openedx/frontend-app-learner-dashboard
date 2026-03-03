@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 
-import { reduxHooks } from 'hooks';
+import { useCourseData } from 'hooks';
 
 import CourseCardBanners from '.';
 
@@ -20,9 +20,11 @@ const mockedComponents = [
 ];
 
 jest.mock('hooks', () => ({
-  reduxHooks: {
-    useCardEnrollmentData: jest.fn(() => ({ isEnrolled: true })),
-  },
+  useCourseData: jest.fn(() => ({
+    enrollment: {
+      isEnrolled: true,
+    },
+  })),
 }));
 
 describe('CourseCardBanners', () => {
@@ -36,8 +38,13 @@ describe('CourseCardBanners', () => {
       return expect(mockedComponent).toBeInTheDocument();
     });
   });
+  it('render null with no courseData', () => {
+    useCourseData.mockReturnValue(null);
+    const { container } = render(<IntlProvider locale="en"><CourseCardBanners {...props} /></IntlProvider>);
+    expect(container.firstChild).toBeNull();
+  });
   it('render with isEnrolled false', () => {
-    reduxHooks.useCardEnrollmentData.mockReturnValueOnce({ isEnrolled: false });
+    useCourseData.mockReturnValue({ enrollment: { isEnrolled: false } });
     render(<IntlProvider locale="en"><CourseCardBanners {...props} /></IntlProvider>);
     const mockedComponentsIfNotEnrolled = mockedComponents.slice(-2);
     mockedComponentsIfNotEnrolled.map((componentName) => {

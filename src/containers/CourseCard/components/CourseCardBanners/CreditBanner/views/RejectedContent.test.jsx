@@ -1,13 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 
-import { reduxHooks } from 'hooks';
+import { useCourseData } from 'hooks';
 import RejectedContent from './RejectedContent';
 
 jest.mock('hooks', () => ({
-  reduxHooks: {
-    useCardCreditData: jest.fn(),
-  },
+  useCourseData: jest.fn(),
 }));
 
 const cardId = 'test-card-id';
@@ -15,7 +13,9 @@ const credit = {
   providerStatusUrl: 'test-credit-provider-status-url',
   providerName: 'test-credit-provider-name',
 };
-reduxHooks.useCardCreditData.mockReturnValue(credit);
+useCourseData.mockReturnValue({
+  credit,
+});
 
 const renderRejectedContent = () => render(<IntlProvider><RejectedContent cardId={cardId} /></IntlProvider>);
 
@@ -23,7 +23,7 @@ describe('RejectedContent component', () => {
   describe('hooks', () => {
     it('initializes credit data with cardId', () => {
       renderRejectedContent();
-      expect(reduxHooks.useCardCreditData).toHaveBeenCalledWith(cardId);
+      expect(useCourseData).toHaveBeenCalledWith(cardId);
     });
   });
   describe('render', () => {

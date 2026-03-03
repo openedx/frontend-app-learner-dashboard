@@ -19,6 +19,7 @@ frontend-platform's getConfig loads configuration in the following sequence:
 
 module.exports = {
   NODE_ENV: 'development',
+  APP_ID: 'learner-dashboard',
   NODE_PATH: './src',
   PORT: 1996,
   BASE_URL: 'localhost:1996',

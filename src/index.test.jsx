@@ -33,7 +33,6 @@ jest.mock('@edx/frontend-platform', () => ({
   subscribe: jest.fn(),
 }));
 
-jest.mock('data/store', () => ({ redux: 'store' }));
 jest.mock('./App', () => 'App');
 
 describe('app registry', () => {
