@@ -66,6 +66,34 @@ describe('queryHooks', () => {
     const mockQueryData = { courses: ['query-course'], user: 'query-user' };
     const mockNormalUserData = { courses: ['normal-course'], user: 'normal-user', coursesByCardId: {} };
 
+    it('should fetch and return data with coursesByCardId for normal user', async () => {
+      mockUseMasquerade.mockReturnValue({
+        masqueradeUser: undefined,
+        setMasqueradeUser(): void { throw new Error('Function not implemented.'); },
+      });
+      const mockApiData = {
+        courses: [{ id: 'course-1' }, { id: 'course-2' }],
+        emailConfirmation: { isNeeded: false },
+        platformSettings: { supportEmail: 'test@example.com' },
+      };
+      (api.initializeList as jest.Mock).mockResolvedValue(mockApiData);
+
+      const { result } = renderHook(() => useInitializeLearnerHome(), {
+        wrapper: createWrapper(),
+      });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBe(true);
+      });
+
+      expect(api.initializeList).toHaveBeenCalledWith(undefined);
+      expect(result.current.data).toMatchObject(mockApiData);
+      expect(result.current.data?.coursesByCardId).toEqual({
+        'card-0': { id: 'course-1', cardId: 'card-0' },
+        'card-1': { id: 'course-2', cardId: 'card-1' },
+      });
+    });
+
     it('should use query data when masquerading and query succeeds', async () => {
       const masqueradeUser = 'test-user';
       mockUseMasquerade.mockReturnValue({
