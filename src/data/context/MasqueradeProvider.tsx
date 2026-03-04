@@ -1,6 +1,5 @@
 import React, {
-  createContext, useContext, useMemo, useReducer, ReactNode,
-  useCallback,
+  createContext, useContext, useMemo, useState, ReactNode,
 } from 'react';
 
 interface MasqueradeContextType {
@@ -10,46 +9,17 @@ interface MasqueradeContextType {
 
 const MasqueradeContext = createContext<MasqueradeContextType | null>(null);
 
-interface MasqueradeState {
-  masqueradeUser: string | undefined,
-}
-
-const initialState: MasqueradeState = {
-  masqueradeUser: undefined,
-};
-
-interface MasqueradeAction {
-  type: 'SET_MASQUERADE_USER', payload: string | undefined,
-}
-
-const masqueradeReducer = (state: MasqueradeState, action: MasqueradeAction): MasqueradeState => {
-  switch (action.type) {
-    case 'SET_MASQUERADE_USER':
-      return {
-        ...state,
-        masqueradeUser: action.payload,
-      };
-    /* istanbul ignore next */
-    default:
-      return state;
-  }
-};
-
 interface MasqueradeProviderProps {
   children: ReactNode,
 }
 
 export const MasqueradeProvider: React.FC<MasqueradeProviderProps> = ({ children }) => {
-  const [state, dispatch] = useReducer(masqueradeReducer, initialState);
-
-  const setMasqueradeUser = useCallback((user: string | undefined) => {
-    dispatch({ type: 'SET_MASQUERADE_USER', payload: user });
-  }, []);
+  const [masqueradeUser, setMasqueradeUser] = useState<string | undefined>(undefined);
 
   const contextValue = useMemo(() => ({
-    masqueradeUser: state.masqueradeUser,
+    masqueradeUser,
     setMasqueradeUser,
-  }), [state.masqueradeUser, setMasqueradeUser]);
+  }), [masqueradeUser]);
 
   return (
     <MasqueradeContext.Provider value={contextValue}>
