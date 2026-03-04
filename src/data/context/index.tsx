@@ -1,4 +1,3 @@
-import { useBackedData } from './BackedDataProvider';
 import { MasqueradeProvider, useMasquerade } from './MasqueradeProvider';
 import { FiltersProvider, useFilters } from './FiltersProvider';
 import { SelectSessionModalProvider, useSelectSessionModal } from './SelectSessionProvider';
@@ -16,6 +15,6 @@ const ContextProviders = ({ children }: ContextProvidersProps) => (
 );
 
 export {
-  MasqueradeProvider, useBackedData, useMasquerade, useFilters, useSelectSessionModal,
+  MasqueradeProvider, useMasquerade, useFilters, useSelectSessionModal,
 };
 export default ContextProviders;

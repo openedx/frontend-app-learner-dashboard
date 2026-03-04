@@ -1,6 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useContext, useEffect } from 'react';
-import { useBackedData, useMasquerade } from '@src/data/context';
+import { useMasquerade } from '@src/data/context';
 import GlobalDataContext from '@src/data/contexts/GlobalDataContext';
 import {
   initializeList,
@@ -10,7 +10,7 @@ import { learnerDashboardQueryKeys } from './queryKeys';
 
 const useInitializeLearnerHome = () => {
   const { masqueradeUser } = useMasquerade();
-  const { backUpData, setBackUpData } = useBackedData();
+  const queryClient = useQueryClient();
   const { setEmailConfirmation, setPlatformSettings } = useContext(GlobalDataContext);
 
   const query = useQuery({
@@ -28,12 +28,6 @@ const useInitializeLearnerHome = () => {
     refetchOnMount: !masqueradeUser,
   });
 
-  useEffect(() => {
-    if (!masqueradeUser && query.data) {
-      setBackUpData(query.data);
-    }
-  }, [masqueradeUser, query.data, setBackUpData]);
-
   // Populate shell-level GlobalDataProvider so header widgets can access this data
   useEffect(() => {
     if (query.data && !masqueradeUser) {
@@ -46,10 +40,10 @@ const useInitializeLearnerHome = () => {
     }
   }, [masqueradeUser, query.data, setEmailConfirmation, setPlatformSettings]);
 
-  // When masquerading fails, show the original user's dashboard rather than an error
+  // When masquerading fails, fall back to the normal user's cached data
   let { data } = query;
   if (masqueradeUser && query.isError) {
-    data = backUpData;
+    data = queryClient.getQueryData(learnerDashboardQueryKeys.initialize(undefined));
   }
 
   return { ...query, data };
