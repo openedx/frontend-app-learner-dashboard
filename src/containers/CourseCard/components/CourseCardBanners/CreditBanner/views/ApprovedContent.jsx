@@ -1,17 +1,24 @@
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { useContext } from 'react';
+
 import { useIntl } from '@openedx/frontend-base';
 
-import MasqueradeUserContext from '../../../../../../data/contexts/MasqueradeUserContext';
-import { reduxHooks } from '../../../../../../hooks';
+import { useCourseData, useIsMasquerading } from '@src/hooks';
 import CreditContent from './components/CreditContent';
 import ProviderLink from './components/ProviderLink';
 
 import messages from './messages';
 
 export const ApprovedContent = ({ cardId }) => {
-  const { providerStatusUrl: href, providerName } = reduxHooks.useCardCreditData(cardId);
-  const { isMasquerading } = useContext(MasqueradeUserContext);
+  const courseData = useCourseData(cardId);
+  const { providerStatusUrl: href, providerName } = useMemo(() => {
+    const creditData = courseData?.credit;
+    return {
+      providerStatusUrl: creditData.providerStatusUrl,
+      providerName: creditData.providerName,
+    };
+  }, [courseData]);
+  const isMasquerading = useIsMasquerading();
   const { formatMessage } = useIntl();
   return (
     <CreditContent

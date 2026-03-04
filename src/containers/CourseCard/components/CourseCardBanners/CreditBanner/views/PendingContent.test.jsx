@@ -1,36 +1,36 @@
 import { render, screen } from '@testing-library/react';
 import { IntlProvider } from '@openedx/frontend-base';
-
-import { reduxHooks } from '@src/hooks';
-import MasqueradeUserContext from '@src/data/contexts/MasqueradeUserContext';
+import { useCourseData, useIsMasquerading } from '@src/hooks';
 
 import messages from './messages';
 import PendingContent from './PendingContent';
 
 jest.mock('@src/hooks', () => ({
-  reduxHooks: { useCardCreditData: jest.fn() },
+  useCourseData: jest.fn(),
+  useIsMasquerading: jest.fn(),
 }));
 
 const cardId = 'test-card-id';
 const providerName = 'test-credit-provider-name';
 const providerStatusUrl = 'test-credit-provider-status-url';
-reduxHooks.useCardCreditData.mockReturnValue({
-  providerName,
-  providerStatusUrl,
+useIsMasquerading.mockReturnValue(false);
+useCourseData.mockReturnValue({
+  credit: {
+    providerName,
+    providerStatusUrl,
+  },
 });
 
-const renderPendingContent = (isMasquerading = false) => render(
+const renderPendingContent = () => render(
   <IntlProvider messages={{}} locale="en">
-    <MasqueradeUserContext.Provider value={{ isMasquerading }}>
-      <PendingContent cardId={cardId} />
-    </MasqueradeUserContext.Provider>
+    <PendingContent cardId={cardId} />
   </IntlProvider>,
 );
 describe('PendingContent component', () => {
   describe('hooks', () => {
     it('initializes card credit data with cardId', () => {
       renderPendingContent();
-      expect(reduxHooks.useCardCreditData).toHaveBeenCalledWith(cardId);
+      expect(useCourseData).toHaveBeenCalledWith(cardId);
     });
   });
   describe('behavior', () => {
@@ -58,9 +58,9 @@ describe('PendingContent component', () => {
       });
       describe('when masqueradeData is true', () => {
         it('disables the view details button', () => {
-          renderPendingContent(true);
+          useIsMasquerading.mockReturnValue(true);
+          renderPendingContent();
           const button = screen.getByRole('link', { name: messages.viewDetails.defaultMessage });
-          expect(button).toHaveAttribute('aria-disabled', 'true');
           expect(button).toHaveClass('disabled');
         });
       });

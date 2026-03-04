@@ -1,6 +1,6 @@
 import React from 'react';
 import { useIntl } from '@openedx/frontend-base';
-import { StrictDict } from 'utils';
+import { StrictDict } from '@src/utils';
 
 import getLearnerHeaderMenu from './LearnerDashboardMenu';
 

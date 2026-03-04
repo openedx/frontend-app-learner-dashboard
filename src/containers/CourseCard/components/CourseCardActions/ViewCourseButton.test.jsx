@@ -1,11 +1,20 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { IntlProvider } from '@openedx/frontend-base';
+import { useCourseTrackingEvent } from '@src/hooks';
 
 import track from '@src/tracking';
-import { reduxHooks } from '@src/hooks';
 import useActionDisabledState from '../hooks';
 import ViewCourseButton from './ViewCourseButton';
+
+jest.mock('@src/hooks', () => ({
+  useCourseData: jest.fn().mockReturnValue({
+    courseRun: { homeUrl: 'homeUrl' },
+  }),
+  useCourseTrackingEvent: jest.fn().mockReturnValue({
+    trackCourseEvent: jest.fn(),
+  }),
+}));
 
 jest.mock('@src/tracking', () => ({
   course: {
@@ -13,12 +22,6 @@ jest.mock('@src/tracking', () => ({
   },
 }));
 
-jest.mock('@src/hooks', () => ({
-  reduxHooks: {
-    useCardCourseRunData: jest.fn(() => ({ homeUrl: 'homeUrl' })),
-    useTrackCourseEvent: jest.fn(),
-  },
-}));
 jest.mock('../hooks', () => jest.fn(() => ({ disableViewCourse: false })));
 
 jest.mock('./ActionButton/hooks', () => jest.fn(() => false));
@@ -35,15 +38,18 @@ describe('ViewCourseButton', () => {
     expect(button).not.toHaveAttribute('aria-disabled', 'true');
   });
   it('calls trackCourseEvent on click', async () => {
+    const mockedTrackCourseEvent = jest.fn();
+    useCourseTrackingEvent.mockReturnValue(mockedTrackCourseEvent);
     render(<IntlProvider locale="en"><ViewCourseButton {...defaultProps} /></IntlProvider>);
     const user = userEvent.setup();
     const button = screen.getByRole('button', { name: 'View Course' });
     await user.click(button);
-    expect(reduxHooks.useTrackCourseEvent).toHaveBeenCalledWith(
+    expect(useCourseTrackingEvent).toHaveBeenCalledWith(
       track.course.enterCourseClicked,
       defaultProps.cardId,
       homeUrl,
     );
+    expect(mockedTrackCourseEvent).toHaveBeenCalled();
   });
   it('learner cannot view course', () => {
     useActionDisabledState.mockReturnValueOnce({ disableViewCourse: true });

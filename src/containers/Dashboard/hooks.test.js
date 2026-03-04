@@ -1,6 +1,6 @@
 import { useIntl } from '@openedx/frontend-base';
 import { useWindowSize, breakpoints } from '@openedx/paragon';
-import { apiHooks } from '@src/hooks';
+
 import { MockUseState } from '@src/testUtils';
 
 import appMessages from '@src/messages';
@@ -15,27 +15,20 @@ jest.mock('@openedx/paragon', () => ({
 jest.mock('@openedx/frontend-base', () => {
   const { formatMessage } = jest.requireActual('@src/testUtils');
   return {
-    ...jest.requireActual('@openedx/frontend-base',),
+    ...jest.requireActual('@openedx/frontend-base'),
     useIntl: () => ({
       formatMessage,
     }),
   };
 });
 
-jest.mock('@src/hooks', () => ({
-  apiHooks: {
-    useInitializeApp: jest.fn(),
-  },
-}));
-
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
   useEffect: jest.fn((cb, prereqs) => ({ useEffect: { cb, prereqs } })),
 }));
+
 const state = new MockUseState(hooks);
 
-const initializeApp = jest.fn();
-apiHooks.useInitializeApp.mockReturnValue(initializeApp);
 useWindowSize.mockReturnValue({ width: 20 });
 breakpoints.large = { maxWidth: 30 };
 describe('CourseCard hooks', () => {
@@ -50,9 +43,7 @@ describe('CourseCard hooks', () => {
   });
 
   describe('useDashboardLayoutData', () => {
-    beforeEach(() => {
-      state.mock();
-    });
+    beforeEach(() => { state.mock(); });
     describe('behavior', () => {
       it('initializes sidebarShowing to default true value', () => {
         hooks.useDashboardLayoutData();

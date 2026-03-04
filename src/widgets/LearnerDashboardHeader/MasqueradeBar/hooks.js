@@ -1,62 +1,46 @@
-import { useState, useContext } from 'react';
+import { useState, useMemo } from 'react';
 import { useIntl } from '@openedx/frontend-base';
 
-import MasqueradeUserContext from '../../../data/contexts/MasqueradeUserContext';
-import { StrictDict } from '../../../utils';
+import { useMasquerade } from '../../../data/context';
+import { useInitializeLearnerHome } from '../../../data/hooks';
 
-import * as module from './hooks';
 import messages from './messages';
-
-export const state = StrictDict({
-  masqueradeInput: (val) => useState(val), // eslint-disable-line
-});
-
-export const useMasqueradeInput = () => {
-  const [masqueradeInput, setMasqueradeInput] = module.state.masqueradeInput('');
-  const handleMasqueradeInputChange = (e) => setMasqueradeInput(e.target.value);
-  return {
-    handleMasqueradeInputChange,
-    masqueradeInput,
-  };
-};
-
-const masqueradeErrorMessageMap = {
-  404: messages.NoStudentFound,
-};
-
-export const getMasqueradeErrorMessage = (errorStatus) => {
-  if (errorStatus == null) {
-    return null;
-  }
-  return masqueradeErrorMessageMap[errorStatus] ?? messages.UnknownError;
-};
 
 export const useMasqueradeBarData = ({
   authenticatedUser,
 }) => {
   const { formatMessage } = useIntl();
-  const { setMasqueradeUser } = useContext(MasqueradeUserContext);
-  const handleClearMasquerade = () => setMasqueradeUser(null);
-
+  const [masqueradeInput, setMasqueradeInput] = useState('');
+  const { masqueradeUser, setMasqueradeUser } = useMasquerade();
   const {
-    masqueradeIsSuccess,
-    masqueradeIsPending,
-    masqueradeIsError,
-    masqueradeError,
-  } = useContext(MasqueradeUserContext);
-  const { masqueradeInput, handleMasqueradeInputChange } = module.useMasqueradeInput();
+    isError, error, isPending,
+  } = useInitializeLearnerHome();
 
-  const masqueradeErrorMessage = getMasqueradeErrorMessage(masqueradeError?.customAttributes?.httpErrorStatus);
+  const handleMasqueradeInputChange = (e) => setMasqueradeInput(e.target.value);
+  const handleClearMasquerade = () => {
+    setMasqueradeUser(undefined);
+    setMasqueradeInput('');
+  };
   const handleMasqueradeSubmit = (user) => (e) => {
     setMasqueradeUser(user);
     e.preventDefault();
   };
 
+  const isMasqueradingFailed = !!masqueradeUser && !!masqueradeInput && isError;
+  const isMasqueradingPending = !!masqueradeUser && isPending;
+  const isMasquerading = !!masqueradeUser && !isError && !isPending;
+  const masqueradeErrorMessage = useMemo(() => {
+    if (masqueradeUser && error) {
+      return (error.customAttributes?.httpErrorStatus === 404 ? messages.NoStudentFound : messages.UnknownError);
+    }
+    return null;
+  }, [error, masqueradeUser]);
+
   return {
     canMasquerade: authenticatedUser?.administrator,
-    isMasquerading: masqueradeIsSuccess,
-    isMasqueradingFailed: masqueradeIsError,
-    isMasqueradingPending: masqueradeIsPending,
+    isMasquerading,
+    isMasqueradingFailed,
+    isMasqueradingPending,
     masqueradeErrorMessage,
     masqueradeInput,
     handleMasqueradeSubmit,

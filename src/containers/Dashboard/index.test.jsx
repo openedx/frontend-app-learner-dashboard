@@ -1,19 +1,17 @@
 import { render, screen } from '@testing-library/react';
 import { IntlProvider } from '@openedx/frontend-base';
+import { useSelectSessionModal } from '@src/data/context';
+import { useInitializeLearnerHome } from '@src/data/hooks';
 
-import { reduxHooks, apiHooks } from '@src/hooks';
 import hooks from './hooks';
-import Dashboard from './';
+import Dashboard from '.';
 
-jest.mock('@src/hooks', () => ({
-  reduxHooks: {
-    useHasCourses: jest.fn(),
-    useShowSelectSessionModal: jest.fn(),
-    useRequestIsPending: jest.fn(),
-  },
-  apiHooks: {
-    useInitializeApp: jest.fn(),
-  },
+jest.mock('@src/data/context', () => ({
+  useSelectSessionModal: jest.fn(),
+}));
+
+jest.mock('@src/data/hooks', () => ({
+  useInitializeLearnerHome: jest.fn(),
 }));
 
 jest.mock('./hooks', () => ({
@@ -23,9 +21,9 @@ jest.mock('./hooks', () => ({
 
 jest.mock('../../slots/DashboardModalSlot', () => jest.fn(() => <div>DashboardModalSlot</div>));
 jest.mock('@src/containers/CoursesPanel', () => jest.fn(() => <div>CoursesPanel</div>));
+jest.mock('./LoadingView', () => jest.fn(() => <div>LoadingView</div>));
 jest.mock('@src/containers/SelectSessionModal', () => jest.fn(() => <div>SelectSessionModal</div>));
 jest.mock('./DashboardLayout', () => jest.fn(() => <div>DashboardLayout</div>));
-jest.mock('./LoadingView', () => jest.fn(() => <div>LoadingView</div>));
 
 const pageTitle = 'test-page-title';
 
@@ -37,10 +35,9 @@ describe('Dashboard', () => {
       showSelectSessionModal = true,
     } = props;
     hooks.useDashboardMessages.mockReturnValue({ pageTitle });
-    apiHooks.useInitializeApp.mockReturnValue({ isPending: initIsPending });
-    reduxHooks.useHasCourses.mockReturnValue(hasCourses);
-    reduxHooks.useRequestIsPending.mockReturnValue(initIsPending);
-    reduxHooks.useShowSelectSessionModal.mockReturnValue(showSelectSessionModal);
+    const dataMocked = { data: hasCourses ? { courses: [1, 2] } : { courses: [] }, isPending: initIsPending };
+    useInitializeLearnerHome.mockReturnValue(dataMocked);
+    useSelectSessionModal.mockReturnValue({ selectSessionModal: showSelectSessionModal ? { cardId: 1 } : null });
     return render(<IntlProvider locale="en"><Dashboard /></IntlProvider>);
   };
 
@@ -62,10 +59,9 @@ describe('Dashboard', () => {
         expect(selectSessionModal).toBeInTheDocument();
       });
     });
-    
     describe('courses still loading', () => {
       it('should render LoadingView', () => {
-        createWrapper({ initIsPending: true });
+        createWrapper({ hasCourses: false });
         const loadingView = screen.getByText('LoadingView');
         expect(loadingView).toBeInTheDocument();
       });

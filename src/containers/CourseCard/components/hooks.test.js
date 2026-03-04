@@ -1,16 +1,15 @@
-import { reduxHooks } from '@src/hooks';
-
+import { useCourseData, useIsMasquerading } from '@src/hooks';
 import * as hooks from './hooks';
-import { renderHook } from '@testing-library/react';
-import MasqueradeUserContext from '@src/data/contexts/MasqueradeUserContext';
+
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useMemo: jest.fn((fn) => fn()),
+}));
 
 jest.mock('@src/hooks', () => ({
-  reduxHooks: {
-    useMasqueradeData: jest.fn(),
-    useCardEnrollmentData: jest.fn(),
-    useCardEntitlementData: jest.fn(),
-    useCardCourseRunData: jest.fn(),
-  },
+  ...jest.requireActual('@src/hooks'),
+  useCourseData: jest.fn(),
+  useIsMasquerading: jest.fn(),
 }));
 
 const cardId = 'my-test-course-number';
@@ -40,39 +39,43 @@ describe('useActionDisabledState', () => {
       isAuditAccessExpired,
       resumeUrl,
       homeUrl,
+      availableSessions,
     } = { ...defaultData, ...args };
-    reduxHooks.useMasqueradeData.mockReturnValueOnce({ isMasquerading });
-    reduxHooks.useCardEnrollmentData.mockReturnValueOnce({
-      hasAccess,
-      isAudit,
-      isAuditAccessExpired,
-    });
-    reduxHooks.useCardEntitlementData.mockReturnValueOnce({
-      isEntitlement,
-      isFulfilled,
-      canChange,
-      hasSessions,
-    });
-    reduxHooks.useCardCourseRunData.mockReturnValueOnce({
-      resumeUrl,
-      homeUrl,
+    useIsMasquerading.mockReturnValue(isMasquerading);
+    useCourseData.mockReturnValue({
+      enrollment: {
+        hasAccess,
+        isAudit,
+        isAuditAccessExpired,
+        coursewareAccess: {
+          isStaff: false,
+          hasUnmetPrereqs: !hasAccess,
+          isTooEarly: !hasAccess,
+        },
+      },
+      entitlement: isEntitlement ? {
+        isEntitlement: true,
+        isFulfilled,
+        canChange,
+        hasSessions,
+        availableSessions,
+      } : {},
+      courseRun: {
+        resumeUrl,
+        homeUrl,
+      },
     });
   };
 
-  const runHook = (masqueradeValue = { isMasquerading: false }) => {
-    const { result } = renderHook(() => hooks.useActionDisabledState(cardId), {
-      wrapper: ({ children }) => (
-        <MasqueradeUserContext.Provider value={masqueradeValue}>
-          {children}
-        </MasqueradeUserContext.Provider>
-      ),
-    });
-    return result.current;
-  };
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  const runHook = () => hooks.useActionDisabledState(cardId);
   describe('disableBeginCourse', () => {
     const testDisabled = (data, expected) => {
       mockHooksData(data);
-      expect(runHook({ isMasquerading: data.isMasquerading ?? false }).disableBeginCourse).toBe(expected);
+      expect(runHook().disableBeginCourse).toBe(expected);
     };
     it('disable when homeUrl is invalid', () => {
       testDisabled({ homeUrl: null }, true);
@@ -93,7 +96,7 @@ describe('useActionDisabledState', () => {
   describe('disableResumeCourse', () => {
     const testDisabled = (data, expected) => {
       mockHooksData(data);
-      expect(runHook({ isMasquerading: data.isMasquerading ?? false }).disableResumeCourse).toBe(expected);
+      expect(runHook().disableResumeCourse).toBe(expected);
     };
     it('disable when resumeUrl is invalid', () => {
       testDisabled({ resumeUrl: null }, true);
@@ -114,7 +117,7 @@ describe('useActionDisabledState', () => {
   describe('disableViewCourse', () => {
     const testDisabled = (data, expected) => {
       mockHooksData(data);
-      expect(runHook({ isMasquerading: data.isMasquerading ?? false }).disableViewCourse).toBe(expected);
+      expect(runHook().disableViewCourse).toBe(expected);
     };
     it('disable when hasAccess is false', () => {
       testDisabled({ hasAccess: false }, true);
@@ -129,7 +132,7 @@ describe('useActionDisabledState', () => {
   describe('disableSelectSession', () => {
     const testDisabled = (data, expected) => {
       mockHooksData(data);
-      expect(runHook({ isMasquerading: data.isMasquerading ?? false }).disableSelectSession).toBe(expected);
+      expect(runHook().disableSelectSession).toBe(expected);
     };
     it('disable when isEntitlement is false', () => {
       testDisabled({ isEntitlement: false }, true);
@@ -153,6 +156,7 @@ describe('useActionDisabledState', () => {
           hasAccess: true,
           canChange: true,
           hasSessions: true,
+          availableSessions: ['session1'],
         },
         false,
       );
@@ -161,7 +165,7 @@ describe('useActionDisabledState', () => {
   describe('disableCourseTitle', () => {
     const testDisabled = (data, expected) => {
       mockHooksData(data);
-      expect(runHook({ isMasquerading: data.isMasquerading ?? false }).disableCourseTitle).toBe(expected);
+      expect(runHook().disableCourseTitle).toBe(expected);
     };
     it('disable when isEntitlement is true and isFulfilled is false', () => {
       testDisabled({ isEntitlement: true, isFulfilled: false }, true);

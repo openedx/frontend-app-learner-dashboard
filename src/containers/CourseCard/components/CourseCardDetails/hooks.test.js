@@ -1,21 +1,25 @@
 import { useIntl } from '@openedx/frontend-base';
 
 import { keyStore } from '@src/utils';
-import { utilHooks, reduxHooks } from '@src/hooks';
+import { utilHooks, useCourseData } from '@src/hooks';
+import { useSelectSessionModal } from '@src/data/context';
 import * as hooks from './hooks';
 import messages from './messages';
 
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useMemo: (fn) => fn(),
+}));
+
+const updateSelectSessionModalMock = jest.fn().mockName('updateSelectSessionModal');
+jest.mock('@src/data/context', () => ({
+  useSelectSessionModal: jest.fn(),
+}));
 jest.mock('@src/hooks', () => ({
+  ...jest.requireActual('@src/hooks'),
+  useCourseData: jest.fn(),
   utilHooks: {
     useFormatDate: jest.fn(),
-  },
-  reduxHooks: {
-    useCardCourseData: jest.fn(),
-    useCardCourseRunData: jest.fn(),
-    useCardEnrollmentData: jest.fn(),
-    useCardEntitlementData: jest.fn(),
-    useCardProviderData: jest.fn(),
-    useUpdateSelectSessionModalCallback: (...args) => ({ updateSelectSessionModalCallback: args }),
   },
 }));
 
@@ -45,8 +49,9 @@ describe('CourseCardDetails hooks', () => {
   });
 
   describe('useCardDetailsData', () => {
-    const providerName = 'my-provider-name';
-    const providerData = {};
+    const providerData = {
+      name: 'my-provider-name',
+    };
     const entitlementData = {
       isEntitlement: false,
       disableViewCourse: false,
@@ -58,15 +63,13 @@ describe('CourseCardDetails hooks', () => {
     const runHook = ({ provider = {}, entitlement = {} }) => {
       jest.spyOn(hooks, hookKeys.useAccessMessage)
         .mockImplementationOnce(mockAccessMessage);
-      reduxHooks.useCardProviderData.mockReturnValueOnce({
-        ...providerData,
-        ...provider,
+      useCourseData.mockReturnValue({
+        courseProvider: { ...providerData, ...provider },
+        course: { courseNumber },
+        courseRun: {},
+        entitlement: { ...entitlementData, ...entitlement },
       });
-      reduxHooks.useCardEntitlementData.mockReturnValueOnce({
-        ...entitlementData,
-        ...entitlement,
-      });
-      reduxHooks.useCardCourseData.mockReturnValueOnce({ courseNumber });
+      useSelectSessionModal.mockReturnValue({ updateSelectSessionModal: updateSelectSessionModalMock });
       out = hooks.useCardDetailsData({ cardId });
     };
     beforeEach(() => {
@@ -76,14 +79,16 @@ describe('CourseCardDetails hooks', () => {
       expect(out.accessMessage).toEqual(mockAccessMessage({ cardId }));
     });
     it('forwards provider name if it exists, else formatted unknown provider name', () => {
-      runHook({ provider: { name: providerName } });
-      expect(out.providerName).toEqual(providerName);
-
-      runHook({ provider: {} });
+      expect(out.providerName).toEqual(providerData.name);
+      runHook({ provider: { name: '' } });
       expect(out.providerName).toEqual(formatMessage(messages.unknownProviderName));
     });
     it('forward changeOrLeaveSessionMessage', () => {
       expect(out.changeOrLeaveSessionMessage).toEqual(formatMessage(messages.changeOrLeaveSessionButton));
+    });
+    it('calls updateSelectSessionModal when openSessionModal is called', () => {
+      out.openSessionModal();
+      expect(updateSelectSessionModalMock).toHaveBeenCalledWith(cardId);
     });
   });
 
@@ -101,21 +106,16 @@ describe('CourseCardDetails hooks', () => {
       endDate: '10/20/2000',
     };
     const runHook = ({ enrollment = {}, courseRun = {} }) => {
-      reduxHooks.useCardCourseRunData.mockReturnValueOnce({
-        ...courseRunData,
-        ...courseRun,
-      });
-      reduxHooks.useCardEnrollmentData.mockReturnValueOnce({
-        ...enrollmentData,
-        ...enrollment,
+      useCourseData.mockReturnValue({
+        courseRun: { ...courseRunData, ...courseRun },
+        enrollment: { ...enrollmentData, ...enrollment },
       });
       out = hooks.useAccessMessage({ cardId });
     };
 
     it('loads data from enrollment and course run data based on course number', () => {
       runHook({});
-      expect(reduxHooks.useCardCourseRunData).toHaveBeenCalledWith(cardId);
-      expect(reduxHooks.useCardEnrollmentData).toHaveBeenCalledWith(cardId);
+      expect(useCourseData).toHaveBeenCalledWith(cardId);
     });
 
     describe('if not started yet', () => {

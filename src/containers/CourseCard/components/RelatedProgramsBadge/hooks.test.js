@@ -1,16 +1,15 @@
 import { useIntl } from '@openedx/frontend-base';
 
 import { MockUseState } from '@src/testUtils';
-import { reduxHooks } from '@src/hooks';
+import { useCourseData } from '@src/hooks';
 
 import * as hooks from './hooks';
 import messages from './messages';
 
 jest.mock('@src/hooks', () => ({
-  reduxHooks: {
-    useCardRelatedProgramsData: jest.fn(),
-  },
+  useCourseData: jest.fn(),
 }));
+
 jest.mock('@openedx/frontend-base', () => {
   const { formatMessage } = jest.requireActual('@src/testUtils');
   return {
@@ -24,7 +23,7 @@ jest.mock('@openedx/frontend-base', () => {
 const cardId = 'test-card-id';
 
 const state = new MockUseState(hooks);
-let numPrograms = 27;
+const numPrograms = 27;
 
 describe('RelatedProgramsBadge hooks', () => {
   const { formatMessage } = useIntl();
@@ -34,15 +33,14 @@ describe('RelatedProgramsBadge hooks', () => {
   });
   beforeEach(() => {
     jest.clearAllMocks();
-    reduxHooks.useCardRelatedProgramsData.mockReturnValueOnce({
-      length: numPrograms,
-    });
   });
   describe('useRelatedProgramsBadgeData', () => {
     beforeEach(() => {
       state.mock();
-      reduxHooks.useCardRelatedProgramsData.mockReturnValueOnce({
-        length: numPrograms,
+      useCourseData.mockReturnValue({
+        programs: {
+          relatedPrograms: new Array(numPrograms).fill({}),
+        },
       });
       out = hooks.useRelatedProgramsBadgeData({ cardId });
     });
@@ -66,14 +64,12 @@ describe('RelatedProgramsBadge hooks', () => {
       expect(out.numPrograms).toEqual(numPrograms);
     });
     test('returns empty programsMessage if no programs', () => {
-      reduxHooks.useCardRelatedProgramsData.mockReset();
-      reduxHooks.useCardRelatedProgramsData.mockReturnValueOnce({ length: 0 });
+      useCourseData.mockReturnValueOnce({ programs: { relatedPrograms: [] } });
       out = hooks.useRelatedProgramsBadgeData({ cardId });
       expect(out.programsMessage).toEqual('');
     });
     test('returns badgeLabelSingular programsMessage if 1 programs', () => {
-      reduxHooks.useCardRelatedProgramsData.mockReset();
-      reduxHooks.useCardRelatedProgramsData.mockReturnValueOnce({ length: 1 });
+      useCourseData.mockReturnValueOnce({ programs: { relatedPrograms: [{}] } });
       out = hooks.useRelatedProgramsBadgeData({ cardId });
       expect(out.programsMessage).toEqual(formatMessage(
         messages.badgeLabelSingular,
