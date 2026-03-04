@@ -1,6 +1,6 @@
 import useCourseData from './useCourseData';
 
-const useCourseTrackingEvent = (tracker: Function, cardId: string, ...args: any[]) => {
+const useCourseTrackingEvent = (tracker: (...a: any[]) => any, cardId: string, ...args: any[]) => {
   const courseData = useCourseData(cardId);
   const courseId = (courseData as any)?.courseRun?.courseId;
 

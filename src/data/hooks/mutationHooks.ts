@@ -10,26 +10,26 @@ import {
 } from '@src/data/services/lms/api';
 import { learnerDashboardQueryKeys } from './queryKeys';
 
-type UpdateEntitlementProps = {
-  uuid: string;
-  courseId: string;
-};
+interface UpdateEntitlementProps {
+  uuid: string,
+  courseId: string,
+}
 
-type DeleteEntitlementParams = {
-  uuid: string;
-  isRefundable: boolean;
-};
+interface DeleteEntitlementParams {
+  uuid: string,
+  isRefundable: boolean,
+}
 
-type UpdateEmailSettingsParams = {
-  courseId: string;
-  enable: boolean;
-};
+interface UpdateEmailSettingsParams {
+  courseId: string,
+  enable: boolean,
+}
 
-type CreditParams = {
-  providerId: string;
-  courseId: string;
-  username: string;
-};
+interface CreditParams {
+  providerId: string,
+  courseId: string,
+  username: string,
+}
 
 const useUnenrollFromCourse = () => {
   const queryClient = useQueryClient();

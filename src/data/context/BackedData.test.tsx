@@ -3,8 +3,7 @@ import { renderHook, act } from '@testing-library/react';
 import { BackedDataProvider, useBackedData } from './BackedDataProvider';
 
 describe('BackedDataProvider and useBackedData', () => {
-  // eslint-disable-next-line func-names
-  const createWrapper = () => function ({ children }: { children: React.ReactNode }) {
+  const createWrapper = () => function Wrapper({ children }: { children: React.ReactNode }) {
     return <BackedDataProvider>{children}</BackedDataProvider>;
   };
 

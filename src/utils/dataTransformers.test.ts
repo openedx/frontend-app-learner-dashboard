@@ -22,13 +22,13 @@ Object.defineProperty(globalThis, 'URLSearchParams', {
   writable: true,
 });
 
-type VisibleListResult = {
-  visibleList: Array<{
-    course: { courseName: string };
-    enrollment: { lastEnrolled: Date }
-  }>;
-  numPages: number;
-};
+interface VisibleListResult {
+  visibleList: {
+    course: { courseName: string },
+    enrollment: { lastEnrolled: Date },
+  }[],
+  numPages: number,
+}
 
 describe('dataTransformers', () => {
   const mockCourses = [
@@ -204,15 +204,15 @@ describe('dataTransformers', () => {
     });
 
     it('should maintain course order', () => {
-        type MockCourseType = {
-          course: { courseName: string };
-        };
-        const result = getTransformedCourseDataList(mockCourses) as MockCourseType[];
+      interface MockCourseType {
+        course: { courseName: string },
+      }
+      const result = getTransformedCourseDataList(mockCourses) as MockCourseType[];
 
-        expect(result[0].course.courseName).toBe('Introduction to React');
-        expect(result[1].course.courseName).toBe('Advanced JavaScript');
-        expect(result[2].course.courseName).toBe('Data Structures');
-        expect(result[3].course.courseName).toBe('Algorithms');
+      expect(result[0].course.courseName).toBe('Introduction to React');
+      expect(result[1].course.courseName).toBe('Advanced JavaScript');
+      expect(result[2].course.courseName).toBe('Data Structures');
+      expect(result[3].course.courseName).toBe('Algorithms');
     });
   });
 

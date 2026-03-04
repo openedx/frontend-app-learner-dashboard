@@ -4,21 +4,23 @@ import React, {
 } from 'react';
 
 interface BackedDataContextType {
-  backUpData: any;
-  setBackUpData: (backUpData: any) => void;
+  backUpData: any,
+  setBackUpData: (backUpData: any) => void,
 }
 
 const BackedDataContext = createContext<BackedDataContextType | null>(null);
 
 interface BackedDataState {
-  backUpData: any;
+  backUpData: any,
 }
 
 const initialState: BackedDataState = {
   backUpData: undefined,
 };
 
-type BackedDataAction = { type: 'SET_DATA'; payload: any };
+interface BackedDataAction {
+  type: 'SET_DATA', payload: any,
+}
 
 const backedDataReducer = (state: BackedDataState, action: BackedDataAction): BackedDataState => {
   switch (action.type) {
@@ -34,7 +36,7 @@ const backedDataReducer = (state: BackedDataState, action: BackedDataAction): Ba
 };
 
 interface BackedDataProviderProps {
-  children: ReactNode;
+  children: ReactNode,
 }
 
 export const BackedDataProvider: React.FC<BackedDataProviderProps> = ({ children }) => {

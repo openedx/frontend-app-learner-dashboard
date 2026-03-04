@@ -43,7 +43,9 @@ describe('CourseCard hooks', () => {
   });
 
   describe('useDashboardLayoutData', () => {
-    beforeEach(() => { state.mock(); });
+    beforeEach(() => {
+      state.mock();
+    });
     describe('behavior', () => {
       it('initializes sidebarShowing to default true value', () => {
         hooks.useDashboardLayoutData();

@@ -6,15 +6,15 @@ const cardId = (val) => `card-${val}`;
 const transformCourseData = (courses) => {
   const now = Date.now();
   return courses.reduce(
-  (obj, curr, index) => {
-    const out = { ...curr, cardId: cardId(index) };
-    if (out.enrollment?.lastEnrolled === null) {
-      out.enrollment.lastEnrolled = now;
-    }
-    return { ...obj, [cardId(index)]: out };
-  },
-  {},
-);
+    (obj, curr, index) => {
+      const out = { ...curr, cardId: cardId(index) };
+      if (out.enrollment?.lastEnrolled === null) {
+        out.enrollment.lastEnrolled = now;
+      }
+      return { ...obj, [cardId(index)]: out };
+    },
+    {},
+  );
 };
 
 const getTransformedCourseDataObject = (courses) => transformCourseData(courses);
@@ -41,7 +41,9 @@ const getVisibleList = (courses: any[], filters: string[], sortBy: string, pageN
 
   const sortFn = (transform, { reverse }) => (v1, v2) => {
     const [a, b] = [v1, v2].map(transform);
-    if (a === b) { return 0; }
+    if (a === b) {
+      return 0;
+    }
     return (((a as any) > (b as any)) ? 1 : -1) * (reverse ? -1 : 1);
   };
 
