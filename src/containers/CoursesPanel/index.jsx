@@ -1,16 +1,18 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { useIntl } from '@openedx/frontend-base';
-
-import { reduxHooks } from '../../hooks';
+import { useInitializeLearnerHome } from '@src/data/hooks';
 import {
   CourseFilterControls,
 } from '../../containers/CourseFilterControls';
 import CourseListSlot from '../../slots/CourseListSlot';
 import NoCoursesViewSlot from '../../slots/NoCoursesViewSlot';
+import { useFilters } from '@src/data/context';
 
-import { useCourseListData } from './hooks';
+import { getVisibleList, getTransformedCourseDataList } from '@src/utils/dataTransformers';
+
 import messages from './messages';
+
 import './index.scss';
 
 /**
@@ -20,14 +22,46 @@ import './index.scss';
 */
 export const CoursesPanel = () => {
   const { formatMessage } = useIntl();
-  const hasCourses = reduxHooks.useHasCourses();
-  const courseListData = useCourseListData();
+  const { data } = useInitializeLearnerHome();
+  const hasCourses = useMemo(() => data?.courses?.length > 0, [data]);
+
+  const {
+    filters, sortBy, pageNumber, setPageNumber,
+  } = useFilters();
+  const { visibleList, numPages } = useMemo(() => {
+    let transformedCourses = [];
+    if (data?.courses?.length) {
+      transformedCourses = getTransformedCourseDataList(data.courses);
+    }
+    return getVisibleList(
+      transformedCourses,
+      filters,
+      sortBy,
+      pageNumber,
+    );
+  }, [data, filters, sortBy, pageNumber]);
+
+  // Clamp page number when filtered/mutated list shrinks
+  React.useEffect(() => {
+    if (numPages > 0 && pageNumber > numPages) {
+      setPageNumber(1);
+    }
+  }, [numPages, pageNumber, setPageNumber]);
+
+  const courseListData = {
+    filterOptions: filters,
+    setPageNumber,
+    numPages,
+    visibleList,
+    showFilters: filters.length > 0,
+  };
+
   return (
     <div className="course-list-container">
       <div className="course-list-heading-container">
         <h2 className="course-list-title">{formatMessage(messages.myCourses)}</h2>
         <div className="course-filter-controls-container">
-          <CourseFilterControls {...courseListData.filterOptions} />
+          <CourseFilterControls />
         </div>
       </div>
       {hasCourses ? <CourseListSlot courseListData={courseListData} /> : <NoCoursesViewSlot />}

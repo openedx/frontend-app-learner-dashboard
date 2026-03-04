@@ -2,6 +2,7 @@ import React from 'react';
 import { useWindowSize, breakpoints } from '@openedx/paragon';
 import { useIntl } from '@openedx/frontend-base';
 import { StrictDict } from '../../utils';
+
 import appMessages from '../../messages';
 import * as module from './hooks';
 

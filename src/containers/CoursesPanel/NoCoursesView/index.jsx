@@ -2,17 +2,18 @@ import React from 'react';
 import { useIntl } from '@openedx/frontend-base';
 import { Button, Image } from '@openedx/paragon';
 import { Search } from '@openedx/paragon/icons';
+import { baseAppUrl } from '@src/data/services/lms/urls';
 
-import { baseAppUrl } from '../../../data/services/lms/urls';
-import emptyCourseSVG from '../../../assets/empty-course.svg';
-import { reduxHooks } from '../../../hooks';
+import emptyCourseSVG from '@src/assets/empty-course.svg';
+import { useInitializeLearnerHome } from '@src/data/hooks';
 
 import messages from './messages';
 import './index.scss';
 
 export const NoCoursesView = () => {
   const { formatMessage } = useIntl();
-  const { courseSearchUrl } = reduxHooks.usePlatformSettingsData();
+  const { data: learnerData } = useInitializeLearnerHome();
+  const courseSearchUrl = learnerData?.platformSettings?.courseSearchUrl || '';
   return (
     <div
       id="no-courses-content-view"

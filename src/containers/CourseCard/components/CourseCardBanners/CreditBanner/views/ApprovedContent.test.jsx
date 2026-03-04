@@ -1,15 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import { IntlProvider } from '@openedx/frontend-base';
 import { formatMessage } from '@src/testUtils';
-import { reduxHooks } from '@src/hooks';
-import MasqueradeUserContext from '@src/data/contexts/MasqueradeUserContext';
+import { useCourseData, useIsMasquerading } from '@src/hooks';
 import messages from './messages';
 import ApprovedContent from './ApprovedContent';
 
 jest.mock('@src/hooks', () => ({
-  reduxHooks: {
-    useCardCreditData: jest.fn(),
-  },
+  useCourseData: jest.fn(),
+  useIsMasquerading: jest.fn(),
 }));
 
 const cardId = 'test-card-id';
@@ -17,28 +15,21 @@ const credit = {
   providerStatusUrl: 'test-credit-provider-status-url',
   providerName: 'test-credit-provider-name',
 };
-reduxHooks.useCardCreditData.mockReturnValue(credit);
-
-const renderWithMasquerading = (isMasquerading = false) => render(
-  <IntlProvider locale="en">
-    <MasqueradeUserContext.Provider value={{ isMasquerading }}>
-      <ApprovedContent cardId={cardId} />
-    </MasqueradeUserContext.Provider>
-  </IntlProvider>
-);
+useCourseData.mockReturnValue({ credit });
+useIsMasquerading.mockReturnValue(false);
 
 describe('ApprovedContent component', () => {
   describe('hooks', () => {
     it('initializes credit data with cardId', () => {
-      renderWithMasquerading();
-      expect(reduxHooks.useCardCreditData).toHaveBeenCalledWith(cardId);
+      render(<IntlProvider locale="en"><ApprovedContent cardId={cardId} /></IntlProvider>);
+      expect(useCourseData).toHaveBeenCalledWith(cardId);
     });
   });
   describe('render', () => {
     describe('rendered CreditContent component', () => {
       beforeEach(() => {
         jest.clearAllMocks();
-        renderWithMasquerading();
+        render(<IntlProvider locale="en"><ApprovedContent cardId={cardId} /></IntlProvider>);
       });
       it('action.message is formatted viewCredit message', () => {
         const actionButton = screen.getByRole('link', { name: messages.viewCredit.defaultMessage });
@@ -63,7 +54,8 @@ describe('ApprovedContent component', () => {
     });
     describe('when masquerading', () => {
       beforeEach(() => {
-        renderWithMasquerading(true);
+        useIsMasquerading.mockReturnValue(true);
+        render(<IntlProvider locale="en"><ApprovedContent cardId={cardId} /></IntlProvider>);
       });
 
       it('disables the action button', () => {

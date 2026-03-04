@@ -3,19 +3,19 @@ import PropTypes from 'prop-types';
 
 import { useIntl } from '@openedx/frontend-base';
 
-import track from '../../../../tracking';
-import { reduxHooks } from '../../../../hooks';
-
+import track from '@src/tracking';
+import { useCourseTrackingEvent, useCourseData } from '@src/hooks';
 import useActionDisabledState from '../hooks';
 import ActionButton from './ActionButton';
 import messages from './messages';
 
 export const ViewCourseButton = ({ cardId }) => {
   const { formatMessage } = useIntl();
-  const { homeUrl } = reduxHooks.useCardCourseRunData(cardId);
+  const courseData = useCourseData(cardId);
+  const homeUrl = courseData?.courseRun?.homeUrl;
   const { disableViewCourse } = useActionDisabledState(cardId);
 
-  const handleClick = reduxHooks.useTrackCourseEvent(
+  const handleClick = useCourseTrackingEvent(
     track.course.enterCourseClicked,
     cardId,
     homeUrl,

@@ -1,8 +1,9 @@
+import React from 'react';
 import PropTypes from 'prop-types';
-import { useContext } from 'react';
+
 import { useIntl } from '@openedx/frontend-base';
 
-import MasqueradeUserContext from '../../../../../../data/contexts/MasqueradeUserContext';
+import { useIsMasquerading } from '@src/hooks';
 import CreditContent from './components/CreditContent';
 import ProviderLink from './components/ProviderLink';
 import hooks from './hooks';
@@ -12,7 +13,7 @@ import messages from './messages';
 export const MustRequestContent = ({ cardId }) => {
   const { formatMessage } = useIntl();
   const { requestData, createCreditRequest } = hooks.useCreditRequestData(cardId);
-  const { isMasquerading } = useContext(MasqueradeUserContext);
+  const isMasquerading = useIsMasquerading();
   return (
     <CreditContent
       action={{
