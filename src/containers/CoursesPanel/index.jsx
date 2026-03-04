@@ -9,7 +9,7 @@ import CourseListSlot from '../../slots/CourseListSlot';
 import NoCoursesViewSlot from '../../slots/NoCoursesViewSlot';
 import { useFilters } from '@src/data/context';
 
-import { getVisibleList, getTransformedCourseDataList } from '@src/utils/dataTransformers';
+import { getVisibleList } from '@src/utils/dataTransformers';
 
 import messages from './messages';
 
@@ -29,10 +29,9 @@ export const CoursesPanel = () => {
     filters, sortBy, pageNumber, setPageNumber,
   } = useFilters();
   const { visibleList, numPages } = useMemo(() => {
-    let transformedCourses = [];
-    if (data?.courses?.length) {
-      transformedCourses = getTransformedCourseDataList(data.courses);
-    }
+    const transformedCourses = data?.coursesByCardId
+      ? Object.values(data.coursesByCardId)
+      : [];
     return getVisibleList(
       transformedCourses,
       filters,

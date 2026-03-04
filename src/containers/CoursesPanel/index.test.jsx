@@ -12,6 +12,7 @@ jest.mock('@src/data/hooks', () => ({
   useInitializeLearnerHome: jest.fn(() => ({
     data: {
       courses: [{ id: 1 }, { id: 2 }],
+      coursesByCardId: { 'card-0': { id: 1, cardId: 'card-0' }, 'card-1': { id: 2, cardId: 'card-1' } },
     },
   })),
 }));
@@ -34,7 +35,9 @@ jest.mock('@src/containers/CourseFilterControls', () => ({
 
 describe('CoursesPanel', () => {
   const createWrapper = (courseListData) => {
-    useInitializeLearnerHome.mockReturnValue({ data: { courses: courseListData?.visibleList || [] } });
+    const visibleList = courseListData?.visibleList || [];
+    const coursesByCardId = Object.fromEntries(visibleList.map((c, i) => [`card-${i}`, { ...c, cardId: c.cardId || `card-${i}` }]));
+    useInitializeLearnerHome.mockReturnValue({ data: { courses: visibleList, coursesByCardId } });
     return render(<MemoryRouter><IntlProvider locale="en"><CoursesPanel /></IntlProvider></MemoryRouter>);
   };
 
@@ -72,7 +75,6 @@ describe('CoursesPanel', () => {
 
     beforeEach(() => {
       jest.clearAllMocks();
-      jest.spyOn(dataTransformers, 'getTransformedCourseDataList');
       jest.spyOn(dataTransformers, 'getVisibleList');
     });
 
@@ -84,7 +86,6 @@ describe('CoursesPanel', () => {
         setPageNumber: mockSetPageNumber,
       });
 
-      dataTransformers.getTransformedCourseDataList.mockReturnValue([{ id: 1 }, { id: 2 }]);
       dataTransformers.getVisibleList.mockReturnValue({
         visibleList: [{ id: 1 }],
         numPages: 2,
@@ -103,7 +104,6 @@ describe('CoursesPanel', () => {
         setPageNumber: mockSetPageNumber,
       });
 
-      dataTransformers.getTransformedCourseDataList.mockReturnValue([{ id: 1 }, { id: 2 }]);
       dataTransformers.getVisibleList.mockReturnValue({
         visibleList: [{ id: 1 }],
         numPages: 3,
@@ -122,7 +122,6 @@ describe('CoursesPanel', () => {
         setPageNumber: mockSetPageNumber,
       });
 
-      dataTransformers.getTransformedCourseDataList.mockReturnValue([]);
       dataTransformers.getVisibleList.mockReturnValue({
         visibleList: [],
         numPages: 0,
@@ -141,7 +140,6 @@ describe('CoursesPanel', () => {
         setPageNumber: mockSetPageNumber,
       });
 
-      dataTransformers.getTransformedCourseDataList.mockReturnValue([{ id: 1 }, { id: 2 }]);
       dataTransformers.getVisibleList.mockReturnValue({
         visibleList: [{ id: 1 }],
         numPages: 2,
