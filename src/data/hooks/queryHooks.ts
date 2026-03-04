@@ -15,6 +15,7 @@ const useInitializeLearnerHome = () => {
   const query = useQuery({
     queryKey: learnerDashboardQueryKeys.initialize(masqueradeUser),
     queryFn: async () => initializeList(masqueradeUser),
+    staleTime: 5 * 60 * 1000, // 5 minutes — dashboard data rarely changes while viewing
     retry: false,
     retryOnMount: !masqueradeUser,
     refetchOnMount: !masqueradeUser,
