@@ -2,18 +2,20 @@ import { FilterKeys, ListPageSize, SortKeys } from '@src/data/constants/app';
 import StrictDict from './StrictDict';
 
 const cardId = (val) => `card-${val}`;
-const today = Date.now();
 
-const transformCourseData = (courses) => courses.reduce(
+const transformCourseData = (courses) => {
+  const now = Date.now();
+  return courses.reduce(
   (obj, curr, index) => {
     const out = { ...curr, cardId: cardId(index) };
     if (out.enrollment?.lastEnrolled === null) {
-      out.enrollment.lastEnrolled = today;
+      out.enrollment.lastEnrolled = now;
     }
     return { ...obj, [cardId(index)]: out };
   },
   {},
 );
+};
 
 const getTransformedCourseDataObject = (courses) => transformCourseData(courses);
 
