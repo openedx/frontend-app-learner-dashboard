@@ -40,6 +40,7 @@ const createWrapper = (queryClient?: QueryClient) => {
     defaultOptions: {
       queries: {
         retry: false,
+        retryDelay: 0,
         gcTime: 0,
       },
       mutations: {
@@ -96,12 +97,14 @@ describe('queryHooks', () => {
           throw new Error('Function not implemented.');
         },
       });
-      (api.initializeList as jest.Mock).mockRejectedValue(new Error('API Error'));
+      const error: any = new Error('API Error');
+      error.response = { status: 403 };
+      (api.initializeList as jest.Mock).mockRejectedValue(error);
 
       // Don't use gcTime: 0 here — we need the seeded cache entry to persist
       // for the fallback lookup via queryClient.getQueryData()
       const queryClient = new QueryClient({
-        defaultOptions: { queries: { retry: false }, mutations: { retry: false } },
+        defaultOptions: { queries: { retry: false, retryDelay: 0 }, mutations: { retry: false } },
       });
       queryClient.setQueryData(
         learnerDashboardQueryKeys.initialize(undefined),
@@ -118,6 +121,48 @@ describe('queryHooks', () => {
 
       expect(api.initializeList).toHaveBeenCalledWith(masqueradeUser);
       expect(result.current.data).toEqual(mockNormalUserData);
+    });
+
+    it('should not retry on 4xx errors', async () => {
+      mockUseMasquerade.mockReturnValue({
+        masqueradeUser: undefined,
+        setMasqueradeUser(): void { throw new Error('Function not implemented.'); },
+      });
+      const error: any = new Error('Forbidden');
+      error.response = { status: 403 };
+      (api.initializeList as jest.Mock).mockRejectedValue(error);
+
+      const { result } = renderHook(() => useInitializeLearnerHome(), {
+        wrapper: createWrapper(),
+      });
+
+      await waitFor(() => {
+        expect(result.current.isError).toBe(true);
+      });
+
+      // 4xx errors should not be retried — only 1 call
+      expect(api.initializeList).toHaveBeenCalledTimes(1);
+    });
+
+    it('should retry on 5xx errors up to 3 times', async () => {
+      mockUseMasquerade.mockReturnValue({
+        masqueradeUser: undefined,
+        setMasqueradeUser(): void { throw new Error('Function not implemented.'); },
+      });
+      const error: any = new Error('Server Error');
+      error.response = { status: 500 };
+      (api.initializeList as jest.Mock).mockRejectedValue(error);
+
+      const { result } = renderHook(() => useInitializeLearnerHome(), {
+        wrapper: createWrapper(),
+      });
+
+      await waitFor(() => {
+        expect(result.current.isError).toBe(true);
+      });
+
+      // 1 initial + 3 retries = 4 total calls
+      expect(api.initializeList).toHaveBeenCalledTimes(4);
     });
 
     it('should have correct query configuration for masquerading', async () => {

@@ -23,7 +23,11 @@ const useInitializeLearnerHome = () => {
       };
     },
     staleTime: 5 * 60 * 1000, // 5 minutes — dashboard data rarely changes while viewing
-    retry: false,
+    retry: (failureCount, error: any) => {
+      // Don't retry client errors (4xx) — they won't resolve on retry
+      if (error?.response?.status >= 400 && error?.response?.status < 500) return false;
+      return failureCount < 3;
+    },
     retryOnMount: !masqueradeUser,
     refetchOnMount: !masqueradeUser,
   });
