@@ -11,7 +11,9 @@ export const useAccessMessage = ({ cardId }) => {
   const { courseRun, enrollment } = courseData || {};
   const formatDate = utilHooks.useFormatDate();
   if (!courseRun.isStarted) {
-    if (!courseRun.startDate && !courseRun.advertisedStart) { return null; }
+    if (!courseRun.startDate && !courseRun.advertisedStart) {
+      return null;
+    }
     const startDate = courseRun.advertisedStart ? courseRun.advertisedStart : formatDate(courseRun.startDate);
     return formatMessage(messages.courseStarts, { startDate });
   }
@@ -28,7 +30,9 @@ export const useAccessMessage = ({ cardId }) => {
         { accessExpirationDate: formatDate(accessExpirationDate) },
       );
     }
-    if (!endDate) { return null; }
+    if (!endDate) {
+      return null;
+    }
     return formatMessage(
       isArchived ? messages.courseEnded : messages.courseEnds,
       { endDate: formatDate(endDate) },

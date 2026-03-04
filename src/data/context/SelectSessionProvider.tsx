@@ -4,23 +4,23 @@ import React, {
 } from 'react';
 
 interface SelectSessionModalState {
-  cardId: string | null;
+  cardId: string | null,
 }
 
 interface SelectSessionModalContextType {
-  selectSessionModal: SelectSessionModalState;
-  updateSelectSessionModal: (cardId: string | null) => void;
-  closeSelectSessionModal: () => void;
+  selectSessionModal: SelectSessionModalState,
+  updateSelectSessionModal: (cardId: string | null) => void,
+  closeSelectSessionModal: () => void,
 }
 
 const SelectSessionModalContext = createContext<SelectSessionModalContextType | null>(null);
 
 interface State {
-  selectSessionModal: SelectSessionModalState;
+  selectSessionModal: SelectSessionModalState,
 }
 
 type Action =
-  | { type: 'UPDATE_SELECT_SESSION_MODAL'; payload: string | null }
+  | { type: 'UPDATE_SELECT_SESSION_MODAL', payload: string | null }
   | { type: 'CLOSE_SELECT_SESSION_MODAL' };
 
 const initialState: State = {
@@ -46,7 +46,7 @@ const selectSessionModalReducer = (state: State, action: Action): State => {
 };
 
 interface SelectSessionModalProviderProps {
-  children: ReactNode;
+  children: ReactNode,
 }
 
 export const SelectSessionModalProvider: React.FC<SelectSessionModalProviderProps> = ({ children }) => {

@@ -39,7 +39,9 @@ export const useCreditBannerData = (cardId) => {
       requestStatus: creditData.requestStatus,
     };
   }, [courseData]);
-  if (!credit.isEligible || !courseData?.credit?.isEligible) { return null; }
+  if (!credit.isEligible || !courseData?.credit?.isEligible) {
+    return null;
+  }
 
   const { error, purchased, requestStatus } = credit;
   let ContentComponent = EligibleContent;

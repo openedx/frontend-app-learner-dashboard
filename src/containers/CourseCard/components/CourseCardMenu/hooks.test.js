@@ -69,7 +69,9 @@ describe('CourseCardMenu hooks', () => {
   });
 
   describe('useHandleToggleDropdown', () => {
-    beforeEach(() => { out = hooks.useHandleToggleDropdown(cardId); });
+    beforeEach(() => {
+      out = hooks.useHandleToggleDropdown(cardId);
+    });
     describe('behavior', () => {
       it('initializes course event tracker with event name and card ID', () => {
         expect(useCourseTrackingEvent).toHaveBeenCalledWith(

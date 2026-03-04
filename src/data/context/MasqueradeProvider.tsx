@@ -4,21 +4,23 @@ import React, {
 } from 'react';
 
 interface MasqueradeContextType {
-  masqueradeUser: string | undefined;
-  setMasqueradeUser: (user: string | undefined) => void;
+  masqueradeUser: string | undefined,
+  setMasqueradeUser: (user: string | undefined) => void,
 }
 
 const MasqueradeContext = createContext<MasqueradeContextType | null>(null);
 
 interface MasqueradeState {
-  masqueradeUser: string | undefined;
+  masqueradeUser: string | undefined,
 }
 
 const initialState: MasqueradeState = {
   masqueradeUser: undefined,
 };
 
-type MasqueradeAction = { type: 'SET_MASQUERADE_USER'; payload: string | undefined };
+interface MasqueradeAction {
+  type: 'SET_MASQUERADE_USER', payload: string | undefined,
+}
 
 const masqueradeReducer = (state: MasqueradeState, action: MasqueradeAction): MasqueradeState => {
   switch (action.type) {
@@ -34,7 +36,7 @@ const masqueradeReducer = (state: MasqueradeState, action: MasqueradeAction): Ma
 };
 
 interface MasqueradeProviderProps {
-  children: ReactNode;
+  children: ReactNode,
 }
 
 export const MasqueradeProvider: React.FC<MasqueradeProviderProps> = ({ children }) => {

@@ -6,23 +6,23 @@ import React, {
 type SortOption = 'enrolled' | 'title';
 
 interface FiltersContextType {
-  filters: string[];
-  sortBy: SortOption;
-  pageNumber: number;
-  setFilters: (newFilters: string[]) => void;
-  addFilter: (filter: string) => void;
-  removeFilter: (filter: string) => void;
-  clearFilters: () => void;
-  setSortBy: (sortBy: SortOption) => void;
-  setPageNumber: (pageNumber: number) => void;
+  filters: string[],
+  sortBy: SortOption,
+  pageNumber: number,
+  setFilters: (newFilters: string[]) => void,
+  addFilter: (filter: string) => void,
+  removeFilter: (filter: string) => void,
+  clearFilters: () => void,
+  setSortBy: (sortBy: SortOption) => void,
+  setPageNumber: (pageNumber: number) => void,
 }
 
 const FiltersContext = createContext<FiltersContextType | null>(null);
 
 interface FiltersState {
-  filters: string[];
-  sortBy: SortOption;
-  pageNumber: number;
+  filters: string[],
+  sortBy: SortOption,
+  pageNumber: number,
 }
 
 const initialState: FiltersState = {
@@ -32,12 +32,12 @@ const initialState: FiltersState = {
 };
 
 type FiltersAction =
-  | { type: 'SET_FILTERS'; payload: string[] }
-  | { type: 'ADD_FILTER'; payload: string }
-  | { type: 'REMOVE_FILTER'; payload: string }
+  | { type: 'SET_FILTERS', payload: string[] }
+  | { type: 'ADD_FILTER', payload: string }
+  | { type: 'REMOVE_FILTER', payload: string }
   | { type: 'CLEAR_FILTERS' }
-  | { type: 'SET_SORT_BY'; payload: SortOption }
-  | { type: 'SET_PAGE_NUMBER'; payload: number };
+  | { type: 'SET_SORT_BY', payload: SortOption }
+  | { type: 'SET_PAGE_NUMBER', payload: number };
 
 const filtersReducer = (state: FiltersState, action: FiltersAction): FiltersState => {
   switch (action.type) {

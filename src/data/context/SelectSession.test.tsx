@@ -3,8 +3,7 @@ import { renderHook, act } from '@testing-library/react';
 import { SelectSessionModalProvider, useSelectSessionModal } from './SelectSessionProvider';
 
 describe('SelectSessionModalProvider and useSelectSessionModal', () => {
-  // eslint-disable-next-line func-names
-  const createWrapper = () => function ({ children }: { children: React.ReactNode }) {
+  const createWrapper = () => function Wrapper({ children }: { children: React.ReactNode }) {
     return <SelectSessionModalProvider>{children}</SelectSessionModalProvider>;
   };
 
@@ -380,7 +379,7 @@ describe('SelectSessionModalProvider and useSelectSessionModal', () => {
     });
 
     it('should handle provider re-renders without losing state', () => {
-      const TestWrapper = ({ rerenderTrigger, children }: { rerenderTrigger: number; children: React.ReactNode }) => (
+      const TestWrapper = ({ rerenderTrigger, children }: { rerenderTrigger: number, children: React.ReactNode }) => (
         <SelectSessionModalProvider>
           <div data-testid={`rerender-${rerenderTrigger}`}>
             {children}
@@ -596,8 +595,8 @@ describe('SelectSessionModalProvider and useSelectSessionModal', () => {
         wrapper: createWrapper(),
       });
 
-      const stringCardId: string = 'typed-card-123';
-      const nullCardId: null = null;
+      const stringCardId = 'typed-card-123';
+      const nullCardId = null;
 
       act(() => {
         result.current.updateSelectSessionModal(stringCardId);
