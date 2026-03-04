@@ -8,7 +8,7 @@ import {
   updateEmailSettings,
   updateEntitlementEnrollment,
 } from '@src/data/services/lms/api';
-import { learnerDashboardQueryKeys } from './queryKeys';
+import { learnerDashboardQueryKeys, learnerDashboardMutationKeys } from './queryKeys';
 
 interface UpdateEntitlementProps {
   uuid: string,
@@ -35,7 +35,7 @@ const useUnenrollFromCourse = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationKey: learnerDashboardQueryKeys.unenrollFromCourse(),
+    mutationKey: learnerDashboardMutationKeys.unenrollFromCourse(),
     mutationFn: ({ courseId }: { courseId: string }) => unenrollFromCourse({ courseId }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: learnerDashboardQueryKeys.initializeBase() });
@@ -50,7 +50,7 @@ const useUpdateEntitlementEnrollment = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationKey: learnerDashboardQueryKeys.updateEntitlementEnrollment(),
+    mutationKey: learnerDashboardMutationKeys.updateEntitlementEnrollment(),
     mutationFn: ({ uuid, courseId }: UpdateEntitlementProps) => updateEntitlementEnrollment({ uuid, courseId }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: learnerDashboardQueryKeys.initializeBase() });
@@ -65,7 +65,7 @@ const useDeleteEntitlementEnrollment = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationKey: learnerDashboardQueryKeys.deleteEntitlementEnrollment(),
+    mutationKey: learnerDashboardMutationKeys.deleteEntitlementEnrollment(),
     mutationFn: (params: DeleteEntitlementParams) => deleteEntitlementEnrollment(params),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: learnerDashboardQueryKeys.initializeBase() });
@@ -80,7 +80,7 @@ const useUpdateEmailSettings = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationKey: learnerDashboardQueryKeys.updateEmailSettings(),
+    mutationKey: learnerDashboardMutationKeys.updateEmailSettings(),
     mutationFn: ({ courseId, enable }: UpdateEmailSettingsParams) => updateEmailSettings({ courseId, enable }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: learnerDashboardQueryKeys.initializeBase() });
@@ -95,7 +95,7 @@ const useCreateCreditRequest = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationKey: learnerDashboardQueryKeys.createCreditRequest(),
+    mutationKey: learnerDashboardMutationKeys.createCreditRequest(),
     mutationFn: (props: CreditParams) => createCreditRequest(props),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: learnerDashboardQueryKeys.initializeBase() });
@@ -110,7 +110,7 @@ const useSendConfirmEmail = (sendEmailUrl: string) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationKey: learnerDashboardQueryKeys.sendConfirmEmail(sendEmailUrl),
+    mutationKey: learnerDashboardMutationKeys.sendConfirmEmail(sendEmailUrl),
     mutationFn: () => sendConfirmEmail(sendEmailUrl),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: learnerDashboardQueryKeys.initializeBase() });
