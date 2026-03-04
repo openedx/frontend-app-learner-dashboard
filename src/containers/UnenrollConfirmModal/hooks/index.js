@@ -2,7 +2,6 @@ import React from 'react';
 
 import { StrictDict } from '@src/utils';
 
-import { useInitializeLearnerHome } from '@src/data/hooks';
 import { useUnenrollReasons } from './reasons';
 import * as module from '.';
 
@@ -20,7 +19,6 @@ export const useUnenrollData = ({ closeModal, cardId }) => {
   const [isConfirmed, setIsConfirmed] = module.state.confirmed(false);
   const confirm = () => setIsConfirmed(true);
   const reason = useUnenrollReasons({ cardId });
-  const { refetch: refreshList } = useInitializeLearnerHome();
 
   let modalState;
   if (isConfirmed) {
@@ -35,17 +33,13 @@ export const useUnenrollData = ({ closeModal, cardId }) => {
     setIsConfirmed(false);
     reason.handleClear();
   };
-  const closeAndRefresh = () => {
-    refreshList();
-    close();
-  };
 
   return {
     isConfirmed,
     confirm,
     reason,
     close,
-    closeAndRefresh,
+    closeAndRefresh: close,
     modalState,
   };
 };
