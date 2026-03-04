@@ -1,4 +1,4 @@
-import { EnvironmentTypes, SiteConfig } from '@openedx/frontend-base';
+import type { SiteConfig } from '@openedx/frontend-base';
 
 import { appId } from './src/constants';
 
@@ -10,7 +10,9 @@ const siteConfig: SiteConfig = {
   loginUrl: 'http://localhost:8000/login',
   logoutUrl: 'http://localhost:8000/logout',
 
-  environment: EnvironmentTypes.TEST,
+  // Use 'test' instead of EnvironmentTypes.TEST to break a circular dependency
+  // when mocking `@openedx/frontend-base` itself.
+  environment: 'test' as SiteConfig['environment'],
   apps: [{
     appId,
     config: {
