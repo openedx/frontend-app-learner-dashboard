@@ -33,7 +33,9 @@ export const useHandleToggleDropdown = (cardId) => {
     cardId,
   );
   return (isOpen) => {
-    if (isOpen) { trackCourseEvent(); }
+    if (isOpen) {
+      trackCourseEvent();
+    }
   };
 };
 

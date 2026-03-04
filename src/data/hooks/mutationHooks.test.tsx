@@ -35,8 +35,7 @@ const createWrapper = () => {
     },
   });
 
-  // eslint-disable-next-line func-names
-  return function ({ children }: { children: React.ReactNode }) {
+  return function Wrapper({ children }: { children: React.ReactNode }) {
     return (
       <QueryClientProvider client={queryClient}>
         {children}
@@ -332,12 +331,10 @@ describe('mutationHooks', () => {
 
       for (const { hook, params, arg } of hooks) {
         invalidateQueriesSpy.mockClear();
-        // ts-ignore to handle varying params
-        // @ts-ignore
+        // @ts-expect-error handle varying params
         const { result } = renderHook(() => (arg ? hook(arg) : hook()), { wrapper });
 
-        // @ts-ignore
-        // eslint-disable-next-line no-await-in-loop
+        // @ts-expect-error handle varying mutateAsync params
         await result.current.mutateAsync(params);
 
         expect(invalidateQueriesSpy).toHaveBeenCalledWith({

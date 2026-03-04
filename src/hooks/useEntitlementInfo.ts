@@ -12,8 +12,8 @@ const useEntitlementInfo = (courseData) => useMemo(() => {
   const deadlinePassed = deadline < today;
   const showExpirationWarning = (
     !entitlement.isFulfilled
-        && !deadlinePassed
-        && deadline <= dateSixMonthsFromNow
+    && !deadlinePassed
+    && deadline <= dateSixMonthsFromNow
   );
   return {
     isEntitlement: true,

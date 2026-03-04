@@ -41,8 +41,7 @@ const createWrapper = () => {
     },
   });
 
-  // eslint-disable-next-line func-names
-  return function ({ children }: { children: React.ReactNode }) {
+  return function Wrapper({ children }: { children: React.ReactNode }) {
     return (
       <QueryClientProvider client={queryClient}>
         {children}
