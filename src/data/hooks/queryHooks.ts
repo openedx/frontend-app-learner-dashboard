@@ -5,6 +5,7 @@ import GlobalDataContext from '@src/data/contexts/GlobalDataContext';
 import {
   initializeList,
 } from '@src/data/services/lms/api';
+import { getTransformedCourseDataObject } from '@src/utils/dataTransformers';
 import { learnerDashboardQueryKeys } from './queryKeys';
 
 const useInitializeLearnerHome = () => {
@@ -14,7 +15,13 @@ const useInitializeLearnerHome = () => {
 
   const query = useQuery({
     queryKey: learnerDashboardQueryKeys.initialize(masqueradeUser),
-    queryFn: async () => initializeList(masqueradeUser),
+    queryFn: async () => {
+      const data = await initializeList(masqueradeUser);
+      return {
+        ...data,
+        coursesByCardId: getTransformedCourseDataObject(data?.courses || []),
+      };
+    },
     staleTime: 5 * 60 * 1000, // 5 minutes — dashboard data rarely changes while viewing
     retry: false,
     retryOnMount: !masqueradeUser,

@@ -13,6 +13,13 @@ jest.mock('@openedx/frontend-base', () => ({
 }));
 jest.mock('@src/data/context');
 jest.mock('@src/data/services/lms/api');
+jest.mock('@src/utils/dataTransformers', () => ({
+  getTransformedCourseDataObject: jest.fn((courses) => {
+    const result = {};
+    (courses || []).forEach((c, i) => { result[`card-${i}`] = { ...c, cardId: `card-${i}` }; });
+    return result;
+  }),
+}));
 jest.mock('@src/data/contexts/GlobalDataContext', () => {
   const { createContext } = jest.requireActual('react');
   return {
@@ -85,7 +92,8 @@ describe('queryHooks', () => {
       });
 
       expect(api.initializeList).toHaveBeenCalledWith(masqueradeUser);
-      expect(result.current.data).toEqual(mockQueryData);
+      expect(result.current.data).toMatchObject(mockQueryData);
+      expect(result.current.data).toHaveProperty('coursesByCardId');
       expect(mockSetBackUpData).not.toHaveBeenCalled();
     });
 
