@@ -1,9 +1,10 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { useMasquerade, useBackedData } from '@src/data/context';
+import { useMasquerade } from '@src/data/context';
 import {
   useInitializeLearnerHome,
 } from './index';
+import { learnerDashboardQueryKeys } from './queryKeys';
 import * as api from '../services/lms/api';
 
 // Mock external dependencies
@@ -32,11 +33,10 @@ jest.mock('@src/data/contexts/GlobalDataContext', () => {
 });
 
 const mockUseMasquerade = useMasquerade as jest.MockedFunction<typeof useMasquerade>;
-const mockUseBackedData = useBackedData as jest.MockedFunction<typeof useBackedData>;
 
 // Create a test wrapper with QueryClient
-const createWrapper = () => {
-  const queryClient = new QueryClient({
+const createWrapper = (queryClient?: QueryClient) => {
+  const client = queryClient || new QueryClient({
     defaultOptions: {
       queries: {
         retry: false,
@@ -50,7 +50,7 @@ const createWrapper = () => {
 
   return function Wrapper({ children }: { children: React.ReactNode }) {
     return (
-      <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={client}>
         {children}
       </QueryClientProvider>
     );
@@ -62,16 +62,8 @@ describe('queryHooks', () => {
     jest.clearAllMocks();
   });
   describe('useInitializeLearnerHome', () => {
-    const mockBackupData = { courses: ['backup-course'], user: 'backup-user' };
     const mockQueryData = { courses: ['query-course'], user: 'query-user' };
-    const mockSetBackUpData = jest.fn();
-
-    beforeEach(() => {
-      mockUseBackedData.mockReturnValue({
-        backUpData: mockBackupData,
-        setBackUpData: mockSetBackUpData,
-      });
-    });
+    const mockNormalUserData = { courses: ['normal-course'], user: 'normal-user', coursesByCardId: {} };
 
     it('should use query data when masquerading and query succeeds', async () => {
       const masqueradeUser = 'test-user';
@@ -94,10 +86,9 @@ describe('queryHooks', () => {
       expect(api.initializeList).toHaveBeenCalledWith(masqueradeUser);
       expect(result.current.data).toMatchObject(mockQueryData);
       expect(result.current.data).toHaveProperty('coursesByCardId');
-      expect(mockSetBackUpData).not.toHaveBeenCalled();
     });
 
-    it('should use backup data when masquerading and query fails', async () => {
+    it('should fall back to cached normal-user data when masquerading fails', async () => {
       const masqueradeUser = 'test-user';
       mockUseMasquerade.mockReturnValue({
         masqueradeUser,
@@ -107,8 +98,18 @@ describe('queryHooks', () => {
       });
       (api.initializeList as jest.Mock).mockRejectedValue(new Error('API Error'));
 
+      // Don't use gcTime: 0 here — we need the seeded cache entry to persist
+      // for the fallback lookup via queryClient.getQueryData()
+      const queryClient = new QueryClient({
+        defaultOptions: { queries: { retry: false }, mutations: { retry: false } },
+      });
+      queryClient.setQueryData(
+        learnerDashboardQueryKeys.initialize(undefined),
+        mockNormalUserData,
+      );
+
       const { result } = renderHook(() => useInitializeLearnerHome(), {
-        wrapper: createWrapper(),
+        wrapper: createWrapper(queryClient),
       });
 
       await waitFor(() => {
@@ -116,27 +117,7 @@ describe('queryHooks', () => {
       });
 
       expect(api.initializeList).toHaveBeenCalledWith(masqueradeUser);
-      expect(result.current.data).toEqual(mockBackupData);
-      expect(mockSetBackUpData).not.toHaveBeenCalled();
-    });
-
-    it('should not set backup data when masquerading', async () => {
-      const masqueradeUser = 'test-user';
-      mockUseMasquerade.mockReturnValue({
-        masqueradeUser,
-        setMasqueradeUser(): void {
-          throw new Error('Function not implemented.');
-        },
-      });
-      (api.initializeList as jest.Mock).mockResolvedValue(mockQueryData);
-
-      renderHook(() => useInitializeLearnerHome(), {
-        wrapper: createWrapper(),
-      });
-
-      await waitFor(() => {
-        expect(mockSetBackUpData).not.toHaveBeenCalled();
-      });
+      expect(result.current.data).toEqual(mockNormalUserData);
     });
 
     it('should have correct query configuration for masquerading', async () => {

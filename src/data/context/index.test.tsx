@@ -1,18 +1,14 @@
 import { render, screen } from '@testing-library/react';
 import ContextProviders from './index';
-import { BackedDataProvider } from './BackedDataProvider';
-import { useBackedData } from './BackedDataProvider';
 import { useFilters } from './FiltersProvider';
 import { useSelectSessionModal } from './SelectSessionProvider';
 
 const TestComponent = () => {
-  const backedData = useBackedData();
   const filters = useFilters();
   const selectSessionModal = useSelectSessionModal();
 
   return (
     <div>
-      <div>{backedData ? 'BackedData Available' : 'BackedData Not Available'}</div>
       <div>{filters ? 'Filters Available' : 'Filters Not Available'}</div>
       <div>{selectSessionModal ? 'SelectSession Available' : 'SelectSession Not Available'}</div>
     </div>
@@ -32,14 +28,11 @@ describe('ContextProviders', () => {
 
   it('should provide all context providers to children', () => {
     render(
-      <BackedDataProvider>
-        <ContextProviders>
-          <TestComponent />
-        </ContextProviders>
-      </BackedDataProvider>,
+      <ContextProviders>
+        <TestComponent />
+      </ContextProviders>,
     );
 
-    expect(screen.getByText('BackedData Available')).toBeInTheDocument();
     expect(screen.getByText('Filters Available')).toBeInTheDocument();
     expect(screen.getByText('SelectSession Available')).toBeInTheDocument();
   });
