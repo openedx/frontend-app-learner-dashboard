@@ -4,18 +4,18 @@ import PropTypes from 'prop-types';
 import { Program } from '@openedx/paragon/icons';
 import { useIntl } from '@openedx/frontend-base';
 
-import { reduxHooks } from '../../../../../hooks';
-import Banner from '../../../../../components/Banner';
+import { useCourseData } from '@src/hooks';
+import Banner from '@src/components/Banner';
 
 import ProgramList from './ProgramsList';
 import messages from './messages';
 
 export const RelatedProgramsBanner = ({ cardId }) => {
   const { formatMessage } = useIntl();
+  const courseData = useCourseData(cardId);
+  const programData = courseData?.programs;
 
-  const programData = reduxHooks.useCardRelatedProgramsData(cardId);
-
-  if (!programData?.length) {
+  if (!courseData || !programData?.relatedPrograms.length) {
     return null;
   }
 
@@ -27,7 +27,7 @@ export const RelatedProgramsBanner = ({ cardId }) => {
       <span className="font-weight-bolder">
         {formatMessage(messages.relatedPrograms)}
       </span>
-      <ProgramList programs={programData.list} />
+      <ProgramList programs={programData.relatedPrograms} />
     </Banner>
   );
 };

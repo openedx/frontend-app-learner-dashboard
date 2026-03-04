@@ -1,16 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { reduxHooks } from '../../../../hooks';
-import CourseBannerSlot from '../../../../slots/CourseBannerSlot';
+import { useCourseData } from '@src/hooks';
 
+import CourseBannerSlot from '@src/slots/CourseBannerSlot';
 import CertificateBanner from './CertificateBanner';
 import CreditBanner from './CreditBanner';
 import EntitlementBanner from './EntitlementBanner';
 import RelatedProgramsBanner from './RelatedProgramsBanner';
 
 export const CourseCardBanners = ({ cardId }) => {
-  const { isEnrolled } = reduxHooks.useCardEnrollmentData(cardId);
+  const courseData = useCourseData(cardId);
+  if (!courseData) {
+    return null;
+  }
+  const { isEnrolled = false } = courseData.enrollment;
   return (
     <div className="course-card-banners" data-testid="CourseCardBanners">
       <RelatedProgramsBanner cardId={cardId} />

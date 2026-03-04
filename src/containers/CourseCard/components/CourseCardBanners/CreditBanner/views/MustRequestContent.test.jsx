@@ -1,9 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { IntlProvider } from '@openedx/frontend-base';
 import userEvent from '@testing-library/user-event';
-
-import { reduxHooks } from '@src/hooks';
-import MasqueradeUserContext from '@src/data/contexts/MasqueradeUserContext';
+import { useCourseData, useIsMasquerading } from '@src/hooks';
 import messages from './messages';
 import hooks from './hooks';
 import MustRequestContent from './MustRequestContent';
@@ -13,9 +11,8 @@ jest.mock('./hooks', () => ({
 }));
 
 jest.mock('@src/hooks', () => ({
-  reduxHooks: {
-    useCardCreditData: jest.fn(),
-  },
+  useCourseData: jest.fn(),
+  useIsMasquerading: jest.fn(),
 }));
 
 const cardId = 'test-card-id';
@@ -31,11 +28,9 @@ const providerName = 'test-credit-provider-name';
 const providerStatusUrl = 'test-credit-provider-status-url';
 const createCreditRequest = jest.fn().mockName('createCreditRequest');
 
-const renderMustRequestContent = (isMasquerading = false) => render(
+const renderMustRequestContent = () => render(
   <IntlProvider locale="en" messages={messages}>
-    <MasqueradeUserContext.Provider value={{ isMasquerading }}>
-      <MustRequestContent cardId={cardId} />
-    </MasqueradeUserContext.Provider>
+    <MustRequestContent cardId={cardId} />
   </IntlProvider>,
 );
 
@@ -46,9 +41,12 @@ describe('MustRequestContent component', () => {
       requestData,
       createCreditRequest,
     });
-    reduxHooks.useCardCreditData.mockReturnValue({
-      providerName,
-      providerStatusUrl,
+    useIsMasquerading.mockReturnValue(false);
+    useCourseData.mockReturnValue({
+      credit: {
+        providerName,
+        providerStatusUrl,
+      },
     });
   });
 
@@ -91,13 +89,14 @@ describe('MustRequestContent component', () => {
 
     describe('when masquerading', () => {
       beforeEach(() => {
-        renderMustRequestContent(true);
+        useIsMasquerading.mockReturnValue(true);
+        renderMustRequestContent();
       });
 
       it('disables the request credit button', () => {
         const button = screen.getByRole('button', { name: /request credit/i });
-        expect(button).toHaveAttribute('aria-disabled', 'true');
         expect(button).toHaveClass('disabled');
+        expect(button).toHaveAttribute('aria-disabled', 'true');
       });
     });
   });

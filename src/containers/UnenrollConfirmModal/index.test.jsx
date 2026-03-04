@@ -2,8 +2,8 @@ import { render, screen } from '@testing-library/react';
 import { formatMessage } from '@src/testUtils';
 
 import { IntlProvider } from '@openedx/frontend-base';
+import { useInitializeLearnerHome } from '@src/data/hooks';
 import { UnenrollConfirmModal } from '.';
-
 import * as hooks from './hooks';
 import messages from './components/messages';
 
@@ -12,6 +12,13 @@ jest.mock('./hooks', () => ({
   modalStates: jest.requireActual('./hooks').modalStates,
   useUnenrollData: jest.fn(),
 }));
+
+jest.mock('@src/data/hooks', () => ({
+  useInitializeLearnerHome: jest.fn(),
+}));
+
+const mockRefreshList = jest.fn();
+useInitializeLearnerHome.mockReturnValue({ refetch: mockRefreshList });
 
 describe('UnenrollConfirmModal component', () => {
   const hookProps = {

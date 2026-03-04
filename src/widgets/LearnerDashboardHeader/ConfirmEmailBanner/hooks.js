@@ -1,25 +1,25 @@
-import { useContext, useState } from 'react';
+import React from 'react';
 
-import GlobalDataContext from '../../../data/contexts/GlobalDataContext';
 import { StrictDict } from '../../../utils';
-import { apiHooks } from '../../../hooks';
+import { useInitializeLearnerHome, useSendConfirmEmail } from '@src/data/hooks';
 
 import * as module from './hooks';
 
 export const state = StrictDict({
-  showPageBanner: (val) => useState(val), // eslint-disable-line
-  showConfirmModal: (val) => useState(val), // eslint-disable-line
+  showPageBanner: (val) => React.useState(val), // eslint-disable-line
+  showConfirmModal: (val) => React.useState(val), // eslint-disable-line
 });
 
 export const useConfirmEmailBannerData = () => {
-  const { emailConfirmation } = useContext(GlobalDataContext);
-  const { isNeeded } = emailConfirmation;
+  const { data: learnerData } = useInitializeLearnerHome();
+  const isNeeded = learnerData?.emailConfirmation?.isNeeded || false;
+  const sendEmailUrl = learnerData?.emailConfirmation?.sendEmailUrl || '';
+  const { mutate: sendConfirmEmail } = useSendConfirmEmail(sendEmailUrl);
   const [showPageBanner, setShowPageBanner] = module.state.showPageBanner(isNeeded);
   const [showConfirmModal, setShowConfirmModal] = module.state.showConfirmModal(false);
   const closePageBanner = () => setShowPageBanner(false);
   const closeConfirmModal = () => setShowConfirmModal(false);
   const openConfirmModal = () => setShowConfirmModal(true);
-  const sendConfirmEmail = apiHooks.useSendConfirmEmail();
 
   const openConfirmModalButtonClick = () => {
     sendConfirmEmail();

@@ -1,5 +1,8 @@
-import { StrictDict } from '../../../../../utils';
-import { reduxHooks } from '../../../../../hooks';
+import { useMemo } from 'react';
+import { useInitializeLearnerHome } from '@src/data/hooks';
+import { StrictDict } from '@src/utils';
+
+import { useCourseData } from '@src/hooks';
 
 import ApprovedContent from './views/ApprovedContent';
 import EligibleContent from './views/EligibleContent';
@@ -14,11 +17,29 @@ export const statusComponents = StrictDict({
 });
 
 export const useCreditBannerData = (cardId) => {
-  const credit = reduxHooks.useCardCreditData(cardId);
-  const { supportEmail } = reduxHooks.usePlatformSettingsData();
-  if (!credit.isEligible) {
-    return null;
-  }
+  const courseData = useCourseData(cardId);
+  const { data: learnerHomeData } = useInitializeLearnerHome();
+  const supportEmail = useMemo(
+    () => (learnerHomeData?.platformSettings?.supportEmail),
+    [learnerHomeData],
+  );
+
+  const credit = useMemo(() => {
+    const creditData = courseData?.credit;
+    if (!creditData || Object.keys(creditData).length === 0) {
+      return { isEligible: false };
+    }
+    return {
+      isEligible: true,
+      providerStatusUrl: creditData.providerStatusUrl,
+      providerName: creditData.providerName,
+      providerId: creditData.providerId,
+      error: creditData.error,
+      purchased: creditData.purchased,
+      requestStatus: creditData.requestStatus,
+    };
+  }, [courseData]);
+  if (!credit.isEligible || !courseData?.credit?.isEligible) { return null; }
 
   const { error, purchased, requestStatus } = credit;
   let ContentComponent = EligibleContent;
