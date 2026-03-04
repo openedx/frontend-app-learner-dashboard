@@ -17,7 +17,9 @@ jest.mock('@src/data/services/lms/api');
 jest.mock('@src/utils/dataTransformers', () => ({
   getTransformedCourseDataObject: jest.fn((courses) => {
     const result = {};
-    (courses || []).forEach((c, i) => { result[`card-${i}`] = { ...c, cardId: `card-${i}` }; });
+    (courses || []).forEach((c, i) => {
+      result[`card-${i}`] = { ...c, cardId: `card-${i}` };
+    });
     return result;
   }),
 }));
@@ -69,7 +71,9 @@ describe('queryHooks', () => {
     it('should fetch and return data with coursesByCardId for normal user', async () => {
       mockUseMasquerade.mockReturnValue({
         masqueradeUser: undefined,
-        setMasqueradeUser(): void { throw new Error('Function not implemented.'); },
+        setMasqueradeUser(): void {
+          throw new Error('Function not implemented.');
+        },
       });
       const mockApiData = {
         courses: [{ id: 'course-1' }, { id: 'course-2' }],
@@ -154,7 +158,9 @@ describe('queryHooks', () => {
     it('should not retry on 4xx errors', async () => {
       mockUseMasquerade.mockReturnValue({
         masqueradeUser: undefined,
-        setMasqueradeUser(): void { throw new Error('Function not implemented.'); },
+        setMasqueradeUser(): void {
+          throw new Error('Function not implemented.');
+        },
       });
       const error: any = new Error('Forbidden');
       error.response = { status: 403 };
@@ -175,7 +181,9 @@ describe('queryHooks', () => {
     it('should retry on 5xx errors up to 3 times', async () => {
       mockUseMasquerade.mockReturnValue({
         masqueradeUser: undefined,
-        setMasqueradeUser(): void { throw new Error('Function not implemented.'); },
+        setMasqueradeUser(): void {
+          throw new Error('Function not implemented.');
+        },
       });
       const error: any = new Error('Server Error');
       error.response = { status: 500 };
