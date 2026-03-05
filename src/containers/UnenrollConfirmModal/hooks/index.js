@@ -4,6 +4,7 @@ import { StrictDict } from 'utils';
 
 import { useInitializeLearnerHome, useUnenrollFromCourse } from 'data/hooks';
 import { configuration } from 'config';
+import { useCourseData } from 'hooks';
 import { useUnenrollReasons } from './reasons';
 import * as module from '.';
 
@@ -21,12 +22,14 @@ export const useUnenrollData = ({ closeModal, cardId }) => {
   const [isConfirmed, setIsConfirmed] = module.state.confirmed(false);
   const reason = useUnenrollReasons({ cardId });
   const { refetch: refreshList } = useInitializeLearnerHome();
+  const courseData = useCourseData(cardId);
+  const courseId = courseData?.courseRun?.courseId;
 
-  const unenrollFromCourse = useUnenrollFromCourse(cardId);
+  const { mutate: unenrollFromCourse } = useUnenrollFromCourse();
 
   const confirm = () => {
     if (!configuration.SHOW_UNENROLL_SURVEY) {
-      unenrollFromCourse();
+      unenrollFromCourse({ courseId });
     }
     setIsConfirmed(true);
   };

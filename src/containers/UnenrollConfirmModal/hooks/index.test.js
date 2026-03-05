@@ -2,6 +2,7 @@ import { MockUseState } from 'testUtils';
 import { configuration } from 'config';
 
 import { useInitializeLearnerHome, useUnenrollFromCourse } from 'data/hooks';
+import { useCourseData } from 'hooks';
 
 import * as reasons from './reasons';
 import * as hooks from '.';
@@ -15,6 +16,10 @@ jest.mock('data/hooks', () => ({
   useUnenrollFromCourse: jest.fn(),
 }));
 
+jest.mock('hooks', () => ({
+  useCourseData: jest.fn(),
+}));
+
 jest.mock('config', () => ({
   configuration: {
     SHOW_UNENROLL_SURVEY: true,
@@ -26,7 +31,8 @@ const testValue = 'test-value';
 const mockRefreshList = jest.fn();
 const unenrollFromCourse = jest.fn();
 useInitializeLearnerHome.mockReturnValue({ refetch: mockRefreshList });
-useUnenrollFromCourse.mockReturnValue(unenrollFromCourse);
+useUnenrollFromCourse.mockReturnValue({ mutate: unenrollFromCourse });
+useCourseData.mockReturnValue({ courseRun: { courseId: 'test-course-id' } });
 let out;
 
 const mockReason = {
