@@ -1,22 +1,23 @@
 import { useIntl } from '@openedx/frontend-base';
-import { utilHooks, reduxHooks } from '../../../../hooks';
+import { utilHooks, useCourseData, useEntitlementInfo } from '@src/hooks';
+import { useSelectSessionModal } from '@src/data/context';
 
 import * as hooks from './hooks';
 import messages from './messages';
 
 export const useAccessMessage = ({ cardId }) => {
   const { formatMessage } = useIntl();
-  const enrollment = reduxHooks.useCardEnrollmentData(cardId);
-  const courseRun = reduxHooks.useCardCourseRunData(cardId);
+  const courseData = useCourseData(cardId);
+  const { courseRun, enrollment } = courseData || {};
   const formatDate = utilHooks.useFormatDate();
   if (!courseRun.isStarted) {
     if (!courseRun.startDate && !courseRun.advertisedStart) {
       return null;
     }
-    const startDate = courseRun.advertisedStart ?? formatDate(courseRun.startDate);
+    const startDate = courseRun.advertisedStart ? courseRun.advertisedStart : formatDate(courseRun.startDate);
     return formatMessage(messages.courseStarts, { startDate });
   }
-  if (enrollment.isEnrolled) {
+  if (enrollment?.isEnrolled) {
     const { isArchived, endDate } = courseRun;
     const {
       accessExpirationDate,
@@ -42,23 +43,23 @@ export const useAccessMessage = ({ cardId }) => {
 
 export const useCardDetailsData = ({ cardId }) => {
   const { formatMessage } = useIntl();
-  const providerName = reduxHooks.useCardProviderData(cardId).name;
-  const { courseNumber } = reduxHooks.useCardCourseData(cardId);
+  const courseData = useCourseData(cardId);
+  const providerName = courseData?.courseProvider?.name;
+  const courseNumber = courseData?.course?.courseNumber;
   const {
     isEntitlement,
     isFulfilled,
     canChange,
-  } = reduxHooks.useCardEntitlementData(cardId);
-
-  const openSessionModal = reduxHooks.useUpdateSelectSessionModalCallback(cardId);
+  } = useEntitlementInfo(courseData);
+  const { updateSelectSessionModal } = useSelectSessionModal();
 
   return {
-    providerName: providerName ?? formatMessage(messages.unknownProviderName),
+    providerName: providerName || formatMessage(messages.unknownProviderName),
     accessMessage: hooks.useAccessMessage({ cardId }),
     isEntitlement,
     isFulfilled,
     canChange,
-    openSessionModal,
+    openSessionModal: () => updateSelectSessionModal(cardId),
     courseNumber,
     changeOrLeaveSessionMessage: formatMessage(messages.changeOrLeaveSessionButton),
   };

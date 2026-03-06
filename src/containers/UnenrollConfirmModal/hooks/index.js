@@ -1,14 +1,12 @@
-import { useState } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
+import React from 'react';
 
-import { RequestKeys } from '../../../data/constants/requests';
-import { StrictDict } from '../../../utils';
+import { StrictDict } from '@src/utils';
 
 import { useUnenrollReasons } from './reasons';
 import * as module from '.';
 
 export const state = StrictDict({
-  confirmed: (val) => useState(val), // eslint-disable-line
+  confirmed: (val) => React.useState(val), // eslint-disable-line
 });
 
 export const modalStates = StrictDict({
@@ -21,12 +19,10 @@ export const useUnenrollData = ({ closeModal, cardId }) => {
   const [isConfirmed, setIsConfirmed] = module.state.confirmed(false);
   const confirm = () => setIsConfirmed(true);
   const reason = useUnenrollReasons({ cardId });
-  const queryClient = useQueryClient();
-  const refreshList = () => queryClient.invalidateQueries({ queryKey: [RequestKeys.initialize] });
 
   let modalState;
   if (isConfirmed) {
-    modalState = (reason.isSubmitted || reason.isSkipped)
+    modalState = (reason.isSubmitted)
       ? modalStates.finished : modalStates.reason;
   } else {
     modalState = modalStates.confirm;
@@ -37,17 +33,13 @@ export const useUnenrollData = ({ closeModal, cardId }) => {
     setIsConfirmed(false);
     reason.handleClear();
   };
-  const closeAndRefresh = () => {
-    refreshList();
-    close();
-  };
 
   return {
     isConfirmed,
     confirm,
     reason,
     close,
-    closeAndRefresh,
+    closeAndRefresh: close,
     modalState,
   };
 };

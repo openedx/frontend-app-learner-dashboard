@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { useIntl } from '@openedx/frontend-base';
 
-import { StrictDict } from '../../utils';
-import track from '../../tracking';
-import { reduxHooks, apiHooks } from '../../hooks';
+import { StrictDict } from '@src/utils';
 
+import track from '@src/tracking';
+
+import { useCourseData } from '@src/hooks';
+import { useDeleteEntitlementEnrollment, useUpdateEntitlementEnrollment } from '@src/data/hooks';
+import { useSelectSessionModal } from '@src/data/context';
 import { LEAVE_OPTION } from './constants';
 import messages from './messages';
 import * as module from './hooks';
@@ -16,18 +19,28 @@ export const state = StrictDict({
 
 export const useSelectSessionModalData = () => {
   const { formatMessage } = useIntl();
-
-  const selectedCardId = reduxHooks.useSelectSessionModalData().cardId;
+  const { selectSessionModal, closeSelectSessionModal: closeSessionModal } = useSelectSessionModal();
+  const selectedCardId = selectSessionModal.cardId;
+  const courseData = useCourseData(selectedCardId);
   const {
     availableSessions,
     isFulfilled,
-  } = reduxHooks.useCardEntitlementData(selectedCardId);
-  const { title: courseTitle } = reduxHooks.useCardCourseData(selectedCardId);
-  const { courseId } = reduxHooks.useCardCourseRunData(selectedCardId) || {};
-  const { isEnrolled } = reduxHooks.useCardEnrollmentData(selectedCardId);
-  const leaveEntitlementSession = apiHooks.useLeaveEntitlementSession(selectedCardId);
-  const switchEntitlementEnrollment = apiHooks.useSwitchEntitlementEnrollment(selectedCardId);
-  const newEntitlementEnrollment = apiHooks.useNewEntitlementEnrollment(selectedCardId);
+    courseTitle,
+    courseId,
+    isEnrolled,
+    uuid,
+    isRefundable,
+  } = useMemo(() => ({
+    availableSessions: courseData?.entitlement?.availableSessions || [],
+    isFulfilled: courseData?.entitlement?.isFulfilled || false,
+    courseTitle: courseData?.course?.title || courseData?.course?.courseName || '',
+    courseId: courseData?.courseRun?.courseId || null,
+    isEnrolled: courseData?.enrollment?.isEnrolled || false,
+    uuid: courseData?.entitlement?.uuid || null,
+    isRefundable: courseData?.entitlement?.isRefundable || false,
+  }), [courseData]);
+  const { mutate: leaveEntitlement } = useDeleteEntitlementEnrollment();
+  const { mutate: switchEntitlementMutation } = useUpdateEntitlementEnrollment();
 
   const [selectedSession, setSelectedSession] = module.state.selectedSession(courseId || null);
 
@@ -40,7 +53,6 @@ export const useSelectSessionModalData = () => {
     header = formatMessage(messages.selectSessionHeader, { courseTitle });
     hint = formatMessage(messages.selectSessionHint);
   }
-  const closeSessionModal = reduxHooks.useUpdateSelectSessionModalCallback(null);
 
   const trackNewSession = track.entitlements.newSession(selectedSession);
   const trackSwitchSession = track.entitlements.switchSession(selectedCardId, selectedSession);
@@ -48,17 +60,17 @@ export const useSelectSessionModalData = () => {
 
   const handleSelection = ({ target: { value } }) => setSelectedSession(value);
   const handleSubmit = () => {
+    const onSuccess = () => closeSessionModal();
     if (selectedSession === LEAVE_OPTION) {
       trackLeaveSession();
-      leaveEntitlementSession();
+      leaveEntitlement({ uuid, isRefundable }, { onSuccess });
     } else if (isEnrolled) {
       trackSwitchSession();
-      switchEntitlementEnrollment(selectedSession);
+      switchEntitlementMutation({ uuid, courseId: selectedSession }, { onSuccess });
     } else {
       trackNewSession();
-      newEntitlementEnrollment(selectedSession);
+      switchEntitlementMutation({ uuid, courseId: selectedSession }, { onSuccess });
     }
-    closeSessionModal();
   };
 
   return {

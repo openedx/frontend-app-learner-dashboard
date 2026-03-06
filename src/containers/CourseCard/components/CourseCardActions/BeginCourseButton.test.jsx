@@ -1,22 +1,34 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { IntlProvider } from '@openedx/frontend-base';
-import { reduxHooks } from '@src/hooks';
 import track from '@src/tracking';
+import { useCourseData, useCourseTrackingEvent } from '@src/hooks';
 import useActionDisabledState from '../hooks';
 import BeginCourseButton from './BeginCourseButton';
+
+jest.mock('@src/hooks', () => ({
+  useCourseData: jest.fn().mockReturnValue({
+    enrollment: { mode: 'executive-education' },
+    courseRun: { homeUrl: 'home-url' },
+  }),
+  useCourseTrackingEvent: jest.fn().mockReturnValue({
+    trackCourseEvent: jest.fn(),
+  }),
+}));
+
+jest.mock('@src/data/hooks', () => ({
+  useInitializeLearnerHome: jest.fn().mockReturnValue({
+    data: {
+      enterpriseDashboard: {
+        authOrgId: 'test-org-id',
+      },
+    },
+  }),
+}));
 
 jest.mock('@src/tracking', () => ({
   course: {
     enterCourseClicked: jest.fn().mockName('segment.enterCourseClicked'),
-  },
-}));
-
-jest.mock('@src/hooks', () => ({
-  reduxHooks: {
-    useCardCourseRunData: jest.fn(),
-    useCardExecEdTrackingParam: jest.fn(),
-    useTrackCourseEvent: jest.fn(),
   },
 }));
 
@@ -25,12 +37,6 @@ jest.mock('../hooks', () => jest.fn(() => ({ disableBeginCourse: false })));
 jest.mock('./ActionButton/hooks', () => jest.fn(() => false));
 
 const homeUrl = 'home-url';
-reduxHooks.useCardCourseRunData.mockReturnValue({ homeUrl });
-const execEdPath = (cardId) => `exec-ed-tracking-path=${cardId}`;
-reduxHooks.useCardExecEdTrackingParam.mockImplementation(execEdPath);
-reduxHooks.useTrackCourseEvent.mockImplementation(
-  (eventName, cardId, url) => ({ trackCourseEvent: { eventName, cardId, url } }),
-);
 
 const props = {
   cardId: 'cardId',
@@ -45,11 +51,7 @@ describe('BeginCourseButton', () => {
   describe('initiliaze hooks', () => {
     it('initializes course run data with cardId', () => {
       renderComponent();
-      expect(reduxHooks.useCardCourseRunData).toHaveBeenCalledWith(props.cardId);
-    });
-    it('loads exec education path param', () => {
-      renderComponent();
-      expect(reduxHooks.useCardExecEdTrackingParam).toHaveBeenCalledWith(props.cardId);
+      expect(useCourseData).toHaveBeenCalledWith(props.cardId);
     });
     it('loads disabled states for begin action from action hooks', () => {
       renderComponent();
@@ -73,15 +75,15 @@ describe('BeginCourseButton', () => {
         expect(button).not.toHaveClass('disabled');
         expect(button).not.toHaveAttribute('aria-disabled', 'true');
       });
-      it('should track enter course clicked event on click, with exec ed param', async () => {
+      it('should track enter course clicked event on click, with exec ed param', () => {
         renderComponent();
         const user = userEvent.setup();
         const button = screen.getByRole('button', { name: 'Begin Course' });
         user.click(button);
-        expect(reduxHooks.useTrackCourseEvent).toHaveBeenCalledWith(
+        expect(useCourseTrackingEvent).toHaveBeenCalledWith(
           track.course.enterCourseClicked,
           props.cardId,
-          homeUrl + execEdPath(props.cardId),
+          `${homeUrl}?org_id=test-org-id`,
         );
       });
     });

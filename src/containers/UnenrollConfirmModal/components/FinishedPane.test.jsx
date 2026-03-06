@@ -1,12 +1,17 @@
 import { render, screen } from '@testing-library/react';
 import { formatMessage } from '@src/testUtils';
 import { IntlProvider } from '@openedx/frontend-base';
+import { useCourseData } from '@src/hooks';
 
 import { FinishedPane } from './FinishedPane';
 import messages from './messages';
 
+jest.mock('@src/hooks', () => ({
+  useCourseData: jest.fn(),
+}));
+
 const props = {
-  gaveReason: true,
+  cardId: 'cardId',
   handleClose: jest.fn().mockName('props.handleClose'),
 };
 
@@ -14,6 +19,11 @@ describe('UnenrollConfirmModal FinishedPane', () => {
   describe('gave reason', () => {
     beforeEach(() => {
       jest.clearAllMocks();
+      useCourseData.mockReturnValue({
+        course: {
+          courseName: 'Test Course',
+        },
+      });
       render(<IntlProvider locale="en"><FinishedPane {...props} /></IntlProvider>);
     });
     it('renders heading', () => {
@@ -25,22 +35,8 @@ describe('UnenrollConfirmModal FinishedPane', () => {
       expect(returnButton).toBeInTheDocument();
     });
     it('Gave reason, display thanks message', () => {
-      const thanksMsg = screen.getByText((text) => text.includes('Thank you'));
-      expect(thanksMsg).toBeInTheDocument();
-      expect(thanksMsg.innerHTML).toContain(formatMessage(messages.finishThanksText));
-    });
-  });
-  describe('Did not give reason', () => {
-    it('Does not display thanks message', () => {
-      const customProps = {
-        gaveReason: false,
-        handleClose: jest.fn().mockName('props.handleClose'),
-      };
-      render(<IntlProvider locale="en"><FinishedPane {...customProps} /></IntlProvider>);
-      const thanksMsg = screen.queryByText((text) => text.includes('Thank you'));
-      expect(thanksMsg).toBeNull();
-      const finishMsg = screen.getByText(formatMessage(messages.finishText));
-      expect(finishMsg).toBeInTheDocument();
+      const finishSuccessMessage = screen.getByText((text) => text.includes('Unenrollment Successful'));
+      expect(finishSuccessMessage).toBeInTheDocument();
     });
   });
 });
