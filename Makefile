@@ -34,13 +34,13 @@ clean:
 
 build: clean
 	tsc --project tsconfig.build.json
-	tsc-alias -p tsconfig.build.json
-	find src -type f \( -name '*.scss' -o -name '*.png' -o -name '*.svg' \) -exec sh -c '\
+	find src -type f \( -name '*.scss' -o \( \( -name '*.png' -o -name '*.svg' \) -path '*/assets/*' \) \) -exec sh -c '\
 	  for f in "$$@"; do \
 	    d="dist/$${f#src/}"; \
 	    mkdir -p "$$(dirname "$$d")"; \
 	    cp "$$f" "$$d"; \
 	  done' sh {} +
+	tsc-alias -p tsconfig.build.json
 
 i18n.extract:
 	# Pulling display strings from .jsx files into .json files...
