@@ -17,6 +17,7 @@ const app: App = {
     ECOMMERCE_BASE_URL: '',
     ORDER_HISTORY_URL: '',
     SUPPORT_URL: '',
+    SHOW_UNENROLL_SURVEY: false,
   }
 };
 

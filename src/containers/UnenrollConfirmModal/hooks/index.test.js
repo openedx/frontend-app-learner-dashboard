@@ -1,4 +1,8 @@
 import { MockUseState } from '@src/testUtils';
+import { useAppConfig } from '@openedx/frontend-base';
+
+import { useCourseData } from '@src/hooks';
+import { useUnenrollFromCourse } from '@src/data/hooks';
 
 import * as reasons from './reasons';
 import * as hooks from '.';
@@ -7,8 +11,23 @@ jest.mock('./reasons', () => ({
   useUnenrollReasons: jest.fn(),
 }));
 
+jest.mock('@src/data/hooks', () => ({
+  useUnenrollFromCourse: jest.fn(),
+}));
+
+jest.mock('@src/hooks', () => ({
+  useCourseData: jest.fn(),
+}));
+
+jest.mock('@openedx/frontend-base', () => ({
+  useAppConfig: jest.fn(),
+}));
+
 const state = new MockUseState(hooks);
 const testValue = 'test-value';
+const unenrollFromCourse = jest.fn();
+useUnenrollFromCourse.mockReturnValue({ mutate: unenrollFromCourse });
+useCourseData.mockReturnValue({ courseRun: { courseId: 'test-course-id' } });
 let out;
 
 const mockReason = {
@@ -22,6 +41,7 @@ const useUnenrollReasons = jest.fn(() => mockReason);
 describe('UnenrollConfirmModal hooks', () => {
   beforeEach(() => {
     reasons.useUnenrollReasons.mockImplementation(useUnenrollReasons);
+    useAppConfig.mockReturnValue({ SHOW_UNENROLL_SURVEY: true });
   });
   const closeModal = jest.fn();
   const cardId = 'test-card-id';
@@ -66,22 +86,67 @@ describe('UnenrollConfirmModal hooks', () => {
         expect(mockReason.handleClear).toHaveBeenCalled();
       });
     });
-    describe('modalState', () => {
-      it('returns modalStates.finished if confirmed and submitted', () => {
+  });
+
+  describe('SHOW_UNENROLL_SURVEY configuration tests', () => {
+    beforeEach(() => {
+      state.mock();
+      jest.clearAllMocks();
+    });
+    afterEach(() => {
+      state.restore();
+    });
+
+    describe('when SHOW_UNENROLL_SURVEY is true (default)', () => {
+      beforeEach(() => {
+        useAppConfig.mockReturnValue({ SHOW_UNENROLL_SURVEY: true });
+        useCourseData.mockReturnValue({ courseRun: { courseId: 'test-course-id' } });
+        useUnenrollFromCourse.mockReturnValue({ mutate: unenrollFromCourse });
+        reasons.useUnenrollReasons.mockImplementation(useUnenrollReasons);
+      });
+
+      test('confirm does not call unenrollFromCourse immediately', () => {
+        out = createUseUnenrollData();
+        out.confirm();
+        expect(unenrollFromCourse).not.toHaveBeenCalled();
+        expect(state.setState.confirmed).toHaveBeenCalledWith(true);
+      });
+
+      test('modalState returns reason when confirmed but not submitted', () => {
+        state.mockVal(state.keys.confirmed, true);
+        reasons.useUnenrollReasons.mockReturnValueOnce({ ...mockReason, isSubmitted: false });
+        out = createUseUnenrollData();
+        expect(out.modalState).toEqual(hooks.modalStates.reason);
+      });
+
+      test('modalState returns finished when confirmed and submitted', () => {
         state.mockVal(state.keys.confirmed, true);
         reasons.useUnenrollReasons.mockReturnValueOnce({ ...mockReason, isSubmitted: true });
         out = createUseUnenrollData();
         expect(out.modalState).toEqual(hooks.modalStates.finished);
       });
-      it('returns modalStates.reason if confirmed and not submitted', () => {
-        state.mockVal(state.keys.confirmed, true);
-        out = createUseUnenrollData();
-        expect(out.modalState).toEqual(hooks.modalStates.reason);
+    });
+
+    describe('when SHOW_UNENROLL_SURVEY is false', () => {
+      beforeEach(() => {
+        useAppConfig.mockReturnValue({ SHOW_UNENROLL_SURVEY: false });
+        useCourseData.mockReturnValue({ courseRun: { courseId: 'test-course-id' } });
+        useUnenrollFromCourse.mockReturnValue({ mutate: unenrollFromCourse });
+        reasons.useUnenrollReasons.mockImplementation(useUnenrollReasons);
       });
-      it('returns modalStates.confirm if not confirmed', () => {
-        state.mockVal(state.keys.confirmed, false);
+
+      test('confirm calls unenrollFromCourse immediately', () => {
         out = createUseUnenrollData();
-        expect(out.modalState).toEqual(hooks.modalStates.confirm);
+        out.confirm();
+        expect(unenrollFromCourse).toHaveBeenCalled();
+        expect(state.setState.confirmed).toHaveBeenCalledWith(true);
+      });
+
+      test('modalState returns finished when confirmed regardless of submission status', () => {
+        state.mockVal(state.keys.confirmed, true);
+        reasons.useUnenrollReasons.mockReturnValueOnce({ ...mockReason, isSubmitted: false });
+        out = createUseUnenrollData();
+        expect(out.modalState).toEqual(hooks.modalStates.finished);
       });
     });
   });
