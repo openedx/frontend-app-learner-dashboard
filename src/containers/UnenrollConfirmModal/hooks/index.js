@@ -1,6 +1,9 @@
 import React from 'react';
 
+import { useAppConfig } from '@openedx/frontend-base';
 import { StrictDict } from '@src/utils';
+import { useCourseData } from '@src/hooks';
+import { useUnenrollFromCourse } from '@src/data/hooks';
 
 import { useUnenrollReasons } from './reasons';
 import * as module from '.';
@@ -17,12 +20,23 @@ export const modalStates = StrictDict({
 
 export const useUnenrollData = ({ closeModal, cardId }) => {
   const [isConfirmed, setIsConfirmed] = module.state.confirmed(false);
-  const confirm = () => setIsConfirmed(true);
   const reason = useUnenrollReasons({ cardId });
+  const appConfig = useAppConfig();
+  const courseData = useCourseData(cardId);
+  const courseId = courseData?.courseRun?.courseId;
+
+  const { mutate: unenrollFromCourse } = useUnenrollFromCourse();
+
+  const confirm = () => {
+    if (!appConfig.SHOW_UNENROLL_SURVEY) {
+      unenrollFromCourse({ courseId });
+    }
+    setIsConfirmed(true);
+  };
 
   let modalState;
   if (isConfirmed) {
-    modalState = (reason.isSubmitted)
+    modalState = (reason.isSubmitted || !appConfig.SHOW_UNENROLL_SURVEY)
       ? modalStates.finished : modalStates.reason;
   } else {
     modalState = modalStates.confirm;
