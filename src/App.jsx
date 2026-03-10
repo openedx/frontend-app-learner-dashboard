@@ -12,7 +12,6 @@ import { Alert } from '@openedx/paragon';
 import Dashboard from 'containers/Dashboard';
 
 import AppWrapper from 'containers/AppWrapper';
-import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
 
 import { getConfig } from '@edx/frontend-platform';
 import { useInitializeLearnerHome } from 'data/hooks';
@@ -43,13 +42,14 @@ export const App = () => {
   }, []);
   return (
     <>
+    
       <Helmet>
         <title>{formatMessage(messages.pageTitle)}</title>
         <link rel="shortcut icon" href={getConfig().FAVICON_URL} type="image/x-icon" />
       </Helmet>
       <div>
         <AppWrapper>
-          <LearnerDashboardHeader />
+          {/* <LearnerDashboardHeader /> */}
           <main id="main">
             {hasNetworkFailure
               ? (
