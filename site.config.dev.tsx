@@ -13,7 +13,6 @@ const siteConfig: SiteConfig = {
   logoutUrl: 'http://local.openedx.io:8000/logout',
 
   environment: EnvironmentTypes.DEVELOPMENT,
-  basename: '/learner-dashboard',
   apps: [
     shellApp,
     headerApp,

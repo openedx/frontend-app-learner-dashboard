@@ -11,7 +11,6 @@ const siteConfig: SiteConfig = {
   logoutUrl: 'http://localhost:8000/logout',
 
   environment: EnvironmentTypes.TEST,
-  basename: '/learner-dashboard',
   apps: [{
     appId,
     config: {
