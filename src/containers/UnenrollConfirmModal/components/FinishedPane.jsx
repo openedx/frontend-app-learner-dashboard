@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { useCourseData } from '@src/hooks';
 import { useIntl } from '@openedx/frontend-base';
 import {
   ActionRow,
@@ -10,16 +10,19 @@ import {
 import messages from './messages';
 
 export const FinishedPane = ({
-  gaveReason,
+  cardId,
   handleClose,
 }) => {
   const { formatMessage } = useIntl();
+  const courseData = useCourseData(cardId);
+  const courseName = courseData?.course?.courseName || '';
+  const courseTitle = <span className="font-italic">“{courseName}”</span>;
+
   return (
     <>
       <h4>{formatMessage(messages.finishHeading)}</h4>
       <p>
-        {gaveReason && formatMessage(messages.finishThanksText)}
-        {formatMessage(messages.finishText)}
+        {formatMessage(messages.finishText, { courseTitle })}
       </p>
       <ActionRow>
         <Button onClick={handleClose}>{formatMessage(messages.finishReturn)}</Button>
@@ -29,7 +32,7 @@ export const FinishedPane = ({
 };
 FinishedPane.propTypes = {
   handleClose: PropTypes.func.isRequired,
-  gaveReason: PropTypes.bool.isRequired,
+  cardId: PropTypes.string.isRequired,
 };
 
 export default FinishedPane;

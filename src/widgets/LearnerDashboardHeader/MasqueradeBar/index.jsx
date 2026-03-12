@@ -72,7 +72,7 @@ export const MasqueradeBar = () => {
               )}
             </FormGroup>
             <StatefulButton
-              disabled={!masqueradeInput.length}
+              disabled={!masqueradeInput?.length}
               variant="brand"
               onClick={handleMasqueradeSubmit(masqueradeInput)}
               labels={{

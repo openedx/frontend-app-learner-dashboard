@@ -1,40 +1,38 @@
-import React from 'react';
-import { apiHooks } from '@src/hooks';
 import { MockUseState } from '@src/testUtils';
+import { useAppConfig } from '@openedx/frontend-base';
+
+import { useCourseData } from '@src/hooks';
+import { useUnenrollFromCourse } from '@src/data/hooks';
+
 import * as reasons from './reasons';
 import * as hooks from '.';
-import { renderHook } from '@testing-library/react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 jest.mock('./reasons', () => ({
   useUnenrollReasons: jest.fn(),
 }));
-jest.mock('../../../hooks', () => ({
-  apiHooks: {
-    useInitializeApp: jest.fn(),
-  },
+
+jest.mock('@src/data/hooks', () => ({
+  useUnenrollFromCourse: jest.fn(),
 }));
-jest.mock('@tanstack/react-query', () => ({
-  useQueryClient: () => ({
-    invalidateQueries: jest.fn(),
-  }),
-  QueryClient: jest.fn().mockImplementation(() => ({
-    invalidateQueries: jest.fn(),
-  })),
-  QueryClientProvider: ({ children }) => children,
+
+jest.mock('@src/hooks', () => ({
+  useCourseData: jest.fn(),
+}));
+
+jest.mock('@openedx/frontend-base', () => ({
+  useAppConfig: jest.fn(),
 }));
 
 const state = new MockUseState(hooks);
 const testValue = 'test-value';
-const initializeApp = jest.fn();
-apiHooks.useInitializeApp.mockReturnValue(initializeApp);
-
+const unenrollFromCourse = jest.fn();
+useUnenrollFromCourse.mockReturnValue({ mutate: unenrollFromCourse });
+useCourseData.mockReturnValue({ courseRun: { courseId: 'test-course-id' } });
 let out;
 
 const mockReason = {
   handleClear: jest.fn(),
   isSubmitted: false,
-  isSkipped: false,
   submittedReason: 'test-submitted-reason',
 };
 
@@ -43,18 +41,12 @@ const useUnenrollReasons = jest.fn(() => mockReason);
 describe('UnenrollConfirmModal hooks', () => {
   beforeEach(() => {
     reasons.useUnenrollReasons.mockImplementation(useUnenrollReasons);
+    useAppConfig.mockReturnValue({ SHOW_UNENROLL_SURVEY: true });
   });
   const closeModal = jest.fn();
   const cardId = 'test-card-id';
-  const createUseUnenrollData = () => {
-    const queryClient = new QueryClient();
-    const { result } = renderHook(() => hooks.useUnenrollData({ closeModal, cardId }), {
-      wrapper: ({ children }) => (
-        <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-      ),
-    });
-    return result.current;
-  };
+
+  const createUseUnenrollData = () => hooks.useUnenrollData({ closeModal, cardId });
 
   describe('state fields', () => {
     state.testGetter(state.keys.confirmed);
@@ -87,63 +79,75 @@ describe('UnenrollConfirmModal hooks', () => {
       });
     });
     describe('closeAndRefresh', () => {
-      beforeEach(() => {
-        apiHooks.useInitializeApp.mockClear();
-      });
       it('calls closeModal, sets isConfirmed to false, and calls reason.handleClear', () => {
         out.closeAndRefresh();
         expect(closeModal).toHaveBeenCalled();
         expect(state.setState.confirmed).toHaveBeenCalledWith(false);
         expect(mockReason.handleClear).toHaveBeenCalled();
       });
-      it('calls refreshList and close', () => {
-        const refreshList = jest.fn();
-        const close = jest.fn();
-
-        jest.spyOn(hooks, 'useUnenrollData').mockReturnValue({
-          closeAndRefresh: () => {
-            refreshList();
-            close();
-          },
-          refreshList,
-          close,
-        });
-
-        out = hooks.useUnenrollData({ closeModal, cardId });
-        out.closeAndRefresh();
-        expect(refreshList).toHaveBeenCalled();
-        expect(close).toHaveBeenCalled();
-      });
     });
   });
 
-  describe('modalState', () => {
-    // Helper function to compute modalState based on the same logic as the actual hook
-    const getModalState = (isConfirmed, reason) => {
-      if (isConfirmed) {
-        return (reason.isSubmitted || reason.isSkipped) ? 'finished' : 'reason';
-      }
-      return 'confirm';
-    };
-
-    test('should return finished when confirmed and submitted', () => {
-      const result = getModalState(true, { isSubmitted: true, isSkipped: false });
-      expect(result).toEqual('finished');
+  describe('SHOW_UNENROLL_SURVEY configuration tests', () => {
+    beforeEach(() => {
+      state.mock();
+      jest.clearAllMocks();
+    });
+    afterEach(() => {
+      state.restore();
     });
 
-    test('should return finished when confirmed and skipped', () => {
-      const result = getModalState(true, { isSubmitted: false, isSkipped: true });
-      expect(result).toEqual('finished');
+    describe('when SHOW_UNENROLL_SURVEY is true (default)', () => {
+      beforeEach(() => {
+        useAppConfig.mockReturnValue({ SHOW_UNENROLL_SURVEY: true });
+        useCourseData.mockReturnValue({ courseRun: { courseId: 'test-course-id' } });
+        useUnenrollFromCourse.mockReturnValue({ mutate: unenrollFromCourse });
+        reasons.useUnenrollReasons.mockImplementation(useUnenrollReasons);
+      });
+
+      test('confirm does not call unenrollFromCourse immediately', () => {
+        out = createUseUnenrollData();
+        out.confirm();
+        expect(unenrollFromCourse).not.toHaveBeenCalled();
+        expect(state.setState.confirmed).toHaveBeenCalledWith(true);
+      });
+
+      test('modalState returns reason when confirmed but not submitted', () => {
+        state.mockVal(state.keys.confirmed, true);
+        reasons.useUnenrollReasons.mockReturnValueOnce({ ...mockReason, isSubmitted: false });
+        out = createUseUnenrollData();
+        expect(out.modalState).toEqual(hooks.modalStates.reason);
+      });
+
+      test('modalState returns finished when confirmed and submitted', () => {
+        state.mockVal(state.keys.confirmed, true);
+        reasons.useUnenrollReasons.mockReturnValueOnce({ ...mockReason, isSubmitted: true });
+        out = createUseUnenrollData();
+        expect(out.modalState).toEqual(hooks.modalStates.finished);
+      });
     });
 
-    test('should return reason when confirmed but not submitted or skipped', () => {
-      const result = getModalState(true, { isSubmitted: false, isSkipped: false });
-      expect(result).toEqual('reason');
-    });
+    describe('when SHOW_UNENROLL_SURVEY is false', () => {
+      beforeEach(() => {
+        useAppConfig.mockReturnValue({ SHOW_UNENROLL_SURVEY: false });
+        useCourseData.mockReturnValue({ courseRun: { courseId: 'test-course-id' } });
+        useUnenrollFromCourse.mockReturnValue({ mutate: unenrollFromCourse });
+        reasons.useUnenrollReasons.mockImplementation(useUnenrollReasons);
+      });
 
-    test('should return confirm when not confirmed', () => {
-      const result = getModalState(false, { isSubmitted: false, isSkipped: false });
-      expect(result).toEqual('confirm');
+      test('confirm calls unenrollFromCourse immediately', () => {
+        out = createUseUnenrollData();
+        out.confirm();
+        expect(unenrollFromCourse).toHaveBeenCalled();
+        expect(state.setState.confirmed).toHaveBeenCalledWith(true);
+      });
+
+      test('modalState returns finished when confirmed regardless of submission status', () => {
+        state.mockVal(state.keys.confirmed, true);
+        reasons.useUnenrollReasons.mockReturnValueOnce({ ...mockReason, isSubmitted: false });
+        out = createUseUnenrollData();
+        expect(out.modalState).toEqual(hooks.modalStates.finished);
+      });
     });
   });
 });

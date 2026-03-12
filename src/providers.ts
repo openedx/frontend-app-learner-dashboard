@@ -1,11 +1,11 @@
 import { AppProvider } from '@openedx/frontend-base';
 
 import GlobalDataProvider from './data/contexts/GlobalDataProvider';
-import MasqueradeUserProvider from './data/contexts/MasqueradeUserProvider';
+import { MasqueradeProvider } from './data/context/MasqueradeProvider';
 
 const providers: AppProvider[] = [
   GlobalDataProvider,
-  MasqueradeUserProvider,
+  MasqueradeProvider,
 ];
 
 export default providers;

@@ -1,15 +1,16 @@
+import React from 'react';
 import PropTypes from 'prop-types';
-import { useContext } from 'react';
+
 import { useIntl } from '@openedx/frontend-base';
 
-import MasqueradeUserContext from '../../../../../../data/contexts/MasqueradeUserContext';
-import { reduxHooks } from '../../../../../../hooks';
+import { useCourseData, useIsMasquerading } from '@src/hooks';
 import CreditContent from './components/CreditContent';
 import messages from './messages';
 
 export const PendingContent = ({ cardId }) => {
-  const { providerStatusUrl: href, providerName } = reduxHooks.useCardCreditData(cardId);
-  const { isMasquerading } = useContext(MasqueradeUserContext);
+  const courseData = useCourseData(cardId);
+  const { providerStatusUrl: href, providerName } = courseData?.credit || {};
+  const isMasquerading = useIsMasquerading();
   const { formatMessage } = useIntl();
   return (
     <CreditContent

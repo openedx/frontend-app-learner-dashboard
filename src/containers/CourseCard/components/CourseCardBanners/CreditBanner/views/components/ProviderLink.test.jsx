@@ -1,13 +1,11 @@
 import { render, screen } from '@testing-library/react';
-import { reduxHooks } from '@src/hooks';
 import { IntlProvider } from '@openedx/frontend-base';
+import { useCourseData } from '@src/hooks';
 
 import ProviderLink from './ProviderLink';
 
 jest.mock('@src/hooks', () => ({
-  reduxHooks: {
-    useCardCreditData: jest.fn(),
-  },
+  useCourseData: jest.fn(),
 }));
 
 const cardId = 'test-card-id';
@@ -23,12 +21,12 @@ const renderProviderLink = () => render(
 describe('ProviderLink component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    reduxHooks.useCardCreditData.mockReturnValue(credit);
+    useCourseData.mockReturnValue({ credit });
     renderProviderLink();
   });
   describe('hooks', () => {
     it('initializes credit hook with cardId', () => {
-      expect(reduxHooks.useCardCreditData).toHaveBeenCalledWith(cardId);
+      expect(useCourseData).toHaveBeenCalledWith(cardId);
     });
   });
   describe('render', () => {

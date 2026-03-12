@@ -1,6 +1,7 @@
 {
   "extends": "@openedx/frontend-base/tools/tsconfig.json",
   "compilerOptions": {
+    "types": ["jest", "@testing-library/jest-dom"],
     "rootDir": ".",
     "outDir": "dist",
     "paths": {
