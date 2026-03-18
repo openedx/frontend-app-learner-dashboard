@@ -61,7 +61,7 @@ describe('Dashboard', () => {
     });
     describe('courses still loading', () => {
       it('should render LoadingView', () => {
-        createWrapper({ hasCourses: false });
+        createWrapper({ initIsPending: true });
         const loadingView = screen.getByText('LoadingView');
         expect(loadingView).toBeInTheDocument();
       });

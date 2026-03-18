@@ -61,6 +61,7 @@ describe('PendingContent component', () => {
           useIsMasquerading.mockReturnValue(true);
           renderPendingContent();
           const button = screen.getByRole('link', { name: messages.viewDetails.defaultMessage });
+          expect(button).toHaveAttribute('aria-disabled', 'true');
           expect(button).toHaveClass('disabled');
         });
       });

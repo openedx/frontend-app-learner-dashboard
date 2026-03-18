@@ -14,7 +14,7 @@ export const useAccessMessage = ({ cardId }) => {
     if (!courseRun.startDate && !courseRun.advertisedStart) {
       return null;
     }
-    const startDate = courseRun.advertisedStart ? courseRun.advertisedStart : formatDate(courseRun.startDate);
+    const startDate = courseRun.advertisedStart || formatDate(courseRun.startDate);
     return formatMessage(messages.courseStarts, { startDate });
   }
   if (enrollment?.isEnrolled) {

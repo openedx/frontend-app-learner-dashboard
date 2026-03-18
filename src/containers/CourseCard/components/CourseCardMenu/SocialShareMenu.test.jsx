@@ -115,6 +115,7 @@ describe('SocialShareMenu', () => {
           it('is disabled', () => {
             const emailSettingsButton = screen.getByRole('button', { name: messages.emailSettings.defaultMessage });
             expect(emailSettingsButton).toHaveAttribute('aria-disabled', 'true');
+            expect(emailSettingsButton).toHaveClass('disabled');
           });
         } else {
           it('is enabled', () => {

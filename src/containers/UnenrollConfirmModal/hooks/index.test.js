@@ -79,7 +79,7 @@ describe('UnenrollConfirmModal hooks', () => {
       });
     });
     describe('closeAndRefresh', () => {
-      it('calls closeModal, sets isConfirmed to false, and calls reason.handleClear', () => {
+      it('behaves the same as close', () => {
         out.closeAndRefresh();
         expect(closeModal).toHaveBeenCalled();
         expect(state.setState.confirmed).toHaveBeenCalledWith(false);
@@ -92,6 +92,9 @@ describe('UnenrollConfirmModal hooks', () => {
     beforeEach(() => {
       state.mock();
       jest.clearAllMocks();
+      useCourseData.mockReturnValue({ courseRun: { courseId: 'test-course-id' } });
+      useUnenrollFromCourse.mockReturnValue({ mutate: unenrollFromCourse });
+      reasons.useUnenrollReasons.mockImplementation(useUnenrollReasons);
     });
     afterEach(() => {
       state.restore();
@@ -100,9 +103,6 @@ describe('UnenrollConfirmModal hooks', () => {
     describe('when SHOW_UNENROLL_SURVEY is true (default)', () => {
       beforeEach(() => {
         useAppConfig.mockReturnValue({ SHOW_UNENROLL_SURVEY: true });
-        useCourseData.mockReturnValue({ courseRun: { courseId: 'test-course-id' } });
-        useUnenrollFromCourse.mockReturnValue({ mutate: unenrollFromCourse });
-        reasons.useUnenrollReasons.mockImplementation(useUnenrollReasons);
       });
 
       test('confirm does not call unenrollFromCourse immediately', () => {
@@ -130,9 +130,6 @@ describe('UnenrollConfirmModal hooks', () => {
     describe('when SHOW_UNENROLL_SURVEY is false', () => {
       beforeEach(() => {
         useAppConfig.mockReturnValue({ SHOW_UNENROLL_SURVEY: false });
-        useCourseData.mockReturnValue({ courseRun: { courseId: 'test-course-id' } });
-        useUnenrollFromCourse.mockReturnValue({ mutate: unenrollFromCourse });
-        reasons.useUnenrollReasons.mockImplementation(useUnenrollReasons);
       });
 
       test('confirm calls unenrollFromCourse immediately', () => {

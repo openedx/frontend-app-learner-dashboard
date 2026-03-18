@@ -1,9 +1,10 @@
+import type { ReactNode } from 'react';
 import { MasqueradeProvider, useMasquerade } from './MasqueradeProvider';
 import { FiltersProvider, useFilters } from './FiltersProvider';
 import { SelectSessionModalProvider, useSelectSessionModal } from './SelectSessionProvider';
 
 interface ContextProvidersProps {
-  children: React.ReactNode,
+  children: ReactNode,
 }
 
 const ContextProviders = ({ children }: ContextProvidersProps) => (
