@@ -1,9 +1,9 @@
-import React from 'react';
+import type { ReactNode } from 'react';
 import { renderHook, act } from '@testing-library/react';
 import { SelectSessionModalProvider, useSelectSessionModal } from './SelectSessionProvider';
 
 describe('SelectSessionModalProvider and useSelectSessionModal', () => {
-  const createWrapper = () => function Wrapper({ children }: { children: React.ReactNode }) {
+  const createWrapper = () => function Wrapper({ children }: { children: ReactNode }) {
     return <SelectSessionModalProvider>{children}</SelectSessionModalProvider>;
   };
 
@@ -172,7 +172,7 @@ describe('SelectSessionModalProvider and useSelectSessionModal', () => {
           wrapper: createWrapper(),
         });
 
-        const unicodeCardId = 'card-\u8282\u70b9-123';
+        const unicodeCardId = 'card-节点-123';
 
         act(() => {
           result.current.updateSelectSessionModal(unicodeCardId);
@@ -379,7 +379,7 @@ describe('SelectSessionModalProvider and useSelectSessionModal', () => {
     });
 
     it('should handle provider re-renders without losing state', () => {
-      const TestWrapper = ({ rerenderTrigger, children }: { rerenderTrigger: number, children: React.ReactNode }) => (
+      const TestWrapper = ({ rerenderTrigger, children }: { rerenderTrigger: number, children: ReactNode }) => (
         <SelectSessionModalProvider>
           <div data-testid={`rerender-${rerenderTrigger}`}>
             {children}

@@ -20,23 +20,27 @@ export const Dashboard = () => {
   const hasCourses = useMemo(() => data?.courses?.length > 0, [data]);
 
   return (
-    <div id="dashboard-container" className="d-flex flex-column p-2 pt-0">
-      <h1 className="sr-only">{pageTitle}</h1>
-      {!isPending && (
-        <>
-          <DashboardModalSlot />
-          {(hasCourses && showSelectSessionModal) && <SelectSessionModal />}
-        </>
-      )}
-      <div id="dashboard-content" data-testid="dashboard-content">
-        {isPending
-          ? (<LoadingView />)
-          : (
-            <DashboardLayout>
-              <CoursesPanel />
-            </DashboardLayout>
+    <div id="learnerdashboardroot">
+      <main>
+        <div id="dashboard-container" className="d-flex flex-column p-2 pt-0">
+          <h1 className="sr-only">{pageTitle}</h1>
+          {!isPending && (
+            <>
+              <DashboardModalSlot />
+              {(hasCourses && showSelectSessionModal) && <SelectSessionModal />}
+            </>
           )}
-      </div>
+          <div id="dashboard-content" data-testid="dashboard-content">
+            {isPending
+              ? (<LoadingView />)
+              : (
+                <DashboardLayout>
+                  <CoursesPanel />
+                </DashboardLayout>
+              )}
+          </div>
+        </div>
+      </main>
     </div>
   );
 };

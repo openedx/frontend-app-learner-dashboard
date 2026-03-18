@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import * as ReactShare from 'react-share';
 import { EXECUTIVE_EDUCATION_COURSE_MODES } from '@src/data/constants/course';

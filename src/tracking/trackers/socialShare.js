@@ -1,4 +1,4 @@
-import { logShare } from '../../data/services/lms/api';
+import { logShare } from '@src/data/services/lms/api';
 
 /**
  * Track Social Share event click.

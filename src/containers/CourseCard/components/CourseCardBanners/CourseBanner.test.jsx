@@ -50,7 +50,7 @@ const renderCourseBanner = (overrides = {}) => {
 };
 
 describe('CourseBanner', () => {
-  it('initializes data with course number from enrollment, course and course run data', () => {
+  it('calls useCourseData with the correct cardId', () => {
     renderCourseBanner();
     expect(useCourseData).toHaveBeenCalledWith(cardId);
   });
