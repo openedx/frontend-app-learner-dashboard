@@ -6,6 +6,7 @@ import { useCourseTrackingEvent, useCourseData } from 'hooks';
 import track from 'tracking';
 import useActionDisabledState from '../hooks';
 import ResumeButton from './ResumeButton';
+import { baseAppUrl } from 'data/services/lms/urls';
 
 const authOrgId = 'auth-org-id';
 jest.mock('data/hooks', () => ({
@@ -40,7 +41,7 @@ jest.mock('./ActionButton/hooks', () => jest.fn(() => false));
 
 useCourseData.mockReturnValue({
   enrollment: { mode: 'executive-education' },
-  courseRun: { resumeUrl: 'home-url' },
+  courseRun: { resumeUrl: '/resume-url' },
 });
 
 describe('ResumeButton', () => {
@@ -84,7 +85,7 @@ describe('ResumeButton', () => {
         expect(useCourseTrackingEvent).toHaveBeenCalledWith(
           track.course.enterCourseClicked,
           props.cardId,
-          `home-url?org_id=${authOrgId}`,
+          baseAppUrl(`/resume-url?org_id=${authOrgId}`),
         );
       });
     });
