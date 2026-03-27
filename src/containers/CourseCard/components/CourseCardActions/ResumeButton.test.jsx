@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { useCourseTrackingEvent, useCourseData } from 'hooks';
+import { baseAppUrl } from 'data/services/lms/urls';
 
 import track from 'tracking';
 import useActionDisabledState from '../hooks';
@@ -40,7 +41,7 @@ jest.mock('./ActionButton/hooks', () => jest.fn(() => false));
 
 useCourseData.mockReturnValue({
   enrollment: { mode: 'executive-education' },
-  courseRun: { resumeUrl: 'home-url' },
+  courseRun: { resumeUrl: '/resume-url' },
 });
 
 describe('ResumeButton', () => {
@@ -84,7 +85,7 @@ describe('ResumeButton', () => {
         expect(useCourseTrackingEvent).toHaveBeenCalledWith(
           track.course.enterCourseClicked,
           props.cardId,
-          `home-url?org_id=${authOrgId}`,
+          baseAppUrl(`/resume-url?org_id=${authOrgId}`),
         );
       });
     });

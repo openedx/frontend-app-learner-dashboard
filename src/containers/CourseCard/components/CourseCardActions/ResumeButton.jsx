@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { EXECUTIVE_EDUCATION_COURSE_MODES } from 'data/constants/course';
+import { baseAppUrl } from 'data/services/lms/urls';
 import track from 'tracking';
 import { useCourseTrackingEvent, useCourseData } from 'hooks';
 import { useInitializeLearnerHome } from 'data/hooks';
@@ -26,7 +27,7 @@ export const ResumeButton = ({ cardId }) => {
   const handleClick = useCourseTrackingEvent(
     track.course.enterCourseClicked,
     cardId,
-    resumeUrl + execEdTrackingParam,
+    baseAppUrl(resumeUrl) + execEdTrackingParam,
   );
   return (
     <ActionButton
