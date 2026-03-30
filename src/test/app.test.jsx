@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React from 'react';
-import * as redux from 'redux';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { Provider } from 'react-redux';
 import {
   act,
@@ -78,57 +78,18 @@ jest.mock('utils/hooks', () => {
   };
 });
 
-
-const configureStore = () => redux.createStore(
-  reducers,
-);
+const queryClient = new QueryClient();
 
 let el;
-let store;
-let state;
 let retryLink;
 let inspector;
 
 /**
- * Simple wrapper for updating the top-level state variable, that also returns the new value
- * @return {obj} - current redux store state
- */
-const getState = () => {
-  state = store.getState();
-  return state;
-};
-
-/**
- * Object to be filled with resolve/reject functions for all controlled network comm channels
- */
-const resolveFns = {
-};
-/**
  * Mock the api with jest functions that can be tested against.
  */
-const mockNetworkError = (reject) => () => reject(new Error({
-  response: { status: ErrorStatuses.badRequest },
-}));
-
-const mockForbiddenError = (reject) => () => reject(new Error({
-  response: { status: ErrorStatuses.forbidden },
-}));
-
-
-const allCourses = [
-  ...fakeData.courseRunData,
-  ...fakeData.entitlementData,
-];
-
-const { compileCourseRunData, compileEntitlementData } = fakeData;
-
-const initCourses = jest.fn(() => []);
-
-let initializeApp;
-
 const mockApi = () => {
   api.initializeList = jest.fn(() => new Promise(
-    (resolve, reject) => {
+    (resolve) => {
       resolveFns.init = {
         success: () => {
           const data = {
@@ -142,28 +103,24 @@ const mockApi = () => {
 };
 
 /**
- * load and configure the store, render the element, and populate the top-level state object
+ * Render the element and initialize React Query's QueryClientProvider.
  */
 const renderEl = async () => {
-  store = configureStore();
   el = await render(
     <IntlProvider locale='en' messages={messages.en}>
-      <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
         <App />
-      </Provider>
+      </QueryClientProvider>
     </IntlProvider>,
   );
-  getState();
 };
 
-const waitForEqual = async (valFn, expected, key) => waitFor(() => {
-  expect(valFn(), `${key} is expected to equal ${expected}`).toEqual(expected);
-});
-const waitForRequestStatus = (key, status) => waitForEqual(
-  () => getState().requests[key].status,
-  status,
-  key,
-);
+const waitForRequestStatus = async (key, status) => {
+  await waitFor(() => {
+    const queryState = queryClient.getQueryState(key);
+    expect(queryState?.status).toEqual(status);
+  });
+};
 
 const loadApp = async (courses) => {
   initCourses.mockReturnValue(courses.map(compileCourseRunData));
@@ -172,7 +129,7 @@ const loadApp = async (courses) => {
   await waitForRequestStatus(RequestKeys.initialize, RequestStates.pending);
   resolveFns.init.success();
   await waitForRequestStatus(RequestKeys.initialize, RequestStates.completed);
-}
+};
 
 const courseNames = [
   'course-name-1',
@@ -196,7 +153,6 @@ describe('ESG app integration tests', () => {
       'course-name-2',
     ];
     const testCourse = async (index, tests) => {
-      await getState();
       const cards = inspector.get.courseCards;
       const card = cards.at(index);
       const cardId = genCardId(index);

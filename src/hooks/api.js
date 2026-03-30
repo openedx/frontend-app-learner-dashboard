@@ -8,6 +8,7 @@ import api from 'data/services/lms/api';
 
 import * as reduxHooks from 'data/redux/hooks';
 import * as module from './api';
+import { useQuery, useMutation } from '@tanstack/react-query';
 
 const { useMakeNetworkRequest } = reduxHooks;
 
@@ -24,39 +25,52 @@ export const useNetworkRequest = (action, args) => {
  * submission list data.
  */
 export const useInitializeApp = () => {
-  const loadData = reduxHooks.useLoadData();
-  return module.useNetworkRequest(api.initializeList, {
-    requestKey: RequestKeys.initialize,
-    onSuccess: ({ data }) => loadData(data),
-  });
+  const { data, error, isLoading } = useQuery('initializeApp', () => api.initializeList());
+
+  return {
+    data,
+    error,
+    isLoading,
+  };
 };
 
 export const useNewEntitlementEnrollment = (cardId) => {
   const { uuid } = reduxHooks.useCardEntitlementData(cardId);
-  const onSuccess = module.useInitializeApp();
-  return module.useNetworkRequest(
+  const { mutate, isLoading, error } = useMutation(
     (selection) => api.updateEntitlementEnrollment({ uuid, courseId: selection }),
-    { onSuccess, requestKey: RequestKeys.newEntitlementEnrollment },
   );
+
+  return {
+    enroll: mutate,
+    isLoading,
+    error,
+  };
 };
 
 export const useSwitchEntitlementEnrollment = (cardId) => {
   const { uuid } = reduxHooks.useCardEntitlementData(cardId);
-  const onSuccess = module.useInitializeApp();
-  const action = (selection) => api.updateEntitlementEnrollment({ uuid, courseId: selection });
-  return module.useNetworkRequest(
-    action,
-    { onSuccess, requestKey: RequestKeys.switchEntitlementSession },
+  const { mutate, isLoading, error } = useMutation(
+    (selection) => api.updateEntitlementEnrollment({ uuid, courseId: selection }),
   );
+
+  return {
+    switchEnrollment: mutate,
+    isLoading,
+    error,
+  };
 };
 
 export const useLeaveEntitlementSession = (cardId) => {
   const { uuid, isRefundable } = reduxHooks.useCardEntitlementData(cardId);
-  const onSuccess = module.useInitializeApp();
-  return module.useNetworkRequest(
+  const { mutate, isLoading, error } = useMutation(
     () => api.deleteEntitlementEnrollment({ uuid, isRefundable }),
-    { onSuccess, requestKey: RequestKeys.leaveEntitlementSession },
   );
+
+  return {
+    leaveSession: mutate,
+    isLoading,
+    error,
+  };
 };
 
 export const useUnenrollFromCourse = (cardId) => {
