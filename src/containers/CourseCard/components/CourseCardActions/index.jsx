@@ -16,10 +16,17 @@ export const CourseCardActions = ({ cardId }) => {
   const hasStarted = cardData.enrollment.hasStarted || false;
   const { isEntitlement, isFulfilled } = useEntitlementInfo(cardData);
   const isArchived = cardData.courseRun.isArchived || false;
+  const completionSummary = cardData.gradeData?.completionSummary || 0;
+  const resumeUrl = cardData.courseRun?.resumeUrl || '#';
 
   return (
     <ActionRow data-test-id="CourseCardActions">
-      <CourseCardActionSlot cardId={cardId} />
+      <CourseCardActionSlot
+        cardId={cardId}
+        completionSummary={completionSummary}
+        hasStarted={hasStarted}
+        resumeUrl={resumeUrl}
+      />
       {isEntitlement && (isFulfilled
         ? <ViewCourseButton cardId={cardId} />
         : <SelectSessionButton cardId={cardId} />

@@ -22,10 +22,13 @@ describe('CourseCardActions', () => {
     isFulfilled = false,
     isArchived = false,
     hasStarted = false,
+    completionSummary = 0,
+    resumeUrl = '#',
   } = {}) => {
     useCourseData.mockReturnValueOnce({
       enrollment: { hasStarted },
-      courseRun: { isArchived },
+      courseRun: { isArchived, resumeUrl },
+      gradeData: { completionSummary },
       entitlement: isEntitlement !== null ? { isEntitlement, isFulfilled } : null,
     });
   };
