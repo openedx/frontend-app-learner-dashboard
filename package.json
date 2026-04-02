@@ -4,7 +4,7 @@
   "description": "",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/edx/frontend-app-learner-dashboard.git"
+    "url": "git+https://github.com/openedx/frontend-app-learner-dashboard.git"
   },
   "exports": {
     ".": "./dist/index.js",

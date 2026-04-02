@@ -1,0 +1,13 @@
+{
+  "branches": [
+    "placeholder",
+    { "name": "frontend-base", "prerelease": "alpha", "channel": "latest" }
+  ],
+  "tagFormat": "v${version}",
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    "@semantic-release/npm",
+    "@semantic-release/github"
+  ]
+}
