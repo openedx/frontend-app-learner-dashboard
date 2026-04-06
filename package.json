@@ -23,6 +23,12 @@
     "*.css",
     "*.scss"
   ],
+  "atlasTranslations": {
+    "path": "translations/frontend-app-learner-dashboard/src/i18n/messages",
+    "dependencies": [
+      "@openedx/frontend-base"
+    ]
+  },
   "scripts": {
     "build": "make build",
     "build:packages": "make build-packages",
