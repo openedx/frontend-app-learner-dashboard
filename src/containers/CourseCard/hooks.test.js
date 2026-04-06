@@ -1,58 +1,32 @@
-import { useIntl } from '@edx/frontend-platform/i18n';
+import { renderHook } from '@testing-library/react';
+import { useWindowSize } from '@openedx/paragon';
+import { useIsCollapsed } from './hooks';
 
-import { reduxHooks } from 'hooks';
-
-import * as hooks from './hooks';
-
-jest.mock('hooks', () => ({
-  reduxHooks: {
-    useCardCourseData: jest.fn(),
-    useCardEnrollmentData: jest.fn(),
+jest.mock('@openedx/paragon', () => ({
+  useWindowSize: jest.fn(),
+  breakpoints: {
+    small: {
+      maxWidth: 576,
+    },
   },
 }));
 
-jest.mock('@edx/frontend-platform/i18n', () => {
-  const { formatMessage } = jest.requireActual('testUtils');
-  return {
-    ...jest.requireActual('@edx/frontend-platform/i18n'),
-    useIntl: () => ({
-      formatMessage,
-    }),
-  };
-});
-
-const cardId = 'my-test-course-number';
-
-describe('CourseCard hooks', () => {
-  let out;
-  const { formatMessage } = useIntl();
-  beforeEach(() => {
+describe('useIsCollapsed', () => {
+  afterEach(() => {
     jest.clearAllMocks();
   });
 
-  describe('useCardData', () => {
-    const courseData = {
-      title: 'fake-title',
-      bannerImgSrc: 'my-banner-url',
-    };
-    const runHook = ({ course = {} }) => {
-      reduxHooks.useCardCourseData.mockReturnValueOnce({
-        ...courseData,
-        ...course,
-      });
-      reduxHooks.useCardEnrollmentData.mockReturnValue({ isEnrolled: 'test-is-enrolled' });
-      out = hooks.useCardData({ cardId });
-    };
-    beforeEach(() => {
-      runHook({});
-    });
-    it('forwards formatMessage from useIntl', () => {
-      expect(out.formatMessage).toEqual(formatMessage);
-    });
-    it('passes course title and banner URL form course data', () => {
-      expect(reduxHooks.useCardCourseData).toHaveBeenCalledWith(cardId);
-      expect(out.title).toEqual(courseData.title);
-      expect(out.bannerImgSrc).toEqual(courseData.bannerImgSrc);
-    });
+  it('should return true when window width is smaller than small breakpoint', () => {
+    useWindowSize.mockReturnValue({ width: 500 });
+    const { result } = renderHook(() => useIsCollapsed());
+    expect(result.current).toBe(true);
+    expect(useWindowSize).toHaveBeenCalled();
+  });
+
+  it('should return false when window width is larger than small breakpoint', () => {
+    useWindowSize.mockReturnValue({ width: 800 });
+    const { result } = renderHook(() => useIsCollapsed());
+    expect(result.current).toBe(false);
+    expect(useWindowSize).toHaveBeenCalled();
   });
 });

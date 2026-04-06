@@ -13,7 +13,6 @@ import {
   ErrorPage,
   PageWrap,
 } from '@edx/frontend-platform/react';
-import store from 'data/store';
 import {
   APP_READY,
   APP_INIT_ERROR,
@@ -22,22 +21,36 @@ import {
   mergeConfig,
 } from '@edx/frontend-platform';
 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import ContextProviders from 'data/context';
 import { configuration } from './config';
 
 import messages from './i18n';
 
 import App from './App';
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60_000,
+    },
+  },
+});
+
 subscribe(APP_READY, () => {
   const root = createRoot(document.getElementById('root'));
 
   root.render(
     <StrictMode>
-      <AppProvider store={store}>
-        <Routes>
-          <Route path="/" element={<PageWrap><App /></PageWrap>} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
+      <AppProvider>
+        <ContextProviders>
+          <QueryClientProvider client={queryClient}>
+            <Routes>
+              <Route path="/" element={<PageWrap><App /></PageWrap>} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </QueryClientProvider>
+        </ContextProviders>
       </AppProvider>
     </StrictMode>,
   );

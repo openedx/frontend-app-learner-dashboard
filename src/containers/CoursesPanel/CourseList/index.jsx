@@ -11,14 +11,15 @@ import { useIsCollapsed } from './hooks';
 
 export const CourseList = ({ courseListData }) => {
   const {
-    filterOptions, setPageNumber, numPages, showFilters, visibleList,
+    setPageNumber, numPages, visibleList, showFilters,
   } = courseListData;
+
   const isCollapsed = useIsCollapsed();
   return (
     <>
       {showFilters && (
         <div id="course-list-active-filters-container">
-          <ActiveCourseFilters {...filterOptions} />
+          <ActiveCourseFilters />
         </div>
       )}
       <div className="d-flex flex-column flex-grow-1">
@@ -42,7 +43,6 @@ export const CourseList = ({ courseListData }) => {
 export const courseListDataShape = PropTypes.shape({
   showFilters: PropTypes.bool.isRequired,
   visibleList: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  filterOptions: PropTypes.shape().isRequired,
   numPages: PropTypes.number.isRequired,
   setPageNumber: PropTypes.func.isRequired,
 });

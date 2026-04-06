@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { reduxHooks } from 'hooks';
+import { useCourseData, useCourseTrackingEvent } from 'hooks';
 import track from 'tracking';
 import useActionDisabledState from './hooks';
 import CourseCardTitle from './CourseCardTitle';
@@ -12,11 +12,8 @@ jest.mock('tracking', () => ({
 }));
 
 jest.mock('hooks', () => ({
-  reduxHooks: {
-    useCardCourseData: jest.fn(),
-    useCardCourseRunData: jest.fn(),
-    useTrackCourseEvent: jest.fn(),
-  },
+  useCourseData: jest.fn(),
+  useCourseTrackingEvent: jest.fn(),
 }));
 
 jest.mock('./hooks', () => jest.fn(() => ({ disableCourseTitle: false })));
@@ -32,9 +29,11 @@ describe('CourseCardTitle', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    reduxHooks.useCardCourseData.mockReturnValue({ courseName });
-    reduxHooks.useCardCourseRunData.mockReturnValue({ homeUrl });
-    reduxHooks.useTrackCourseEvent.mockReturnValue(handleTitleClick);
+    useCourseData.mockReturnValue({
+      course: { courseName },
+      courseRun: { homeUrl },
+    });
+    useCourseTrackingEvent.mockReturnValue(handleTitleClick);
   });
 
   it('renders course name as link when not disabled', async () => {
@@ -62,9 +61,8 @@ describe('CourseCardTitle', () => {
     useActionDisabledState.mockReturnValue({ disableCourseTitle: false });
     render(<CourseCardTitle {...props} />);
 
-    expect(reduxHooks.useCardCourseData).toHaveBeenCalledWith(props.cardId);
-    expect(reduxHooks.useCardCourseRunData).toHaveBeenCalledWith(props.cardId);
-    expect(reduxHooks.useTrackCourseEvent).toHaveBeenCalledWith(
+    expect(useCourseData).toHaveBeenCalledWith(props.cardId);
+    expect(useCourseTrackingEvent).toHaveBeenCalledWith(
       track.course.courseTitleClicked,
       props.cardId,
       homeUrl,

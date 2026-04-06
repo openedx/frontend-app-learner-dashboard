@@ -15,7 +15,7 @@ The default CourseBanner looks like this when audit access has expired for the c
 
 The following `env.config.jsx` will render a custom implemenation of a CourseBanner under every `CourseCard`.
 
-![Screenshot of custom banner added under CourseCard](./images/course_banner_slot_default.png)
+![Screenshot of custom banner added under CourseCard](./images/custom_course_banner.png)
 
 ```js
 import { DIRECT_PLUGIN, PLUGIN_OPERATIONS } from '@openedx/frontend-plugin-framework';

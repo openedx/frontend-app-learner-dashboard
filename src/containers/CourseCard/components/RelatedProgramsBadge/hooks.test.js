@@ -1,15 +1,13 @@
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { MockUseState } from 'testUtils';
-import { reduxHooks } from 'hooks';
+import { useCourseData } from 'hooks';
 
 import * as hooks from './hooks';
 import messages from './messages';
 
 jest.mock('hooks', () => ({
-  reduxHooks: {
-    useCardRelatedProgramsData: jest.fn(),
-  },
+  useCourseData: jest.fn(),
 }));
 
 jest.mock('@edx/frontend-platform/i18n', () => {
@@ -39,8 +37,10 @@ describe('RelatedProgramsBadge hooks', () => {
   describe('useRelatedProgramsBadgeData', () => {
     beforeEach(() => {
       state.mock();
-      reduxHooks.useCardRelatedProgramsData.mockReturnValueOnce({
-        length: numPrograms,
+      useCourseData.mockReturnValue({
+        programs: {
+          relatedPrograms: new Array(numPrograms).fill({}),
+        },
       });
       out = hooks.useRelatedProgramsBadgeData({ cardId });
     });
@@ -64,12 +64,12 @@ describe('RelatedProgramsBadge hooks', () => {
       expect(out.numPrograms).toEqual(numPrograms);
     });
     test('returns empty programsMessage if no programs', () => {
-      reduxHooks.useCardRelatedProgramsData.mockReturnValueOnce({ length: 0 });
+      useCourseData.mockReturnValueOnce({ programs: { relatedPrograms: [] } });
       out = hooks.useRelatedProgramsBadgeData({ cardId });
       expect(out.programsMessage).toEqual('');
     });
     test('returns badgeLabelSingular programsMessage if 1 programs', () => {
-      reduxHooks.useCardRelatedProgramsData.mockReturnValueOnce({ length: 1 });
+      useCourseData.mockReturnValueOnce({ programs: { relatedPrograms: [{}] } });
       out = hooks.useRelatedProgramsBadgeData({ cardId });
       expect(out.programsMessage).toEqual(formatMessage(
         messages.badgeLabelSingular,

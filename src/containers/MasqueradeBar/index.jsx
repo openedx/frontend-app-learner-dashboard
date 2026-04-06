@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { useIntl } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
 
 import {
@@ -13,25 +14,39 @@ import {
 } from '@openedx/paragon';
 import { Close, PersonSearch } from '@openedx/paragon/icons';
 
+import { useMasquerade } from 'data/context';
+import { useInitializeLearnerHome } from 'data/hooks';
 import messages from './messages';
-import { useMasqueradeBarData } from './hooks';
 import './index.scss';
 
 export const MasqueradeBar = () => {
-  const { authenticatedUser } = React.useContext(AppContext);
-
+  const { formatMessage } = useIntl();
   const {
-    canMasquerade,
-    isMasquerading,
-    isMasqueradingFailed,
-    isMasqueradingPending,
-    masqueradeInput,
-    masqueradeErrorMessage,
-    handleMasqueradeInputChange,
-    handleClearMasquerade,
-    handleMasqueradeSubmit,
-    formatMessage,
-  } = useMasqueradeBarData({ authenticatedUser });
+    isError, error, isPending,
+  } = useInitializeLearnerHome();
+  const { authenticatedUser } = React.useContext(AppContext);
+  const [masqueradeInput, setMasqueradeInput] = React.useState('');
+  const canMasquerade = authenticatedUser?.administrator;
+  const { masqueradeUser, setMasqueradeUser } = useMasquerade();
+  const handleMasqueradeInputChange = (e) => setMasqueradeInput(e.target.value);
+  const handleClearMasquerade = () => {
+    setMasqueradeUser(undefined);
+    setMasqueradeInput('');
+  };
+  const handleMasqueradeSubmit = (user) => (e) => {
+    setMasqueradeUser(user);
+    e.preventDefault();
+  };
+
+  const isMasqueradingFailed = !!masqueradeUser && masqueradeInput && isError;
+  const isMasqueradingPending = !!masqueradeUser && isPending;
+  const isMasquerading = !!masqueradeUser && !isError && !isPending;
+  const masqueradeErrorMessage = useMemo(() => {
+    if (masqueradeUser && error) {
+      return (error.customAttributes?.httpErrorStatus === 404 ? messages.NoStudentFound : messages.UnknownError);
+    }
+    return null;
+  }, [error, masqueradeUser]);
 
   if (!canMasquerade) { return null; }
 
@@ -72,7 +87,7 @@ export const MasqueradeBar = () => {
               )}
             </FormGroup>
             <StatefulButton
-              disabled={!masqueradeInput.length}
+              disabled={!masqueradeInput?.length}
               variant="brand"
               onClick={handleMasqueradeSubmit(masqueradeInput)}
               labels={{

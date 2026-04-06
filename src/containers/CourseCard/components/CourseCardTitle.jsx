@@ -2,15 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import track from 'tracking';
-import { reduxHooks } from 'hooks';
+import { useCourseData, useCourseTrackingEvent } from 'hooks';
 import useActionDisabledState from './hooks';
 
 const { courseTitleClicked } = track.course;
 
 export const CourseCardTitle = ({ cardId }) => {
-  const { courseName } = reduxHooks.useCardCourseData(cardId);
-  const { homeUrl } = reduxHooks.useCardCourseRunData(cardId);
-  const handleTitleClicked = reduxHooks.useTrackCourseEvent(
+  const courseData = useCourseData(cardId);
+  const courseName = courseData?.course?.courseName;
+  const homeUrl = courseData?.courseRun?.homeUrl;
+  const handleTitleClicked = useCourseTrackingEvent(
     courseTitleClicked,
     cardId,
     homeUrl,

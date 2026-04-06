@@ -1,5 +1,6 @@
 const configuration = {
   // BASE_URL: process.env.BASE_URL,
+  APP_ID: process.env.APP_ID,
   LMS_BASE_URL: process.env.LMS_BASE_URL,
   ECOMMERCE_BASE_URL: process.env.ECOMMERCE_BASE_URL,
   CREDIT_PURCHASE_URL: process.env.CREDIT_PURCHASE_URL,
@@ -20,6 +21,7 @@ const configuration = {
   SEARCH_CATALOG_URL: process.env.SEARCH_CATALOG_URL || null,
   ENABLE_PROGRAMS: process.env.ENABLE_PROGRAMS === 'true',
   NON_BROWSABLE_COURSES: process.env.NON_BROWSABLE_COURSES === 'true',
+  SHOW_UNENROLL_SURVEY: process.env.SHOW_UNENROLL_SURVEY === 'true',
 };
 
 const features = {};
