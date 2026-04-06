@@ -32,7 +32,7 @@ export const ResumeButton = ({ cardId }) => {
     <ActionButton
       disabled={disableResumeCourse}
       as="a"
-      href="#"
+      href={resumeUrl + execEdTrackingParam}
       onClick={handleClick}
     >
       {formatMessage(messages.resume)}
