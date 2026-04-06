@@ -24,7 +24,7 @@ export const ViewCourseButton = ({ cardId }) => {
     <ActionButton
       disabled={disableViewCourse}
       as="a"
-      href="#"
+      href={homeUrl}
       onClick={handleClick}
     >
       {formatMessage(messages.viewCourse)}
