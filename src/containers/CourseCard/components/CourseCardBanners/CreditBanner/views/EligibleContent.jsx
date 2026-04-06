@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { reduxHooks } from 'hooks';
+import { useCourseData } from 'hooks';
 import track from 'tracking';
 
 import CreditContent from './components/CreditContent';
@@ -11,8 +11,9 @@ import messages from './messages';
 
 export const EligibleContent = ({ cardId }) => {
   const { formatMessage } = useIntl();
-  const { providerName } = reduxHooks.useCardCreditData(cardId);
-  const { courseId } = reduxHooks.useCardCourseRunData(cardId);
+  const courseData = useCourseData(cardId);
+  const providerName = courseData?.credit?.providerName;
+  const courseId = courseData?.courseRun?.courseId;
 
   const onClick = track.credit.purchase(courseId);
   const getCredit = formatMessage(messages.getCredit);

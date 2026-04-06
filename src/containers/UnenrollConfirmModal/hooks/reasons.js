@@ -1,13 +1,14 @@
 import React from 'react';
 
 import {
-  apiHooks,
-  reduxHooks,
+  useCourseData,
+  useCourseTrackingEvent,
   utilHooks,
+  useEntitlementInfo,
 } from 'hooks';
 import { StrictDict } from 'utils';
 import track from 'tracking';
-
+import { useUnenrollFromCourse } from 'data/hooks';
 import * as module from './reasons';
 import constants from '../constants';
 
@@ -20,6 +21,8 @@ export const state = StrictDict({
 export const useUnenrollReasons = ({
   cardId,
 }) => {
+  const courseData = useCourseData(cardId);
+  const { mutate: unenrollFromCourseMutation } = useUnenrollFromCourse();
   // The selected option element from the menu
   const [selectedReason, setSelectedReason] = module.state.selectedReason(
     constants.reasonKeys.preferNotToSay,
@@ -30,19 +33,22 @@ export const useUnenrollReasons = ({
   // Did the user submit an unenrollment reason
   const [isSubmitted, setIsSubmitted] = module.state.isSubmitted(false);
 
-  const { isEntitlement } = reduxHooks.useCardEntitlementData(cardId);
+  const { isEntitlement } = useEntitlementInfo(courseData);
 
   const submittedReason = selectedReason === 'custom' ? customOption : selectedReason;
   const hasReason = ![null, ''].includes(submittedReason);
 
-  const handleTrackReasons = reduxHooks.useTrackCourseEvent(
+  const handleTrackReasons = useCourseTrackingEvent(
     track.engagement.unenrollReason,
     cardId,
     submittedReason,
     isEntitlement,
   );
 
-  const unenrollFromCourse = apiHooks.useUnenrollFromCourse(cardId);
+  const unenrollFromCourse = () => {
+    const courseId = courseData?.courseRun?.courseId;
+    unenrollFromCourseMutation({ courseId });
+  };
 
   const handleClear = () => {
     setSelectedReason(null);

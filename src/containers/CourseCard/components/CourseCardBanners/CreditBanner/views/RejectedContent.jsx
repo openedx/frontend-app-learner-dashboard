@@ -3,18 +3,19 @@ import PropTypes from 'prop-types';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { reduxHooks } from 'hooks';
+import { useCourseData } from 'hooks';
 import CreditContent from './components/CreditContent';
 import ProviderLink from './components/ProviderLink';
 import messages from './messages';
 
 export const RejectedContent = ({ cardId }) => {
-  const credit = reduxHooks.useCardCreditData(cardId);
+  const courseData = useCourseData(cardId);
+  const credit = courseData?.credit;
   const { formatMessage } = useIntl();
   return (
     <CreditContent
       message={formatMessage(messages.rejected, {
-        providerName: credit.providerName,
+        providerName: credit?.providerName,
         linkToProviderSite: (<ProviderLink cardId={cardId} />),
       })}
     />

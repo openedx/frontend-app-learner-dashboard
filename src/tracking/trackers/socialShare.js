@@ -1,4 +1,4 @@
-import api from 'data/services/lms/api';
+import { logShare } from 'data/services/lms/api';
 
 /**
  * Track Social Share event click.
@@ -6,6 +6,6 @@ import api from 'data/services/lms/api';
  * @param {string} site - sharing destination ('facebook', 'twitter')
  * @return {func} - Callback that tracks the event when fired.
  */
-export const shareClicked = (courseId, site) => () => api.logShare({ courseId, site });
+export const shareClicked = (courseId, site) => () => logShare({ courseId, site });
 
 export default shareClicked;
