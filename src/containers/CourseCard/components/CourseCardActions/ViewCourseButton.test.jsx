@@ -32,7 +32,7 @@ const homeUrl = 'homeUrl';
 describe('ViewCourseButton', () => {
   it('learner can view course', async () => {
     render(<IntlProvider locale="en"><ViewCourseButton {...defaultProps} /></IntlProvider>);
-    const button = screen.getByRole('button', { name: 'View Course' });
+    const button = screen.getByRole('link', { name: 'View Course' });
     expect(button).toBeInTheDocument();
     expect(button).not.toHaveClass('disabled');
     expect(button).not.toHaveAttribute('aria-disabled', 'true');
@@ -42,7 +42,7 @@ describe('ViewCourseButton', () => {
     useCourseTrackingEvent.mockReturnValue(mockedTrackCourseEvent);
     render(<IntlProvider locale="en"><ViewCourseButton {...defaultProps} /></IntlProvider>);
     const user = userEvent.setup();
-    const button = screen.getByRole('button', { name: 'View Course' });
+    const button = screen.getByRole('link', { name: 'View Course' });
     await user.click(button);
     expect(useCourseTrackingEvent).toHaveBeenCalledWith(
       track.course.enterCourseClicked,
@@ -54,7 +54,7 @@ describe('ViewCourseButton', () => {
   it('learner cannot view course', () => {
     useActionDisabledState.mockReturnValueOnce({ disableViewCourse: true });
     render(<IntlProvider locale="en"><ViewCourseButton {...defaultProps} /></IntlProvider>);
-    const button = screen.getByRole('button', { name: 'View Course' });
+    const button = screen.getByRole('link', { name: 'View Course' });
     expect(button).toHaveClass('disabled');
     expect(button).toHaveAttribute('aria-disabled', 'true');
   });
