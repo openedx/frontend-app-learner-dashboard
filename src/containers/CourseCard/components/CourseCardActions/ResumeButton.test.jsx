@@ -63,7 +63,7 @@ describe('ResumeButton', () => {
       });
       it('should be disabled', () => {
         render(<IntlProvider locale="en"><ResumeButton {...props} /></IntlProvider>);
-        const button = screen.getByRole('button', { name: 'Resume' });
+        const button = screen.getByRole('link', { name: 'Resume' });
         expect(button).toHaveClass('disabled');
         expect(button).toHaveAttribute('aria-disabled', 'true');
       });
@@ -71,7 +71,7 @@ describe('ResumeButton', () => {
     describe('enabled', () => {
       it('should be enabled', () => {
         render(<IntlProvider locale="en"><ResumeButton {...props} /></IntlProvider>);
-        const button = screen.getByRole('button', { name: 'Resume' });
+        const button = screen.getByRole('link', { name: 'Resume' });
         expect(button).toBeInTheDocument();
         expect(button).not.toHaveClass('disabled');
         expect(button).not.toHaveAttribute('aria-disabled', 'true');
@@ -79,7 +79,7 @@ describe('ResumeButton', () => {
       it('should track enter course clicked event on click, with exec ed param', async () => {
         render(<IntlProvider locale="en"><ResumeButton {...props} /></IntlProvider>);
         const user = userEvent.setup();
-        const button = screen.getByRole('button', { name: 'Resume' });
+        const button = screen.getByRole('link', { name: 'Resume' });
         user.click(button);
         expect(useCourseTrackingEvent).toHaveBeenCalledWith(
           track.course.enterCourseClicked,

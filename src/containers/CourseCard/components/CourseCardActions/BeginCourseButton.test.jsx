@@ -63,7 +63,7 @@ describe('BeginCourseButton', () => {
       it('should be disabled', () => {
         useActionDisabledState.mockReturnValueOnce({ disableBeginCourse: true });
         renderComponent();
-        const button = screen.getByRole('button', { name: 'Begin Course' });
+        const button = screen.getByRole('link', { name: 'Begin Course' });
         expect(button).toHaveClass('disabled');
         expect(button).toHaveAttribute('aria-disabled', 'true');
       });
@@ -71,14 +71,14 @@ describe('BeginCourseButton', () => {
     describe('enabled', () => {
       it('should be enabled', () => {
         renderComponent();
-        const button = screen.getByRole('button', { name: 'Begin Course' });
+        const button = screen.getByRole('link', { name: 'Begin Course' });
         expect(button).not.toHaveClass('disabled');
         expect(button).not.toHaveAttribute('aria-disabled', 'true');
       });
       it('should track enter course clicked event on click, with exec ed param', () => {
         renderComponent();
         const user = userEvent.setup();
-        const button = screen.getByRole('button', { name: 'Begin Course' });
+        const button = screen.getByRole('link', { name: 'Begin Course' });
         user.click(button);
         expect(useCourseTrackingEvent).toHaveBeenCalledWith(
           track.course.enterCourseClicked,
