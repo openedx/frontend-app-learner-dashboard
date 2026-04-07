@@ -5,12 +5,14 @@ import messages from './messages';
 
 const courseSearchUrl = 'http://localhost:18000/course-search-url';
 
-jest.mock('hooks', () => ({
-  reduxHooks: {
-    usePlatformSettingsData: () => ({
-      courseSearchUrl,
-    }),
-  },
+jest.mock('data/hooks', () => ({
+  useInitializeLearnerHome: () => ({
+    data: {
+      platformSettings: {
+        courseSearchUrl,
+      },
+    },
+  }),
 }));
 
 jest.mock('./track', () => ({

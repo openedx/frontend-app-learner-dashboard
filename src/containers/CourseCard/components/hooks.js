@@ -1,16 +1,19 @@
-import { reduxHooks } from 'hooks';
+import { useCourseData, useEntitlementInfo, useIsMasquerading } from 'hooks';
 
 export const useActionDisabledState = (cardId) => {
-  const { isMasquerading } = reduxHooks.useMasqueradeData();
+  const courseData = useCourseData(cardId);
+  const isMasquerading = useIsMasquerading();
+
   const {
-    hasAccess, isAudit, isAuditAccessExpired,
-  } = reduxHooks.useCardEnrollmentData(cardId);
+    isAudit, isAuditAccessExpired,
+  } = courseData.enrollment || {};
+  const { isStaff, hasUnmetPrereqs, isTooEarly } = courseData.enrollment?.coursewareAccess || {};
+  const hasAccess = isStaff || !(hasUnmetPrereqs || isTooEarly);
   const {
     isEntitlement, isFulfilled, canChange, hasSessions,
-  } = reduxHooks.useCardEntitlementData(cardId);
+  } = useEntitlementInfo(courseData);
 
-  const { resumeUrl, homeUrl } = reduxHooks.useCardCourseRunData(cardId);
-
+  const { resumeUrl, homeUrl } = courseData.courseRun || {};
   const disableBeginCourse = !homeUrl || (isMasquerading || !hasAccess || (isAudit && isAuditAccessExpired));
   const disableResumeCourse = !resumeUrl || (isMasquerading || !hasAccess || (isAudit && isAuditAccessExpired));
   const disableViewCourse = !hasAccess || (isAudit && isAuditAccessExpired);

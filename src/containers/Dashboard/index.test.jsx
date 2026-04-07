@@ -1,15 +1,17 @@
 import { render, screen } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { useSelectSessionModal } from 'data/context';
+import { useInitializeLearnerHome } from 'data/hooks';
 
-import { reduxHooks } from 'hooks';
+import hooks from './hooks';
 import Dashboard from '.';
 
-jest.mock('hooks', () => ({
-  reduxHooks: {
-    useHasCourses: jest.fn(),
-    useShowSelectSessionModal: jest.fn(),
-    useRequestIsPending: jest.fn(),
-  },
+jest.mock('data/context', () => ({
+  useSelectSessionModal: jest.fn(),
+}));
+
+jest.mock('data/hooks', () => ({
+  useInitializeLearnerHome: jest.fn(),
 }));
 
 jest.mock('./hooks', () => ({
@@ -30,9 +32,10 @@ describe('Dashboard', () => {
       initIsPending = true,
       showSelectSessionModal = true,
     } = props;
-    reduxHooks.useHasCourses.mockReturnValue(hasCourses);
-    reduxHooks.useRequestIsPending.mockReturnValue(initIsPending);
-    reduxHooks.useShowSelectSessionModal.mockReturnValue(showSelectSessionModal);
+    hooks.useDashboardMessages.mockReturnValue({ pageTitle });
+    const dataMocked = { data: hasCourses ? { courses: [1, 2] } : { courses: [] }, isPending: initIsPending };
+    useInitializeLearnerHome.mockReturnValue(dataMocked);
+    useSelectSessionModal.mockReturnValue({ selectSessionModal: showSelectSessionModal ? { cardId: 1 } : null });
     return render(<IntlProvider locale="en"><Dashboard /></IntlProvider>);
   };
 

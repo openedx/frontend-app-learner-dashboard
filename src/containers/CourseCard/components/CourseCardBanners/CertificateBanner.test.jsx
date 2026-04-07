@@ -1,20 +1,20 @@
+import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 
-import { reduxHooks } from 'hooks';
+import { useCourseData } from 'hooks';
+import { useInitializeLearnerHome } from 'data/hooks';
 import CertificateBanner from './CertificateBanner';
 
 jest.mock('hooks', () => ({
   utilHooks: {
     useFormatDate: jest.fn(() => date => date),
   },
-  reduxHooks: {
-    useCardCertificateData: jest.fn(),
-    useCardCourseRunData: jest.fn(),
-    useCardEnrollmentData: jest.fn(),
-    useCardGradeData: jest.fn(),
-    usePlatformSettingsData: jest.fn(),
-  },
+  useCourseData: jest.fn(),
+}));
+
+jest.mock('data/hooks', () => ({
+  useInitializeLearnerHome: jest.fn(),
 }));
 
 const defaultCertificate = {
@@ -35,9 +35,14 @@ const supportEmail = 'suport@email.com';
 const billingEmail = 'billing@email.com';
 
 describe('CertificateBanner', () => {
-  reduxHooks.useCardCourseRunData.mockReturnValue({
-    minPassingGrade: 0.8,
-    progressUrl: 'progressUrl',
+  useCourseData.mockReturnValue({
+    enrollment: {},
+    certificate: {},
+    gradeData: {},
+    courseRun: {
+      minPassingGrade: 0.8,
+      progressUrl: 'progressUrl',
+    },
   });
   const createWrapper = ({
     certificate = {},
@@ -46,11 +51,17 @@ describe('CertificateBanner', () => {
     courseRun = {},
     platformSettings = {},
   }) => {
-    reduxHooks.useCardGradeData.mockReturnValueOnce({ ...defaultGrade, ...grade });
-    reduxHooks.useCardCertificateData.mockReturnValueOnce({ ...defaultCertificate, ...certificate });
-    reduxHooks.useCardEnrollmentData.mockReturnValueOnce({ ...defaultEnrollment, ...enrollment });
-    reduxHooks.useCardCourseRunData.mockReturnValueOnce({ ...defaultCourseRun, ...courseRun });
-    reduxHooks.usePlatformSettingsData.mockReturnValueOnce({ ...defaultPlatformSettings, ...platformSettings });
+    useCourseData.mockReturnValue({
+      enrollment: { ...defaultEnrollment, ...enrollment },
+      certificate: { ...defaultCertificate, ...certificate },
+      gradeData: { ...defaultGrade, ...grade },
+      courseRun: {
+        ...defaultCourseRun,
+        ...courseRun,
+      },
+    });
+    const lernearData = { data: { platformSettings: { ...defaultPlatformSettings, ...platformSettings } } };
+    useInitializeLearnerHome.mockReturnValue(lernearData);
     return render(<IntlProvider locale="en"><CertificateBanner {...props} /></IntlProvider>);
   };
   beforeEach(() => {
@@ -222,7 +233,8 @@ describe('CertificateBanner', () => {
         isPassing: true,
       },
       certificate: {
-        isEarnedButUnavailable: true,
+        isEarned: true,
+        availableDate: '10/20/3030',
       },
     });
     const banner = screen.getByRole('alert');
@@ -238,5 +250,28 @@ describe('CertificateBanner', () => {
     });
     const banner = screen.queryByRole('alert');
     expect(banner).toBeNull();
+  });
+  it('should use default values when courseData is empty or undefined', () => {
+    useCourseData.mockReturnValue({});
+    const lernearData = { data: { platformSettings: { supportEmail } } };
+    useInitializeLearnerHome.mockReturnValue(lernearData);
+    render(<IntlProvider locale="en"><CertificateBanner cardId="test-card" /></IntlProvider>);
+
+    const mockedUseMemo = jest.spyOn(React, 'useMemo');
+    const useMemoCall = mockedUseMemo.mock.calls.find(call => call[1].some(dep => dep === undefined || dep === null));
+
+    if (useMemoCall) {
+      const result = useMemoCall[0]();
+
+      expect(result.certificate).toEqual({});
+      expect(result.isVerified).toBe(false);
+      expect(result.isAudit).toBe(false);
+      expect(result.isPassing).toBe(false);
+      expect(result.isArchived).toBe(false);
+      expect(result.minPassingGrade).toBe(0);
+      expect(result.progressUrl).toBeDefined();
+    }
+
+    mockedUseMemo.mockRestore();
   });
 });

@@ -1,9 +1,6 @@
-import React from 'react';
-
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { useWindowSize, breakpoints } from '@openedx/paragon';
 
-import { apiHooks } from 'hooks';
 import { MockUseState } from 'testUtils';
 
 import appMessages from 'messages';
@@ -25,12 +22,6 @@ jest.mock('@edx/frontend-platform/i18n', () => {
   };
 });
 
-jest.mock('hooks', () => ({
-  apiHooks: {
-    useInitializeApp: jest.fn(),
-  },
-}));
-
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
   useEffect: jest.fn((cb, prereqs) => ({ useEffect: { cb, prereqs } })),
@@ -38,8 +29,6 @@ jest.mock('react', () => ({
 
 const state = new MockUseState(hooks);
 
-const initializeApp = jest.fn();
-apiHooks.useInitializeApp.mockReturnValue(initializeApp);
 useWindowSize.mockReturnValue({ width: 20 });
 breakpoints.large = { maxWidth: 30 };
 describe('CourseCard hooks', () => {
@@ -75,16 +64,6 @@ describe('CourseCard hooks', () => {
         expect(sidebarShowing).toEqual(state.stateVals.sidebarShowing);
         expect(setSidebarShowing).toEqual(state.setState.sidebarShowing);
       });
-    });
-  });
-  describe('useInitializeDashboard', () => {
-    it('dispatches initialize thunk action on component load', () => {
-      hooks.useInitializeDashboard();
-      const [cb, prereqs] = React.useEffect.mock.calls[0];
-      expect(prereqs).toEqual([]);
-      expect(initializeApp).not.toHaveBeenCalled();
-      cb();
-      expect(initializeApp).toHaveBeenCalledWith();
     });
   });
   describe('useDashboardMessages', () => {

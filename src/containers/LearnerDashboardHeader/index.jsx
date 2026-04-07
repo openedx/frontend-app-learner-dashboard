@@ -6,7 +6,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import MasqueradeBar from 'containers/MasqueradeBar';
 import { AppContext } from '@edx/frontend-platform/react';
 import Header from '@edx/frontend-component-header';
-import { reduxHooks } from 'hooks';
+import { useInitializeLearnerHome } from 'data/hooks';
 import urls from 'data/services/lms/urls';
 
 import { useLocation } from 'react-router-dom';
@@ -23,6 +23,8 @@ export const LearnerDashboardHeader = () => {
   const { pageTitle } = useDashboardMessages();
   const location = useLocation();
   const { pathname } = location;
+  const { data: learnerData } = useInitializeLearnerHome();
+  const courseSearchUrl = learnerData?.platformSettings?.courseSearchUrl || '';
 
   const exploreCoursesClick = () => {
     findCoursesNavClicked(urls.baseAppUrl(courseSearchUrl));
