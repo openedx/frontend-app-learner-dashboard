@@ -21,7 +21,6 @@ import {
   getConfig,
   mergeConfig,
 } from '@edx/frontend-platform';
-import { FooterSlot } from '@edx/frontend-component-footer';
 
 import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
 import { ProgramsList } from './containers/ProgramDashboard';
@@ -53,9 +52,9 @@ subscribe(APP_READY, () => {
             <LearnerDashboardHeader />
             <Routes>
               <Route path="/" element={<PageWrap><App /></PageWrap>} />
-              {/* {getConfig().ENABLE_PROGRAM_DASHBOARD && ( */}
+              {getConfig().ENABLE_PROGRAM_DASHBOARD && (
                 <Route path="programs" element={<PageWrap><ProgramsList /></PageWrap>} />
-              {/* )} */}
+              )}
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </QueryClientProvider>
