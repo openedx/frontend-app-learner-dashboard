@@ -18,10 +18,12 @@ import './index.scss';
 
 export const LearnerDashboardHeader = () => {
   const { authenticatedUser } = React.useContext(AppContext);
+
   const { formatMessage } = useIntl();
   const { pageTitle } = useDashboardMessages();
   const location = useLocation();
   const { pathname } = location;
+
   const { data: learnerData } = useInitializeLearnerHome();
   const courseSearchUrl = learnerData?.platformSettings?.courseSearchUrl || '';
 

@@ -37,6 +37,7 @@ jest.mock('@edx/frontend-platform', () => ({
 }));
 
 jest.mock('./App', () => 'App');
+
 jest.mock('@edx/frontend-component-footer', () => ({
   FooterSlot: jest.fn(() => <div>FooterSlot</div>),
 }));

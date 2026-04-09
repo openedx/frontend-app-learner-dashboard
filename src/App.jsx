@@ -4,13 +4,11 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { logError } from '@edx/frontend-platform/logging';
 import { initializeHotjar } from '@edx/frontend-enterprise-hotjar';
 
-import { ErrorPage, AppContext } from '@edx/frontend-platform/react';
+import { ErrorPage } from '@edx/frontend-platform/react';
 import { FooterSlot } from '@edx/frontend-component-footer';
 import { Alert } from '@openedx/paragon';
 
 import Dashboard from 'containers/Dashboard';
-
-import track from 'tracking';
 
 import { getConfig } from '@edx/frontend-platform';
 import { useInitializeLearnerHome } from 'data/hooks';
