@@ -28,8 +28,6 @@ import { ProgramsList } from './containers/ProgramDashboard';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ContextProviders from 'data/context';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import ContextProviders from 'data/context';
 import { configuration } from './config';
 
 import messages from './i18n';
@@ -55,9 +53,9 @@ subscribe(APP_READY, () => {
             <LearnerDashboardHeader />
             <Routes>
               <Route path="/" element={<PageWrap><App /></PageWrap>} />
-              {getConfig().ENABLE_PROGRAM_DASHBOARD && (
+              {/* {getConfig().ENABLE_PROGRAM_DASHBOARD && ( */}
                 <Route path="programs" element={<PageWrap><ProgramsList /></PageWrap>} />
-              )}
+              {/* )} */}
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </QueryClientProvider>

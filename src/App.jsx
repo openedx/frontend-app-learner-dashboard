@@ -24,12 +24,6 @@ export const App = () => {
   const supportEmail = data?.platformSettings?.supportEmail || undefined;
 
   /* istanbul ignore next */
-  const { masqueradeUser } = useMasquerade();
-  const { data, isError } = useInitializeLearnerHome();
-  const hasNetworkFailure = !masqueradeUser && isError;
-  const supportEmail = data?.platformSettings?.supportEmail || undefined;
-
-  /* istanbul ignore next */
   React.useEffect(() => {
     if (getConfig().HOTJAR_APP_ID) {
       try {
