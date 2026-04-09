@@ -2,17 +2,9 @@ npm-install-%: ## install specified % npm package
 	npm install $* --save-dev
 	git add package.json
 
-intl_imports = ./node_modules/.bin/intl-imports.js
-i18n = ./src/i18n
-
 TURBO = TURBO_TELEMETRY_DISABLED=1 turbo --dangerously-disable-package-manager-check
 
 NPM_TESTS=build i18n_extract lint test
-
-# Variables for additional translation sources and imports (define in edx-internal if needed)
-ATLAS_EXTRA_SOURCES ?=
-ATLAS_EXTRA_INTL_IMPORTS ?=
-ATLAS_OPTIONS ?=
 
 .PHONY: test
 test: $(addprefix test.npm.,$(NPM_TESTS))  ## validate ci suite
@@ -70,22 +62,8 @@ i18n.extract:
 
 extract_translations: | requirements i18n.extract
 
-# Despite the name, we actually need this target to detect changes in the incoming translated message files as well.
-detect_changed_source_translations:
-	# Checking for changed translations...
-	git diff --exit-code $(i18n)
-
-pull_translations:
-	rm -rf src/i18n/messages
-	mkdir src/i18n/messages
-	cd src/i18n/messages \
-      && atlas pull $(ATLAS_OPTIONS) \
-               translations/frontend-base/src/i18n/messages:frontend-base \
-               translations/paragon/src/i18n/messages:paragon \
-               translations/frontend-app-learner-dashboard/src/i18n/messages:frontend-app-learner-dashboard \
-               $(ATLAS_EXTRA_SOURCES)
-
-	$(intl_imports) frontend-base paragon frontend-app-learner-dashboard $(ATLAS_EXTRA_INTL_IMPORTS)
+pull_translations: | requirements
+	npm run translations:pull -- --atlas-options="$(ATLAS_OPTIONS)"
 
 # This target is used by CI.
 validate-no-uncommitted-package-lock-changes:
