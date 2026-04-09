@@ -12,10 +12,6 @@ import Dashboard from 'containers/Dashboard';
 
 import track from 'tracking';
 
-import fakeData from 'data/services/lms/fakeData/courses';
-import AppWrapper from 'containers/AppWrapper';
-import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
-
 import { getConfig } from '@edx/frontend-platform';
 import { useInitializeLearnerHome } from 'data/hooks';
 import { useMasquerade } from 'data/context';

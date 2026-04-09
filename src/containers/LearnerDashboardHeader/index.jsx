@@ -19,7 +19,6 @@ import './index.scss';
 export const LearnerDashboardHeader = () => {
   const { authenticatedUser } = React.useContext(AppContext);
   const { formatMessage } = useIntl();
-  const { courseSearchUrl } = reduxHooks.usePlatformSettingsData();
   const { pageTitle } = useDashboardMessages();
   const location = useLocation();
   const { pathname } = location;

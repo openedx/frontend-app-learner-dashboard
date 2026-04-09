@@ -3,12 +3,10 @@ import {
   Alert, CardGrid, Col, Container, Row, Spinner,
 } from '@openedx/paragon';
 import { getConfig } from '@edx/frontend-platform';
-import { logError } from '@edx/frontend-platform/logging';
-import { camelCaseObject } from '@edx/frontend-platform/utils';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import appMessages from 'messages';
-import { getProgramsListData } from '../data/api';
+import { useProgramsListData } from '../data/api';
 import { ProgramData } from '../data/types';
 import ProgramListCard from './ProgramListCard';
 import ExploreProgramsCTA from './ExploreProgramsCTA';
@@ -18,22 +16,7 @@ import './index.scss';
 
 const ProgramsList: React.FC = () => {
   const { formatMessage } = useIntl();
-  const [programsData, setProgramsData] = useState<ProgramData[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [errorState, setErrorState] = useState<boolean>(false);
-
-  useEffect(() => {
-    getProgramsListData()
-      .then(responseData => {
-        setProgramsData(camelCaseObject(responseData));
-        setIsLoading(false);
-      })
-      .catch(err => {
-        logError(err);
-        setIsLoading(false);
-        setErrorState(true);
-      });
-  }, []);
+  const { data: programsData, isLoading, isError: errorState } = useProgramsListData() as { data: ProgramData[]; isLoading: boolean; isError: boolean };
 
   const renderPrograms = () => {
     if (isLoading) {
