@@ -7,27 +7,14 @@ import { useInitializeLearnerHome } from 'data/hooks';
 import { App } from './App';
 import messages from './messages';
 
-jest.mock('containers/Dashboard', () => jest.fn(() => <div>Dashboard</div>));
-jest.mock('data/redux', () => ({
-  selectors: 'redux.selectors',
-  actions: 'redux.actions',
-  thunkActions: 'redux.thunkActions',
-}));
-jest.mock('hooks', () => ({
-  reduxHooks: {
-    useRequestIsFailed: jest.fn(),
-    usePlatformSettingsData: jest.fn(),
-    useLoadData: jest.fn(),
-  },
+jest.mock('data/hooks', () => ({
+  useInitializeLearnerHome: jest.fn(),
 }));
 
 jest.mock('data/context', () => ({
   useMasquerade: jest.fn(() => ({ masqueradeUser: null })),
 }));
 
-jest.mock('@edx/frontend-component-footer', () => ({
-  FooterSlot: jest.fn(() => <div>FooterSlot</div>),
-}));
 jest.mock('containers/Dashboard', () => jest.fn(() => <div>Dashboard</div>));
 jest.mock('containers/LearnerDashboardHeader', () => jest.fn(() => <div>LearnerDashboardHeader</div>));
 jest.mock('containers/AppWrapper', () => jest.fn(({ children }) => <div className="AppWrapper">{children}</div>));

@@ -28,6 +28,8 @@ import { ProgramsList } from './containers/ProgramDashboard';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ContextProviders from 'data/context';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import ContextProviders from 'data/context';
 import { configuration } from './config';
 
 import messages from './i18n';
