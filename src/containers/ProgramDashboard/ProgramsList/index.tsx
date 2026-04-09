@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
   Alert, CardGrid, Col, Container, Row, Spinner,
 } from '@openedx/paragon';
@@ -26,7 +26,7 @@ const ProgramsList: React.FC = () => {
         </Row>
       );
     }
-    if (programsData.length > 0) {
+    if (programsData && programsData.length > 0) {
       return (
         <>
           <Col sm={12} md={9}>
