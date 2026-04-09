@@ -9,7 +9,6 @@ import messages from './messages';
 
 jest.mock('containers/Dashboard', () => jest.fn(() => <div>Dashboard</div>));
 jest.mock('containers/LearnerDashboardHeader', () => jest.fn(() => <div>LearnerDashboardHeader</div>));
-jest.mock('containers/AppWrapper', () => jest.fn(({ children }) => <div className="AppWrapper">{children}</div>));
 
 jest.mock('@edx/frontend-platform', () => ({
   getConfig: jest.fn(() => ({})),

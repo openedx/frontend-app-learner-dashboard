@@ -4,14 +4,14 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { logError } from '@edx/frontend-platform/logging';
 
 import ProgramsList from '.';
-import { getProgramsListData } from '../data/api';
+import { useProgramsListData } from '../data/api';
 import ProgramListCard from './ProgramListCard';
 import ExploreProgramsCTA from './ExploreProgramsCTA';
 import messages from './messages';
 
 // Mock API and external utilities
 jest.mock('../data/api', () => ({
-  getProgramsListData: jest.fn(),
+  useProgramsListData: jest.fn(),
 }));
 jest.mock('@edx/frontend-platform/logging', () => ({
   logError: jest.fn(),
@@ -40,7 +40,7 @@ describe('ProgramsList', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     // Set up a successful mock API response by default
-    (getProgramsListData as jest.Mock).mockResolvedValue(mockApiData);
+    (useProgramsListData as jest.Mock).mockResolvedValue(mockApiData);
   });
 
   const renderComponent = () => render(
@@ -60,7 +60,7 @@ describe('ProgramsList', () => {
   it('fetches program data on mount', async () => {
     renderComponent();
 
-    expect(getProgramsListData).toHaveBeenCalledTimes(1);
+    expect(useProgramsListData).toHaveBeenCalledTimes(1);
   });
 
   it('renders ProgramListCard components upon successful API response', async () => {
@@ -90,7 +90,7 @@ describe('ProgramsList', () => {
   });
 
   it('renders the ExploreProgramsCTA with "hasEnrollments" set to false if there are no program enrollments', async () => {
-    (getProgramsListData as jest.Mock).mockResolvedValueOnce({ data: [] });
+    (useProgramsListData as jest.Mock).mockResolvedValueOnce({ data: [] });
     renderComponent();
 
     await waitFor(() => {
@@ -107,7 +107,7 @@ describe('ProgramsList', () => {
 
   it('calls logError if the API request fails', async () => {
     const mockError = new Error('Network failed');
-    (getProgramsListData as jest.Mock).mockRejectedValue(mockError);
+    (useProgramsListData as jest.Mock).mockRejectedValue(mockError);
 
     const mockContactUrl = 'mock-contact-url';
 

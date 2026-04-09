@@ -1,5 +1,5 @@
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
-import { getProgramsListData } from './api';
+import { useProgramsListData } from './api';
 
 const mockGet = jest.fn(() => ({
   data: {},
@@ -19,7 +19,7 @@ jest.mock('@edx/frontend-platform', () => ({
 
 describe('API', () => {
   it('uses the expected URL to call the endpoint', async () => {
-    await getProgramsListData();
+    await useProgramsListData();
 
     expect(getAuthenticatedHttpClient).toHaveBeenCalled();
     expect(mockGet).toHaveBeenCalledWith(`${mockLMSBaseUrl}/api/dashboard/v0/programs/`);
