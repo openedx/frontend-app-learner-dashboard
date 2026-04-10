@@ -32,7 +32,7 @@ describe('Dashboard', () => {
       initIsPending = true,
       showSelectSessionModal = true,
     } = props;
-    hooks.useDashboardMessages.mockReturnValue({ pageTitle });
+    hooks.useDashboardMessages.mockReturnValue({ pageTitle: 'Dashboard' });
     const dataMocked = { data: hasCourses ? { courses: [1, 2] } : { courses: [] }, isPending: initIsPending };
     useInitializeLearnerHome.mockReturnValue(dataMocked);
     useSelectSessionModal.mockReturnValue({ selectSessionModal: showSelectSessionModal ? { cardId: 1 } : null });
