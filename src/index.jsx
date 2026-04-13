@@ -57,7 +57,7 @@ subscribe(APP_READY, () => {
               )}
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
-            <FooterSlot/>
+            <FooterSlot />
           </QueryClientProvider>
         </ContextProviders>
       </AppProvider>
