@@ -21,7 +21,7 @@ jest.mock('@src/data/hooks', () => ({
 jest.mock('@src/hooks', () => ({
   useCourseData: jest.fn().mockReturnValue({
     enrollment: { mode: 'executive-education' },
-    courseRun: { homeUrl: 'home-url' },
+    courseRun: { homeUrl: 'http://localhost:8000/courses/course-v1:Test+101+2024/course/' },
   }),
   useCourseTrackingEvent: jest.fn().mockReturnValue({
     trackCourseEvent: jest.fn(),
@@ -40,7 +40,7 @@ jest.mock('./ActionButton/hooks', () => jest.fn(() => false));
 
 useCourseData.mockReturnValue({
   enrollment: { mode: 'executive-education' },
-  courseRun: { resumeUrl: 'home-url' },
+  courseRun: { resumeUrl: '/courses/course-v1:Test+101+2024/courseware/chapter1/' },
 });
 
 describe('ResumeButton', () => {
@@ -84,7 +84,7 @@ describe('ResumeButton', () => {
         expect(useCourseTrackingEvent).toHaveBeenCalledWith(
           track.course.enterCourseClicked,
           props.cardId,
-          `home-url?org_id=${authOrgId}`,
+          `http://localhost:8000/courses/course-v1:Test+101+2024/courseware/chapter1/?org_id=${authOrgId}`,
         );
       });
     });
