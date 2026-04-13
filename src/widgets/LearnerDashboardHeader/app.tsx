@@ -1,6 +1,6 @@
 import { App, LinkMenuItem, WidgetOperationTypes, getAppConfig } from '@openedx/frontend-base';
 
-import { appId } from '../../constants';
+import { appId, dashboardRole } from '../../constants';
 
 import ConfirmEmailBanner from './ConfirmEmailBanner';
 import MasqueradeBar from './MasqueradeBar';
@@ -18,6 +18,9 @@ const app: App = {
       id: 'org.openedx.frontend.widget.learnerDashboard.headerConfirmEmail.v1',
       op: WidgetOperationTypes.PREPEND,
       component: ConfirmEmailBanner,
+      condition: {
+        active: [dashboardRole]
+      }
     },
     {
       slotId: 'org.openedx.frontend.slot.header.primaryLinks.v1',
@@ -29,7 +32,10 @@ const app: App = {
           url="/"
           variant="navLink"
         />
-      )
+      ),
+      condition: {
+        active: [dashboardRole]
+      }
     },
     {
       slotId: 'org.openedx.frontend.slot.header.primaryLinks.v1',
@@ -41,6 +47,7 @@ const app: App = {
         />
       ),
       condition: {
+        active: [dashboardRole],
         callback: () => getAppConfig(appId).ENABLE_PROGRAMS === true,
       }
     },
@@ -53,6 +60,9 @@ const app: App = {
           variant="navLink"
         />
       ),
+      condition: {
+        active: [dashboardRole]
+      }
     },
     {
       slotId: 'org.openedx.frontend.slot.header.secondaryLinks.v1',
@@ -64,6 +74,7 @@ const app: App = {
         />
       ),
       condition: {
+        active: [dashboardRole],
         callback: () => getAppConfig(appId).SUPPORT_URL ? true : false,
       }
     },
@@ -78,6 +89,7 @@ const app: App = {
         />
       ),
       condition: {
+        active: [dashboardRole],
         callback: () => getAppConfig(appId).ORDER_HISTORY_URL ? true : false,
       }
     },
@@ -86,6 +98,9 @@ const app: App = {
       id: 'org.openedx.frontend.widget.learnerDashboard.headerMasqueradeBar.v1',
       op: WidgetOperationTypes.APPEND,
       component: MasqueradeBar,
+      condition: {
+        active: [dashboardRole]
+      }
     },
   ]
 };
