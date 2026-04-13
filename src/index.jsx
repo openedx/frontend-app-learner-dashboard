@@ -2,7 +2,7 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
-import React, { StrictMode } from 'react';
+import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   Navigate, Route, Routes,
@@ -21,6 +21,7 @@ import {
   getConfig,
   mergeConfig,
 } from '@edx/frontend-platform';
+import { FooterSlot } from '@edx/frontend-component-footer';
 
 import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -56,6 +57,7 @@ subscribe(APP_READY, () => {
               )}
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
+            <FooterSlot/>
           </QueryClientProvider>
         </ContextProviders>
       </AppProvider>

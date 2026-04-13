@@ -123,7 +123,7 @@ describe('ProgramListCard', () => {
     width: 500,
     size: 'xSmall',
   }])('tests window size', ({ width, size }) => {
-    global.innerWidth = width;
+    innerWidth = width;
     const { getByAltText } = renderComponent();
     const imageCap = getByAltText('program card image for test-title');
     expect(imageCap).toHaveAttribute('src', `banner-${size}.jpg`);
