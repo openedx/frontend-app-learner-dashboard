@@ -1,4 +1,7 @@
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
+import React from 'react';
+import { renderHook } from '@testing-library/react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useProgramsListData } from './api';
 
 const mockGet = jest.fn(() => ({
@@ -17,11 +20,29 @@ jest.mock('@edx/frontend-platform', () => ({
   })),
 }));
 
+const createTestQueryClient = () => new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
+});
+
 describe('API', () => {
   it('uses the expected URL to call the endpoint', async () => {
-    await useProgramsListData();
+    const queryClient = createTestQueryClient();
+
+    const wrapper = ({ children }: { children: React.ReactNode }) => React.createElement(
+      QueryClientProvider,
+      { client: queryClient },
+      children,
+    );
+
+    renderHook(() => useProgramsListData(), { wrapper });
 
     expect(getAuthenticatedHttpClient).toHaveBeenCalled();
-    expect(mockGet).toHaveBeenCalledWith(`${mockLMSBaseUrl}/api/dashboard/v0/programs/`);
+    expect(mockGet).toHaveBeenCalledWith(
+      `${mockLMSBaseUrl}/api/dashboard/v0/programs/`,
+    );
   });
 });

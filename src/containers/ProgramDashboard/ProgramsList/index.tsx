@@ -16,7 +16,15 @@ import './index.scss';
 
 const ProgramsList: React.FC = () => {
   const { formatMessage } = useIntl();
-  const { data: programsData, isLoading, isError: errorState } = useProgramsListData() as { data: ProgramData[]; isLoading: boolean; isError: boolean };
+  const {
+    data: programsData,
+    isLoading,
+    isError: errorState,
+  } = useProgramsListData() as {
+    data: ProgramData[];
+    isLoading: boolean;
+    isError: boolean;
+  };
 
   const renderPrograms = () => {
     if (isLoading) {

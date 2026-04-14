@@ -9,11 +9,9 @@ const fetchProgramsListData = async () => {
   return data;
 };
 
-export const useProgramsListData = () => {
-  return useQuery({
-    queryKey: ['programsList'],
-    queryFn: fetchProgramsListData,
-    retry: false,
-    refetchOnWindowFocus: false,
-  });
-};
+export const useProgramsListData = () => useQuery({
+  queryKey: ['programsList'],
+  queryFn: fetchProgramsListData,
+  retry: false,
+  refetchOnWindowFocus: false,
+});
