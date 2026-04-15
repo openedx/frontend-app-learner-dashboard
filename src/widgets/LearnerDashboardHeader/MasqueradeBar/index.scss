@@ -1,11 +1,11 @@
 .masquerade-bar {
   display: flex;
   align-items: flex-start;
-  padding: var(--pgn-spacing-spacer-3);
+  padding: var(--pgn-spacing-spacer-3) 0;
   margin-bottom: var(--pgn-spacing-spacer-2);
 
   .masquerade-form-label {
-    padding: var(--pgn-spacing-spacer-2) var(--pgn-spacing-spacer-3);
+    padding: var(--pgn-spacing-spacer-2) var(--pgn-spacing-spacer-3) var(--pgn-spacing-spacer-2) 0;
     display: flex;
     align-items: center;
     margin-bottom: 0;
@@ -31,6 +31,6 @@
 @media (--pgn-size-breakpoint-max-width-md) {
   .masquerade-bar {
     margin: auto;
-    padding: var(--pgn-spacing-spacer-3) var(--pgn-spacing-spacer-4);
+    padding: var(--pgn-spacing-spacer-3) 0;
   }
 }
