@@ -29,7 +29,7 @@ const app: App = {
       element: (
         <LinkMenuItem
           label={<CoursesLink />}
-          url="/"
+          role={dashboardRole}
           variant="navLink"
         />
       ),

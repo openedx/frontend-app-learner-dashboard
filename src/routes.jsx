@@ -1,4 +1,4 @@
-import { authenticatedLoader } from '@openedx/frontend-base';
+import { authenticatedLoader, homeRole } from '@openedx/frontend-base';
 import { dashboardRole } from './constants';
 
 const routes = [
@@ -7,7 +7,7 @@ const routes = [
     path: '/learner-dashboard',
     loader: authenticatedLoader,
     handle: {
-      role: dashboardRole
+      roles: [dashboardRole, homeRole]
     },
     async lazy () {
       const module = await import('./Main');

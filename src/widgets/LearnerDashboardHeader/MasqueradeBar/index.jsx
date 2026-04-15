@@ -3,6 +3,7 @@ import { SiteContext } from '@openedx/frontend-base';
 
 import {
   Chip,
+  Container,
   Form,
   FormControl,
   FormControlFeedback,
@@ -36,8 +37,9 @@ export const MasqueradeBar = () => {
   if (!canMasquerade) { return null; }
 
   return (
-    <div className="w-100 shadow-sm px-2">
-      <Form className="masquerade-bar w-100">
+    <div className="w-100 shadow-sm">
+      <Container fluid size="xl">
+        <Form className="masquerade-bar w-100">
         {isMasquerading ? (
           <>
             <FormLabel inline="true" className="masquerade-form-label">
@@ -85,6 +87,7 @@ export const MasqueradeBar = () => {
           </>
         )}
       </Form>
+      </Container>
     </div>
   );
 };
