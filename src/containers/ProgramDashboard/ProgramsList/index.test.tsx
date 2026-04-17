@@ -1,6 +1,8 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 
+import { getConfig } from '@edx/frontend-platform';
+import { logError } from '@edx/frontend-platform/logging';
 import ProgramsList from '.';
 import { useProgramsListData } from '../data/api';
 import ProgramListCard from './ProgramListCard';
@@ -11,9 +13,11 @@ import messages from './messages';
 jest.mock('../data/api', () => ({
   useProgramsListData: jest.fn(),
 }));
+
 jest.mock('@edx/frontend-platform/logging', () => ({
-  logError: jest.fn(),
+  logError: jest.fn(() => {}),
 }));
+
 jest.mock('@edx/frontend-platform', () => ({
   getConfig: jest.fn(() => ({
     CONTACT_URL: 'test-contact-url',
@@ -38,7 +42,11 @@ describe('ProgramsList', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     // Set up a successful mock API response by default
-    (useProgramsListData as jest.Mock).mockResolvedValue(mockApiData);
+    (useProgramsListData as jest.Mock).mockResolvedValue({
+      data: mockApiData,
+      loading: false,
+      isError: false,
+    });
   });
 
   const renderComponent = () => render(
@@ -100,7 +108,7 @@ describe('ProgramsList', () => {
     });
   });
 
-  it('renders fallback UI when the API request fails', async() => {
+  it('renders fallback UI when the API request fails', async () => {
     const mockError = new Error('Network failed');
     (useProgramsListData as jest.Mock).mockReturnValue({
       data: [],
@@ -111,5 +119,27 @@ describe('ProgramsList', () => {
     await waitFor(() => {
       expect(screen.getByTestId('explore-programs-cta')).toBeInTheDocument();
     });
+  });
+
+  it('calls logError if the API request fails', () => {
+    const mockError = new Error('Network failed');
+
+    (useProgramsListData as jest.Mock).mockReturnValue({
+      data: undefined,
+      isLoading: false,
+      isError: true,
+      error: mockError,
+    });
+
+    const mockContactUrl = 'mock-contact-url';
+    getConfig.mockReturnValue({
+      CONTACT_URL: mockContactUrl,
+    });
+
+    renderComponent();
+
+    expect(screen.getByRole('link', { name: mockContactUrl })).toBeInTheDocument();
+    expect(screen.queryAllByTestId('program-list-card')).toHaveLength(0);
+    expect(logError).toHaveBeenCalledWith(mockError);
   });
 });
