@@ -1,4 +1,3 @@
-
 import { useQuery } from '@tanstack/react-query';
 import { getConfig } from '@edx/frontend-platform';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';

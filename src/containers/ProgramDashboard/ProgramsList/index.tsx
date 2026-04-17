@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Alert, CardGrid, Col, Container, Row, Spinner,
 } from '@openedx/paragon';
 import { getConfig } from '@edx/frontend-platform';
 import { useIntl } from '@edx/frontend-platform/i18n';
+import { logError } from '@edx/frontend-platform/logging';
 
 import appMessages from 'messages';
 import { useProgramsListData } from '../data/api';
@@ -16,15 +17,24 @@ import './index.scss';
 
 const ProgramsList: React.FC = () => {
   const { formatMessage } = useIntl();
+
   const {
     data: programsData,
     isLoading,
     isError: errorState,
+    error,
   } = useProgramsListData() as {
     data: ProgramData[];
     isLoading: boolean;
     isError: boolean;
+    error: Error | null;
   };
+
+  useEffect(() => {
+    if (error) {
+      logError(error);
+    }
+  }, [error]);
 
   const renderPrograms = () => {
     if (isLoading) {
