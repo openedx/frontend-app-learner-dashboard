@@ -2,7 +2,7 @@ import { EnvironmentTypes, SiteConfig, footerApp, headerApp, shellApp } from '@o
 
 import { learnerDashboardApp } from './src';
 
-import './src/app.scss';
+import '@openedx/frontend-base/shell/style';
 
 const siteConfig: SiteConfig = {
   siteId: 'learner-dashboard-dev',
