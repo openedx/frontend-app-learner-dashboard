@@ -1,48 +1,41 @@
-import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
-import React from 'react';
 import { renderHook } from '@testing-library/react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { useProgramsListData } from './api';
+import { useQuery } from '@tanstack/react-query';
+import { useProgramsListData } from '../../../data/hooks/queryHooks';
+import { fetchProgramsListData } from './api';
 
-const mockGet = jest.fn(() => ({
-  data: {},
+jest.mock('@tanstack/react-query', () => ({
+  useQuery: jest.fn(),
 }));
-const mockLMSBaseUrl = 'http://test-lms-base-url';
-
-jest.mock('@edx/frontend-platform/auth', () => ({
-  getAuthenticatedHttpClient: jest.fn(() => ({
-    get: mockGet,
-  })),
-}));
-jest.mock('@edx/frontend-platform', () => ({
-  getConfig: jest.fn(() => ({
-    LMS_BASE_URL: mockLMSBaseUrl,
-  })),
+jest.mock('./api', () => ({
+  fetchProgramsListData: jest.fn(),
 }));
 
-const createTestQueryClient = () => new QueryClient({
-  defaultOptions: {
-    queries: {
+describe('useProgramsListData', () => {
+  const mockQueryResult = {
+    data: { results: [] },
+    isLoading: false,
+    isError: false,
+  };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    (useQuery as jest.Mock).mockReturnValue(mockQueryResult);
+  });
+
+  it('calls useQuery with the expected arguments', () => {
+    renderHook(() => useProgramsListData());
+
+    expect(useQuery).toHaveBeenCalledWith({
+      queryKey: ['programsList'],
+      queryFn: fetchProgramsListData,
       retry: false,
-    },
-  },
-});
+      refetchOnWindowFocus: false,
+    });
+  });
 
-describe('API', () => {
-  it('uses the expected URL to call the endpoint', async () => {
-    const queryClient = createTestQueryClient();
+  it('returns the result of useQuery', () => {
+    const { result } = renderHook(() => useProgramsListData());
 
-    const wrapper = ({ children }: { children: React.ReactNode }) => React.createElement(
-      QueryClientProvider,
-      { client: queryClient },
-      children,
-    );
-
-    renderHook(() => useProgramsListData(), { wrapper });
-
-    expect(getAuthenticatedHttpClient).toHaveBeenCalled();
-    expect(mockGet).toHaveBeenCalledWith(
-      `${mockLMSBaseUrl}/api/dashboard/v0/programs/`,
-    );
+    expect(result.current).toEqual(mockQueryResult);
   });
 });

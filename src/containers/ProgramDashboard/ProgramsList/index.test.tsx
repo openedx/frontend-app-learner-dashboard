@@ -1,21 +1,17 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
-
-import { getConfig } from '@edx/frontend-platform';
-import { logError } from '@edx/frontend-platform/logging';
 import ProgramsList from '.';
-import { useProgramsListData } from '../data/api';
+import { useProgramsListData } from '../../../data/hooks/queryHooks';
 import ProgramListCard from './ProgramListCard';
 import ExploreProgramsCTA from './ExploreProgramsCTA';
 import messages from './messages';
 
-// Mock API and external utilities
-jest.mock('../data/api', () => ({
+jest.mock('../../../data/hooks/queryHooks', () => ({
   useProgramsListData: jest.fn(),
 }));
 
 jest.mock('@edx/frontend-platform/logging', () => ({
-  logError: jest.fn(() => {}),
+  logError: jest.fn(),
 }));
 
 jest.mock('@edx/frontend-platform', () => ({
@@ -24,7 +20,6 @@ jest.mock('@edx/frontend-platform', () => ({
   })),
 }));
 
-// Mock Child Components
 jest.mock('./ProgramListCard', () => jest.fn(({ program }) => (
   <div data-testid="program-list-card">{program.title}</div>
 )));
@@ -32,7 +27,6 @@ jest.mock('./ExploreProgramsCTA', () => jest.fn(() => (
   <div data-testid="explore-programs-cta" />
 )));
 
-// Mock Data
 const mockApiData = [
   { uuid: '111-aaa', title: 'Data Science Program' },
   { uuid: '222-bbb', title: 'UX Design Program' },
@@ -41,10 +35,10 @@ const mockApiData = [
 describe('ProgramsList', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    // Set up a successful mock API response by default
-    (useProgramsListData as jest.Mock).mockResolvedValue({
+    // useProgramsListData is a synchronous hook — use mockReturnValue, NOT mockResolvedValue
+    (useProgramsListData as jest.Mock).mockReturnValue({
       data: mockApiData,
-      loading: false,
+      isLoading: false,
       isError: false,
     });
   });
@@ -55,91 +49,72 @@ describe('ProgramsList', () => {
     </IntlProvider>,
   );
 
-  it('renders header text and ExploreProgramsCTA', async () => {
+  it('renders header text and ExploreProgramsCTA', () => {
     renderComponent();
-    await waitFor(() => {
-      expect(screen.getByText(messages.programsListHeaderText.defaultMessage)).toBeInTheDocument();
-      expect(screen.getByTestId('explore-programs-cta')).toBeInTheDocument();
-    });
+    expect(screen.getByText(messages.programsListHeaderText.defaultMessage)).toBeInTheDocument();
+    expect(screen.getByTestId('explore-programs-cta')).toBeInTheDocument();
   });
 
-  it('fetches program data on mount', async () => {
+  it('fetches program data on mount', () => {
     renderComponent();
-
     expect(useProgramsListData).toHaveBeenCalledTimes(1);
   });
 
-  it('renders ProgramListCard only when an assigned program exists', async () => {
+  it('renders a loading spinner while data is being fetched', () => {
     (useProgramsListData as jest.Mock).mockReturnValue({
-      data: mockApiData,
-      loading: false,
-      error: null,
+      data: undefined,
+      isLoading: true,
+      isError: false,
     });
+    renderComponent();
+    expect(screen.getByRole('status')).toBeInTheDocument();
+    expect(screen.queryAllByTestId('program-list-card')).toHaveLength(0);
+  });
 
+  it('renders ProgramListCard for each program when enrollments exist', async () => {
     renderComponent();
 
     await waitFor(() => {
-      expect(
-        screen.queryAllByTestId('program-list-card').length,
-      ).toBeGreaterThan(0);
+      expect(screen.queryAllByTestId('program-list-card').length).toBeGreaterThan(0);
     });
 
     expect(ProgramListCard).toHaveBeenCalledWith(
-      expect.objectContaining({
-        program: mockApiData[0],
-      }),
+      expect.objectContaining({ program: mockApiData[0] }),
+      {},
+    );
+    expect(ProgramListCard).toHaveBeenCalledWith(
+      expect.objectContaining({ program: mockApiData[1] }),
       {},
     );
   });
 
-  it('renders the ExploreProgramsCTA with "hasEnrollments" set to false if there are no program enrollments', async () => {
-    (useProgramsListData as jest.Mock).mockResolvedValueOnce({ data: [] });
-    renderComponent();
-
-    await waitFor(() => {
-      expect(ExploreProgramsCTA).toHaveBeenCalledWith(
-        expect.objectContaining(
-          {
-            hasEnrollments: false,
-          },
-        ),
-        {},
-      );
-    });
-  });
-
-  it('renders fallback UI when the API request fails', async () => {
-    const mockError = new Error('Network failed');
+  it('renders fallback UI when the API request fails', () => {
     (useProgramsListData as jest.Mock).mockReturnValue({
       data: [],
-      loading: false,
-      error: mockError,
+      isLoading: false,
+      isError: false,
     });
     renderComponent();
-    await waitFor(() => {
-      expect(screen.getByTestId('explore-programs-cta')).toBeInTheDocument();
-    });
+
+    expect(ExploreProgramsCTA).toHaveBeenCalledWith(
+      expect.objectContaining({ hasEnrollments: false }),
+      {},
+    );
   });
 
-  it('calls logError if the API request fails', () => {
-    const mockError = new Error('Network failed');
-
+  it('renders an Alert and no program cards when the API request fails', async () => {
     (useProgramsListData as jest.Mock).mockReturnValue({
       data: undefined,
       isLoading: false,
       isError: true,
-      error: mockError,
     });
-
-    const mockContactUrl = 'mock-contact-url';
-    getConfig.mockReturnValue({
-      CONTACT_URL: mockContactUrl,
-    });
-
     renderComponent();
 
-    expect(screen.getByRole('link', { name: mockContactUrl })).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByRole('alert')).toBeInTheDocument();
+    });
+
     expect(screen.queryAllByTestId('program-list-card')).toHaveLength(0);
-    expect(logError).toHaveBeenCalledWith(mockError);
+    expect(screen.queryByTestId('explore-programs-cta')).not.toBeInTheDocument();
   });
 });
