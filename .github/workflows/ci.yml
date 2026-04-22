@@ -36,6 +36,9 @@ jobs:
     - name: Build
       run: npm run build
 
+    - name: Build (CI)
+      run: npm run build:ci
+
     - name: Run Coverage
       uses: codecov/codecov-action@v5
       with:
