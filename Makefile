@@ -56,6 +56,9 @@ build:
 	  done' sh {} +
 	tsc-alias -p tsconfig.build.json
 
+build-ci:
+	SITE_CONFIG_PATH=site.config.ci.tsx openedx build
+
 i18n.extract:
 	# Pulling display strings from .jsx files into .json files...
 	npm run-script i18n_extract

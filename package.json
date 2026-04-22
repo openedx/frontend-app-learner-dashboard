@@ -30,6 +30,7 @@
   },
   "scripts": {
     "build": "make build",
+    "build:ci": "make build-ci",
     "build:packages": "make build-packages",
     "clean": "make clean",
     "clean:packages": "make clean-packages",
