@@ -30,7 +30,10 @@ const createWrapper = () => {
   const wrapper = ({ children }: { children: React.ReactNode }) => (
     <QueryClientProvider client={queryClient}>
       <AppContext.Provider value={{
-        authenticatedUser: { username: 'test-user' },
+        authenticatedUser: {
+          username: 'test-user', userId: 1, roles: [], administrator: false,
+        },
+        config: {} as any,
       }}
       >
         {children}
