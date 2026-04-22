@@ -17,7 +17,7 @@ const mockBaseProgram = {
   uuid: 'test-uuid',
   title: 'test-title',
   type: 'test-type',
-  bannerImage: {
+  banner_image: {
     xSmall: { url: 'banner-xSmall.jpg', width: 348, height: 116 },
     small: { url: 'banner-small.jpg', width: 435, height: 145 },
     medium: { url: 'banner-medium.jpg', width: 726, height: 242 },

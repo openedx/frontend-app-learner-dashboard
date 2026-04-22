@@ -2,7 +2,7 @@ export interface ProgramData {
   uuid: string,
   title: string,
   type: string,
-  bannerImage: {
+  banner_image: {
     small: ImageData,
     medium: ImageData,
     large: ImageData,

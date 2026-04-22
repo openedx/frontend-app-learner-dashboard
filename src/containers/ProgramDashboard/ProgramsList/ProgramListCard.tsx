@@ -20,18 +20,20 @@ const ProgramListCard: React.FC<ProgramCardProps> = ({
     let imageURL = '';
     // We need to check that the breakpoint value exists before using it
     // Otherwise TypeScript will flag it as it can potentially be undefined in Paragon
-    if (!windowWidth) {
-      return program.bannerImage.medium.url;
-    }
+    if (program.banner_image && Object.keys(program.banner_image).length > 0) {
+      if (!windowWidth) {
+        return program.banner_image.medium.url;
+      }
 
-    if (typeof breakpoints.large.minWidth === 'number' && windowWidth >= breakpoints.large.minWidth) {
-      imageURL = program.bannerImage.large.url;
-    } else if (typeof breakpoints.medium.minWidth === 'number' && windowWidth >= breakpoints.medium.minWidth) {
-      imageURL = program.bannerImage.medium.url;
-    } else if (typeof breakpoints.small.minWidth === 'number' && windowWidth >= breakpoints.small.minWidth) {
-      imageURL = program.bannerImage.small.url;
-    } else {
-      imageURL = program.bannerImage.xSmall.url;
+      if (typeof breakpoints.large.minWidth === 'number' && windowWidth >= breakpoints.large.minWidth) {
+        imageURL = program.banner_image.large.url;
+      } else if (typeof breakpoints.medium.minWidth === 'number' && windowWidth >= breakpoints.medium.minWidth) {
+        imageURL = program.banner_image.medium.url;
+      } else if (typeof breakpoints.small.minWidth === 'number' && windowWidth >= breakpoints.small.minWidth) {
+        imageURL = program.banner_image.small.url;
+      } else {
+        imageURL = program.banner_image.xSmall.url;
+      }
     }
     return imageURL;
   };

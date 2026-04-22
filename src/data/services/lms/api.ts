@@ -1,3 +1,4 @@
+import { getConfig } from '@edx/frontend-platform';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import { apiKeys, enableEmailsAction, unenrollmentAction } from 'data/services/lms/constants';
 import urls from 'data/services/lms/urls';
@@ -82,6 +83,12 @@ const sendConfirmEmail = async (sendEmailUrl: string) => {
   return response;
 };
 
+const fetchProgramsListData = async () => {
+  const url = `${getConfig().LMS_BASE_URL}/api/dashboard/v0/programs/`;
+  const { data } = await getAuthenticatedHttpClient().get(url);
+  return data;
+};
+
 export {
   initializeList,
   unenrollFromCourse,
@@ -92,4 +99,5 @@ export {
   logShare,
   createCreditRequest,
   sendConfirmEmail,
+  fetchProgramsListData
 };

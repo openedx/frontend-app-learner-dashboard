@@ -1,3 +1,4 @@
+import { getConfig } from '@edx/frontend-platform';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { apiKeys, enableEmailsAction, unenrollmentAction } from 'data/services/lms/constants';
@@ -15,6 +16,7 @@ import {
   logShare,
   createCreditRequest,
   sendConfirmEmail,
+  fetchProgramsListData,
 } from './api';
 
 // Mock dependencies
@@ -23,6 +25,12 @@ jest.mock('data/services/lms/constants');
 jest.mock('data/services/lms/urls');
 jest.mock('data/services/lms/utils');
 jest.mock('tracking/constants');
+jest.mock('@edx/frontend-platform', () => ({
+  getConfig: jest.fn(),
+}));
+jest.mock('@edx/frontend-platform/auth', () => ({
+  getAuthenticatedHttpClient: jest.fn(),
+}));
 
 const mockHttpClient = {
   get: jest.fn(),
@@ -283,6 +291,41 @@ describe('API functions', () => {
       mockHttpClient.post.mockRejectedValue(apiError);
 
       await expect(unenrollFromCourse({ courseId: 'invalid-course' })).rejects.toEqual(apiError);
+    });
+  });
+
+  describe('fetchProgramsListData', () => {
+    const mockLmsBaseUrl = 'http://localhost:18000';
+    const mockData = { results: [{ uuid: 'test-uuid', title: 'Test Program' }] };
+    const mockGet = jest.fn();
+
+    beforeEach(() => {
+      jest.clearAllMocks();
+      getConfig.mockReturnValue({ LMS_BASE_URL: mockLmsBaseUrl });
+      getAuthenticatedHttpClient.mockReturnValue({ get: mockGet });
+    });
+
+    it('calls the correct URL', async () => {
+      mockGet.mockResolvedValue({ data: mockData });
+
+      await fetchProgramsListData();
+
+      expect(mockGet).toHaveBeenCalledWith(`${mockLmsBaseUrl}/api/dashboard/v0/programs/`);
+    });
+
+    it('returns data from the response', async () => {
+      mockGet.mockResolvedValue({ data: mockData });
+
+      const result = await fetchProgramsListData();
+
+      expect(result).toEqual(mockData);
+    });
+
+    it('throws an error when the request fails', async () => {
+      const mockError = new Error('Network Error');
+      mockGet.mockRejectedValue(mockError);
+
+      await expect(fetchProgramsListData()).rejects.toThrow('Network Error');
     });
   });
 });
