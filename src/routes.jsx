@@ -10,7 +10,7 @@ const routes = [
       roles: [dashboardRole, homeRole]
     },
     async lazy () {
-      const module = await import('./Main');
+      const module = await import(/* webpackChunkName: "learner-dashboard-main" */ './Main');
       return { Component: module.default };
     },
   }
