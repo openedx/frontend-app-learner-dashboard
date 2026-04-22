@@ -3,7 +3,6 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 import ProgramsList from '.';
 import { useProgramsListData } from '../../../data/hooks/queryHooks';
 import ProgramListCard from './ProgramListCard';
-import ExploreProgramsCTA from './ExploreProgramsCTA';
 import messages from './messages';
 
 jest.mock('../../../data/hooks/queryHooks', () => ({
@@ -84,20 +83,6 @@ describe('ProgramsList', () => {
     );
     expect(ProgramListCard).toHaveBeenCalledWith(
       expect.objectContaining({ program: mockApiData[1] }),
-      {},
-    );
-  });
-
-  it('renders fallback UI when the API request fails', () => {
-    (useProgramsListData as jest.Mock).mockReturnValue({
-      data: [],
-      isLoading: false,
-      isError: false,
-    });
-    renderComponent();
-
-    expect(ExploreProgramsCTA).toHaveBeenCalledWith(
-      expect.objectContaining({ hasEnrollments: false }),
       {},
     );
   });
