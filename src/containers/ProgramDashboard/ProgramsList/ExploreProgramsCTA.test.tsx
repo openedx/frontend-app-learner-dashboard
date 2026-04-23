@@ -43,7 +43,7 @@ describe('ExploreProgramsCTA', () => {
 
   it('uses EXPLORE_PROGRAMS_URL when it is defined', () => {
     const customUrl = 'https://custom.explore.url/programs';
-    getConfig.mockReturnValueOnce({
+    (getConfig as jest.Mock).mockReturnValueOnce({
       LMS_BASE_URL: 'https://courses.example.com',
       EXPLORE_PROGRAMS_URL: customUrl,
     });
