@@ -301,8 +301,10 @@ describe('API functions', () => {
 
     beforeEach(() => {
       jest.clearAllMocks();
-      getConfig.mockReturnValue({ LMS_BASE_URL: mockLmsBaseUrl });
-      getAuthenticatedHttpClient.mockReturnValue({ get: mockGet });
+      (getConfig as jest.Mock).mockReturnValue({ LMS_BASE_URL: mockLmsBaseUrl });
+      (getAuthenticatedHttpClient as jest.MockedFunction<
+        typeof getAuthenticatedHttpClient
+      >).mockReturnValue({ get: mockGet });
     });
 
     it('calls the correct URL', async () => {
