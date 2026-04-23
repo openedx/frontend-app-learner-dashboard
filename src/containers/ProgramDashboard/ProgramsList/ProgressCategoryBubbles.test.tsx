@@ -6,7 +6,7 @@ import ProgressCategoryBubbles from './ProgressCategoryBubbles';
 describe('ProgressCategoryBubbles', () => {
   it('renders the correct values for each category', () => {
     render(
-      <IntlProvider>
+      <IntlProvider locale="en">
         <ProgressCategoryBubbles inProgress={1} notStarted={2} completed={0} />
       </IntlProvider>,
     );
