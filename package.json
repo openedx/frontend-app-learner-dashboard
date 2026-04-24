@@ -7,8 +7,7 @@
     "url": "git+https://github.com/edx/frontend-app-learner-dashboard.git"
   },
   "exports": {
-    ".": "./dist/index.js",
-    "./app.scss": "./dist/app.scss"
+    ".": "./dist/index.js"
   },
   "files": [
     "/dist"
@@ -40,12 +39,12 @@
     "url": "https://github.com/openedx/frontend-app-learner-dashboard/issues"
   },
   "dependencies": {
-    "@edx/brand": "npm:@openedx/brand-openedx@^1.2.3",
     "@edx/openedx-atlas": "^0.7.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@openedx/brand-openedx": "npm:@edx/elm-theme@^1.11.1",
     "classnames": "^2.3.1",
     "font-awesome": "4.7.0",
     "lodash": "^4.17.21",
@@ -68,7 +67,7 @@
     "tsc-alias": "^1.8.16"
   },
   "peerDependencies": {
-    "@openedx/frontend-base": "^1.0.0-alpha.16",
+    "@openedx/frontend-base": "^1.0.0-alpha.39",
     "@openedx/paragon": "^23",
     "@tanstack/react-query": "^5",
     "@types/react": "^18",

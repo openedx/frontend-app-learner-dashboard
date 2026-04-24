@@ -4,7 +4,7 @@ import { appId } from './constants';
 import ContextProviders from './data/context';
 import Dashboard from './containers/Dashboard';
 
-import './app.scss';
+import './style.scss';
 
 const Main = () => (
   <CurrentAppProvider appId={appId}>
