@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import { useSelectSessionModal } from '@src/data/context';
 import { useInitializeLearnerHome } from '@src/data/hooks';
@@ -8,6 +8,7 @@ import DashboardModalSlot from '../../slots/DashboardModalSlot';
 
 import LoadingView from './LoadingView';
 import DashboardLayout from './DashboardLayout';
+import DashboardTabs from './DashboardTabs';
 import hooks from './hooks';
 import './index.scss';
 
@@ -15,9 +16,32 @@ export const Dashboard = () => {
   const { data, isPending } = useInitializeLearnerHome();
   const { pageTitle } = hooks.useDashboardMessages();
   const { selectSessionModal } = useSelectSessionModal();
-  const showSelectSessionModal = selectSessionModal.cardId !== null;
+  const showSelectSessionModal = selectSessionModal?.cardId != null;
 
   const hasCourses = useMemo(() => data?.courses?.length > 0, [data]);
+  const dashboardTabs = useMemo(() => ([
+    {
+      key: 'courses',
+      title: 'Courses',
+      panel: <CoursesPanel />,
+    },
+    {
+      key: 'programs',
+      title: 'Programs',
+      panel: <span>Programs</span>,
+    },
+    {
+      key: 'history',
+      title: 'History',
+      panel: <span>History</span>,
+    },
+  ]), []);
+  const [activeTab, setActiveTab] = useState(dashboardTabs[0].key);
+  const handleTabSelect = useCallback((tabKey) => {
+    if (tabKey) {
+      setActiveTab(tabKey);
+    }
+  }, []);
 
   return (
     <div id="learnerdashboardroot">
@@ -35,7 +59,11 @@ export const Dashboard = () => {
               ? (<LoadingView />)
               : (
                 <DashboardLayout>
-                  <CoursesPanel />
+                  <DashboardTabs
+                    activeTab={activeTab}
+                    onSelect={handleTabSelect}
+                    tabs={dashboardTabs}
+                  />
                 </DashboardLayout>
               )}
           </div>

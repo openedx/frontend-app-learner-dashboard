@@ -13,6 +13,12 @@
     }
   }
 }
+//  dashboard tab
+#dashboard-content {
+    .nav-tabs .nav-link:focus::before {
+      border: 0;
+    }
+}
 
 @media (--pgn-size-breakpoint-max-width-lg) {
   .sidebar-column {
