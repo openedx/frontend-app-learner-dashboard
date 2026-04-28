@@ -1,4 +1,4 @@
-import { App, LinkMenuItem, WidgetOperationTypes, getAppConfig } from '@openedx/frontend-base';
+import { App, LinkMenuItem, WidgetOperationTypes, getAppConfig, helpButtonSlotOperation } from '@openedx/frontend-base';
 
 import { appId, dashboardRole } from '../../constants';
 
@@ -7,7 +7,6 @@ import MasqueradeBar from './MasqueradeBar';
 import CoursesLink from './CoursesLink';
 import DiscoverLinkMenuItem from './DiscoverLinkMenuItem';
 import ProgramsLinkMenuItem from './ProgramsLinkMenuItem';
-import SupportLinkMenuItem from './SupportLinkMenuItem';
 import OrderHistoryLinkMenuItem from './OrderHistoryLinkMenuItem';
 
 const app: App = {
@@ -64,20 +63,7 @@ const app: App = {
         active: [dashboardRole]
       }
     },
-    {
-      slotId: 'org.openedx.frontend.slot.header.secondaryLinks.v1',
-      id: 'org.openedx.frontend.widget.learnerDashboard.headerLinkSupport.v1',
-      op: WidgetOperationTypes.APPEND,
-      element: (
-        <SupportLinkMenuItem
-          variant="navLink"
-        />
-      ),
-      condition: {
-        active: [dashboardRole],
-        callback: () => getAppConfig(appId).SUPPORT_URL ? true : false,
-      }
-    },
+    helpButtonSlotOperation({ appId, role: dashboardRole }),
     {
       slotId: 'org.openedx.frontend.slot.header.authenticatedMenu.v1',
       id: 'org.openedx.frontend.widget.learnerDashboard.headerLinkOrderHistory.v1',
