@@ -7,7 +7,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { logError } from '@edx/frontend-platform/logging';
 
 import appMessages from 'messages';
-import { useProgramsListData } from '../../../data/hooks/queryHooks';
+import { useProgramsListData } from '../../../data/hooks';
 import { ProgramData } from '../data/types';
 import ProgramListCard from './ProgramListCard';
 import ExploreProgramsCTA from './ExploreProgramsCTA';

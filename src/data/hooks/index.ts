@@ -1,4 +1,4 @@
-import { useInitializeLearnerHome } from './queryHooks';
+import { useInitializeLearnerHome, useProgramsListData } from './queryHooks';
 import {
   useUnenrollFromCourse,
   useUpdateEntitlementEnrollment,
@@ -16,4 +16,5 @@ export {
   useUpdateEmailSettings,
   useCreateCreditRequest,
   useSendConfirmEmail,
+  useProgramsListData,
 };
