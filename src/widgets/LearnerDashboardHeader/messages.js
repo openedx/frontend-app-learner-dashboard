@@ -16,11 +16,6 @@ const messages = defineMessages({
     defaultMessage: 'SWITCH DASHBOARD',
     description: 'Switch Dashboard header in the user menu',
   },
-  help: {
-    id: 'learnerVariantDashboard.help.label',
-    defaultMessage: 'Help',
-    description: 'The text for the link to the Help Center',
-  },
   profile: {
     id: 'learnerVariantDashboard.menu.profile.label',
     defaultMessage: 'Profile',
