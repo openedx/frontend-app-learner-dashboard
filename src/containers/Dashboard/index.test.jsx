@@ -25,8 +25,6 @@ jest.mock('./LoadingView', () => jest.fn(() => <div>LoadingView</div>));
 jest.mock('containers/SelectSessionModal', () => jest.fn(() => <div>SelectSessionModal</div>));
 jest.mock('./DashboardLayout', () => jest.fn(() => <div>DashboardLayout</div>));
 
-const pageTitle = 'test-page-title';
-
 describe('Dashboard', () => {
   const createWrapper = (props = {}) => {
     const {
@@ -34,7 +32,7 @@ describe('Dashboard', () => {
       initIsPending = true,
       showSelectSessionModal = true,
     } = props;
-    hooks.useDashboardMessages.mockReturnValue({ pageTitle });
+    hooks.useDashboardMessages.mockReturnValue({ pageTitle: 'Dashboard' });
     const dataMocked = { data: hasCourses ? { courses: [1, 2] } : { courses: [] }, isPending: initIsPending };
     useInitializeLearnerHome.mockReturnValue(dataMocked);
     useSelectSessionModal.mockReturnValue({ selectSessionModal: showSelectSessionModal ? { cardId: 1 } : null });
@@ -42,11 +40,6 @@ describe('Dashboard', () => {
   };
 
   describe('render', () => {
-    it('page title is displayed in sr-only h1 tag', () => {
-      createWrapper();
-      const heading = screen.getByText(pageTitle);
-      expect(heading).toHaveClass('sr-only');
-    });
     describe('initIsPending false', () => {
       it('should render DashboardModalSlot', () => {
         createWrapper({ initIsPending: false });

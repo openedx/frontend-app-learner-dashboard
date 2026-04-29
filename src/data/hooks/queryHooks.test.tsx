@@ -5,11 +5,28 @@ import {
   useInitializeLearnerHome,
 } from './index';
 import * as api from '../services/lms/api';
-
+import { useProgramsListData } from './queryHooks';
+import { fetchProgramsListData } from '../services/lms/api';
 // Mock external dependencies
 jest.mock('@edx/frontend-platform/logging');
 jest.mock('data/context');
 jest.mock('data/services/lms/api');
+
+const mockGet = jest.fn(() => ({
+  data: {},
+}));
+const mockLMSBaseUrl = 'http://test-lms-base-url';
+
+jest.mock('@edx/frontend-platform/auth', () => ({
+  getAuthenticatedHttpClient: jest.fn(() => ({
+    get: mockGet,
+  })),
+}));
+jest.mock('@edx/frontend-platform', () => ({
+  getConfig: jest.fn(() => ({
+    LMS_BASE_URL: mockLMSBaseUrl,
+  })),
+}));
 
 const mockUseMasquerade = useMasquerade as jest.MockedFunction<typeof useMasquerade>;
 const mockUseBackedData = useBackedData as jest.MockedFunction<typeof useBackedData>;
@@ -135,6 +152,33 @@ describe('queryHooks', () => {
 
       // For masquerading, retryOnMount and refetchOnMount should be false
       expect(result.current.isRefetchError).toBe(false);
+    });
+  });
+
+  describe('useProgramsListData', () => {
+    it('calls fetchProgramsListData as the query function', async () => {
+      (fetchProgramsListData as jest.Mock).mockResolvedValue({});
+      renderHook(() => useProgramsListData(), { wrapper: createWrapper() });
+      await waitFor(() => expect(fetchProgramsListData).toHaveBeenCalled());
+    });
+
+    it('returns data on success', async () => {
+      const mockData = { results: [{ uuid: 'test-uuid' }] };
+      (fetchProgramsListData as jest.Mock).mockResolvedValue(mockData);
+
+      const { result } = renderHook(() => useProgramsListData(), { wrapper: createWrapper() });
+
+      await waitFor(() => expect(result.current.isSuccess).toBe(true));
+      expect(result.current.data).toEqual(mockData);
+    });
+
+    it('handles error state correctly', async () => {
+      (fetchProgramsListData as jest.Mock).mockRejectedValue(new Error('API Error'));
+
+      const { result } = renderHook(() => useProgramsListData(), { wrapper: createWrapper() });
+
+      await waitFor(() => expect(result.current.isError).toBe(true));
+      expect(result.current.error).toEqual(new Error('API Error'));
     });
   });
 });

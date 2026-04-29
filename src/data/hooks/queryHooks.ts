@@ -5,6 +5,7 @@ import {
   initializeList,
 } from 'data/services/lms/api';
 import { learnerDashboardQueryKeys } from './queryKeys';
+import { fetchProgramsListData } from '../services/lms/api';
 
 const useInitializeLearnerHome = () => {
   const { masqueradeUser } = useMasquerade();
@@ -33,6 +34,14 @@ const useInitializeLearnerHome = () => {
   return { ...query, data };
 };
 
+const useProgramsListData = () => useQuery({
+  queryKey: ['programsList'],
+  queryFn: fetchProgramsListData,
+  retry: false,
+  refetchOnWindowFocus: false,
+});
+
 export {
   useInitializeLearnerHome,
+  useProgramsListData,
 };

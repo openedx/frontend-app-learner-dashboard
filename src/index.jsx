@@ -2,10 +2,10 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
-import React, { StrictMode } from 'react';
+import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
-  Route, Navigate, Routes,
+  Navigate, Route, Routes,
 } from 'react-router-dom';
 
 import {
@@ -18,11 +18,15 @@ import {
   APP_INIT_ERROR,
   initialize,
   subscribe,
+  getConfig,
   mergeConfig,
 } from '@edx/frontend-platform';
+import { FooterSlot } from '@edx/frontend-component-footer';
 
+import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ContextProviders from 'data/context';
+import { ProgramsList } from './containers/ProgramDashboard';
 import { configuration } from './config';
 
 import messages from './i18n';
@@ -45,10 +49,15 @@ subscribe(APP_READY, () => {
       <AppProvider>
         <ContextProviders>
           <QueryClientProvider client={queryClient}>
+            <LearnerDashboardHeader />
             <Routes>
               <Route path="/" element={<PageWrap><App /></PageWrap>} />
+              {getConfig().ENABLE_PROGRAM_DASHBOARD && (
+                <Route path="programs" element={<PageWrap><ProgramsList /></PageWrap>} />
+              )}
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
+            <FooterSlot />
           </QueryClientProvider>
         </ContextProviders>
       </AppProvider>

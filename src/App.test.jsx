@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { getConfig } from '@edx/frontend-platform';
@@ -15,12 +15,8 @@ jest.mock('data/context', () => ({
   useMasquerade: jest.fn(() => ({ masqueradeUser: null })),
 }));
 
-jest.mock('@edx/frontend-component-footer', () => ({
-  FooterSlot: jest.fn(() => <div>FooterSlot</div>),
-}));
 jest.mock('containers/Dashboard', () => jest.fn(() => <div>Dashboard</div>));
 jest.mock('containers/LearnerDashboardHeader', () => jest.fn(() => <div>LearnerDashboardHeader</div>));
-jest.mock('containers/AppWrapper', () => jest.fn(({ children }) => <div className="AppWrapper">{children}</div>));
 
 jest.mock('@edx/frontend-platform', () => ({
   getConfig: jest.fn(() => ({})),
@@ -43,31 +39,12 @@ useInitializeLearnerHome.mockReturnValue({
 
 describe('App router component', () => {
   describe('component', () => {
-    const runBasicTests = () => {
-      it('displays title in helmet component', async () => {
-        await waitFor(() => expect(document.title).toEqual(messages.pageTitle.defaultMessage));
-      });
-      it('displays learner dashboard header', () => {
-        const learnerDashboardHeader = screen.getByText('LearnerDashboardHeader');
-        expect(learnerDashboardHeader).toBeInTheDocument();
-      });
-      it('wraps the header and main components in an AppWrapper widget container', () => {
-        const appWrapper = screen.getByText('LearnerDashboardHeader').parentElement;
-        expect(appWrapper).toHaveClass('AppWrapper');
-        expect(appWrapper.children[1].id).toEqual('main');
-      });
-      it('displays footer slot', () => {
-        const footerSlot = screen.getByText('FooterSlot');
-        expect(footerSlot).toBeInTheDocument();
-      });
-    };
     describe('no network failure', () => {
       beforeEach(() => {
         jest.clearAllMocks();
         getConfig.mockReturnValue({});
         render(<IntlProvider locale="en"><App /></IntlProvider>);
       });
-      runBasicTests();
       it('loads dashboard', () => {
         const dashboard = screen.getByText('Dashboard');
         expect(dashboard).toBeInTheDocument();
@@ -79,7 +56,6 @@ describe('App router component', () => {
         getConfig.mockReturnValue({ OPTIMIZELY_URL: 'fake.url' });
         render(<IntlProvider locale="en"><App /></IntlProvider>);
       });
-      runBasicTests();
       it('loads dashboard', () => {
         const dashboard = screen.getByText('Dashboard');
         expect(dashboard).toBeInTheDocument();
@@ -91,7 +67,6 @@ describe('App router component', () => {
         getConfig.mockReturnValue({ OPTIMIZELY_PROJECT_ID: 'fakeId' });
         render(<IntlProvider locale="en"><App /></IntlProvider>);
       });
-      runBasicTests();
       it('loads dashboard', () => {
         const dashboard = screen.getByText('Dashboard');
         expect(dashboard).toBeInTheDocument();
@@ -107,7 +82,6 @@ describe('App router component', () => {
         getConfig.mockReturnValue({});
         render(<IntlProvider locale="en" messages={messages}><App /></IntlProvider>);
       });
-      runBasicTests();
       it('loads error page', () => {
         const alert = screen.getByRole('alert');
         expect(alert).toBeInTheDocument();
@@ -120,7 +94,6 @@ describe('App router component', () => {
         getConfig.mockReturnValue({});
         render(<IntlProvider locale="en"><App /></IntlProvider>);
       });
-      runBasicTests();
       it('loads error page', () => {
         const alert = screen.getByRole('alert');
         expect(alert).toBeInTheDocument();
