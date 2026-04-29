@@ -11,6 +11,11 @@ const messages = defineMessages({
     description: 'Page title: Learner Home',
     defaultMessage: 'Learner Home',
   },
+  'learner-dash.page.title': {
+    id: 'learner-dash.page.title',
+    description: 'Document title for the learner dashboard page',
+    defaultMessage: 'Learner Home | {siteName}',
+  },
 });
 
 export default messages;
