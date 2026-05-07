@@ -8,7 +8,6 @@ import { logError } from '@edx/frontend-platform/logging';
 
 import appMessages from 'messages';
 import { useProgramsListData } from '../../../data/hooks';
-import { ProgramData } from '../data/types';
 import ProgramListCard from './ProgramListCard';
 import ExploreProgramsCTA from './ExploreProgramsCTA';
 import messages from './messages';
@@ -23,12 +22,7 @@ const ProgramsList: React.FC = () => {
     isLoading,
     isError: errorState,
     error,
-  } = useProgramsListData() as {
-    data: ProgramData[];
-    isLoading: boolean;
-    isError: boolean;
-    error: Error | null;
-  };
+  } = useProgramsListData();
 
   useEffect(() => {
     if (error) {
