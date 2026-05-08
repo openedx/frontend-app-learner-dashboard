@@ -7,7 +7,6 @@ import { Alert } from '@openedx/paragon';
 
 import Dashboard from 'containers/Dashboard';
 
-import { getConfig } from '@edx/frontend-platform';
 import { useInitializeLearnerHome } from 'data/hooks';
 import { useMasquerade } from 'data/context';
 import messages from './messages';
