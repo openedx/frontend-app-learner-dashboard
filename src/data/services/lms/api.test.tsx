@@ -296,37 +296,38 @@ describe('API functions', () => {
 
   describe('fetchProgramsListData', () => {
     const mockLmsBaseUrl = 'http://localhost:18000';
-    const mockData = { results: [{ uuid: 'test-uuid', title: 'Test Program' }] };
+    const mockData = [{ uuid: 'test-uuid', title: 'Test Program' }];
     const mockGet = jest.fn();
 
     beforeEach(() => {
       jest.clearAllMocks();
-      (getConfig as jest.Mock).mockReturnValue({ LMS_BASE_URL: mockLmsBaseUrl });
+      (getConfig as jest.Mock).mockReturnValue({
+        LMS_BASE_URL: mockLmsBaseUrl,
+      });
       (getAuthenticatedHttpClient as jest.MockedFunction<
         typeof getAuthenticatedHttpClient
-      >).mockReturnValue({ get: mockGet });
+      >).mockReturnValue({
+        get: mockGet,
+      } as any);
     });
 
     it('calls the correct URL', async () => {
       mockGet.mockResolvedValue({ data: mockData });
-
       await fetchProgramsListData();
-
-      expect(mockGet).toHaveBeenCalledWith(`${mockLmsBaseUrl}/api/dashboard/v0/programs/`);
+      expect(mockGet).toHaveBeenCalledWith(
+        `${mockLmsBaseUrl}/api/dashboard/v0/programs/`
+      );
     });
 
     it('returns data from the response', async () => {
       mockGet.mockResolvedValue({ data: mockData });
-
       const result = await fetchProgramsListData();
-
       expect(result).toEqual(mockData);
     });
 
     it('throws an error when the request fails', async () => {
       const mockError = new Error('Network Error');
       mockGet.mockRejectedValue(mockError);
-
       await expect(fetchProgramsListData()).rejects.toThrow('Network Error');
     });
   });

@@ -4,7 +4,8 @@ import { apiKeys, enableEmailsAction, unenrollmentAction } from 'data/services/l
 import urls from 'data/services/lms/urls';
 import { stringifyUrl } from 'data/services/lms/utils';
 import eventNames from 'tracking/constants';
-import { ProgramData } from '../../types';
+
+import { ProgramData } from '../../../containers/ProgramDashboard/data/types';
 
 const initializeList = async (user) => {
   const { data } = await getAuthenticatedHttpClient().get(
@@ -86,7 +87,7 @@ const sendConfirmEmail = async (sendEmailUrl: string) => {
 
 const fetchProgramsListData = async (): Promise<ProgramData[]> => {
   const url = `${getConfig().LMS_BASE_URL}/api/dashboard/v0/programs/`;
-  const { data } = await getAuthenticatedHttpClient().get(url);
+  const { data } = await getAuthenticatedHttpClient().get<ProgramData[]>(url);
   return data;
 };
 

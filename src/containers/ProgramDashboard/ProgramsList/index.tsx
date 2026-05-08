@@ -18,7 +18,7 @@ const ProgramsList: React.FC = () => {
   const { formatMessage } = useIntl();
 
   const {
-    data: programsData,
+    data: programsData = [],
     isLoading,
     isError: errorState,
     error,
