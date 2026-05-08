@@ -314,9 +314,7 @@ describe('API functions', () => {
     it('calls the correct URL', async () => {
       mockGet.mockResolvedValue({ data: mockData });
       await fetchProgramsListData();
-      expect(mockGet).toHaveBeenCalledWith(
-        `${mockLmsBaseUrl}/api/dashboard/v0/programs/`
-      );
+      expect(mockGet).toHaveBeenCalledWith(`${mockLmsBaseUrl}/api/dashboard/v0/programs/`);
     });
 
     it('returns data from the response', async () => {
