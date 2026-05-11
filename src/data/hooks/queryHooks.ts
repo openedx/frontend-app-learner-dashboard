@@ -6,7 +6,7 @@ import {
 } from 'data/services/lms/api';
 import { learnerDashboardQueryKeys } from './queryKeys';
 import { fetchProgramsListData } from '../services/lms/api';
-import { ProgramData } from '../../containers/ProgramDashboard/data/types';
+import { ProgramData } from '../types';
 
 const useInitializeLearnerHome = () => {
   const { masqueradeUser } = useMasquerade();

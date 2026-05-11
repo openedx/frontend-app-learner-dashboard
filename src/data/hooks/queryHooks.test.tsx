@@ -12,22 +12,6 @@ jest.mock('@edx/frontend-platform/logging');
 jest.mock('data/context');
 jest.mock('data/services/lms/api');
 
-const mockGet = jest.fn(() => ({
-  data: {},
-}));
-const mockLMSBaseUrl = 'http://test-lms-base-url';
-
-jest.mock('@edx/frontend-platform/auth', () => ({
-  getAuthenticatedHttpClient: jest.fn(() => ({
-    get: mockGet,
-  })),
-}));
-jest.mock('@edx/frontend-platform', () => ({
-  getConfig: jest.fn(() => ({
-    LMS_BASE_URL: mockLMSBaseUrl,
-  })),
-}));
-
 const mockUseMasquerade = useMasquerade as jest.MockedFunction<typeof useMasquerade>;
 const mockUseBackedData = useBackedData as jest.MockedFunction<typeof useBackedData>;
 

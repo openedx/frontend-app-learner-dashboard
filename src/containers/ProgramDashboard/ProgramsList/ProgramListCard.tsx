@@ -20,26 +20,25 @@ const ProgramListCard: React.FC<ProgramCardProps> = ({
     let imageURL = '';
     // We need to check that the breakpoint value exists before using it
     // Otherwise TypeScript will flag it as it can potentially be undefined in Paragon
-    if (program.banner_image && Object.keys(program.banner_image).length > 0) {
+    if (program.bannerImage && Object.keys(program.bannerImage).length > 0) {
       if (!windowWidth) {
-        return program.banner_image.medium.url;
+        return program.bannerImage.medium.url;
       }
 
       if (typeof breakpoints.large.minWidth === 'number' && windowWidth >= breakpoints.large.minWidth) {
-        imageURL = program.banner_image.large.url;
+        imageURL = program.bannerImage.large.url;
       } else if (typeof breakpoints.medium.minWidth === 'number' && windowWidth >= breakpoints.medium.minWidth) {
-        imageURL = program.banner_image.medium.url;
+        imageURL = program.bannerImage.medium.url;
       } else if (typeof breakpoints.small.minWidth === 'number' && windowWidth >= breakpoints.small.minWidth) {
-        imageURL = program.banner_image.small.url;
+        imageURL = program.bannerImage.small.url;
       } else {
-        imageURL = program.banner_image.xSmall.url;
+        imageURL = program.bannerImage.xSmall.url;
       }
     }
     return imageURL;
   };
 
   const getOrgImageUrl = (): string => {
-    // Otherwise use the logoImageUrl and key for the organization
     if (program.authoringOrganizations?.length === 1 && program.authoringOrganizations[0].logoImageUrl) {
       return program.authoringOrganizations[0].logoImageUrl;
     }

@@ -1,7 +1,7 @@
 import { render, RenderResult, screen } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import ProgramListCard from './ProgramListCard';
-import { ProgramData } from '../data/types';
+import { ProgramData } from '../../../data/types';
 
 jest.mock('react-router-dom', () => ({
   Link: jest.fn(({ children, ...props }) => <a {...props}>{children}</a>),
@@ -17,7 +17,7 @@ const mockBaseProgram = {
   uuid: 'test-uuid',
   title: 'test-title',
   type: 'test-type',
-  banner_image: {
+  bannerImage: {
     xSmall: { url: 'banner-xSmall.jpg', width: 348, height: 116 },
     small: { url: 'banner-small.jpg', width: 435, height: 145 },
     medium: { url: 'banner-medium.jpg', width: 726, height: 242 },
