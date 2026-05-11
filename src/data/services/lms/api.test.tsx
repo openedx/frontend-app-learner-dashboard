@@ -1,4 +1,3 @@
-import { getConfig } from '@edx/frontend-platform';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { apiKeys, enableEmailsAction, unenrollmentAction } from 'data/services/lms/constants';
@@ -67,6 +66,7 @@ describe('API functions', () => {
       updateEmailSettings: jest.fn(() => '/api/email-settings'),
       event: jest.fn(() => '/api/event'),
       creditRequestUrl: jest.fn((providerId) => `/api/credit/${providerId}`),
+      programsApiUrl: jest.fn(() => '/api/dashboard/v0/programs/'),
     };
 
     mockedStringifyUrl.mockImplementation((url, params) => {
@@ -295,15 +295,11 @@ describe('API functions', () => {
   });
 
   describe('fetchProgramsListData', () => {
-    const mockLmsBaseUrl = 'http://localhost:18000';
     const mockData = [{ uuid: 'test-uuid', title: 'Test Program' }];
     const mockGet = jest.fn();
 
     beforeEach(() => {
       jest.clearAllMocks();
-      (getConfig as jest.Mock).mockReturnValue({
-        LMS_BASE_URL: mockLmsBaseUrl,
-      });
       (getAuthenticatedHttpClient as jest.MockedFunction<
         typeof getAuthenticatedHttpClient
       >).mockReturnValue({
@@ -314,7 +310,7 @@ describe('API functions', () => {
     it('calls the correct URL', async () => {
       mockGet.mockResolvedValue({ data: mockData });
       await fetchProgramsListData();
-      expect(mockGet).toHaveBeenCalledWith(`${mockLmsBaseUrl}/api/dashboard/v0/programs/`);
+      expect(mockGet).toHaveBeenCalledWith(urls.programsApiUrl());
     });
 
     it('returns data from the response', async () => {

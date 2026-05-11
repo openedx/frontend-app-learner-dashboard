@@ -1,11 +1,6 @@
 import { defineMessages } from '@edx/frontend-platform/i18n';
 
 const messages = defineMessages({
-  programDashboardPageTitle: {
-    defaultMessage: 'Program Dashboard',
-    id: 'program.dashboard.page.title',
-    description: 'Page title for Program Dashboard',
-  },
   programsListHeaderText: {
     defaultMessage: 'My Programs',
     id: 'programs.list.header.text',

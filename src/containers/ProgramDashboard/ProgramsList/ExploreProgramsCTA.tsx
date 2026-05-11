@@ -18,9 +18,9 @@ const ExploreProgramsCTA: React.FC<ExploreProgramsCTAProps> = ({
         {hasEnrollments ? (
           formatMessage(messages.exploreProgramsCTAText)
         ) : (
-          <h2 className="text-center">
+          <p className="text-center">
             {formatMessage(messages.hasNoEnrollmentsText)}
-          </h2>
+          </p>
         )}
       </Card.Section>
       <Card.Footer className="justify-content-center">

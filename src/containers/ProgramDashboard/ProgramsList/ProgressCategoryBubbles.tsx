@@ -3,7 +3,7 @@ import { Bubble, Stack } from '@openedx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import messages from './messages';
 
-import { Progress } from '../data/types';
+import { Progress } from '../../../data/types';
 
 const ProgressCategoryBubbles: React.FC<Progress> = ({ notStarted, inProgress, completed }) => {
   const { formatMessage } = useIntl();

@@ -1,11 +1,10 @@
-import { getConfig } from '@edx/frontend-platform';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import { apiKeys, enableEmailsAction, unenrollmentAction } from 'data/services/lms/constants';
 import urls from 'data/services/lms/urls';
 import { stringifyUrl } from 'data/services/lms/utils';
 import eventNames from 'tracking/constants';
 
-import { ProgramData } from '../../../containers/ProgramDashboard/data/types';
+import { ProgramData } from '../../types';
 
 const initializeList = async (user) => {
   const { data } = await getAuthenticatedHttpClient().get(
@@ -86,7 +85,7 @@ const sendConfirmEmail = async (sendEmailUrl: string) => {
 };
 
 const fetchProgramsListData = async (): Promise<ProgramData[]> => {
-  const url = `${getConfig().LMS_BASE_URL}/api/dashboard/v0/programs/`;
+  const url = urls.programsApiUrl();
   const { data } = await getAuthenticatedHttpClient().get<ProgramData[]>(url);
   return data;
 };
