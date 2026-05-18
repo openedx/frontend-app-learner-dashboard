@@ -24,6 +24,7 @@ jest.mock('containers/CoursesPanel', () => jest.fn(() => <div>CoursesPanel</div>
 jest.mock('./LoadingView', () => jest.fn(() => <div>LoadingView</div>));
 jest.mock('containers/SelectSessionModal', () => jest.fn(() => <div>SelectSessionModal</div>));
 jest.mock('./DashboardLayout', () => jest.fn(() => <div>DashboardLayout</div>));
+jest.mock('containers/MasqueradeBar', () => jest.fn(() => <div>MasqueradeBar</div>)); // Mock the MasqueradeBar
 
 describe('Dashboard', () => {
   const createWrapper = (props = {}) => {
@@ -51,6 +52,11 @@ describe('Dashboard', () => {
         const selectSessionModal = screen.getByText('SelectSessionModal');
         expect(selectSessionModal).toBeInTheDocument();
       });
+      it('should render MasqueradeBar', () => {
+        createWrapper({ initIsPending: false });
+        const masqueradeBar = screen.getByText('MasqueradeBar');
+        expect(masqueradeBar).toBeInTheDocument();
+      });
     });
     describe('courses still loading', () => {
       it('should render LoadingView', () => {
@@ -64,6 +70,11 @@ describe('Dashboard', () => {
         createWrapper({ initIsPending: false });
         const dashboardLayout = screen.getByText('DashboardLayout');
         expect(dashboardLayout).toBeInTheDocument();
+      });
+      it('should render MasqueradeBar', () => {
+        createWrapper({ initIsPending: false });
+        const masqueradeBar = screen.getByText('MasqueradeBar');
+        expect(masqueradeBar).toBeInTheDocument();
       });
     });
   });
