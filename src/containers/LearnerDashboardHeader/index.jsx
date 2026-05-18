@@ -3,7 +3,6 @@ import { Helmet } from 'react-helmet';
 
 import { getConfig } from '@edx/frontend-platform';
 import { useIntl } from '@edx/frontend-platform/i18n';
-import MasqueradeBar from 'containers/MasqueradeBar';
 import { AppContext } from '@edx/frontend-platform/react';
 import Header from '@edx/frontend-component-header';
 import { useInitializeLearnerHome } from 'data/hooks';
@@ -51,7 +50,6 @@ export const LearnerDashboardHeader = () => {
         userMenuItems={learnerHomeHeaderMenu.userMenu}
       />
       <h1 className="sr-only">{pageTitle}</h1>
-      <MasqueradeBar />
     </>
   );
 };
