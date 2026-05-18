@@ -31,7 +31,6 @@ jest.mock('react-router-dom', () => ({
 }));
 
 const mockedHeaderProps = jest.fn();
-jest.mock('containers/MasqueradeBar', () => jest.fn(() => <div>MasqueradeBar</div>));
 jest.mock('./ConfirmEmailBanner', () => jest.fn(() => <div>ConfirmEmailBanner</div>));
 jest.mock('@edx/frontend-component-header', () => jest.fn((props) => {
   mockedHeaderProps(props);
@@ -56,7 +55,6 @@ describe('LearnerDashboardHeader', () => {
     mergeConfig({ ORDER_HISTORY_URL: 'test-url' });
     render(<IntlProvider locale="en"><LearnerDashboardHeader /></IntlProvider>);
     expect(screen.getByText('ConfirmEmailBanner')).toBeInTheDocument();
-    expect(screen.getByText('MasqueradeBar')).toBeInTheDocument();
     expect(screen.getByText('Header')).toBeInTheDocument();
     const props = mockedHeaderProps.mock.calls[0][0];
     const { mainMenuItems } = props;
