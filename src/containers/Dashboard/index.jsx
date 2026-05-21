@@ -6,6 +6,7 @@ import SelectSessionModal from 'containers/SelectSessionModal';
 import CoursesPanel from 'containers/CoursesPanel';
 import DashboardModalSlot from 'plugin-slots/DashboardModalSlot';
 
+import MasqueradeBar from 'containers/MasqueradeBar';
 import LoadingView from './LoadingView';
 import DashboardLayout from './DashboardLayout';
 import hooks from './hooks';
@@ -20,24 +21,27 @@ export const Dashboard = () => {
   const hasCourses = useMemo(() => data?.courses?.length > 0, [data]);
 
   return (
-    <div id="dashboard-container" className="d-flex flex-column p-2 pt-0">
-      <h1 className="sr-only">{pageTitle}</h1>
-      {!isPending && (
-        <>
-          <DashboardModalSlot />
-          {(hasCourses && showSelectSessionModal) && <SelectSessionModal />}
-        </>
-      )}
-      <div id="dashboard-content" data-testid="dashboard-content">
-        {isPending
-          ? (<LoadingView />)
-          : (
-            <DashboardLayout>
-              <CoursesPanel />
-            </DashboardLayout>
-          )}
+    <>
+      <MasqueradeBar />
+      <div id="dashboard-container" className="d-flex flex-column p-2 pt-0">
+        <h1 className="sr-only">{pageTitle}</h1>
+        {!isPending && (
+          <>
+            <DashboardModalSlot />
+            {(hasCourses && showSelectSessionModal) && <SelectSessionModal />}
+          </>
+        )}
+        <div id="dashboard-content" data-testid="dashboard-content">
+          {isPending
+            ? (<LoadingView />)
+            : (
+              <DashboardLayout>
+                <CoursesPanel />
+              </DashboardLayout>
+            )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

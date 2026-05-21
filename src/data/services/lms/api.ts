@@ -4,6 +4,8 @@ import urls from 'data/services/lms/urls';
 import { stringifyUrl } from 'data/services/lms/utils';
 import eventNames from 'tracking/constants';
 
+import { ProgramData } from '../../types';
+
 const initializeList = async (user) => {
   const { data } = await getAuthenticatedHttpClient().get(
     stringifyUrl(urls.getInitApiUrl(), { [apiKeys.user]: user }),
@@ -82,6 +84,12 @@ const sendConfirmEmail = async (sendEmailUrl: string) => {
   return response;
 };
 
+const fetchProgramsListData = async (): Promise<ProgramData[]> => {
+  const url = urls.programsApiUrl();
+  const { data } = await getAuthenticatedHttpClient().get<ProgramData[]>(url);
+  return data;
+};
+
 export {
   initializeList,
   unenrollFromCourse,
@@ -92,4 +100,5 @@ export {
   logShare,
   createCreditRequest,
   sendConfirmEmail,
+  fetchProgramsListData,
 };

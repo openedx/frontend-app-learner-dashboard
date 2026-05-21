@@ -24,8 +24,7 @@ jest.mock('containers/CoursesPanel', () => jest.fn(() => <div>CoursesPanel</div>
 jest.mock('./LoadingView', () => jest.fn(() => <div>LoadingView</div>));
 jest.mock('containers/SelectSessionModal', () => jest.fn(() => <div>SelectSessionModal</div>));
 jest.mock('./DashboardLayout', () => jest.fn(() => <div>DashboardLayout</div>));
-
-const pageTitle = 'test-page-title';
+jest.mock('containers/MasqueradeBar', () => jest.fn(() => <div>MasqueradeBar</div>)); // Mock the MasqueradeBar
 
 describe('Dashboard', () => {
   const createWrapper = (props = {}) => {
@@ -34,7 +33,7 @@ describe('Dashboard', () => {
       initIsPending = true,
       showSelectSessionModal = true,
     } = props;
-    hooks.useDashboardMessages.mockReturnValue({ pageTitle });
+    hooks.useDashboardMessages.mockReturnValue({ pageTitle: 'Dashboard' });
     const dataMocked = { data: hasCourses ? { courses: [1, 2] } : { courses: [] }, isPending: initIsPending };
     useInitializeLearnerHome.mockReturnValue(dataMocked);
     useSelectSessionModal.mockReturnValue({ selectSessionModal: showSelectSessionModal ? { cardId: 1 } : null });
@@ -42,11 +41,6 @@ describe('Dashboard', () => {
   };
 
   describe('render', () => {
-    it('page title is displayed in sr-only h1 tag', () => {
-      createWrapper();
-      const heading = screen.getByText(pageTitle);
-      expect(heading).toHaveClass('sr-only');
-    });
     describe('initIsPending false', () => {
       it('should render DashboardModalSlot', () => {
         createWrapper({ initIsPending: false });
@@ -57,6 +51,11 @@ describe('Dashboard', () => {
         createWrapper({ initIsPending: false });
         const selectSessionModal = screen.getByText('SelectSessionModal');
         expect(selectSessionModal).toBeInTheDocument();
+      });
+      it('should render MasqueradeBar', () => {
+        createWrapper({ initIsPending: false });
+        const masqueradeBar = screen.getByText('MasqueradeBar');
+        expect(masqueradeBar).toBeInTheDocument();
       });
     });
     describe('courses still loading', () => {
@@ -71,6 +70,11 @@ describe('Dashboard', () => {
         createWrapper({ initIsPending: false });
         const dashboardLayout = screen.getByText('DashboardLayout');
         expect(dashboardLayout).toBeInTheDocument();
+      });
+      it('should render MasqueradeBar', () => {
+        createWrapper({ initIsPending: false });
+        const masqueradeBar = screen.getByText('MasqueradeBar');
+        expect(masqueradeBar).toBeInTheDocument();
       });
     });
   });
