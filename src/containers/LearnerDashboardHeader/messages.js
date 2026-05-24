@@ -41,10 +41,10 @@ const messages = defineMessages({
     defaultMessage: 'Order History',
     description: 'The text for the user menu Order History navigation link.',
   },
-  signOut: {
-    id: 'learnerVariantDashboard.menu.signOut.label',
-    defaultMessage: 'Sign Out',
-    description: 'The label for the user menu Sign Out action.',
+  logout: {
+    id: 'learnerVariantDashboard.menu.logout.label',
+    defaultMessage: 'Logout',
+    description: 'The label for the user menu Logout action.',
   },
   course: {
     id: 'learnerVariantDashboard.course',

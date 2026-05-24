@@ -66,7 +66,7 @@ const getLearnerHeaderMenu = (
         {
           type: 'item',
           href: `${getConfig().LOGOUT_URL}`,
-          content: formatMessage(messages.signOut),
+          content: formatMessage(messages.logout),
         },
       ],
     },
