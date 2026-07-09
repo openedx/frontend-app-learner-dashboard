@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - frontend-base
+      - release/frontend-base
 
 permissions:
   id-token: write  # Required for OIDC
