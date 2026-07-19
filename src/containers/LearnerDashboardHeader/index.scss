@@ -38,20 +38,27 @@
   height: 40px;
 }
 
-// ─── Header layout: logo left | nav center | account right ───────────────────
+// ─── Same as LMS: logo shrink-0 | nav flex:1 + center | secondary auto ───────
 .site-header-desktop .nav-container {
+  display: flex;
+  align-items: center;
 
-  // True-center the main nav using absolute positioning.
-  // .nav-container already carries position-relative from Bootstrap.
-  .main-nav {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+  .logo {
     flex: 0 0 auto;
+  }
+
+  .main-nav {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-width: 0;
   }
 
   // Push secondary menu to the far right
   .secondary-menu-container {
+    flex: 0 0 auto;
     margin-left: auto;
   }
 }
@@ -86,11 +93,10 @@
 
 // ─── Navigation link styling overrides ───────────────────────────────────────
 .site-header-desktop .main-nav {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
   .nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
     padding: 5px 10px !important;
     margin: 0.25rem 0.125rem;
     font-size: 0.9rem;
@@ -119,15 +125,17 @@
     color: #059669;
     font-weight: 600 !important;
   }
+
+  .lw-nav-icon {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+  }
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
 
-// Nav icon + label pairing
-.lw-nav-item {
-  gap: 0.375rem;
-}
-
+// Nav icon (direct child of .nav-link)
 .lw-nav-icon {
   width: 1rem;
   height: 1rem;
