@@ -1,0 +1,88 @@
+.course-card-meta {
+  margin-bottom: 0.75rem;
+
+  .course-card-meta-byline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    color: var(--pgn-color-gray-500, #6b7280);
+    margin-bottom: 0.5rem;
+  }
+
+  .course-card-meta-rating {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    color: var(--pgn-color-black, #1a1a1a);
+  }
+
+  .course-card-meta-star-icon {
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.25rem;
+    color: #f5a623;
+  }
+
+  .course-card-meta-description {
+    font-size: 0.875rem;
+    color: var(--pgn-color-gray-700, #4b5563);
+    margin-bottom: 0.75rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .course-card-meta-chips {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .course-card-meta-chip {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.75rem;
+    color: var(--pgn-color-gray-600, #52606d);
+    background-color: var(--pgn-color-gray-100, #f1f2f6);
+    border-radius: 0.25rem;
+    padding: 0.15rem 0.5rem;
+  }
+
+  .course-card-meta-chip-plain {
+    background: none;
+    padding: 0.15rem 0;
+  }
+
+  .course-card-meta-chip-icon {
+    width: 0.875rem;
+    height: 0.875rem;
+    margin-right: 0.25rem;
+  }
+
+  .course-card-meta-progress {
+    margin-bottom: 0.5rem;
+
+    .course-card-meta-progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.875rem;
+      color: var(--pgn-color-gray-600, #52606d);
+      margin-bottom: 0.25rem;
+    }
+  }
+
+  .course-card-meta-status-line {
+    font-size: 0.875rem;
+    color: var(--pgn-color-gray-500, #6b7280);
+    margin-bottom: 0;
+
+    &--overdue {
+      color: #d9662e;
+      font-weight: 600;
+    }
+  }
+}

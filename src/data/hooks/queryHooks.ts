@@ -3,6 +3,8 @@ import { useEffect } from 'react';
 import { useBackedData, useMasquerade } from 'data/context';
 import {
   initializeList,
+  getCourseCompletion,
+  getCourseAssignmentsCardInfo,
 } from 'data/services/lms/api';
 import { learnerDashboardQueryKeys } from './queryKeys';
 
@@ -33,6 +35,21 @@ const useInitializeLearnerHome = () => {
   return { ...query, data };
 };
 
+const useCourseCompletion = () => useQuery({
+  queryKey: learnerDashboardQueryKeys.courseCompletion(),
+  queryFn: getCourseCompletion,
+  retry: false,
+});
+
+const useCourseAssignmentsCardInfo = (courseIds: string[]) => useQuery({
+  queryKey: learnerDashboardQueryKeys.courseAssignmentsCardInfo(courseIds),
+  queryFn: () => getCourseAssignmentsCardInfo(courseIds),
+  enabled: courseIds.length > 0,
+  retry: false,
+});
+
 export {
   useInitializeLearnerHome,
+  useCourseCompletion,
+  useCourseAssignmentsCardInfo,
 };

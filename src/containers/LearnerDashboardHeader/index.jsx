@@ -5,6 +5,7 @@ import { AppContext } from '@edx/frontend-platform/react';
 import Header from '@edx/frontend-component-header';
 import { useInitializeLearnerHome } from 'data/hooks';
 import urls from 'data/services/lms/urls';
+import WelcomeBannerSlot from 'plugin-slots/WelcomeBannerSlot';
 
 import ConfirmEmailBanner from './ConfirmEmailBanner';
 
@@ -35,6 +36,7 @@ export const LearnerDashboardHeader = () => {
         secondaryMenuItems={learnerHomeHeaderMenu.secondaryMenu}
         userMenuItems={learnerHomeHeaderMenu.userMenu}
       />
+      <WelcomeBannerSlot />
       <MasqueradeBar />
     </>
   );

@@ -1,0 +1,85 @@
+// Layout + accents not covered by Indigo / Paragon utilities.
+// Text colors use theme utility classes in JSX (text-slate-*).
+#course-completion-widget {
+  .course-completion-header {
+    gap: 8px;
+  }
+
+  // OpenLMS PRIMARY_COLOR — no light-theme CSS var for this navy.
+  .course-completion-icon {
+    color: #003366;
+    flex-shrink: 0;
+  }
+
+  .course-completion-list {
+    gap: 24px;
+  }
+
+  .course-completion-item {
+    display: grid;
+    grid-template-columns: 8px 1fr;
+    column-gap: 10px;
+    align-items: start;
+  }
+
+  .course-completion-bullet {
+    grid-column: 1;
+    grid-row: 1;
+    width: 8px;
+    height: 8px;
+    margin-top: calc((24px - 8px) / 2); // match lh-regular
+    // No light-theme orange token; keep design accent.
+    background-color: #F97316;
+  }
+
+  .course-completion-title {
+    grid-column: 2;
+    grid-row: 1;
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    // Override Hyperlink brand (#9D0054) with design accent.
+    color: #F97316;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+      color: #F97316;
+      text-decoration: underline;
+    }
+  }
+
+  .course-completion-meta {
+    grid-column: 2;
+    grid-row: 2;
+    gap: 12px;
+  }
+
+  .course-completion-footer {
+    gap: 16px;
+  }
+
+  .course-completion-pagination {
+    border: 1px solid var(--color-slate-300, #E2E8F0);
+    background-color: var(--pgn-color-white, #FFFFFF);
+  }
+
+  .course-completion-page-btn {
+    min-width: 37px;
+    height: 37px;
+    border: 0;
+    background-color: transparent;
+    cursor: pointer;
+
+    &.is-active {
+      background-color: var(--pgn-color-primary-100, #D1FAE5);
+      color: var(--pgn-color-primary-base, #059669);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--pgn-color-primary-base, #059669);
+      outline-offset: 2px;
+    }
+  }
+}

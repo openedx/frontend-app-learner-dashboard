@@ -7,4 +7,10 @@ export const learnerDashboardQueryKeys = {
   updateEmailSettings: () => [...learnerDashboardQueryKeys.all, 'updateEmailSettings'] as const,
   createCreditRequest: () => [...learnerDashboardQueryKeys.all, 'createCreditRequest'] as const,
   sendConfirmEmail: (sendEmailUrl: string) => [...learnerDashboardQueryKeys.all, 'sendConfirmEmail', sendEmailUrl] as const,
+  courseCompletion: () => [...learnerDashboardQueryKeys.all, 'courseCompletion'] as const,
+  courseAssignmentsCardInfo: (courseIds: string[]) => [
+    ...learnerDashboardQueryKeys.all,
+    'courseAssignmentsCardInfo',
+    [...courseIds].sort().join(','),
+  ] as const,
 };

@@ -1,0 +1,24 @@
+#progress-summary-widget {
+  .progress-summary-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--pgn-spacing-spacer-4);
+    text-align: center;
+  }
+
+  .progress-summary-stat {
+    text-align: left;
+    flex: 1;
+  }
+
+  .progress-summary-stat-value {
+    font-size: var(--pgn-typography-font-size-h2-base);
+    font-weight: var(--pgn-typography-font-weight-semi-bold);
+    color: var(--color-slate-800olor-slate-500);
+  }
+
+  .progress-summary-stat-label {
+    font-size: 12px;
+    color: var(--color-slate-500);
+  }
+}

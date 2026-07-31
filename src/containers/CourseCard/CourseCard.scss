@@ -1,29 +1,58 @@
 .course-card {
+  height: 100%;
+
   .card {
+    height: 100%;
+
     .pgn__card-wrapper-image-cap.vertical {
       display: flex;
+      position: relative;
       min-height: var(--pgn-size-card-image-vertical-max-height);
     }
     .pgn__card-image-cap {
       border-bottom-left-radius: 0 !important;
+      border-bottom-right-radius: 0 !important;
     }
     .overflow-visible {
       overflow: visible;
+    }
+
+    .course-card-status-badge {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      z-index: 1000;
+      padding: 0.3rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--pgn-color-white, #fff);
+
+      &.overdue {
+        background-color: #d9662e;
+      }
+
+      &.due-soon {
+        background-color: #e0942e;
+      }
     }
     .pgn__card-header-content {
       margin-top: 1.5rem;
     }
     .pgn__card-footer {
       flex-wrap: nowrap;
-
-      &.vertical {
-        flex-direction: column;
-      }
+      justify-content: space-between;
 
       .pgn__action-row {
-        align-self: flex-end;
+        flex: 1;
         white-space: nowrap;
       }
+    }
+
+    .course-card-cta-button {
+      font-weight: 700;
+      padding-top: 0.65rem;
+      padding-bottom: 0.65rem;
     }
 
     .course-card-verify-ribbon-container {

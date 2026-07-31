@@ -1,4 +1,4 @@
-import { useInitializeLearnerHome } from './queryHooks';
+import { useInitializeLearnerHome, useCourseCompletion, useCourseAssignmentsCardInfo } from './queryHooks';
 import {
   useUnenrollFromCourse,
   useUpdateEntitlementEnrollment,
@@ -10,6 +10,8 @@ import {
 
 export {
   useInitializeLearnerHome,
+  useCourseCompletion,
+  useCourseAssignmentsCardInfo,
   useUnenrollFromCourse,
   useUpdateEntitlementEnrollment,
   useDeleteEntitlementEnrollment,

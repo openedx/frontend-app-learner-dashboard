@@ -6,3 +6,4 @@
 * [`org.openedx.frontend.learner_dashboard.course_list.v1`](./CourseListSlot/)
 * [`org.openedx.frontend.learner_dashboard.no_courses_view.v1`](./NoCoursesViewSlot/)
 * [`org.openedx.frontend.learner_dashboard.dashboard_modal.v1`](./DashboardModalSlot)
+* [`org.openedx.frontend.learner_dashboard.welcome_banner.v1`](./WelcomeBannerSlot/)

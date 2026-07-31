@@ -1,0 +1,110 @@
+.overdue-courses-section {
+  --overdue-pad-y: var(--pgn-spacing-spacer-4); // 24px
+  --overdue-pad-x: var(--pgn-spacing-spacer-4); // 24px
+  --overdue-inset-left: 66px;
+  // Paragon/Bootstrap grid gutter
+  --overdue-gutter-half: 0.75rem;
+
+  background-color: var(--orange-danger-orange-50, #FFF7ED);
+  border-left: 4px solid var(--orange-danger-orange-600, #EA580C);
+  border-radius: 0.25rem;
+  margin-bottom: var(--pgn-spacing-spacer-4);
+  padding: var(--overdue-pad-y) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pgn-spacing-spacer-4);
+
+  .overdue-courses-inner {
+    box-sizing: border-box;
+    padding-left: var(--overdue-inset-left);
+    width: calc(100% + var(--overdue-inset-left));
+  }
+
+  .overdue-courses-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--pgn-spacing-spacer-2);
+    margin-bottom: var(--pgn-spacing-spacer-4);
+  }
+
+  .overdue-courses-title-row {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .overdue-courses-warning-icon {
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-right: 12px;
+    height: auto;
+  }
+
+  .overdue-courses-title {
+    font-family: var(--pgn-typography-font-family-sans-serif);
+    font-weight: var(--pgn-typography-font-weight-semi-bold); // 500
+    font-size: var(--pgn-typography-font-size-h2-base); // 1.875rem / 30px
+    line-height: 100%;
+    letter-spacing: 0;
+    color: var(--orange-danger-orange-600, #EA580C);
+    margin: 0;
+  }
+
+  .overdue-courses-subtitle {
+    font-family: var(--pgn-typography-font-family-sans-serif);
+    font-weight: var(--pgn-typography-font-weight-normal); // 400
+    font-size: var(--pgn-typography-font-size-h5-base); // 0.875rem / 14px
+    line-height: 21px;
+    letter-spacing: 0;
+    color: var(--color-slate-600, #64748B);
+    margin: 0;
+  }
+
+  // Flex equivalent of <Row> + <Col sm={12} md={6} lg={6}>
+  .overdue-courses-grid {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: calc(var(--overdue-gutter-half) * -1);
+    margin-right: calc(var(--overdue-gutter-half) * -1);
+  }
+
+  .overdue-courses-grid-item {
+    box-sizing: border-box;
+    flex: 0 0 100%;
+    max-width: 100%;
+    min-width: 0;
+    padding-left: var(--overdue-gutter-half);
+    padding-right: var(--overdue-gutter-half);
+  }
+}
+
+@media (min-width: 1200px) {
+  .overdue-courses-section .overdue-courses-inner {
+    width: calc(66.666667% + var(--overdue-inset-left));
+  }
+}
+
+@media (min-width: 768px) {
+  .overdue-courses-section .overdue-courses-grid-item {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
+@media (--pgn-size-breakpoint-max-width-md) {
+  .overdue-courses-section {
+    --overdue-pad-y: var(--pgn-spacing-spacer-3);
+    --overdue-pad-x: var(--pgn-spacing-spacer-3);
+    gap: var(--pgn-spacing-spacer-3);
+
+    .overdue-courses-header {
+      margin-bottom: var(--pgn-spacing-spacer-3);
+    }
+
+    .overdue-courses-title {
+      font-size: var(--pgn-typography-font-size-h3-base);
+    }
+  }
+}

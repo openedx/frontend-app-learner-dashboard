@@ -1,20 +1,19 @@
 import { render, screen } from '@testing-library/react';
 
 import { IntlProvider } from '@edx/frontend-platform/i18n';
-import { useInitializeLearnerHome } from 'data/hooks';
+import { useInitializeLearnerHome, useCourseCompletion } from 'data/hooks';
 import WidgetSidebarSlot from '.';
 
 jest.mock('data/hooks', () => ({
   useInitializeLearnerHome: jest.fn(),
+  useCourseCompletion: jest.fn(),
 }));
-
-const courseSearchUrl = 'mock-url';
 
 describe('WidgetSidebar', () => {
   it('renders PluginSlot with correct children', () => {
-    useInitializeLearnerHome.mockReturnValueOnce({ platformSettings: { courseSearchUrl } });
+    useInitializeLearnerHome.mockReturnValueOnce({ data: { courses: [{ id: 1 }] } });
+    useCourseCompletion.mockReturnValue({ data: [], isLoading: false, isError: false });
     render(<IntlProvider locale="en"><WidgetSidebarSlot /></IntlProvider>);
-    const pluginSlot = screen.getByText('Looking for a new challenge?');
-    expect(pluginSlot).toBeDefined();
+    expect(screen.getByText('Progress Summary')).toBeDefined();
   });
 });

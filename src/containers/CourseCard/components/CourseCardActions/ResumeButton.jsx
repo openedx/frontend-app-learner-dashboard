@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
+import { PlayArrow } from '@openedx/paragon/icons';
 
 import { EXECUTIVE_EDUCATION_COURSE_MODES } from 'data/constants/course';
 import { baseAppUrl } from 'data/services/lms/urls';
@@ -35,6 +36,9 @@ export const ResumeButton = ({ cardId }) => {
       as="a"
       href="#"
       onClick={handleClick}
+      variant="success"
+      iconBefore={PlayArrow}
+      className="course-card-cta-button w-100"
     >
       {formatMessage(messages.resume)}
     </ActionButton>

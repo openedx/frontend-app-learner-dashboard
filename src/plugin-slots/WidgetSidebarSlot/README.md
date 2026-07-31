@@ -11,7 +11,7 @@ This slot is used for adding content to the right-hand sidebar.
 
 ## Example
 
-The space will show the `LookingForChallengeWidget` by default. This can be disabled in the configuration with the `keepDefault` boolean.
+The space will show the `ProgressSummaryWidget` by default. This can be disabled in the configuration with the `keepDefault` boolean.
 
 ![Screenshot of the widget sidebar](./images/widget_sidebar_slot.png)
 
@@ -25,7 +25,7 @@ import { DIRECT_PLUGIN, PLUGIN_OPERATIONS } from '@openedx/frontend-plugin-frame
 const config = {
   pluginSlots: {
      'org.openedx.frontend.learner_dashboard.widget_sidebar.v1': {
-      // Hide the default LookingForChallenge component
+      // Hide the default ProgressSummaryWidget component
       keepDefault: false,
       plugins: [
         {

@@ -3,8 +3,9 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { useInitializeLearnerHome } from 'data/hooks';
 import { useFilters } from 'data/context';
 import * as dataTransformers from 'utils/dataTransformers';
+import * as dueDateUtils from 'utils/dueDate';
 import messagesNoCourses from 'containers/CoursesPanel/NoCoursesView/messages';
-import CoursesPanel from '.';
+import AssignedCoursesSection from '.';
 import messages from './messages';
 
 jest.mock('data/hooks', () => ({
@@ -34,11 +35,15 @@ jest.mock('@openedx/frontend-plugin-framework', () => ({
   PluginSlot: 'PluginSlot',
 }));
 
-describe('CoursesPanel', () => {
+describe('AssignedCoursesSection', () => {
   const createWrapper = (courseListData) => {
     useInitializeLearnerHome.mockReturnValue({ data: { courses: courseListData?.visibleList || [] } });
-    return render(<IntlProvider locale="en"><CoursesPanel /></IntlProvider>);
+    return render(<IntlProvider locale="en"><AssignedCoursesSection /></IntlProvider>);
   };
+
+  beforeEach(() => {
+    jest.spyOn(dueDateUtils, 'filterNonOverdueCourses').mockImplementation((courses) => courses);
+  });
 
   describe('no courses', () => {
     it('should render no courses view slot', () => {
@@ -56,16 +61,41 @@ describe('CoursesPanel', () => {
       const courseCards = screen.getAllByText('CourseCard');
       expect(courseCards.length).toEqual(visibleList.length);
     });
-    it('displays course filter controls', () => {
+    it('does not display the refine/filter controls', () => {
       createWrapper();
-      expect(screen.getByText('CourseFilterControls')).toBeInTheDocument();
+      expect(screen.queryByText('CourseFilterControls')).toBeNull();
     });
 
     it('displays course list slot when courses exist', () => {
       const visibleList = [{ cardId: 'foo' }, { cardId: 'bar' }, { cardId: 'baz' }];
       createWrapper({ visibleList });
-      const heading = screen.getByText(messages.myCourses.defaultMessage);
+      const heading = screen.getByText(messages.sectionTitle.defaultMessage);
       expect(heading).toBeInTheDocument();
+    });
+
+    it('excludes overdue courses before pagination', () => {
+      const transformedCourses = [
+        { cardId: 'card-0', course: {} },
+        { cardId: 'card-1', course: {} },
+      ];
+      const nonOverdueCourses = [{ cardId: 'card-1', course: {} }];
+
+      jest.spyOn(dataTransformers, 'getTransformedCourseDataList').mockReturnValue(transformedCourses);
+      jest.spyOn(dueDateUtils, 'filterNonOverdueCourses').mockReturnValue(nonOverdueCourses);
+      jest.spyOn(dataTransformers, 'getVisibleList').mockReturnValue({
+        visibleList: nonOverdueCourses,
+        numPages: 1,
+      });
+
+      createWrapper({ visibleList: nonOverdueCourses });
+
+      expect(dueDateUtils.filterNonOverdueCourses).toHaveBeenCalledWith(transformedCourses);
+      expect(dataTransformers.getVisibleList).toHaveBeenCalledWith(
+        nonOverdueCourses,
+        [],
+        'enrolled',
+        1,
+      );
     });
   });
 

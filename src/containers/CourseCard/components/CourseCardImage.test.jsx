@@ -3,6 +3,7 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { formatMessage } from 'testUtils';
 import { useCourseData } from 'hooks';
 import useActionDisabledState from './hooks';
+import useCourseCardMeta from './CourseCardMeta/hooks';
 import { CourseCardImage } from './CourseCardImage';
 import messages from '../messages';
 
@@ -18,9 +19,13 @@ jest.mock('hooks', () => ({
   useCourseTrackingEvent: jest.fn((eventName, cardId, url) => ({
     trackCourseEvent: { eventName, cardId, url },
   })),
+  utilHooks: {
+    useFormatDate: jest.fn(() => (date) => String(date)),
+  },
 }));
 
 jest.mock('./hooks', () => jest.fn());
+jest.mock('./CourseCardMeta/hooks', () => jest.fn(() => ({ isOverdue: false, isDueSoon: false })));
 
 describe('CourseCardImage', () => {
   const props = {
@@ -89,6 +94,36 @@ describe('CourseCardImage', () => {
       render(<IntlProvider locale="en"><CourseCardImage {...props} /></IntlProvider>);
       expect(useCourseData).toHaveBeenCalledWith(props.cardId);
       expect(useActionDisabledState).toHaveBeenCalledWith(props.cardId);
+      expect(useCourseCardMeta).toHaveBeenCalledWith(props.cardId);
+    });
+  });
+
+  describe('overdue/due-soon badge', () => {
+    beforeEach(() => {
+      useActionDisabledState.mockReturnValue({ disableCourseTitle: true });
+      useCourseData.mockReturnValue({
+        course: { bannerImgSrc },
+        courseRun: { homeUrl },
+        enrollment: {},
+      });
+    });
+
+    it('renders an Overdue badge when useCourseCardMeta reports isOverdue', () => {
+      useCourseCardMeta.mockReturnValue({ isOverdue: true, isDueSoon: false });
+      render(<IntlProvider locale="en"><CourseCardImage {...props} /></IntlProvider>);
+      expect(screen.getByTestId('CourseCardStatusBadge')).toHaveTextContent('Overdue');
+    });
+
+    it('renders a Due Soon badge when useCourseCardMeta reports isDueSoon', () => {
+      useCourseCardMeta.mockReturnValue({ isOverdue: false, isDueSoon: true });
+      render(<IntlProvider locale="en"><CourseCardImage {...props} /></IntlProvider>);
+      expect(screen.getByTestId('CourseCardStatusBadge')).toHaveTextContent('Due Soon');
+    });
+
+    it('renders no badge when neither overdue nor due soon', () => {
+      useCourseCardMeta.mockReturnValue({ isOverdue: false, isDueSoon: false });
+      render(<IntlProvider locale="en"><CourseCardImage {...props} /></IntlProvider>);
+      expect(screen.queryByTestId('CourseCardStatusBadge')).not.toBeInTheDocument();
     });
   });
 });

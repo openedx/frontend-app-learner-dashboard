@@ -9,6 +9,8 @@ import track from 'tracking';
 import { useCourseData, useCourseTrackingEvent } from 'hooks';
 import verifiedRibbon from 'assets/verified-ribbon.png';
 import useActionDisabledState from './hooks';
+import useCourseCardMeta from './CourseCardMeta/hooks';
+import metaMessages from './CourseCardMeta/messages';
 
 import messages from '../messages';
 
@@ -19,6 +21,7 @@ export const CourseCardImage = ({ cardId, orientation }) => {
   const courseData = useCourseData(cardId);
   const { homeUrl } = courseData?.courseRun || {};
   const { disableCourseTitle } = useActionDisabledState(cardId);
+  const { isOverdue, isDueSoon } = useCourseCardMeta(cardId);
   const handleImageClicked = useCourseTrackingEvent(courseImageClicked, cardId, homeUrl);
   const wrapperClassName = `pgn__card-wrapper-image-cap d-inline-block overflow-visible ${orientation}`;
   const image = (
@@ -30,6 +33,16 @@ export const CourseCardImage = ({ cardId, orientation }) => {
         src={courseData?.course?.bannerImgSrc && baseAppUrl(courseData.course.bannerImgSrc)}
         alt={formatMessage(messages.bannerAlt)}
       />
+      {
+        (isOverdue || isDueSoon) && (
+          <span
+            className={`course-card-status-badge ${isOverdue ? 'overdue' : 'due-soon'}`}
+            data-testid="CourseCardStatusBadge"
+          >
+            {formatMessage(isOverdue ? metaMessages.overdueBadge : metaMessages.dueSoonBadge)}
+          </span>
+        )
+      }
       {
         courseData?.enrollment?.isVerified && (
           <span

@@ -82,6 +82,18 @@ const sendConfirmEmail = async (sendEmailUrl: string) => {
   return response;
 };
 
+const getCourseCompletion = async () => {
+  const { data } = await getAuthenticatedHttpClient().get(urls.courseCompletion());
+  return data;
+};
+
+const getCourseAssignmentsCardInfo = async (courseIds) => {
+  const { data } = await getAuthenticatedHttpClient().get(
+    stringifyUrl(urls.courseAssignmentsCardInfo(), { course_id: courseIds }),
+  );
+  return data;
+};
+
 export {
   initializeList,
   unenrollFromCourse,
@@ -92,4 +104,6 @@ export {
   logShare,
   createCreditRequest,
   sendConfirmEmail,
+  getCourseCompletion,
+  getCourseAssignmentsCardInfo,
 };

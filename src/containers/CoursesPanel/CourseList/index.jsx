@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Pagination } from '@openedx/paragon';
+import { Pagination, Row, Col } from '@openedx/paragon';
 import {
   ActiveCourseFilters,
 } from 'containers/CourseFilterControls';
@@ -22,20 +22,13 @@ export const CourseList = ({ courseListData }) => {
           <ActiveCourseFilters />
         </div>
       )}
-      <div className="d-flex flex-column flex-grow-1">
+      <Row>
         {visibleList.map(({ cardId }) => (
-          <CourseCard key={cardId} cardId={cardId} />
+          <Col key={cardId} sm={12} md={6} lg={6} className="mb-4.5">
+            <CourseCard cardId={cardId} />
+          </Col>
         ))}
-        {numPages > 1 && (
-          <Pagination
-            variant={isCollapsed ? 'reduced' : 'secondary'}
-            paginationLabel="Course List"
-            className="mx-auto mb-2"
-            pageCount={numPages}
-            onPageSelect={setPageNumber}
-          />
-        )}
-      </div>
+      </Row>
     </>
   );
 };

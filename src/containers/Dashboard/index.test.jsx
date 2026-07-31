@@ -20,10 +20,16 @@ jest.mock('./hooks', () => ({
 }));
 
 jest.mock('plugin-slots/DashboardModalSlot', () => jest.fn(() => <div>DashboardModalSlot</div>));
-jest.mock('containers/CoursesPanel', () => jest.fn(() => <div>CoursesPanel</div>));
+jest.mock('containers/CoursesPanel', () => jest.fn(() => <div>AssignedCoursesSection</div>));
+jest.mock('containers/OverdueCoursesSection', () => jest.fn(() => <div>OverdueCoursesSection</div>));
 jest.mock('./LoadingView', () => jest.fn(() => <div>LoadingView</div>));
 jest.mock('containers/SelectSessionModal', () => jest.fn(() => <div>SelectSessionModal</div>));
-jest.mock('./DashboardLayout', () => jest.fn(() => <div>DashboardLayout</div>));
+jest.mock('./DashboardLayout', () => jest.fn(({ children }) => (
+  <div>
+    DashboardLayout
+    {children}
+  </div>
+)));
 
 const pageTitle = 'test-page-title';
 
@@ -67,10 +73,10 @@ describe('Dashboard', () => {
       });
     });
     describe('courses loaded', () => {
-      it('should show dashboard layout', () => {
+      it('should show overdue section and dashboard layout', () => {
         createWrapper({ initIsPending: false });
-        const dashboardLayout = screen.getByText('DashboardLayout');
-        expect(dashboardLayout).toBeInTheDocument();
+        expect(screen.getByText('OverdueCoursesSection')).toBeInTheDocument();
+        expect(screen.getByText('DashboardLayout')).toBeInTheDocument();
       });
     });
   });

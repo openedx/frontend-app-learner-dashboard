@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Container, Col, Row } from '@openedx/paragon';
+import {  Col, Row } from '@openedx/paragon';
 
 import WidgetSidebarSlot from 'plugin-slots/WidgetSidebarSlot';
 
@@ -35,16 +35,18 @@ export const DashboardLayout = ({ children }) => {
     : columnConfig.courseList.noSidebar;
 
   return (
-    <Container fluid size="xl">
+    <div className="dashboard-layout-container">
       <Row>
         <Col {...courseListColumnProps} className="course-list-column">
           {children}
         </Col>
         <Col {...columnConfig.sidebar} className={['sidebar-column', !isCollapsed && 'not-collapsed']}>
-          <WidgetSidebarSlot />
+          <div className="sidebar-column-inner d-flex flex-column ml-3">
+            <WidgetSidebarSlot />
+          </div>
         </Col>
       </Row>
-    </Container>
+    </div>
   );
 };
 DashboardLayout.propTypes = {
