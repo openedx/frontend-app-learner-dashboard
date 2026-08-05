@@ -40,10 +40,10 @@ const ICON_MAP = {
 };
 
 const NavItem = ({ icon: IconComponent, label }) => (
-  <span className="d-inline-flex align-items-center lw-nav-item">
-    <IconComponent size={18} className="lw-nav-icon" />
+  <>
+    <IconComponent size={18} className="lw-nav-icon" aria-hidden="true" />
     <span>{label}</span>
-  </span>
+  </>
 );
 
 const getLearnerHeaderMenu = (
@@ -55,6 +55,8 @@ const getLearnerHeaderMenu = (
   const BASE_URL = getConfig().LMS_BASE_URL;
   const searchCatalogUrl = getConfig().SEARCH_CATALOG_URL;
   const configNavLinks = getConfig().HEADER_NAV_LINKS;
+
+  // /dashboard redirects into this MFE, so mark it active by APP_ID.
   const isLinkActive = (link) => {
     if (link.url === '/dashboard' || link.url.endsWith('/dashboard')) {
       return getConfig().APP_ID === 'learner-dashboard';
@@ -66,23 +68,29 @@ const getLearnerHeaderMenu = (
   };
 
   const mainMenu = configNavLinks
-    ? configNavLinks.map((link) => ({
-      type: 'item',
-      href: link.url.startsWith('http') ? link.url : `${BASE_URL}${link.url}`,
-      isActive: isLinkActive(link),
-      content: (
-        <NavItem
-          icon={ICON_MAP[link.icon] ?? IconHome}
-          label={link.title}
-        />
-      ),
-    }))
+    ? configNavLinks.map((link) => {
+      const active = isLinkActive(link);
+      return {
+        type: 'item',
+        href: link.url.startsWith('http') ? link.url : `${BASE_URL}${link.url}`,
+        isActive: active,
+        // Skip navigation when already on this page (avoids /dashboard redirect flicker)
+        onClick: active ? (e) => e.preventDefault() : undefined,
+        content: (
+          <NavItem
+            icon={ICON_MAP[link.icon] ?? IconHome}
+            label={link.title}
+          />
+        ),
+      };
+    })
     : [
       {
         type: 'item',
         href: '/',
         content: formatMessage(messages.course),
         isActive: true,
+        onClick: (e) => e.preventDefault(),
       },
       ...(getConfig().ENABLE_PROGRAMS ? [{
         type: 'item',
