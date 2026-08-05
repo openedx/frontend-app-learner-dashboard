@@ -1,6 +1,6 @@
-// Layout + accents not covered by Indigo / Paragon utilities.
-// Text colors use theme utility classes in JSX (text-slate-*).
+
 #course-completion-widget {
+  margin: 0 !important;
   .course-completion-header {
     gap: 8px;
   }

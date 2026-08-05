@@ -1,0 +1,34 @@
+// Layout + accents not covered by Indigo / Paragon utilities.
+// Text colors use theme utility classes in JSX (text-slate-*).
+#quick-navigation-widget {
+  margin: 0 !important;
+  .quick-navigation-header {
+    gap: 8px;
+  }
+
+  // OpenLMS PRIMARY_COLOR — no light-theme CSS var for this navy.
+  .quick-navigation-header-icon {
+    color: #003366;
+    flex-shrink: 0;
+  }
+
+  .quick-navigation-list {
+    gap: 16px;
+  }
+
+  .quick-navigation-link {
+    color: var(--color-slate-700, #334155);
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+      color: var(--pgn-color-primary-base, #059669);
+      text-decoration: underline;
+    }
+  }
+
+  .quick-navigation-icon {
+    flex-shrink: 0;
+    color: var(--color-slate-500, #64748B);
+  }
+}

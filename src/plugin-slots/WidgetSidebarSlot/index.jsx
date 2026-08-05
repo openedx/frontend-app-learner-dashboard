@@ -3,6 +3,7 @@ import React from 'react';
 import { PluginSlot } from '@openedx/frontend-plugin-framework';
 import ProgressSummaryWidget from 'plugins/ProgressSummaryWidget';
 import CourseCompletionWidget from 'plugins/CourseCompletionWidget';
+import QuickNavigationWidget from 'plugins/QuickNavigationWidget';
 
 export const WidgetSidebarSlot = () => (
   <PluginSlot
@@ -11,6 +12,7 @@ export const WidgetSidebarSlot = () => (
   >
     <ProgressSummaryWidget />
     <CourseCompletionWidget />
+    <QuickNavigationWidget />
   </PluginSlot>
 );
 
