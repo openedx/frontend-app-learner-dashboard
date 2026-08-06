@@ -3,6 +3,7 @@ import { logError } from '@edx/frontend-platform/logging';
 import {
   createCreditRequest,
   deleteEntitlementEnrollment,
+  markAnnouncementRead,
   sendConfirmEmail,
   unenrollFromCourse,
   updateEmailSettings,
@@ -121,6 +122,21 @@ const useSendConfirmEmail = (sendEmailUrl: string) => {
   });
 };
 
+const useMarkAnnouncementRead = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationKey: learnerDashboardQueryKeys.markAnnouncementRead(),
+    mutationFn: (announcementId: number) => markAnnouncementRead(announcementId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: learnerDashboardQueryKeys.announcements() });
+    },
+    onError: (error, announcementId) => {
+      logError(`Failed to mark announcement ${announcementId} as read:`, error);
+    },
+  });
+};
+
 export {
   useUnenrollFromCourse,
   useUpdateEntitlementEnrollment,
@@ -128,4 +144,5 @@ export {
   useUpdateEmailSettings,
   useCreateCreditRequest,
   useSendConfirmEmail,
+  useMarkAnnouncementRead,
 };

@@ -82,6 +82,31 @@ const sendConfirmEmail = async (sendEmailUrl: string) => {
   return response;
 };
 
+<<<<<<< Updated upstream
+=======
+const getCourseCompletion = async () => {
+  const { data } = await getAuthenticatedHttpClient().get(urls.courseCompletion());
+  return data;
+};
+
+const getCourseAssignmentsCardInfo = async (courseIds) => {
+  const { data } = await getAuthenticatedHttpClient().get(
+    stringifyUrl(urls.courseAssignmentsCardInfo(), { course_id: courseIds }),
+  );
+  return data;
+};
+
+const getAnnouncements = async () => {
+  const { data } = await getAuthenticatedHttpClient().get(urls.announcementsList());
+  return data;
+};
+
+const markAnnouncementRead = async (announcementId: number) => {
+  const { data } = await getAuthenticatedHttpClient().post(urls.markAnnouncementRead(announcementId));
+  return data;
+};
+
+>>>>>>> Stashed changes
 export {
   initializeList,
   unenrollFromCourse,
@@ -92,4 +117,11 @@ export {
   logShare,
   createCreditRequest,
   sendConfirmEmail,
+<<<<<<< Updated upstream
+=======
+  getCourseCompletion,
+  getCourseAssignmentsCardInfo,
+  getAnnouncements,
+  markAnnouncementRead,
+>>>>>>> Stashed changes
 };

@@ -1,0 +1,83 @@
+// Layout + accents not covered by Indigo / Paragon utilities.
+// Text colors use theme utility classes in JSX (text-slate-*).
+#news-announcements-widget {
+  margin: 0 !important;
+
+  .news-announcements-header {
+    gap: 8px;
+  }
+
+  // OpenLMS PRIMARY_COLOR — no light-theme CSS var for this navy.
+  .news-announcements-header-icon {
+    color: #003366;
+    flex-shrink: 0;
+  }
+
+  .news-announcements-badge {
+    font-weight: 600;
+  }
+
+  .news-announcements-list {
+    gap: 4px;
+  }
+
+  .news-announcements-item-wrapper {
+    display: block;
+  }
+
+  .news-announcements-item {
+    padding: 8px;
+    border-radius: 8px;
+    cursor: default;
+    font: inherit;
+    transition: background-color 0.15s ease-in-out;
+
+    &.is-unread {
+      cursor: pointer;
+
+      &:hover,
+      &:focus-visible {
+        background-color: var(--color-slate-100, #F1F5F9);
+      }
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--pgn-color-primary-base, #059669);
+      outline-offset: 2px;
+    }
+  }
+
+  .news-announcements-dot {
+    width: 8px;
+    height: 8px;
+    margin-top: 6px;
+    background-color: var(--pgn-color-primary-base, #2563EB);
+    flex-shrink: 0;
+  }
+
+  .news-announcements-content {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .news-announcements-title {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  .news-announcements-description {
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
+    margin-top: 2px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .news-announcements-time {
+    display: block;
+    font-size: 0.75rem;
+    margin-top: 4px;
+  }
+}

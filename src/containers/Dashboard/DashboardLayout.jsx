@@ -41,7 +41,13 @@ export const DashboardLayout = ({ children }) => {
           {children}
         </Col>
         <Col {...columnConfig.sidebar} className={['sidebar-column', !isCollapsed && 'not-collapsed']}>
+<<<<<<< Updated upstream
           <WidgetSidebarSlot />
+=======
+          <div className="sidebar-column-inner d-flex flex-column ml-3" style={{ gap: '1.5rem' }}>
+            <WidgetSidebarSlot />
+          </div>
+>>>>>>> Stashed changes
         </Col>
       </Row>
     </Container>
