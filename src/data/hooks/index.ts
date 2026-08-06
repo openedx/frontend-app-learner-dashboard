@@ -1,10 +1,6 @@
-<<<<<<< Updated upstream
-import { useInitializeLearnerHome } from './queryHooks';
-=======
 import {
   useInitializeLearnerHome, useCourseCompletion, useCourseAssignmentsCardInfo, useAnnouncements,
 } from './queryHooks';
->>>>>>> Stashed changes
 import {
   useUnenrollFromCourse,
   useUpdateEntitlementEnrollment,
@@ -17,12 +13,9 @@ import {
 
 export {
   useInitializeLearnerHome,
-<<<<<<< Updated upstream
-=======
   useCourseCompletion,
   useCourseAssignmentsCardInfo,
   useAnnouncements,
->>>>>>> Stashed changes
   useUnenrollFromCourse,
   useUpdateEntitlementEnrollment,
   useDeleteEntitlementEnrollment,

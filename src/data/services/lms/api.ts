@@ -82,8 +82,6 @@ const sendConfirmEmail = async (sendEmailUrl: string) => {
   return response;
 };
 
-<<<<<<< Updated upstream
-=======
 const getCourseCompletion = async () => {
   const { data } = await getAuthenticatedHttpClient().get(urls.courseCompletion());
   return data;
@@ -106,7 +104,6 @@ const markAnnouncementRead = async (announcementId: number) => {
   return data;
 };
 
->>>>>>> Stashed changes
 export {
   initializeList,
   unenrollFromCourse,
@@ -117,11 +114,8 @@ export {
   logShare,
   createCreditRequest,
   sendConfirmEmail,
-<<<<<<< Updated upstream
-=======
   getCourseCompletion,
   getCourseAssignmentsCardInfo,
   getAnnouncements,
   markAnnouncementRead,
->>>>>>> Stashed changes
 };

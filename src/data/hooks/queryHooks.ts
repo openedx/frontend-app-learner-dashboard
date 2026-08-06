@@ -3,12 +3,9 @@ import { useEffect } from 'react';
 import { useBackedData, useMasquerade } from 'data/context';
 import {
   initializeList,
-<<<<<<< Updated upstream
-=======
   getCourseCompletion,
   getCourseAssignmentsCardInfo,
   getAnnouncements,
->>>>>>> Stashed changes
 } from 'data/services/lms/api';
 import { learnerDashboardQueryKeys } from './queryKeys';
 
@@ -39,10 +36,6 @@ const useInitializeLearnerHome = () => {
   return { ...query, data };
 };
 
-<<<<<<< Updated upstream
-export {
-  useInitializeLearnerHome,
-=======
 const useCourseCompletion = () => useQuery({
   queryKey: learnerDashboardQueryKeys.courseCompletion(),
   queryFn: getCourseCompletion,
@@ -67,5 +60,4 @@ export {
   useCourseCompletion,
   useCourseAssignmentsCardInfo,
   useAnnouncements,
->>>>>>> Stashed changes
 };
