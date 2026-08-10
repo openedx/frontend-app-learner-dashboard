@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react';
 import { useWindowSize } from '@openedx/paragon';
-import { useIsCollapsed } from './hooks';
+import { useIsCollapsed } from '../DashboardCard/hooks';
 
 jest.mock('@openedx/paragon', () => ({
   useWindowSize: jest.fn(),

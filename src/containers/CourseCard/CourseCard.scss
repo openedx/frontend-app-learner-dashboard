@@ -25,26 +25,6 @@
         white-space: nowrap;
       }
     }
-
-    .course-card-verify-ribbon-container {
-      width: 100%;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      text-align: center;
-
-      .badge {
-        border-radius: 0;
-      }
-
-      > img {
-        width: 40px;
-        z-index: 1000;
-        position: absolute;
-        top: 0;
-        right: 0;
-      }
-    }
   }
 
   .course-card-banners {

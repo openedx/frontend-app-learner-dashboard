@@ -6,7 +6,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import track from 'tracking';
 import { useCourseTrackingEvent, useCourseData } from 'hooks';
 import useActionDisabledState from '../hooks';
-import ActionButton from './ActionButton';
+import ActionButton from 'containers/DashboardCard/ActionButton';
 import messages from './messages';
 
 export const ViewCourseButton = ({ cardId }) => {

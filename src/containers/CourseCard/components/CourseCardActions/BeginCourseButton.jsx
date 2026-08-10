@@ -8,7 +8,7 @@ import track from 'tracking';
 import { useCourseData, useCourseTrackingEvent } from 'hooks';
 import { useInitializeLearnerHome } from 'data/hooks';
 import useActionDisabledState from '../hooks';
-import ActionButton from './ActionButton';
+import ActionButton from 'containers/DashboardCard/ActionButton';
 import messages from './messages';
 
 export const BeginCourseButton = ({ cardId }) => {
