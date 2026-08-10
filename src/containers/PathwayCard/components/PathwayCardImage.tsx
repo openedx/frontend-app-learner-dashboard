@@ -20,7 +20,7 @@ export const PathwayCardImage = ({ cardId, orientation }) => {
       tabIndex={-1}
     >
       <CardImage
-        bannerImgSrc={pathwayData.pathway?.bannerImgSrc}
+        bannerImgSrc={pathwayData.pathway?.imageUrl}
         messages={messages}
       />
     </a>

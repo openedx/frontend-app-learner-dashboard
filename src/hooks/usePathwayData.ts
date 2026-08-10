@@ -1,8 +1,13 @@
 export interface PathwayData {
   pathway: {
-    name: string;
-    bannerImgSrc?: string;
+    content: {
+      displayName: string;
+    };
+    imageUrl?: string;
     courseCount: number;
+    type?: string;
+    typeBackgroundColor?: string;
+    typeTextColor?: string;
   };
   pathwayRun: {
     homeUrl: string;
@@ -21,8 +26,9 @@ export const usePathwayData = (cardId: string): PathwayData => {
   // TODO Waiting the backend
   return {
     pathway: {
-      name: '',
+      content: { displayName: '' },
       courseCount: 0,
+      typeBackgroundColor: '',
     },
     pathwayRun: {
       homeUrl: '',

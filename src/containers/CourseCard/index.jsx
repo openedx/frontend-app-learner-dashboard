@@ -6,10 +6,10 @@ import { Card } from '@openedx/paragon';
 import { useIsCollapsed } from '../DashboardCard/hooks';
 import CourseCardBanners from './components/CourseCardBanners';
 import CourseCardImage from './components/CourseCardImage';
-import CourseCardMenu from './components/CourseCardMenu';
 import CourseCardActions from './components/CourseCardActions';
 import CourseCardDetails from './components/CourseCardDetails';
 import CourseCardTitle from './components/CourseCardTitle';
+import { CourseHaderActions } from './components/CourseHeaderActions';
 
 import './CourseCard.scss';
 import 'containers/DashboardCard/Card.scss';
@@ -28,7 +28,7 @@ export const CourseCard = ({
             <Card.Body>
               <Card.Header
                 title={<CourseCardTitle cardId={cardId} />}
-                actions={<CourseCardMenu cardId={cardId} />}
+                actions={<CourseHaderActions cardId={cardId} />}
               />
               <Card.Section className="pt-0">
                 <CourseCardDetails cardId={cardId} />

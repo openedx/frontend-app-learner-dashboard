@@ -2,7 +2,7 @@ import { usePathwayData } from 'hooks/usePathwayData';
 
 export const PathwayCardTitle = ({ cardId }: { cardId: string }) => {
   const pathwayData = usePathwayData(cardId);
-  const courseName = pathwayData.pathway.name;
+  const name = pathwayData.pathway.content.displayName;
   const homeUrl = pathwayData?.pathwayRun?.homeUrl;
 
   return (
@@ -12,7 +12,7 @@ export const PathwayCardTitle = ({ cardId }: { cardId: string }) => {
         className="dashboard-card-title"
         data-testid="PathwayCardTitle"
       >
-          {courseName}
+        {name}
       </a>
     </h3>
   );

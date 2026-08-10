@@ -22,4 +22,9 @@
       }
     }
   }
+
+  .course-card-badge {
+    background-color: var(--learner-dash-course-badge-background-color);
+    color: var(--learner-dash-course-badge-color);
+  }
 }

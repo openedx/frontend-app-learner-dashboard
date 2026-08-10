@@ -2,14 +2,15 @@ import { Card } from "@openedx/paragon";
 import { useIsCollapsed } from "containers/DashboardCard/hooks";
 import { PathwayCardImage } from "./components/PathwayCardImage";
 import { PathwayCardTitle } from "./components/PathwayCardTitle";
-import { PathwayCardMenu } from "./components/PathwayCardMenu";
 import { PathwayCardDetails } from "./components/PathwayCardDetails";
-import { PathwayCardActions } from "./components/PathwayCardActions";
 import { PathwayCardBanners } from "./components/PathwayCardBanners";
+import { PathwayCardActions } from "./components/PathwayCardActions";
+import { PathwayHeaderActions } from "./components/PathwayHeaderActions";
 
 import 'containers/DashboardCard/Card.scss';
+import './PathwayCard.scss';
 
-export const Pathwaycard = ({
+export const PathwayCard = ({
   cardId,
 }: { cardId: string }) => {
   const isCollapsed = useIsCollapsed();
@@ -23,7 +24,7 @@ export const Pathwaycard = ({
             <Card.Body>
               <Card.Header
                 title={<PathwayCardTitle cardId={cardId} />}
-                actions={<PathwayCardMenu cardId={cardId} />}
+                actions={<PathwayHeaderActions cardId={cardId} />}
               />
               <Card.Section className="pt-0">
                 <PathwayCardDetails cardId={cardId} />
