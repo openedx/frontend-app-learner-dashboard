@@ -9,7 +9,7 @@ export const PathwayCardTitle = ({ cardId }: { cardId: string }) => {
     <h3>
       <a
         href={homeUrl}
-        className="course-card-title"
+        className="dashboard-card-title"
         data-testid="PathwayCardTitle"
       >
           {courseName}
