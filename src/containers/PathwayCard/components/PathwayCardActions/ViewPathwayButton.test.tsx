@@ -17,7 +17,7 @@ describe('ViewPathwayButton', () => {
   it('renders a link to the pathway home url', () => {
     mockUsePathwayData.mockReturnValue({ pathwayRun: { homeUrl: '/pathway-home' } } as unknown as TransformedPathwayData);
     render(<IntlProvider locale="en"><ViewPathwayButton cardId="test-card-id" /></IntlProvider>);
-    const button = screen.getByRole('button', { name: messages.viewPathway.defaultMessage });
+    const button = screen.getByRole('link', { name: messages.viewPathway.defaultMessage });
     expect(button).toHaveAttribute('href', '/pathway-home');
   });
 });
