@@ -7,8 +7,8 @@ import {
 } from 'containers/FilterControls';
 import CourseCard from 'containers/CourseCard';
 
-import { useIsCollapsed } from './hooks';
 import { PathwayCard } from 'containers/PathwayCard';
+import { useIsCollapsed } from './hooks';
 
 export const ItemsList = ({ itemsListData }) => {
   const {

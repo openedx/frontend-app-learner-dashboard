@@ -17,11 +17,10 @@ import {
   getVisibleItems,
 } from 'utils/dataTransformers';
 
-import messages from './messages';
-
 import './index.scss';
 import { getConfig } from '@edx/frontend-platform';
 import { COURSE_TYPE } from 'data/context/FiltersProvider';
+import messages from './messages';
 
 /**
  * Renders the list of CourseCards and PathwayCards, as well as the controls (FilterControls) for modifying the list.
@@ -39,7 +38,7 @@ export const ItemsPanel = () => {
     filters, sortBy, pageNumber, setPageNumber, types,
   } = useFilters();
   // If there is a type filter and the "courses" type is not selected, it means all courses are hidden.
-  const hideCourses = types.length > 0 && !types.find(type => type.id === COURSE_TYPE)
+  const hideCourses = types.length > 0 && !types.find(type => type.id === COURSE_TYPE);
 
   const { visibleList, numPages } = useMemo(() => {
     const visibleItems = [];
@@ -70,16 +69,15 @@ export const ItemsPanel = () => {
         title: pathway.pathway.content.displayName,
         itemType: 'pathway',
       })));
-      visiblePathways
     }
 
     return getVisibleItems(visibleItems, sortBy, pageNumber);
-  }, [data, filters, sortBy, pageNumber, types]);
+  }, [data, filters, sortBy, pageNumber, types, hideCourses]);
 
   const filterTypes = useMemo(() => {
-    const filterTypes = [];
+    const availableTypes = [];
     if (hasCourses) {
-      filterTypes.push({
+      availableTypes.push({
         id: COURSE_TYPE,
         text: formatMessage(messages.courseType),
       });
@@ -87,13 +85,13 @@ export const ItemsPanel = () => {
     if (hasPathways) {
       data?.pathway?.forEach((pathway) => {
         const { type, typeText } = pathway.pathway;
-        if (!filterTypes.some(filterType => filterType.id === type)) {
-          filterTypes.push({ id: type, text: typeText });
+        if (!availableTypes.some(filterType => filterType.id === type)) {
+          availableTypes.push({ id: type, text: typeText });
         }
       });
     }
-    return filterTypes;
-  }, [data, hasCourses, hasPathways]);
+    return availableTypes;
+  }, [data, hasCourses, hasPathways, formatMessage]);
 
   // Clamp page number when filtered/mutated list shrinks
   React.useEffect(() => {

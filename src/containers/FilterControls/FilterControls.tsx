@@ -19,10 +19,12 @@ import FilterForm from './components/FilterForm';
 import SortForm from './components/SortForm';
 import messages from './messages';
 
+// @ts-ignore
 import './index.scss';
 import { TypeForm } from './components/TypeForm';
+import { FilterType } from 'data/context/FiltersProvider';
 
-export const FilterControls = ({ filterTypes }) => {
+export const FilterControls = ({ filterTypes }: { filterTypes: FilterType[] }) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [targetRef, setTargetRef] = React.useState(null);
   const { formatMessage } = useIntl();
@@ -52,7 +54,7 @@ export const FilterControls = ({ filterTypes }) => {
     setSortBy(event.target.value);
   };
 
-  const handleTypeChange = ({ target: { checked, value }}) => {
+  const handleTypeChange = ({ target: { checked, value } }) => {
     const type = filterTypes.find(filterType => filterType.id === value);
     if (type) {
       if (checked) {
@@ -68,11 +70,13 @@ export const FilterControls = ({ filterTypes }) => {
     update(value);
   };
   const { width } = useWindowSize();
+  // @ts-ignore
   const isMobile = width < breakpoints.small.minWidth;
 
   return (
     <div id="filter-controls">
       <Button
+        // @ts-ignore
         ref={setTargetRef}
         variant="outline-primary"
         iconBefore={Tune}

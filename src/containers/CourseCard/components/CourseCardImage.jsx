@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 
 import track from 'tracking';
 import { useCourseData, useCourseTrackingEvent } from 'hooks';
-import useActionDisabledState from './hooks';
 import { CardImage } from 'containers/DashboardCard/CardImage';
+import useActionDisabledState from './hooks';
 
 import messages from '../messages';
 

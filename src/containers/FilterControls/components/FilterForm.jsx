@@ -28,8 +28,7 @@ export const FilterForm = ({
       <div className="filter-form-heading mb-1">
         {getConfig().ENABLE_PATHWAY_PILOT_UI
           ? formatMessage(messages.status)
-          : formatMessage(messages.courseStatus)
-        }
+          : formatMessage(messages.courseStatus)}
       </div>
       <Form.CheckboxSet
         name="course-status-filters"

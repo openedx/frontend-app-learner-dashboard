@@ -8,8 +8,8 @@ import { baseAppUrl } from 'data/services/lms/urls';
 import track from 'tracking';
 import { useCourseTrackingEvent, useCourseData } from 'hooks';
 import { useInitializeLearnerHome } from 'data/hooks';
-import useActionDisabledState from '../hooks';
 import ActionButton from 'containers/DashboardCard/ActionButton';
+import useActionDisabledState from '../hooks';
 import messages from './messages';
 
 export const ResumeButton = ({ cardId }) => {

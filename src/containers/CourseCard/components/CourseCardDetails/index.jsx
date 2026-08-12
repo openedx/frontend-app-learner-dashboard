@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import { Button } from '@openedx/paragon';
 
-import useCardDetailsData from './hooks';
 import { CardDetails } from 'containers/DashboardCard/CardDetails';
+import useCardDetailsData from './hooks';
 
 export const CourseCardDetails = ({ cardId }) => {
   const {
