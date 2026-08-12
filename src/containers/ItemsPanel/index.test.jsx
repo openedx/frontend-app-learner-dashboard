@@ -18,6 +18,7 @@ jest.mock('data/hooks', () => ({
 jest.mock('data/context', () => ({
   useFilters: jest.fn(() => ({
     filters: [],
+    types: [],
     sortBy: 'enrolled',
     pageNumber: 1,
     setPageNumber: jest.fn(),
@@ -51,7 +52,11 @@ describe('ItemsPanel', () => {
   });
   describe('with courses', () => {
     it('should render courselist', () => {
-      const visibleList = [{ cardId: 'foo' }, { cardId: 'bar' }, { cardId: 'baz' }];
+      const visibleList = [
+        { cardId: 'foo', course: { courseName: 'Foo' } },
+        { cardId: 'bar', course: { courseName: 'Bar' } },
+        { cardId: 'baz', course: { courseName: 'Baz' } },
+      ];
       createWrapper({ visibleList });
       const courseCards = screen.getAllByText('CourseCard');
       expect(courseCards.length).toEqual(visibleList.length);
@@ -62,7 +67,11 @@ describe('ItemsPanel', () => {
     });
 
     it('displays course list slot when courses exist', () => {
-      const visibleList = [{ cardId: 'foo' }, { cardId: 'bar' }, { cardId: 'baz' }];
+      const visibleList = [
+        { cardId: 'foo', course: { courseName: 'Foo' } },
+        { cardId: 'bar', course: { courseName: 'Bar' } },
+        { cardId: 'baz', course: { courseName: 'Baz' } },
+      ];
       createWrapper({ visibleList });
       const heading = screen.getByText(messages.myCourses.defaultMessage);
       expect(heading).toBeInTheDocument();
@@ -76,19 +85,24 @@ describe('ItemsPanel', () => {
       jest.clearAllMocks();
       jest.spyOn(dataTransformers, 'getTransformedCourseDataList');
       jest.spyOn(dataTransformers, 'getVisibleCourses');
+      jest.spyOn(dataTransformers, 'getVisibleItems');
     });
 
     it('clamps page number to 1 when current page exceeds total pages', () => {
       useFilters.mockReturnValue({
         filters: [],
+        types: [],
         sortBy: 'enrolled',
         pageNumber: 5, // User is on page 5
         setPageNumber: mockSetPageNumber,
       });
 
       dataTransformers.getTransformedCourseDataList.mockReturnValue([{ id: 1 }, { id: 2 }]);
-      dataTransformers.getVisibleCourses.mockReturnValue({
-        visibleList: [{ id: 1 }],
+      dataTransformers.getVisibleCourses.mockReturnValue([
+        { cardId: 'foo', course: { courseName: 'Foo' } },
+      ]);
+      dataTransformers.getVisibleItems.mockReturnValue({
+        visibleList: [{ cardId: 'foo' }],
         numPages: 2,
       });
 
@@ -100,14 +114,18 @@ describe('ItemsPanel', () => {
     it('does not clamp page number when current page is valid', () => {
       useFilters.mockReturnValue({
         filters: [],
+        types: [],
         sortBy: 'enrolled',
         pageNumber: 2,
         setPageNumber: mockSetPageNumber,
       });
 
       dataTransformers.getTransformedCourseDataList.mockReturnValue([{ id: 1 }, { id: 2 }]);
-      dataTransformers.getVisibleCourses.mockReturnValue({
-        visibleList: [{ id: 1 }],
+      dataTransformers.getVisibleCourses.mockReturnValue([
+        { cardId: 'foo', course: { courseName: 'Foo' } },
+      ]);
+      dataTransformers.getVisibleItems.mockReturnValue({
+        visibleList: [{ cardId: 'foo' }],
         numPages: 3,
       });
 
@@ -119,13 +137,15 @@ describe('ItemsPanel', () => {
     it('does not clamp when numPages is 0', () => {
       useFilters.mockReturnValue({
         filters: [],
+        types: [],
         sortBy: 'enrolled',
         pageNumber: 2,
         setPageNumber: mockSetPageNumber,
       });
 
       dataTransformers.getTransformedCourseDataList.mockReturnValue([]);
-      dataTransformers.getVisibleCourses.mockReturnValue({
+      dataTransformers.getVisibleCourses.mockReturnValue([]);
+      dataTransformers.getVisibleItems.mockReturnValue({
         visibleList: [],
         numPages: 0,
       });
@@ -138,14 +158,18 @@ describe('ItemsPanel', () => {
     it('handles edge case when pageNumber equals numPages', () => {
       useFilters.mockReturnValue({
         filters: [],
+        types: [],
         sortBy: 'enrolled',
         pageNumber: 2,
         setPageNumber: mockSetPageNumber,
       });
 
       dataTransformers.getTransformedCourseDataList.mockReturnValue([{ id: 1 }, { id: 2 }]);
-      dataTransformers.getVisibleCourses.mockReturnValue({
-        visibleList: [{ id: 1 }],
+      dataTransformers.getVisibleCourses.mockReturnValue([
+        { cardId: 'foo', course: { courseName: 'Foo' } },
+      ]);
+      dataTransformers.getVisibleItems.mockReturnValue({
+        visibleList: [{ cardId: 'foo' }],
         numPages: 2,
       });
 

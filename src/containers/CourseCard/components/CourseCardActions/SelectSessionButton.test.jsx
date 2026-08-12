@@ -14,7 +14,7 @@ jest.mock('data/context', () => ({
 }));
 jest.mock('../hooks', () => jest.fn(() => ({ disableSelectSession: false })));
 
-jest.mock('./ActionButton/hooks', () => jest.fn(() => false));
+jest.mock('containers/DashboardCard/ActionButton/hooks', () => jest.fn(() => false));
 
 describe('SelectSessionButton', () => {
   const props = { cardId: 'cardId' };

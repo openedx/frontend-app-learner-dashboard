@@ -18,12 +18,16 @@ describe('FiltersProvider and useFilters', () => {
         expect(result.current.filters).toEqual([]);
         expect(result.current.sortBy).toBe('enrolled');
         expect(result.current.pageNumber).toBe(1);
+        expect(result.current.types).toEqual([]);
         expect(typeof result.current.setFilters).toBe('function');
         expect(typeof result.current.addFilter).toBe('function');
         expect(typeof result.current.removeFilter).toBe('function');
         expect(typeof result.current.clearFilters).toBe('function');
         expect(typeof result.current.setSortBy).toBe('function');
         expect(typeof result.current.setPageNumber).toBe('function');
+        expect(typeof result.current.addType).toBe('function');
+        expect(typeof result.current.removeType).toBe('function');
+        expect(typeof result.current.clearTypes).toBe('function');
       });
 
       it('should have all expected properties in context', () => {
@@ -35,12 +39,16 @@ describe('FiltersProvider and useFilters', () => {
           'filters',
           'sortBy',
           'pageNumber',
+          'types',
           'setFilters',
           'addFilter',
           'removeFilter',
           'clearFilters',
           'setSortBy',
           'setPageNumber',
+          'addType',
+          'removeType',
+          'clearTypes',
         ];
 
         expectedProperties.forEach(prop => {
@@ -331,6 +339,157 @@ describe('FiltersProvider and useFilters', () => {
     });
   });
 
+  describe('types management', () => {
+    const courseType = { id: 'course', text: 'Course' };
+    const pathwayType = { id: 'pathway', text: 'Pathway' };
+
+    describe('addType', () => {
+      it('should add type to empty types array', () => {
+        const { result } = renderHook(() => useFilters(), {
+          wrapper: createWrapper(),
+        });
+
+        act(() => {
+          result.current.addType(courseType);
+        });
+
+        expect(result.current.types).toEqual([courseType]);
+      });
+
+      it('should add type to existing types', () => {
+        const { result } = renderHook(() => useFilters(), {
+          wrapper: createWrapper(),
+        });
+
+        act(() => {
+          result.current.addType(courseType);
+        });
+
+        act(() => {
+          result.current.addType(pathwayType);
+        });
+
+        expect(result.current.types).toEqual([courseType, pathwayType]);
+      });
+
+      it('should add duplicate types (no deduplication)', () => {
+        const { result } = renderHook(() => useFilters(), {
+          wrapper: createWrapper(),
+        });
+
+        act(() => {
+          result.current.addType(courseType);
+        });
+
+        act(() => {
+          result.current.addType(courseType);
+        });
+
+        expect(result.current.types).toEqual([courseType, courseType]);
+      });
+    });
+
+    describe('removeType', () => {
+      it('should remove specific type from types array by id', () => {
+        const { result } = renderHook(() => useFilters(), {
+          wrapper: createWrapper(),
+        });
+
+        act(() => {
+          result.current.addType(courseType);
+          result.current.addType(pathwayType);
+        });
+
+        act(() => {
+          result.current.removeType(courseType.id);
+        });
+
+        expect(result.current.types).toEqual([pathwayType]);
+      });
+
+      it('should handle removing non-existent type', () => {
+        const { result } = renderHook(() => useFilters(), {
+          wrapper: createWrapper(),
+        });
+
+        act(() => {
+          result.current.addType(courseType);
+        });
+
+        act(() => {
+          result.current.removeType('nonExistent');
+        });
+
+        expect(result.current.types).toEqual([courseType]);
+      });
+
+      it('should remove type from empty array', () => {
+        const { result } = renderHook(() => useFilters(), {
+          wrapper: createWrapper(),
+        });
+
+        act(() => {
+          result.current.removeType(courseType.id);
+        });
+
+        expect(result.current.types).toEqual([]);
+      });
+    });
+
+    describe('clearTypes', () => {
+      it('should clear all types', () => {
+        const { result } = renderHook(() => useFilters(), {
+          wrapper: createWrapper(),
+        });
+
+        act(() => {
+          result.current.addType(courseType);
+          result.current.addType(pathwayType);
+        });
+
+        act(() => {
+          result.current.clearTypes();
+        });
+
+        expect(result.current.types).toEqual([]);
+      });
+
+      it('should clear types when already empty', () => {
+        const { result } = renderHook(() => useFilters(), {
+          wrapper: createWrapper(),
+        });
+
+        act(() => {
+          result.current.clearTypes();
+        });
+
+        expect(result.current.types).toEqual([]);
+      });
+
+      it('should not affect filters, sortBy and pageNumber when clearing types', () => {
+        const { result } = renderHook(() => useFilters(), {
+          wrapper: createWrapper(),
+        });
+
+        act(() => {
+          result.current.addFilter('inProgress');
+          result.current.addType(courseType);
+          result.current.setSortBy('title');
+          result.current.setPageNumber(3);
+        });
+
+        act(() => {
+          result.current.clearTypes();
+        });
+
+        expect(result.current.types).toEqual([]);
+        expect(result.current.filters).toEqual(['inProgress']);
+        expect(result.current.sortBy).toBe('title');
+        expect(result.current.pageNumber).toBe(3);
+      });
+    });
+  });
+
   describe('sortBy management', () => {
     it('should have initial sortBy as "enrolled"', () => {
       const { result } = renderHook(() => useFilters(), {
@@ -508,6 +667,51 @@ describe('FiltersProvider and useFilters', () => {
       expect(result.current.filters).toEqual([]);
     });
 
+    it('should handle ADD_TYPE action correctly', () => {
+      const { result } = renderHook(() => useFilters(), {
+        wrapper: createWrapper(),
+      });
+
+      act(() => {
+        result.current.addType({ id: 'course', text: 'Course' });
+      });
+
+      expect(result.current.types).toEqual([{ id: 'course', text: 'Course' }]);
+    });
+
+    it('should handle REMOVE_TYPE action correctly', () => {
+      const { result } = renderHook(() => useFilters(), {
+        wrapper: createWrapper(),
+      });
+
+      act(() => {
+        result.current.addType({ id: 'course', text: 'Course' });
+        result.current.addType({ id: 'pathway', text: 'Pathway' });
+      });
+
+      act(() => {
+        result.current.removeType('course');
+      });
+
+      expect(result.current.types).toEqual([{ id: 'pathway', text: 'Pathway' }]);
+    });
+
+    it('should handle CLEAR_TYPES action correctly', () => {
+      const { result } = renderHook(() => useFilters(), {
+        wrapper: createWrapper(),
+      });
+
+      act(() => {
+        result.current.addType({ id: 'course', text: 'Course' });
+      });
+
+      act(() => {
+        result.current.clearTypes();
+      });
+
+      expect(result.current.types).toEqual([]);
+    });
+
     it('should handle SET_SORT_BY action correctly', () => {
       const { result } = renderHook(() => useFilters(), {
         wrapper: createWrapper(),
@@ -683,6 +887,9 @@ describe('FiltersProvider and useFilters', () => {
         clearFilters: result.current.clearFilters,
         setSortBy: result.current.setSortBy,
         setPageNumber: result.current.setPageNumber,
+        addType: result.current.addType,
+        removeType: result.current.removeType,
+        clearTypes: result.current.clearTypes,
       };
       rerender();
 
@@ -692,6 +899,9 @@ describe('FiltersProvider and useFilters', () => {
       expect(result.current.clearFilters).toBe(initialFunctions.clearFilters);
       expect(result.current.setSortBy).toBe(initialFunctions.setSortBy);
       expect(result.current.setPageNumber).toBe(initialFunctions.setPageNumber);
+      expect(result.current.addType).toBe(initialFunctions.addType);
+      expect(result.current.removeType).toBe(initialFunctions.removeType);
+      expect(result.current.clearTypes).toBe(initialFunctions.clearTypes);
     });
   });
 
@@ -709,6 +919,9 @@ describe('FiltersProvider and useFilters', () => {
       expect(result.current.clearFilters).toBe(firstContextValue.clearFilters);
       expect(result.current.setSortBy).toBe(firstContextValue.setSortBy);
       expect(result.current.setPageNumber).toBe(firstContextValue.setPageNumber);
+      expect(result.current.addType).toBe(firstContextValue.addType);
+      expect(result.current.removeType).toBe(firstContextValue.removeType);
+      expect(result.current.clearTypes).toBe(firstContextValue.clearTypes);
     });
 
     it('should update memoized value when state changes', () => {
@@ -723,6 +936,20 @@ describe('FiltersProvider and useFilters', () => {
       });
       expect(result.current.filters).not.toEqual(initialValue.filters);
       expect(result.current.filters).toContain('newFilter');
+    });
+
+    it('should update memoized value when types change', () => {
+      const { result } = renderHook(() => useFilters(), {
+        wrapper: createWrapper(),
+      });
+
+      const initialValue = result.current;
+
+      act(() => {
+        result.current.addType({ id: 'course', text: 'Course' });
+      });
+      expect(result.current.types).not.toEqual(initialValue.types);
+      expect(result.current.types).toContainEqual({ id: 'course', text: 'Course' });
     });
   });
 

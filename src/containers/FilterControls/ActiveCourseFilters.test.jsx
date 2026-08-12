@@ -9,6 +9,7 @@ import ActiveCourseFilters from './ActiveCourseFilters';
 import messages from './messages';
 
 const filters = Object.values(FilterKeys);
+const types = [{ id: 'course', text: 'Course' }, { id: 'pathway', text: 'Pathway' }];
 
 jest.mock('data/context', () => ({
   useFilters: jest.fn(),
@@ -16,13 +17,22 @@ jest.mock('data/context', () => ({
 
 const removeFiltersMock = jest.fn().mockName('removeFilter');
 const clearFiltersMock = jest.fn().mockName('clearFilters');
+const removeTypeMock = jest.fn().mockName('removeType');
+const clearTypesMock = jest.fn().mockName('clearTypes');
 useFilters.mockReturnValue({
   filters,
+  types: [],
   removeFilter: removeFiltersMock,
   clearFilters: clearFiltersMock,
+  removeType: removeTypeMock,
+  clearTypes: clearTypesMock,
 });
 
 describe('ActiveCourseFilters', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('renders chips correctly', () => {
     render(<IntlProvider locale="en"><ActiveCourseFilters /></IntlProvider>);
     filters.map((key) => {
@@ -46,9 +56,45 @@ describe('ActiveCourseFilters', () => {
   it('should call onClick when button is clicked clear all filters', async () => {
     const user = userEvent.setup();
     render(<IntlProvider locale="en"><ActiveCourseFilters /></IntlProvider>);
-    screen.debug();
     const clearAllButton = screen.getByRole('button', { name: formatMessage(messages.clearAll) });
     await user.click(clearAllButton);
     expect(clearFiltersMock).toHaveBeenCalledTimes(1);
+  });
+
+  describe('with types', () => {
+    beforeEach(() => {
+      useFilters.mockReturnValue({
+        filters: [],
+        types,
+        removeFilter: removeFiltersMock,
+        clearFilters: clearFiltersMock,
+        removeType: removeTypeMock,
+        clearTypes: clearTypesMock,
+      });
+    });
+
+    it('renders type chips correctly', () => {
+      render(<IntlProvider locale="en"><ActiveCourseFilters /></IntlProvider>);
+      types.forEach(type => {
+        expect(screen.getByText(type.text)).toBeInTheDocument();
+      });
+    });
+
+    it('calls removeType when a type chip is clicked', async () => {
+      const user = userEvent.setup();
+      render(<IntlProvider locale="en"><ActiveCourseFilters /></IntlProvider>);
+      const removeButton = screen.getByRole('button', { name: types[0].text });
+      await user.click(removeButton);
+      expect(removeTypeMock).toHaveBeenCalledTimes(1);
+      expect(removeTypeMock).toHaveBeenCalledWith(types[0].id);
+    });
+
+    it('calls clearTypes when clear all is clicked', async () => {
+      const user = userEvent.setup();
+      render(<IntlProvider locale="en"><ActiveCourseFilters /></IntlProvider>);
+      const clearAllButton = screen.getByRole('button', { name: formatMessage(messages.clearAll) });
+      await user.click(clearAllButton);
+      expect(clearTypesMock).toHaveBeenCalledTimes(1);
+    });
   });
 });

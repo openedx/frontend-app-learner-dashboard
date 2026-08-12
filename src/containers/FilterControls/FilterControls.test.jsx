@@ -27,6 +27,7 @@ jest.mock('tracking', () => ({
 }));
 
 const filters = Object.values(FilterKeys);
+const filterTypes = [{ id: 'course', text: 'Course' }, { id: 'pathway', text: 'Pathway' }];
 
 jest.mock('data/context', () => ({
   useFilters: jest.fn(),
@@ -35,10 +36,13 @@ jest.mock('data/context', () => ({
 const setSortByMock = jest.fn().mockName('setSortBy');
 useFilters.mockReturnValue({
   filters,
+  types: [],
   removeFilter: jest.fn().mockName('removeFilter'),
   clearFilters: jest.fn().mockName('clearFilters'),
   setSortBy: setSortByMock,
   addFilter: jest.fn().mockName('addFilter'),
+  addType: jest.fn().mockName('addType'),
+  removeType: jest.fn().mockName('removeType'),
 });
 
 describe('FilterControls', () => {
@@ -46,7 +50,7 @@ describe('FilterControls', () => {
     it('should render sheet', async () => {
       const user = userEvent.setup();
       useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth - 1 });
-      render(<IntlProvider locale="en"><FilterControls /></IntlProvider>);
+      render(<IntlProvider locale="en"><FilterControls filterTypes={filterTypes} /></IntlProvider>);
       const filtersButton = screen.getByRole('button', { name: 'Refine' });
       await user.click(filtersButton);
       await waitFor(() => {
@@ -60,7 +64,7 @@ describe('FilterControls', () => {
     it('should have button disabled', async () => {
       const user = userEvent.setup();
       useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
-      render(<IntlProvider locale="en"><FilterControls /></IntlProvider>);
+      render(<IntlProvider locale="en"><FilterControls filterTypes={filterTypes} /></IntlProvider>);
       const filtersButton = screen.getByRole('button', { name: 'Refine' });
       await user.click(filtersButton);
       await waitFor(() => {
@@ -74,7 +78,7 @@ describe('FilterControls', () => {
     it('should have button disabled', () => {
       useInitializeLearnerHome.mockReturnValue({ data: { courses: [] } });
       useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
-      render(<IntlProvider locale="en"><FilterControls /></IntlProvider>);
+      render(<IntlProvider locale="en"><FilterControls filterTypes={filterTypes} /></IntlProvider>);
       const button = screen.getByRole('button', { name: formatMessage(messages.refine) });
       expect(button).toBeInTheDocument();
       expect(button).toBeDisabled();
@@ -84,7 +88,7 @@ describe('FilterControls', () => {
     it('should have button enabled', () => {
       useInitializeLearnerHome.mockReturnValue({ data: { courses: [1, 2, 3] } });
       useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
-      render(<IntlProvider locale="en"><FilterControls /></IntlProvider>);
+      render(<IntlProvider locale="en"><FilterControls filterTypes={filterTypes} /></IntlProvider>);
       const button = screen.getByRole('button', { name: formatMessage(messages.refine) });
       expect(button).toBeInTheDocument();
       expect(button).toBeEnabled();
@@ -93,7 +97,7 @@ describe('FilterControls', () => {
       const user = userEvent.setup();
       useInitializeLearnerHome.mockReturnValue({ data: { courses: [1, 2, 3] } });
       useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
-      render(<IntlProvider locale="en"><FilterControls /></IntlProvider>);
+      render(<IntlProvider locale="en"><FilterControls filterTypes={filterTypes} /></IntlProvider>);
       const filtersButton = screen.getByRole('button', { name: 'Refine' });
       await user.click(filtersButton);
       await waitFor(async () => {
@@ -108,14 +112,17 @@ describe('FilterControls', () => {
       const removeFilterMock = jest.fn().mockName('removeFilter');
       useFilters.mockReturnValue({
         filters: [],
+        types: [],
         removeFilter: removeFilterMock,
         clearFilters: jest.fn().mockName('clearFilters'),
         setSortBy: jest.fn().mockName('setSortBy'),
         addFilter: addFilterMock,
+        addType: jest.fn().mockName('addType'),
+        removeType: jest.fn().mockName('removeType'),
       });
       useInitializeLearnerHome.mockReturnValue({ data: { courses: [1, 2, 3] } });
       useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
-      render(<IntlProvider locale="en"><FilterControls /></IntlProvider>);
+      render(<IntlProvider locale="en"><FilterControls filterTypes={filterTypes} /></IntlProvider>);
       const filtersButton = screen.getByRole('button', { name: 'Refine' });
       await user.click(filtersButton);
       await waitFor(async () => {
@@ -130,20 +137,75 @@ describe('FilterControls', () => {
       const removeFilterMock = jest.fn().mockName('removeFilter');
       useFilters.mockReturnValue({
         filters: [FilterKeys.inProgress],
+        types: [],
         removeFilter: removeFilterMock,
         clearFilters: jest.fn().mockName('clearFilters'),
         setSortBy: jest.fn().mockName('setSortBy'),
         addFilter: addFilterMock,
+        addType: jest.fn().mockName('addType'),
+        removeType: jest.fn().mockName('removeType'),
       });
       useInitializeLearnerHome.mockReturnValue({ data: { courses: [1, 2, 3] } });
       useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
-      render(<IntlProvider locale="en"><FilterControls /></IntlProvider>);
+      render(<IntlProvider locale="en"><FilterControls filterTypes={filterTypes} /></IntlProvider>);
       const filtersButton = screen.getByRole('button', { name: 'Refine' });
       await user.click(filtersButton);
       await waitFor(async () => {
         const filterCheckbox = screen.getByText('In-Progress');
         await user.click(filterCheckbox);
         expect(removeFilterMock).toHaveBeenCalledWith(FilterKeys.inProgress);
+      });
+    });
+    it('should call addType on type check', async () => {
+      const user = userEvent.setup();
+      const addTypeMock = jest.fn().mockName('addType');
+      const removeTypeMock = jest.fn().mockName('removeType');
+      useFilters.mockReturnValue({
+        filters: [],
+        types: [],
+        removeFilter: jest.fn().mockName('removeFilter'),
+        clearFilters: jest.fn().mockName('clearFilters'),
+        setSortBy: jest.fn().mockName('setSortBy'),
+        addFilter: jest.fn().mockName('addFilter'),
+        addType: addTypeMock,
+        removeType: removeTypeMock,
+      });
+      useInitializeLearnerHome.mockReturnValue({ data: { courses: [1, 2, 3] } });
+      useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
+      render(<IntlProvider locale="en"><FilterControls filterTypes={filterTypes} /></IntlProvider>);
+      const filtersButton = screen.getByRole('button', { name: 'Refine' });
+      await user.click(filtersButton);
+      await waitFor(async () => {
+        const typeCheckbox = screen.getByText(filterTypes[0].text);
+        await user.click(typeCheckbox);
+        expect(addTypeMock).toHaveBeenCalledWith(filterTypes[0]);
+        expect(removeTypeMock).not.toHaveBeenCalled();
+      });
+    });
+    it('should call removeType on type uncheck', async () => {
+      const user = userEvent.setup();
+      const addTypeMock = jest.fn().mockName('addType');
+      const removeTypeMock = jest.fn().mockName('removeType');
+      useFilters.mockReturnValue({
+        filters: [],
+        types: [filterTypes[0]],
+        removeFilter: jest.fn().mockName('removeFilter'),
+        clearFilters: jest.fn().mockName('clearFilters'),
+        setSortBy: jest.fn().mockName('setSortBy'),
+        addFilter: jest.fn().mockName('addFilter'),
+        addType: addTypeMock,
+        removeType: removeTypeMock,
+      });
+      useInitializeLearnerHome.mockReturnValue({ data: { courses: [1, 2, 3] } });
+      useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
+      render(<IntlProvider locale="en"><FilterControls filterTypes={filterTypes} /></IntlProvider>);
+      const filtersButton = screen.getByRole('button', { name: 'Refine' });
+      await user.click(filtersButton);
+      await waitFor(async () => {
+        const typeCheckbox = screen.getByText(filterTypes[0].text);
+        await user.click(typeCheckbox);
+        expect(removeTypeMock).toHaveBeenCalledWith(filterTypes[0].id);
+        expect(addTypeMock).not.toHaveBeenCalled();
       });
     });
   });

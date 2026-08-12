@@ -4,7 +4,7 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 import CourseCard from '.';
 import hooks from '../DashboardCard/hooks';
 
-jest.mock('./hooks', () => ({
+jest.mock('../DashboardCard/hooks', () => ({
   useIsCollapsed: jest.fn(),
 }));
 

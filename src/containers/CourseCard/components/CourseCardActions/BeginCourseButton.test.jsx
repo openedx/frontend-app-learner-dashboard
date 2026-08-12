@@ -34,7 +34,7 @@ jest.mock('tracking', () => ({
 
 jest.mock('../hooks', () => jest.fn(() => ({ disableBeginCourse: false })));
 
-jest.mock('./ActionButton/hooks', () => jest.fn(() => false));
+jest.mock('containers/DashboardCard/ActionButton/hooks', () => jest.fn(() => false));
 
 const homeUrl = 'home-url';
 
