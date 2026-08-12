@@ -1,5 +1,6 @@
 import { MessageDescriptor } from 'react-intl';
 import { useIntl } from '@edx/frontend-platform/i18n';
+// @ts-expect-error TS2307: no module declaration for image assets in this repo
 import verifiedRibbon from 'assets/verified-ribbon.png';
 
 import { baseAppUrl } from 'data/services/lms/urls';

@@ -34,7 +34,7 @@ export const PathwayCard = ({
               </Card.Footer>
             </Card.Body>
           </div>
-          <PathwayCardBanners cardId={cardId} />
+          <PathwayCardBanners />
         </div>
       </Card>
     </div>
