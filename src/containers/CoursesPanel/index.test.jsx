@@ -25,9 +25,9 @@ jest.mock('data/context', () => ({
 }));
 
 jest.mock('containers/CourseCard', () => jest.fn(() => <div>CourseCard</div>));
-jest.mock('containers/CourseFilterControls', () => ({
+jest.mock('containers/FilterControls', () => ({
   ActiveCourseFilters: jest.fn(() => <div>ActiveCourseFilters</div>),
-  CourseFilterControls: jest.fn(() => <div>CourseFilterControls</div>),
+  FilterControls: jest.fn(() => <div>FilterControls</div>),
 }));
 
 jest.mock('@openedx/frontend-plugin-framework', () => ({
@@ -58,7 +58,7 @@ describe('CoursesPanel', () => {
     });
     it('displays course filter controls', () => {
       createWrapper();
-      expect(screen.getByText('CourseFilterControls')).toBeInTheDocument();
+      expect(screen.getByText('FilterControls')).toBeInTheDocument();
     });
 
     it('displays course list slot when courses exist', () => {
@@ -75,7 +75,7 @@ describe('CoursesPanel', () => {
     beforeEach(() => {
       jest.clearAllMocks();
       jest.spyOn(dataTransformers, 'getTransformedCourseDataList');
-      jest.spyOn(dataTransformers, 'getVisibleList');
+      jest.spyOn(dataTransformers, 'getVisibleCourses');
     });
 
     it('clamps page number to 1 when current page exceeds total pages', () => {
@@ -87,7 +87,7 @@ describe('CoursesPanel', () => {
       });
 
       dataTransformers.getTransformedCourseDataList.mockReturnValue([{ id: 1 }, { id: 2 }]);
-      dataTransformers.getVisibleList.mockReturnValue({
+      dataTransformers.getVisibleCourses.mockReturnValue({
         visibleList: [{ id: 1 }],
         numPages: 2,
       });
@@ -106,7 +106,7 @@ describe('CoursesPanel', () => {
       });
 
       dataTransformers.getTransformedCourseDataList.mockReturnValue([{ id: 1 }, { id: 2 }]);
-      dataTransformers.getVisibleList.mockReturnValue({
+      dataTransformers.getVisibleCourses.mockReturnValue({
         visibleList: [{ id: 1 }],
         numPages: 3,
       });
@@ -125,7 +125,7 @@ describe('CoursesPanel', () => {
       });
 
       dataTransformers.getTransformedCourseDataList.mockReturnValue([]);
-      dataTransformers.getVisibleList.mockReturnValue({
+      dataTransformers.getVisibleCourses.mockReturnValue({
         visibleList: [],
         numPages: 0,
       });
@@ -144,7 +144,7 @@ describe('CoursesPanel', () => {
       });
 
       dataTransformers.getTransformedCourseDataList.mockReturnValue([{ id: 1 }, { id: 2 }]);
-      dataTransformers.getVisibleList.mockReturnValue({
+      dataTransformers.getVisibleCourses.mockReturnValue({
         visibleList: [{ id: 1 }],
         numPages: 2,
       });

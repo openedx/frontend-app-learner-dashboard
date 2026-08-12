@@ -1,19 +1,19 @@
 import { render, screen } from '@testing-library/react';
 
 import { useIsCollapsed } from './hooks';
-import CourseList from '.';
+import ItemsList from '.';
 
 jest.mock('./hooks', () => ({
   useIsCollapsed: jest.fn(),
 }));
 
 jest.mock('containers/CourseCard', () => jest.fn(() => <div>CourseCard</div>));
-jest.mock('containers/CourseFilterControls', () => ({
+jest.mock('containers/FilterControls', () => ({
   ActiveCourseFilters: jest.fn(() => <div>ActiveCourseFilters</div>),
 }));
 
-describe('CourseList', () => {
-  const defaultCourseListData = {
+describe('ItemsList', () => {
+  const defaultItemsListData = {
     filterOptions: {},
     numPages: 1,
     setPageNumber: jest.fn().mockName('setPageNumber'),
@@ -22,8 +22,8 @@ describe('CourseList', () => {
   };
   useIsCollapsed.mockReturnValue(false);
 
-  const renderList = (courseListData = defaultCourseListData) => (
-    render(<CourseList courseListData={courseListData} />)
+  const renderList = (itemsListData = defaultItemsListData) => (
+    render(<ItemsList itemsListData={itemsListData} />)
   );
 
   describe('no courses or filters', () => {
@@ -40,7 +40,7 @@ describe('CourseList', () => {
   describe('with filters', () => {
     it('should render filter component', () => {
       renderList({
-        ...defaultCourseListData,
+        ...defaultItemsListData,
         showFilters: true,
       });
       const filterControls = screen.getByText('ActiveCourseFilters');
@@ -52,7 +52,7 @@ describe('CourseList', () => {
       const visibleList = [{ cardId: 'foo' }, { cardId: 'bar' }, { cardId: 'baz' }];
       const numPages = 3;
       renderList({
-        ...defaultCourseListData,
+        ...defaultItemsListData,
         visibleList,
         numPages,
       });
@@ -67,7 +67,7 @@ describe('CourseList', () => {
       const visibleList = [{ cardId: 'foo' }, { cardId: 'bar' }, { cardId: 'baz' }];
       useIsCollapsed.mockReturnValueOnce(true);
       renderList({
-        ...defaultCourseListData,
+        ...defaultItemsListData,
         visibleList,
         numPages: 3,
         showFilters: true,

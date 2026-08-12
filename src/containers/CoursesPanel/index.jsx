@@ -3,20 +3,28 @@ import React, { useMemo } from 'react';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { useInitializeLearnerHome } from 'data/hooks';
 import {
-  CourseFilterControls,
-} from 'containers/CourseFilterControls';
+  FilterControls,
+} from 'containers/FilterControls';
 import CourseListSlot from 'plugin-slots/CourseListSlot';
 import NoCoursesViewSlot from 'plugin-slots/NoCoursesViewSlot';
 import { useFilters } from 'data/context';
 
-import { getVisibleList, getTransformedCourseDataList } from 'utils/dataTransformers';
+import {
+  getVisibleCourses,
+  getTransformedCourseDataList,
+  getVisiblePathways,
+  getTransformedPathwayDataList,
+  getVisibleItems,
+} from 'utils/dataTransformers';
 
 import messages from './messages';
 
 import './index.scss';
+import { getConfig } from '@edx/frontend-platform';
+import { COURSE_TYPE } from 'data/context/FiltersProvider';
 
 /**
- * Renders the list of CourseCards, as well as the controls (CourseFilterControls) for modifying the list.
+ * Renders the list of CourseCards, as well as the controls (FilterControls) for modifying the list.
  * Also houses the NoCoursesView to display if the user hasn't enrolled in any courses.
  * @returns List of courses as CourseCards or empty state
 */
@@ -24,22 +32,68 @@ export const CoursesPanel = () => {
   const { formatMessage } = useIntl();
   const { data } = useInitializeLearnerHome();
   const hasCourses = useMemo(() => data?.courses?.length > 0, [data]);
+  const hasPathways = useMemo(() => data?.pathway?.length > 0, [data]);
+  const hasData = hasCourses || (getConfig().ENABLE_PATHWAY_PILOT_UI && hasPathways);
 
   const {
-    filters, sortBy, pageNumber, setPageNumber,
+    filters, sortBy, pageNumber, setPageNumber, types,
   } = useFilters();
+  // If there is a type filter and the "courses" type is not selected, it means all courses are hidden.
+  const hideCourses = types.length > 0 && !types.find(type => type.id === COURSE_TYPE)
+
   const { visibleList, numPages } = useMemo(() => {
-    let transformedCourses = [];
-    if (data?.courses?.length) {
-      transformedCourses = getTransformedCourseDataList(data.courses);
+    const visibleItems = [];
+
+    if (!hideCourses) {
+      let transformedCourses = [];
+      if (data?.courses?.length) {
+        transformedCourses = getTransformedCourseDataList(data.courses);
+      }
+      const visibleCourse = getVisibleCourses(
+        transformedCourses,
+        filters,
+      );
+      visibleItems.push(...visibleCourse.map(course => ({
+        cardId: course.cardId,
+        lastEnrolled: new Date(course.enrollment?.lastEnrolled),
+        title: course.course.courseName,
+        itemType: 'course',
+      })));
     }
-    return getVisibleList(
-      transformedCourses,
-      filters,
-      sortBy,
-      pageNumber,
-    );
-  }, [data, filters, sortBy, pageNumber]);
+
+    if (getConfig().ENABLE_PATHWAY_PILOT_UI && data?.pathway?.length) {
+      const transformedPathways = getTransformedPathwayDataList(data.pathway);
+      const visiblePathways = getVisiblePathways(transformedPathways, filters, types);
+      visibleItems.push(...visiblePathways.map(pathway => ({
+        cardId: pathway.cardId,
+        lastEnrolled: new Date(pathway.enrollment?.lastEnrolled),
+        title: pathway.pathway.content.displayName,
+        itemType: 'pathway',
+      })));
+      visiblePathways
+    }
+
+    return getVisibleItems(visibleItems, sortBy, pageNumber);
+  }, [data, filters, sortBy, pageNumber, types]);
+
+  const filterTypes = useMemo(() => {
+    const filterTypes = [];
+    if (hasCourses) {
+      filterTypes.push({
+        id: COURSE_TYPE,
+        text: formatMessage(messages.courseType),
+      });
+    }
+    if (hasPathways) {
+      data?.pathway?.forEach((pathway) => {
+        const { type, typeText } = pathway.pathway;
+        if (!filterTypes.some(filterType => filterType.id === type)) {
+          filterTypes.push({ id: type, text: typeText });
+        }
+      });
+    }
+    return filterTypes;
+  }, [data, hasCourses, hasPathways]);
 
   // Clamp page number when filtered/mutated list shrinks
   React.useEffect(() => {
@@ -48,23 +102,23 @@ export const CoursesPanel = () => {
     }
   }, [numPages, pageNumber, setPageNumber]);
 
-  const courseListData = {
+  const itemsListData = {
     filterOptions: filters,
     setPageNumber,
     numPages,
     visibleList,
-    showFilters: filters.length > 0,
+    showFilters: filters.length > 0 || types.length > 0,
   };
 
   return (
     <div className="course-list-container">
       <div className="course-list-heading-container">
         <h2 className="course-list-title">{formatMessage(messages.myCourses)}</h2>
-        <div className="course-filter-controls-container">
-          <CourseFilterControls />
+        <div className="filter-controls-container">
+          <FilterControls filterTypes={filterTypes} />
         </div>
       </div>
-      {hasCourses ? <CourseListSlot courseListData={courseListData} /> : <NoCoursesViewSlot />}
+      {hasData ? <CourseListSlot courseListData={itemsListData} /> : <NoCoursesViewSlot />}
     </div>
   );
 };

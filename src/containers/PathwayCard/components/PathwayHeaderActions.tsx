@@ -6,7 +6,7 @@ import { isValidCssColor } from "utils";
 
 export const PathwayHeaderActions = ({ cardId } : { cardId: string }) => {
   const pathwayData = usePathwayData(cardId);
-  const pathwayType = pathwayData.pathway.type;
+  const pathwayType = pathwayData.pathway.typeText;
   const typeBackgroundColor = pathwayData.pathway.typeBackgroundColor
   const typeTextColor = pathwayData.pathway.typeTextColor;
 

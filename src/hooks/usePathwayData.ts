@@ -1,3 +1,5 @@
+import { getTransformedPathwayDataList, TransformedPathwayData } from "utils/dataTransformers";
+
 export interface PathwayData {
   pathway: {
     content: {
@@ -6,6 +8,7 @@ export interface PathwayData {
     imageUrl?: string;
     courseCount: number;
     type?: string;
+    typeText?: string;
     typeBackgroundColor?: string;
     typeTextColor?: string;
   };
@@ -16,15 +19,25 @@ export interface PathwayData {
   };
   enrollment: {
     isEmailEnabled: boolean;
+    isEnrolled: boolean;
+    isVerified: boolean;
+    hasStarted: boolean;
+    lastEnrolled?: string | number;
   };
   provider?: {
     name: string;
   }
 };
 
-export const usePathwayData = (cardId: string): PathwayData => {
+export const usePathwayData = (cardId: string): TransformedPathwayData => {
   // TODO Waiting the backend
+  const pathwayList = getTransformedPathwayDataList([]);
+
+  const data = pathwayList.find((values) => values.cardId === cardId);
+  if (data) return data;
+
   return {
+    cardId: '',
     pathway: {
       content: { displayName: '' },
       courseCount: 0,
@@ -37,6 +50,9 @@ export const usePathwayData = (cardId: string): PathwayData => {
     },
     enrollment: {
       isEmailEnabled: true,
+      isEnrolled: true,
+      isVerified: false,
+      hasStarted: false,
     },
     provider: {
       name: '',

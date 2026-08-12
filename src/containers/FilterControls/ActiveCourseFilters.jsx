@@ -10,7 +10,19 @@ import './index.scss';
 
 export const ActiveCourseFilters = () => {
   const { formatMessage } = useIntl();
-  const { filters, clearFilters, removeFilter } = useFilters();
+  const {
+    filters,
+    clearFilters,
+    removeFilter,
+    types,
+    removeType,
+    clearTypes,
+  } = useFilters();
+
+  const handleClear = () => {
+    clearFilters();
+    clearTypes();
+  };
 
   return (
     <div id="course-list-active-filters">
@@ -23,7 +35,16 @@ export const ActiveCourseFilters = () => {
           {formatMessage(messages[filter])}
         </Chip>
       ))}
-      <Button variant="link" onClick={clearFilters}>
+      {types.map(type => (
+        <Chip
+          key={type.id}
+          iconAfter={CloseSmall}
+          onClick={() => removeType(type.id)}
+        >
+          {type.text}
+        </Chip>
+      ))}
+      <Button variant="link" onClick={handleClear}>
         {formatMessage(messages.clearAll)}
       </Button>
     </div>

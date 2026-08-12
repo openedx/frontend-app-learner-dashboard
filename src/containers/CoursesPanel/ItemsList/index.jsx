@@ -4,15 +4,16 @@ import PropTypes from 'prop-types';
 import { Pagination } from '@openedx/paragon';
 import {
   ActiveCourseFilters,
-} from 'containers/CourseFilterControls';
+} from 'containers/FilterControls';
 import CourseCard from 'containers/CourseCard';
 
 import { useIsCollapsed } from './hooks';
+import { PathwayCard } from 'containers/PathwayCard';
 
-export const CourseList = ({ courseListData }) => {
+export const ItemsList = ({ itemsListData }) => {
   const {
     setPageNumber, numPages, visibleList, showFilters,
-  } = courseListData;
+  } = itemsListData;
 
   const isCollapsed = useIsCollapsed();
   return (
@@ -23,8 +24,9 @@ export const CourseList = ({ courseListData }) => {
         </div>
       )}
       <div className="d-flex flex-column flex-grow-1">
-        {visibleList.map(({ cardId }) => (
-          <CourseCard key={cardId} cardId={cardId} />
+        {visibleList.map(({ cardId, itemType }) => (itemType === 'pathway'
+          ? <PathwayCard key={cardId} cardId={cardId} />
+          : <CourseCard key={cardId} cardId={cardId} />
         ))}
         {numPages > 1 && (
           <Pagination
@@ -40,15 +42,15 @@ export const CourseList = ({ courseListData }) => {
   );
 };
 
-export const courseListDataShape = PropTypes.shape({
+export const itemsListDataShape = PropTypes.shape({
   showFilters: PropTypes.bool.isRequired,
   visibleList: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   numPages: PropTypes.number.isRequired,
   setPageNumber: PropTypes.func.isRequired,
 });
 
-CourseList.propTypes = {
-  courseListData: courseListDataShape,
+ItemsList.propTypes = {
+  itemsListData: itemsListDataShape,
 };
 
-export default CourseList;
+export default ItemsList;

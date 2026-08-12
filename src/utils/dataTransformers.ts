@@ -1,16 +1,43 @@
 import { FilterKeys, ListPageSize, SortKeys } from 'data/constants/app';
 import StrictDict from './StrictDict';
+import { PathwayData } from 'hooks/usePathwayData';
+import { FilterType } from 'data/context/FiltersProvider';
 
-const cardId = (val) => `card-${val}`;
+interface TransformedPathwayData extends PathwayData {
+  cardId: string;
+}
+
+interface VisibleItem {
+  cardId: string;
+  lastEnrolled: Date;
+  title: string;
+  itemType: 'curse' | 'pathway';
+}
+
+const courseCardId = (val) => `card-${val}`;
+const pathwayCardId = (val) => `p-card-${val}`;
 const today = Date.now();
 
 const transformCourseData = (courses) => courses.reduce(
   (obj, curr, index) => {
-    const out = { ...curr, cardId: cardId(index) };
+    const out = { ...curr, cardId: courseCardId(index) };
     if (out.enrollment?.lastEnrolled === null) {
       out.enrollment.lastEnrolled = today;
     }
-    return { ...obj, [cardId(index)]: out };
+    return { ...obj, [courseCardId(index)]: out };
+  },
+  {},
+);
+
+const transformPathwayData = (
+  pathways: PathwayData[],
+): Record<string, TransformedPathwayData> => pathways.reduce(
+  (obj: Record<string, TransformedPathwayData>, curr, index) => {
+    const out = { ...curr, cardId: pathwayCardId(index) };
+    if (out.enrollment?.lastEnrolled === null) {
+      out.enrollment.lastEnrolled = today;
+    }
+    return { ...obj, [pathwayCardId(index)]: out };
   },
   {},
 );
@@ -19,7 +46,11 @@ const getTransformedCourseDataObject = (courses) => transformCourseData(courses)
 
 const getTransformedCourseDataList = (courses) => Object.values(transformCourseData(courses));
 
-const getVisibleList = (courses: any[], filters: string[], sortBy: string, pageNumber: number) => {
+const getTransformedPathwayDataObject = (pathways) => transformPathwayData(pathways);
+
+const getTransformedPathwayDataList = (pathways) => Object.values(transformPathwayData(pathways));
+
+const getVisibleCourses = (courses: any[], filters: string[]) => {
   const courseFilters = StrictDict({
     [FilterKeys.notEnrolled]: (course) => !course.enrollment.isEnrolled,
     [FilterKeys.done]: (course) => course.courseRun !== null && course.courseRun.isArchived,
@@ -28,24 +59,46 @@ const getVisibleList = (courses: any[], filters: string[], sortBy: string, pageN
     [FilterKeys.notStarted]: (course) => !course.enrollment.hasStarted,
   });
 
-  const transforms = StrictDict({
-    [SortKeys.enrolled]: ({ enrollment }) => new Date(enrollment?.lastEnrolled),
-    [SortKeys.title]: ({ course }) => course.courseName.toLowerCase(),
-  });
-
   const courseFilterFn = filtersList => (filtersList.length
     ? course => filtersList.reduce((match, filter) => match && courseFilters[filter](course), true)
     : () => true);
 
-  const sortFn = (transform, { reverse }) => (v1, v2) => {
+  return courses.filter(courseFilterFn(filters));
+};
+
+const getVisiblePathways = (pathways: TransformedPathwayData[], filters: string[], types: FilterType[]) => {
+  const pathwayFilters = StrictDict({
+    [FilterKeys.notEnrolled]: (pathway: PathwayData) => !pathway.enrollment.isEnrolled,
+    [FilterKeys.done]: (pathway: PathwayData) => pathway.pathwayRun !== null && pathway.pathwayRun.isArchived,
+    [FilterKeys.upgraded]: (pathway: PathwayData) => pathway.enrollment.isVerified,
+    [FilterKeys.inProgress]: (pathway: PathwayData) => pathway.enrollment.hasStarted,
+    [FilterKeys.notStarted]: (pathway: PathwayData) => !pathway.enrollment.hasStarted,
+  });
+
+  const pathwayFilterFn = filtersList => (filtersList.length
+    ? pathway => filtersList.reduce((match, filter) => match && pathwayFilters[filter](pathway), true)
+    : () => true);
+
+  const pathwayTypesFilterFn = filterTypes => (filterTypes.length
+    ? pathway => filterTypes.some(type => type.id === pathway.pathway.type)
+    : () => true);
+
+  return pathways.filter(pathwayFilterFn(filters)).filter(pathwayTypesFilterFn(types));
+};
+
+const getVisibleItems = (items: VisibleItem[], sortBy: string, pageNumber: number) => {
+  const transforms = StrictDict({
+    [SortKeys.enrolled]: (item: VisibleItem) => item.lastEnrolled,
+    [SortKeys.title]: (item: VisibleItem) => item.title.toLowerCase(),
+  });
+
+  const sortFn = (transform, { reverse }) => (v1: VisibleItem, v2: VisibleItem) => {
     const [a, b] = [v1, v2].map(transform);
     if (a === b) { return 0; }
     return (((a as any) > (b as any)) ? 1 : -1) * (reverse ? -1 : 1);
   };
 
-  const list = courses
-    .filter(courseFilterFn(filters))
-    .sort(sortFn(transforms[sortBy], { reverse: sortBy === SortKeys.enrolled }));
+  const list = items.sort(sortFn(transforms[sortBy], { reverse: sortBy === SortKeys.enrolled }));
 
   const querySearch = new URLSearchParams(window.location.search);
   const disablePagination = querySearch.get('disable_pagination');
@@ -57,11 +110,20 @@ const getVisibleList = (courses: any[], filters: string[], sortBy: string, pageN
       numPages: 1,
     };
   }
-  const result = {
+  return {
     visibleList: list.slice((pageNumber - 1) * pageSize, pageNumber * pageSize),
     numPages: Math.ceil(list.length / pageSize),
   };
-  return result;
 };
 
-export { getVisibleList, getTransformedCourseDataList, getTransformedCourseDataObject };
+export {
+  getVisibleCourses,
+  getVisiblePathways,
+  getVisibleItems,
+  getTransformedCourseDataList,
+  getTransformedCourseDataObject,
+  getTransformedPathwayDataList,
+  getTransformedPathwayDataObject,
+  type TransformedPathwayData,
+  type VisibleItem,
+};

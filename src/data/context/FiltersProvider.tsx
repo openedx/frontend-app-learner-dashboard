@@ -3,18 +3,28 @@ import React, {
   useCallback,
 } from 'react';
 
+export const COURSE_TYPE = 'Course';
 type SortOption = 'enrolled' | 'title';
+
+export interface FilterType {
+  id: string;
+  text: string;
+}
 
 interface FiltersContextType {
   filters: string[];
   sortBy: SortOption;
   pageNumber: number;
+  types: FilterType[];
   setFilters: (newFilters: string[]) => void;
   addFilter: (filter: string) => void;
   removeFilter: (filter: string) => void;
   clearFilters: () => void;
   setSortBy: (sortBy: SortOption) => void;
   setPageNumber: (pageNumber: number) => void;
+  addType: (type: FilterType) => void;
+  removeType: (type: string) => void;
+  clearTypes: () => void;
 }
 
 const FiltersContext = createContext<FiltersContextType | null>(null);
@@ -23,12 +33,14 @@ interface FiltersState {
   filters: string[];
   sortBy: SortOption;
   pageNumber: number;
+  types: FilterType[];
 }
 
 const initialState: FiltersState = {
   filters: [],
   sortBy: 'enrolled',
   pageNumber: 1,
+  types: [],
 };
 
 type FiltersAction =
@@ -37,7 +49,10 @@ type FiltersAction =
   | { type: 'REMOVE_FILTER'; payload: string }
   | { type: 'CLEAR_FILTERS' }
   | { type: 'SET_SORT_BY'; payload: SortOption }
-  | { type: 'SET_PAGE_NUMBER'; payload: number };
+  | { type: 'SET_PAGE_NUMBER'; payload: number }
+  | { type: 'ADD_TYPE'; payload: FilterType }
+  | { type: 'REMOVE_TYPE'; payload: string }
+  | { type: 'CLEAR_TYPES'};
 
 const filtersReducer = (state: FiltersState, action: FiltersAction): FiltersState => {
   switch (action.type) {
@@ -53,6 +68,12 @@ const filtersReducer = (state: FiltersState, action: FiltersAction): FiltersStat
       return { ...state, sortBy: action.payload };
     case 'SET_PAGE_NUMBER':
       return { ...state, pageNumber: action.payload };
+    case 'ADD_TYPE':
+      return { ...state, types: [...state.types, action.payload] };
+    case 'REMOVE_TYPE':
+      return { ...state, types: state.types.filter(item => item.id !== action.payload) };
+    case 'CLEAR_TYPES':
+      return { ...state, types: [] };
     /* istanbul ignore next */
     default:
       return state;
@@ -86,21 +107,38 @@ export const FiltersProvider = ({ children }: { children: React.ReactNode }) => 
     dispatch({ type: 'SET_PAGE_NUMBER', payload: pageNumber });
   }, []);
 
+  const addType = useCallback((type: FilterType) => {
+    dispatch({ type: 'ADD_TYPE', payload: type });
+  }, []);
+
+  const removeType = useCallback((type: string) => {
+    dispatch({ type: 'REMOVE_TYPE', payload: type});
+  }, []);
+
+  const clearTypes = useCallback(() => {
+    dispatch({ type: 'CLEAR_TYPES' });
+  }, []);
+
   const contextValue = useMemo(
     () => ({
       filters: state.filters,
       sortBy: state.sortBy,
       pageNumber: state.pageNumber,
+      types: state.types,
       setFilters,
       addFilter,
       removeFilter,
       clearFilters,
       setSortBy,
       setPageNumber,
+      addType,
+      removeType,
+      clearTypes,
     }),
     [
       state.filters,
       state.sortBy,
+      state.types,
       state.pageNumber,
       setFilters,
       addFilter,
@@ -108,6 +146,9 @@ export const FiltersProvider = ({ children }: { children: React.ReactNode }) => 
       clearFilters,
       setSortBy,
       setPageNumber,
+      addType,
+      removeType,
+      clearTypes,
     ],
   );
 

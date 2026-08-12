@@ -20,15 +20,23 @@ import SortForm from './components/SortForm';
 import messages from './messages';
 
 import './index.scss';
+import { TypeForm } from './components/TypeForm';
 
-export const CourseFilterControls = () => {
+export const FilterControls = ({ filterTypes }) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [targetRef, setTargetRef] = React.useState(null);
   const { formatMessage } = useIntl();
   const { data } = useInitializeLearnerHome();
   const hasCourses = React.useMemo(() => data?.courses?.length > 0, [data]);
   const {
-    filters, sortBy, setSortBy, addFilter, removeFilter,
+    filters,
+    sortBy,
+    types,
+    setSortBy,
+    addFilter,
+    removeFilter,
+    addType,
+    removeType,
   } = useFilters();
 
   const openFiltersOptions = () => {
@@ -44,6 +52,17 @@ export const CourseFilterControls = () => {
     setSortBy(event.target.value);
   };
 
+  const handleTypeChange = ({ target: { checked, value }}) => {
+    const type = filterTypes.find(filterType => filterType.id === value);
+    if (type) {
+      if (checked) {
+        addType(type);
+      } else {
+        removeType(type.id);
+      }
+    }
+  };
+
   const handleFilterChange = ({ target: { checked, value } }) => {
     const update = checked ? addFilter : removeFilter;
     update(value);
@@ -52,7 +71,7 @@ export const CourseFilterControls = () => {
   const isMobile = width < breakpoints.small.minWidth;
 
   return (
-    <div id="course-filter-controls">
+    <div id="filter-controls">
       <Button
         ref={setTargetRef}
         variant="outline-primary"
@@ -76,6 +95,13 @@ export const CourseFilterControls = () => {
               </div>
               <hr />
               <div className="filter-form-row">
+                <TypeForm
+                  types={filterTypes}
+                  selectedTypes={types}
+                  handleTypeChange={handleTypeChange}
+                />
+              </div>
+              <div className="filter-form-row">
                 <FilterForm {...{ filters, handleFilterChange }} />
               </div>
               <div className="filter-form-row text-left m-1">
@@ -95,9 +121,17 @@ export const CourseFilterControls = () => {
               placement="bottom-end"
             >
               <div
-                id="course-filter-controls-card"
+                id="filter-controls-card"
                 className="bg-white p-3 rounded shadow d-flex flex-row"
               >
+                <div className="filter-form-col">
+                  <TypeForm
+                    types={filterTypes}
+                    selectedTypes={types}
+                    handleTypeChange={handleTypeChange}
+                  />
+                </div>
+                <hr className="h-100 bg-primary-200 mx-3 my-0" />
                 <div className="filter-form-col">
                   <FilterForm {...{ filters, handleFilterChange }} />
                 </div>
@@ -113,4 +147,4 @@ export const CourseFilterControls = () => {
   );
 };
 
-export default CourseFilterControls;
+export default FilterControls;

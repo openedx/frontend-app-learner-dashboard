@@ -8,7 +8,7 @@ import { useFilters } from 'data/context';
 
 import userEvent from '@testing-library/user-event';
 import messages from './messages';
-import CourseFilterControls from './CourseFilterControls';
+import FilterControls from './FilterControls';
 
 jest.mock('data/hooks', () => ({
   useInitializeLearnerHome: jest.fn().mockReturnValue({ data: { courses: [1, 2, 3] } }),
@@ -41,12 +41,12 @@ useFilters.mockReturnValue({
   addFilter: jest.fn().mockName('addFilter'),
 });
 
-describe('CourseFilterControls', () => {
+describe('FilterControls', () => {
   describe('mobile and open', () => {
     it('should render sheet', async () => {
       const user = userEvent.setup();
       useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth - 1 });
-      render(<IntlProvider locale="en"><CourseFilterControls /></IntlProvider>);
+      render(<IntlProvider locale="en"><FilterControls /></IntlProvider>);
       const filtersButton = screen.getByRole('button', { name: 'Refine' });
       await user.click(filtersButton);
       await waitFor(() => {
@@ -60,7 +60,7 @@ describe('CourseFilterControls', () => {
     it('should have button disabled', async () => {
       const user = userEvent.setup();
       useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
-      render(<IntlProvider locale="en"><CourseFilterControls /></IntlProvider>);
+      render(<IntlProvider locale="en"><FilterControls /></IntlProvider>);
       const filtersButton = screen.getByRole('button', { name: 'Refine' });
       await user.click(filtersButton);
       await waitFor(() => {
@@ -74,7 +74,7 @@ describe('CourseFilterControls', () => {
     it('should have button disabled', () => {
       useInitializeLearnerHome.mockReturnValue({ data: { courses: [] } });
       useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
-      render(<IntlProvider locale="en"><CourseFilterControls /></IntlProvider>);
+      render(<IntlProvider locale="en"><FilterControls /></IntlProvider>);
       const button = screen.getByRole('button', { name: formatMessage(messages.refine) });
       expect(button).toBeInTheDocument();
       expect(button).toBeDisabled();
@@ -84,7 +84,7 @@ describe('CourseFilterControls', () => {
     it('should have button enabled', () => {
       useInitializeLearnerHome.mockReturnValue({ data: { courses: [1, 2, 3] } });
       useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
-      render(<IntlProvider locale="en"><CourseFilterControls /></IntlProvider>);
+      render(<IntlProvider locale="en"><FilterControls /></IntlProvider>);
       const button = screen.getByRole('button', { name: formatMessage(messages.refine) });
       expect(button).toBeInTheDocument();
       expect(button).toBeEnabled();
@@ -93,7 +93,7 @@ describe('CourseFilterControls', () => {
       const user = userEvent.setup();
       useInitializeLearnerHome.mockReturnValue({ data: { courses: [1, 2, 3] } });
       useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
-      render(<IntlProvider locale="en"><CourseFilterControls /></IntlProvider>);
+      render(<IntlProvider locale="en"><FilterControls /></IntlProvider>);
       const filtersButton = screen.getByRole('button', { name: 'Refine' });
       await user.click(filtersButton);
       await waitFor(async () => {
@@ -115,7 +115,7 @@ describe('CourseFilterControls', () => {
       });
       useInitializeLearnerHome.mockReturnValue({ data: { courses: [1, 2, 3] } });
       useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
-      render(<IntlProvider locale="en"><CourseFilterControls /></IntlProvider>);
+      render(<IntlProvider locale="en"><FilterControls /></IntlProvider>);
       const filtersButton = screen.getByRole('button', { name: 'Refine' });
       await user.click(filtersButton);
       await waitFor(async () => {
@@ -137,7 +137,7 @@ describe('CourseFilterControls', () => {
       });
       useInitializeLearnerHome.mockReturnValue({ data: { courses: [1, 2, 3] } });
       useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
-      render(<IntlProvider locale="en"><CourseFilterControls /></IntlProvider>);
+      render(<IntlProvider locale="en"><FilterControls /></IntlProvider>);
       const filtersButton = screen.getByRole('button', { name: 'Refine' });
       await user.click(filtersButton);
       await waitFor(async () => {

@@ -6,6 +6,11 @@ const messages = defineMessages({
     description: 'course status filter form heading',
     defaultMessage: 'Course Status',
   },
+  status: {
+    id: 'learner-dash.courseListFilters.status',
+    description: 'course and pathway status filter form heading',
+    defaultMessage: 'Status',
+  },
   inProgress: {
     id: 'learner-dash.courseListFilters.inProgress',
     description: 'in-progress filter checkbox label for course list filters',
@@ -55,6 +60,11 @@ const messages = defineMessages({
     id: 'learner-dash.courseListFilters.refine',
     description: 'Filter button container text',
     defaultMessage: 'Refine',
+  },
+  type: {
+    id: 'learner-dash.courseListFilters.type',
+    description: 'Type radio form heading',
+    defaultMessage: 'Type',
   },
 });
 

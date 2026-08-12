@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from '@edx/frontend-platform/i18n';
+import { getConfig } from '@edx/frontend-platform';
 
 import { FilterKeys } from 'data/constants/app';
 
@@ -24,7 +25,12 @@ export const FilterForm = ({
   const { formatMessage } = useIntl();
   return (
     <Form.Group>
-      <div className="filter-form-heading mb-1">{formatMessage(messages.courseStatus)}</div>
+      <div className="filter-form-heading mb-1">
+        {getConfig().ENABLE_PATHWAY_PILOT_UI
+          ? formatMessage(messages.status)
+          : formatMessage(messages.courseStatus)
+        }
+      </div>
       <Form.CheckboxSet
         name="course-status-filters"
         onChange={handleFilterChange}

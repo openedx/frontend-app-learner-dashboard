@@ -1,6 +1,6 @@
 import { FilterKeys, SortKeys, ListPageSize } from 'data/constants/app';
 import {
-  getVisibleList,
+  getVisibleCourses,
   getTransformedCourseDataList,
   getTransformedCourseDataObject,
 } from './dataTransformers';
@@ -216,7 +216,7 @@ describe('dataTransformers', () => {
     });
   });
 
-  describe('getVisibleList', () => {
+  describe('getVisibleCourses', () => {
     const transformedCourses = [
       {
         course: { courseName: 'Introduction to React' },
@@ -262,7 +262,7 @@ describe('dataTransformers', () => {
 
     describe('filtering', () => {
       it('should filter courses by notEnrolled', () => {
-        const result = getVisibleList(
+        const result = getVisibleCourses(
           transformedCourses,
           [FilterKeys.notEnrolled],
           SortKeys.title,
@@ -274,7 +274,7 @@ describe('dataTransformers', () => {
       });
 
       it('should filter courses by done (archived)', () => {
-        const result = getVisibleList(
+        const result = getVisibleCourses(
           transformedCourses,
           [FilterKeys.done],
           SortKeys.title,
@@ -286,7 +286,7 @@ describe('dataTransformers', () => {
       });
 
       it('should filter courses by upgraded (verified)', () => {
-        const result = getVisibleList(
+        const result = getVisibleCourses(
           transformedCourses,
           [FilterKeys.upgraded],
           SortKeys.title,
@@ -298,7 +298,7 @@ describe('dataTransformers', () => {
       });
 
       it('should filter courses by inProgress (hasStarted)', () => {
-        const result = getVisibleList(
+        const result = getVisibleCourses(
           transformedCourses,
           [FilterKeys.inProgress],
           SortKeys.title,
@@ -311,7 +311,7 @@ describe('dataTransformers', () => {
       });
 
       it('should filter courses by notStarted', () => {
-        const result = getVisibleList(
+        const result = getVisibleCourses(
           transformedCourses,
           [FilterKeys.notStarted],
           SortKeys.title,
@@ -324,7 +324,7 @@ describe('dataTransformers', () => {
       });
 
       it('should apply multiple filters with AND logic', () => {
-        const result = getVisibleList(
+        const result = getVisibleCourses(
           transformedCourses,
           [FilterKeys.upgraded, FilterKeys.notStarted],
           SortKeys.title,
@@ -336,7 +336,7 @@ describe('dataTransformers', () => {
       });
 
       it('should return all courses when no filters applied', () => {
-        const result = getVisibleList(
+        const result = getVisibleCourses(
           transformedCourses,
           [],
           SortKeys.title,
@@ -347,7 +347,7 @@ describe('dataTransformers', () => {
       });
 
       it('should return empty list when filters match no courses', () => {
-        const result = getVisibleList(
+        const result = getVisibleCourses(
           transformedCourses,
           [FilterKeys.notEnrolled, FilterKeys.upgraded],
           SortKeys.title,
@@ -360,7 +360,7 @@ describe('dataTransformers', () => {
 
     describe('sorting', () => {
       it('should sort by title (alphabetically)', () => {
-        const result = getVisibleList(
+        const result = getVisibleCourses(
           transformedCourses,
           [],
           SortKeys.title,
@@ -377,7 +377,7 @@ describe('dataTransformers', () => {
       });
 
       it('should sort by enrolled date (newest first - reverse order)', () => {
-        const result = getVisibleList(
+        const result = getVisibleCourses(
           transformedCourses,
           [],
           SortKeys.enrolled,
@@ -403,7 +403,7 @@ describe('dataTransformers', () => {
           },
         ];
 
-        const result = getVisibleList(
+        const result = getVisibleCourses(
           identicalCourses,
           [],
           SortKeys.title,
@@ -426,7 +426,7 @@ describe('dataTransformers', () => {
       }));
 
       it('should paginate results correctly for first page', () => {
-        const result = getVisibleList(
+        const result = getVisibleCourses(
           manyCourses,
           [],
           SortKeys.title,
@@ -443,7 +443,7 @@ describe('dataTransformers', () => {
         const manyCoursesList = Array.from({ length: listSize }, (_, i) => ({
           course: { courseName: `Course ${i.toString().padStart(2, '0')}` },
         }));
-        const result = getVisibleList(
+        const result = getVisibleCourses(
           manyCoursesList,
           [],
           SortKeys.title,
@@ -455,7 +455,7 @@ describe('dataTransformers', () => {
       });
 
       it('should handle last page with fewer items', () => {
-        const result = getVisibleList(
+        const result = getVisibleCourses(
           manyCourses,
           [],
           SortKeys.title,
@@ -466,7 +466,7 @@ describe('dataTransformers', () => {
       });
 
       it('should calculate correct number of pages', () => {
-        const result = getVisibleList(
+        const result = getVisibleCourses(
           manyCourses,
           [],
           SortKeys.title,
@@ -479,7 +479,7 @@ describe('dataTransformers', () => {
       it('should disable pagination when query parameter is set', () => {
         mockGet.mockReturnValue('1');
 
-        const result = getVisibleList(
+        const result = getVisibleCourses(
           manyCourses,
           [],
           SortKeys.title,
@@ -493,7 +493,7 @@ describe('dataTransformers', () => {
       it('should use pagination when disable_pagination is not 1', () => {
         mockGet.mockReturnValue('0');
 
-        const result = getVisibleList(
+        const result = getVisibleCourses(
           manyCourses,
           [],
           SortKeys.title,
@@ -504,7 +504,7 @@ describe('dataTransformers', () => {
       });
 
       it('should handle empty courses array with pagination', () => {
-        const result = getVisibleList(
+        const result = getVisibleCourses(
           [],
           [],
           SortKeys.title,
@@ -527,7 +527,7 @@ describe('dataTransformers', () => {
         ];
 
         expect(() => {
-          getVisibleList(
+          getVisibleCourses(
             coursesWithMissingProps,
             [FilterKeys.inProgress],
             SortKeys.title,
@@ -537,7 +537,7 @@ describe('dataTransformers', () => {
       });
 
       it('should handle invalid page number', () => {
-        const result = getVisibleList(
+        const result = getVisibleCourses(
           transformedCourses,
           [],
           SortKeys.title,
@@ -549,7 +549,7 @@ describe('dataTransformers', () => {
       });
 
       it('should handle very large page number', () => {
-        const result = getVisibleList(
+        const result = getVisibleCourses(
           transformedCourses,
           [],
           SortKeys.title,
@@ -568,7 +568,7 @@ describe('dataTransformers', () => {
           },
         ];
 
-        const result = getVisibleList(
+        const result = getVisibleCourses(
           coursesWithNullCourseRun,
           [FilterKeys.done],
           SortKeys.title,
@@ -581,7 +581,7 @@ describe('dataTransformers', () => {
 
     describe('integration scenarios', () => {
       it('should handle complex filtering, sorting, and pagination together', () => {
-        const result = getVisibleList(
+        const result = getVisibleCourses(
           transformedCourses,
           [FilterKeys.inProgress],
           SortKeys.enrolled,
@@ -614,7 +614,7 @@ describe('dataTransformers', () => {
           },
         ];
 
-        const result = getVisibleList(
+        const result = getVisibleCourses(
           realisticCourses,
           [],
           SortKeys.title,
