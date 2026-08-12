@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { PluginSlot } from '@openedx/frontend-plugin-framework';
-import { ItemsList, itemsListDataShape } from 'containers/CoursesPanel/ItemsList';
+import { ItemsList, itemsListDataShape } from 'containers/ItemsPanel/ItemsList';
 
-export const CourseListSlot = ({ courseListData }) => (
+export const ItemsListSlot = ({ courseListData }) => (
   <PluginSlot
     id="org.openedx.frontend.learner_dashboard.course_list.v1"
     idAliases={['course_list_slot']}
@@ -13,8 +13,8 @@ export const CourseListSlot = ({ courseListData }) => (
   </PluginSlot>
 );
 
-CourseListSlot.propTypes = {
+ItemsListSlot.propTypes = {
   courseListData: itemsListDataShape,
 };
 
-export default CourseListSlot;
+export default ItemsListSlot;

@@ -3,8 +3,8 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { useInitializeLearnerHome } from 'data/hooks';
 import { useFilters } from 'data/context';
 import * as dataTransformers from 'utils/dataTransformers';
-import messagesNoCourses from 'containers/CoursesPanel/NoCoursesView/messages';
-import CoursesPanel from '.';
+import messagesNoCourses from 'containers/ItemsPanel/NoCoursesView/messages';
+import ItemsPanel from '.';
 import messages from './messages';
 
 jest.mock('data/hooks', () => ({
@@ -34,10 +34,10 @@ jest.mock('@openedx/frontend-plugin-framework', () => ({
   PluginSlot: 'PluginSlot',
 }));
 
-describe('CoursesPanel', () => {
+describe('ItemsPanel', () => {
   const createWrapper = (courseListData) => {
     useInitializeLearnerHome.mockReturnValue({ data: { courses: courseListData?.visibleList || [] } });
-    return render(<IntlProvider locale="en"><CoursesPanel /></IntlProvider>);
+    return render(<IntlProvider locale="en"><ItemsPanel /></IntlProvider>);
   };
 
   describe('no courses', () => {

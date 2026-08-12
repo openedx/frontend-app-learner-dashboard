@@ -11,7 +11,7 @@
 
 ## Description
 
-This slot is used for replacing or adding content around the `CourseList` component. The `CourseListSlot` is only rendered if the learner has enrolled in at least one course.
+This slot is used for replacing or adding content around the `CourseList` component. The `ItemsListSlot` is only rendered if the learner has enrolled in at least one course.
 
 ## Example
 

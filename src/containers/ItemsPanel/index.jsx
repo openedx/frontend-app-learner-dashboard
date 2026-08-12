@@ -5,7 +5,7 @@ import { useInitializeLearnerHome } from 'data/hooks';
 import {
   FilterControls,
 } from 'containers/FilterControls';
-import CourseListSlot from 'plugin-slots/CourseListSlot';
+import ItemsListSlot from 'plugin-slots/ItemsListSlot';
 import NoCoursesViewSlot from 'plugin-slots/NoCoursesViewSlot';
 import { useFilters } from 'data/context';
 
@@ -24,11 +24,11 @@ import { getConfig } from '@edx/frontend-platform';
 import { COURSE_TYPE } from 'data/context/FiltersProvider';
 
 /**
- * Renders the list of CourseCards, as well as the controls (FilterControls) for modifying the list.
+ * Renders the list of CourseCards and PathwayCards, as well as the controls (FilterControls) for modifying the list.
  * Also houses the NoCoursesView to display if the user hasn't enrolled in any courses.
  * @returns List of courses as CourseCards or empty state
 */
-export const CoursesPanel = () => {
+export const ItemsPanel = () => {
   const { formatMessage } = useIntl();
   const { data } = useInitializeLearnerHome();
   const hasCourses = useMemo(() => data?.courses?.length > 0, [data]);
@@ -118,11 +118,11 @@ export const CoursesPanel = () => {
           <FilterControls filterTypes={filterTypes} />
         </div>
       </div>
-      {hasData ? <CourseListSlot courseListData={itemsListData} /> : <NoCoursesViewSlot />}
+      {hasData ? <ItemsListSlot courseListData={itemsListData} /> : <NoCoursesViewSlot />}
     </div>
   );
 };
 
-CoursesPanel.propTypes = {};
+ItemsPanel.propTypes = {};
 
-export default CoursesPanel;
+export default ItemsPanel;
