@@ -8,7 +8,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
   "dependencies": {
     "@edx/brand": "file:./my-brand"
   }
