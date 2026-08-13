@@ -2,6 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { formatMessage } from 'testUtils';
 import { breakpoints, useWindowSize } from '@openedx/paragon';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { getConfig } from '@edx/frontend-platform';
 import { FilterKeys, SortKeys } from 'data/constants/app';
 import { useInitializeLearnerHome } from 'data/hooks';
 import { useFilters } from 'data/context';
@@ -12,6 +13,11 @@ import FilterControls from './FilterControls';
 
 jest.mock('data/hooks', () => ({
   useInitializeLearnerHome: jest.fn().mockReturnValue({ data: { courses: [1, 2, 3] } }),
+}));
+
+jest.mock('@edx/frontend-platform', () => ({
+  ...jest.requireActual('@edx/frontend-platform'),
+  getConfig: jest.fn(() => ({ ENABLE_PATHWAY_PILOT_UI: false })),
 }));
 
 jest.mock('@openedx/paragon', () => ({
@@ -46,6 +52,10 @@ useFilters.mockReturnValue({
 });
 
 describe('FilterControls', () => {
+  beforeEach(() => {
+    getConfig.mockReturnValue({ ENABLE_PATHWAY_PILOT_UI: false });
+  });
+
   describe('mobile and open', () => {
     it('should render sheet', async () => {
       const user = userEvent.setup();
@@ -157,6 +167,7 @@ describe('FilterControls', () => {
       });
     });
     it('should call addType on type check', async () => {
+      getConfig.mockReturnValue({ ENABLE_PATHWAY_PILOT_UI: true });
       const user = userEvent.setup();
       const addTypeMock = jest.fn().mockName('addType');
       const removeTypeMock = jest.fn().mockName('removeType');
@@ -183,6 +194,7 @@ describe('FilterControls', () => {
       });
     });
     it('should call removeType on type uncheck', async () => {
+      getConfig.mockReturnValue({ ENABLE_PATHWAY_PILOT_UI: true });
       const user = userEvent.setup();
       const addTypeMock = jest.fn().mockName('addType');
       const removeTypeMock = jest.fn().mockName('removeType');
@@ -207,6 +219,20 @@ describe('FilterControls', () => {
         expect(removeTypeMock).toHaveBeenCalledWith(filterTypes[0].id);
         expect(addTypeMock).not.toHaveBeenCalled();
       });
+    });
+    it('should not render type filters when the pathway pilot UI is disabled', async () => {
+      getConfig.mockReturnValue({ ENABLE_PATHWAY_PILOT_UI: false });
+      const user = userEvent.setup();
+      useInitializeLearnerHome.mockReturnValue({ data: { courses: [1, 2, 3] } });
+      useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
+      render(<IntlProvider locale="en"><FilterControls filterTypes={filterTypes} /></IntlProvider>);
+      const filtersButton = screen.getByRole('button', { name: 'Refine' });
+      await user.click(filtersButton);
+      await waitFor(() => {
+        const filterForm = screen.getByText(messages.courseStatus.defaultMessage);
+        expect(filterForm).toBeInTheDocument();
+      });
+      expect(screen.queryByText(filterTypes[0].text)).not.toBeInTheDocument();
     });
   });
 });

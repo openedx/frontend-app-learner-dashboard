@@ -5,11 +5,12 @@ import { useInitializeLearnerHome } from 'data/hooks';
 import {
   FilterControls,
 } from 'containers/FilterControls';
-import ItemsListSlot from 'plugin-slots/ItemsListSlot';
+import { CourseListSlot } from 'plugin-slots/CourseListSlot';
 import NoCoursesViewSlot from 'plugin-slots/NoCoursesViewSlot';
 import { useFilters } from 'data/context';
 
 import {
+  getVisibleList,
   getVisibleCourses,
   getTransformedCourseDataList,
   getVisiblePathways,
@@ -21,6 +22,7 @@ import './index.scss';
 import { getConfig } from '@edx/frontend-platform';
 import { COURSE_TYPE } from 'data/context/FiltersProvider';
 import messages from './messages';
+import ItemsListSlot from 'plugin-slots/ItemsListSlot';
 
 /**
  * Renders the list of CourseCards and PathwayCards, as well as the controls (FilterControls) for modifying the list.
@@ -32,7 +34,8 @@ export const ItemsPanel = () => {
   const { data } = useInitializeLearnerHome();
   const hasCourses = useMemo(() => data?.courses?.length > 0, [data]);
   const hasPathways = useMemo(() => data?.pathway?.length > 0, [data]);
-  const hasData = hasCourses || (getConfig().ENABLE_PATHWAY_PILOT_UI && hasPathways);
+  const isPathwaysEnabled = getConfig().ENABLE_PATHWAY_PILOT_UI;
+  const hasData = hasCourses || (isPathwaysEnabled && hasPathways);
 
   const {
     filters, sortBy, pageNumber, setPageNumber, types,
@@ -41,40 +44,67 @@ export const ItemsPanel = () => {
   const hideCourses = types.length > 0 && !types.find(type => type.id === COURSE_TYPE);
 
   const { visibleList, numPages } = useMemo(() => {
-    const visibleItems = [];
+    let transformedCourses = [];
+    if (hasCourses) {
+      transformedCourses = getTransformedCourseDataList(data.courses);
+    }
+    
+    if (isPathwaysEnabled) {
+      // New workflow: with courses and pathways
+      const visibleItems = [];
 
-    if (!hideCourses) {
-      let transformedCourses = [];
-      if (data?.courses?.length) {
-        transformedCourses = getTransformedCourseDataList(data.courses);
+      if (!hideCourses) {
+        const visibleCourse = getVisibleCourses(
+          transformedCourses,
+          filters,
+        );
+        visibleItems.push(...visibleCourse.map(course => ({
+          cardId: course.cardId,
+          lastEnrolled: new Date(course.enrollment?.lastEnrolled),
+          title: course.course.courseName,
+          itemType: 'course',
+        })));
       }
-      const visibleCourse = getVisibleCourses(
+
+      if (hasPathways) {
+        const transformedPathways = getTransformedPathwayDataList(data.pathway);
+        const visiblePathways = getVisiblePathways(transformedPathways, filters, types);
+        visibleItems.push(...visiblePathways.map(pathway => ({
+          cardId: pathway.cardId,
+          lastEnrolled: new Date(pathway.enrollment?.lastEnrolled),
+          title: pathway.pathway.content.displayName,
+          itemType: 'pathway',
+        })));
+      }
+
+      return getVisibleItems(visibleItems, sortBy, pageNumber);
+
+    } else {
+      // Old workflow, only with courses
+      return getVisibleList(
         transformedCourses,
         filters,
+        sortBy,
+        pageNumber,
       );
-      visibleItems.push(...visibleCourse.map(course => ({
-        cardId: course.cardId,
-        lastEnrolled: new Date(course.enrollment?.lastEnrolled),
-        title: course.course.courseName,
-        itemType: 'course',
-      })));
     }
-
-    if (getConfig().ENABLE_PATHWAY_PILOT_UI && data?.pathway?.length) {
-      const transformedPathways = getTransformedPathwayDataList(data.pathway);
-      const visiblePathways = getVisiblePathways(transformedPathways, filters, types);
-      visibleItems.push(...visiblePathways.map(pathway => ({
-        cardId: pathway.cardId,
-        lastEnrolled: new Date(pathway.enrollment?.lastEnrolled),
-        title: pathway.pathway.content.displayName,
-        itemType: 'pathway',
-      })));
-    }
-
-    return getVisibleItems(visibleItems, sortBy, pageNumber);
-  }, [data, filters, sortBy, pageNumber, types, hideCourses]);
+  }, [
+    data,
+    filters,
+    sortBy,
+    pageNumber,
+    types,
+    hideCourses,
+    hasCourses,
+    hasPathways,
+  ]);
 
   const filterTypes = useMemo(() => {
+    if (!isPathwaysEnabled) {
+      // The filter types are disabled
+      return [];
+    }
+
     const availableTypes = [];
     if (hasCourses) {
       availableTypes.push({
@@ -108,15 +138,23 @@ export const ItemsPanel = () => {
     showFilters: filters.length > 0 || types.length > 0,
   };
 
+  const title = isPathwaysEnabled ? formatMessage(messages.myLearning) : formatMessage(messages.myCourses)
+
   return (
     <div className="course-list-container">
       <div className="course-list-heading-container">
-        <h2 className="course-list-title">{formatMessage(messages.myCourses)}</h2>
+        <h2 className="course-list-title">{title}</h2>
         <div className="filter-controls-container">
           <FilterControls filterTypes={filterTypes} />
         </div>
       </div>
-      {hasData ? <ItemsListSlot courseListData={itemsListData} /> : <NoCoursesViewSlot />}
+      {hasData
+        ? (isPathwaysEnabled
+            ? <ItemsListSlot itemsListData={itemsListData} />
+            : <CourseListSlot courseListData={itemsListData} />
+          )
+        : <NoCoursesViewSlot />
+      }
     </div>
   );
 };

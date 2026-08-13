@@ -1,5 +1,6 @@
 import React from 'react';
 import { useIntl } from '@edx/frontend-platform/i18n';
+import { getConfig } from '@edx/frontend-platform';
 import track from 'tracking';
 import {
   Button,
@@ -98,13 +99,15 @@ export const FilterControls = ({ filterTypes }: { filterTypes: FilterType[] }) =
                 <b>{formatMessage(messages.refine)}</b>
               </div>
               <hr />
-              <div className="filter-form-row">
-                <TypeForm
-                  types={filterTypes}
-                  selectedTypes={types}
-                  handleTypeChange={handleTypeChange}
-                />
-              </div>
+              {getConfig().ENABLE_PATHWAY_PILOT_UI && (
+                <div className="filter-form-row">
+                  <TypeForm
+                    types={filterTypes}
+                    selectedTypes={types}
+                    handleTypeChange={handleTypeChange}
+                  />
+                </div>
+              )}
               <div className="filter-form-row">
                 <FilterForm {...{ filters, handleFilterChange }} />
               </div>
@@ -128,14 +131,18 @@ export const FilterControls = ({ filterTypes }: { filterTypes: FilterType[] }) =
                 id="filter-controls-card"
                 className="bg-white p-3 rounded shadow d-flex flex-row"
               >
-                <div className="filter-form-col">
-                  <TypeForm
-                    types={filterTypes}
-                    selectedTypes={types}
-                    handleTypeChange={handleTypeChange}
-                  />
-                </div>
-                <hr className="h-100 bg-primary-200 mx-3 my-0" />
+                {getConfig().ENABLE_PATHWAY_PILOT_UI && (
+                  <>
+                    <div className="filter-form-col">
+                      <TypeForm
+                        types={filterTypes}
+                        selectedTypes={types}
+                        handleTypeChange={handleTypeChange}
+                      />
+                    </div>
+                    <hr className="h-100 bg-primary-200 mx-3 my-0" />
+                  </>
+                )}
                 <div className="filter-form-col">
                   <FilterForm {...{ filters, handleFilterChange }} />
                 </div>

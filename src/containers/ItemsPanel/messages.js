@@ -6,6 +6,11 @@ const messages = defineMessages({
     defaultMessage: 'My Courses',
     description: 'Course list heading',
   },
+  myLearning: {
+    id: 'dashboard.mylearning',
+    defaultMessage: 'My Learning',
+    description: 'Course and Pathway list heading',
+  },
   courseType: {
     id: 'learner-dash.courseListFilters.courseType',
     description: 'Course Type filter text',

@@ -1,5 +1,6 @@
 import { FilterKeys, SortKeys, ListPageSize } from 'data/constants/app';
 import {
+  getVisibleList,
   getVisibleCourses,
   getVisiblePathways,
   getVisibleItems,
@@ -513,6 +514,103 @@ describe('dataTransformers', () => {
     });
   });
 
+  describe('getVisibleList', () => {
+    const courses = [
+      {
+        cardId: 'card-0',
+        course: { courseName: 'Introduction to React' },
+        enrollment: {
+          isEnrolled: true,
+          isVerified: false,
+          hasStarted: true,
+          lastEnrolled: new Date('2024-01-15'),
+        },
+        courseRun: { isArchived: false },
+      },
+      {
+        cardId: 'card-1',
+        course: { courseName: 'Advanced JavaScript' },
+        enrollment: {
+          isEnrolled: true,
+          isVerified: true,
+          hasStarted: false,
+          lastEnrolled: new Date('2024-02-01'),
+        },
+        courseRun: { isArchived: false },
+      },
+      {
+        cardId: 'card-2',
+        course: { courseName: 'Algorithms' },
+        enrollment: {
+          isEnrolled: true,
+          isVerified: false,
+          hasStarted: true,
+          lastEnrolled: new Date('2024-01-01'),
+        },
+        courseRun: { isArchived: true },
+      },
+    ];
+
+    it('should filter courses using the provided filters', () => {
+      const result = getVisibleList(courses, [FilterKeys.upgraded], SortKeys.title, 1);
+
+      expect(result.visibleList).toHaveLength(1);
+      expect(result.visibleList[0].course.courseName).toBe('Advanced JavaScript');
+    });
+
+    it('should return all courses when no filters applied', () => {
+      const result = getVisibleList(courses, [], SortKeys.title, 1);
+
+      expect(result.visibleList).toHaveLength(3);
+    });
+
+    it('should sort courses by title', () => {
+      const result = getVisibleList(courses, [], SortKeys.title, 1);
+
+      const titles = result.visibleList.map(c => c.course.courseName);
+      expect(titles).toEqual(['Advanced JavaScript', 'Algorithms', 'Introduction to React']);
+    });
+
+    it('should sort courses by enrolled date (newest first)', () => {
+      const result = getVisibleList(courses, [], SortKeys.enrolled, 1);
+
+      const titles = result.visibleList.map(c => c.course.courseName);
+      expect(titles).toEqual(['Advanced JavaScript', 'Introduction to React', 'Algorithms']);
+    });
+
+    it('should paginate results', () => {
+      const manyCourses = Array.from({ length: 25 }, (_, i) => ({
+        cardId: `card-${i}`,
+        course: { courseName: `Course ${i.toString().padStart(2, '0')}` },
+        enrollment: {
+          isEnrolled: true, isVerified: false, hasStarted: true, lastEnrolled: new Date(),
+        },
+        courseRun: { isArchived: false },
+      }));
+
+      const result = getVisibleList(manyCourses, [], SortKeys.title, 1);
+
+      expect(result.visibleList).toHaveLength(ListPageSize);
+      expect(result.numPages).toBe(Math.ceil(25 / ListPageSize));
+    });
+
+    it('should disable pagination when query parameter is set', () => {
+      mockGet.mockReturnValue('1');
+
+      const result = getVisibleList(courses, [], SortKeys.title, 1);
+
+      expect(result.visibleList).toHaveLength(3);
+      expect(result.numPages).toBe(1);
+    });
+
+    it('should handle empty course list', () => {
+      const result = getVisibleList([], [], SortKeys.title, 1);
+
+      expect(result.visibleList).toHaveLength(0);
+      expect(result.numPages).toBe(0);
+    });
+  });
+
   describe('getVisiblePathways', () => {
     const transformedPathways = [
       {
@@ -692,10 +790,10 @@ describe('dataTransformers', () => {
 
   describe('getVisibleItems', () => {
     const items: VisibleItem[] = [
-      { cardId: 'card-0', lastEnrolled: new Date('2024-01-15'), title: 'Introduction to React', itemType: 'curse' },
-      { cardId: 'card-1', lastEnrolled: new Date('2024-02-01'), title: 'Advanced JavaScript', itemType: 'curse' },
+      { cardId: 'card-0', lastEnrolled: new Date('2024-01-15'), title: 'Introduction to React', itemType: 'course' },
+      { cardId: 'card-1', lastEnrolled: new Date('2024-02-01'), title: 'Advanced JavaScript', itemType: 'course' },
       { cardId: 'p-card-0', lastEnrolled: new Date('2024-01-10'), title: 'Data Science Pathway', itemType: 'pathway' },
-      { cardId: 'card-2', lastEnrolled: new Date('2024-01-01'), title: 'Algorithms', itemType: 'curse' },
+      { cardId: 'card-2', lastEnrolled: new Date('2024-01-01'), title: 'Algorithms', itemType: 'course' },
     ];
 
     describe('sorting', () => {
@@ -725,13 +823,13 @@ describe('dataTransformers', () => {
         const result = getVisibleItems([...items], SortKeys.title, 1);
 
         const itemTypes = result.visibleList.map(i => i.itemType);
-        expect(itemTypes).toContain('curse');
+        expect(itemTypes).toContain('course');
         expect(itemTypes).toContain('pathway');
       });
 
       it('should handle items with identical sort values', () => {
         const identicalItems: VisibleItem[] = [
-          { cardId: 'card-0', lastEnrolled: new Date('2024-01-01'), title: 'Same Name', itemType: 'curse' },
+          { cardId: 'card-0', lastEnrolled: new Date('2024-01-01'), title: 'Same Name', itemType: 'course' },
           { cardId: 'p-card-0', lastEnrolled: new Date('2024-01-01'), title: 'Same Name', itemType: 'pathway' },
         ];
 
@@ -746,7 +844,7 @@ describe('dataTransformers', () => {
         cardId: `card-${i}`,
         lastEnrolled: new Date(`2024-01-${(i + 1).toString().padStart(2, '0')}`),
         title: `Item ${i.toString().padStart(2, '0')}`,
-        itemType: 'curse' as const,
+        itemType: 'course' as const,
       }));
 
       it('should paginate results correctly for first page', () => {
@@ -763,7 +861,7 @@ describe('dataTransformers', () => {
           cardId: `card-${i}`,
           lastEnrolled: new Date(),
           title: `Item ${i.toString().padStart(2, '0')}`,
-          itemType: 'curse' as const,
+          itemType: 'course' as const,
         }));
         const result = getVisibleItems([...manyItemsList], SortKeys.title, 2);
 

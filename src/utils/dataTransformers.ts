@@ -11,7 +11,7 @@ interface VisibleItem {
   cardId: string;
   lastEnrolled: Date;
   title: string;
-  itemType: 'curse' | 'pathway';
+  itemType: 'course' | 'pathway';
 }
 
 const courseCardId = (val) => `card-${val}`;
@@ -49,6 +49,51 @@ const getTransformedCourseDataList = (courses) => Object.values(transformCourseD
 const getTransformedPathwayDataObject = (pathways) => transformPathwayData(pathways);
 
 const getTransformedPathwayDataList = (pathways) => Object.values(transformPathwayData(pathways));
+
+const getVisibleList = (courses: any[], filters: string[], sortBy: string, pageNumber: number) => {
+  const courseFilters = StrictDict({
+    [FilterKeys.notEnrolled]: (course) => !course.enrollment.isEnrolled,
+    [FilterKeys.done]: (course) => course.courseRun !== null && course.courseRun.isArchived,
+    [FilterKeys.upgraded]: (course) => course.enrollment.isVerified,
+    [FilterKeys.inProgress]: (course) => course.enrollment.hasStarted,
+    [FilterKeys.notStarted]: (course) => !course.enrollment.hasStarted,
+  });
+
+  const transforms = StrictDict({
+    [SortKeys.enrolled]: ({ enrollment }) => new Date(enrollment?.lastEnrolled),
+    [SortKeys.title]: ({ course }) => course.courseName.toLowerCase(),
+  });
+
+  const courseFilterFn = filtersList => (filtersList.length
+    ? course => filtersList.reduce((match, filter) => match && courseFilters[filter](course), true)
+    : () => true);
+
+  const sortFn = (transform, { reverse }) => (v1, v2) => {
+    const [a, b] = [v1, v2].map(transform);
+    if (a === b) { return 0; }
+    return (((a as any) > (b as any)) ? 1 : -1) * (reverse ? -1 : 1);
+  };
+
+  const list = courses
+    .filter(courseFilterFn(filters))
+    .sort(sortFn(transforms[sortBy], { reverse: sortBy === SortKeys.enrolled }));
+
+  const querySearch = new URLSearchParams(window.location.search);
+  const disablePagination = querySearch.get('disable_pagination');
+  const pageSize = Number(disablePagination) === 1 ? 0 : ListPageSize;
+
+  if (pageSize === 0) {
+    return {
+      visibleList: list,
+      numPages: 1,
+    };
+  }
+  const result = {
+    visibleList: list.slice((pageNumber - 1) * pageSize, pageNumber * pageSize),
+    numPages: Math.ceil(list.length / pageSize),
+  };
+  return result;
+};
 
 const getVisibleCourses = (courses: any[], filters: string[]) => {
   const courseFilters = StrictDict({
@@ -117,6 +162,7 @@ const getVisibleItems = (items: VisibleItem[], sortBy: string, pageNumber: numbe
 };
 
 export {
+  getVisibleList,
   getVisibleCourses,
   getVisiblePathways,
   getVisibleItems,

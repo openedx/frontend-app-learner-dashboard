@@ -114,6 +114,34 @@ describe('ItemsPanel', () => {
       expect(dataTransformers.getVisiblePathways).toHaveBeenCalled();
     });
 
+    it('shows the "My Learning" heading and renders both courses and pathways when the pilot UI is enabled', () => {
+      getConfig.mockReturnValue({ ENABLE_PATHWAY_PILOT_UI: true });
+      const transformedPathways = [{
+        cardId: 'pathway-1',
+        enrollment: { lastEnrolled: '2024-01-01' },
+        pathway: { content: { displayName: 'Pathway 1' }, type: 'masters', typeText: 'Masters' },
+      }];
+      jest.spyOn(dataTransformers, 'getTransformedPathwayDataList').mockReturnValue(transformedPathways);
+      jest.spyOn(dataTransformers, 'getVisiblePathways').mockReturnValue(transformedPathways);
+
+      useInitializeLearnerHome.mockReturnValue({
+        data: {
+          courses: [{
+            course: { courseName: 'Foo' },
+            enrollment: { isEnrolled: true, hasStarted: true, lastEnrolled: '2024-01-01' },
+          }],
+          pathway: [{ pathway: { type: 'masters', typeText: 'Masters' } }],
+        },
+      });
+
+      render(<IntlProvider locale="en"><ItemsPanel /></IntlProvider>);
+
+      expect(screen.getByText(messages.myLearning.defaultMessage)).toBeInTheDocument();
+      expect(screen.queryByText(messages.myCourses.defaultMessage)).not.toBeInTheDocument();
+      expect(screen.getByText('CourseCard')).toBeInTheDocument();
+      expect(screen.getByText('PathwayCard')).toBeInTheDocument();
+    });
+
     it('does not render pathway cards when the pilot UI is disabled', () => {
       getConfig.mockReturnValue({ ENABLE_PATHWAY_PILOT_UI: false });
       jest.spyOn(dataTransformers, 'getTransformedPathwayDataList');
@@ -130,6 +158,9 @@ describe('ItemsPanel', () => {
 
     it('derives unique filter types from the raw pathway list', () => {
       FilterControls.mockClear();
+      getConfig.mockReturnValue({ ENABLE_PATHWAY_PILOT_UI: true });
+      jest.spyOn(dataTransformers, 'getTransformedPathwayDataList').mockReturnValue([]);
+      jest.spyOn(dataTransformers, 'getVisiblePathways').mockReturnValue([]);
 
       useInitializeLearnerHome.mockReturnValue({
         data: {
@@ -161,9 +192,9 @@ describe('ItemsPanel', () => {
 
     beforeEach(() => {
       jest.clearAllMocks();
+      getConfig.mockReturnValue({ ENABLE_PATHWAY_PILOT_UI: false });
       jest.spyOn(dataTransformers, 'getTransformedCourseDataList');
-      jest.spyOn(dataTransformers, 'getVisibleCourses');
-      jest.spyOn(dataTransformers, 'getVisibleItems');
+      jest.spyOn(dataTransformers, 'getVisibleList');
     });
 
     it('clamps page number to 1 when current page exceeds total pages', () => {
@@ -176,10 +207,7 @@ describe('ItemsPanel', () => {
       });
 
       dataTransformers.getTransformedCourseDataList.mockReturnValue([{ id: 1 }, { id: 2 }]);
-      dataTransformers.getVisibleCourses.mockReturnValue([
-        { cardId: 'foo', course: { courseName: 'Foo' } },
-      ]);
-      dataTransformers.getVisibleItems.mockReturnValue({
+      dataTransformers.getVisibleList.mockReturnValue({
         visibleList: [{ cardId: 'foo' }],
         numPages: 2,
       });
@@ -199,10 +227,7 @@ describe('ItemsPanel', () => {
       });
 
       dataTransformers.getTransformedCourseDataList.mockReturnValue([{ id: 1 }, { id: 2 }]);
-      dataTransformers.getVisibleCourses.mockReturnValue([
-        { cardId: 'foo', course: { courseName: 'Foo' } },
-      ]);
-      dataTransformers.getVisibleItems.mockReturnValue({
+      dataTransformers.getVisibleList.mockReturnValue({
         visibleList: [{ cardId: 'foo' }],
         numPages: 3,
       });
@@ -222,8 +247,7 @@ describe('ItemsPanel', () => {
       });
 
       dataTransformers.getTransformedCourseDataList.mockReturnValue([]);
-      dataTransformers.getVisibleCourses.mockReturnValue([]);
-      dataTransformers.getVisibleItems.mockReturnValue({
+      dataTransformers.getVisibleList.mockReturnValue({
         visibleList: [],
         numPages: 0,
       });
@@ -243,10 +267,7 @@ describe('ItemsPanel', () => {
       });
 
       dataTransformers.getTransformedCourseDataList.mockReturnValue([{ id: 1 }, { id: 2 }]);
-      dataTransformers.getVisibleCourses.mockReturnValue([
-        { cardId: 'foo', course: { courseName: 'Foo' } },
-      ]);
-      dataTransformers.getVisibleItems.mockReturnValue({
+      dataTransformers.getVisibleList.mockReturnValue({
         visibleList: [{ cardId: 'foo' }],
         numPages: 2,
       });
