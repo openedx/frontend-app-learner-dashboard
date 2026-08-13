@@ -21,8 +21,8 @@ import {
 import './index.scss';
 import { getConfig } from '@edx/frontend-platform';
 import { COURSE_TYPE } from 'data/context/FiltersProvider';
-import messages from './messages';
 import ItemsListSlot from 'plugin-slots/ItemsListSlot';
+import messages from './messages';
 
 /**
  * Renders the list of CourseCards and PathwayCards, as well as the controls (FilterControls) for modifying the list.
@@ -48,7 +48,7 @@ export const ItemsPanel = () => {
     if (hasCourses) {
       transformedCourses = getTransformedCourseDataList(data.courses);
     }
-    
+
     if (isPathwaysEnabled) {
       // New workflow: with courses and pathways
       const visibleItems = [];
@@ -78,16 +78,14 @@ export const ItemsPanel = () => {
       }
 
       return getVisibleItems(visibleItems, sortBy, pageNumber);
-
-    } else {
-      // Old workflow, only with courses
-      return getVisibleList(
-        transformedCourses,
-        filters,
-        sortBy,
-        pageNumber,
-      );
     }
+    // Old workflow, only with courses
+    return getVisibleList(
+      transformedCourses,
+      filters,
+      sortBy,
+      pageNumber,
+    );
   }, [
     data,
     filters,
@@ -97,6 +95,7 @@ export const ItemsPanel = () => {
     hideCourses,
     hasCourses,
     hasPathways,
+    isPathwaysEnabled,
   ]);
 
   const filterTypes = useMemo(() => {
@@ -121,7 +120,13 @@ export const ItemsPanel = () => {
       });
     }
     return availableTypes;
-  }, [data, hasCourses, hasPathways, formatMessage]);
+  }, [
+    data,
+    hasCourses,
+    hasPathways,
+    formatMessage,
+    isPathwaysEnabled,
+  ]);
 
   // Clamp page number when filtered/mutated list shrinks
   React.useEffect(() => {
@@ -138,7 +143,14 @@ export const ItemsPanel = () => {
     showFilters: filters.length > 0 || types.length > 0,
   };
 
-  const title = isPathwaysEnabled ? formatMessage(messages.myLearning) : formatMessage(messages.myCourses)
+  const title = isPathwaysEnabled ? formatMessage(messages.myLearning) : formatMessage(messages.myCourses);
+
+  let listContent = <NoCoursesViewSlot />;
+  if (hasData) {
+    listContent = isPathwaysEnabled
+      ? <ItemsListSlot itemsListData={itemsListData} />
+      : <CourseListSlot courseListData={itemsListData} />;
+  }
 
   return (
     <div className="course-list-container">
@@ -148,13 +160,7 @@ export const ItemsPanel = () => {
           <FilterControls filterTypes={filterTypes} />
         </div>
       </div>
-      {hasData
-        ? (isPathwaysEnabled
-            ? <ItemsListSlot itemsListData={itemsListData} />
-            : <CourseListSlot courseListData={itemsListData} />
-          )
-        : <NoCoursesViewSlot />
-      }
+      {listContent}
     </div>
   );
 };
