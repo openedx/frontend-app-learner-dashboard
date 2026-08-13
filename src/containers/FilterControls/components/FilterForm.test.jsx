@@ -1,9 +1,14 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { getConfig } from '@edx/frontend-platform';
 import { formatMessage } from 'testUtils';
 import { FilterKeys } from 'data/constants/app';
 import { FilterForm, filterOrder } from './FilterForm';
 import messages from '../messages';
+
+jest.mock('@edx/frontend-platform', () => ({
+  getConfig: jest.fn(() => ({})),
+}));
 
 const mockHandleFilterChange = jest.fn();
 
@@ -47,8 +52,17 @@ describe('FilterForm', () => {
     expect(mockHandleFilterChange).toHaveBeenCalled();
   });
 
-  it('displays course status heading', () => {
+  it('displays course status heading when the pilot UI is disabled', () => {
+    getConfig.mockReturnValue({ ENABLE_PATHWAY_PILOT_UI: false });
     renderComponent();
-    expect(screen.getByText(/course status/i)).toBeInTheDocument();
+    expect(screen.getByText(formatMessage(messages.courseStatus))).toBeInTheDocument();
+    expect(screen.queryByText(formatMessage(messages.status))).toBeNull();
+  });
+
+  it('displays status heading when the pilot UI is enabled', () => {
+    getConfig.mockReturnValue({ ENABLE_PATHWAY_PILOT_UI: true });
+    renderComponent();
+    expect(screen.getByText(formatMessage(messages.status))).toBeInTheDocument();
+    expect(screen.queryByText(formatMessage(messages.courseStatus))).toBeNull();
   });
 });
