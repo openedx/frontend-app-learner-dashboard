@@ -46,4 +46,52 @@ describe('PathwayHeaderActions', () => {
     renderComponent();
     expect(screen.queryByText('  ')).toBeNull();
   });
+
+  it('applies custom colors when both category colors are valid', () => {
+    mockGetConfig.mockReturnValue({ ENABLE_PATHWAY_PILOT_UI: true } as unknown as ConfigDocument);
+    mockUsePathwayData.mockReturnValue({
+      pathway: {
+        categoryLabel: 'Program',
+        categoryBackgroundColor: '#ffffff',
+        categoryTextColor: '#000000',
+      },
+    } as unknown as TransformedPathwayData);
+    renderComponent();
+    const badge = screen.getByText('Program');
+    expect(badge).toHaveStyle({ backgroundColor: '#ffffff', color: '#000000' });
+  });
+
+  it('does not apply custom colors when a category color is invalid', () => {
+    mockGetConfig.mockReturnValue({ ENABLE_PATHWAY_PILOT_UI: true } as unknown as ConfigDocument);
+    mockUsePathwayData.mockReturnValue({
+      pathway: {
+        categoryLabel: 'Program',
+        categoryBackgroundColor: 'not-a-color',
+        categoryTextColor: '#000000',
+      },
+    } as unknown as TransformedPathwayData);
+    renderComponent();
+    const badge = screen.getByText('Program');
+    expect(badge.style.backgroundColor).toBe('');
+  });
+
+  it('does not render the badge when categoryLabel is undefined', () => {
+    mockGetConfig.mockReturnValue({ ENABLE_PATHWAY_PILOT_UI: true } as unknown as ConfigDocument);
+    mockUsePathwayData.mockReturnValue({ pathway: {} } as unknown as TransformedPathwayData);
+    renderComponent();
+    expect(screen.getByText('PathwayCardMenu')).toBeInTheDocument();
+  });
+
+  it('does not apply custom colors when only one category color is set', () => {
+    mockGetConfig.mockReturnValue({ ENABLE_PATHWAY_PILOT_UI: true } as unknown as ConfigDocument);
+    mockUsePathwayData.mockReturnValue({
+      pathway: {
+        categoryLabel: 'Program',
+        categoryBackgroundColor: '#ffffff',
+      },
+    } as unknown as TransformedPathwayData);
+    renderComponent();
+    const badge = screen.getByText('Program');
+    expect(badge.style.backgroundColor).toBe('');
+  });
 });

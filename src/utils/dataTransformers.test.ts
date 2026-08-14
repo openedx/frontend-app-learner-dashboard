@@ -558,6 +558,50 @@ describe('dataTransformers', () => {
       expect(result.visibleList[0].course.courseName).toBe('Advanced JavaScript');
     });
 
+    it('should filter courses by notEnrolled', () => {
+      const coursesWithNotEnrolled = [
+        ...courses,
+        {
+          cardId: 'card-3',
+          course: { courseName: 'Data Structures' },
+          enrollment: {
+            isEnrolled: false,
+            isVerified: false,
+            hasStarted: false,
+            lastEnrolled: new Date('2024-01-10'),
+          },
+          courseRun: null,
+        },
+      ];
+
+      const result = getVisibleList(coursesWithNotEnrolled, [FilterKeys.notEnrolled], SortKeys.title, 1);
+
+      expect(result.visibleList).toHaveLength(1);
+      expect(result.visibleList[0].course.courseName).toBe('Data Structures');
+    });
+
+    it('should filter courses by done (archived)', () => {
+      const result = getVisibleList(courses, [FilterKeys.done], SortKeys.title, 1);
+
+      expect(result.visibleList).toHaveLength(1);
+      expect(result.visibleList[0].course.courseName).toBe('Algorithms');
+    });
+
+    it('should filter courses by inProgress (hasStarted)', () => {
+      const result = getVisibleList(courses, [FilterKeys.inProgress], SortKeys.title, 1);
+
+      expect(result.visibleList).toHaveLength(2);
+      const courseNames = result.visibleList.map(c => c.course.courseName).sort();
+      expect(courseNames).toEqual(['Algorithms', 'Introduction to React']);
+    });
+
+    it('should filter courses by notStarted', () => {
+      const result = getVisibleList(courses, [FilterKeys.notStarted], SortKeys.title, 1);
+
+      expect(result.visibleList).toHaveLength(1);
+      expect(result.visibleList[0].course.courseName).toBe('Advanced JavaScript');
+    });
+
     it('should return all courses when no filters applied', () => {
       const result = getVisibleList(courses, [], SortKeys.title, 1);
 
