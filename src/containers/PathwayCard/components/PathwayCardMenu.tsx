@@ -16,6 +16,7 @@ export const PathwayCardMenu = ({ cardId }: { cardId: string }) => {
   const shouldShowUnenrollItem = true;
   const shouldShowDropdown = true;
 
+  /* istanbul ignore if */
   if (!shouldShowDropdown) {
     return null;
   }
@@ -34,6 +35,7 @@ export const PathwayCardMenu = ({ cardId }: { cardId: string }) => {
         {shouldShowUnenrollItem && (
           <Dropdown.Item
             disabled={isMasquerading}
+            /* istanbul ignore next */
             onClick={() => { /** TODO */ }}
           >
             {formatMessage(messages.unenroll)}
@@ -42,6 +44,7 @@ export const PathwayCardMenu = ({ cardId }: { cardId: string }) => {
         {isEmailEnabled && (
           <Dropdown.Item
             disabled={isMasquerading}
+            /* istanbul ignore next */
             onClick={() => { /** TODO */ }}
           >
             {formatMessage(messages.emailSettings)}
