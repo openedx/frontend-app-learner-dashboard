@@ -71,7 +71,7 @@ export const ItemsPanel = () => {
         const visiblePathways = getVisiblePathways(transformedPathways, filters, types);
         visibleItems.push(...visiblePathways.map(pathway => ({
           cardId: pathway.cardId,
-          lastEnrolled: new Date(pathway.enrollment?.lastEnrolled),
+          lastEnrolled: new Date(pathway.enrollment?.lastEnrolled ?? Date.now()),
           title: pathway.pathway.content.displayName,
           itemType: 'pathway',
         })));
