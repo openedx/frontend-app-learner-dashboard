@@ -35,8 +35,7 @@ export const PathwayCardMenu = ({ cardId }: { cardId: string }) => {
         {shouldShowUnenrollItem && (
           <Dropdown.Item
             disabled={isMasquerading}
-            /* istanbul ignore next */
-            onClick={() => { /** TODO */ }}
+            onClick={/* istanbul ignore next */ () => { /** TODO */ }}
           >
             {formatMessage(messages.unenroll)}
           </Dropdown.Item>
@@ -44,8 +43,7 @@ export const PathwayCardMenu = ({ cardId }: { cardId: string }) => {
         {isEmailEnabled && (
           <Dropdown.Item
             disabled={isMasquerading}
-            /* istanbul ignore next */
-            onClick={() => { /** TODO */ }}
+            onClick={/* istanbul ignore next */ () => { /** TODO */ }}
           >
             {formatMessage(messages.emailSettings)}
           </Dropdown.Item>

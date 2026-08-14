@@ -9,8 +9,7 @@ export const ResumeButton = () => {
     <ActionButton
       as="a"
       href="#"
-      /* istanbul ignore if */
-      onClick={() => { /** TODO */ }}
+      onClick={/* istanbul ignore if */ () => { /** TODO */ }}
     >
       {formatMessage(messages.resume)}
     </ActionButton>

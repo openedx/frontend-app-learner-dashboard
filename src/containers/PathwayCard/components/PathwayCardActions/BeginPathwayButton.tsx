@@ -9,7 +9,7 @@ export const BeginPathwayButton = () => {
     <ActionButton
       as="a"
       href="#"
-      onClick={() => { /** TODO */ }}
+      onClick={/* istanbul ignore if */ () => { /** TODO */ }}
     >
       {formatMessage(messages.beginPathway)}
     </ActionButton>
