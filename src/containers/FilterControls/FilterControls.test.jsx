@@ -93,6 +93,30 @@ describe('FilterControls', () => {
       expect(button).toBeInTheDocument();
       expect(button).toBeDisabled();
     });
+    it('should have button disabled when pathways exist but pathway pilot UI is disabled', () => {
+      getConfig.mockReturnValue({ ENABLE_PATHWAY_PILOT_UI: false });
+      useInitializeLearnerHome.mockReturnValue({ data: { courses: [], pathway: [1, 2, 3] } });
+      useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
+      render(<IntlProvider locale="en"><FilterControls filterTypes={filterTypes} /></IntlProvider>);
+      const button = screen.getByRole('button', { name: formatMessage(messages.refine) });
+      expect(button).toBeDisabled();
+    });
+    it('should have button disabled when pathway pilot UI is enabled but there are no pathways', () => {
+      getConfig.mockReturnValue({ ENABLE_PATHWAY_PILOT_UI: true });
+      useInitializeLearnerHome.mockReturnValue({ data: { courses: [], pathway: [] } });
+      useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
+      render(<IntlProvider locale="en"><FilterControls filterTypes={filterTypes} /></IntlProvider>);
+      const button = screen.getByRole('button', { name: formatMessage(messages.refine) });
+      expect(button).toBeDisabled();
+    });
+    it('should have button enabled when there are no courses but pathways exist and pathway pilot UI is enabled', () => {
+      getConfig.mockReturnValue({ ENABLE_PATHWAY_PILOT_UI: true });
+      useInitializeLearnerHome.mockReturnValue({ data: { courses: [], pathway: [1, 2, 3] } });
+      useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
+      render(<IntlProvider locale="en"><FilterControls filterTypes={filterTypes} /></IntlProvider>);
+      const button = screen.getByRole('button', { name: formatMessage(messages.refine) });
+      expect(button).toBeEnabled();
+    });
   });
   describe('with courses', () => {
     it('should have button enabled', () => {

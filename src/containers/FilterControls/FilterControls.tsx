@@ -31,6 +31,8 @@ export const FilterControls = ({ filterTypes }: { filterTypes: FilterType[] }) =
   const { formatMessage } = useIntl();
   const { data } = useInitializeLearnerHome();
   const hasCourses = React.useMemo(() => data?.courses?.length > 0, [data]);
+  const hasPathways = React.useMemo(() => data?.pathway?.length > 0, [data]);
+  const hasData = hasCourses || (getConfig().ENABLE_PATHWAY_PILOT_UI && hasPathways);
   const {
     filters,
     sortBy,
@@ -82,7 +84,7 @@ export const FilterControls = ({ filterTypes }: { filterTypes: FilterType[] }) =
         variant="outline-primary"
         iconBefore={Tune}
         onClick={openFiltersOptions}
-        disabled={!hasCourses}
+        disabled={!hasData}
       >
         {formatMessage(messages.refine)}
       </Button>
