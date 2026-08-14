@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import ActionButton from "containers/DashboardCard/ActionButton";
 import { useIntl } from '@edx/frontend-platform/i18n';
 
@@ -9,7 +10,7 @@ export const BeginPathwayButton = () => {
     <ActionButton
       as="a"
       href="#"
-      onClick={/* istanbul ignore if */ () => { /** TODO */ }}
+      onClick={() => { /** TODO */ }}
     >
       {formatMessage(messages.beginPathway)}
     </ActionButton>

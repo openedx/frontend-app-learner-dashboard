@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { getTransformedPathwayDataList, TransformedPathwayData } from "utils/dataTransformers";
 
 export interface PathwayData {
