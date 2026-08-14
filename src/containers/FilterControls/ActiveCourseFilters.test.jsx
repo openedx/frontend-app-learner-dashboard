@@ -9,7 +9,7 @@ import ActiveCourseFilters from './ActiveCourseFilters';
 import messages from './messages';
 
 const filters = Object.values(FilterKeys);
-const types = [{ id: 'course', text: 'Course' }, { id: 'pathway', text: 'Pathway' }];
+const categories = [{ id: 'course', text: 'Course' }, { id: 'pathway', text: 'Pathway' }];
 
 jest.mock('data/context', () => ({
   useFilters: jest.fn(),
@@ -17,15 +17,15 @@ jest.mock('data/context', () => ({
 
 const removeFiltersMock = jest.fn().mockName('removeFilter');
 const clearFiltersMock = jest.fn().mockName('clearFilters');
-const removeTypeMock = jest.fn().mockName('removeType');
-const clearTypesMock = jest.fn().mockName('clearTypes');
+const removeCategoryMock = jest.fn().mockName('removeCategory');
+const clearCategoriesMock = jest.fn().mockName('clearCategories');
 useFilters.mockReturnValue({
   filters,
-  types: [],
+  categories: [],
   removeFilter: removeFiltersMock,
   clearFilters: clearFiltersMock,
-  removeType: removeTypeMock,
-  clearTypes: clearTypesMock,
+  removeCategory: removeCategoryMock,
+  clearCategories: clearCategoriesMock,
 });
 
 describe('ActiveCourseFilters', () => {
@@ -61,40 +61,40 @@ describe('ActiveCourseFilters', () => {
     expect(clearFiltersMock).toHaveBeenCalledTimes(1);
   });
 
-  describe('with types', () => {
+  describe('with categories', () => {
     beforeEach(() => {
       useFilters.mockReturnValue({
         filters: [],
-        types,
+        categories,
         removeFilter: removeFiltersMock,
         clearFilters: clearFiltersMock,
-        removeType: removeTypeMock,
-        clearTypes: clearTypesMock,
+        removeCategory: removeCategoryMock,
+        clearCategories: clearCategoriesMock,
       });
     });
 
-    it('renders type chips correctly', () => {
+    it('renders category chips correctly', () => {
       render(<IntlProvider locale="en"><ActiveCourseFilters /></IntlProvider>);
-      types.forEach(type => {
-        expect(screen.getByText(type.text)).toBeInTheDocument();
+      categories.forEach(category => {
+        expect(screen.getByText(category.text)).toBeInTheDocument();
       });
     });
 
-    it('calls removeType when a type chip is clicked', async () => {
+    it('calls removeCategory when a category chip is clicked', async () => {
       const user = userEvent.setup();
       render(<IntlProvider locale="en"><ActiveCourseFilters /></IntlProvider>);
-      const removeButton = screen.getByRole('button', { name: types[0].text });
+      const removeButton = screen.getByRole('button', { name: categories[0].text });
       await user.click(removeButton);
-      expect(removeTypeMock).toHaveBeenCalledTimes(1);
-      expect(removeTypeMock).toHaveBeenCalledWith(types[0].id);
+      expect(removeCategoryMock).toHaveBeenCalledTimes(1);
+      expect(removeCategoryMock).toHaveBeenCalledWith(categories[0].id);
     });
 
-    it('calls clearTypes when clear all is clicked', async () => {
+    it('calls clearCategories when clear all is clicked', async () => {
       const user = userEvent.setup();
       render(<IntlProvider locale="en"><ActiveCourseFilters /></IntlProvider>);
       const clearAllButton = screen.getByRole('button', { name: formatMessage(messages.clearAll) });
       await user.click(clearAllButton);
-      expect(clearTypesMock).toHaveBeenCalledTimes(1);
+      expect(clearCategoriesMock).toHaveBeenCalledTimes(1);
     });
   });
 });

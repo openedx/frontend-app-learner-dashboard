@@ -95,7 +95,7 @@ describe('dataTransformers', () => {
       pathway: {
         content: { displayName: 'Data Science Pathway' },
         courseCount: 3,
-        type: 'professional',
+        category: 'professional',
       },
       pathwayRun: {
         homeUrl: '/pathway/1',
@@ -114,7 +114,7 @@ describe('dataTransformers', () => {
       pathway: {
         content: { displayName: 'Web Development Pathway' },
         courseCount: 5,
-        type: 'verified',
+        category: 'verified',
       },
       pathwayRun: {
         homeUrl: '/pathway/2',
@@ -133,7 +133,7 @@ describe('dataTransformers', () => {
       pathway: {
         content: { displayName: 'Machine Learning Pathway' },
         courseCount: 4,
-        type: 'professional',
+        category: 'professional',
       },
       pathwayRun: {
         homeUrl: '/pathway/3',
@@ -618,7 +618,7 @@ describe('dataTransformers', () => {
         pathway: {
           content: { displayName: 'Data Science Pathway' },
           courseCount: 3,
-          type: 'professional',
+          category: 'professional',
         },
         pathwayRun: { isArchived: false, hasStarted: true, homeUrl: '/1' },
         enrollment: {
@@ -634,7 +634,7 @@ describe('dataTransformers', () => {
         pathway: {
           content: { displayName: 'Web Development Pathway' },
           courseCount: 5,
-          type: 'verified',
+          category: 'verified',
         },
         pathwayRun: { isArchived: false, hasStarted: false, homeUrl: '/2' },
         enrollment: {
@@ -650,7 +650,7 @@ describe('dataTransformers', () => {
         pathway: {
           content: { displayName: 'Machine Learning Pathway' },
           courseCount: 4,
-          type: 'professional',
+          category: 'professional',
         },
         pathwayRun: { isArchived: true, hasStarted: true, homeUrl: '/3' },
         enrollment: {
@@ -776,7 +776,7 @@ describe('dataTransformers', () => {
       const pathwaysWithNullRun = [
         {
           cardId: 'p-card-0',
-          pathway: { content: { displayName: 'Test Pathway' }, courseCount: 1, type: 'professional' },
+          pathway: { content: { displayName: 'Test Pathway' }, courseCount: 1, category: 'professional' },
           pathwayRun: null,
           enrollment: { isEnrolled: true },
         },

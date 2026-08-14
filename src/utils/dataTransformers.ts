@@ -1,7 +1,7 @@
 import { FilterKeys, ListPageSize, SortKeys } from 'data/constants/app';
 import StrictDict from './StrictDict';
 import { PathwayData } from 'hooks/usePathwayData';
-import { FilterType } from 'data/context/FiltersProvider';
+import { FilterCategory } from 'data/context/FiltersProvider';
 
 interface TransformedPathwayData extends PathwayData {
   cardId: string;
@@ -111,7 +111,7 @@ const getVisibleCourses = (courses: any[], filters: string[]) => {
   return courses.filter(courseFilterFn(filters));
 };
 
-const getVisiblePathways = (pathways: TransformedPathwayData[], filters: string[], types: FilterType[]) => {
+const getVisiblePathways = (pathways: TransformedPathwayData[], filters: string[], categories: FilterCategory[]) => {
   const pathwayFilters = StrictDict({
     [FilterKeys.notEnrolled]: (pathway: PathwayData) => !pathway.enrollment.isEnrolled,
     [FilterKeys.done]: (pathway: PathwayData) => pathway.pathwayRun !== null && pathway.pathwayRun.isArchived,
@@ -124,11 +124,11 @@ const getVisiblePathways = (pathways: TransformedPathwayData[], filters: string[
     ? pathway => filtersList.reduce((match, filter) => match && pathwayFilters[filter](pathway), true)
     : () => true);
 
-  const pathwayTypesFilterFn = filterTypes => (filterTypes.length
-    ? pathway => filterTypes.some(type => type.id === pathway.pathway.type)
+  const pathwayCategoriesFilterFn = filterCategories => (filterCategories.length
+    ? pathway => filterCategories.some(category => category.id === pathway.pathway.category)
     : () => true);
 
-  return pathways.filter(pathwayFilterFn(filters)).filter(pathwayTypesFilterFn(types));
+  return pathways.filter(pathwayFilterFn(filters)).filter(pathwayCategoriesFilterFn(categories));
 };
 
 const getVisibleItems = (items: VisibleItem[], sortBy: string, pageNumber: number) => {

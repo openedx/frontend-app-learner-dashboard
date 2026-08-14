@@ -61,10 +61,10 @@ const messages = defineMessages({
     description: 'Filter button container text',
     defaultMessage: 'Refine',
   },
-  type: {
-    id: 'learner-dash.courseListFilters.type',
-    description: 'Type radio form heading',
-    defaultMessage: 'Type',
+  category: {
+    id: 'learner-dash.courseListFilters.category',
+    description: 'Category radio form heading',
+    defaultMessage: 'Category',
   },
 });
 

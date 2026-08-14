@@ -33,7 +33,7 @@ jest.mock('tracking', () => ({
 }));
 
 const filters = Object.values(FilterKeys);
-const filterTypes = [{ id: 'course', text: 'Course' }, { id: 'pathway', text: 'Pathway' }];
+const filterCategories = [{ id: 'course', text: 'Course' }, { id: 'pathway', text: 'Pathway' }];
 
 jest.mock('data/context', () => ({
   useFilters: jest.fn(),
@@ -42,13 +42,13 @@ jest.mock('data/context', () => ({
 const setSortByMock = jest.fn().mockName('setSortBy');
 useFilters.mockReturnValue({
   filters,
-  types: [],
+  categories: [],
   removeFilter: jest.fn().mockName('removeFilter'),
   clearFilters: jest.fn().mockName('clearFilters'),
   setSortBy: setSortByMock,
   addFilter: jest.fn().mockName('addFilter'),
-  addType: jest.fn().mockName('addType'),
-  removeType: jest.fn().mockName('removeType'),
+  addCategory: jest.fn().mockName('addCategory'),
+  removeCategory: jest.fn().mockName('removeCategory'),
 });
 
 describe('FilterControls', () => {
@@ -60,7 +60,7 @@ describe('FilterControls', () => {
     it('should render sheet', async () => {
       const user = userEvent.setup();
       useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth - 1 });
-      render(<IntlProvider locale="en"><FilterControls filterTypes={filterTypes} /></IntlProvider>);
+      render(<IntlProvider locale="en"><FilterControls filterCategories={filterCategories} /></IntlProvider>);
       const filtersButton = screen.getByRole('button', { name: 'Refine' });
       await user.click(filtersButton);
       await waitFor(() => {
@@ -74,7 +74,7 @@ describe('FilterControls', () => {
     it('should have button disabled', async () => {
       const user = userEvent.setup();
       useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
-      render(<IntlProvider locale="en"><FilterControls filterTypes={filterTypes} /></IntlProvider>);
+      render(<IntlProvider locale="en"><FilterControls filterCategories={filterCategories} /></IntlProvider>);
       const filtersButton = screen.getByRole('button', { name: 'Refine' });
       await user.click(filtersButton);
       await waitFor(() => {
@@ -88,7 +88,7 @@ describe('FilterControls', () => {
     it('should have button disabled', () => {
       useInitializeLearnerHome.mockReturnValue({ data: { courses: [] } });
       useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
-      render(<IntlProvider locale="en"><FilterControls filterTypes={filterTypes} /></IntlProvider>);
+      render(<IntlProvider locale="en"><FilterControls filterCategories={filterCategories} /></IntlProvider>);
       const button = screen.getByRole('button', { name: formatMessage(messages.refine) });
       expect(button).toBeInTheDocument();
       expect(button).toBeDisabled();
@@ -97,7 +97,7 @@ describe('FilterControls', () => {
       getConfig.mockReturnValue({ ENABLE_PATHWAY_PILOT_UI: false });
       useInitializeLearnerHome.mockReturnValue({ data: { courses: [], pathway: [1, 2, 3] } });
       useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
-      render(<IntlProvider locale="en"><FilterControls filterTypes={filterTypes} /></IntlProvider>);
+      render(<IntlProvider locale="en"><FilterControls filterCategories={filterCategories} /></IntlProvider>);
       const button = screen.getByRole('button', { name: formatMessage(messages.refine) });
       expect(button).toBeDisabled();
     });
@@ -105,7 +105,7 @@ describe('FilterControls', () => {
       getConfig.mockReturnValue({ ENABLE_PATHWAY_PILOT_UI: true });
       useInitializeLearnerHome.mockReturnValue({ data: { courses: [], pathway: [] } });
       useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
-      render(<IntlProvider locale="en"><FilterControls filterTypes={filterTypes} /></IntlProvider>);
+      render(<IntlProvider locale="en"><FilterControls filterCategories={filterCategories} /></IntlProvider>);
       const button = screen.getByRole('button', { name: formatMessage(messages.refine) });
       expect(button).toBeDisabled();
     });
@@ -113,7 +113,7 @@ describe('FilterControls', () => {
       getConfig.mockReturnValue({ ENABLE_PATHWAY_PILOT_UI: true });
       useInitializeLearnerHome.mockReturnValue({ data: { courses: [], pathway: [1, 2, 3] } });
       useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
-      render(<IntlProvider locale="en"><FilterControls filterTypes={filterTypes} /></IntlProvider>);
+      render(<IntlProvider locale="en"><FilterControls filterCategories={filterCategories} /></IntlProvider>);
       const button = screen.getByRole('button', { name: formatMessage(messages.refine) });
       expect(button).toBeEnabled();
     });
@@ -122,7 +122,7 @@ describe('FilterControls', () => {
     it('should have button enabled', () => {
       useInitializeLearnerHome.mockReturnValue({ data: { courses: [1, 2, 3] } });
       useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
-      render(<IntlProvider locale="en"><FilterControls filterTypes={filterTypes} /></IntlProvider>);
+      render(<IntlProvider locale="en"><FilterControls filterCategories={filterCategories} /></IntlProvider>);
       const button = screen.getByRole('button', { name: formatMessage(messages.refine) });
       expect(button).toBeInTheDocument();
       expect(button).toBeEnabled();
@@ -131,7 +131,7 @@ describe('FilterControls', () => {
       const user = userEvent.setup();
       useInitializeLearnerHome.mockReturnValue({ data: { courses: [1, 2, 3] } });
       useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
-      render(<IntlProvider locale="en"><FilterControls filterTypes={filterTypes} /></IntlProvider>);
+      render(<IntlProvider locale="en"><FilterControls filterCategories={filterCategories} /></IntlProvider>);
       const filtersButton = screen.getByRole('button', { name: 'Refine' });
       await user.click(filtersButton);
       await waitFor(async () => {
@@ -146,17 +146,17 @@ describe('FilterControls', () => {
       const removeFilterMock = jest.fn().mockName('removeFilter');
       useFilters.mockReturnValue({
         filters: [],
-        types: [],
+        categories: [],
         removeFilter: removeFilterMock,
         clearFilters: jest.fn().mockName('clearFilters'),
         setSortBy: jest.fn().mockName('setSortBy'),
         addFilter: addFilterMock,
-        addType: jest.fn().mockName('addType'),
-        removeType: jest.fn().mockName('removeType'),
+        addCategory: jest.fn().mockName('addCategory'),
+        removeCategory: jest.fn().mockName('removeCategory'),
       });
       useInitializeLearnerHome.mockReturnValue({ data: { courses: [1, 2, 3] } });
       useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
-      render(<IntlProvider locale="en"><FilterControls filterTypes={filterTypes} /></IntlProvider>);
+      render(<IntlProvider locale="en"><FilterControls filterCategories={filterCategories} /></IntlProvider>);
       const filtersButton = screen.getByRole('button', { name: 'Refine' });
       await user.click(filtersButton);
       await waitFor(async () => {
@@ -171,17 +171,17 @@ describe('FilterControls', () => {
       const removeFilterMock = jest.fn().mockName('removeFilter');
       useFilters.mockReturnValue({
         filters: [FilterKeys.inProgress],
-        types: [],
+        categories: [],
         removeFilter: removeFilterMock,
         clearFilters: jest.fn().mockName('clearFilters'),
         setSortBy: jest.fn().mockName('setSortBy'),
         addFilter: addFilterMock,
-        addType: jest.fn().mockName('addType'),
-        removeType: jest.fn().mockName('removeType'),
+        addCategory: jest.fn().mockName('addCategory'),
+        removeCategory: jest.fn().mockName('removeCategory'),
       });
       useInitializeLearnerHome.mockReturnValue({ data: { courses: [1, 2, 3] } });
       useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
-      render(<IntlProvider locale="en"><FilterControls filterTypes={filterTypes} /></IntlProvider>);
+      render(<IntlProvider locale="en"><FilterControls filterCategories={filterCategories} /></IntlProvider>);
       const filtersButton = screen.getByRole('button', { name: 'Refine' });
       await user.click(filtersButton);
       await waitFor(async () => {
@@ -190,73 +190,73 @@ describe('FilterControls', () => {
         expect(removeFilterMock).toHaveBeenCalledWith(FilterKeys.inProgress);
       });
     });
-    it('should call addType on type check', async () => {
+    it('should call addCategory on category check', async () => {
       getConfig.mockReturnValue({ ENABLE_PATHWAY_PILOT_UI: true });
       const user = userEvent.setup();
-      const addTypeMock = jest.fn().mockName('addType');
-      const removeTypeMock = jest.fn().mockName('removeType');
+      const addCategoryMock = jest.fn().mockName('addCategory');
+      const removeCategoryMock = jest.fn().mockName('removeCategory');
       useFilters.mockReturnValue({
         filters: [],
-        types: [],
+        categories: [],
         removeFilter: jest.fn().mockName('removeFilter'),
         clearFilters: jest.fn().mockName('clearFilters'),
         setSortBy: jest.fn().mockName('setSortBy'),
         addFilter: jest.fn().mockName('addFilter'),
-        addType: addTypeMock,
-        removeType: removeTypeMock,
+        addCategory: addCategoryMock,
+        removeCategory: removeCategoryMock,
       });
       useInitializeLearnerHome.mockReturnValue({ data: { courses: [1, 2, 3] } });
       useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
-      render(<IntlProvider locale="en"><FilterControls filterTypes={filterTypes} /></IntlProvider>);
+      render(<IntlProvider locale="en"><FilterControls filterCategories={filterCategories} /></IntlProvider>);
       const filtersButton = screen.getByRole('button', { name: 'Refine' });
       await user.click(filtersButton);
       await waitFor(async () => {
-        const typeCheckbox = screen.getByText(filterTypes[0].text);
-        await user.click(typeCheckbox);
-        expect(addTypeMock).toHaveBeenCalledWith(filterTypes[0]);
-        expect(removeTypeMock).not.toHaveBeenCalled();
+        const categoryCheckbox = screen.getByText(filterCategories[0].text);
+        await user.click(categoryCheckbox);
+        expect(addCategoryMock).toHaveBeenCalledWith(filterCategories[0]);
+        expect(removeCategoryMock).not.toHaveBeenCalled();
       });
     });
-    it('should call removeType on type uncheck', async () => {
+    it('should call removeCategory on category uncheck', async () => {
       getConfig.mockReturnValue({ ENABLE_PATHWAY_PILOT_UI: true });
       const user = userEvent.setup();
-      const addTypeMock = jest.fn().mockName('addType');
-      const removeTypeMock = jest.fn().mockName('removeType');
+      const addCategoryMock = jest.fn().mockName('addCategory');
+      const removeCategoryMock = jest.fn().mockName('removeCategory');
       useFilters.mockReturnValue({
         filters: [],
-        types: [filterTypes[0]],
+        categories: [filterCategories[0]],
         removeFilter: jest.fn().mockName('removeFilter'),
         clearFilters: jest.fn().mockName('clearFilters'),
         setSortBy: jest.fn().mockName('setSortBy'),
         addFilter: jest.fn().mockName('addFilter'),
-        addType: addTypeMock,
-        removeType: removeTypeMock,
+        addCategory: addCategoryMock,
+        removeCategory: removeCategoryMock,
       });
       useInitializeLearnerHome.mockReturnValue({ data: { courses: [1, 2, 3] } });
       useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
-      render(<IntlProvider locale="en"><FilterControls filterTypes={filterTypes} /></IntlProvider>);
+      render(<IntlProvider locale="en"><FilterControls filterCategories={filterCategories} /></IntlProvider>);
       const filtersButton = screen.getByRole('button', { name: 'Refine' });
       await user.click(filtersButton);
       await waitFor(async () => {
-        const typeCheckbox = screen.getByText(filterTypes[0].text);
-        await user.click(typeCheckbox);
-        expect(removeTypeMock).toHaveBeenCalledWith(filterTypes[0].id);
-        expect(addTypeMock).not.toHaveBeenCalled();
+        const categoryCheckbox = screen.getByText(filterCategories[0].text);
+        await user.click(categoryCheckbox);
+        expect(removeCategoryMock).toHaveBeenCalledWith(filterCategories[0].id);
+        expect(addCategoryMock).not.toHaveBeenCalled();
       });
     });
-    it('should not render type filters when the pathway pilot UI is disabled', async () => {
+    it('should not render category filters when the pathway pilot UI is disabled', async () => {
       getConfig.mockReturnValue({ ENABLE_PATHWAY_PILOT_UI: false });
       const user = userEvent.setup();
       useInitializeLearnerHome.mockReturnValue({ data: { courses: [1, 2, 3] } });
       useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
-      render(<IntlProvider locale="en"><FilterControls filterTypes={filterTypes} /></IntlProvider>);
+      render(<IntlProvider locale="en"><FilterControls filterCategories={filterCategories} /></IntlProvider>);
       const filtersButton = screen.getByRole('button', { name: 'Refine' });
       await user.click(filtersButton);
       await waitFor(() => {
         const filterForm = screen.getByText(messages.courseStatus.defaultMessage);
         expect(filterForm).toBeInTheDocument();
       });
-      expect(screen.queryByText(filterTypes[0].text)).not.toBeInTheDocument();
+      expect(screen.queryByText(filterCategories[0].text)).not.toBeInTheDocument();
     });
   });
 });

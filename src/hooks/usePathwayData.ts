@@ -7,10 +7,10 @@ export interface PathwayData {
     };
     imageUrl?: string;
     courseCount: number;
-    type?: string;
-    typeText?: string;
-    typeBackgroundColor?: string;
-    typeTextColor?: string;
+    category?: string;
+    categoryLabel?: string;
+    categoryBackgroundColor?: string;
+    categoryTextColor?: string;
   };
   pathwayRun: {
     homeUrl: string;
@@ -41,7 +41,7 @@ export const usePathwayData = (cardId: string): TransformedPathwayData => {
     pathway: {
       content: { displayName: '' },
       courseCount: 0,
-      typeBackgroundColor: '',
+      categoryBackgroundColor: '',
     },
     pathwayRun: {
       homeUrl: '',

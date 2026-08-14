@@ -28,21 +28,21 @@ describe('PathwayHeaderActions', () => {
 
   it('does not render the type badge when the pilot UI is disabled', () => {
     mockGetConfig.mockReturnValue({ ENABLE_PATHWAY_PILOT_UI: false } as unknown as ConfigDocument);
-    mockUsePathwayData.mockReturnValue({ pathway: { typeText: 'Program' } } as unknown as TransformedPathwayData);
+    mockUsePathwayData.mockReturnValue({ pathway: { categoryLabel: 'Program' } } as unknown as TransformedPathwayData);
     renderComponent();
     expect(screen.queryByText('Program')).toBeNull();
   });
 
   it('renders the type badge when the pilot UI is enabled and a type is set', () => {
     mockGetConfig.mockReturnValue({ ENABLE_PATHWAY_PILOT_UI: true } as unknown as ConfigDocument);
-    mockUsePathwayData.mockReturnValue({ pathway: { typeText: 'Program' } } as unknown as TransformedPathwayData);
+    mockUsePathwayData.mockReturnValue({ pathway: { categoryLabel: 'Program' } } as unknown as TransformedPathwayData);
     renderComponent();
     expect(screen.getByText('Program')).toBeInTheDocument();
   });
 
-  it('does not render the badge when typeText is blank', () => {
+  it('does not render the badge when categoryLabel is blank', () => {
     mockGetConfig.mockReturnValue({ ENABLE_PATHWAY_PILOT_UI: true } as unknown as ConfigDocument);
-    mockUsePathwayData.mockReturnValue({ pathway: { typeText: '  ' } } as unknown as TransformedPathwayData);
+    mockUsePathwayData.mockReturnValue({ pathway: { categoryLabel: '  ' } } as unknown as TransformedPathwayData);
     renderComponent();
     expect(screen.queryByText('  ')).toBeNull();
   });

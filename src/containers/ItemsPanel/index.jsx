@@ -20,7 +20,7 @@ import {
 
 import './index.scss';
 import { getConfig } from '@edx/frontend-platform';
-import { COURSE_TYPE } from 'data/context/FiltersProvider';
+import { COURSE_CATEGORY } from 'data/context/FiltersProvider';
 import ItemsListSlot from 'plugin-slots/ItemsListSlot';
 import messages from './messages';
 
@@ -38,10 +38,10 @@ export const ItemsPanel = () => {
   const hasData = hasCourses || (isPathwaysEnabled && hasPathways);
 
   const {
-    filters, sortBy, pageNumber, setPageNumber, types,
+    filters, sortBy, pageNumber, setPageNumber, categories,
   } = useFilters();
-  // If there is a type filter and the "courses" type is not selected, it means all courses are hidden.
-  const hideCourses = types.length > 0 && !types.find(type => type.id === COURSE_TYPE);
+  // If there is a category filter and the "courses" category is not selected, it means all courses are hidden.
+  const hideCourses = categories.length > 0 && !categories.find(category => category.id === COURSE_CATEGORY);
 
   const { visibleList, numPages } = useMemo(() => {
     let transformedCourses = [];
@@ -68,7 +68,7 @@ export const ItemsPanel = () => {
 
       if (hasPathways) {
         const transformedPathways = getTransformedPathwayDataList(data.pathway);
-        const visiblePathways = getVisiblePathways(transformedPathways, filters, types);
+        const visiblePathways = getVisiblePathways(transformedPathways, filters, categories);
         visibleItems.push(...visiblePathways.map(pathway => ({
           cardId: pathway.cardId,
           lastEnrolled: new Date(pathway.enrollment?.lastEnrolled ?? Date.now()),
@@ -91,35 +91,35 @@ export const ItemsPanel = () => {
     filters,
     sortBy,
     pageNumber,
-    types,
+    categories,
     hideCourses,
     hasCourses,
     hasPathways,
     isPathwaysEnabled,
   ]);
 
-  const filterTypes = useMemo(() => {
+  const filterCategories = useMemo(() => {
     if (!isPathwaysEnabled) {
-      // The filter types are disabled
+      // The filter categories are disabled
       return [];
     }
 
-    const availableTypes = [];
+    const availableCategories = [];
     if (hasCourses) {
-      availableTypes.push({
-        id: COURSE_TYPE,
-        text: formatMessage(messages.courseType),
+      availableCategories.push({
+        id: COURSE_CATEGORY,
+        text: formatMessage(messages.courseCategory),
       });
     }
     if (hasPathways) {
       data?.pathway?.forEach((pathway) => {
-        const { type, typeText } = pathway.pathway;
-        if (!availableTypes.some(filterType => filterType.id === type)) {
-          availableTypes.push({ id: type, text: typeText });
+        const { category, categoryLabel } = pathway.pathway;
+        if (!availableCategories.some(filterCategory => filterCategory.id === category)) {
+          availableCategories.push({ id: category, text: categoryLabel });
         }
       });
     }
-    return availableTypes;
+    return availableCategories;
   }, [
     data,
     hasCourses,
@@ -140,7 +140,7 @@ export const ItemsPanel = () => {
     setPageNumber,
     numPages,
     visibleList,
-    showFilters: filters.length > 0 || types.length > 0,
+    showFilters: filters.length > 0 || categories.length > 0,
   };
 
   const title = isPathwaysEnabled ? formatMessage(messages.myLearning) : formatMessage(messages.myCourses);
@@ -157,7 +157,7 @@ export const ItemsPanel = () => {
       <div className="course-list-heading-container">
         <h2 className="course-list-title">{title}</h2>
         <div className="filter-controls-container">
-          <FilterControls filterTypes={filterTypes} />
+          <FilterControls filterCategories={filterCategories} />
         </div>
       </div>
       {listContent}

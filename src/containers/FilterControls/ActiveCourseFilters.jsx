@@ -14,14 +14,14 @@ export const ActiveCourseFilters = () => {
     filters,
     clearFilters,
     removeFilter,
-    types,
-    removeType,
-    clearTypes,
+    categories,
+    removeCategory,
+    clearCategories,
   } = useFilters();
 
   const handleClear = () => {
     clearFilters();
-    clearTypes();
+    clearCategories();
   };
 
   return (
@@ -35,13 +35,13 @@ export const ActiveCourseFilters = () => {
           {formatMessage(messages[filter])}
         </Chip>
       ))}
-      {types.map(type => (
+      {categories.map(category => (
         <Chip
-          key={type.id}
+          key={category.id}
           iconAfter={CloseSmall}
-          onClick={() => removeType(type.id)}
+          onClick={() => removeCategory(category.id)}
         >
-          {type.text}
+          {category.text}
         </Chip>
       ))}
       <Button variant="link" onClick={handleClear}>

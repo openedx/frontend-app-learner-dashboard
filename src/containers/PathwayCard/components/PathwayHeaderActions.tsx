@@ -6,26 +6,26 @@ import { isValidCssColor } from "utils";
 
 export const PathwayHeaderActions = ({ cardId } : { cardId: string }) => {
   const pathwayData = usePathwayData(cardId);
-  const pathwayType = pathwayData.pathway.typeText;
-  const typeBackgroundColor = pathwayData.pathway.typeBackgroundColor
-  const typeTextColor = pathwayData.pathway.typeTextColor;
+  const pathwayCategory = pathwayData.pathway.categoryLabel;
+  const categoryBackgroundColor = pathwayData.pathway.categoryBackgroundColor
+  const categoryTextColor = pathwayData.pathway.categoryTextColor;
 
-  const hasCustomColors = !!typeBackgroundColor
-    && !!typeTextColor
-    && isValidCssColor(typeBackgroundColor)
-    && isValidCssColor(typeTextColor);
+  const hasCustomColors = !!categoryBackgroundColor
+    && !!categoryTextColor
+    && isValidCssColor(categoryBackgroundColor)
+    && isValidCssColor(categoryTextColor);
 
   return (
     <Stack direction="horizontal" gap={2}>
-      {getConfig().ENABLE_PATHWAY_PILOT_UI && pathwayType?.trim() && (
+      {getConfig().ENABLE_PATHWAY_PILOT_UI && pathwayCategory?.trim() && (
         <Badge
           className="pathway-card-badge"
           style={hasCustomColors ? {
-            backgroundColor: typeBackgroundColor,
-            color: typeTextColor,
+            backgroundColor: categoryBackgroundColor,
+            color: categoryTextColor,
           } : undefined}
         >
-          {pathwayType}
+          {pathwayCategory}
         </Badge>
       )}
       <PathwayCardMenu cardId={cardId} />

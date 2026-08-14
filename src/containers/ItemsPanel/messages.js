@@ -11,9 +11,9 @@ const messages = defineMessages({
     defaultMessage: 'My Learning',
     description: 'Course and Pathway list heading',
   },
-  courseType: {
-    id: 'learner-dash.courseListFilters.courseType',
-    description: 'Course Type filter text',
+  courseCategory: {
+    id: 'learner-dash.courseListFilters.courseCategory',
+    description: 'Course Category filter text',
     defaultMessage: 'Courses',
   },
 });

@@ -22,10 +22,10 @@ import messages from './messages';
 
 // @ts-ignore
 import './index.scss';
-import { TypeForm } from './components/TypeForm';
-import { FilterType } from 'data/context/FiltersProvider';
+import { CategoryForm } from './components/CategoryForm';
+import { FilterCategory } from 'data/context/FiltersProvider';
 
-export const FilterControls = ({ filterTypes }: { filterTypes: FilterType[] }) => {
+export const FilterControls = ({ filterCategories }: { filterCategories: FilterCategory[] }) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [targetRef, setTargetRef] = React.useState(null);
   const { formatMessage } = useIntl();
@@ -36,12 +36,12 @@ export const FilterControls = ({ filterTypes }: { filterTypes: FilterType[] }) =
   const {
     filters,
     sortBy,
-    types,
+    categories,
     setSortBy,
     addFilter,
     removeFilter,
-    addType,
-    removeType,
+    addCategory,
+    removeCategory,
   } = useFilters();
 
   const openFiltersOptions = () => {
@@ -57,13 +57,13 @@ export const FilterControls = ({ filterTypes }: { filterTypes: FilterType[] }) =
     setSortBy(event.target.value);
   };
 
-  const handleTypeChange = ({ target: { checked, value } }) => {
-    const type = filterTypes.find(filterType => filterType.id === value);
-    if (type) {
+  const handleCategoryChange = ({ target: { checked, value } }) => {
+    const category = filterCategories.find(filterCategory => filterCategory.id === value);
+    if (category) {
       if (checked) {
-        addType(type);
+        addCategory(category);
       } else {
-        removeType(type.id);
+        removeCategory(category.id);
       }
     }
   };
@@ -103,10 +103,10 @@ export const FilterControls = ({ filterTypes }: { filterTypes: FilterType[] }) =
               <hr />
               {getConfig().ENABLE_PATHWAY_PILOT_UI && (
                 <div className="filter-form-row">
-                  <TypeForm
-                    types={filterTypes}
-                    selectedTypes={types}
-                    handleTypeChange={handleTypeChange}
+                  <CategoryForm
+                    categories={filterCategories}
+                    selectedCategories={categories}
+                    handleCategoryChange={handleCategoryChange}
                   />
                 </div>
               )}
@@ -136,10 +136,10 @@ export const FilterControls = ({ filterTypes }: { filterTypes: FilterType[] }) =
                 {getConfig().ENABLE_PATHWAY_PILOT_UI && (
                   <>
                     <div className="filter-form-col">
-                      <TypeForm
-                        types={filterTypes}
-                        selectedTypes={types}
-                        handleTypeChange={handleTypeChange}
+                      <CategoryForm
+                        categories={filterCategories}
+                        selectedCategories={categories}
+                        handleCategoryChange={handleCategoryChange}
                       />
                     </div>
                     <hr className="h-100 bg-primary-200 mx-3 my-0" />

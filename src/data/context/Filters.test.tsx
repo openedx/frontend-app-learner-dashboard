@@ -18,16 +18,16 @@ describe('FiltersProvider and useFilters', () => {
         expect(result.current.filters).toEqual([]);
         expect(result.current.sortBy).toBe('enrolled');
         expect(result.current.pageNumber).toBe(1);
-        expect(result.current.types).toEqual([]);
+        expect(result.current.categories).toEqual([]);
         expect(typeof result.current.setFilters).toBe('function');
         expect(typeof result.current.addFilter).toBe('function');
         expect(typeof result.current.removeFilter).toBe('function');
         expect(typeof result.current.clearFilters).toBe('function');
         expect(typeof result.current.setSortBy).toBe('function');
         expect(typeof result.current.setPageNumber).toBe('function');
-        expect(typeof result.current.addType).toBe('function');
-        expect(typeof result.current.removeType).toBe('function');
-        expect(typeof result.current.clearTypes).toBe('function');
+        expect(typeof result.current.addCategory).toBe('function');
+        expect(typeof result.current.removeCategory).toBe('function');
+        expect(typeof result.current.clearCategories).toBe('function');
       });
 
       it('should have all expected properties in context', () => {
@@ -39,16 +39,16 @@ describe('FiltersProvider and useFilters', () => {
           'filters',
           'sortBy',
           'pageNumber',
-          'types',
+          'categories',
           'setFilters',
           'addFilter',
           'removeFilter',
           'clearFilters',
           'setSortBy',
           'setPageNumber',
-          'addType',
-          'removeType',
-          'clearTypes',
+          'addCategory',
+          'removeCategory',
+          'clearCategories',
         ];
 
         expectedProperties.forEach(prop => {
@@ -339,150 +339,150 @@ describe('FiltersProvider and useFilters', () => {
     });
   });
 
-  describe('types management', () => {
-    const courseType = { id: 'course', text: 'Course' };
-    const pathwayType = { id: 'pathway', text: 'Pathway' };
+  describe('categories management', () => {
+    const courseCategory = { id: 'course', text: 'Course' };
+    const pathwayCategory = { id: 'pathway', text: 'Pathway' };
 
-    describe('addType', () => {
-      it('should add type to empty types array', () => {
+    describe('addCategory', () => {
+      it('should add category to empty categories array', () => {
         const { result } = renderHook(() => useFilters(), {
           wrapper: createWrapper(),
         });
 
         act(() => {
-          result.current.addType(courseType);
+          result.current.addCategory(courseCategory);
         });
 
-        expect(result.current.types).toEqual([courseType]);
+        expect(result.current.categories).toEqual([courseCategory]);
       });
 
-      it('should add type to existing types', () => {
+      it('should add category to existing categories', () => {
         const { result } = renderHook(() => useFilters(), {
           wrapper: createWrapper(),
         });
 
         act(() => {
-          result.current.addType(courseType);
+          result.current.addCategory(courseCategory);
         });
 
         act(() => {
-          result.current.addType(pathwayType);
+          result.current.addCategory(pathwayCategory);
         });
 
-        expect(result.current.types).toEqual([courseType, pathwayType]);
+        expect(result.current.categories).toEqual([courseCategory, pathwayCategory]);
       });
 
-      it('should add duplicate types (no deduplication)', () => {
+      it('should add duplicate categories (no deduplication)', () => {
         const { result } = renderHook(() => useFilters(), {
           wrapper: createWrapper(),
         });
 
         act(() => {
-          result.current.addType(courseType);
+          result.current.addCategory(courseCategory);
         });
 
         act(() => {
-          result.current.addType(courseType);
+          result.current.addCategory(courseCategory);
         });
 
-        expect(result.current.types).toEqual([courseType, courseType]);
-      });
-    });
-
-    describe('removeType', () => {
-      it('should remove specific type from types array by id', () => {
-        const { result } = renderHook(() => useFilters(), {
-          wrapper: createWrapper(),
-        });
-
-        act(() => {
-          result.current.addType(courseType);
-          result.current.addType(pathwayType);
-        });
-
-        act(() => {
-          result.current.removeType(courseType.id);
-        });
-
-        expect(result.current.types).toEqual([pathwayType]);
-      });
-
-      it('should handle removing non-existent type', () => {
-        const { result } = renderHook(() => useFilters(), {
-          wrapper: createWrapper(),
-        });
-
-        act(() => {
-          result.current.addType(courseType);
-        });
-
-        act(() => {
-          result.current.removeType('nonExistent');
-        });
-
-        expect(result.current.types).toEqual([courseType]);
-      });
-
-      it('should remove type from empty array', () => {
-        const { result } = renderHook(() => useFilters(), {
-          wrapper: createWrapper(),
-        });
-
-        act(() => {
-          result.current.removeType(courseType.id);
-        });
-
-        expect(result.current.types).toEqual([]);
+        expect(result.current.categories).toEqual([courseCategory, courseCategory]);
       });
     });
 
-    describe('clearTypes', () => {
-      it('should clear all types', () => {
+    describe('removeCategory', () => {
+      it('should remove specific category from categories array by id', () => {
         const { result } = renderHook(() => useFilters(), {
           wrapper: createWrapper(),
         });
 
         act(() => {
-          result.current.addType(courseType);
-          result.current.addType(pathwayType);
+          result.current.addCategory(courseCategory);
+          result.current.addCategory(pathwayCategory);
         });
 
         act(() => {
-          result.current.clearTypes();
+          result.current.removeCategory(courseCategory.id);
         });
 
-        expect(result.current.types).toEqual([]);
+        expect(result.current.categories).toEqual([pathwayCategory]);
       });
 
-      it('should clear types when already empty', () => {
+      it('should handle removing non-existent category', () => {
         const { result } = renderHook(() => useFilters(), {
           wrapper: createWrapper(),
         });
 
         act(() => {
-          result.current.clearTypes();
+          result.current.addCategory(courseCategory);
         });
 
-        expect(result.current.types).toEqual([]);
+        act(() => {
+          result.current.removeCategory('nonExistent');
+        });
+
+        expect(result.current.categories).toEqual([courseCategory]);
       });
 
-      it('should not affect filters, sortBy and pageNumber when clearing types', () => {
+      it('should remove category from empty array', () => {
+        const { result } = renderHook(() => useFilters(), {
+          wrapper: createWrapper(),
+        });
+
+        act(() => {
+          result.current.removeCategory(courseCategory.id);
+        });
+
+        expect(result.current.categories).toEqual([]);
+      });
+    });
+
+    describe('clearCategories', () => {
+      it('should clear all categories', () => {
+        const { result } = renderHook(() => useFilters(), {
+          wrapper: createWrapper(),
+        });
+
+        act(() => {
+          result.current.addCategory(courseCategory);
+          result.current.addCategory(pathwayCategory);
+        });
+
+        act(() => {
+          result.current.clearCategories();
+        });
+
+        expect(result.current.categories).toEqual([]);
+      });
+
+      it('should clear categories when already empty', () => {
+        const { result } = renderHook(() => useFilters(), {
+          wrapper: createWrapper(),
+        });
+
+        act(() => {
+          result.current.clearCategories();
+        });
+
+        expect(result.current.categories).toEqual([]);
+      });
+
+      it('should not affect filters, sortBy and pageNumber when clearing categories', () => {
         const { result } = renderHook(() => useFilters(), {
           wrapper: createWrapper(),
         });
 
         act(() => {
           result.current.addFilter('inProgress');
-          result.current.addType(courseType);
+          result.current.addCategory(courseCategory);
           result.current.setSortBy('title');
           result.current.setPageNumber(3);
         });
 
         act(() => {
-          result.current.clearTypes();
+          result.current.clearCategories();
         });
 
-        expect(result.current.types).toEqual([]);
+        expect(result.current.categories).toEqual([]);
         expect(result.current.filters).toEqual(['inProgress']);
         expect(result.current.sortBy).toBe('title');
         expect(result.current.pageNumber).toBe(3);
@@ -667,49 +667,49 @@ describe('FiltersProvider and useFilters', () => {
       expect(result.current.filters).toEqual([]);
     });
 
-    it('should handle ADD_TYPE action correctly', () => {
+    it('should handle ADD_CATEGORY action correctly', () => {
       const { result } = renderHook(() => useFilters(), {
         wrapper: createWrapper(),
       });
 
       act(() => {
-        result.current.addType({ id: 'course', text: 'Course' });
+        result.current.addCategory({ id: 'course', text: 'Course' });
       });
 
-      expect(result.current.types).toEqual([{ id: 'course', text: 'Course' }]);
+      expect(result.current.categories).toEqual([{ id: 'course', text: 'Course' }]);
     });
 
-    it('should handle REMOVE_TYPE action correctly', () => {
+    it('should handle REMOVE_CATEGORY action correctly', () => {
       const { result } = renderHook(() => useFilters(), {
         wrapper: createWrapper(),
       });
 
       act(() => {
-        result.current.addType({ id: 'course', text: 'Course' });
-        result.current.addType({ id: 'pathway', text: 'Pathway' });
+        result.current.addCategory({ id: 'course', text: 'Course' });
+        result.current.addCategory({ id: 'pathway', text: 'Pathway' });
       });
 
       act(() => {
-        result.current.removeType('course');
+        result.current.removeCategory('course');
       });
 
-      expect(result.current.types).toEqual([{ id: 'pathway', text: 'Pathway' }]);
+      expect(result.current.categories).toEqual([{ id: 'pathway', text: 'Pathway' }]);
     });
 
-    it('should handle CLEAR_TYPES action correctly', () => {
+    it('should handle CLEAR_CATEGORY action correctly', () => {
       const { result } = renderHook(() => useFilters(), {
         wrapper: createWrapper(),
       });
 
       act(() => {
-        result.current.addType({ id: 'course', text: 'Course' });
+        result.current.addCategory({ id: 'course', text: 'Course' });
       });
 
       act(() => {
-        result.current.clearTypes();
+        result.current.clearCategories();
       });
 
-      expect(result.current.types).toEqual([]);
+      expect(result.current.categories).toEqual([]);
     });
 
     it('should handle SET_SORT_BY action correctly', () => {
@@ -887,9 +887,9 @@ describe('FiltersProvider and useFilters', () => {
         clearFilters: result.current.clearFilters,
         setSortBy: result.current.setSortBy,
         setPageNumber: result.current.setPageNumber,
-        addType: result.current.addType,
-        removeType: result.current.removeType,
-        clearTypes: result.current.clearTypes,
+        addCategory: result.current.addCategory,
+        removeCategory: result.current.removeCategory,
+        clearCategories: result.current.clearCategories,
       };
       rerender();
 
@@ -899,9 +899,9 @@ describe('FiltersProvider and useFilters', () => {
       expect(result.current.clearFilters).toBe(initialFunctions.clearFilters);
       expect(result.current.setSortBy).toBe(initialFunctions.setSortBy);
       expect(result.current.setPageNumber).toBe(initialFunctions.setPageNumber);
-      expect(result.current.addType).toBe(initialFunctions.addType);
-      expect(result.current.removeType).toBe(initialFunctions.removeType);
-      expect(result.current.clearTypes).toBe(initialFunctions.clearTypes);
+      expect(result.current.addCategory).toBe(initialFunctions.addCategory);
+      expect(result.current.removeCategory).toBe(initialFunctions.removeCategory);
+      expect(result.current.clearCategories).toBe(initialFunctions.clearCategories);
     });
   });
 
@@ -919,9 +919,9 @@ describe('FiltersProvider and useFilters', () => {
       expect(result.current.clearFilters).toBe(firstContextValue.clearFilters);
       expect(result.current.setSortBy).toBe(firstContextValue.setSortBy);
       expect(result.current.setPageNumber).toBe(firstContextValue.setPageNumber);
-      expect(result.current.addType).toBe(firstContextValue.addType);
-      expect(result.current.removeType).toBe(firstContextValue.removeType);
-      expect(result.current.clearTypes).toBe(firstContextValue.clearTypes);
+      expect(result.current.addCategory).toBe(firstContextValue.addCategory);
+      expect(result.current.removeCategory).toBe(firstContextValue.removeCategory);
+      expect(result.current.clearCategories).toBe(firstContextValue.clearCategories);
     });
 
     it('should update memoized value when state changes', () => {
@@ -938,7 +938,7 @@ describe('FiltersProvider and useFilters', () => {
       expect(result.current.filters).toContain('newFilter');
     });
 
-    it('should update memoized value when types change', () => {
+    it('should update memoized value when categories change', () => {
       const { result } = renderHook(() => useFilters(), {
         wrapper: createWrapper(),
       });
@@ -946,10 +946,10 @@ describe('FiltersProvider and useFilters', () => {
       const initialValue = result.current;
 
       act(() => {
-        result.current.addType({ id: 'course', text: 'Course' });
+        result.current.addCategory({ id: 'course', text: 'Course' });
       });
-      expect(result.current.types).not.toEqual(initialValue.types);
-      expect(result.current.types).toContainEqual({ id: 'course', text: 'Course' });
+      expect(result.current.categories).not.toEqual(initialValue.categories);
+      expect(result.current.categories).toContainEqual({ id: 'course', text: 'Course' });
     });
   });
 

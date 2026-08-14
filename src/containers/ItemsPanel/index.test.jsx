@@ -24,7 +24,7 @@ jest.mock('data/hooks', () => ({
 jest.mock('data/context', () => ({
   useFilters: jest.fn(() => ({
     filters: [],
-    types: [],
+    categories: [],
     sortBy: 'enrolled',
     pageNumber: 1,
     setPageNumber: jest.fn(),
@@ -96,20 +96,20 @@ describe('ItemsPanel', () => {
       const transformedPathways = [{
         cardId: 'pathway-1',
         enrollment: { lastEnrolled: '2024-01-01' },
-        pathway: { content: { displayName: 'Pathway 1' }, type: 'masters', typeText: 'Masters' },
+        pathway: { content: { displayName: 'Pathway 1' }, category: 'masters', categoryLabel: 'Masters' },
       }];
       jest.spyOn(dataTransformers, 'getTransformedPathwayDataList').mockReturnValue(transformedPathways);
       jest.spyOn(dataTransformers, 'getVisiblePathways').mockReturnValue(transformedPathways);
 
       useInitializeLearnerHome.mockReturnValue({
-        data: { courses: [], pathway: [{ pathway: { type: 'masters', typeText: 'Masters' } }] },
+        data: { courses: [], pathway: [{ pathway: { category: 'masters', categoryLabel: 'Masters' } }] },
       });
 
       render(<IntlProvider locale="en"><ItemsPanel /></IntlProvider>);
 
       expect(screen.getByText('PathwayCard')).toBeInTheDocument();
       expect(dataTransformers.getTransformedPathwayDataList).toHaveBeenCalledWith(
-        [{ pathway: { type: 'masters', typeText: 'Masters' } }],
+        [{ pathway: { category: 'masters', categoryLabel: 'Masters' } }],
       );
       expect(dataTransformers.getVisiblePathways).toHaveBeenCalled();
     });
@@ -119,7 +119,7 @@ describe('ItemsPanel', () => {
       const transformedPathways = [{
         cardId: 'pathway-1',
         enrollment: { lastEnrolled: '2024-01-01' },
-        pathway: { content: { displayName: 'Pathway 1' }, type: 'masters', typeText: 'Masters' },
+        pathway: { content: { displayName: 'Pathway 1' }, category: 'masters', categoryLabel: 'Masters' },
       }];
       jest.spyOn(dataTransformers, 'getTransformedPathwayDataList').mockReturnValue(transformedPathways);
       jest.spyOn(dataTransformers, 'getVisiblePathways').mockReturnValue(transformedPathways);
@@ -130,7 +130,7 @@ describe('ItemsPanel', () => {
             course: { courseName: 'Foo' },
             enrollment: { isEnrolled: true, hasStarted: true, lastEnrolled: '2024-01-01' },
           }],
-          pathway: [{ pathway: { type: 'masters', typeText: 'Masters' } }],
+          pathway: [{ pathway: { category: 'masters', categoryLabel: 'Masters' } }],
         },
       });
 
@@ -147,7 +147,7 @@ describe('ItemsPanel', () => {
       jest.spyOn(dataTransformers, 'getTransformedPathwayDataList');
 
       useInitializeLearnerHome.mockReturnValue({
-        data: { courses: [], pathway: [{ pathway: { type: 'masters', typeText: 'Masters' } }] },
+        data: { courses: [], pathway: [{ pathway: { category: 'masters', categoryLabel: 'Masters' } }] },
       });
 
       render(<IntlProvider locale="en"><ItemsPanel /></IntlProvider>);
@@ -156,7 +156,7 @@ describe('ItemsPanel', () => {
       expect(dataTransformers.getTransformedPathwayDataList).not.toHaveBeenCalled();
     });
 
-    it('derives unique filter types from the raw pathway list', () => {
+    it('derives unique filter categories from the raw pathway list', () => {
       FilterControls.mockClear();
       getConfig.mockReturnValue({ ENABLE_PATHWAY_PILOT_UI: true });
       jest.spyOn(dataTransformers, 'getTransformedPathwayDataList').mockReturnValue([]);
@@ -169,18 +169,18 @@ describe('ItemsPanel', () => {
             enrollment: { isEnrolled: true, hasStarted: true, lastEnrolled: '2024-01-01' },
           }],
           pathway: [
-            { pathway: { type: 'masters', typeText: 'Masters' } },
-            { pathway: { type: 'masters', typeText: 'Masters' } },
-            { pathway: { type: 'xseries', typeText: 'XSeries' } },
+            { pathway: { category: 'masters', categoryLabel: 'Masters' } },
+            { pathway: { category: 'masters', categoryLabel: 'Masters' } },
+            { pathway: { category: 'xseries', categoryLabel: 'XSeries' } },
           ],
         },
       });
 
       render(<IntlProvider locale="en"><ItemsPanel /></IntlProvider>);
 
-      const { filterTypes } = FilterControls.mock.calls[0][0];
-      expect(filterTypes).toEqual([
-        { id: 'Course', text: messages.courseType.defaultMessage },
+      const { filterCategories } = FilterControls.mock.calls[0][0];
+      expect(filterCategories).toEqual([
+        { id: 'Course', text: messages.courseCategory.defaultMessage },
         { id: 'masters', text: 'Masters' },
         { id: 'xseries', text: 'XSeries' },
       ]);
@@ -200,7 +200,7 @@ describe('ItemsPanel', () => {
     it('clamps page number to 1 when current page exceeds total pages', () => {
       useFilters.mockReturnValue({
         filters: [],
-        types: [],
+        categories: [],
         sortBy: 'enrolled',
         pageNumber: 5, // User is on page 5
         setPageNumber: mockSetPageNumber,
@@ -220,7 +220,7 @@ describe('ItemsPanel', () => {
     it('does not clamp page number when current page is valid', () => {
       useFilters.mockReturnValue({
         filters: [],
-        types: [],
+        categories: [],
         sortBy: 'enrolled',
         pageNumber: 2,
         setPageNumber: mockSetPageNumber,
@@ -240,7 +240,7 @@ describe('ItemsPanel', () => {
     it('does not clamp when numPages is 0', () => {
       useFilters.mockReturnValue({
         filters: [],
-        types: [],
+        categories: [],
         sortBy: 'enrolled',
         pageNumber: 2,
         setPageNumber: mockSetPageNumber,
@@ -260,7 +260,7 @@ describe('ItemsPanel', () => {
     it('handles edge case when pageNumber equals numPages', () => {
       useFilters.mockReturnValue({
         filters: [],
-        types: [],
+        categories: [],
         sortBy: 'enrolled',
         pageNumber: 2,
         setPageNumber: mockSetPageNumber,
