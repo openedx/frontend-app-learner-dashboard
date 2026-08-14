@@ -5,8 +5,8 @@ import { ItemsList, itemsListDataShape } from 'containers/ItemsPanel/ItemsList';
 
 export const ItemsListSlot = ({ itemsListData }) => (
   <PluginSlot
-    id="org.openedx.frontend.learner_dashboard.item_list.v1"
-    idAliases={['item_list_slot']}
+    id="org.openedx.frontend.learner_dashboard.items_list.v1"
+    idAliases={['items_list_slot']}
     pluginProps={{ itemsListData }}
   >
     <ItemsList itemsListData={itemsListData} />
@@ -14,7 +14,7 @@ export const ItemsListSlot = ({ itemsListData }) => (
 );
 
 ItemsListSlot.propTypes = {
-  courseListData: itemsListDataShape,
+  itemsListData: itemsListDataShape,
 };
 
 export default ItemsListSlot;
