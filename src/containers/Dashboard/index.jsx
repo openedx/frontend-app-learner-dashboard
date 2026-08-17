@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 import { useSelectSessionModal } from 'data/context';
 import { useInitializeLearnerHome } from 'data/hooks';
 import SelectSessionModal from 'containers/SelectSessionModal';
-import CoursesPanel from 'containers/CoursesPanel';
+import ItemsPanel from 'containers/ItemsPanel';
 import DashboardModalSlot from 'plugin-slots/DashboardModalSlot';
 
 import LoadingView from './LoadingView';
@@ -33,7 +33,7 @@ export const Dashboard = () => {
           ? (<LoadingView />)
           : (
             <DashboardLayout>
-              <CoursesPanel />
+              <ItemsPanel />
             </DashboardLayout>
           )}
       </div>

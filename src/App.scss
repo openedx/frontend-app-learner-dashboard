@@ -19,6 +19,11 @@ $input-focus-box-shadow: var(--pgn-elevation-form-input-base); // hack to get up
   color: black;
 }
 
+:root {
+  --learner-dash-course-badge-background-color: #DBD0FE;
+  --learner-dash-course-badge-color: #411E65;
+}
+
 #root {
   // Removing a odd 1.5 scaling on checkboxes.:
   input[type=checkbox] {

@@ -37,7 +37,7 @@ jest.mock('tracking', () => ({
 
 jest.mock('../hooks', () => jest.fn(() => ({ disableResumeCourse: false })));
 
-jest.mock('./ActionButton/hooks', () => jest.fn(() => false));
+jest.mock('containers/DashboardCard/ActionButton/hooks', () => jest.fn(() => false));
 
 useCourseData.mockReturnValue({
   enrollment: { mode: 'executive-education' },

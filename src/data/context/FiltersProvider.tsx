@@ -3,18 +3,28 @@ import React, {
   useCallback,
 } from 'react';
 
+export const COURSE_CATEGORY = 'Course';
 type SortOption = 'enrolled' | 'title';
+
+export interface FilterCategory {
+  id: string;
+  text: string;
+}
 
 interface FiltersContextType {
   filters: string[];
   sortBy: SortOption;
   pageNumber: number;
+  categories: FilterCategory[];
   setFilters: (newFilters: string[]) => void;
   addFilter: (filter: string) => void;
   removeFilter: (filter: string) => void;
   clearFilters: () => void;
   setSortBy: (sortBy: SortOption) => void;
   setPageNumber: (pageNumber: number) => void;
+  addCategory: (category: FilterCategory) => void;
+  removeCategory: (category: string) => void;
+  clearCategories: () => void;
 }
 
 const FiltersContext = createContext<FiltersContextType | null>(null);
@@ -23,12 +33,14 @@ interface FiltersState {
   filters: string[];
   sortBy: SortOption;
   pageNumber: number;
+  categories: FilterCategory[];
 }
 
 const initialState: FiltersState = {
   filters: [],
   sortBy: 'enrolled',
   pageNumber: 1,
+  categories: [],
 };
 
 type FiltersAction =
@@ -37,7 +49,10 @@ type FiltersAction =
   | { type: 'REMOVE_FILTER'; payload: string }
   | { type: 'CLEAR_FILTERS' }
   | { type: 'SET_SORT_BY'; payload: SortOption }
-  | { type: 'SET_PAGE_NUMBER'; payload: number };
+  | { type: 'SET_PAGE_NUMBER'; payload: number }
+  | { type: 'ADD_CATEGORY'; payload: FilterCategory }
+  | { type: 'REMOVE_CATEGORY'; payload: string }
+  | { type: 'CLEAR_CATEGORIES'};
 
 const filtersReducer = (state: FiltersState, action: FiltersAction): FiltersState => {
   switch (action.type) {
@@ -53,6 +68,12 @@ const filtersReducer = (state: FiltersState, action: FiltersAction): FiltersStat
       return { ...state, sortBy: action.payload };
     case 'SET_PAGE_NUMBER':
       return { ...state, pageNumber: action.payload };
+    case 'ADD_CATEGORY':
+      return { ...state, categories: [...state.categories, action.payload] };
+    case 'REMOVE_CATEGORY':
+      return { ...state, categories: state.categories.filter(item => item.id !== action.payload) };
+    case 'CLEAR_CATEGORIES':
+      return { ...state, categories: [] };
     /* istanbul ignore next */
     default:
       return state;
@@ -86,21 +107,38 @@ export const FiltersProvider = ({ children }: { children: React.ReactNode }) => 
     dispatch({ type: 'SET_PAGE_NUMBER', payload: pageNumber });
   }, []);
 
+  const addCategory = useCallback((category: FilterCategory) => {
+    dispatch({ type: 'ADD_CATEGORY', payload: category });
+  }, []);
+
+  const removeCategory = useCallback((category: string) => {
+    dispatch({ type: 'REMOVE_CATEGORY', payload: category});
+  }, []);
+
+  const clearCategories = useCallback(() => {
+    dispatch({ type: 'CLEAR_CATEGORIES' });
+  }, []);
+
   const contextValue = useMemo(
     () => ({
       filters: state.filters,
       sortBy: state.sortBy,
       pageNumber: state.pageNumber,
+      categories: state.categories,
       setFilters,
       addFilter,
       removeFilter,
       clearFilters,
       setSortBy,
       setPageNumber,
+      addCategory,
+      removeCategory,
+      clearCategories,
     }),
     [
       state.filters,
       state.sortBy,
+      state.categories,
       state.pageNumber,
       setFilters,
       addFilter,
@@ -108,6 +146,9 @@ export const FiltersProvider = ({ children }: { children: React.ReactNode }) => 
       clearFilters,
       setSortBy,
       setPageNumber,
+      addCategory,
+      removeCategory,
+      clearCategories,
     ],
   );
 

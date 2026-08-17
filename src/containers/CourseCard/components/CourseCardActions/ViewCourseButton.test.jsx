@@ -24,7 +24,7 @@ jest.mock('tracking', () => ({
 
 jest.mock('../hooks', () => jest.fn(() => ({ disableViewCourse: false })));
 
-jest.mock('./ActionButton/hooks', () => jest.fn(() => false));
+jest.mock('containers/DashboardCard/ActionButton/hooks', () => jest.fn(() => false));
 
 const defaultProps = { cardId: 'cardId' };
 const homeUrl = 'homeUrl';
