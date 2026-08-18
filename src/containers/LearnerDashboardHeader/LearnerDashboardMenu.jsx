@@ -10,6 +10,12 @@ import { getConfig } from '@edx/frontend-platform';
 
 import urls from 'data/services/lms/urls';
 
+import {
+  getLinkPath,
+  isSearchCatalogLink,
+  normalizePath,
+} from '@edx/frontend-component-header/navUtils';
+
 import messages from './messages';
 
 const ICON_MAP = {
@@ -56,15 +62,15 @@ const getLearnerHeaderMenu = (
   const searchCatalogUrl = getConfig().SEARCH_CATALOG_URL;
   const configNavLinks = getConfig().HEADER_NAV_LINKS;
 
-  // /dashboard redirects into this MFE, so mark it active by APP_ID.
+  // /dashboard redirects into learner-dashboard MFE; search catalog URL into search MFE.
   const isLinkActive = (link) => {
     if (link.url === '/dashboard' || link.url.endsWith('/dashboard')) {
       return getConfig().APP_ID === 'learner-dashboard';
     }
-    const linkPath = link.url.startsWith('http')
-      ? new URL(link.url).pathname
-      : link.url;
-    return window.location.pathname === linkPath;
+    if (isSearchCatalogLink(link.url, searchCatalogUrl)) {
+      return getConfig().APP_ID === 'search';
+    }
+    return normalizePath(window.location.pathname) === normalizePath(getLinkPath(link.url));
   };
 
   const mainMenu = configNavLinks
@@ -84,29 +90,37 @@ const getLearnerHeaderMenu = (
         ),
       };
     })
-    : [
-      {
-        type: 'item',
-        href: '/',
-        content: formatMessage(messages.course),
-        isActive: true,
-        onClick: (e) => e.preventDefault(),
-      },
-      ...(getConfig().ENABLE_PROGRAMS ? [{
-        type: 'item',
-        href: `${urls.programsUrl()}`,
-        content: formatMessage(messages.program),
-      }] : []),
-      ...(!getConfig().NON_BROWSABLE_COURSES ? [{
-        type: 'item',
-        href: `${urls.baseAppUrl(courseSearchUrl)}`,
-        content: formatMessage(messages.discoverNew),
-        onClick: (e) => {
-          exploreCoursesClick(e);
+    : (() => {
+      const coursesActive = getConfig().APP_ID === 'learner-dashboard';
+      const discoverActive = getConfig().APP_ID === 'search';
+      return [
+        {
+          type: 'item',
+          href: '/',
+          content: formatMessage(messages.course),
+          isActive: coursesActive,
+          onClick: coursesActive ? (e) => e.preventDefault() : undefined,
         },
-      }]
-        : []),
-    ];
+        ...(getConfig().ENABLE_PROGRAMS ? [{
+          type: 'item',
+          href: `${urls.programsUrl()}`,
+          content: formatMessage(messages.program),
+        }] : []),
+        ...(!getConfig().NON_BROWSABLE_COURSES ? [{
+          type: 'item',
+          href: `${urls.baseAppUrl(courseSearchUrl)}`,
+          content: formatMessage(messages.discoverNew),
+          isActive: discoverActive,
+          onClick: (e) => {
+            if (discoverActive) {
+              e.preventDefault();
+              return;
+            }
+            exploreCoursesClick(e);
+          },
+        }] : []),
+      ];
+    })();
 
   const searchItem = searchCatalogUrl ? [{
     type: 'item',
