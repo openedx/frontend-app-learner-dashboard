@@ -3,7 +3,7 @@ name: Node CI
 on:
   push:
     branches:
-    - master
+    - legacy-mfe
   pull_request:
     branches:
     - '**'
