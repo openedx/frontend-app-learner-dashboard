@@ -1,7 +1,8 @@
 {
   "branches": [
-    { "name": "release/frontend-base", "channel": "latest" },
-    { "name": "frontend-base", "prerelease": "alpha", "channel": "alpha" }
+    "+([0-9])?(.{+([0-9]),x}).x",
+    { "name": "stable", "channel": "latest" },
+    { "name": "master", "prerelease": "alpha", "channel": "alpha" }
   ],
   "tagFormat": "v${version}",
   "plugins": [
