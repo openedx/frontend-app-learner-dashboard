@@ -1,61 +1,263 @@
-|license-badge| |status-badge| |ci-badge| |codecov-badge|
-
-.. |license-badge| image:: https://img.shields.io/github/license/openedx/frontend-app-learner-dashboard.svg
-    :target: https://github.com/openedx/frontend-app-learner-dashboard/blob/master/LICENSE
-    :alt: License
-.. |status-badge| image:: https://img.shields.io/badge/Status-Maintained-brightgreen
-    :alt: Maintained
-.. |ci-badge| image:: https://github.com/openedx/frontend-app-learner-dashboard/actions/workflows/ci.yml/badge.svg
-    :target: https://github.com/openedx/frontend-app-learner-dashboard/actions/workflows/ci.yml
-    :alt: Continuous Integration
-.. |codecov-badge| image:: https://codecov.io/github/openedx/frontend-app-learner-dashboard/coverage.svg?branch=master
-    :target: https://app.codecov.io/github/openedx/frontend-app-learner-dashboard?branch=master
-    :alt: Codecov
-
+##############################
 frontend-app-learner-dashboard
-==============================
+##############################
 
-The Learner Home app is a microfrontend (MFE) course listing experience for the Open edX Learning Management System
-(LMS).  This experience was designed to provide a clean and functional interface to allow learners to view all of their
-open enrollments, as well as take relevant actions on those enrollments.  It also serves as host to a number of exposed
-"widget" containers to provide upsell and discovery widgets as sidebar components.
+|license-badge| |status-badge| |ci-badge| |codecov-badge| |semantic-release|
 
-Quickstart
-----------
+The Learner Dashboard is a `frontend-base`_ application: a library that plugs
+into the Open edX frontend shell, rather than a standalone micro-frontend
+bundled with its own webpack build.
 
-To start the MFE and enable the feature in LMS:
+.. _frontend-base: https://github.com/openedx/frontend-base
 
-1. Start the MFE with ``npm run start``. Take a note of the path/port (defaults to ``http://localhost:1996``).
+********
+Purpose
+********
 
-From there, simply load the configured address/port.  You should be prompted to log into your LMS if you are not
-already, and then redirected to your home page.
+This app is the course listing experience for the Open edX Learning Management
+System.  It gives learners a single place to see all of their open enrollments
+and act on them: resume a course, change a session, manage email settings,
+unenroll, view related programs, and pursue credit or certificates.
 
-Widgets
--------
-This MFE can be customized with widgets.  The parts of this MFE that can be customized in that manner are documented
-`here </src/slots>`_.
+It also hosts a sidebar of widget slots, which operators use for upsell and
+discovery components.
 
-License
--------
+*********************
+Branches and Releases
+*********************
 
-The code in this repository is licensed under the AGPLv3 unless otherwise noted.
+This app is published to NPM by ``semantic-release``, and its branches follow
+`OEP-10 ADR 0002`_:
 
-Please see the `license`_ for more info.
+``master``
+  Unstable.  Every merge publishes a prerelease on the ``alpha`` dist-tag.
+  Breaking changes land here with no DEPR process and no warning, so it is not
+  supported in production.  All changes, including bug fixes, should target this
+  branch first.
 
-.. _license: https://github.com/openedx/frontend-app-learner-dashboard/blob/master/LICENSE
+``stable``
+  Carries the newest stable major and owns the ``latest`` dist-tag.  Changes
+  arrive here as backports from ``master``, and no breaking change lands after
+  publication.
 
+``n.x`` and ``n.m.x``
+  Maintenance branches for majors and minors that ``stable`` has moved past.
+  Each owns the dist-tag matching its own name, so consumers select a maintained
+  line by semver range, e.g. ``"1.x"``.
+
+``stable`` is cut, and ``1.0.0`` is the current stable release.  Both
+``.releaserc`` and the ``Release CI`` workflow know the whole layout, including
+the maintenance branch patterns, so a new line starts publishing as soon as it
+is pushed.
+
+This repository is no longer branched or tagged for Open edX releases in its own
+right.  It participates by published version instead, per `OEP-10 ADR 0003`_.
+
+The micro-frontend this app replaces goes on living on `legacy-mfe`_, which is
+where any further ``release/RELEASENAME`` branches for it are cut, for as long as
+a supported release still ships it.  Teak, Ulmo and Verawood all do.
+
+.. _OEP-10 ADR 0002: https://docs.openedx.org/projects/openedx-proposals/en/latest/processes/oep-0010/decisions/0002-frontend-stable-branches.html
+.. _OEP-10 ADR 0003: https://docs.openedx.org/projects/openedx-proposals/en/latest/processes/oep-0010/decisions/0003-frontend-release-strategy.html
+.. _legacy-mfe: https://github.com/openedx/frontend-app-learner-dashboard/tree/legacy-mfe
+
+***************
+Getting Started
+***************
+
+Prerequisites
+=============
+
+A running Open edX instance is needed to serve this app's backend APIs.
+`Tutor`_ in development mode is the usual choice, and ``site.config.dev.tsx``
+already points at its default hostnames.
+
+Unlike a micro-frontend, this app is neither built nor served by ``tutor-mfe``.
+The dev server below runs on the host.  Note that ``tutor-mfe`` v22 and later do
+ship this app as a frontend-base application for *deployment*, disabled by
+default; see `Frontend apps`_ in its README to enable it.
+
+.. _Tutor: https://github.com/overhangio/tutor
+.. _Frontend apps: https://github.com/overhangio/tutor-mfe#frontend-apps
+
+Cloning and Startup
+===================
+
+1. Clone the repo:
+
+   ``git clone https://github.com/openedx/frontend-app-learner-dashboard.git``
+
+2. Use the version of Node specified in the ``.nvmrc`` file.
+
+   Using other major versions of Node *may* work, but is unsupported.  This
+   repository includes an ``.nvmrc`` file to help set the correct Node version
+   via `nvm <https://github.com/nvm-sh/nvm>`_.
+
+3. Install npm dependencies:
+
+   ``cd frontend-app-learner-dashboard && npm install``
+
+4. Start the dev server:
+
+   ``npm run dev``
+
+The dev server defaults to ``PORT=1996 PUBLIC_PATH=/learner-dashboard`` (set in
+the ``dev`` script in ``package.json``) and is available at
+`http://apps.local.openedx.io:1996/learner-dashboard <http://apps.local.openedx.io:1996/learner-dashboard>`_.
+
+Configuration used by the dev server is defined in ``site.config.dev.tsx`` at
+the repo root.
+
+Local Development Against ``frontend-base``
+===========================================
+
+To develop this app and a local checkout of ``frontend-base`` in tandem, use the
+built-in npm workspace support:
+
+.. code-block:: sh
+
+    mkdir -p packages/frontend-base
+    sudo mount --bind /path/to/frontend-base packages/frontend-base
+    npm install
+    npm run dev:packages
+
+Bind mounts are used instead of symlinks because Node resolves symlinks to their
+real paths, which breaks hoisted dependency resolution.  When you are done,
+unmount with ``sudo umount packages/frontend-base``.
+
+Configuration
+=============
+
+This app is no longer configured by build-time environment variables.
+``getAppConfig`` resolves three sources, in order of increasing precedence: the
+app's bundled defaults, the site's ``commonAppConfig``, and the app's ``config``.
+The first is the app author's, at build time; the other two are the operator's,
+the second applying to every app on the site and the third to this app alone.  In
+edx-platform they arrive as ``MFE_CONFIG`` and
+``MFE_CONFIG_OVERRIDES['learner-dashboard']`` respectively.
+
+The full list of keys and their defaults is the ``config`` block in
+``src/app.ts``:
+
+.. list-table::
+   :widths: 30 50 20
+   :header-rows: 1
+
+   * - Name
+     - Description / Usage
+     - Example
+
+   * - ``LEARNING_BASE_URL``
+     - Base URL of the Learning MFE, used to build course home and courseware
+       links from the dashboard's cards.
+     - ``http://apps.local.openedx.io:2000``
+
+   * - ``ENABLE_PROGRAMS``
+     - Shows the Programs link in the header's primary navigation, pointing at
+       the LMS's ``/dashboard/programs``.  The related-programs badges and
+       banners on course cards are driven by course data and are not affected by
+       this.
+     - ``false``
+
+   * - ``ECOMMERCE_BASE_URL``
+     - Base URL of the ecommerce service.  Used to build the credit checkout
+       link, as ``ECOMMERCE_BASE_URL/credit/checkout/COURSE_ID/``.
+     - ``''``
+
+   * - ``CREDIT_PURCHASE_URL``
+     - Overrides the credit checkout link with ``CREDIT_PURCHASE_URL/COURSE_ID/``,
+       for deployments whose credit purchase flow does not live behind
+       ``ECOMMERCE_BASE_URL``.  It has no bundled default; set it to take
+       precedence.
+     - ``''``
+
+   * - ``ORDER_HISTORY_URL``
+     - Destination of the order history link in the header menu.  The link is
+       hidden when this is empty.
+     - ``''``
+
+   * - ``SHOW_UNENROLL_SURVEY``
+     - Shows the survey that asks learners why they unenrolled, as the last step
+       of the unenrollment flow.
+     - ``false``
+
+*****
+Slots
+*****
+
+This app offers slots for operators to customize its pages.  See `src/slots/`_
+for the current list and per-slot READMEs with usage examples.
+
+.. _src/slots/: ./src/slots/
+
+**********
+Developing
+**********
+
+Project Structure
+=================
+
+The layout follows the standard `frontend-base app layout`_:
+
+- ``src/app.ts`` - the app definition imported by ``site.config.*.tsx``.
+- ``src/constants.ts`` - the app's ``appId`` and route role identifiers.
+- ``src/index.ts`` - the package's public exports (this is a library).
+- ``src/routes.jsx`` - the app's react-router routes.
+- ``src/Main.jsx`` - the root component for the app's routes.
+- ``src/providers.ts`` - the context providers the app wraps the site in.
+- ``src/slots.tsx`` - slot operations this app performs on *other* apps' slots,
+  such as the header.
+- ``src/slots/`` - the slots this app offers to consumers.
+- ``src/widgets/`` - components this app contributes to slots, including its
+  header.
+- ``src/style.scss`` - app-scoped runtime styles.
+
+Everything else under ``src/`` is a feature or shared-concern directory:
+``containers/`` for the page's composed pieces, ``components/`` for the reusable
+ones, ``data/`` for API access and React Query hooks, and ``hooks/``,
+``tracking/`` and ``utils/`` for the shared remainder.
+
+For more, see the `frontend-base migration how-to`_.
+
+.. _frontend-base app layout: https://github.com/openedx/frontend-base/blob/main/docs/how_tos/migrate-frontend-app.md#src-file-structure
+.. _frontend-base migration how-to: https://github.com/openedx/frontend-base/blob/main/docs/how_tos/migrate-frontend-app.md
+
+Build Process Notes
+===================
+
+**Library build**
+
+``npm run build`` compiles the library into ``dist/`` via ``tsc`` and
+``tsc-alias``, and copies the SCSS and asset files across.  This is what gets
+published and consumed by sites.
+
+**CI build**
+
+``npm run build:ci`` runs ``openedx build`` against ``site.config.ci.tsx`` so
+webpack traverses the full app graph.  This catches issues, such as broken
+lazy-loaded imports, that ``tsc`` and Jest would not surface.
+
+Internationalization
+====================
+
+Please refer to the `frontend-base i18n howto`_ for documentation on
+internationalization.
+
+.. _frontend-base i18n howto: https://github.com/openedx/frontend-base/blob/main/docs/how_tos/i18n.rst
+
+************
 Getting Help
-------------
+************
 
-If you're having trouble, we have discussion forums at https://discuss.openedx.org where you can connect with others in
-the community.
+If you're having trouble, we have discussion forums at
+https://discuss.openedx.org where you can connect with others in the community.
 
-Our real-time conversations are on Slack. You can request a `Slack invitation`_, then join our
-`community Slack workspace`_.  Because this is a frontend repository, the best place to discuss it would be in the
-`#wg-frontend channel`_.
+Our real-time conversations are on Slack. You can request a `Slack invitation`_,
+then join our `community Slack workspace`_.  Because this is a frontend
+repository, the best place to discuss it would be in the `#wg-frontend channel`_.
 
-For anything non-trivial, the best path is to open an issue in this repository with as many details about the issue you
-are facing as you can provide.
+For anything non-trivial, the best path is to open an issue in this repository
+with as many details about the issue you are facing as you can provide.
 
 https://github.com/openedx/frontend-app-learner-dashboard/issues
 
@@ -64,23 +266,67 @@ For more information about these options, see the `Getting Help`_ page.
 .. _Slack invitation: https://openedx.org/slack
 .. _community Slack workspace: https://openedx.slack.com/
 .. _#wg-frontend channel: https://openedx.slack.com/archives/C04BM6YC7A6
-.. _Getting Help: https://openedx.org/community/connect
+.. _Getting Help: https://openedx.org/getting-help
 
-Resources
----------
+*******
+License
+*******
 
-Additional info about the Learner Home MFE project can be found on the `Open edX Wiki`_.
+The code in this repository is licensed under the AGPLv3 unless otherwise noted.
 
-.. _Open edX Wiki: https://openedx.atlassian.net/wiki/spaces/OEPM/pages/3575906333/Learner+Home
+Please see `LICENSE <LICENSE>`_ for details.
 
+************
+Contributing
+************
+
+Contributions are very welcome. Please read `How To Contribute`_ for details.
+
+.. _How To Contribute: https://openedx.org/r/how-to-contribute
+
+This project is currently accepting all types of contributions, bug fixes and
+security fixes.
+
+****************************
 The Open edX Code of Conduct
-----------------------------
+****************************
 
 All community members are expected to follow the `Open edX Code of Conduct`_.
 
 .. _Open edX Code of Conduct: https://openedx.org/code-of-conduct/
 
-Reporting Security Issues
--------------------------
+******
+People
+******
 
-Please do not report security issues in public. Please email security@openedx.org.
+The assigned maintainers for this component and other project details may be
+found in `Backstage`_. Backstage pulls this data from the ``catalog-info.yaml``
+file in this repo.
+
+.. _Backstage: https://backstage.openedx.org/catalog/default/component/frontend-app-learner-dashboard
+
+*************************
+Reporting Security Issues
+*************************
+
+Please do not report security issues in public, and email security@openedx.org
+instead.
+
+.. |license-badge| image:: https://img.shields.io/github/license/openedx/frontend-app-learner-dashboard.svg
+    :target: https://github.com/openedx/frontend-app-learner-dashboard/blob/master/LICENSE
+    :alt: License
+
+.. |status-badge| image:: https://img.shields.io/badge/Status-Maintained-brightgreen
+    :alt: Maintained
+
+.. |ci-badge| image:: https://github.com/openedx/frontend-app-learner-dashboard/actions/workflows/ci.yml/badge.svg
+    :target: https://github.com/openedx/frontend-app-learner-dashboard/actions/workflows/ci.yml
+    :alt: Continuous Integration
+
+.. |codecov-badge| image:: https://codecov.io/github/openedx/frontend-app-learner-dashboard/coverage.svg?branch=master
+    :target: https://codecov.io/github/openedx/frontend-app-learner-dashboard?branch=master
+    :alt: Codecov
+
+.. |semantic-release| image:: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
+    :target: https://github.com/semantic-release/semantic-release
+    :alt: semantic-release
