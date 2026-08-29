@@ -18,16 +18,22 @@ const entitlementEnrollment = (uuid) => `${getApiUrl()}/entitlements/v1/entitlem
 export const updateUrl = (base, url) => ((url == null || url.startsWith('http://') || url.startsWith('https://')) ? url : `${base}${url}`);
 
 export const baseAppUrl = (url) => updateUrl(getBaseUrl(), url);
-export const learningMfeUrl = (url) => updateUrl(getAppConfig(appId).LEARNING_BASE_URL, url);
 
 // static view url
 const programsUrl = () => baseAppUrl('/dashboard/programs');
 
+/**
+ * Returns the credit purchase URL for a course, or `null` when the site
+ * configures neither CREDIT_PURCHASE_URL nor ECOMMERCE_BASE_URL.
+ */
 export const creditPurchaseUrl = (courseId) => {
   const config = getAppConfig(appId);
-  return config.CREDIT_PURCHASE_URL
-    ? `${config.CREDIT_PURCHASE_URL}/${courseId}/`
-    : `${config.ECOMMERCE_BASE_URL}/credit/checkout/${courseId}/`;
+  if (config.CREDIT_PURCHASE_URL) {
+    return `${config.CREDIT_PURCHASE_URL}/${courseId}/`;
+  }
+  return config.ECOMMERCE_BASE_URL
+    ? `${config.ECOMMERCE_BASE_URL}/credit/checkout/${courseId}/`
+    : null;
 };
 export const creditRequestUrl = (providerId) => `${getApiUrl()}/credit/v1/providers/${providerId}/request/`;
 
@@ -40,7 +46,6 @@ export default StrictDict({
   entitlementEnrollment,
   event,
   getInitApiUrl,
-  learningMfeUrl,
   programsUrl,
   updateEmailSettings,
 });

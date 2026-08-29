@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { IntlProvider } from '@openedx/frontend-base';
 
 import { useCourseData } from '@src/hooks';
+import { creditPurchaseUrl } from '@src/data/services/lms/urls';
 import track from '@src/tracking';
 
 import messages from './messages';
@@ -10,6 +11,10 @@ import EligibleContent from './EligibleContent';
 
 jest.mock('@src/hooks', () => ({
   useCourseData: jest.fn(),
+}));
+
+jest.mock('@src/data/services/lms/urls', () => ({
+  creditPurchaseUrl: jest.fn(),
 }));
 
 jest.mock('@src/tracking', () => ({
@@ -24,6 +29,7 @@ const credit = {
   providerName: 'test-credit-provider-name',
 };
 useCourseData.mockReturnValue({ credit, courseRun: { courseId } });
+creditPurchaseUrl.mockReturnValue(`http://ecommerce.example.com/credit/checkout/${courseId}/`);
 
 const renderEligibleContent = () => render(<IntlProvider locale="en" messages={{}}><EligibleContent cardId={cardId} /></IntlProvider>);
 
@@ -53,6 +59,11 @@ describe('EligibleContent component', () => {
         const eligibleMessage = screen.getByTestId('credit-msg');
         expect(eligibleMessage).toBeInTheDocument();
         expect(eligibleMessage).toHaveTextContent(credit.providerName);
+      });
+      it('renders no action when no credit purchase url is configured', () => {
+        creditPurchaseUrl.mockReturnValueOnce(null);
+        renderEligibleContent();
+        expect(screen.queryByRole('button')).not.toBeInTheDocument();
       });
       it('message is formatted eligible message if no provider', () => {
         useCourseData.mockReturnValue({ credit: {}, courseRun: { courseId } });

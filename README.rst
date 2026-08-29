@@ -130,14 +130,12 @@ Configuration
 
 This app is no longer configured by build-time environment variables.
 ``getAppConfig`` resolves three sources, in order of increasing precedence: the
-app's bundled defaults, the site's ``commonAppConfig``, and the app's ``config``.
-The first is the app author's, at build time; the other two are the operator's,
-the second applying to every app on the site and the third to this app alone.  In
-edx-platform they arrive as ``MFE_CONFIG`` and
-``MFE_CONFIG_OVERRIDES['learner-dashboard']`` respectively.
+app's bundled ``defaultConfig``, the site's ``commonAppConfig``, and the app's
+``config``.  The first is the app author's, at build time; the other two are the
+operator's, the second applying to every app on the site and the third to this
+app alone.
 
-The full list of keys and their defaults is the ``config`` block in
-``src/app.ts``:
+These are the fields the app reads:
 
 .. list-table::
    :widths: 30 50 20
@@ -147,39 +145,35 @@ The full list of keys and their defaults is the ``config`` block in
      - Description / Usage
      - Example
 
-   * - ``LEARNING_BASE_URL``
-     - Base URL of the Learning MFE, used to build course home and courseware
-       links from the dashboard's cards.
-     - ``http://apps.local.openedx.io:2000``
-
    * - ``ENABLE_PROGRAMS``
      - Shows the Programs link in the header's primary navigation, pointing at
-       the LMS's ``/dashboard/programs``.  The related-programs badges and
-       banners on course cards are driven by course data and are not affected by
-       this.
-     - ``false``
+       the LMS's ``/dashboard/programs``.  The link is hidden when this is
+       unset.  The related-programs badges and banners on course cards are
+       driven by course data and are not affected by this.
+     - ``true``
 
    * - ``ECOMMERCE_BASE_URL``
      - Base URL of the ecommerce service.  Used to build the credit checkout
-       link, as ``ECOMMERCE_BASE_URL/credit/checkout/COURSE_ID/``.
-     - ``''``
+       link, as ``ECOMMERCE_BASE_URL/credit/checkout/COURSE_ID/``.  The credit
+       banner renders no "Get credit" button when neither this nor
+       ``CREDIT_PURCHASE_URL`` is set.
+     - ``http://localhost:18130``
 
    * - ``CREDIT_PURCHASE_URL``
      - Overrides the credit checkout link with ``CREDIT_PURCHASE_URL/COURSE_ID/``,
        for deployments whose credit purchase flow does not live behind
-       ``ECOMMERCE_BASE_URL``.  It has no bundled default; set it to take
-       precedence.
-     - ``''``
+       ``ECOMMERCE_BASE_URL``.  Takes precedence when set.
+     - ``http://credit.example.com``
 
    * - ``ORDER_HISTORY_URL``
      - Destination of the order history link in the header menu.  The link is
-       hidden when this is empty.
-     - ``''``
+       hidden when this is unset.
+     - ``http://localhost:1996/orders``
 
    * - ``SHOW_UNENROLL_SURVEY``
      - Shows the survey that asks learners why they unenrolled, as the last step
-       of the unenrollment flow.
-     - ``false``
+       of the unenrollment flow.  Skipped when unset.
+     - ``true``
 
 *****
 Slots

@@ -100,7 +100,7 @@ describe('UnenrollConfirmModal hooks', () => {
       state.restore();
     });
 
-    describe('when SHOW_UNENROLL_SURVEY is true (default)', () => {
+    describe('when the operator sets SHOW_UNENROLL_SURVEY to true', () => {
       beforeEach(() => {
         useAppConfig.mockReturnValue({ SHOW_UNENROLL_SURVEY: true });
       });

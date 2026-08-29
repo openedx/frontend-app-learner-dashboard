@@ -17,8 +17,6 @@ const siteConfig: SiteConfig = {
     appId,
     config: {
       ECOMMERCE_BASE_URL: 'http://localhost:18130',
-      FAVICON_URL: 'https://edx-cdn.org/v3/default/favicon.ico',
-      LEARNING_BASE_URL: 'http://localhost:2000',
     },
   }],
 
