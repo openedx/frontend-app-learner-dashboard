@@ -1,19 +1,19 @@
 import { createContext, Dispatch, SetStateAction } from 'react';
 
 interface EmailConfirmation {
-  isNeeded: boolean,
-  sendEmailUrl: string,
+  isNeeded: boolean;
+  sendEmailUrl: string;
 }
 
 interface PlatformSettings {
-  courseSearchUrl: string,
+  courseSearchUrl: string;
 }
 
 interface GlobalDataContextType {
-  emailConfirmation: EmailConfirmation,
-  platformSettings: PlatformSettings,
-  setEmailConfirmation: Dispatch<SetStateAction<EmailConfirmation>> | null,
-  setPlatformSettings: Dispatch<SetStateAction<PlatformSettings>> | null,
+  emailConfirmation: EmailConfirmation;
+  platformSettings: PlatformSettings;
+  setEmailConfirmation: Dispatch<SetStateAction<EmailConfirmation>> | null;
+  setPlatformSettings: Dispatch<SetStateAction<PlatformSettings>> | null;
 }
 
 const GlobalDataContext = createContext<GlobalDataContextType>({

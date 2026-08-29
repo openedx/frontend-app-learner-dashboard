@@ -646,7 +646,7 @@ describe('FiltersProvider and useFilters', () => {
     });
 
     it('should handle provider re-renders without losing state', () => {
-      const TestWrapper = ({ rerenderTrigger, children }: { rerenderTrigger: number, children: ReactNode }) => (
+      const TestWrapper = ({ rerenderTrigger, children }: { rerenderTrigger: number; children: ReactNode }) => (
         <FiltersProvider>
           <div data-testid={`rerender-${rerenderTrigger}`}>
             {children}

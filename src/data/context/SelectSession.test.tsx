@@ -379,7 +379,7 @@ describe('SelectSessionModalProvider and useSelectSessionModal', () => {
     });
 
     it('should handle provider re-renders without losing state', () => {
-      const TestWrapper = ({ rerenderTrigger, children }: { rerenderTrigger: number, children: ReactNode }) => (
+      const TestWrapper = ({ rerenderTrigger, children }: { rerenderTrigger: number; children: ReactNode }) => (
         <SelectSessionModalProvider>
           <div data-testid={`rerender-${rerenderTrigger}`}>
             {children}

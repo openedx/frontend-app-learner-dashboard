@@ -4,7 +4,7 @@ import { FiltersProvider, useFilters } from './FiltersProvider';
 import { SelectSessionModalProvider, useSelectSessionModal } from './SelectSessionProvider';
 
 interface ContextProvidersProps {
-  children: ReactNode,
+  children: ReactNode;
 }
 
 const ContextProviders = ({ children }: ContextProvidersProps) => (

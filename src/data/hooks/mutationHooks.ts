@@ -11,24 +11,24 @@ import {
 import { learnerDashboardQueryKeys, learnerDashboardMutationKeys } from './queryKeys';
 
 interface UpdateEntitlementProps {
-  uuid: string,
-  courseId: string,
+  uuid: string;
+  courseId: string;
 }
 
 interface DeleteEntitlementParams {
-  uuid: string,
-  isRefundable: boolean,
+  uuid: string;
+  isRefundable: boolean;
 }
 
 interface UpdateEmailSettingsParams {
-  courseId: string,
-  enable: boolean,
+  courseId: string;
+  enable: boolean;
 }
 
 interface CreditParams {
-  providerId: string,
-  courseId: string,
-  username: string,
+  providerId: string;
+  courseId: string;
+  username: string;
 }
 
 const useUnenrollFromCourse = () => {
