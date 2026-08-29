@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { useIntl } from '@openedx/frontend-base';
 
 import { useCourseData } from '@src/hooks';
+import { creditPurchaseUrl } from '@src/data/services/lms/urls';
 import track from '@src/tracking';
 
 import CreditContent from './components/CreditContent';
@@ -15,6 +16,7 @@ export const EligibleContent = ({ cardId }) => {
   const providerName = courseData?.credit?.providerName;
   const courseId = courseData?.courseRun?.courseId;
 
+  const purchaseUrl = creditPurchaseUrl(courseId);
   const onClick = track.credit.purchase(courseId);
   const getCredit = formatMessage(messages.getCredit);
   const message = providerName
@@ -23,7 +25,7 @@ export const EligibleContent = ({ cardId }) => {
 
   return (
     <CreditContent
-      action={{ onClick, message: getCredit }}
+      action={purchaseUrl ? { onClick, message: getCredit } : null}
       message={message}
     />
   );

@@ -9,13 +9,6 @@ const app: App = {
   routes,
   providers,
   slots,
-  config: {
-    LEARNING_BASE_URL: 'http://apps.local.openedx.io:2000',
-    ENABLE_PROGRAMS: false,
-    ECOMMERCE_BASE_URL: '',
-    ORDER_HISTORY_URL: '',
-    SHOW_UNENROLL_SURVEY: false,
-  }
 };
 
 export default app;
