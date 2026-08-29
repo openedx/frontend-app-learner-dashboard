@@ -3,14 +3,14 @@ import React, {
 } from 'react';
 
 interface MasqueradeContextType {
-  masqueradeUser: string | undefined,
-  setMasqueradeUser: (user: string | undefined) => void,
+  masqueradeUser: string | undefined;
+  setMasqueradeUser: (user: string | undefined) => void;
 }
 
 const MasqueradeContext = createContext<MasqueradeContextType | null>(null);
 
 interface MasqueradeProviderProps {
-  children: ReactNode,
+  children: ReactNode;
 }
 
 export const MasqueradeProvider: React.FC<MasqueradeProviderProps> = ({ children }) => {

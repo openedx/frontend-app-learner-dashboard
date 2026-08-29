@@ -351,7 +351,7 @@ describe('MasqueradeProvider and useMasquerade', () => {
     });
 
     it('should handle provider re-renders without losing state', () => {
-      const TestWrapper = ({ rerenderTrigger, children }: { rerenderTrigger: number, children: ReactNode }) => (
+      const TestWrapper = ({ rerenderTrigger, children }: { rerenderTrigger: number; children: ReactNode }) => (
         <MasqueradeProvider>
           <div data-testid={`rerender-${rerenderTrigger}`}>
             {children}

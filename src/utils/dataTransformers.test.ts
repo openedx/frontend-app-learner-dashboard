@@ -24,10 +24,10 @@ Object.defineProperty(globalThis, 'URLSearchParams', {
 
 interface VisibleListResult {
   visibleList: {
-    course: { courseName: string },
-    enrollment: { lastEnrolled: Date },
-  }[],
-  numPages: number,
+    course: { courseName: string };
+    enrollment: { lastEnrolled: Date };
+  }[];
+  numPages: number;
 }
 
 describe('dataTransformers', () => {
@@ -205,7 +205,7 @@ describe('dataTransformers', () => {
 
     it('should maintain course order', () => {
       interface MockCourseType {
-        course: { courseName: string },
+        course: { courseName: string };
       }
       const result = getTransformedCourseDataList(mockCourses) as MockCourseType[];
 

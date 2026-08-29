@@ -5,15 +5,15 @@ import React, {
 type SortOption = 'enrolled' | 'title';
 
 interface FiltersContextType {
-  filters: string[],
-  sortBy: SortOption,
-  pageNumber: number,
-  setFilters: (newFilters: string[]) => void,
-  addFilter: (filter: string) => void,
-  removeFilter: (filter: string) => void,
-  clearFilters: () => void,
-  setSortBy: (sortBy: SortOption) => void,
-  setPageNumber: (pageNumber: number) => void,
+  filters: string[];
+  sortBy: SortOption;
+  pageNumber: number;
+  setFilters: (newFilters: string[]) => void;
+  addFilter: (filter: string) => void;
+  removeFilter: (filter: string) => void;
+  clearFilters: () => void;
+  setSortBy: (sortBy: SortOption) => void;
+  setPageNumber: (pageNumber: number) => void;
 }
 
 const FiltersContext = createContext<FiltersContextType | null>(null);
