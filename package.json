@@ -1,6 +1,7 @@
 {
   "name": "@openedx/frontend-app-learner-dashboard",
   "version": "0.0.0-dev",
+  "packageManager": "npm@11.12.1",
   "description": "",
   "repository": {
     "type": "git",
