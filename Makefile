@@ -2,7 +2,7 @@ npm-install-%: ## install specified % npm package
 	npm install $* --save-dev
 	git add package.json
 
-TURBO = TURBO_TELEMETRY_DISABLED=1 turbo --dangerously-disable-package-manager-check
+TURBO = TURBO_TELEMETRY_DISABLED=1 turbo
 
 NPM_TESTS=build i18n_extract lint test
 
