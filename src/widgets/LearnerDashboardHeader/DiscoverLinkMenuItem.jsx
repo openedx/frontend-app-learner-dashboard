@@ -18,7 +18,7 @@ function DiscoverLink() {
 export default function DiscoverLinkMenuItem({ variant = 'hyperlink' }) {
   const { platformSettings } = useContext(GlobalDataContext);
   const { courseSearchUrl } = platformSettings;
-  const url = urls.baseAppUrl(courseSearchUrl);
+  const url = urls.coursesUrl(courseSearchUrl);
 
   return (
     <LinkMenuItem

@@ -1,4 +1,6 @@
 import react from 'react';
+import { useLocation } from 'react-router-dom';
+import { mergeSiteConfig } from '@openedx/frontend-base';
 
 import { StrictDict } from '@src/utils';
 
@@ -208,4 +210,26 @@ export const mockLocation = (href) => {
   delete global.window.location;
   global.window = Object.create(window);
   global.window.location = { href };
+};
+
+/**
+ * Adds an app to the site config whose route at `path` provides `role`, so that
+ * `resolveRouteByRole(role)` finds it.  Restore the previous site config afterwards with
+ * `setSiteConfig`.
+ */
+export const provideRoute = (role, path) => {
+  mergeSiteConfig({
+    apps: [{
+      appId: 'org.openedx.frontend.app.test',
+      routes: [{ path, handle: { roles: [role] } }],
+    }],
+  });
+};
+
+/**
+ * Shows the current pathname, so a test can click a link and assert the client navigated.
+ */
+export const LocationDisplay = () => {
+  const { pathname } = useLocation();
+  return <div data-testid="location">{pathname}</div>;
 };

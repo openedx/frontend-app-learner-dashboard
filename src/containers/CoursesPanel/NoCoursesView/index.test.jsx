@@ -1,6 +1,8 @@
-import { render, screen } from '@testing-library/react';
-import { IntlProvider } from '@openedx/frontend-base';
-import { formatMessage } from '@src/testUtils';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+import { IntlProvider, getSiteConfig, setSiteConfig } from '@openedx/frontend-base';
+import { coursesRole } from '@src/constants';
+import { LocationDisplay, formatMessage, provideRoute } from '@src/testUtils';
 import { baseAppUrl } from '@src/data/services/lms/urls';
 
 import EmptyCourse from '.';
@@ -19,6 +21,12 @@ jest.mock('@src/data/hooks', () => ({
 }));
 
 describe('NoCoursesView', () => {
+  const siteConfig = getSiteConfig();
+
+  afterEach(() => {
+    setSiteConfig(siteConfig);
+  });
+
   it('should display image, heading and button', () => {
     render(<IntlProvider locale="en"><EmptyCourse /></IntlProvider>);
     const image = screen.getByRole('img', { alt: formatMessage(messages.bannerAlt) });
@@ -36,5 +44,21 @@ describe('NoCoursesView', () => {
     const button = screen.getByRole('link', { name: formatMessage(messages.exploreCoursesButton) });
     expect(button).toBeInTheDocument();
     expect(button.href).toBe(baseAppUrl(courseSearchUrl));
+  });
+  it('navigates to the courses route in the client when an app provides it', () => {
+    provideRoute(coursesRole, 'courses');
+    render(
+      <IntlProvider locale="en">
+        <MemoryRouter initialEntries={['/dashboard']}>
+          <EmptyCourse />
+          <LocationDisplay />
+        </MemoryRouter>
+      </IntlProvider>,
+    );
+    const button = screen.getByRole('link', { name: formatMessage(messages.exploreCoursesButton) });
+    expect(button).toHaveAttribute('href', '/courses');
+
+    fireEvent.click(button);
+    expect(screen.getByTestId('location')).toHaveTextContent('/courses');
   });
 });

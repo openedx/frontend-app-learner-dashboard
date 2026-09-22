@@ -1,5 +1,8 @@
-import { getAppConfig, getSiteConfig } from '@openedx/frontend-base';
-import { appId } from '@src/constants';
+import {
+  getAppConfig, getSiteConfig, setSiteConfig,
+} from '@openedx/frontend-base';
+import { appId, coursesRole } from '@src/constants';
+import { provideRoute } from '@src/testUtils';
 import * as urls from './urls';
 
 describe('urls', () => {
@@ -24,6 +27,21 @@ describe('urls', () => {
     });
     it('return null if url is null', () => {
       expect(urls.baseAppUrl(null)).toEqual(null);
+    });
+  });
+  describe('coursesUrl', () => {
+    const siteConfig = getSiteConfig();
+
+    afterEach(() => {
+      setSiteConfig(siteConfig);
+    });
+
+    it('returns the path of the courses route when an app provides it', () => {
+      provideRoute(coursesRole, 'courses');
+      expect(urls.coursesUrl('/course-search-url')).toEqual('/courses');
+    });
+    it('falls back to the course search url on the lms', () => {
+      expect(urls.coursesUrl('/course-search-url')).toEqual(urls.baseAppUrl('/course-search-url'));
     });
   });
   describe('creditPurchaseUrl', () => {

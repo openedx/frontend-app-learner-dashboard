@@ -1,10 +1,10 @@
-import { useIntl } from '@openedx/frontend-base';
+import { getLinkProps, useIntl } from '@openedx/frontend-base';
 import { Card, Hyperlink, Icon } from '@openedx/paragon';
 import { ArrowForward } from '@openedx/paragon/icons';
 
 import { useInitializeLearnerHome } from '@src/data/hooks';
 import moreCoursesSVG from '../../assets/more-courses-sidewidget.svg';
-import { baseAppUrl } from '../../data/services/lms/urls';
+import { coursesUrl } from '../../data/services/lms/urls';
 
 import { findCoursesWidgetClicked } from './track';
 import messages from './messages';
@@ -16,7 +16,7 @@ export const LookingForChallengeWidget = () => {
   const { formatMessage } = useIntl();
   const { data: learnerData } = useInitializeLearnerHome();
   const courseSearchUrl = learnerData?.platformSettings?.courseSearchUrl || '';
-  const hyperlinkDestination = baseAppUrl(courseSearchUrl) || '';
+  const url = coursesUrl(courseSearchUrl);
 
   return (
     <Card orientation="horizontal" id="looking-for-challenge-widget">
@@ -31,8 +31,8 @@ export const LookingForChallengeWidget = () => {
         <h5>
           <Hyperlink
             variant="brand"
-            destination={hyperlinkDestination}
-            onClick={findCoursesWidgetClicked(hyperlinkDestination)}
+            {...getLinkProps(url)}
+            onClick={findCoursesWidgetClicked(url)}
             className="d-flex align-items-center"
           >
             {formatMessage(messages.findCoursesButton, { arrow: arrowIcon })}

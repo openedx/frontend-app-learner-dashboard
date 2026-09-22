@@ -42,4 +42,10 @@ describe('find courses trackers', () => {
       url,
     );
   });
+
+  test('a path in this site gets the event tracker alone, so react-router can follow the link', () => {
+    const tracker = findCoursesClicked('/catalog/courses');
+    expect(createLinkTracker).not.toHaveBeenCalled();
+    expect(tracker).toEqual(createEventTracker(eventNames.findCoursesClicked, defaultProps));
+  });
 });
