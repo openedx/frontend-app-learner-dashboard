@@ -1,7 +1,7 @@
-import { appId } from '../../../constants';
+import { appId, coursesRole } from '../../../constants';
 import { StrictDict } from '../../../utils';
 
-import { getAppConfig, getSiteConfig } from '@openedx/frontend-base';
+import { getAppConfig, getSiteConfig, resolveRouteByRole } from '@openedx/frontend-base';
 
 const getBaseUrl = () => getSiteConfig().lmsBaseUrl;
 
@@ -23,6 +23,15 @@ export const baseAppUrl = (url) => updateUrl(getBaseUrl(), url);
 const programsUrl = () => baseAppUrl('/dashboard/programs');
 
 /**
+ * Returns the URL for browsing courses: the courses route if an app in the running site
+ * provides one, so navigation stays within the SPA, or otherwise the course search URL the
+ * LMS reports (`courseSearchUrl`), made absolute.
+ */
+export const coursesUrl = (courseSearchUrl) => (
+  resolveRouteByRole(coursesRole)?.url ?? baseAppUrl(courseSearchUrl)
+);
+
+/**
  * Returns the credit purchase URL for a course, or `null` when the site
  * configures neither CREDIT_PURCHASE_URL nor ECOMMERCE_BASE_URL.
  */
@@ -41,6 +50,7 @@ export default StrictDict({
   getApiUrl,
   baseAppUrl,
   courseUnenroll,
+  coursesUrl,
   creditPurchaseUrl,
   creditRequestUrl,
   entitlementEnrollment,
