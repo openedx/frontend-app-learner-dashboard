@@ -175,6 +175,12 @@ These are the fields the app reads:
        of the unenrollment flow.  Skipped when unset.
      - ``true``
 
+   * - ``ENABLE_PATHWAY_PILOT_UI``
+     - Enables the pathways pilot, which adds the learner's pathways to the
+       dashboard UI alongside their courses.  The dashboard shows only courses
+       when this is unset.
+     - ``true``
+
 *****
 Slots
 *****
