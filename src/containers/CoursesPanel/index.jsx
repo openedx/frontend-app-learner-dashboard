@@ -1,4 +1,7 @@
-import React, { useMemo } from 'react';
+import React, {
+  useEffect, useMemo, useRef, useState,
+} from 'react';
+import classNames from 'classnames';
 
 import { FormattedMessage } from '@openedx/frontend-base';
 import { useIsPathwayPilotUIEnabled } from '@src/hooks';
@@ -24,6 +27,7 @@ import { Icon, Stack } from '@openedx/paragon';
  * @returns List of courses as CourseCards or empty state
 */
 export const CoursesPanel = () => {
+  const isPathwayPilotUIEnabled = useIsPathwayPilotUIEnabled();
   const { data } = useInitializeLearnerHome();
   const hasCourses = useMemo(() => data?.courses?.length > 0, [data]);
 
@@ -43,11 +47,25 @@ export const CoursesPanel = () => {
   }, [data, filters, sortBy, pageNumber]);
 
   // Clamp page number when filtered/mutated list shrinks
-  React.useEffect(() => {
+  useEffect(() => {
     if (numPages > 0 && pageNumber > numPages) {
       setPageNumber(1);
     }
   }, [numPages, pageNumber, setPageNumber]);
+
+  // The heading is stuck to the top once the sentinel right above it scrolls out of view
+  const sentinelRef = useRef(null);
+  const [isStuck, setIsStuck] = useState(false);
+  useEffect(() => {
+    if (!isPathwayPilotUIEnabled || !sentinelRef.current) {
+      return undefined;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsStuck(!entry.isIntersecting),
+    );
+    observer.observe(sentinelRef.current);
+    return () => observer.disconnect();
+  }, [isPathwayPilotUIEnabled]);
 
   const courseListData = {
     filterOptions: filters,
@@ -59,10 +77,16 @@ export const CoursesPanel = () => {
 
   return (
     <div className="course-list-container">
-      <div className="course-list-heading-container mb-3">
-        {useIsPathwayPilotUIEnabled()
+      {isPathwayPilotUIEnabled && <div ref={sentinelRef} />}
+      <div
+        className={classNames('course-list-heading-container mb-3', {
+          'is-sticky': isPathwayPilotUIEnabled,
+          'is-stuck': isPathwayPilotUIEnabled && isStuck,
+        })}
+      >
+        {isPathwayPilotUIEnabled
           ? (
-            <Stack direction='horizontal' className='h3 text-gray-700' gap={2}>
+            <Stack direction='horizontal' className='h3 text-gray-700 ml-2' gap={2}>
               <Icon src={MenuBook} />
               <FormattedMessage {...messages.coursesTitle} />
             </Stack>
@@ -73,7 +97,7 @@ export const CoursesPanel = () => {
             </h2>
           )
         }
-        <div className="course-filter-controls-container">
+        <div className="course-filter-controls-container mr-2">
           <CourseFilterControls />
         </div>
       </div>
