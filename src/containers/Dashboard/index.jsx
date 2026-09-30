@@ -1,7 +1,9 @@
 import React, { useMemo } from 'react';
 
+import { FormattedMessage } from '@openedx/frontend-base';
 import { useSelectSessionModal } from '@src/data/context';
 import { useInitializeLearnerHome } from '@src/data/hooks';
+import { useIsPathwayPilotUIEnabled } from '@src/hooks';
 import SelectSessionModal from '../../containers/SelectSessionModal';
 import CoursesPanel from '../../containers/CoursesPanel';
 import DashboardModalSlot from '../../slots/DashboardModalSlot';
@@ -10,6 +12,7 @@ import LoadingView from './LoadingView';
 import DashboardLayout from './DashboardLayout';
 import hooks from './hooks';
 import './index.scss';
+import messages from './messages';
 
 export const Dashboard = () => {
   const { data, isPending } = useInitializeLearnerHome();
@@ -35,6 +38,11 @@ export const Dashboard = () => {
               ? (<LoadingView />)
               : (
                 <DashboardLayout>
+                  {useIsPathwayPilotUIEnabled() && (
+                    <h2 className="dashboard-title">
+                      <FormattedMessage {...messages.dashboardTitle} />
+                    </h2>
+                  )}
                   <CoursesPanel />
                 </DashboardLayout>
               )}

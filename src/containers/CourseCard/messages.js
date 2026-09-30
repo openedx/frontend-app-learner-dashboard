@@ -21,6 +21,11 @@ const messages = defineMessages({
     description: 'Course card verified banner ribbon alt-text',
     defaultMessage: 'ID Verified Ribbon/Badge',
   },
+  courseBadge: {
+    id: 'learner-dash.courseCard.courseBadge',
+    description: 'Badge that identifies the card as a course',
+    defaultMessage: 'Course',
+  },
 });
 
 export default messages;
