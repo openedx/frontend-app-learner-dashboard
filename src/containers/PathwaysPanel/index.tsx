@@ -13,7 +13,7 @@ export const PathwaysPanel = ({
 }: PathwaysPanelProps) => (
   <>
     {pathwaysByCategory.map((pathwayList) => (
-      pathwayList.categoryLabelPlural && pathwayList.pathways
+      pathwayList.categoryLabelPlural && pathwayList.pathways?.length
         ? (
             <div className="mb-5" key={pathwayList.categoryLabelPlural}>
               <PathwaysList {...pathwayList} />
