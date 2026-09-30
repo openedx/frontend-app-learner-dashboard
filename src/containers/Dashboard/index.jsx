@@ -13,11 +13,14 @@ import DashboardLayout from './DashboardLayout';
 import hooks from './hooks';
 import './index.scss';
 import messages from './messages';
+import { usePathwaysByCategory } from '@src/hooks/usePathwayData';
+import PathwaysPanelSlot from '@src/slots/PathwaysPanelSlot';
 
 export const Dashboard = () => {
   const { data, isPending } = useInitializeLearnerHome();
   const { pageTitle } = hooks.useDashboardMessages();
   const { selectSessionModal } = useSelectSessionModal();
+  const pathways = usePathwaysByCategory();
   const showSelectSessionModal = selectSessionModal.cardId !== null;
 
   const hasCourses = useMemo(() => data?.courses?.length > 0, [data]);
@@ -39,9 +42,12 @@ export const Dashboard = () => {
               : (
                 <DashboardLayout>
                   {useIsPathwayPilotUIEnabled() && (
-                    <h2 className="dashboard-title">
-                      <FormattedMessage {...messages.dashboardTitle} />
-                    </h2>
+                    <>
+                      <h2 className="dashboard-title">
+                        <FormattedMessage {...messages.dashboardTitle} />
+                      </h2>
+                      <PathwaysPanelSlot pathwaysByCategory={pathways} />
+                    </>
                   )}
                   <CoursesPanel />
                 </DashboardLayout>
