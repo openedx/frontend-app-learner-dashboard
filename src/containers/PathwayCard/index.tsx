@@ -5,13 +5,15 @@ import { PathwayData } from '@src/hooks/usePathwayData';
 import messages from './messages';
 import { ItemBadge } from '@src/components/ItemBadge';
 
+import './index.scss';
+
 export const PathwayCard = ({ pathway }: { pathway: PathwayData }) => (
-  <Card>
+  <Card className="pathway-card">
     <Card.Header
       title={pathway.pathway.content.displayName}
       subtitle={pathway.provider?.name ?? null}
       actions={(
-        <Stack direction="horizontal">
+        <div className="d-flex justify-content-between" style={{ width: '250px' }}>
           <Stack direction="horizontal" gap={1}>
             <Icon src={FormatListBulleted} />
             <FormattedMessage
@@ -29,7 +31,7 @@ export const PathwayCard = ({ pathway }: { pathway: PathwayData }) => (
               categoryTextColor={pathway.pathway.categoryTextColor}
             />
           )}
-        </Stack>
+        </div>
       )}
     />
   </Card>

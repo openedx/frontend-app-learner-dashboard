@@ -1,4 +1,5 @@
 import { ReactElement } from 'react';
+import classNames from 'classnames';
 import { Badge } from '@openedx/paragon';
 import { useIsPathwayPilotUIEnabled } from '@src/hooks';
 import { isValidCssColor } from '@src/utils';
@@ -25,8 +26,8 @@ export const ItemBadge = ({
 
   return (
     <Badge
-      variant="light"
-      className="p-1.5"
+      // The default color utilities use !important, so they would override the custom colors
+      className={classNames('p-1.5', { 'bg-info-200 text-info-800': !hasCustomColors })}
       style={hasCustomColors ? {
         backgroundColor: categoryBackgroundColor,
         color: categoryTextColor,

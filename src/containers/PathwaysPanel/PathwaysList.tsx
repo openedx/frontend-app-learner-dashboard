@@ -11,8 +11,8 @@ export const PathwaysList = ({
   categoryLabelPlural,
   pathways,
 }: PathwaysListProps) => (
-  <div>
-    <Stack direction="horizontal" gap={1} className="h3">
+  <>
+    <Stack direction="horizontal" gap={2} className="h3 mb-3">
       <span className="text-gray-700">
         {categoryLabelPlural}
       </span>
@@ -22,5 +22,5 @@ export const PathwaysList = ({
         <PathwayCard pathway={pathway} key={pathway.pathway.id} />
       ))}
     </Stack>
-  </div>
+  </>
 );
