@@ -1,11 +1,8 @@
-import { PathwayData } from '@src/hooks/usePathwayData';
+import { PathwaysInCategoryData } from '@src/hooks/usePathwayData';
 import { PathwaysList } from './PathwaysList';
 
 export interface PathwaysPanelProps {
-  pathwaysByCategory: {
-    categoryLabelPlural: string;
-    pathways: PathwayData[];
-  }[];
+  pathwaysByCategory: PathwaysInCategoryData[];
 };
 
 export const PathwaysPanel = ({
