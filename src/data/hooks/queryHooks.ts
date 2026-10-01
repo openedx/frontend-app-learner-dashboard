@@ -65,7 +65,8 @@ const useInitializeLearnerHome = () => {
   return { ...query, data: dataWithPathways };
 };
 
-const usePathwaysByCourse = (courseIds: string[]): Record<string, PathwayData[]> => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const usePathwaysByCourse = (_courseIds: string[]): Record<string, PathwayData[]> => {
   // TODO The backend is missing.
   // This endpoint should receive a list of course IDs and return a map
   // containing the pathways in which the learner is enrolled for each course.
