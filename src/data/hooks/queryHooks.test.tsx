@@ -152,7 +152,7 @@ describe('queryHooks', () => {
       });
 
       expect(api.initializeList).toHaveBeenCalledWith(masqueradeUser);
-      expect(result.current.data).toEqual(mockNormalUserData);
+      expect(result.current.data).toEqual({ ...mockNormalUserData, pathwaysByCourse: {} });
     });
 
     it('should not retry on 4xx errors', async () => {

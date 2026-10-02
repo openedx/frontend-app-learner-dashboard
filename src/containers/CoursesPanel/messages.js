@@ -6,6 +6,11 @@ const messages = defineMessages({
     defaultMessage: 'My Courses',
     description: 'Course list heading',
   },
+  coursesTitle: {
+    id: 'dahsboard.coursesTitle',
+    defaultMessage: 'Courses',
+    description: 'Title of courses panel',
+  },
 });
 
 export default messages;

@@ -1,7 +1,8 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useMemo } from 'react';
 import { useMasquerade } from '@src/data/context';
 import GlobalDataContext from '@src/data/contexts/GlobalDataContext';
+import type { PathwayData } from '@src/hooks/usePathwayData';
 import {
   initializeList,
 } from '@src/data/services/lms/api';
@@ -50,9 +51,29 @@ const useInitializeLearnerHome = () => {
     data = queryClient.getQueryData(learnerDashboardQueryKeys.initialize(undefined));
   }
 
-  return { ...query, data };
+  const courseIds = useMemo(
+    () => (data?.courses || []).map((course) => course.courseRun?.courseId).filter(Boolean),
+    [data],
+  );
+  const pathwaysByCourse = usePathwaysByCourse(courseIds);
+
+  const dataWithPathways = useMemo(
+    () => (data ? { ...data, pathwaysByCourse } : data),
+    [data, pathwaysByCourse],
+  );
+
+  return { ...query, data: dataWithPathways };
+};
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const usePathwaysByCourse = (_courseIds: string[]): Record<string, PathwayData[]> => {
+  // TODO The backend is missing.
+  // This endpoint should receive a list of course IDs and return a map
+  // containing the pathways in which the learner is enrolled for each course.
+  return {};
 };
 
 export {
   useInitializeLearnerHome,
+  usePathwaysByCourse,
 };
