@@ -20,11 +20,6 @@
   }
 }
 
-.course-list-title {
-  font-size: var(--pgn-typography-font-size-h2-base);
-  margin: var(--pgn-spacing-spacer-3) 0;
-}
-
 .course-list-loading {
   display: flex;
   justify-content: center;
@@ -46,10 +41,5 @@
   .course-filter-controls-container {
     text-align: left;
     align-self: flex-start;
-  }
-
-  .course-list-title {
-    font-size: var(--pgn-typography-font-size-h3-base);
-    margin: var(--pgn-spacing-spacer-2) 0;
   }
 }

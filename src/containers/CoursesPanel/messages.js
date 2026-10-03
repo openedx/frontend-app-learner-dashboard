@@ -7,7 +7,7 @@ const messages = defineMessages({
     description: 'Course list heading',
   },
   coursesTitle: {
-    id: 'dahsboard.coursesTitle',
+    id: 'dashboard.coursesTitle',
     defaultMessage: 'Courses',
     description: 'Title of courses panel',
   },
