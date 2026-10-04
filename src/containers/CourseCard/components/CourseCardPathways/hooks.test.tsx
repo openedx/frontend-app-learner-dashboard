@@ -39,11 +39,12 @@ interface HarnessProps {
   items?: PathwayData[];
   containerWidth: number;
   labelOffsets: number[];
+  labelWidths?: number[];
   labelsWidth: number;
 }
 
 const Harness = ({
-  items = pathways, containerWidth, labelOffsets, labelsWidth,
+  items = pathways, containerWidth, labelOffsets, labelWidths = [], labelsWidth,
 }: HarnessProps) => {
   const {
     containerRef, measureRef, visiblePathways, hiddenPathways,
@@ -52,7 +53,9 @@ const Harness = ({
     <>
       <div ref={containerRef} data-testid="container" data-client-width={containerWidth} />
       <div ref={measureRef} data-testid="measure" data-offset-width={labelsWidth}>
-        {labelOffsets.map((offset) => <span key={offset} data-offset-left={offset} />)}
+        {labelOffsets.map((offset, index) => (
+          <span key={offset} data-offset-left={offset} data-offset-width={labelWidths[index]} />
+        ))}
       </div>
       <div data-testid="visible">{visiblePathways.map(({ pathway }) => pathway.id).join(',')}</div>
       <div data-testid="hidden">{hiddenPathways.map(({ pathway }) => pathway.id).join(',')}</div>
@@ -86,6 +89,22 @@ describe('useVisiblePathways', () => {
     render(<Harness containerWidth={1000} labelsWidth={1300} labelOffsets={[0, 400, 900]} />);
     expect(screen.getByTestId('visible')).toHaveTextContent('1,2');
     expect(screen.getByTestId('hidden')).toHaveTextContent('3');
+  });
+
+  it('measures the labels from the right edge in RTL', () => {
+    // jsdom does not compute the direction
+    jest.spyOn(window, 'getComputedStyle').mockReturnValue({ direction: 'rtl' } as CSSStyleDeclaration);
+    // The same row as [0, 720, 840] in LTR, mirrored: labels 700, 100 and 100 wide in a 940 wide row
+    render(
+      <Harness
+        containerWidth={800}
+        labelsWidth={940}
+        labelOffsets={[240, 120, 0]}
+        labelWidths={[700, 100, 100]}
+      />,
+    );
+    expect(screen.getByTestId('visible')).toHaveTextContent(/^1$/);
+    expect(screen.getByTestId('hidden')).toHaveTextContent('2,3');
   });
 
   it('recalculates the split when the container is resized', () => {
