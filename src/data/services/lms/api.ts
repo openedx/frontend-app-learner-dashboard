@@ -3,6 +3,9 @@ import { apiKeys, enableEmailsAction, unenrollmentAction } from '@src/data/servi
 import urls from '@src/data/services/lms/urls';
 import { stringifyUrl } from '@src/data/services/lms/utils';
 import eventNames from '@src/tracking/constants';
+import type { PathwayData, PathwaysInCategoryData } from '@src/hooks/usePathwayData';
+
+type PathwaysByCourse = Record<string, PathwayData[]>;
 
 const initializeList = async (user) => {
   const { data } = await getAuthenticatedHttpClient().get(
@@ -82,6 +85,20 @@ const sendConfirmEmail = async (sendEmailUrl: string) => {
   return response;
 };
 
+// TODO The backend is missing.
+// This endpoint should receive a list of course IDs and return a map
+// containing the pathways in which the learner is enrolled for each course.
+// The response must be mapped here to the `PathwayData` shape.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const getPathwaysByCourse = async (_courseIds: string[], _user?: string): Promise<PathwaysByCourse> => ({});
+
+// TODO The backend is missing.
+// The pathways must arrive from the backend already grouped by category,
+// and the backend needs to return the category label in the plural form,
+// already internationalized. The response must be mapped here to the `PathwaysInCategoryData` shape.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const getPathwaysByCategory = async (_user?: string): Promise<PathwaysInCategoryData[]> => [];
+
 export {
   initializeList,
   unenrollFromCourse,
@@ -92,4 +109,6 @@ export {
   logShare,
   createCreditRequest,
   sendConfirmEmail,
+  getPathwaysByCourse,
+  getPathwaysByCategory,
 };
