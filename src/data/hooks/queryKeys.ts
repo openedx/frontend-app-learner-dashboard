@@ -4,6 +4,10 @@ export const learnerDashboardQueryKeys = {
   all: BASE_KEY,
   initializeBase: () => [...BASE_KEY, 'initialize'] as const,
   initialize: (masqueradedUser?: string | null) => [...BASE_KEY, 'initialize', masqueradedUser] as const,
+  pathwaysByCourse: (courseIds: string[], masqueradeUser?: string) => (
+    [...BASE_KEY, 'pathwaysByCourse', courseIds, masqueradeUser] as const
+  ),
+  pathwaysByCategory: (masqueradeUser?: string) => [...BASE_KEY, 'pathwaysByCategory', masqueradeUser] as const,
 };
 
 export const learnerDashboardMutationKeys = {

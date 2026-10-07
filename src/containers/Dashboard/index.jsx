@@ -1,7 +1,9 @@
 import React, { useMemo } from 'react';
 
+import { FormattedMessage } from '@openedx/frontend-base';
 import { useSelectSessionModal } from '@src/data/context';
 import { useInitializeLearnerHome } from '@src/data/hooks';
+import { useIsPathwayPilotUIEnabled } from '@src/hooks';
 import SelectSessionModal from '../../containers/SelectSessionModal';
 import CoursesPanel from '../../containers/CoursesPanel';
 import DashboardModalSlot from '../../slots/DashboardModalSlot';
@@ -10,11 +12,15 @@ import LoadingView from './LoadingView';
 import DashboardLayout from './DashboardLayout';
 import hooks from './hooks';
 import './index.scss';
+import messages from './messages';
+import { usePathwaysByCategory } from '@src/hooks/usePathwayData';
+import PathwaysPanelSlot from '@src/slots/PathwaysPanelSlot';
 
 export const Dashboard = () => {
   const { data, isPending } = useInitializeLearnerHome();
   const { pageTitle } = hooks.useDashboardMessages();
   const { selectSessionModal } = useSelectSessionModal();
+  const pathways = usePathwaysByCategory();
   const showSelectSessionModal = selectSessionModal.cardId !== null;
 
   const hasCourses = useMemo(() => data?.courses?.length > 0, [data]);
@@ -35,6 +41,14 @@ export const Dashboard = () => {
               ? (<LoadingView />)
               : (
                 <DashboardLayout>
+                  {useIsPathwayPilotUIEnabled() && (
+                    <>
+                      <h2 className="dashboard-title">
+                        <FormattedMessage {...messages.dashboardTitle} />
+                      </h2>
+                      <PathwaysPanelSlot pathwaysByCategory={pathways} />
+                    </>
+                  )}
                   <CoursesPanel />
                 </DashboardLayout>
               )}

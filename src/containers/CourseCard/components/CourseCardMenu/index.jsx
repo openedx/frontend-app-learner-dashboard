@@ -43,6 +43,7 @@ export const CourseCardMenu = ({ cardId }) => {
         <Dropdown.Toggle
           id={`course-actions-dropdown-${cardId}`}
           as={IconButton}
+          className="d-flex align-items-center"
           src={MoreVert}
           iconAs={Icon}
           variant="primary"

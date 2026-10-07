@@ -4,6 +4,11 @@
   padding: 0 var(--pgn-spacing-spacer-4);
 }
 
+.dashboard-title {
+  font-size: var(--pgn-typography-font-size-h2-base);
+  margin: var(--pgn-spacing-spacer-3) 0;
+}
+
 .sidebar-column {
   padding: 0 var(--pgn-spacing-spacer-3) 0 var(--pgn-spacing-spacer-1);
 
@@ -25,5 +30,12 @@
     [dir=rtl] & {
       padding: 0 var(--pgn-spacing-spacer-3);
     }
+  }
+}
+
+@media (--pgn-size-breakpoint-max-width-md) {
+  .dashboard-title {
+    font-size: var(--pgn-typography-font-size-h3-base);
+    margin: var(--pgn-spacing-spacer-2) 0;
   }
 }
