@@ -4,6 +4,7 @@ const isValidCssColor = (value: string) => {
       return CSS.supports('color', value);
     }
 
+    /* istanbul ignore next */
     if (typeof document === 'undefined') {
       return false;
     }

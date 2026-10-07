@@ -6,7 +6,7 @@ import {
   dataEngineering,
   machineLearning,
   pathwaysByCategory,
-} from '@src/data/services/lms/__fixtures__/pathways';
+} from '@src/data/services/lms/__mocks__/pathways';
 import {
   useInitializeLearnerHome,
   usePathwaysByCategory,

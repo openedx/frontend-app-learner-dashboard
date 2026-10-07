@@ -1,8 +1,9 @@
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import { IntlProvider } from '@openedx/frontend-base';
 import { MemoryRouter } from 'react-router';
 import { useInitializeLearnerHome } from '@src/data/hooks';
 import { useFilters } from '@src/data/context';
+import { useIsPathwayPilotUIEnabled } from '@src/hooks';
 import * as dataTransformers from '@src/utils/dataTransformers';
 import messagesNoCourses from '@src/containers/CoursesPanel/NoCoursesView/messages';
 import CoursesPanel from '.';
@@ -24,6 +25,11 @@ jest.mock('@src/data/context', () => ({
     pageNumber: 1,
     setPageNumber: jest.fn(),
   })),
+}));
+
+jest.mock('@src/hooks', () => ({
+  ...jest.requireActual('@src/hooks'),
+  useIsPathwayPilotUIEnabled: jest.fn(() => false),
 }));
 
 jest.mock('@src/containers/CourseCard', () => jest.fn(() => <div>CourseCard</div>));
@@ -67,6 +73,66 @@ describe('CoursesPanel', () => {
       createWrapper({ visibleList });
       const heading = screen.getByText(messages.myCourses.defaultMessage);
       expect(heading).toBeInTheDocument();
+    });
+  });
+
+  describe('with the pathway pilot UI enabled', () => {
+    let intersectionCallback;
+    const observe = jest.fn();
+    const disconnect = jest.fn();
+    const originalIntersectionObserver = window.IntersectionObserver;
+
+    // jsdom has no IntersectionObserver, so the visibility changes are triggered by hand
+    class MockIntersectionObserver {
+      constructor(callback) {
+        intersectionCallback = callback;
+      }
+
+      observe = observe;
+
+      disconnect = disconnect;
+    }
+
+    const getHeading = (container) => container.querySelector('.course-list-heading-container');
+
+    beforeEach(() => {
+      jest.clearAllMocks();
+      useIsPathwayPilotUIEnabled.mockReturnValue(true);
+      window.IntersectionObserver = MockIntersectionObserver;
+    });
+
+    afterEach(() => {
+      useIsPathwayPilotUIEnabled.mockReturnValue(false);
+      window.IntersectionObserver = originalIntersectionObserver;
+    });
+
+    it('renders the courses title instead of the "My Courses" heading', () => {
+      createWrapper();
+      expect(screen.getByText(messages.coursesTitle.defaultMessage)).toBeInTheDocument();
+      expect(screen.queryByText(messages.myCourses.defaultMessage)).not.toBeInTheDocument();
+    });
+
+    it('makes the heading sticky and observes the sentinel above it', () => {
+      const { container } = createWrapper();
+      expect(getHeading(container)).toHaveClass('is-sticky');
+      expect(getHeading(container)).not.toHaveClass('is-stuck');
+      expect(observe).toHaveBeenCalledWith(getHeading(container).previousElementSibling);
+    });
+
+    it('marks the heading as stuck while the sentinel is out of view', () => {
+      const { container } = createWrapper();
+
+      act(() => intersectionCallback([{ isIntersecting: false }]));
+      expect(getHeading(container)).toHaveClass('is-stuck');
+
+      act(() => intersectionCallback([{ isIntersecting: true }]));
+      expect(getHeading(container)).not.toHaveClass('is-stuck');
+    });
+
+    it('disconnects the observer on unmount', () => {
+      const { unmount } = createWrapper();
+      unmount();
+      expect(disconnect).toHaveBeenCalled();
     });
   });
 

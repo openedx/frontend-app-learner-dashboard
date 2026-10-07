@@ -1,7 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import { IntlProvider } from '@openedx/frontend-base';
 
+import { useIsPathwayPilotUIEnabled } from '@src/hooks';
 import CourseCard from '.';
+import { CourseCardPathways } from './components/CourseCardPathways';
 import hooks from './hooks';
 
 jest.mock('./hooks', () => ({
@@ -23,6 +25,14 @@ jest.mock('./components/CourseCardMenu', () => jest.fn(() => <div>CourseCardMenu
 jest.mock('./components/CourseCardActions', () => jest.fn(() => <div>CourseCardActions</div>));
 jest.mock('./components/CourseCardDetails', () => jest.fn(() => <div>CourseCardDetails</div>));
 jest.mock('./components/CourseCardTitle', () => jest.fn(() => <div>CourseCardTitle</div>));
+jest.mock('./components/CourseCardPathways', () => ({
+  CourseCardPathways: jest.fn(() => <div>CourseCardPathways</div>),
+}));
+
+jest.mock('@src/hooks', () => ({
+  ...jest.requireActual('@src/hooks'),
+  useIsPathwayPilotUIEnabled: jest.fn(() => false),
+}));
 
 const cardId = 'test-card-id';
 
@@ -45,6 +55,26 @@ describe('CourseCard component', () => {
     namesMockComponents.map((courseCardName) => {
       const courseCardComponent = screen.getByText(courseCardName);
       return expect(courseCardComponent).toBeInTheDocument();
+    });
+  });
+
+  describe('pathways strip', () => {
+    afterEach(() => {
+      useIsPathwayPilotUIEnabled.mockReturnValue(false);
+    });
+
+    it('renders the course pathways when the pathway pilot UI is enabled', () => {
+      useIsPathwayPilotUIEnabled.mockReturnValue(true);
+      hooks.useIsCollapsed.mockReturnValueOnce(false);
+      render(<IntlProvider locale="en"><CourseCard cardId={cardId} /></IntlProvider>);
+      expect(screen.getByText('CourseCardPathways')).toBeInTheDocument();
+      expect(CourseCardPathways).toHaveBeenCalledWith({ cardId }, expect.anything());
+    });
+
+    it('does not render the course pathways when the pathway pilot UI is disabled', () => {
+      hooks.useIsCollapsed.mockReturnValueOnce(false);
+      render(<IntlProvider locale="en"><CourseCard cardId={cardId} /></IntlProvider>);
+      expect(screen.queryByText('CourseCardPathways')).not.toBeInTheDocument();
     });
   });
 });
