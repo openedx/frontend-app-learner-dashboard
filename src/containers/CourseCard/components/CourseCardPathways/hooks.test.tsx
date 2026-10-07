@@ -63,6 +63,13 @@ const Harness = ({
   );
 };
 
+// A row wider than the strips used below: labels 400, 500 and 400 wide, ending at 400, 900 and 1300
+const overflowingRow = {
+  labelsWidth: 1300,
+  labelOffsets: [0, 400, 900],
+  labelWidths: [400, 500, 400],
+};
+
 describe('useVisiblePathways', () => {
   const originalResizeObserver = globalThis.ResizeObserver;
 
@@ -86,9 +93,36 @@ describe('useVisiblePathways', () => {
   });
 
   it('moves the labels that do not fit to the hidden pathways', () => {
-    render(<Harness containerWidth={1000} labelsWidth={1300} labelOffsets={[0, 400, 900]} />);
+    render(<Harness {...overflowingRow} containerWidth={1000} />);
     expect(screen.getByTestId('visible')).toHaveTextContent('1,2');
     expect(screen.getByTestId('hidden')).toHaveTextContent('3');
+  });
+
+  it('moves a label that would be cut to the hidden pathways instead of truncating it', () => {
+    // The third label starts within the strip but ends after the space kept for the "+N" trigger
+    render(
+      <Harness
+        containerWidth={1000}
+        labelsWidth={1300}
+        labelOffsets={[0, 400, 800]}
+        labelWidths={[400, 400, 500]}
+      />,
+    );
+    expect(screen.getByTestId('visible')).toHaveTextContent('1,2');
+    expect(screen.getByTestId('hidden')).toHaveTextContent('3');
+  });
+
+  it('moves every label to the hidden pathways when not even the first one fits', () => {
+    render(
+      <Harness
+        containerWidth={500}
+        labelsWidth={1300}
+        labelOffsets={[0, 600, 900]}
+        labelWidths={[600, 300, 400]}
+      />,
+    );
+    expect(screen.getByTestId('visible')).toBeEmptyDOMElement();
+    expect(screen.getByTestId('hidden')).toHaveTextContent('1,2,3');
   });
 
   it('measures the labels from the right edge in RTL', () => {
@@ -108,7 +142,7 @@ describe('useVisiblePathways', () => {
   });
 
   it('recalculates the split when the container is resized', () => {
-    render(<Harness containerWidth={1000} labelsWidth={1300} labelOffsets={[0, 400, 900]} />);
+    render(<Harness {...overflowingRow} containerWidth={1000} />);
     expect(screen.getByTestId('visible')).toHaveTextContent('1,2');
 
     screen.getByTestId('container').dataset.clientWidth = '500';
@@ -127,8 +161,9 @@ describe('useVisiblePathways', () => {
     const measure = screen.getByTestId('measure');
     measure.dataset.offsetWidth = '1300';
     const labels = Array.from(measure.children) as HTMLElement[];
-    [0, 400, 900].forEach((offset, index) => {
+    overflowingRow.labelOffsets.forEach((offset, index) => {
       labels[index].dataset.offsetLeft = String(offset);
+      labels[index].dataset.offsetWidth = String(overflowingRow.labelWidths[index]);
     });
     act(() => resizeCallback());
 
@@ -145,10 +180,9 @@ describe('useVisiblePathways', () => {
     // Same count, but longer names
     rerender(
       <Harness
+        {...overflowingRow}
         items={['4', '5', '6'].map(buildPathway)}
         containerWidth={1000}
-        labelsWidth={1300}
-        labelOffsets={[0, 400, 900]}
       />,
     );
 
@@ -159,7 +193,7 @@ describe('useVisiblePathways', () => {
   it('shows every pathway when ResizeObserver is not available', () => {
     // @ts-expect-error ResizeObserver is removed to emulate an environment without it
     delete globalThis.ResizeObserver;
-    render(<Harness containerWidth={1000} labelsWidth={1300} labelOffsets={[0, 400, 900]} />);
+    render(<Harness {...overflowingRow} containerWidth={1000} />);
     expect(screen.getByTestId('visible')).toHaveTextContent('1,2,3');
     expect(screen.getByTestId('hidden')).toBeEmptyDOMElement();
   });

@@ -14,7 +14,7 @@ export const PathwaysList = ({
 }: PathwaysListProps) => (
   <>
     <Stack direction="horizontal" gap={1} className="h3 mb-3">
-      <Icon className='text-info-900' src={CardsStackIcon} />
+      <Icon className="text-info-900" src={CardsStackIcon} />
       <span className="text-gray-700">
         {categoryLabelPlural}
       </span>

@@ -14,20 +14,15 @@ import './index.scss';
 const PathwayLabel = ({
   pathway,
   isFirst,
-  isTruncated = false,
 }: {
   pathway: PathwayData;
   isFirst: boolean;
-  isTruncated?: boolean;
 }) => {
   // The label uses the same text color as its category badge
   const textColor = getPathwayTextColor(pathway);
   return (
     <span
-      className={classNames('course-card-pathways-label', {
-        'text-info-800': !textColor,
-        'is-truncated': isTruncated,
-      })}
+      className={classNames('course-card-pathways-label', { 'text-info-800': !textColor })}
       style={textColor ? { color: textColor } : undefined}
     >
       {!isFirst && <span className="mx-2">•</span>}
@@ -51,11 +46,11 @@ export const CourseCardPathways = ({ cardId }: { cardId: string }) => {
 
   return (
     <div className="course-card-pathways d-flex align-items-center w-100 bg-dark-100 p-1.5">
-      <Stack direction='horizontal' gap={1} className='mr-1'>
+      <Stack direction="horizontal" gap={1} className="mr-1">
         <span className="text-gray-500 flex-shrink-0">
           <FormattedMessage {...messages.includedIn} />
         </span>
-        <Icon className='text-info-900' src={CardsStackIcon} />
+        <Icon className="text-info-900" src={CardsStackIcon} />
       </Stack>
       <div ref={containerRef} className="course-card-pathways-container d-flex align-items-center">
         {visiblePathways.map((pathway, index) => (
@@ -63,7 +58,6 @@ export const CourseCardPathways = ({ cardId }: { cardId: string }) => {
             key={pathway.pathway.id}
             pathway={pathway}
             isFirst={index === 0}
-            isTruncated={hiddenPathways.length > 0 && index === visiblePathways.length - 1}
           />
         ))}
         {hiddenPathways.length > 0 && <MorePathwaysPopover pathways={hiddenPathways} />}

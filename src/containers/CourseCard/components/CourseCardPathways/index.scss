@@ -11,14 +11,6 @@
   .course-card-pathways-label {
     flex-shrink: 0;
     white-space: nowrap;
-
-    // The last visible label is truncated with an ellipsis when other labels go to the popover
-    &.is-truncated {
-      flex-shrink: 1;
-      min-width: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
   }
 
   // "+N" trigger, separated from the labels by a vertical line
