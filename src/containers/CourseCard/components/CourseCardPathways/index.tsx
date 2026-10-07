@@ -1,7 +1,9 @@
 import classNames from 'classnames';
 import { FormattedMessage } from '@openedx/frontend-base';
+import { Icon, Stack } from '@openedx/paragon';
 
 import { PathwayData, useCoursePathways } from '@src/hooks/usePathwayData';
+import { CardsStackIcon } from '@src/utils/icons/CardsStackIcon';
 
 import { MorePathwaysPopover } from './MorePathwaysPopover';
 import { useVisiblePathways } from './hooks';
@@ -49,9 +51,12 @@ export const CourseCardPathways = ({ cardId }: { cardId: string }) => {
 
   return (
     <div className="course-card-pathways d-flex align-items-center w-100 bg-dark-100 p-1.5">
-      <span className="text-gray-500 flex-shrink-0 mr-2">
-        <FormattedMessage {...messages.includedIn} />
-      </span>
+      <Stack direction='horizontal' gap={1} className='mr-1'>
+        <span className="text-gray-500 flex-shrink-0">
+          <FormattedMessage {...messages.includedIn} />
+        </span>
+        <Icon className='text-info-900' src={CardsStackIcon} />
+      </Stack>
       <div ref={containerRef} className="course-card-pathways-container d-flex align-items-center">
         {visiblePathways.map((pathway, index) => (
           <PathwayLabel

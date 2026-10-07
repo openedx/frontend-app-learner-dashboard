@@ -1,6 +1,7 @@
+import { Icon, Stack } from '@openedx/paragon';
 import { PathwayData } from '@src/hooks/usePathwayData';
+import { CardsStackIcon } from '@src/utils/icons/CardsStackIcon';
 import { PathwayCard } from '../PathwayCard';
-import { Stack } from '@openedx/paragon';
 
 export interface PathwaysListProps {
   categoryLabelPlural: string;
@@ -12,7 +13,8 @@ export const PathwaysList = ({
   pathways,
 }: PathwaysListProps) => (
   <>
-    <Stack direction="horizontal" gap={2} className="h3 mb-3">
+    <Stack direction="horizontal" gap={1} className="h3 mb-3">
+      <Icon className='text-info-900' src={CardsStackIcon} />
       <span className="text-gray-700">
         {categoryLabelPlural}
       </span>
