@@ -19,6 +19,10 @@ describe('urls', () => {
       const url = 'http://edx.org';
       expect(urls.baseAppUrl(url)).toEqual(url);
     });
+    it('returns the url if it is protocol-relative', () => {
+      const url = '//cdn.example.com/image.png';
+      expect(urls.baseAppUrl(url)).toEqual(url);
+    });
     it('returns the url if it is relative', () => {
       const url = '/edx.org';
       expect(urls.baseAppUrl(url)).toEqual(
