@@ -5,14 +5,11 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-
-  &.is-sticky {
-    position: sticky;
-    top: 0;
-    z-index: 2;
-    background-color: var(--pgn-color-white);
-    padding: var(--pgn-spacing-spacer-2) 0;
-  }
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: var(--pgn-color-white);
+  padding: var(--pgn-spacing-spacer-2) 0;
 
   &.is-stuck {
     border-bottom: 1px solid var(--pgn-color-light-400);

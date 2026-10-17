@@ -1,9 +1,11 @@
-import { getAuthenticatedHttpClient } from '@openedx/frontend-base';
+import { getAppConfig, getAuthenticatedHttpClient } from '@openedx/frontend-base';
+import { appId } from '@src/constants';
 import { apiKeys, enableEmailsAction, unenrollmentAction } from '@src/data/services/lms/constants';
 import urls from '@src/data/services/lms/urls';
 import { stringifyUrl } from '@src/data/services/lms/utils';
 import eventNames from '@src/tracking/constants';
 import type { PathwayData, PathwaysInCategoryData } from '@src/hooks/usePathwayData';
+import { buildPathwaysByCourse, pathwaysByCategory } from '@src/data/services/lms/pathwaysPilotData';
 
 type PathwaysByCourse = Record<string, PathwayData[]>;
 
@@ -89,15 +91,21 @@ const sendConfirmEmail = async (sendEmailUrl: string) => {
 // This endpoint should receive a list of course IDs and return a map
 // containing the pathways in which the learner is enrolled for each course.
 // The response must be mapped here to the `PathwayData` shape.
+// Until then, the pathway pilot serves demo pathways.
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const getPathwaysByCourse = async (_courseIds: string[], _user?: string): Promise<PathwaysByCourse> => ({});
+const getPathwaysByCourse = async (courseIds: string[], _user?: string): Promise<PathwaysByCourse> => (
+  getAppConfig(appId).ENABLE_PATHWAY_PILOT_UI === true ? buildPathwaysByCourse(courseIds) : {}
+);
 
 // TODO The backend is missing.
 // The pathways must arrive from the backend already grouped by category,
 // and the backend needs to return the category label in the plural form,
 // already internationalized. The response must be mapped here to the `PathwaysInCategoryData` shape.
+// Until then, the pathway pilot serves demo pathways.
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const getPathwaysByCategory = async (_user?: string): Promise<PathwaysInCategoryData[]> => [];
+const getPathwaysByCategory = async (_user?: string): Promise<PathwaysInCategoryData[]> => (
+  getAppConfig(appId).ENABLE_PATHWAY_PILOT_UI === true ? pathwaysByCategory : []
+);
 
 export {
   initializeList,

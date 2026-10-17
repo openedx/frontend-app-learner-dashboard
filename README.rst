@@ -176,9 +176,10 @@ These are the fields the app reads:
      - ``true``
 
    * - ``ENABLE_PATHWAY_PILOT_UI``
-     - Enables the pathways pilot, which adds the learner's pathways to the
-       dashboard UI alongside their courses.  The dashboard shows only courses
-       when this is unset.
+     - Enables the pathways pilot: serves the bundled demo pathways, since the
+       pathways backend does not exist yet, and shows the ``Course`` badge on
+       course cards.  The pathways UI is shown whenever there are pathways, so
+       it is hidden when this is unset.
      - ``true``
 
 *****

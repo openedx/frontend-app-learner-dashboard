@@ -1,7 +1,6 @@
 import { ReactElement } from 'react';
 import classNames from 'classnames';
 import { Badge } from '@openedx/paragon';
-import { useIsPathwayPilotUIEnabled } from '@src/hooks';
 import { isValidCssColor } from '@src/utils';
 
 export interface ItemBadgeProps {
@@ -22,10 +21,6 @@ export const ItemBadge = ({
     && !!categoryTextColor
     && isValidCssColor(categoryBackgroundColor)
     && isValidCssColor(categoryTextColor);
-
-  if (!useIsPathwayPilotUIEnabled()) {
-    return null;
-  }
 
   return (
     <Badge

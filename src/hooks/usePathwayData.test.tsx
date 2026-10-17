@@ -9,7 +9,7 @@ import {
   dataEngineering,
   machineLearning,
   pathwaysByCategory,
-} from '@src/data/services/lms/__mocks__/pathways';
+} from '@src/data/services/lms/pathwaysPilotData';
 import useCourseData from './useCourseData';
 import { useCoursePathways, usePathwaysByCategory } from './usePathwayData';
 

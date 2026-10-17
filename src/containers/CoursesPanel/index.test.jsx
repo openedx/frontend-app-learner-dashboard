@@ -3,7 +3,6 @@ import { IntlProvider } from '@openedx/frontend-base';
 import { MemoryRouter } from 'react-router';
 import { useInitializeLearnerHome } from '@src/data/hooks';
 import { useFilters } from '@src/data/context';
-import { useIsPathwayPilotUIEnabled } from '@src/hooks';
 import * as dataTransformers from '@src/utils/dataTransformers';
 import messagesNoCourses from '@src/containers/CoursesPanel/NoCoursesView/messages';
 import CoursesPanel from '.';
@@ -27,19 +26,38 @@ jest.mock('@src/data/context', () => ({
   })),
 }));
 
-jest.mock('@src/hooks', () => ({
-  ...jest.requireActual('@src/hooks'),
-  useIsPathwayPilotUIEnabled: jest.fn(() => false),
-}));
-
 jest.mock('@src/containers/CourseCard', () => jest.fn(() => <div>CourseCard</div>));
 jest.mock('@src/containers/CourseFilterControls', () => ({
   ActiveCourseFilters: jest.fn(() => <div>ActiveCourseFilters</div>),
   CourseFilterControls: jest.fn(() => <div>CourseFilterControls</div>),
 }));
 
+let intersectionCallback;
+const observe = jest.fn();
+const disconnect = jest.fn();
+
+// jsdom has no IntersectionObserver, so the visibility changes are triggered by hand
+class MockIntersectionObserver {
+  constructor(callback) {
+    intersectionCallback = callback;
+  }
+
+  observe = observe;
+
+  disconnect = disconnect;
+}
 
 describe('CoursesPanel', () => {
+  const originalIntersectionObserver = window.IntersectionObserver;
+
+  beforeAll(() => {
+    window.IntersectionObserver = MockIntersectionObserver;
+  });
+
+  afterAll(() => {
+    window.IntersectionObserver = originalIntersectionObserver;
+  });
+
   const createWrapper = (courseListData) => {
     const visibleList = courseListData?.visibleList || [];
     const coursesByCardId = Object.fromEntries(visibleList.map((c, i) => [`card-${i}`, { ...c, cardId: c.cardId || `card-${i}` }]));
@@ -71,50 +89,20 @@ describe('CoursesPanel', () => {
     it('displays course list slot when courses exist', () => {
       const visibleList = [{ cardId: 'foo' }, { cardId: 'bar' }, { cardId: 'baz' }];
       createWrapper({ visibleList });
-      const heading = screen.getByText(messages.myCourses.defaultMessage);
+      const heading = screen.getByText(messages.coursesTitle.defaultMessage);
       expect(heading).toBeInTheDocument();
     });
   });
 
-  describe('with the pathway pilot UI enabled', () => {
-    let intersectionCallback;
-    const observe = jest.fn();
-    const disconnect = jest.fn();
-    const originalIntersectionObserver = window.IntersectionObserver;
-
-    // jsdom has no IntersectionObserver, so the visibility changes are triggered by hand
-    class MockIntersectionObserver {
-      constructor(callback) {
-        intersectionCallback = callback;
-      }
-
-      observe = observe;
-
-      disconnect = disconnect;
-    }
-
+  describe('sticky heading', () => {
     const getHeading = (container) => container.querySelector('.course-list-heading-container');
 
     beforeEach(() => {
       jest.clearAllMocks();
-      useIsPathwayPilotUIEnabled.mockReturnValue(true);
-      window.IntersectionObserver = MockIntersectionObserver;
     });
 
-    afterEach(() => {
-      useIsPathwayPilotUIEnabled.mockReturnValue(false);
-      window.IntersectionObserver = originalIntersectionObserver;
-    });
-
-    it('renders the courses title instead of the "My Courses" heading', () => {
-      createWrapper();
-      expect(screen.getByText(messages.coursesTitle.defaultMessage)).toBeInTheDocument();
-      expect(screen.queryByText(messages.myCourses.defaultMessage)).not.toBeInTheDocument();
-    });
-
-    it('makes the heading sticky and observes the sentinel above it', () => {
+    it('observes the sentinel above the heading', () => {
       const { container } = createWrapper();
-      expect(getHeading(container)).toHaveClass('is-sticky');
       expect(getHeading(container)).not.toHaveClass('is-stuck');
       expect(observe).toHaveBeenCalledWith(getHeading(container).previousElementSibling);
     });

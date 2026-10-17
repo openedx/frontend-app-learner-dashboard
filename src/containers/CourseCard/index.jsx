@@ -13,7 +13,6 @@ import CourseCardTitle from './components/CourseCardTitle';
 
 import './CourseCard.scss';
 import { CourseCardPathways } from './components/CourseCardPathways';
-import { useIsPathwayPilotUIEnabled } from '@src/hooks';
 
 export const CourseCard = ({
   cardId,
@@ -24,9 +23,7 @@ export const CourseCard = ({
     <div className="mb-4.5 course-card" id={cardId} data-testid="CourseCard">
       <Card orientation={orientation}>
         <div className="d-flex flex-column w-100">
-          {useIsPathwayPilotUIEnabled() && (
-            <CourseCardPathways cardId={cardId} />
-          )}
+          <CourseCardPathways cardId={cardId} />
           <div {...(!isCollapsed && { className: 'd-flex' })}>
             <CourseCardImage cardId={cardId} orientation="horizontal" />
             <Card.Body>

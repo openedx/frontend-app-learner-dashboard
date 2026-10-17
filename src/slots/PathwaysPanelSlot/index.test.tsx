@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 
 import { PathwaysPanel } from '@src/containers/PathwaysPanel';
-import { pathwaysByCategory } from '@src/data/services/lms/__mocks__/pathways';
+import { pathwaysByCategory } from '@src/data/services/lms/pathwaysPilotData';
 import PathwaysPanelSlot from '.';
 
 jest.mock('@src/containers/PathwaysPanel', () => ({

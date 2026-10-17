@@ -2,7 +2,6 @@ import { render, screen } from '@testing-library/react';
 import { IntlProvider } from '@openedx/frontend-base';
 import { useSelectSessionModal } from '@src/data/context';
 import { useInitializeLearnerHome } from '@src/data/hooks';
-import { useIsPathwayPilotUIEnabled } from '@src/hooks';
 import { usePathwaysByCategory } from '@src/hooks/usePathwayData';
 import PathwaysPanelSlot from '@src/slots/PathwaysPanelSlot';
 
@@ -16,10 +15,6 @@ jest.mock('@src/data/context', () => ({
 
 jest.mock('@src/data/hooks', () => ({
   useInitializeLearnerHome: jest.fn(),
-}));
-
-jest.mock('@src/hooks', () => ({
-  useIsPathwayPilotUIEnabled: jest.fn(),
 }));
 
 jest.mock('@src/hooks/usePathwayData', () => ({
@@ -47,10 +42,8 @@ describe('Dashboard', () => {
       hasCourses = true,
       initIsPending = true,
       showSelectSessionModal = true,
-      isPathwayPilotUIEnabled = false,
     } = props;
     hooks.useDashboardMessages.mockReturnValue({ pageTitle });
-    useIsPathwayPilotUIEnabled.mockReturnValue(isPathwayPilotUIEnabled);
     usePathwaysByCategory.mockReturnValue(pathwaysByCategory);
     const dataMocked = { data: hasCourses ? { courses: [1, 2] } : { courses: [] }, isPending: initIsPending };
     useInitializeLearnerHome.mockReturnValue(dataMocked);
@@ -93,21 +86,12 @@ describe('Dashboard', () => {
         createWrapper({ initIsPending: false });
         expect(screen.getByText('CoursesPanel')).toBeInTheDocument();
       });
-      describe('pathway pilot UI enabled', () => {
-        it('should render dashboard title and PathwaysPanelSlot with pathways', () => {
-          createWrapper({ initIsPending: false, isPathwayPilotUIEnabled: true });
-          const title = screen.getByRole('heading', { level: 2, name: messages.dashboardTitle.defaultMessage });
-          expect(title).toHaveClass('dashboard-title');
-          expect(screen.getByText('PathwaysPanelSlot')).toBeInTheDocument();
-          expect(PathwaysPanelSlot).toHaveBeenCalledWith({ pathwaysByCategory }, expect.anything());
-        });
-      });
-      describe('pathway pilot UI disabled', () => {
-        it('should not render dashboard title nor PathwaysPanelSlot', () => {
-          createWrapper({ initIsPending: false, isPathwayPilotUIEnabled: false });
-          expect(screen.queryByText(messages.dashboardTitle.defaultMessage)).not.toBeInTheDocument();
-          expect(screen.queryByText('PathwaysPanelSlot')).not.toBeInTheDocument();
-        });
+      it('should render dashboard title and PathwaysPanelSlot with pathways', () => {
+        createWrapper({ initIsPending: false });
+        const title = screen.getByRole('heading', { level: 2, name: messages.dashboardTitle.defaultMessage });
+        expect(title).toHaveClass('dashboard-title');
+        expect(screen.getByText('PathwaysPanelSlot')).toBeInTheDocument();
+        expect(PathwaysPanelSlot).toHaveBeenCalledWith({ pathwaysByCategory }, expect.anything());
       });
     });
   });

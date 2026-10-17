@@ -1,31 +1,12 @@
 import { render, screen } from '@testing-library/react';
 
-import { useIsPathwayPilotUIEnabled } from '@src/hooks';
 import { ItemBadge, ItemBadgeProps } from './ItemBadge';
-
-jest.mock('@src/hooks', () => ({
-  useIsPathwayPilotUIEnabled: jest.fn(),
-}));
-
-const mockUseIsPathwayPilotUIEnabled = useIsPathwayPilotUIEnabled as jest.MockedFunction<
-  typeof useIsPathwayPilotUIEnabled
->;
 
 const renderComponent = (props: Partial<ItemBadgeProps> = {}) => render(
   <ItemBadge categoryLabel="Tutorial" {...props} />,
 );
 
 describe('ItemBadge', () => {
-  beforeEach(() => {
-    mockUseIsPathwayPilotUIEnabled.mockReturnValue(true);
-  });
-
-  it('renders nothing when the pathway pilot UI is disabled', () => {
-    mockUseIsPathwayPilotUIEnabled.mockReturnValue(false);
-    const { container } = renderComponent();
-    expect(container).toBeEmptyDOMElement();
-  });
-
   it('renders the category label with the default colors', () => {
     renderComponent();
     const badge = screen.getByText('Tutorial');

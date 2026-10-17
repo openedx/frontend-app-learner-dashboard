@@ -4,7 +4,6 @@ import React, {
 import classNames from 'classnames';
 
 import { FormattedMessage } from '@openedx/frontend-base';
-import { useIsPathwayPilotUIEnabled } from '@src/hooks';
 import { useInitializeLearnerHome } from '@src/data/hooks';
 import { MenuBook } from '@openedx/paragon/icons';
 import {
@@ -27,7 +26,6 @@ import { Icon, Stack } from '@openedx/paragon';
  * @returns List of courses as CourseCards or empty state
 */
 export const CoursesPanel = () => {
-  const isPathwayPilotUIEnabled = useIsPathwayPilotUIEnabled();
   const { data } = useInitializeLearnerHome();
   const hasCourses = useMemo(() => data?.courses?.length > 0, [data]);
 
@@ -57,7 +55,7 @@ export const CoursesPanel = () => {
   const sentinelRef = useRef(null);
   const [isStuck, setIsStuck] = useState(false);
   useEffect(() => {
-    if (!isPathwayPilotUIEnabled || !sentinelRef.current) {
+    if (!sentinelRef.current) {
       return undefined;
     }
     const observer = new IntersectionObserver(
@@ -65,7 +63,7 @@ export const CoursesPanel = () => {
     );
     observer.observe(sentinelRef.current);
     return () => observer.disconnect();
-  }, [isPathwayPilotUIEnabled]);
+  }, []);
 
   const courseListData = {
     filterOptions: filters,
@@ -77,26 +75,12 @@ export const CoursesPanel = () => {
 
   return (
     <div className="course-list-container">
-      {isPathwayPilotUIEnabled && <div ref={sentinelRef} />}
-      <div
-        className={classNames('course-list-heading-container mb-3', {
-          'is-sticky': isPathwayPilotUIEnabled,
-          'is-stuck': isPathwayPilotUIEnabled && isStuck,
-        })}
-      >
-        {isPathwayPilotUIEnabled
-          ? (
-            <Stack direction='horizontal' className='h3 text-gray-700 ml-2' gap={2}>
-              <Icon src={MenuBook} />
-              <FormattedMessage {...messages.coursesTitle} />
-            </Stack>
-          )
-          : (
-            <h2 className="dashboard-title">
-              <FormattedMessage {...messages.myCourses} />
-            </h2>
-          )
-        }
+      <div ref={sentinelRef} />
+      <div className={classNames('course-list-heading-container mb-3', { 'is-stuck': isStuck })}>
+        <Stack direction='horizontal' className='h3 text-gray-700 ml-2' gap={2}>
+          <Icon src={MenuBook} />
+          <FormattedMessage {...messages.coursesTitle} />
+        </Stack>
         <div className="course-filter-controls-container mr-2">
           <CourseFilterControls />
         </div>

@@ -1,12 +1,11 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useMasquerade } from '@src/data/context';
-import useIsPathwayPilotUIEnabled from '@src/hooks/useIsPathwayPilotUIEnabled';
 import {
   dataEngineering,
   machineLearning,
   pathwaysByCategory,
-} from '@src/data/services/lms/__mocks__/pathways';
+} from '@src/data/services/lms/pathwaysPilotData';
 import {
   useInitializeLearnerHome,
   usePathwaysByCategory,
@@ -22,7 +21,6 @@ jest.mock('@openedx/frontend-base', () => ({
 }));
 jest.mock('@src/data/context');
 jest.mock('@src/data/services/lms/api');
-jest.mock('@src/hooks/useIsPathwayPilotUIEnabled', () => jest.fn());
 jest.mock('@src/utils/dataTransformers', () => ({
   getTransformedCourseDataObject: jest.fn((courses) => {
     const result = {};
@@ -44,9 +42,6 @@ jest.mock('@src/data/contexts/GlobalDataContext', () => {
 });
 
 const mockUseMasquerade = useMasquerade as jest.MockedFunction<typeof useMasquerade>;
-const mockUseIsPathwayPilotUIEnabled = useIsPathwayPilotUIEnabled as jest.MockedFunction<
-  typeof useIsPathwayPilotUIEnabled
->;
 
 const mockMasqueradeUser = (masqueradeUser?: string) => {
   mockUseMasquerade.mockReturnValue({
@@ -246,7 +241,6 @@ describe('queryHooks', () => {
 
     beforeEach(() => {
       mockMasqueradeUser(undefined);
-      mockUseIsPathwayPilotUIEnabled.mockReturnValue(true);
       (api.getPathwaysByCourse as jest.Mock).mockResolvedValue(pathwaysByCourse);
     });
 
@@ -272,20 +266,11 @@ describe('queryHooks', () => {
       expect(result.current.fetchStatus).toBe('idle');
       expect(api.getPathwaysByCourse).not.toHaveBeenCalled();
     });
-
-    it('does not fetch anything when the pathway pilot UI is disabled', () => {
-      mockUseIsPathwayPilotUIEnabled.mockReturnValue(false);
-      const { result } = renderHook(() => usePathwaysByCourse(courseIds), { wrapper: createWrapper() });
-
-      expect(result.current.fetchStatus).toBe('idle');
-      expect(api.getPathwaysByCourse).not.toHaveBeenCalled();
-    });
   });
 
   describe('usePathwaysByCategory', () => {
     beforeEach(() => {
       mockMasqueradeUser(undefined);
-      mockUseIsPathwayPilotUIEnabled.mockReturnValue(true);
       (api.getPathwaysByCategory as jest.Mock).mockResolvedValue(pathwaysByCategory);
     });
 
@@ -303,14 +288,6 @@ describe('queryHooks', () => {
 
       await waitFor(() => expect(result.current.isSuccess).toBe(true));
       expect(api.getPathwaysByCategory).toHaveBeenCalledWith('test-user');
-    });
-
-    it('does not fetch anything when the pathway pilot UI is disabled', () => {
-      mockUseIsPathwayPilotUIEnabled.mockReturnValue(false);
-      const { result } = renderHook(() => usePathwaysByCategory(), { wrapper: createWrapper() });
-
-      expect(result.current.fetchStatus).toBe('idle');
-      expect(api.getPathwaysByCategory).not.toHaveBeenCalled();
     });
   });
 });
