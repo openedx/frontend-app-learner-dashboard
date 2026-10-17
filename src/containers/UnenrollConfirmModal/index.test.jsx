@@ -17,6 +17,10 @@ jest.mock('@src/data/hooks', () => ({
   useInitializeLearnerHome: jest.fn(),
 }));
 
+jest.mock('@src/hooks/usePathwayData', () => ({
+  useCoursePathways: jest.fn(() => []),
+}));
+
 const mockRefreshList = jest.fn();
 useInitializeLearnerHome.mockReturnValue({ refetch: mockRefreshList });
 
@@ -45,7 +49,7 @@ describe('UnenrollConfirmModal component', () => {
   it('modalStates.confirm display correct component and to have class shadow', () => {
     hooks.useUnenrollData.mockReturnValueOnce(hookProps);
     render(<IntlProvider><UnenrollConfirmModal {...props} /></IntlProvider>);
-    const confirmHeader = screen.getByText(formatMessage(messages.confirmHeader));
+    const confirmHeader = screen.getByRole('heading', { name: /^Unenroll from/ });
     expect(confirmHeader).toBeInTheDocument();
     const dialogContainer = screen.getByRole('dialog').firstElementChild;
     expect(dialogContainer).toHaveClass('shadow');
