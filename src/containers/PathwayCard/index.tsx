@@ -8,7 +8,7 @@ import { ItemBadge } from '@src/components/ItemBadge';
 import './index.scss';
 
 export const PathwayCard = ({ pathway }: { pathway: PathwayData }) => (
-  <Card className="pathway-card">
+  <Card className="dashboard-pathway-card">
     <Card.Header
       title={pathway.pathway.content.displayName}
       subtitle={pathway.provider?.name ?? null}
