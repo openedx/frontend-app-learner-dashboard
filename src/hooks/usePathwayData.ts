@@ -16,6 +16,7 @@ export interface PathwayData {
     courseCount: number;
     category?: string;
     categoryLabel?: string;
+    categoryLabelPlural?: string;
     categoryBackgroundColor?: string;
     categoryTextColor?: string;
   };
@@ -28,7 +29,6 @@ export interface PathwayData {
 }
 
 export interface PathwaysInCategoryData {
-  categoryLabelPlural: string;
   pathways: PathwayData[];
 }
 

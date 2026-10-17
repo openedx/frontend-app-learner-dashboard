@@ -7,6 +7,7 @@ export const dataEngineering: PathwayData = {
     courseCount: 6,
     category: 'bootcamp',
     categoryLabel: 'Bootcamp',
+    categoryLabelPlural: 'Bootcamps',
   },
   progress: { completedCourseCount: 0 },
   provider: { name: 'MIT OpenCourseWare' },
@@ -19,6 +20,7 @@ export const fullStack: PathwayData = {
     courseCount: 12,
     category: 'bootcamp',
     categoryLabel: 'Bootcamp',
+    categoryLabelPlural: 'Bootcamps',
   },
   progress: { completedCourseCount: 5 },
   provider: { name: 'OpenCraft' },
@@ -31,6 +33,7 @@ export const machineLearning: PathwayData = {
     courseCount: 12,
     category: 'tutorial',
     categoryLabel: 'Tutorial',
+    categoryLabelPlural: 'Tutorials',
     categoryBackgroundColor: '#FCE4F3',
     categoryTextColor: '#9B1766',
   },
@@ -45,6 +48,7 @@ export const loremIpsum: PathwayData = {
     courseCount: 4,
     category: 'tutorial',
     categoryLabel: 'Tutorial',
+    categoryLabelPlural: 'Tutorials',
     categoryBackgroundColor: '#FCE4F3',
     categoryTextColor: '#9B1766',
   },
@@ -59,6 +63,7 @@ export const sedUt: PathwayData = {
     courseCount: 3,
     category: 'tutorial',
     categoryLabel: 'Tutorial',
+    categoryLabelPlural: 'Tutorials',
     categoryBackgroundColor: '#FCE4F3',
     categoryTextColor: '#9B1766',
   },
@@ -73,6 +78,7 @@ export const nemoEnim: PathwayData = {
     courseCount: 5,
     category: 'tutorial',
     categoryLabel: 'Tutorial',
+    categoryLabelPlural: 'Tutorials',
     categoryBackgroundColor: '#FCE4F3',
     categoryTextColor: '#9B1766',
   },
@@ -87,6 +93,7 @@ export const dataScience: PathwayData = {
     courseCount: 8,
     category: 'certificate',
     categoryLabel: 'Certificate',
+    categoryLabelPlural: 'Certificates',
     categoryBackgroundColor: '#E6DDFF',
     categoryTextColor: '#4A00B8',
   },
@@ -100,24 +107,16 @@ export const atVero: PathwayData = {
     courseCount: 7,
     category: 'bootcamp',
     categoryLabel: 'Bootcamp',
+    categoryLabelPlural: 'Bootcamps',
   },
   progress: { completedCourseCount: 3 },
   provider: { name: 'MIT OpenCourseWare' },
 };
 
 export const pathwaysByCategory: PathwaysInCategoryData[] = [
-  {
-    categoryLabelPlural: 'Bootcamps',
-    pathways: [dataEngineering, fullStack, atVero],
-  },
-  {
-    categoryLabelPlural: 'Tutorials',
-    pathways: [machineLearning, loremIpsum, sedUt, nemoEnim],
-  },
-  {
-    categoryLabelPlural: 'Certificates',
-    pathways: [dataScience],
-  },
+  { pathways: [dataEngineering, fullStack, atVero] },
+  { pathways: [machineLearning, loremIpsum, sedUt, nemoEnim] },
+  { pathways: [dataScience] },
 ];
 
 // How many labels go to the "+N" popover depends on the card width; the counts below are

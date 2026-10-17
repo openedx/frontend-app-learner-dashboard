@@ -7,11 +7,12 @@ jest.mock('./PathwaysList', () => ({
   PathwaysList: jest.fn(({ categoryLabelPlural }) => <div>PathwaysList {categoryLabelPlural}</div>),
 }));
 
-const createPathway = (id: string): PathwayData => ({
+const createPathway = (id: string, categoryLabelPlural?: string): PathwayData => ({
   pathway: {
     id,
     content: { displayName: `Pathway ${id}` },
     courseCount: 4,
+    categoryLabelPlural,
   },
 });
 
@@ -20,8 +21,8 @@ describe('PathwaysPanel', () => {
     render(
       <PathwaysPanel
         pathwaysByCategory={[
-          { categoryLabelPlural: 'Bootcamps', pathways: [createPathway('pathway-1')] },
-          { categoryLabelPlural: 'Tutorials', pathways: [createPathway('pathway-2')] },
+          { pathways: [createPathway('pathway-1', 'Bootcamps')] },
+          { pathways: [createPathway('pathway-2', 'Tutorials')] },
         ]}
       />,
     );
@@ -33,19 +34,19 @@ describe('PathwaysPanel', () => {
     render(
       <PathwaysPanel
         pathwaysByCategory={[
-          { categoryLabelPlural: 'Bootcamps', pathways: [createPathway('pathway-1')] },
-          { categoryLabelPlural: 'Tutorials', pathways: [] },
+          { pathways: [createPathway('pathway-1', 'Bootcamps')] },
+          { pathways: [] },
         ]}
       />,
     );
     expect(screen.getByText('PathwaysList Bootcamps')).toBeInTheDocument();
-    expect(screen.queryByText('PathwaysList Tutorials')).not.toBeInTheDocument();
+    expect(screen.getAllByText(/^PathwaysList/)).toHaveLength(1);
   });
 
   it('does not render categories without label', () => {
     render(
       <PathwaysPanel
-        pathwaysByCategory={[{ categoryLabelPlural: '', pathways: [createPathway('pathway-1')] }]}
+        pathwaysByCategory={[{ pathways: [createPathway('pathway-1')] }]}
       />,
     );
     expect(screen.queryByText(/^PathwaysList/)).not.toBeInTheDocument();

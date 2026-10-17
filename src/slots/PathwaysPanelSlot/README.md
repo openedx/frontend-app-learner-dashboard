@@ -27,10 +27,10 @@ const myComponent = ({ pathwaysByCategory }) => (
   <div className="border border-primary rounded bg-light-200 p-4 mb-4">
     <h3 className="h4 text-primary">My custom pathways panel</h3>
     <ul className="list-unstyled mb-0">
-      {pathwaysByCategory.map(({ categoryLabelPlural, pathways }) => (
-        <li key={categoryLabelPlural} className="d-flex align-items-center py-1">
+      {pathwaysByCategory.map(({ pathways }) => (
+        <li key={pathways[0].pathway.id} className="d-flex align-items-center py-1">
           <span className="badge badge-pill badge-primary mr-2">{pathways.length}</span>
-          {categoryLabelPlural}
+          {pathways[0].pathway.categoryLabelPlural}
         </li>
       ))}
     </ul>

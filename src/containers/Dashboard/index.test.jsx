@@ -39,7 +39,7 @@ jest.mock('./DashboardLayout', () => jest.fn(({ children }) => <div>DashboardLay
 jest.mock('@src/slots/PathwaysPanelSlot', () => jest.fn(() => <div>PathwaysPanelSlot</div>));
 
 const pageTitle = 'test-page-title';
-const pathwaysByCategory = [{ categoryLabelPlural: 'Bootcamps', pathways: [] }];
+const pathwaysByCategory = [{ pathways: [] }];
 
 describe('Dashboard', () => {
   const createWrapper = (props = {}) => {

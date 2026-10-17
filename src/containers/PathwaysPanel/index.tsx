@@ -9,14 +9,15 @@ export const PathwaysPanel = ({
   pathwaysByCategory,
 }: PathwaysPanelProps) => (
   <>
-    {pathwaysByCategory.map((pathwayList) => (
-      pathwayList.categoryLabelPlural && pathwayList.pathways?.length
+    {pathwaysByCategory.map(({ pathways }) => {
+      const categoryLabelPlural = pathways?.[0]?.pathway.categoryLabelPlural;
+      return categoryLabelPlural
         ? (
-            <div className="mb-5" key={pathwayList.categoryLabelPlural}>
-              <PathwaysList {...pathwayList} />
+            <div className="mb-5" key={categoryLabelPlural}>
+              <PathwaysList categoryLabelPlural={categoryLabelPlural} pathways={pathways} />
             </div>
           )
-        : null
-    ))}
+        : null;
+    })}
   </>
 );
