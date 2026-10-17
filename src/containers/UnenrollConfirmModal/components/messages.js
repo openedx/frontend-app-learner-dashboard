@@ -1,15 +1,20 @@
 import { defineMessages } from '@openedx/frontend-base';
 
 const messages = defineMessages({
-  confirmHeader: {
-    id: 'learner-dash.unenrollConfirm.confirm.header',
-    description: 'Header for confirm unenroll modal',
-    defaultMessage: 'Confirm Unenrollment',
+  confirmHeaderWithCourse: {
+    id: 'learner-dash.unenrollConfirm.confirm.header.withCourse',
+    description: 'Header for confirm unenroll modal, with the name of the course',
+    defaultMessage: 'Unenroll from {courseTitle}?',
   },
   confirmText: {
     id: 'learner-dash.unenrollConfirm.confirm.text',
     description: 'Text for confirm unenroll modal',
     defaultMessage: 'Are you sure you want to unenroll from the course {courseTitle} ?',
+  },
+  confirmTextWithPathways: {
+    id: 'learner-dash.unenrollConfirm.confirm.text.withPathways',
+    description: 'Text for confirm unenroll modal when the course is part of pathways the learner is enrolled in.',
+    defaultMessage: 'This course is part of {categories} you’re enrolled in. You’ll lose access to the course until you enroll again. Re-enrolling may put you in a different session, and your progress might not carry over.',
   },
   confirmCancel: {
     id: 'learner-dash.unenrollConfirm.confirm.cancel',

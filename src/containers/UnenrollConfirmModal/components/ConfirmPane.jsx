@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useCourseData } from '@src/hooks';
+import { useCoursePathways } from '@src/hooks/usePathwayData';
 
-import { useIntl } from '@openedx/frontend-base';
+import { FormattedMessage, useIntl } from '@openedx/frontend-base';
 import {
   ActionRow,
   Button,
@@ -15,20 +16,39 @@ export const ConfirmPane = ({
   handleClose,
   handleConfirm,
 }) => {
-  const { formatMessage } = useIntl();
+  const { formatList } = useIntl();
   const courseData = useCourseData(cardId);
+  const pathways = useCoursePathways(cardId);
+  // A course can be part of several pathways of the same category, so each category is listed once
+  const categoryLabels = [...new Set(
+    pathways.map(({ pathway }) => pathway.categoryLabelPlural).filter(Boolean),
+  )];
   const courseName = courseData?.course?.courseName || '';
   const courseTitle = <span className="font-italic">“{courseName}”</span>;
   return (
     <>
-      <h4>{formatMessage(messages.confirmHeader)}</h4>
-      <p className="py-2">{formatMessage(messages.confirmText, { courseTitle })}</p>
+      <h4>
+        <FormattedMessage {...messages.confirmHeaderWithCourse} values={{ courseTitle }} />
+      </h4>
+      <p className="py-2">
+        {categoryLabels.length > 0
+          ? (
+            <FormattedMessage
+              {...messages.confirmTextWithPathways}
+              values={{ categories: formatList(categoryLabels, { type: 'conjunction' }) }}
+            />
+          )
+          : (
+            <FormattedMessage {...messages.confirmText} values={{ courseTitle }} />
+          )
+        }
+      </p>
       <ActionRow>
         <Button variant="tertiary" onClick={handleClose}>
-          {formatMessage(messages.confirmCancel)}
+          <FormattedMessage {...messages.confirmCancel} />
         </Button>
         <Button onClick={handleConfirm}>
-          {formatMessage(messages.confirmUnenroll)}
+          <FormattedMessage {...messages.confirmUnenroll} />
         </Button>
       </ActionRow>
     </>
