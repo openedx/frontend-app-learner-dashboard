@@ -1,4 +1,5 @@
-import { getAuthenticatedHttpClient } from '@openedx/frontend-base';
+import { getAppConfig, getAuthenticatedHttpClient } from '@openedx/frontend-base';
+import { buildPathwaysByCourse, pathwaysByCategory } from '@src/data/services/lms/pathwaysPilotData';
 import urls from '@src/data/services/lms/urls';
 import { stringifyUrl } from '@src/data/services/lms/utils';
 import {
@@ -11,11 +12,14 @@ import {
   logShare,
   createCreditRequest,
   sendConfirmEmail,
+  getPathwaysByCourse,
+  getPathwaysByCategory,
 } from './api';
 
 // Mock dependencies
 jest.mock('@openedx/frontend-base', () => ({
   ...jest.requireActual('@openedx/frontend-base'),
+  getAppConfig: jest.fn(() => ({})),
   getAuthenticatedHttpClient: jest.fn(),
 }));
 jest.mock('@src/data/services/lms/constants', () => ({
@@ -264,6 +268,31 @@ describe('API functions', () => {
 
       expect(mockHttpClient.post).toHaveBeenCalledWith('https://example.com/send-email');
       expect(result).toEqual(mockResponse);
+    });
+  });
+
+  // Until the backend exists, the learner has no pathways
+  describe('getPathwaysByCourse', () => {
+    const courseIds = ['course-v1:edX+DemoX+Demo_Course'];
+
+    it('returns an empty map', async () => {
+      await expect(getPathwaysByCourse(courseIds)).resolves.toEqual({});
+    });
+
+    it('returns the demo pathways when the pathway pilot UI is enabled', async () => {
+      (getAppConfig as jest.Mock).mockReturnValueOnce({ ENABLE_PATHWAY_PILOT_UI: true });
+      await expect(getPathwaysByCourse(courseIds)).resolves.toEqual(buildPathwaysByCourse(courseIds));
+    });
+  });
+
+  describe('getPathwaysByCategory', () => {
+    it('returns an empty list', async () => {
+      await expect(getPathwaysByCategory()).resolves.toEqual([]);
+    });
+
+    it('returns the demo pathways when the pathway pilot UI is enabled', async () => {
+      (getAppConfig as jest.Mock).mockReturnValueOnce({ ENABLE_PATHWAY_PILOT_UI: true });
+      await expect(getPathwaysByCategory()).resolves.toEqual(pathwaysByCategory);
     });
   });
 

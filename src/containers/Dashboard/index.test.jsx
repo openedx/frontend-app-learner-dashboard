@@ -2,8 +2,11 @@ import { render, screen } from '@testing-library/react';
 import { IntlProvider } from '@openedx/frontend-base';
 import { useSelectSessionModal } from '@src/data/context';
 import { useInitializeLearnerHome } from '@src/data/hooks';
+import { usePathwaysByCategory } from '@src/hooks/usePathwayData';
+import PathwaysPanelSlot from '@src/slots/PathwaysPanelSlot';
 
 import hooks from './hooks';
+import messages from './messages';
 import Dashboard from '.';
 
 jest.mock('@src/data/context', () => ({
@@ -12,6 +15,10 @@ jest.mock('@src/data/context', () => ({
 
 jest.mock('@src/data/hooks', () => ({
   useInitializeLearnerHome: jest.fn(),
+}));
+
+jest.mock('@src/hooks/usePathwayData', () => ({
+  usePathwaysByCategory: jest.fn(),
 }));
 
 jest.mock('./hooks', () => ({
@@ -23,9 +30,11 @@ jest.mock('../../slots/DashboardModalSlot', () => jest.fn(() => <div>DashboardMo
 jest.mock('@src/containers/CoursesPanel', () => jest.fn(() => <div>CoursesPanel</div>));
 jest.mock('./LoadingView', () => jest.fn(() => <div>LoadingView</div>));
 jest.mock('@src/containers/SelectSessionModal', () => jest.fn(() => <div>SelectSessionModal</div>));
-jest.mock('./DashboardLayout', () => jest.fn(() => <div>DashboardLayout</div>));
+jest.mock('./DashboardLayout', () => jest.fn(({ children }) => <div>DashboardLayout{children}</div>));
+jest.mock('@src/slots/PathwaysPanelSlot', () => jest.fn(() => <div>PathwaysPanelSlot</div>));
 
 const pageTitle = 'test-page-title';
+const pathwaysByCategory = [{ pathways: [] }];
 
 describe('Dashboard', () => {
   const createWrapper = (props = {}) => {
@@ -35,6 +44,7 @@ describe('Dashboard', () => {
       showSelectSessionModal = true,
     } = props;
     hooks.useDashboardMessages.mockReturnValue({ pageTitle });
+    usePathwaysByCategory.mockReturnValue(pathwaysByCategory);
     const dataMocked = { data: hasCourses ? { courses: [1, 2] } : { courses: [] }, isPending: initIsPending };
     useInitializeLearnerHome.mockReturnValue(dataMocked);
     useSelectSessionModal.mockReturnValue({ selectSessionModal: showSelectSessionModal ? { cardId: 1 } : null });
@@ -71,6 +81,17 @@ describe('Dashboard', () => {
         createWrapper({ initIsPending: false });
         const dashboardLayout = screen.getByText('DashboardLayout');
         expect(dashboardLayout).toBeInTheDocument();
+      });
+      it('should render CoursesPanel', () => {
+        createWrapper({ initIsPending: false });
+        expect(screen.getByText('CoursesPanel')).toBeInTheDocument();
+      });
+      it('should render dashboard title and PathwaysPanelSlot with pathways', () => {
+        createWrapper({ initIsPending: false });
+        const title = screen.getByRole('heading', { level: 2, name: messages.dashboardTitle.defaultMessage });
+        expect(title).toHaveClass('dashboard-title');
+        expect(screen.getByText('PathwaysPanelSlot')).toBeInTheDocument();
+        expect(PathwaysPanelSlot).toHaveBeenCalledWith({ pathwaysByCategory }, expect.anything());
       });
     });
   });
