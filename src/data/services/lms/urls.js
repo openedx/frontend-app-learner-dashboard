@@ -15,7 +15,9 @@ const updateEmailSettings = () => `${getApiUrl()}/change_email_settings`;
 const entitlementEnrollment = (uuid) => `${getApiUrl()}/entitlements/v1/entitlements/${uuid}/enrollments`;
 
 // if url is null or absolute, return it as is
-export const updateUrl = (base, url) => ((url == null || url.startsWith('http://') || url.startsWith('https://')) ? url : `${base}${url}`);
+export const updateUrl = (base, url) => (
+  url == null || /^(https?:)?\/\//.test(url) ? url : `${base}${url}`
+);
 
 export const baseAppUrl = (url) => updateUrl(getBaseUrl(), url);
 
