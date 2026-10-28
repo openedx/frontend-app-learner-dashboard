@@ -54,10 +54,8 @@ export const CoursesPanel = () => {
   // The heading is stuck to the top once the sentinel right above it scrolls out of view
   const sentinelRef = useRef(null);
   const [isStuck, setIsStuck] = useState(false);
+  // The sentinel is always rendered, so the ref is set by the time the effect runs
   useEffect(() => {
-    if (!sentinelRef.current) {
-      return undefined;
-    }
     const observer = new IntersectionObserver(
       ([entry]) => setIsStuck(!entry.isIntersecting),
     );
