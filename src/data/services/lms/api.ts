@@ -3,6 +3,7 @@ import { apiKeys, enableEmailsAction, unenrollmentAction } from '@src/data/servi
 import urls from '@src/data/services/lms/urls';
 import { stringifyUrl } from '@src/data/services/lms/utils';
 import eventNames from '@src/tracking/constants';
+import type { PathwaysInCategoryData } from '@src/hooks/usePathwayData';
 
 const initializeList = async (user) => {
   const { data } = await getAuthenticatedHttpClient().get(
@@ -82,6 +83,13 @@ const sendConfirmEmail = async (sendEmailUrl: string) => {
   return response;
 };
 
+// TODO The backend is missing.
+// The pathways must arrive from the backend already grouped by category,
+// and the backend needs to return the category label in the plural form,
+// already internationalized. The response must be mapped here to the `PathwaysInCategoryData` shape.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const getPathwaysByCategory = async (_user?: string): Promise<PathwaysInCategoryData[]> => [];
+
 export {
   initializeList,
   unenrollFromCourse,
@@ -92,4 +100,5 @@ export {
   logShare,
   createCreditRequest,
   sendConfirmEmail,
+  getPathwaysByCategory,
 };

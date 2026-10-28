@@ -11,6 +11,7 @@ import {
   logShare,
   createCreditRequest,
   sendConfirmEmail,
+  getPathwaysByCategory,
 } from './api';
 
 // Mock dependencies
@@ -264,6 +265,13 @@ describe('API functions', () => {
 
       expect(mockHttpClient.post).toHaveBeenCalledWith('https://example.com/send-email');
       expect(result).toEqual(mockResponse);
+    });
+  });
+
+  // Until the backend exists, the learner has no pathways
+  describe('getPathwaysByCategory', () => {
+    it('returns an empty list', async () => {
+      await expect(getPathwaysByCategory()).resolves.toEqual([]);
     });
   });
 
