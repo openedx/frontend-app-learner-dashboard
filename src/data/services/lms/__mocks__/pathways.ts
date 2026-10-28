@@ -134,6 +134,8 @@ const coursePathwaySets: PathwayData[][] = [
   [],
   // Labels with different custom colors
   [dataScience, fullStack],
+  // One pathway of each category, listed in the unenroll modal
+  [dataEngineering, machineLearning, dataScience],
 ];
 
 /**
