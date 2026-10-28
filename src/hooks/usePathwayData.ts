@@ -1,4 +1,11 @@
-import { usePathwaysByCategory as usePathwaysByCategoryQuery } from '@src/data/hooks';
+import { useMemo } from 'react';
+
+import {
+  useInitializeLearnerHome,
+  usePathwaysByCategory as usePathwaysByCategoryQuery,
+  usePathwaysByCourse,
+} from '@src/data/hooks';
+import useCourseData from '@src/hooks/useCourseData';
 
 export interface PathwayData {
   pathway: {
@@ -26,8 +33,21 @@ export interface PathwaysInCategoryData {
 }
 
 const EMPTY_PATHWAYS_BY_CATEGORY: PathwaysInCategoryData[] = [];
+const EMPTY_PATHWAYS: PathwayData[] = [];
 
 export const usePathwaysByCategory = (): PathwaysInCategoryData[] => {
   const { data } = usePathwaysByCategoryQuery();
   return data ?? EMPTY_PATHWAYS_BY_CATEGORY;
+};
+
+export const useCoursePathways = (cardId: string): PathwayData[] => {
+  const { data } = useInitializeLearnerHome();
+  // Every card requests the pathways of all the courses, so they share a single request
+  const courseIds = useMemo(
+    () => (data?.courses || []).map((course) => course.courseRun?.courseId).filter(Boolean),
+    [data],
+  );
+  const { data: pathwaysByCourse } = usePathwaysByCourse(courseIds);
+  const courseId = useCourseData(cardId)?.courseRun?.courseId;
+  return (courseId && pathwaysByCourse?.[courseId]) || EMPTY_PATHWAYS;
 };

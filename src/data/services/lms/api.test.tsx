@@ -11,6 +11,7 @@ import {
   logShare,
   createCreditRequest,
   sendConfirmEmail,
+  getPathwaysByCourse,
   getPathwaysByCategory,
 } from './api';
 
@@ -269,6 +270,12 @@ describe('API functions', () => {
   });
 
   // Until the backend exists, the learner has no pathways
+  describe('getPathwaysByCourse', () => {
+    it('returns an empty map', async () => {
+      await expect(getPathwaysByCourse(['course-v1:edX+DemoX+Demo_Course'])).resolves.toEqual({});
+    });
+  });
+
   describe('getPathwaysByCategory', () => {
     it('returns an empty list', async () => {
       await expect(getPathwaysByCategory()).resolves.toEqual([]);

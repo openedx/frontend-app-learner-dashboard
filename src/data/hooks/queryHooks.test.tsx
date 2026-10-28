@@ -1,10 +1,15 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useMasquerade } from '@src/data/context';
-import { pathwaysByCategory } from '@src/data/services/lms/__mocks__/pathways';
+import {
+  dataEngineering,
+  machineLearning,
+  pathwaysByCategory,
+} from '@src/data/services/lms/__mocks__/pathways';
 import {
   useInitializeLearnerHome,
   usePathwaysByCategory,
+  usePathwaysByCourse,
 } from './index';
 import { learnerDashboardQueryKeys } from './queryKeys';
 import * as api from '../services/lms/api';
@@ -230,6 +235,39 @@ describe('queryHooks', () => {
       expect(result.current.isRefetchError).toBe(false);
     });
   });
+  describe('usePathwaysByCourse', () => {
+    const courseIds = ['course-1', 'course-2'];
+    const pathwaysByCourse = { 'course-1': [dataEngineering, machineLearning] };
+
+    beforeEach(() => {
+      mockMasqueradeUser(undefined);
+      (api.getPathwaysByCourse as jest.Mock).mockResolvedValue(pathwaysByCourse);
+    });
+
+    it('fetches the pathways of the given courses', async () => {
+      const { result } = renderHook(() => usePathwaysByCourse(courseIds), { wrapper: createWrapper() });
+
+      await waitFor(() => expect(result.current.isSuccess).toBe(true));
+      expect(api.getPathwaysByCourse).toHaveBeenCalledWith(courseIds, undefined);
+      expect(result.current.data).toEqual(pathwaysByCourse);
+    });
+
+    it('fetches the pathways of the masqueraded user', async () => {
+      mockMasqueradeUser('test-user');
+      const { result } = renderHook(() => usePathwaysByCourse(courseIds), { wrapper: createWrapper() });
+
+      await waitFor(() => expect(result.current.isSuccess).toBe(true));
+      expect(api.getPathwaysByCourse).toHaveBeenCalledWith(courseIds, 'test-user');
+    });
+
+    it('does not fetch anything without courses', () => {
+      const { result } = renderHook(() => usePathwaysByCourse([]), { wrapper: createWrapper() });
+
+      expect(result.current.fetchStatus).toBe('idle');
+      expect(api.getPathwaysByCourse).not.toHaveBeenCalled();
+    });
+  });
+
   describe('usePathwaysByCategory', () => {
     beforeEach(() => {
       mockMasqueradeUser(undefined);

@@ -1,4 +1,4 @@
-import { useInitializeLearnerHome, usePathwaysByCategory } from './queryHooks';
+import { useInitializeLearnerHome, usePathwaysByCategory, usePathwaysByCourse } from './queryHooks';
 import {
   useUnenrollFromCourse,
   useUpdateEntitlementEnrollment,
@@ -11,6 +11,7 @@ import {
 export {
   useInitializeLearnerHome,
   usePathwaysByCategory,
+  usePathwaysByCourse,
   useUnenrollFromCourse,
   useUpdateEntitlementEnrollment,
   useDeleteEntitlementEnrollment,

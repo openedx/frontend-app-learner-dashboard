@@ -119,3 +119,30 @@ export const pathwaysByCategory: PathwaysInCategoryData[] = [
   { pathways: [dataScience] },
 ];
 
+// How many labels go to the "+N" popover depends on the card width; the counts below are
+// what a desktop-width card shows, where about three labels fit.
+const coursePathwaySets: PathwayData[][] = [
+  // "+1" popover
+  [dataEngineering, machineLearning, loremIpsum, sedUt],
+  // "+2" popover
+  [dataEngineering, machineLearning, loremIpsum, sedUt, nemoEnim],
+  // "+3" popover
+  [dataEngineering, machineLearning, loremIpsum, sedUt, nemoEnim, atVero],
+  // A single label
+  [dataEngineering],
+  // No pathways, so the strip is not shown
+  [],
+  // Labels with different custom colors
+  [dataScience, fullStack],
+];
+
+/**
+ * Gives the courses the pathway sets above by position, cycling, since the real course IDs
+ * are unknown. Courses that get no pathways are left out of the map.
+ */
+export const buildPathwaysByCourse = (courseIds: string[]): Record<string, PathwayData[]> => (
+  courseIds.reduce((obj, courseId, index) => {
+    const pathways = coursePathwaySets[index % coursePathwaySets.length];
+    return pathways.length ? { ...obj, [courseId]: pathways } : obj;
+  }, {})
+);
