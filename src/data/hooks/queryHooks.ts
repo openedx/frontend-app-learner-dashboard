@@ -3,6 +3,7 @@ import { useContext, useEffect } from 'react';
 import { useMasquerade } from '@src/data/context';
 import GlobalDataContext from '@src/data/contexts/GlobalDataContext';
 import {
+  getPathwaysByCategory,
   initializeList,
 } from '@src/data/services/lms/api';
 import { getTransformedCourseDataObject } from '@src/utils/dataTransformers';
@@ -53,6 +54,16 @@ const useInitializeLearnerHome = () => {
   return { ...query, data };
 };
 
+// Pathways in which the learner is enrolled, grouped by category.
+const usePathwaysByCategory = () => {
+  const { masqueradeUser } = useMasquerade();
+  return useQuery({
+    queryKey: learnerDashboardQueryKeys.pathwaysByCategory(masqueradeUser),
+    queryFn: () => getPathwaysByCategory(masqueradeUser),
+  });
+};
+
 export {
   useInitializeLearnerHome,
+  usePathwaysByCategory,
 };
