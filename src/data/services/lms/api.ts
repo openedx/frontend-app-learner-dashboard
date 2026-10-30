@@ -83,7 +83,7 @@ const sendConfirmEmail = async (sendEmailUrl: string) => {
   return response;
 };
 
-// TODO The backend is missing.
+// TODO The backend is missing: https://github.com/openedx/openedx-platform/issues/39203
 // The pathways must arrive from the backend already grouped by category,
 // and the backend needs to return the category label in the plural form,
 // already internationalized. The response must be mapped here to the `PathwaysInCategoryData` shape.
