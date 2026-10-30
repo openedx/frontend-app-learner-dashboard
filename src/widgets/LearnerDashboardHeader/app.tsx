@@ -4,7 +4,7 @@ import { appId, dashboardRole } from '../../constants';
 
 import ConfirmEmailBanner from './ConfirmEmailBanner';
 import MasqueradeBar from './MasqueradeBar';
-import CoursesLink from './CoursesLink';
+import MyLearningLink from './MyLearningLink';
 import DiscoverLinkMenuItem from './DiscoverLinkMenuItem';
 import ProgramsLinkMenuItem from './ProgramsLinkMenuItem';
 import OrderHistoryLinkMenuItem from './OrderHistoryLinkMenuItem';
@@ -23,11 +23,24 @@ const app: App = {
     },
     {
       slotId: 'org.openedx.frontend.slot.header.primaryLinks.v1',
+      id: 'org.openedx.frontend.widget.learnerDashboard.headerLinkDiscover.v1',
+      op: WidgetOperationTypes.APPEND,
+      element: (
+        <DiscoverLinkMenuItem
+          variant="navLink"
+        />
+      ),
+      condition: {
+        active: [dashboardRole]
+      }
+    },
+    {
+      slotId: 'org.openedx.frontend.slot.header.primaryLinks.v1',
       id: 'org.openedx.frontend.widget.learnerDashboard.headerLinkCourses.v1',
       op: WidgetOperationTypes.APPEND,
       element: (
         <LinkMenuItem
-          label={<CoursesLink />}
+          label={<MyLearningLink />}
           role={dashboardRole}
           variant="navLink"
         />
@@ -48,19 +61,6 @@ const app: App = {
       condition: {
         active: [dashboardRole],
         callback: () => getAppConfig(appId).ENABLE_PROGRAMS === true,
-      }
-    },
-    {
-      slotId: 'org.openedx.frontend.slot.header.primaryLinks.v1',
-      id: 'org.openedx.frontend.widget.learnerDashboard.headerLinkDiscover.v1',
-      op: WidgetOperationTypes.APPEND,
-      element: (
-        <DiscoverLinkMenuItem
-          variant="navLink"
-        />
-      ),
-      condition: {
-        active: [dashboardRole]
       }
     },
     helpButtonSlotOperation({ appId, role: dashboardRole }),
