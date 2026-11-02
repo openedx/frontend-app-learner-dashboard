@@ -1,5 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { getSiteConfig } from '@openedx/frontend-base';
 import { useInitializeLearnerHome } from '@src/data/hooks';
 import * as api from '@src/data/services/lms/api';
 import * as hooks from './hooks';
@@ -51,6 +52,21 @@ describe('ConfirmEmailBanner hooks', () => {
 
       expect(result.current.isNeeded).toEqual(false);
     });
+
+    it('show page banner when learner data loads after the first render', () => {
+      useInitializeLearnerHome.mockReturnValue({ data: undefined });
+
+      const { result, rerender } = renderHook(() => hooks.useConfirmEmailBannerData(), {
+        wrapper: createWrapper(),
+      });
+
+      expect(result.current.showPageBanner).toEqual(false);
+
+      useInitializeLearnerHome.mockReturnValue({ data: { emailConfirmation: { ...emailConfirmation } } });
+      rerender();
+
+      expect(result.current.showPageBanner).toEqual(true);
+    });
   });
 
   describe('behavior', () => {
@@ -66,6 +82,20 @@ describe('ConfirmEmailBanner hooks', () => {
       act(() => {
         result.current.closePageBanner();
       });
+
+      expect(result.current.showPageBanner).toEqual(false);
+    });
+
+    it('keep page banner closed when learner data is refetched', () => {
+      const { result, rerender } = renderHook(() => hooks.useConfirmEmailBannerData(), {
+        wrapper: createWrapper(),
+      });
+
+      act(() => {
+        result.current.closePageBanner();
+      });
+      useInitializeLearnerHome.mockReturnValue({ data: { emailConfirmation: { ...emailConfirmation } } });
+      rerender();
 
       expect(result.current.showPageBanner).toEqual(false);
     });
@@ -93,6 +123,32 @@ describe('ConfirmEmailBanner hooks', () => {
 
       expect(result.current.showConfirmModal).toEqual(true);
       expect(api.sendConfirmEmail).toHaveBeenCalled();
+    });
+
+    it('openConfirmModalButtonClick posts to the LMS account activation endpoint when sendEmailUrl is not set', async () => {
+      const { result } = renderHook(() => hooks.useConfirmEmailBannerData(), {
+        wrapper: createWrapper(),
+      });
+
+      await act(async () => {
+        result.current.openConfirmModalButtonClick();
+      });
+
+      expect(api.sendConfirmEmail).toHaveBeenCalledWith(`${getSiteConfig().lmsBaseUrl}/api/send_account_activation_email`);
+    });
+
+    it('openConfirmModalButtonClick posts to sendEmailUrl when it is set', async () => {
+      const sendEmailUrl = 'http://localhost:8000/custom/send_activation_email';
+      useInitializeLearnerHome.mockReturnValue({ data: { emailConfirmation: { ...emailConfirmation, sendEmailUrl } } });
+      const { result } = renderHook(() => hooks.useConfirmEmailBannerData(), {
+        wrapper: createWrapper(),
+      });
+
+      await act(async () => {
+        result.current.openConfirmModalButtonClick();
+      });
+
+      expect(api.sendConfirmEmail).toHaveBeenCalledWith(sendEmailUrl);
     });
 
     it('userConfirmEmailButtonClick', () => {
