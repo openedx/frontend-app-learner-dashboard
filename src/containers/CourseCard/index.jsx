@@ -6,12 +6,13 @@ import { Card } from '@openedx/paragon';
 import { useIsCollapsed } from './hooks';
 import CourseCardBanners from './components/CourseCardBanners';
 import CourseCardImage from './components/CourseCardImage';
-import CourseCardMenu from './components/CourseCardMenu';
+import CourseHeaderActions from './components/CourseHeaderActions';
 import CourseCardActions from './components/CourseCardActions';
 import CourseCardDetails from './components/CourseCardDetails';
 import CourseCardTitle from './components/CourseCardTitle';
 
 import './CourseCard.scss';
+import { CourseCardPathways } from './components/CourseCardPathways';
 
 export const CourseCard = ({
   cardId,
@@ -22,12 +23,13 @@ export const CourseCard = ({
     <div className="mb-4.5 course-card" id={cardId} data-testid="CourseCard">
       <Card orientation={orientation}>
         <div className="d-flex flex-column w-100">
+          <CourseCardPathways cardId={cardId} />
           <div {...(!isCollapsed && { className: 'd-flex' })}>
             <CourseCardImage cardId={cardId} orientation="horizontal" />
             <Card.Body>
               <Card.Header
                 title={<CourseCardTitle cardId={cardId} />}
-                actions={<CourseCardMenu cardId={cardId} />}
+                actions={<CourseHeaderActions cardId={cardId} />}
               />
               <Card.Section className="pt-0">
                 <CourseCardDetails cardId={cardId} />

@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { IntlProvider } from '@openedx/frontend-base';
 
 import CourseCard from '.';
+import { CourseCardPathways } from './components/CourseCardPathways';
 import hooks from './hooks';
 
 jest.mock('./hooks', () => ({
@@ -23,6 +24,9 @@ jest.mock('./components/CourseCardMenu', () => jest.fn(() => <div>CourseCardMenu
 jest.mock('./components/CourseCardActions', () => jest.fn(() => <div>CourseCardActions</div>));
 jest.mock('./components/CourseCardDetails', () => jest.fn(() => <div>CourseCardDetails</div>));
 jest.mock('./components/CourseCardTitle', () => jest.fn(() => <div>CourseCardTitle</div>));
+jest.mock('./components/CourseCardPathways', () => ({
+  CourseCardPathways: jest.fn(() => <div>CourseCardPathways</div>),
+}));
 
 const cardId = 'test-card-id';
 
@@ -46,5 +50,12 @@ describe('CourseCard component', () => {
       const courseCardComponent = screen.getByText(courseCardName);
       return expect(courseCardComponent).toBeInTheDocument();
     });
+  });
+
+  it('renders the course pathways', () => {
+    hooks.useIsCollapsed.mockReturnValueOnce(false);
+    render(<IntlProvider locale="en"><CourseCard cardId={cardId} /></IntlProvider>);
+    expect(screen.getByText('CourseCardPathways')).toBeInTheDocument();
+    expect(CourseCardPathways).toHaveBeenCalledWith({ cardId }, expect.anything());
   });
 });
