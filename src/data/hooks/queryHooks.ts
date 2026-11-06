@@ -1,8 +1,10 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { skipToken, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useContext, useEffect } from 'react';
 import { useMasquerade } from '@src/data/context';
 import GlobalDataContext from '@src/data/contexts/GlobalDataContext';
 import {
+  getPathwaysByCategory,
+  getPathwaysByCourse,
   initializeList,
 } from '@src/data/services/lms/api';
 import { getTransformedCourseDataObject } from '@src/utils/dataTransformers';
@@ -53,6 +55,28 @@ const useInitializeLearnerHome = () => {
   return { ...query, data };
 };
 
+// Pathways in which the learner is enrolled, for each of the given courses.
+const usePathwaysByCourse = (courseIds: string[]) => {
+  const { masqueradeUser } = useMasquerade();
+  return useQuery({
+    queryKey: learnerDashboardQueryKeys.pathwaysByCourse(courseIds, masqueradeUser),
+    queryFn: courseIds.length
+      ? () => getPathwaysByCourse(courseIds, masqueradeUser)
+      : skipToken,
+  });
+};
+
+// Pathways in which the learner is enrolled, grouped by category.
+const usePathwaysByCategory = () => {
+  const { masqueradeUser } = useMasquerade();
+  return useQuery({
+    queryKey: learnerDashboardQueryKeys.pathwaysByCategory(masqueradeUser),
+    queryFn: () => getPathwaysByCategory(masqueradeUser),
+  });
+};
+
 export {
   useInitializeLearnerHome,
+  usePathwaysByCourse,
+  usePathwaysByCategory,
 };
