@@ -10,7 +10,7 @@ function DiscoverLink() {
 
   return (
     <div className="d-flex">
-      <span>{formatMessage(messages.discoverNew)}</span>
+      <span>{formatMessage(messages.explore)}</span>
     </div>
   );
 }

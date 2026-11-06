@@ -8,7 +8,7 @@ import WidgetSidebarSlot from '../../slots/WidgetSidebarSlot';
 import hooks from './hooks';
 
 export const columnConfig = {
-  courseList: {
+  main: {
     withSidebar: {
       lg: { span: 12, offset: 0 },
       xl: { span: 8, offset: 0 },
@@ -30,14 +30,14 @@ export const DashboardLayout = ({ children }) => {
     sidebarShowing,
   } = hooks.useDashboardLayoutData();
 
-  const courseListColumnProps = sidebarShowing
-    ? columnConfig.courseList.withSidebar
-    : columnConfig.courseList.noSidebar;
+  const mainColumnProps = sidebarShowing
+    ? columnConfig.main.withSidebar
+    : columnConfig.main.noSidebar;
 
   return (
     <Container fluid size="xl">
       <Row>
-        <Col {...courseListColumnProps} className="course-list-column">
+        <Col {...mainColumnProps} className="main-column">
           {children}
         </Col>
         <Col {...columnConfig.sidebar} className={['sidebar-column', !isCollapsed && 'not-collapsed']}>

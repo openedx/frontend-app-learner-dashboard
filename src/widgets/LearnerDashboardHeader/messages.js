@@ -41,9 +41,9 @@ const messages = defineMessages({
     defaultMessage: 'Sign Out',
     description: 'The label for the user menu Sign Out action.',
   },
-  course: {
-    id: 'learnerVariantDashboard.course',
-    defaultMessage: 'Courses',
+  myLearning: {
+    id: 'learnerVariantDashboard.myLearning',
+    defaultMessage: 'My Learning',
     description: 'Header link for switching to dashboard page.',
   },
   program: {
@@ -51,9 +51,9 @@ const messages = defineMessages({
     defaultMessage: 'Programs',
     description: 'Header link for switching to program page.',
   },
-  discoverNew: {
-    id: 'learnerVariantDashboard.discoverNew',
-    defaultMessage: 'Discover New',
+  explore: {
+    id: 'learnerVariantDashboard.explore',
+    defaultMessage: 'Explore',
     description: 'Header link for switching to discover page.',
   },
   logoAltText: {
