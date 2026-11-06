@@ -8,7 +8,7 @@ const config = createConfig('test', {
   coveragePathIgnorePatterns: [
     'src/segment.js',
     'testUtils', // don't unit test jest mocking tools
-    'src/__mocks__',
+    '__mocks__', // jest mocks and the mock data used by the tests
   ],
   moduleNameMapper: {
     '\\.svg$': '<rootDir>/src/__mocks__/svg.js',
