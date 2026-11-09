@@ -23,7 +23,8 @@ const app: App = {
     },
     {
       slotId: 'org.openedx.frontend.slot.header.primaryLinks.v1',
-      id: 'org.openedx.frontend.widget.learnerDashboard.headerLinkDiscover.v1',
+      id: 'org.openedx.frontend.widget.learnerDashboard.headerLinkExplore.v1',
+      idAliases: ['org.openedx.frontend.widget.learnerDashboard.headerLinkDiscover.v1'],
       op: WidgetOperationTypes.APPEND,
       element: (
         <DiscoverLinkMenuItem
@@ -36,7 +37,8 @@ const app: App = {
     },
     {
       slotId: 'org.openedx.frontend.slot.header.primaryLinks.v1',
-      id: 'org.openedx.frontend.widget.learnerDashboard.headerLinkCourses.v1',
+      id: 'org.openedx.frontend.widget.learnerDashboard.headerLinkMyLearning.v1',
+      idAliases: ['org.openedx.frontend.widget.learnerDashboard.headerLinkCourses.v1'],
       op: WidgetOperationTypes.APPEND,
       element: (
         <LinkMenuItem

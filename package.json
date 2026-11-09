@@ -71,7 +71,7 @@
   },
   "devDependencies": {
     "@edx/browserslist-config": "^1.5.0",
-    "@openedx/frontend-base": "^2.0.0-alpha.15 || 0.0.0-dev",
+    "@openedx/frontend-base": "^2.0.0-alpha.19 || 0.0.0-dev",
     "@openedx/paragon": "^23 || 0.0.0-dev",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
@@ -89,7 +89,7 @@
     "typescript": "^5.9.3"
   },
   "peerDependencies": {
-    "@openedx/frontend-base": "^2.0.0-alpha.15 || 0.0.0-dev",
+    "@openedx/frontend-base": "^2.0.0-alpha.19 || 0.0.0-dev",
     "@openedx/paragon": "^23 || 0.0.0-dev",
     "@tanstack/react-query": "^5",
     "@types/react": "^18",
