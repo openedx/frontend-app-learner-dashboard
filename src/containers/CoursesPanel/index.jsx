@@ -1,7 +1,8 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
-import { useIntl } from '@openedx/frontend-base';
+import { FormattedMessage } from '@openedx/frontend-base';
 import { useInitializeLearnerHome } from '@src/data/hooks';
+import { MenuBook } from '@openedx/paragon/icons';
 import {
   CourseFilterControls,
 } from '../../containers/CourseFilterControls';
@@ -14,6 +15,7 @@ import { getVisibleList } from '@src/utils/dataTransformers';
 import messages from './messages';
 
 import './index.scss';
+import { Icon, Stack, Sticky } from '@openedx/paragon';
 
 /**
  * Renders the list of CourseCards, as well as the controls (CourseFilterControls) for modifying the list.
@@ -21,7 +23,6 @@ import './index.scss';
  * @returns List of courses as CourseCards or empty state
 */
 export const CoursesPanel = () => {
-  const { formatMessage } = useIntl();
   const { data } = useInitializeLearnerHome();
   const hasCourses = useMemo(() => data?.courses?.length > 0, [data]);
 
@@ -41,7 +42,7 @@ export const CoursesPanel = () => {
   }, [data, filters, sortBy, pageNumber]);
 
   // Clamp page number when filtered/mutated list shrinks
-  React.useEffect(() => {
+  useEffect(() => {
     if (numPages > 0 && pageNumber > numPages) {
       setPageNumber(1);
     }
@@ -57,12 +58,15 @@ export const CoursesPanel = () => {
 
   return (
     <div className="course-list-container">
-      <div className="course-list-heading-container">
-        <h2 className="course-list-title">{formatMessage(messages.myCourses)}</h2>
-        <div className="course-filter-controls-container">
+      <Sticky className="course-list-heading-container mb-3">
+        <Stack direction='horizontal' className='h3 text-gray-700 ml-2' gap={2}>
+          <Icon src={MenuBook} />
+          <FormattedMessage {...messages.coursesTitle} />
+        </Stack>
+        <div className="course-filter-controls-container mr-2">
           <CourseFilterControls />
         </div>
-      </div>
+      </Sticky>
       {hasCourses ? <CourseListSlot courseListData={courseListData} /> : <NoCoursesViewSlot />}
     </div>
   );
