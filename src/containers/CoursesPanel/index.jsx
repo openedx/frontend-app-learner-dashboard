@@ -1,7 +1,4 @@
-import React, {
-  useEffect, useMemo, useRef, useState,
-} from 'react';
-import classNames from 'classnames';
+import React, { useEffect, useMemo } from 'react';
 
 import { FormattedMessage } from '@openedx/frontend-base';
 import { useInitializeLearnerHome } from '@src/data/hooks';
@@ -18,7 +15,7 @@ import { getVisibleList } from '@src/utils/dataTransformers';
 import messages from './messages';
 
 import './index.scss';
-import { Icon, Stack } from '@openedx/paragon';
+import { Icon, Stack, Sticky } from '@openedx/paragon';
 
 /**
  * Renders the list of CourseCards, as well as the controls (CourseFilterControls) for modifying the list.
@@ -51,18 +48,6 @@ export const CoursesPanel = () => {
     }
   }, [numPages, pageNumber, setPageNumber]);
 
-  // The heading is stuck to the top once the sentinel right above it scrolls out of view
-  const sentinelRef = useRef(null);
-  const [isStuck, setIsStuck] = useState(false);
-  // The sentinel is always rendered, so the ref is set by the time the effect runs
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => setIsStuck(!entry.isIntersecting),
-    );
-    observer.observe(sentinelRef.current);
-    return () => observer.disconnect();
-  }, []);
-
   const courseListData = {
     filterOptions: filters,
     setPageNumber,
@@ -73,8 +58,7 @@ export const CoursesPanel = () => {
 
   return (
     <div className="course-list-container">
-      <div ref={sentinelRef} />
-      <div className={classNames('course-list-heading-container mb-3', { 'is-stuck': isStuck })}>
+      <Sticky className="course-list-heading-container mb-3">
         <Stack direction='horizontal' className='h3 text-gray-700 ml-2' gap={2}>
           <Icon src={MenuBook} />
           <FormattedMessage {...messages.coursesTitle} />
@@ -82,7 +66,7 @@ export const CoursesPanel = () => {
         <div className="course-filter-controls-container mr-2">
           <CourseFilterControls />
         </div>
-      </div>
+      </Sticky>
       {hasCourses ? <CourseListSlot courseListData={courseListData} /> : <NoCoursesViewSlot />}
     </div>
   );

@@ -34,9 +34,10 @@ jest.mock('@src/containers/CourseFilterControls', () => ({
 
 let intersectionCallback;
 const observe = jest.fn();
-const disconnect = jest.fn();
+const unobserve = jest.fn();
 
-// jsdom has no IntersectionObserver, so the visibility changes are triggered by hand
+// jsdom has no IntersectionObserver, which Paragon's Sticky needs, so the
+// visibility changes are triggered by hand
 class MockIntersectionObserver {
   constructor(callback) {
     intersectionCallback = callback;
@@ -44,7 +45,7 @@ class MockIntersectionObserver {
 
   observe = observe;
 
-  disconnect = disconnect;
+  unobserve = unobserve;
 }
 
 describe('CoursesPanel', () => {
@@ -101,26 +102,22 @@ describe('CoursesPanel', () => {
       jest.clearAllMocks();
     });
 
-    it('observes the sentinel above the heading', () => {
+    it('renders the heading as a Paragon sticky element at the top', () => {
       const { container } = createWrapper();
-      expect(getHeading(container)).not.toHaveClass('is-stuck');
-      expect(observe).toHaveBeenCalledWith(getHeading(container).previousElementSibling);
+      const heading = getHeading(container);
+      expect(heading).toHaveClass('pgn__sticky', 'pgn__sticky-top');
+      expect(heading).not.toHaveClass('pgn__sticky-shadow');
+      expect(observe).toHaveBeenCalledWith(heading);
     });
 
-    it('marks the heading as stuck while the sentinel is out of view', () => {
+    it('shows the shadow on the heading while it is stuck', () => {
       const { container } = createWrapper();
 
-      act(() => intersectionCallback([{ isIntersecting: false }]));
-      expect(getHeading(container)).toHaveClass('is-stuck');
+      act(() => intersectionCallback([{ intersectionRatio: 0.5 }]));
+      expect(getHeading(container)).toHaveClass('pgn__sticky-shadow');
 
-      act(() => intersectionCallback([{ isIntersecting: true }]));
-      expect(getHeading(container)).not.toHaveClass('is-stuck');
-    });
-
-    it('disconnects the observer on unmount', () => {
-      const { unmount } = createWrapper();
-      unmount();
-      expect(disconnect).toHaveBeenCalled();
+      act(() => intersectionCallback([{ intersectionRatio: 1 }]));
+      expect(getHeading(container)).not.toHaveClass('pgn__sticky-shadow');
     });
   });
 
