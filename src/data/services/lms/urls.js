@@ -12,6 +12,7 @@ const getInitApiUrl = () => (`${getApiUrl()}/learner_home/init`);
 const event = () => `${getBaseUrl()}/event`;
 const courseUnenroll = () => `${getBaseUrl()}/change_enrollment`;
 const updateEmailSettings = () => `${getApiUrl()}/change_email_settings`;
+const sendActivationEmail = () => `${getApiUrl()}/send_account_activation_email`;
 const entitlementEnrollment = (uuid) => `${getApiUrl()}/entitlements/v1/entitlements/${uuid}/enrollments`;
 
 // if url is null or absolute, return it as is
@@ -57,5 +58,6 @@ export default StrictDict({
   event,
   getInitApiUrl,
   programsUrl,
+  sendActivationEmail,
   updateEmailSettings,
 });
