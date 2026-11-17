@@ -4,6 +4,7 @@ import { useSelectSessionModal } from '@src/data/context';
 import { useInitializeLearnerHome } from '@src/data/hooks';
 
 import hooks from './hooks';
+import messages from './messages';
 import Dashboard from '.';
 
 jest.mock('@src/data/context', () => ({
@@ -23,7 +24,7 @@ jest.mock('../../slots/DashboardModalSlot', () => jest.fn(() => <div>DashboardMo
 jest.mock('@src/containers/CoursesPanel', () => jest.fn(() => <div>CoursesPanel</div>));
 jest.mock('./LoadingView', () => jest.fn(() => <div>LoadingView</div>));
 jest.mock('@src/containers/SelectSessionModal', () => jest.fn(() => <div>SelectSessionModal</div>));
-jest.mock('./DashboardLayout', () => jest.fn(() => <div>DashboardLayout</div>));
+jest.mock('./DashboardLayout', () => jest.fn(({ children }) => <div>DashboardLayout{children}</div>));
 
 const pageTitle = 'test-page-title';
 
@@ -71,6 +72,15 @@ describe('Dashboard', () => {
         createWrapper({ initIsPending: false });
         const dashboardLayout = screen.getByText('DashboardLayout');
         expect(dashboardLayout).toBeInTheDocument();
+      });
+      it('should render CoursesPanel', () => {
+        createWrapper({ initIsPending: false });
+        expect(screen.getByText('CoursesPanel')).toBeInTheDocument();
+      });
+      it('should render dashboard title', () => {
+        createWrapper({ initIsPending: false });
+        const title = screen.getByRole('heading', { level: 2, name: messages.dashboardTitle.defaultMessage });
+        expect(title).toHaveClass('dashboard-title');
       });
     });
   });

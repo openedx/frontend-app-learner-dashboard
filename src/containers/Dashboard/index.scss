@@ -1,11 +1,28 @@
 @use "@openedx/paragon/styles/css/core/custom-media-breakpoints.css";
 
-.course-list-column {
-  padding: 0 var(--pgn-spacing-spacer-4);
+#learnerdashboardroot {
+  // The sticky courses heading draws its divider and shadow beyond the
+  // viewport edges; clip (unlike hidden) keeps position: sticky working.
+  overflow-x: clip;
+}
+
+#dashboard-content {
+  // Shared with CoursesPanel, which lines the stuck heading up with the sidebar
+  --dashboard-main-column-padding-x: var(--pgn-spacing-spacer-4);
+  --dashboard-sidebar-column-padding-end: var(--pgn-spacing-spacer-3);
+}
+
+.main-column {
+  padding: 0 var(--dashboard-main-column-padding-x);
+}
+
+.dashboard-title {
+  font-size: var(--pgn-typography-font-size-h2-base);
+  margin: var(--pgn-spacing-spacer-3) 0;
 }
 
 .sidebar-column {
-  padding: 0 var(--pgn-spacing-spacer-3) 0 var(--pgn-spacing-spacer-1);
+  padding: 0 var(--dashboard-sidebar-column-padding-end) 0 var(--pgn-spacing-spacer-1);
 
   &.not-collapsed {
     padding-top: var(--pgn-spacing-spacer-2);
@@ -25,5 +42,12 @@
     [dir=rtl] & {
       padding: 0 var(--pgn-spacing-spacer-3);
     }
+  }
+}
+
+@media (--pgn-size-breakpoint-max-width-md) {
+  .dashboard-title {
+    font-size: var(--pgn-typography-font-size-h3-base);
+    margin: var(--pgn-spacing-spacer-2) 0;
   }
 }

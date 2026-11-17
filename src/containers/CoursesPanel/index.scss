@@ -5,11 +5,42 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  z-index: 2;
+  background-color: var(--pgn-color-white);
+  padding: var(--pgn-spacing-spacer-2) 0;
+
+  // While stuck, the divider and shadow span the whole viewport instead of
+  // only the main column. Paragon puts the shadow on the element itself, so
+  // it is moved to a pseudo-element that bleeds out to both sides.
+  &.pgn__sticky.pgn__sticky-top.pgn__sticky-shadow {
+    box-shadow: none;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: -100vmax;
+      right: -100vmax;
+      z-index: -1;
+      background-color: var(--pgn-color-white);
+      border-bottom: var(--pgn-size-border-width) solid var(--pgn-color-border);
+      box-shadow: var(--pgn-elevation-sticky-shadow-bottom);
+    }
+  }
 }
 
-.course-list-title {
-  font-size: var(--pgn-typography-font-size-h2-base);
-  margin: var(--pgn-spacing-spacer-3) 0;
+@media (--pgn-size-breakpoint-min-width-xl) {
+  // Next to the sidebar, the stuck heading grows over it so that Refine lines
+  // up with the sidebar's right edge. The sidebar column is half as wide as
+  // the main column, measured with their paddings.
+  .main-column.with-sidebar .course-list-heading-container.pgn__sticky-shadow {
+    width: calc(
+      150%
+      + 2 * var(--dashboard-main-column-padding-x)
+      - var(--dashboard-sidebar-column-padding-end)
+    );
+  }
 }
 
 .course-list-loading {
@@ -33,10 +64,5 @@
   .course-filter-controls-container {
     text-align: left;
     align-self: flex-start;
-  }
-
-  .course-list-title {
-    font-size: var(--pgn-typography-font-size-h3-base);
-    margin: var(--pgn-spacing-spacer-2) 0;
   }
 }

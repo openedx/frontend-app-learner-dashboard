@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import { IntlProvider } from '@openedx/frontend-base';
 import { MemoryRouter } from 'react-router';
 import { useInitializeLearnerHome } from '@src/data/hooks';
@@ -32,8 +32,33 @@ jest.mock('@src/containers/CourseFilterControls', () => ({
   CourseFilterControls: jest.fn(() => <div>CourseFilterControls</div>),
 }));
 
+let intersectionCallback;
+const observe = jest.fn();
+const unobserve = jest.fn();
+
+// jsdom has no IntersectionObserver, which Paragon's Sticky needs, so the
+// visibility changes are triggered by hand
+class MockIntersectionObserver {
+  constructor(callback) {
+    intersectionCallback = callback;
+  }
+
+  observe = observe;
+
+  unobserve = unobserve;
+}
 
 describe('CoursesPanel', () => {
+  const originalIntersectionObserver = window.IntersectionObserver;
+
+  beforeAll(() => {
+    window.IntersectionObserver = MockIntersectionObserver;
+  });
+
+  afterAll(() => {
+    window.IntersectionObserver = originalIntersectionObserver;
+  });
+
   const createWrapper = (courseListData) => {
     const visibleList = courseListData?.visibleList || [];
     const coursesByCardId = Object.fromEntries(visibleList.map((c, i) => [`card-${i}`, { ...c, cardId: c.cardId || `card-${i}` }]));
@@ -65,8 +90,34 @@ describe('CoursesPanel', () => {
     it('displays course list slot when courses exist', () => {
       const visibleList = [{ cardId: 'foo' }, { cardId: 'bar' }, { cardId: 'baz' }];
       createWrapper({ visibleList });
-      const heading = screen.getByText(messages.myCourses.defaultMessage);
+      const heading = screen.getByText(messages.coursesTitle.defaultMessage);
       expect(heading).toBeInTheDocument();
+    });
+  });
+
+  describe('sticky heading', () => {
+    const getHeading = (container) => container.querySelector('.course-list-heading-container');
+
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it('renders the heading as a Paragon sticky element at the top', () => {
+      const { container } = createWrapper();
+      const heading = getHeading(container);
+      expect(heading).toHaveClass('pgn__sticky', 'pgn__sticky-top');
+      expect(heading).not.toHaveClass('pgn__sticky-shadow');
+      expect(observe).toHaveBeenCalledWith(heading);
+    });
+
+    it('shows the shadow on the heading while it is stuck', () => {
+      const { container } = createWrapper();
+
+      act(() => intersectionCallback([{ intersectionRatio: 0.5 }]));
+      expect(getHeading(container)).toHaveClass('pgn__sticky-shadow');
+
+      act(() => intersectionCallback([{ intersectionRatio: 1 }]));
+      expect(getHeading(container)).not.toHaveClass('pgn__sticky-shadow');
     });
   });
 
