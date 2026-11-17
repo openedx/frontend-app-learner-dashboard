@@ -60,7 +60,7 @@ describe('DashboardLayout', () => {
   const testSidebarLayout = ({ isCollapsed }) => {
     it('displays withSidebar width for the main column', () => {
       const mainCol = screen.getByText('test children').parentElement;
-      expect(mainCol).toHaveClass('col-xl-8');
+      expect(mainCol).toHaveClass('col-xl-8', 'with-sidebar');
       const sidebarCol = mainCol.nextSibling;
       expect(sidebarCol).toHaveClass('sidebar-column', !isCollapsed && 'not-collapsed');
     });
@@ -69,6 +69,7 @@ describe('DashboardLayout', () => {
     it('displays noSidebar width for the main column', () => {
       const mainCol = screen.getByText('test children').parentElement;
       expect(mainCol).toHaveClass('col-xl-12');
+      expect(mainCol).not.toHaveClass('with-sidebar');
       const sidebarCol = mainCol.nextSibling;
       expect(sidebarCol).toHaveClass('sidebar-column', !isCollapsed && 'not-collapsed');
     });

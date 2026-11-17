@@ -1,7 +1,19 @@
 @use "@openedx/paragon/styles/css/core/custom-media-breakpoints.css";
 
+#learnerdashboardroot {
+  // The sticky courses heading draws its divider and shadow beyond the
+  // viewport edges; clip (unlike hidden) keeps position: sticky working.
+  overflow-x: clip;
+}
+
+#dashboard-content {
+  // Shared with CoursesPanel, which lines the stuck heading up with the sidebar
+  --dashboard-main-column-padding-x: var(--pgn-spacing-spacer-4);
+  --dashboard-sidebar-column-padding-end: var(--pgn-spacing-spacer-3);
+}
+
 .main-column {
-  padding: 0 var(--pgn-spacing-spacer-4);
+  padding: 0 var(--dashboard-main-column-padding-x);
 }
 
 .dashboard-title {
@@ -10,7 +22,7 @@
 }
 
 .sidebar-column {
-  padding: 0 var(--pgn-spacing-spacer-3) 0 var(--pgn-spacing-spacer-1);
+  padding: 0 var(--dashboard-sidebar-column-padding-end) 0 var(--pgn-spacing-spacer-1);
 
   &.not-collapsed {
     padding-top: var(--pgn-spacing-spacer-2);

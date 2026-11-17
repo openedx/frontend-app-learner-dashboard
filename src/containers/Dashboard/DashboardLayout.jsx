@@ -37,7 +37,7 @@ export const DashboardLayout = ({ children }) => {
   return (
     <Container fluid size="xl">
       <Row>
-        <Col {...mainColumnProps} className="main-column">
+        <Col {...mainColumnProps} className={['main-column', sidebarShowing && 'with-sidebar']}>
           {children}
         </Col>
         <Col {...columnConfig.sidebar} className={['sidebar-column', !isCollapsed && 'not-collapsed']}>
