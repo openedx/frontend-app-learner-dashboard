@@ -2,7 +2,7 @@ import React, { useEffect, useMemo } from 'react';
 
 import { FormattedMessage } from '@openedx/frontend-base';
 import { useInitializeLearnerHome } from '@src/data/hooks';
-import { MenuBook } from '@openedx/paragon/icons';
+import { ImportContacts } from '@openedx/paragon/icons';
 import {
   CourseFilterControls,
 } from '../../containers/CourseFilterControls';
@@ -60,7 +60,7 @@ export const CoursesPanel = () => {
     <div className="course-list-container">
       <Sticky className="course-list-heading-container mb-3">
         <Stack direction='horizontal' className='h3 text-gray-700 ml-2' gap={2}>
-          <Icon src={MenuBook} />
+          <Icon src={ImportContacts} />
           <FormattedMessage {...messages.coursesTitle} />
         </Stack>
         <div className="course-filter-controls-container mr-2">
