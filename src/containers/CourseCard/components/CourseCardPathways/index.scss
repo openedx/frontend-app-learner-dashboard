@@ -13,9 +13,10 @@
     white-space: nowrap;
   }
 
-  // "+N" trigger, separated from the labels by a vertical line
+  // "+N" trigger, right after the last visible label and separated from it by a vertical line
   .course-card-pathways-trigger {
     flex-shrink: 0;
+    margin-inline-start: 0.5rem;
     border-left: 1px solid var(--pgn-color-light-700);
     border-radius: 0;
 
