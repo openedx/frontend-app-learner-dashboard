@@ -10,8 +10,8 @@ export interface PathwayData {
     category?: string;
     categoryLabel?: string;
     categoryLabelPlural?: string;
-    categoryBackgroundColor?: string;
-    categoryTextColor?: string;
+    categoryBackgroundColor: string;
+    categoryTextColor: string;
   };
   progress?: {
     completedItemCount: number;

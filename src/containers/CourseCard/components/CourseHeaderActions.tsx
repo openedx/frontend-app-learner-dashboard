@@ -1,16 +1,14 @@
 import { FormattedMessage } from '@openedx/frontend-base';
-import { Stack } from '@openedx/paragon';
+import { Badge, Stack } from '@openedx/paragon';
 
 import CourseCardMenu from './CourseCardMenu';
 import messages from '../messages';
-import { CategoryBadge } from '@src/components/CategoryBadge';
 
 export const CourseHeaderActions = ({ cardId }: { cardId: string }) => (
   <Stack direction="horizontal" gap={1}>
-    <CategoryBadge
-      categoryLabel={<FormattedMessage {...messages.courseBadge} />}
-      className="text-dark-900 bg-light-500"
-    />
+    <Badge className="p-1.5 text-dark-900 bg-light-500">
+      <FormattedMessage {...messages.courseBadge} />
+    </Badge>
     <CourseCardMenu cardId={cardId} />
   </Stack>
 );
