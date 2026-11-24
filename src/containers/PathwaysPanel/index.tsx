@@ -10,14 +10,15 @@ export const PathwaysPanel = ({
 }: PathwaysPanelProps) => (
   <>
     {pathwaysByCategory.map(({ pathways }) => {
-      const categoryLabelPlural = pathways?.[0]?.pathway.categoryLabelPlural;
-      return categoryLabelPlural
-        ? (
-            <div className="mb-5" key={categoryLabelPlural}>
-              <PathwaysList categoryLabelPlural={categoryLabelPlural} pathways={pathways} />
-            </div>
-          )
-        : null;
+      if (!pathways.length) {
+        return null;
+      }
+      const { categoryLabelPlural } = pathways[0].pathway;
+      return (
+        <div className="mb-5" key={categoryLabelPlural}>
+          <PathwaysList categoryLabelPlural={categoryLabelPlural} pathways={pathways} />
+        </div>
+      );
     })}
   </>
 );

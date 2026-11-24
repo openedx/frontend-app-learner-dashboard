@@ -24,13 +24,11 @@ export const PathwayCard = ({ pathway }: { pathway: PathwayData }) => (
               }}
             />
           </Stack>
-          {pathway.pathway.categoryLabel && (
-            <CategoryBadge
-              categoryLabel={pathway.pathway.categoryLabel}
-              categoryBackgroundColor={pathway.pathway.categoryBackgroundColor}
-              categoryTextColor={pathway.pathway.categoryTextColor}
-            />
-          )}
+          <CategoryBadge
+            categoryLabel={pathway.pathway.categoryLabel}
+            categoryBackgroundColor={pathway.pathway.categoryBackgroundColor}
+            categoryTextColor={pathway.pathway.categoryTextColor}
+          />
         </div>
       )}
     />

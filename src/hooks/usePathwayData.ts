@@ -7,9 +7,9 @@ export interface PathwayData {
       displayName: string;
     };
     itemCount: number;
-    category?: string;
-    categoryLabel?: string;
-    categoryLabelPlural?: string;
+    category: string;
+    categoryLabel: string;
+    categoryLabelPlural: string;
     categoryBackgroundColor: string;
     categoryTextColor: string;
   };

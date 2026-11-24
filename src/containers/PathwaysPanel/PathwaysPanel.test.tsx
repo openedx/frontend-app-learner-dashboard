@@ -7,11 +7,13 @@ jest.mock('./PathwaysList', () => ({
   PathwaysList: jest.fn(({ categoryLabelPlural }) => <div>PathwaysList {categoryLabelPlural}</div>),
 }));
 
-const createPathway = (id: string, categoryLabelPlural?: string): PathwayData => ({
+const createPathway = (id: string, categoryLabelPlural: string): PathwayData => ({
   pathway: {
     id,
     content: { displayName: `Pathway ${id}` },
     itemCount: 4,
+    category: categoryLabelPlural.toLowerCase(),
+    categoryLabel: categoryLabelPlural.slice(0, -1),
     categoryBackgroundColor: '#FCE4F3',
     categoryTextColor: '#9B1766',
     categoryLabelPlural,
@@ -43,14 +45,5 @@ describe('PathwaysPanel', () => {
     );
     expect(screen.getByText('PathwaysList Bootcamps')).toBeInTheDocument();
     expect(screen.getAllByText(/^PathwaysList/)).toHaveLength(1);
-  });
-
-  it('does not render categories without label', () => {
-    render(
-      <PathwaysPanel
-        pathwaysByCategory={[{ pathways: [createPathway('pathway-1')] }]}
-      />,
-    );
-    expect(screen.queryByText(/^PathwaysList/)).not.toBeInTheDocument();
   });
 });

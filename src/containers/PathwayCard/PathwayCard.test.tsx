@@ -16,6 +16,7 @@ const defaultPathway: PathwayData = {
     itemCount: 6,
     category: 'tutorial',
     categoryLabel: 'Tutorial',
+    categoryLabelPlural: 'Tutorials',
     categoryBackgroundColor: '#FCE4F3',
     categoryTextColor: '#9B1766',
   },
@@ -58,7 +59,7 @@ describe('PathwayCard', () => {
     expect(screen.queryByText('Test Provider')).not.toBeInTheDocument();
   });
 
-  it('renders CategoryBadge with category props when categoryLabel is set', () => {
+  it('renders CategoryBadge with the category props', () => {
     renderComponent();
     expect(screen.getByText('CategoryBadge')).toBeInTheDocument();
     expect(CategoryBadge).toHaveBeenCalledWith(
@@ -69,14 +70,5 @@ describe('PathwayCard', () => {
       },
       expect.anything(),
     );
-  });
-
-  it('does not render CategoryBadge when there is no categoryLabel', () => {
-    renderComponent({
-      ...defaultPathway,
-      pathway: { ...defaultPathway.pathway, categoryLabel: undefined },
-    });
-    expect(screen.queryByText('CategoryBadge')).not.toBeInTheDocument();
-    expect(CategoryBadge).not.toHaveBeenCalled();
   });
 });
