@@ -6,7 +6,7 @@ import { Card } from '@openedx/paragon';
 import { useIsCollapsed } from './hooks';
 import CourseCardBanners from './components/CourseCardBanners';
 import CourseCardImage from './components/CourseCardImage';
-import CourseCardMenu from './components/CourseCardMenu';
+import CourseHeaderActions from './components/CourseHeaderActions';
 import CourseCardActions from './components/CourseCardActions';
 import CourseCardDetails from './components/CourseCardDetails';
 import CourseCardTitle from './components/CourseCardTitle';
@@ -27,7 +27,7 @@ export const CourseCard = ({
             <Card.Body>
               <Card.Header
                 title={<CourseCardTitle cardId={cardId} />}
-                actions={<CourseCardMenu cardId={cardId} />}
+                actions={<CourseHeaderActions cardId={cardId} />}
               />
               <Card.Section className="pt-0">
                 <CourseCardDetails cardId={cardId} />

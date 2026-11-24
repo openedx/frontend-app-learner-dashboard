@@ -1,8 +1,10 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useMasquerade } from '@src/data/context';
+import { pathwaysByCategory } from '@src/data/services/lms/__mocks__/pathways';
 import {
   useInitializeLearnerHome,
+  usePathwaysByCategory,
 } from './index';
 import { learnerDashboardQueryKeys } from './queryKeys';
 import * as api from '../services/lms/api';
@@ -35,6 +37,15 @@ jest.mock('@src/data/contexts/GlobalDataContext', () => {
 });
 
 const mockUseMasquerade = useMasquerade as jest.MockedFunction<typeof useMasquerade>;
+
+const mockMasqueradeUser = (masqueradeUser?: string) => {
+  mockUseMasquerade.mockReturnValue({
+    masqueradeUser,
+    setMasqueradeUser(): void {
+      throw new Error('Function not implemented.');
+    },
+  });
+};
 
 // Create a test wrapper with QueryClient
 const createWrapper = (queryClient?: QueryClient) => {
@@ -217,6 +228,28 @@ describe('queryHooks', () => {
 
       // For masquerading, retryOnMount and refetchOnMount should be false
       expect(result.current.isRefetchError).toBe(false);
+    });
+  });
+  describe('usePathwaysByCategory', () => {
+    beforeEach(() => {
+      mockMasqueradeUser(undefined);
+      (api.getPathwaysByCategory as jest.Mock).mockResolvedValue(pathwaysByCategory);
+    });
+
+    it('fetches the pathways grouped by category', async () => {
+      const { result } = renderHook(() => usePathwaysByCategory(), { wrapper: createWrapper() });
+
+      await waitFor(() => expect(result.current.isSuccess).toBe(true));
+      expect(api.getPathwaysByCategory).toHaveBeenCalledWith(undefined);
+      expect(result.current.data).toEqual(pathwaysByCategory);
+    });
+
+    it('fetches the pathways of the masqueraded user', async () => {
+      mockMasqueradeUser('test-user');
+      const { result } = renderHook(() => usePathwaysByCategory(), { wrapper: createWrapper() });
+
+      await waitFor(() => expect(result.current.isSuccess).toBe(true));
+      expect(api.getPathwaysByCategory).toHaveBeenCalledWith('test-user');
     });
   });
 });
