@@ -6,7 +6,7 @@ import messages from './messages';
 import { CategoryBadge } from '@src/components/CategoryBadge';
 
 export const PathwayCard = ({ pathway }: { pathway: PathwayData }) => (
-  <Card className='p-2' orientation="horizontal">
+  <Card className="p-2" orientation="horizontal">
     <Card.Section>
       <h3 className="mb-1">
         {pathway.pathway.content.displayName}
