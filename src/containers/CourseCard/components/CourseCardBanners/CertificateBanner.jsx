@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 
 import { MailtoLink, Hyperlink } from '@openedx/paragon';
 import { CheckCircle } from '@openedx/paragon/icons';
-import { useIntl } from '@openedx/frontend-base';
-import { baseAppUrl } from '@src/data/services/lms/urls';
+import { getLinkProps, useIntl } from '@openedx/frontend-base';
+import { baseAppUrl, courseProgressUrl } from '@src/data/services/lms/urls';
 
 import { useInitializeLearnerHome } from '@src/data/hooks';
 import { utilHooks, useCourseData } from '@src/hooks';
@@ -33,7 +33,7 @@ export const CertificateBanner = ({ cardId }) => {
     isPassing: courseData?.gradeData?.isPassing,
     isArchived: courseData?.courseRun?.isArchived,
     minPassingGrade: Math.floor((courseData?.courseRun?.minPassingGrade ?? 0) * 100),
-    progressUrl: baseAppUrl(courseData?.courseRun?.progressUrl || ''),
+    progressUrl: courseProgressUrl(courseData?.courseRun?.courseId, courseData?.courseRun?.progressUrl || ''),
   }), [courseData]);
   const { supportEmail, billingEmail } = useMemo(
     () => ({
@@ -84,7 +84,7 @@ export const CertificateBanner = ({ cardId }) => {
         <Banner variant="warning">
           {formatMessage(messages.notEligibleForCert)}
           {'  '}
-          <Hyperlink isInline destination={progressUrl}>{formatMessage(messages.viewGrades)}</Hyperlink>
+          <Hyperlink isInline {...getLinkProps(progressUrl)}>{formatMessage(messages.viewGrades)}</Hyperlink>
         </Banner>
       );
     }

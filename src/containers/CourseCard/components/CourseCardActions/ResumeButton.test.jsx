@@ -1,6 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { IntlProvider } from '@openedx/frontend-base';
+import { MemoryRouter } from 'react-router-dom';
+import { IntlProvider, getSiteConfig, setSiteConfig } from '@openedx/frontend-base';
+import { coursewareRole } from '@src/constants';
+import { LocationDisplay, provideRoute } from '@src/testUtils';
 import { useCourseTrackingEvent, useCourseData } from '@src/hooks';
 
 import track from '@src/tracking';
@@ -38,10 +41,11 @@ jest.mock('../hooks', () => jest.fn(() => ({ disableResumeCourse: false })));
 
 jest.mock('./ActionButton/hooks', () => jest.fn(() => false));
 
-useCourseData.mockReturnValue({
+const lmsCourseData = {
   enrollment: { mode: 'executive-education' },
   courseRun: { resumeUrl: '/courses/course-v1:Test+101+2024/courseware/chapter1/' },
-});
+};
+useCourseData.mockReturnValue(lmsCourseData);
 
 describe('ResumeButton', () => {
   const props = {
@@ -75,6 +79,33 @@ describe('ResumeButton', () => {
         expect(button).toBeInTheDocument();
         expect(button).not.toHaveClass('disabled');
         expect(button).not.toHaveAttribute('aria-disabled', 'true');
+      });
+      describe('when an app in this site provides the courseware', () => {
+        const siteConfig = getSiteConfig();
+        const courseId = 'course-v1:Test+101+2024';
+
+        afterEach(() => {
+          setSiteConfig(siteConfig);
+          useCourseData.mockReturnValue(lmsCourseData);
+          useCourseTrackingEvent.mockReturnValue({ trackCourseEvent: jest.fn() });
+        });
+
+        it('resumes there, in the client', async () => {
+          provideRoute(coursewareRole, 'learning/course/:courseId');
+          useCourseData.mockReturnValue({
+            enrollment: { mode: 'verified' },
+            courseRun: { courseId, resumeUrl: `/courses/${courseId}/jump_to/block-v1:Test+101+2024+type@problem+block@abc` },
+          });
+          useCourseTrackingEvent.mockReturnValue(jest.fn());
+          render(
+            <IntlProvider locale="en">
+              <MemoryRouter><ResumeButton {...props} /><LocationDisplay /></MemoryRouter>
+            </IntlProvider>,
+          );
+
+          await userEvent.click(screen.getByRole('link', { name: 'Resume' }));
+          expect(decodeURIComponent(screen.getByTestId('location').textContent)).toEqual(`/learning/course/${courseId}`);
+        });
       });
       it('should track enter course clicked event on click, with exec ed param', async () => {
         render(<IntlProvider locale="en"><ResumeButton {...props} /></IntlProvider>);

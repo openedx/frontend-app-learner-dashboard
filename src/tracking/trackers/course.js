@@ -1,3 +1,5 @@
+import { isInternalUrl } from '@openedx/frontend-base';
+
 import { createEventTracker, createLinkTracker } from '../../data/services/segment/utils';
 import { categories, eventNames } from '../constants';
 import * as module from './course';
@@ -19,9 +21,13 @@ export const courseEventTracker = (eventName, courseId, options = {}) => createE
  * @param {string} eventName - event name for the click event
  * @return {callback} - component hook returning a link tracking event callback
  */
-export const courseLinkTracker = (eventName) => (courseId, href) => (
-  createLinkTracker(module.courseEventTracker(eventName, courseId), href)
-);
+export const courseLinkTracker = (eventName) => (courseId, href) => {
+  const tracker = module.courseEventTracker(eventName, courseId);
+  // A path in this site is followed by react-router in the client, so the event is just sent
+  // along the way.  Anything else is a full page load, which createLinkTracker holds back until
+  // the event is on its way.
+  return href && isInternalUrl(href) ? tracker : createLinkTracker(tracker, href);
+};
 
 // Non-Link events
 export const courseOptionsDropdownClicked = (courseId) => (

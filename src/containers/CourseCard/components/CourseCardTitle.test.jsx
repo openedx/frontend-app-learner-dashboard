@@ -1,5 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { MemoryRouter } from 'react-router-dom';
+import { getSiteConfig, setSiteConfig } from '@openedx/frontend-base';
+import { courseOutlineRole } from '@src/constants';
+import { LocationDisplay, provideRoute } from '@src/testUtils';
 import { useCourseData, useCourseTrackingEvent } from '@src/hooks';
 import track from '@src/tracking';
 import useActionDisabledState from './hooks';
@@ -26,6 +30,11 @@ describe('CourseCardTitle', () => {
   const courseName = 'Test Course';
   const homeUrl = 'http://test.com';
   const handleTitleClick = jest.fn();
+  const siteConfig = getSiteConfig();
+
+  afterEach(() => {
+    setSiteConfig(siteConfig);
+  });
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -46,6 +55,21 @@ describe('CourseCardTitle', () => {
 
     await user.click(link);
     expect(handleTitleClick).toHaveBeenCalled();
+  });
+
+  it('links to the course home in this site when an app provides it', async () => {
+    const courseId = 'course-v1:Test+101+2024';
+    provideRoute(courseOutlineRole, 'learning/course/:courseId/home');
+    useCourseData.mockReturnValue({
+      course: { courseName },
+      courseRun: { courseId, homeUrl: `${global.location.origin}/learning/course/${courseId}/home` },
+    });
+    useActionDisabledState.mockReturnValue({ disableCourseTitle: false });
+    render(<MemoryRouter><CourseCardTitle {...props} /><LocationDisplay /></MemoryRouter>);
+
+    await userEvent.click(screen.getByRole('link', { name: courseName }));
+    expect(decodeURIComponent(screen.getByTestId('location').textContent)).toEqual(`/learning/course/${courseId}/home`);
+    expect(decodeURIComponent(useCourseTrackingEvent.mock.calls[0][2])).toEqual(`/learning/course/${courseId}/home`);
   });
 
   it('renders course name as span when disabled', () => {
