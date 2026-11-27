@@ -37,6 +37,16 @@ describe('course trackers', () => {
           createLinkTracker(trackers.courseEventTracker(testEventName, courseId), href),
         );
       });
+      it('returns the event tracker alone for a path in this site, which react-router follows', () => {
+        expect(trackers.courseLinkTracker(testEventName)(courseId, '/learning/course')).toEqual(
+          trackers.courseEventTracker(testEventName, courseId),
+        );
+      });
+      it('returns a link tracker when there is no href', () => {
+        expect(trackers.courseLinkTracker(testEventName)(courseId, undefined)).toEqual(
+          createLinkTracker(trackers.courseEventTracker(testEventName, courseId), undefined),
+        );
+      });
     });
   });
   describe('Non-link events', () => {

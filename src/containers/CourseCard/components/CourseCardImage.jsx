@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from '@openedx/frontend-base';
-import { baseAppUrl } from '@src/data/services/lms/urls';
+import { baseAppUrl, courseHomeUrl } from '@src/data/services/lms/urls';
 
 import { Badge } from '@openedx/paragon';
 
 import track from '@src/tracking';
 import { useCourseData, useCourseTrackingEvent } from '@src/hooks';
 import verifiedRibbon from '@src/assets/verified-ribbon.png';
+import CourseLink from './CourseLink';
 import useActionDisabledState from './hooks';
 
 import messages from '../messages';
@@ -17,7 +18,7 @@ const { courseImageClicked } = track.course;
 export const CourseCardImage = ({ cardId, orientation }) => {
   const { formatMessage } = useIntl();
   const courseData = useCourseData(cardId);
-  const { homeUrl } = courseData?.courseRun || {};
+  const homeUrl = courseHomeUrl(courseData?.courseRun?.courseId, courseData?.courseRun?.homeUrl);
   const { disableCourseTitle } = useActionDisabledState(cardId);
   const handleImageClicked = useCourseTrackingEvent(courseImageClicked, cardId, homeUrl);
   const wrapperClassName = `pgn__card-wrapper-image-cap d-inline-block overflow-visible ${orientation}`;
@@ -48,14 +49,14 @@ export const CourseCardImage = ({ cardId, orientation }) => {
   return disableCourseTitle
     ? (<div className={wrapperClassName}>{image}</div>)
     : (
-      <a
+      <CourseLink
         className={wrapperClassName}
         href={homeUrl}
         onClick={handleImageClicked}
         tabIndex="-1"
       >
         {image}
-      </a>
+      </CourseLink>
     );
 };
 CourseCardImage.propTypes = {
